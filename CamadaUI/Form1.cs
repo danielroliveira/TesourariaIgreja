@@ -7,15 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CamadaDTO;
 
 namespace CamadaUI
 {
 	public partial class Form1 : Form
 	{
+
+		private BindingSource bind = new BindingSource();
+		private objContribuinte Cont = new objContribuinte();
+
 		public Form1()
 		{
 			InitializeComponent();
+
+			//txtClienteNome.DataBindings.Add("Text", BindingCliente, "Cadastro", True, DataSourceUpdateMode.OnPropertyChanged)
+
+			bind.DataSource = Cont;
+			textBox1.DataBindings.Add("Text", bind, "Contribuinte", true, DataSourceUpdateMode.OnPropertyChanged);
+
+			Cont.PropertyChanged += Alterado;
+
 		}
 
+		private void Alterado(object sender, PropertyChangedEventArgs e)
+		{
+			MessageBox.Show("Alterado");
+		}
 	}
 }

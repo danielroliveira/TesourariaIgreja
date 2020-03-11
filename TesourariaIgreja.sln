@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamadaUI", "CamadaUI\CamadaUI.csproj", "{5D6BE76E-5AC5-4832-9792-5DD6A0562A93}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4B658D19-BA42-46F2-8DEB-88C56EAB121A} = {4B658D19-BA42-46F2-8DEB-88C56EAB121A}
-		{485CD9FC-A32C-4F76-998F-1DBABBF39ABC} = {485CD9FC-A32C-4F76-998F-1DBABBF39ABC}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamadaBLL", "CamadaBLL\CamadaBLL.csproj", "{485CD9FC-A32C-4F76-998F-1DBABBF39ABC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{011E4609-82F5-4211-B2EB-F214707A0CAB} = {011E4609-82F5-4211-B2EB-F214707A0CAB}
@@ -18,16 +12,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamadaDAO", "CamadaDAO\Cama
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamadaDTO", "CamadaDTO\CamadaDTO.csproj", "{4B658D19-BA42-46F2-8DEB-88C56EAB121A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamadaUI", "CamadaUI\CamadaUI.csproj", "{9D93F4B5-3EB5-40F4-8610-00594580503E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B658D19-BA42-46F2-8DEB-88C56EAB121A} = {4B658D19-BA42-46F2-8DEB-88C56EAB121A}
+		{485CD9FC-A32C-4F76-998F-1DBABBF39ABC} = {485CD9FC-A32C-4F76-998F-1DBABBF39ABC}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D6BE76E-5AC5-4832-9792-5DD6A0562A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D6BE76E-5AC5-4832-9792-5DD6A0562A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D6BE76E-5AC5-4832-9792-5DD6A0562A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D6BE76E-5AC5-4832-9792-5DD6A0562A93}.Release|Any CPU.Build.0 = Release|Any CPU
 		{485CD9FC-A32C-4F76-998F-1DBABBF39ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{485CD9FC-A32C-4F76-998F-1DBABBF39ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{485CD9FC-A32C-4F76-998F-1DBABBF39ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -40,6 +36,10 @@ Global
 		{4B658D19-BA42-46F2-8DEB-88C56EAB121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B658D19-BA42-46F2-8DEB-88C56EAB121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B658D19-BA42-46F2-8DEB-88C56EAB121A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D93F4B5-3EB5-40F4-8610-00594580503E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D93F4B5-3EB5-40F4-8610-00594580503E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D93F4B5-3EB5-40F4-8610-00594580503E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D93F4B5-3EB5-40F4-8610-00594580503E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
