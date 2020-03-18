@@ -55,10 +55,48 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="main\frmMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main\frmMessage.designer.cs">
+      <DependentUpon>frmMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="main\frmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main\frmPrincipal.designer.cs">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="main\FuncoesGlobais.cs" />
+    <Compile Include="main\Utilidades.cs" />
+    <Compile Include="modals\frmModFinBorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modals\frmModFinBorder.designer.cs">
+      <DependentUpon>frmModFinBorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="modals\frmModNoBorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modals\frmModNoBorder.designer.cs">
+      <DependentUpon>frmModNoBorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main\frmMessage.resx">
+      <DependentUpon>frmMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main\frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="modals\frmModFinBorder.resx">
+      <DependentUpon>frmModFinBorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="modals\frmModNoBorder.resx">
+      <DependentUpon>frmModNoBorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -68,6 +106,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -91,6 +130,48 @@
       <Project>{4b658d19-ba42-46f2-8deb-88c56eab121a}</Project>
       <Name>CamadaDTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sair_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\biblia_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NotasColor_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agenda_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloseIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DropdownIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo FAES cinza PNG Borda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Entradas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Entradas_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Saidas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_exclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_question.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_warning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

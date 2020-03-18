@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CamadaUI.Properties {
+namespace CamadaDAL.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -23,12 +23,27 @@ namespace CamadaUI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SlateGray")]
-        public global::System.Drawing.Color PanelTopColor {
+        [global::System.Configuration.DefaultSettingValueAttribute("E:\\Desktop\\ConfigDB.xml")]
+        public string ConexaoStringFile {
             get {
-                return ((global::System.Drawing.Color)(this["PanelTopColor"]));
+                return ((string)(this["ConexaoStringFile"]));
+            }
+            set {
+                this["ConexaoStringFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Teste")]
+        public string ConexaoStringName {
+            get {
+                return ((string)(this["ConexaoStringName"]));
+            }
+            set {
+                this["ConexaoStringName"] = value;
             }
         }
     }

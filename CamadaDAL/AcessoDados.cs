@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -33,12 +32,16 @@ namespace CamadaDAL
         //------------------------------------------------------------------------------------------------------------
         public string GetConnectionString()
         {
-            string retorno = string.Empty;
+            string retorno;
 
             try
             {
-                string connFile = ConfigurationManager.AppSettings["ConexaoStringFile"];
-                string connName = ConfigurationManager.AppSettings["ConexaoStringName"];
+                //string connFile = ConfigurationManager.AppSettings["ConexaoStringFile"];
+                string connFile = Properties.Settings.Default.ConexaoStringFile;
+
+                //string connName = ConfigurationManager.AppSettings["ConexaoStringName"];
+                string connName = Properties.Settings.Default.ConexaoStringName;
+
                 GetConnection getConn = new GetConnection();
 
                 retorno = getConn.LoadConnectionString(connFile, connName);
