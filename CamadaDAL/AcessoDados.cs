@@ -1,47 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CamadaDAO
+namespace CamadaDAL
 {
-	public class AcessoDados
-	{
-		//-------------------------------------------------------------------------------------------------------
-		// DECLARAÇÃO DAS VARIÁVEIS
-		//-------------------------------------------------------------------------------------------------------
-		SqlConnection conn;
-		SqlCommand cmd;
-		private SqlTransaction trans;
-		public List<SqlParameter> ParamList = new List<SqlParameter>();
-		private string _dataBasePath;
+    public class AcessoDados
+    {
+        //-------------------------------------------------------------------------------------------------------
+        // DECLARAÇÃO DAS VARIÁVEIS
+        //-------------------------------------------------------------------------------------------------------
+        SqlConnection conn;
+        SqlCommand cmd;
+        private SqlTransaction trans;
+        public List<SqlParameter> ParamList = new List<SqlParameter>();
 
         // ==============================================================================
         #region CONEXAO
 
         // NEW CONSTRUCTOR
         //-------------------------------------------------------------------------------------------------
-        public AcessoDados(string dataBasePath)
-		{
-			_dataBasePath = dataBasePath; // backup DATABASE path
+        public AcessoDados()
+        {
+            if (!Connect())
+            {
+                return;
+            }
+        }
 
-			if (!Connect(dataBasePath))
-			{
-				return;
-			}
-		}
+        // GET CONNECTION STRING
+        //------------------------------------------------------------------------------------------------------------
+        public string GetConnectionString()
+        {
+            string retorno = string.Empty;
+
+            try
+            {
+                string connFile = ConfigurationManager.AppSettings["ConexaoStringFile"];
+                string connName = ConfigurationManager.AppSettings["ConexaoStringName"];
+                GetConnection getConn = new GetConnection();
+
+                retorno = getConn.LoadConnectionString(connFile, connName);
+
+                if (string.IsNullOrEmpty(retorno.Trim()))
+                {
+                    throw new Exception("Arquivo de Conexão Database inválido...");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            /*
+            //--- verifica se há retorno da |DataDirectory|
+            //--- substitui o |DataDirectory| pelo "CamadaDAL\Dados"
+            If retorno.Contains("|DataDirectory|") Then
+            Dim BaseDir As String = AppDomain.CurrentDomain.BaseDirectory
+
+            Dim findI As Integer
+
+            findI = BaseDir.IndexOf("\", 0)
+            findI = BaseDir.IndexOf("\", findI + 1)
+            findI = BaseDir.IndexOf("\", findI + 1)
+
+            BaseDir = BaseDir.Substring(0, findI) + "\CamadaDAL"
+
+            retorno = retorno.Replace("|DataDirectory|", BaseDir)
+
+            End If 
+            */
+
+            return retorno;
+
+        }
 
         // OPEN CONNECTION
-        private bool Connect(string dataBasePath)
+        private bool Connect()
         {
-            string connstr = "Provider=Microsoft.Jet.OleDb.4.0; Data Source=" + dataBasePath;
+            string connstr = "";
             bool bln = false;
 
             if (conn == null)
             {
                 try
                 {
-                    //connstr = GetConnectionString();
+                    connstr = GetConnectionString();
+
                     if (connstr != string.Empty)
                     {
                         conn = new SqlConnection(connstr);
@@ -94,7 +140,7 @@ namespace CamadaDAO
         {
             ParamList.Add(new SqlParameter(nomeParametro, valorParametro));
         }
-
+               
         #endregion
 
         // ==============================================================================
@@ -108,7 +154,7 @@ namespace CamadaDAO
                 if (conn.State == ConnectionState.Closed)
                 {
                     // try connect
-                    Connect(_dataBasePath);
+                    Connect();
                     // Check Again
                     if (conn.State == ConnectionState.Closed)
                         throw new Exception("Sem conexão ao Database...");
@@ -117,8 +163,10 @@ namespace CamadaDAO
                 cmd = new SqlConnection().CreateCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = commandType;
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
                 cmd.CommandText = nomeStoredProcedureOuTextoSQL;
-                cmd.CommandTimeout = 7200;
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
+                 cmd.CommandTimeout = 7200;
 
                 ParamList.ForEach(p => cmd.Parameters.Add(p));
 
@@ -146,7 +194,7 @@ namespace CamadaDAO
                 if (conn.State == ConnectionState.Closed)
                 {
                     // try connect
-                    Connect(_dataBasePath);
+                    Connect();
                     // Check Again
                     if (conn.State == ConnectionState.Closed)
                         throw new Exception("Sem conexão ao Database...");
@@ -155,7 +203,9 @@ namespace CamadaDAO
                 cmd = new SqlConnection().CreateCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = commandType;
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
                 cmd.CommandText = nomeStoredProcedureOuTextoSQL;
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
                 cmd.CommandTimeout = 7200;
 
                 if (isTran) cmd.Transaction = trans;

@@ -15,7 +15,8 @@ namespace CamadaUI
 	{
 
 		private BindingSource bind = new BindingSource();
-		private objContribuinte Cont = new objContribuinte();
+		private objContribuinte Cont = new objContribuinte(null);
+		private bool RegistroAlterado = false;
 
 		public Form1()
 		{
@@ -32,7 +33,11 @@ namespace CamadaUI
 
 		private void Alterado(object sender, PropertyChangedEventArgs e)
 		{
-			MessageBox.Show("Alterado");
+			if (RegistroAlterado == false)
+			{
+				MessageBox.Show("Alterado");
+				RegistroAlterado = true;
+			}
 		}
 	}
 }

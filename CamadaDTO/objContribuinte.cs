@@ -17,10 +17,10 @@ namespace CamadaDTO
 			internal int? _IDContribuinte;
 			internal string _Contribuinte;
 			internal string _CNP;
-			internal DateTime _NascimentoData;
+			internal DateTime? _NascimentoData;
 			internal bool _Dizimista;
 			internal bool _Ativo;
-			internal int _IDMembro;
+			internal int? _IDMembro;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -29,14 +29,16 @@ namespace CamadaDTO
 		private StructContribuinte BackupData;
 		private bool inTxn = false;
 
-		public objContribuinte()
+		public objContribuinte(int? IDContribuinte) : base()
 		{
 			EditData = new StructContribuinte() {
-				_IDContribuinte = null,
+				_IDContribuinte = IDContribuinte,
 				_Contribuinte = "", 
 				_Ativo = true, 
 				_CNP = "", 
-				_Dizimista = false
+				_Dizimista = false,
+				_NascimentoData = null,
+				_IDMembro = null
 			};
 		}
 
@@ -69,6 +71,8 @@ namespace CamadaDTO
 			}
 		}
 
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -79,24 +83,29 @@ namespace CamadaDTO
 			}
 		}
 
-
-		// PROPERTIES
-		//-------------------------------------------------------------------------------------------------
-		public int? IDContribuinte
+		public override string ToString()
 		{
-			get
-			{
-				return EditData._IDContribuinte;
-			}
+			return EditData._Contribuinte;
 		}
 
+		public bool RegistroAlterado 
+		{
+			get => inTxn;  
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+		public int? IDContribuinte
+		{ 
+			get => EditData._IDContribuinte; 
+		}
+
+		// Property Contribuinte
+		//----------------------------------------------------------------
 		public string Contribuinte
 		{
-			get
-			{
-				return EditData._Contribuinte;
-			}
-
+			get => EditData._Contribuinte;
 			set
 			{
 				if (value != EditData._Contribuinte)
@@ -107,35 +116,79 @@ namespace CamadaDTO
 			}
 		}
 
-
-		/*
-		public event EventHandler Alterado;
-
-		protected virtual void OnAlterado(EventArgs e)
+		// Property CNP
+		//---------------------------------------------------------------
+		public string CNP
 		{
-			EventHandler handler = Alterado;
-			handler?.Invoke(this, e);
+			get => EditData._CNP;
+			set
+			{
+				if (value != EditData._CNP)
+				{
+					EditData._CNP = value;
+					NotifyPropertyChanged("CNP");
+				}
+			}
 		}
-		*/
 
+		// Property NascimentoData
+		//---------------------------------------------------------------
+		public DateTime? NascimentoData
+		{
+			get => EditData._NascimentoData;
+			set
+			{
+				if (value != EditData._NascimentoData)
+				{
+					EditData._NascimentoData = value;
+					NotifyPropertyChanged("NascimentoData");
+				}
+			}
+		}
 
-		/*
-		    '
-			'-- _EVENTO PUBLIC AOALTERAR
-			Public Event AoAlterar()
-			'
-			Public Overrides Function ToString() As String
-				Return IDVenda.ToString
-			End Function
-			'
-			Public ReadOnly Property RegistroAlterado As Boolean
-				Get
-					Return inTxn
-				End Get
-			End Property
-		
-		*/
+		// Property Dizimista
+		//---------------------------------------------------------------
+		public bool Dizimista
+		{
+			get => EditData._Dizimista;
+			set
+			{
+				if (value != EditData._Dizimista)
+				{
+					EditData._Dizimista = value;
+					NotifyPropertyChanged("Dizimista");
+				}
+			}
+		}
 
+		// Property Ativo
+		//---------------------------------------------------------------
+		public bool Ativo
+		{
+			get => EditData._Ativo;
+			set
+			{
+				if (value != EditData._Ativo)
+				{
+					EditData._Ativo = value;
+					NotifyPropertyChanged("Ativo");
+				}
+			}
+		}
 
+		// Property IDMembro
+		//---------------------------------------------------------------
+		public int? IDMembro
+		{
+			get => EditData._IDMembro;
+			set
+			{
+				if (value != EditData._IDMembro)
+				{
+					EditData._IDMembro = value;
+					NotifyPropertyChanged("IDMembro");
+				}
+			}
+		}
 	}
 }
