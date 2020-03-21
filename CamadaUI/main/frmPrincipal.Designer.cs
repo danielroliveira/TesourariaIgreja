@@ -43,8 +43,19 @@
 			this.btnClose = new System.Windows.Forms.Button();
 			this.btnMinimizer = new System.Windows.Forms.Button();
 			this.btnConfig = new System.Windows.Forms.Button();
+			this.PainelInferior = new System.Windows.Forms.Panel();
+			this.lblConta = new System.Windows.Forms.Label();
+			this.Label4 = new System.Windows.Forms.Label();
+			this.lblVersao = new System.Windows.Forms.Label();
+			this.Label1 = new System.Windows.Forms.Label();
+			this.lblFilial = new System.Windows.Forms.Label();
+			this.Label3 = new System.Windows.Forms.Label();
+			this.lblDataSis = new System.Windows.Forms.Label();
+			this.Label2 = new System.Windows.Forms.Label();
+			this.lblHora = new System.Windows.Forms.Label();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
+			this.PainelInferior.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mnuPrincipal
@@ -57,9 +68,10 @@
             this.btnAvisos});
 			this.mnuPrincipal.Location = new System.Drawing.Point(0, 39);
 			this.mnuPrincipal.Name = "mnuPrincipal";
+			this.mnuPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.mnuPrincipal.Size = new System.Drawing.Size(1110, 56);
 			this.mnuPrincipal.TabIndex = 1;
-			this.mnuPrincipal.Text = "toolStrip1";
+			this.mnuPrincipal.Text = "Menu Principal";
 			// 
 			// btnSair
 			// 
@@ -138,8 +150,9 @@
 			this.btnAvisos.Image = global::CamadaUI.Properties.Resources.agenda_32;
 			this.btnAvisos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnAvisos.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnAvisos.Margin = new System.Windows.Forms.Padding(5);
 			this.btnAvisos.Name = "btnAvisos";
-			this.btnAvisos.Size = new System.Drawing.Size(117, 53);
+			this.btnAvisos.Size = new System.Drawing.Size(117, 46);
 			this.btnAvisos.Text = "Avisos";
 			// 
 			// pnlTop
@@ -227,12 +240,134 @@
 			this.btnConfig.UseVisualStyleBackColor = false;
 			this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
 			// 
+			// PainelInferior
+			// 
+			this.PainelInferior.BackColor = System.Drawing.Color.SlateGray;
+			this.PainelInferior.Controls.Add(this.lblConta);
+			this.PainelInferior.Controls.Add(this.Label4);
+			this.PainelInferior.Controls.Add(this.lblVersao);
+			this.PainelInferior.Controls.Add(this.Label1);
+			this.PainelInferior.Controls.Add(this.lblFilial);
+			this.PainelInferior.Controls.Add(this.Label3);
+			this.PainelInferior.Controls.Add(this.lblDataSis);
+			this.PainelInferior.Controls.Add(this.Label2);
+			this.PainelInferior.Controls.Add(this.lblHora);
+			this.PainelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.PainelInferior.Location = new System.Drawing.Point(0, 697);
+			this.PainelInferior.Name = "PainelInferior";
+			this.PainelInferior.Size = new System.Drawing.Size(1110, 35);
+			this.PainelInferior.TabIndex = 3;
+			// 
+			// lblConta
+			// 
+			this.lblConta.ForeColor = System.Drawing.Color.Transparent;
+			this.lblConta.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblConta.Location = new System.Drawing.Point(396, 7);
+			this.lblConta.Name = "lblConta";
+			this.lblConta.Size = new System.Drawing.Size(186, 19);
+			this.lblConta.TabIndex = 5;
+			this.lblConta.Text = "...";
+			// 
+			// Label4
+			// 
+			this.Label4.AutoSize = true;
+			this.Label4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label4.ForeColor = System.Drawing.Color.Transparent;
+			this.Label4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.Label4.Location = new System.Drawing.Point(351, 7);
+			this.Label4.Name = "Label4";
+			this.Label4.Size = new System.Drawing.Size(51, 19);
+			this.Label4.TabIndex = 4;
+			this.Label4.Text = "Conta:";
+			// 
+			// lblVersao
+			// 
+			this.lblVersao.ForeColor = System.Drawing.Color.Transparent;
+			this.lblVersao.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblVersao.Location = new System.Drawing.Point(643, 7);
+			this.lblVersao.Name = "lblVersao";
+			this.lblVersao.Size = new System.Drawing.Size(102, 19);
+			this.lblVersao.TabIndex = 3;
+			this.lblVersao.Text = "...";
+			// 
+			// Label1
+			// 
+			this.Label1.AutoSize = true;
+			this.Label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label1.ForeColor = System.Drawing.Color.Transparent;
+			this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.Label1.Location = new System.Drawing.Point(590, 7);
+			this.Label1.Name = "Label1";
+			this.Label1.Size = new System.Drawing.Size(57, 19);
+			this.Label1.TabIndex = 2;
+			this.Label1.Text = "Versão:";
+			// 
+			// lblFilial
+			// 
+			this.lblFilial.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblFilial.ForeColor = System.Drawing.Color.Transparent;
+			this.lblFilial.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblFilial.Location = new System.Drawing.Point(248, 7);
+			this.lblFilial.Name = "lblFilial";
+			this.lblFilial.Size = new System.Drawing.Size(102, 19);
+			this.lblFilial.TabIndex = 3;
+			this.lblFilial.Text = "...";
+			// 
+			// Label3
+			// 
+			this.Label3.AutoSize = true;
+			this.Label3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label3.ForeColor = System.Drawing.Color.Transparent;
+			this.Label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.Label3.Location = new System.Drawing.Point(205, 7);
+			this.Label3.Name = "Label3";
+			this.Label3.Size = new System.Drawing.Size(44, 19);
+			this.Label3.TabIndex = 2;
+			this.Label3.Text = "Filial:";
+			// 
+			// lblDataSis
+			// 
+			this.lblDataSis.ForeColor = System.Drawing.Color.Transparent;
+			this.lblDataSis.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblDataSis.Location = new System.Drawing.Point(131, 7);
+			this.lblDataSis.Name = "lblDataSis";
+			this.lblDataSis.Size = new System.Drawing.Size(68, 19);
+			this.lblDataSis.TabIndex = 1;
+			this.lblDataSis.Text = "...";
+			// 
+			// Label2
+			// 
+			this.Label2.AutoSize = true;
+			this.Label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label2.ForeColor = System.Drawing.Color.Transparent;
+			this.Label2.Location = new System.Drawing.Point(12, 7);
+			this.Label2.Name = "Label2";
+			this.Label2.Size = new System.Drawing.Size(119, 19);
+			this.Label2.TabIndex = 0;
+			this.Label2.Text = "Data do Sistema:";
+			// 
+			// lblHora
+			// 
+			this.lblHora.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblHora.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold);
+			this.lblHora.ForeColor = System.Drawing.Color.White;
+			this.lblHora.Image = global::CamadaUI.Properties.Resources.RelogioIcon_peq;
+			this.lblHora.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblHora.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblHora.Location = new System.Drawing.Point(1003, 3);
+			this.lblHora.Name = "lblHora";
+			this.lblHora.Size = new System.Drawing.Size(102, 30);
+			this.lblHora.TabIndex = 6;
+			this.lblHora.Text = "Hora";
+			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1110, 732);
+			this.Controls.Add(this.PainelInferior);
 			this.Controls.Add(this.mnuPrincipal);
 			this.Controls.Add(this.pnlTop);
 			this.DoubleBuffered = true;
@@ -251,6 +386,8 @@
 			this.mnuPrincipal.PerformLayout();
 			this.pnlTop.ResumeLayout(false);
 			this.pnlTop.PerformLayout();
+			this.PainelInferior.ResumeLayout(false);
+			this.PainelInferior.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -272,6 +409,16 @@
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
 		private System.Windows.Forms.ToolStripSplitButton btnSaidas;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		internal System.Windows.Forms.Panel PainelInferior;
+		internal System.Windows.Forms.Label lblConta;
+		internal System.Windows.Forms.Label Label4;
+		internal System.Windows.Forms.Label lblVersao;
+		internal System.Windows.Forms.Label Label1;
+		internal System.Windows.Forms.Label lblFilial;
+		internal System.Windows.Forms.Label Label3;
+		internal System.Windows.Forms.Label lblDataSis;
+		internal System.Windows.Forms.Label Label2;
+		internal System.Windows.Forms.Label lblHora;
 	}
 }
 

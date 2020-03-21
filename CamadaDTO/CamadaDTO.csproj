@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppEnum.cs" />
     <Compile Include="AppException.cs" />
+    <Compile Include="objUsuario.cs" />
+    <Compile Include="objConta.cs" />
     <Compile Include="objContribuinte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

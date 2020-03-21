@@ -3,11 +3,17 @@ using System.Drawing;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using CamadaDTO;
+using CamadaBLL;
 
 namespace CamadaUI
 {
 	public partial class frmPrincipal : Form
 	{
+		private DateTime _DataPadrao;
+		private objConta _ContaPadrao;
+		private objUsuario _UsuarioAtual;
+
 		#region SUB NEW | LOAD
 
 		// SUB NEW
@@ -24,31 +30,72 @@ namespace CamadaUI
 				MdiClient client = control as MdiClient;
 				if (!(client == null))
 				{
-					//client.BackgroundImage = Properties.Resources.Logo_FAES_cinza_PNG_Borda;
-
-					//Image cachorro = Image.FromFile("E:\\Desktop\\faes.png");
-					//Image cachorro = Image.FromFile("E:\\Desktop\\j0424399.jpg");
-
-					//Image cachorro = Properties.Resources.notamusical_16;
-					this.BackgroundImageLayout = ImageLayout.Zoom;
-					//client.BackColor = Color.FromArgb(195, 240, 123);
-
+					BackgroundImageLayout = ImageLayout.Zoom;
 					client.BackgroundImage = Properties.Resources.Logo_FAES_cinza_PNG_Borda;
-					//picFundo.BackColor = Color.Red;
 				}
 			}
-
 		}
 
 		// LOAD
 		// =============================================================================
 		private void frmPrincipal_Load(object sender, EventArgs e)
 		{
+			//--- INICIA APLICACAO COM O MENU DESABILITADO
+			mnuPrincipal.Enabled = false;
+
+			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				AcessoControlBLL acessoBLL = new AcessoControlBLL();
+				string TestAcesso = acessoBLL.GetConnString();
+
+				// --- open FRMCONNSTRING: to define the string de conexao
+				if (string.IsNullOrEmpty(TestAcesso))
+				{
+					main.frmConnString fcString = new main.frmConnString();
+					fcString.ShowDialog();
+
+					if(fcString.DialogResult == DialogResult.Cancel)
+					{
+						Application.Exit();
+						return;
+					}
+				}
+
+
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter o caminho do BD..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
 			mnuPrincipal.Focus();
-			//btnBiblia.Select();
+			btnEntradas.Select();
 
 			MenuOpen_Handler();
 		}
+
+		//--- PROPERTY PUBLIC
+		// =============================================================================
+		public objUsuario UsuarioAtual
+		{
+			get => _UsuarioAtual; 
+			set 
+			{ 
+				_UsuarioAtual = value; 
+			}
+		}
+
 
 		public string AplicacaoTitulo
 		{

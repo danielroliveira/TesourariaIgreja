@@ -36,8 +36,11 @@
     <StartupObject>CamadaUI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BetterListViewExpress, Version=3.15.0.0, Culture=neutral, PublicKeyToken=e6c91a3add447be2, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +58,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="main\frmConnString.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main\frmConnString.Designer.cs">
+      <DependentUpon>frmConnString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="main\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="main\frmMessage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +83,7 @@
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="main\FuncoesGlobais.cs" />
+    <Compile Include="main\InputBox.cs" />
     <Compile Include="main\Utilidades.cs" />
     <Compile Include="modals\frmModFinBorder.cs">
       <SubType>Form</SubType>
@@ -85,6 +101,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main\frmConnString.resx">
+      <DependentUpon>frmConnString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="main\frmMessage.resx">
       <DependentUpon>frmMessage.cs</DependentUpon>
@@ -135,12 +157,6 @@
     <None Include="Resources\sair_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\biblia_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NotasColor_32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\agenda_32.png" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +188,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RelogioIcon_peq.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

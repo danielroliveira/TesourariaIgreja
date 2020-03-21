@@ -30,7 +30,7 @@ namespace CamadaDAL
 
         // GET CONNECTION STRING
         //------------------------------------------------------------------------------------------------------------
-        public string GetConnectionString()
+        public static string GetConnectionString()
         {
             string retorno;
 
@@ -56,27 +56,22 @@ namespace CamadaDAL
                 throw ex;
             }
 
-            /*
-            //--- verifica se há retorno da |DataDirectory|
-            //--- substitui o |DataDirectory| pelo "CamadaDAL\Dados"
-            If retorno.Contains("|DataDirectory|") Then
-            Dim BaseDir As String = AppDomain.CurrentDomain.BaseDirectory
-
-            Dim findI As Integer
-
-            findI = BaseDir.IndexOf("\", 0)
-            findI = BaseDir.IndexOf("\", findI + 1)
-            findI = BaseDir.IndexOf("\", findI + 1)
-
-            BaseDir = BaseDir.Substring(0, findI) + "\CamadaDAL"
-
-            retorno = retorno.Replace("|DataDirectory|", BaseDir)
-
-            End If 
-            */
-
             return retorno;
 
+        }
+
+        // GET CONFIG DB - CONNECTION XML PATH
+        //------------------------------------------------------------------------------------------------------------
+        public static string GetConfigXMLPath()
+        {
+            try
+            {
+                return Properties.Settings.Default.ConexaoStringFile;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // OPEN CONNECTION
@@ -274,6 +269,5 @@ namespace CamadaDAL
         public bool isTran { get; set; } = false;
 
         #endregion
-
     }
 }
