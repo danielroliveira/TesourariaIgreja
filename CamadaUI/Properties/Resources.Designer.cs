@@ -113,6 +113,26 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap delete_24 {
+            get {
+                object obj = ResourceManager.GetObject("delete_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap deletepage_24 {
+            get {
+                object obj = ResourceManager.GetObject("deletepage_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap download_24 {
             get {
                 object obj = ResourceManager.GetObject("download_24", resourceCulture);
@@ -196,6 +216,16 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap refresh_16 {
             get {
                 object obj = ResourceManager.GetObject("refresh_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refresh_24 {
+            get {
+                object obj = ResourceManager.GetObject("refresh_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

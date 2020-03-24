@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace CamadaDAL
@@ -18,7 +13,7 @@ namespace CamadaDAL
             //--- Try open XML Document
             try
             {
-                doc.LoadXml(SourceXMLFile);
+                doc.Load(SourceXMLFile);
             }
             catch (Exception ex)
             {
@@ -43,9 +38,9 @@ namespace CamadaDAL
         {
             try
             {
-                ConfigurationManager.AppSettings["ConexaoStringFile"] = SourceXMLFile;
-                ConfigurationManager.AppSettings["ConexaoStringName"] = stringName;
-                // My.MySettings.Default.Save()
+                Properties.Settings.Default.ConexaoStringFile = SourceXMLFile;
+                Properties.Settings.Default.ConexaoStringName = stringName;
+                Properties.Settings.Default.Save();
                 return true;
             }
             catch (Exception ex)

@@ -92,6 +92,7 @@
 			this.txtSenha.Size = new System.Drawing.Size(118, 23);
 			this.txtSenha.TabIndex = 3;
 			this.txtSenha.Text = "12345678";
+			this.txtSenha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenha_KeyDown);
 			// 
 			// txtApelido
 			// 
@@ -102,6 +103,7 @@
 			this.txtApelido.Size = new System.Drawing.Size(156, 23);
 			this.txtApelido.TabIndex = 1;
 			this.txtApelido.Text = "Daniel";
+			this.txtApelido.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);
 			// 
 			// lblSenha
 			// 
@@ -149,6 +151,7 @@
 			this.btnCancel.TabIndex = 10;
 			this.btnCancel.Text = "&Cancelar";
 			this.btnCancel.UseVisualStyleBackColor = false;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// frmLogin
 			// 
@@ -159,6 +162,8 @@
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
 			this.Name = "frmLogin";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmLogin_KeyDown);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.btnOK, 0);

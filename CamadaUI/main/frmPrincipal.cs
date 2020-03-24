@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using CamadaDTO;
@@ -46,13 +47,13 @@ namespace CamadaUI
 			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
 			try
 			{
-				// --- Ampulheta ON
+				//--- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
 				AcessoControlBLL acessoBLL = new AcessoControlBLL();
 				string TestAcesso = acessoBLL.GetConnString();
 
-				// --- open FRMCONNSTRING: to define the string de conexao
+				//--- open FRMCONNSTRING: to define the string de conexao
 				if (string.IsNullOrEmpty(TestAcesso))
 				{
 					main.frmConnString fcString = new main.frmConnString();
@@ -65,7 +66,29 @@ namespace CamadaUI
 					}
 				}
 
+				//--- ABRE E VERIFICA O LOGIN DO USUARIO
+				main.frmLogin frmLog = new main.frmLogin();
+				objConta contaInicial = new objConta(null);
 
+				frmLog.ShowDialog();
+
+				if (frmLog.DialogResult == DialogResult.No)
+				{
+					Application.Exit();
+					return;
+				}
+
+				//--- VERFICA SE O ARQUIVO DE CONFIG FOI ENCONTRADO
+				if (VerificaConfig() == false)
+				{
+					Application.Exit();
+					return;
+				}
+
+				/*
+				'
+				'----------------------------------------------------------------
+				*/
 
 			}
 			catch (Exception ex)
@@ -111,6 +134,58 @@ namespace CamadaUI
 		}
 
 		#endregion
+
+		#region CONFIGURACAO INICIAL
+
+		//--- VERIFICA CONFIG
+		//=================================================================================================
+		private bool VerificaConfig()
+		{
+			if (File.Exists(Application.StartupPath + "\\ConfigFiles\\Config.xml"))
+			{
+				return true;
+			}
+			else
+			{
+				if (UsuarioAtual.UsuarioAcesso > 1) // não é administrador do sistema
+				{
+					AbrirDialog("Arquivo de Configuração não foi encontrado! \n" +
+								"Seu LOGIN não tem acesso ao arquivo de Configuração... \n" +
+								"Comunique-se com o administrador do sistema.",
+								"Erro de Arquivo",
+								DialogType.OK,
+								DialogIcon.Warning);
+					return false;
+				}
+			}
+
+			AbrirDialog("Arquivo de Configuração não foi encontrado!",
+						"Erro de Arquivo",
+						DialogType.OK,
+						DialogIcon.Warning);
+
+			//--- abre o form de config
+			Config.frmConfig frmC = new Config.frmConfig(this);
+			frmC.ShowDialog();
+
+			//--- se não existe o config, então fecha a aplicação
+			if (File.Exists(Application.StartupPath + "\\ConfigFiles\\Config.xml"))
+			{
+				AbrirDialog("Arquivo de Configuração ainda não foi encontrado! \n" +
+							"A aplicação será fechada...",
+							"Erro de Arquivo",
+							DialogType.OK,
+							DialogIcon.Warning);
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		#endregion
+
 
 		#region BUTTONS
 		private void MenuOpen_Handler()

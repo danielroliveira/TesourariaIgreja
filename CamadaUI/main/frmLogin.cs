@@ -19,20 +19,27 @@ namespace CamadaUI.main
 		AcessoControlBLL db = new AcessoControlBLL();
 		private string Fantasia = "";
 
+		//=================================================================================================
+		// LOGIN | SUBNEW
+		//=================================================================================================
 		public frmLogin()
 		{
 			InitializeComponent();
 			txtApelido.Focus();
 
+			txtApelido.GotFocus += txt_GotFocus;
+			txtSenha.GotFocus += txt_GotFocus;
+			btnClose.Click += btnCancel_Click;
+
 			//--- ler o arquivo de imagem da LOGO e captar o nome fantasia
-			if (File.Exists(Application.StartupPath + "/ConfigFiles/Config.xml"))
+			if (File.Exists(Application.StartupPath + "//ConfigFiles//Config.xml"))
 			{
 				XmlDocument myXML = new XmlDocument();
 				string myLogoArq;
 
 				try
 				{
-					myXML.Load(Application.StartupPath + "/ConfigFiles/Config.xml");
+					myXML.Load(Application.StartupPath + "//ConfigFiles//Config.xml");
 					//--- nome fantasia
 					Fantasia = myXML.SelectSingleNode("Configuracao").SelectSingleNode("DadosEmpresa").ChildNodes[0].InnerText;
 					//--- arquivo de imagem
@@ -47,6 +54,18 @@ namespace CamadaUI.main
 			}
 		}
 
+		#region BUTTONS
+
+		// BUTTON FECHAR
+		//------------------------------------------------------------------------------------------------------------
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			Logado = false;
+			Close();
+		}
+
+		// BUTTON CLICK
+		//------------------------------------------------------------------------------------------------------------
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 
@@ -127,10 +146,83 @@ namespace CamadaUI.main
 			}
 		}
 
+		#endregion
+
+
 
 		private bool VerificaCampos()
 		{
-			return false;
+			//--- Verifica se o campo Apelido tem algum valor
+			if (txtApelido.Text.Trim().Length == 0)
+			{
+				AbrirDialog("Por Favor, preencha o campo Nome do Usuário...", 
+					"Nome do Usuário Vazio", DialogType.OK, DialogIcon.Exclamation);
+				txtApelido.Focus();
+				return false;
+			}
+			///--- Verifica se o campo senha tem algum valor
+			if (txtSenha.Text.Trim().Length < 8)
+			{
+				AbrirDialog("Por Favor, preencha o campo da SENHA...\n" +
+					   "Sua SENHA precisa ter pelo menos 8 caracteres", 
+					   "Senha Incompleta", DialogType.OK, DialogIcon.Exclamation);
+				txtSenha.Focus();
+				return false;
+			}
+
+			return true;
+		}
+
+		private void txt_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				e.Handled = true;
+				txtSenha.Focus();
+			}
+		}
+
+		private void txtSenha_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				e.Handled = true;
+				btnOK.Focus();
+			}
+		}
+
+		private void frmLogin_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				btnOK_Click(new object(), new EventArgs());
+			}
+			else if (e.KeyCode == Keys.Escape)
+			{
+				btnCancel_Click(new object(), new EventArgs());
+			}
+		}
+
+		private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if( Logado == true)
+			{
+				DialogResult = DialogResult.OK;
+			}
+			else
+			{
+				DialogResult = DialogResult.No;
+			}
+		}
+
+		//--- SELECIONAR TODO O TEXTO QUANDO RECEBE O FOCO NO CONTROLE
+		private void txt_GotFocus(object sender, EventArgs e)
+		{
+			txtApelido.SelectAll();
 		}
 
 	}
