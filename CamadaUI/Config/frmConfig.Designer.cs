@@ -32,10 +32,10 @@
 			this.line1 = new AwesomeShapeControl.Line();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnAvisos = new System.Windows.Forms.Button();
-			this.btnLeitura = new System.Windows.Forms.Button();
+			this.btnServidor = new System.Windows.Forms.Button();
 			this.btnGeral = new System.Windows.Forms.Button();
-			this.btnHarpa = new System.Windows.Forms.Button();
-			this.btnLouvores = new System.Windows.Forms.Button();
+			this.btnImagem = new System.Windows.Forms.Button();
+			this.btnCores = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
 			this.pnlMenu.SuspendLayout();
@@ -62,10 +62,10 @@
 			this.pnlMenu.Controls.Add(this.line1);
 			this.pnlMenu.Controls.Add(this.label1);
 			this.pnlMenu.Controls.Add(this.btnAvisos);
-			this.pnlMenu.Controls.Add(this.btnLeitura);
+			this.pnlMenu.Controls.Add(this.btnServidor);
 			this.pnlMenu.Controls.Add(this.btnGeral);
-			this.pnlMenu.Controls.Add(this.btnHarpa);
-			this.pnlMenu.Controls.Add(this.btnLouvores);
+			this.pnlMenu.Controls.Add(this.btnImagem);
+			this.pnlMenu.Controls.Add(this.btnCores);
 			this.pnlMenu.Dock = System.Windows.Forms.DockStyle.Left;
 			this.pnlMenu.Location = new System.Drawing.Point(0, 50);
 			this.pnlMenu.Name = "pnlMenu";
@@ -112,22 +112,22 @@
 			this.btnAvisos.UseVisualStyleBackColor = false;
 			this.btnAvisos.Click += new System.EventHandler(this.btnAvisos_Click);
 			// 
-			// btnLeitura
+			// btnServidor
 			// 
-			this.btnLeitura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnLeitura.FlatAppearance.BorderSize = 0;
-			this.btnLeitura.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnLeitura.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnLeitura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnLeitura.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnLeitura.ForeColor = System.Drawing.Color.White;
-			this.btnLeitura.Location = new System.Drawing.Point(1, 245);
-			this.btnLeitura.Name = "btnLeitura";
-			this.btnLeitura.Size = new System.Drawing.Size(198, 55);
-			this.btnLeitura.TabIndex = 0;
-			this.btnLeitura.Text = "Leitura Bíblica";
-			this.btnLeitura.UseVisualStyleBackColor = false;
-			this.btnLeitura.Click += new System.EventHandler(this.btnLeitura_Click);
+			this.btnServidor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnServidor.FlatAppearance.BorderSize = 0;
+			this.btnServidor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnServidor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnServidor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnServidor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnServidor.ForeColor = System.Drawing.Color.White;
+			this.btnServidor.Location = new System.Drawing.Point(1, 245);
+			this.btnServidor.Name = "btnServidor";
+			this.btnServidor.Size = new System.Drawing.Size(198, 55);
+			this.btnServidor.TabIndex = 0;
+			this.btnServidor.Text = "Servidor Dados";
+			this.btnServidor.UseVisualStyleBackColor = false;
+			this.btnServidor.Click += new System.EventHandler(this.btnServidor_Click);
 			// 
 			// btnGeral
 			// 
@@ -146,39 +146,39 @@
 			this.btnGeral.UseVisualStyleBackColor = false;
 			this.btnGeral.Click += new System.EventHandler(this.btnGeral_Click);
 			// 
-			// btnHarpa
+			// btnImagem
 			// 
-			this.btnHarpa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnHarpa.FlatAppearance.BorderSize = 0;
-			this.btnHarpa.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnHarpa.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnHarpa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnHarpa.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnHarpa.ForeColor = System.Drawing.Color.White;
-			this.btnHarpa.Location = new System.Drawing.Point(1, 184);
-			this.btnHarpa.Name = "btnHarpa";
-			this.btnHarpa.Size = new System.Drawing.Size(198, 55);
-			this.btnHarpa.TabIndex = 0;
-			this.btnHarpa.Text = "Hinos da Harpa";
-			this.btnHarpa.UseVisualStyleBackColor = false;
-			this.btnHarpa.Click += new System.EventHandler(this.btnHarpa_Click);
+			this.btnImagem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnImagem.FlatAppearance.BorderSize = 0;
+			this.btnImagem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnImagem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnImagem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnImagem.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnImagem.ForeColor = System.Drawing.Color.White;
+			this.btnImagem.Location = new System.Drawing.Point(1, 184);
+			this.btnImagem.Name = "btnImagem";
+			this.btnImagem.Size = new System.Drawing.Size(198, 55);
+			this.btnImagem.TabIndex = 0;
+			this.btnImagem.Text = "Imagem Padrão";
+			this.btnImagem.UseVisualStyleBackColor = false;
+			this.btnImagem.Click += new System.EventHandler(this.btnImagem_Click);
 			// 
-			// btnLouvores
+			// btnCores
 			// 
-			this.btnLouvores.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnLouvores.FlatAppearance.BorderSize = 0;
-			this.btnLouvores.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnLouvores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnLouvores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnLouvores.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnLouvores.ForeColor = System.Drawing.Color.White;
-			this.btnLouvores.Location = new System.Drawing.Point(1, 123);
-			this.btnLouvores.Name = "btnLouvores";
-			this.btnLouvores.Size = new System.Drawing.Size(198, 55);
-			this.btnLouvores.TabIndex = 0;
-			this.btnLouvores.Text = "Louvores";
-			this.btnLouvores.UseVisualStyleBackColor = false;
-			this.btnLouvores.Click += new System.EventHandler(this.btnLouvores_Click);
+			this.btnCores.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnCores.FlatAppearance.BorderSize = 0;
+			this.btnCores.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnCores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnCores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnCores.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnCores.ForeColor = System.Drawing.Color.White;
+			this.btnCores.Location = new System.Drawing.Point(1, 123);
+			this.btnCores.Name = "btnCores";
+			this.btnCores.Size = new System.Drawing.Size(198, 55);
+			this.btnCores.TabIndex = 0;
+			this.btnCores.Text = "Aparência";
+			this.btnCores.UseVisualStyleBackColor = false;
+			this.btnCores.Click += new System.EventHandler(this.btnAparencia_Click);
 			// 
 			// pnlCorpo
 			// 
@@ -209,13 +209,13 @@
 		#endregion
 
 		private System.Windows.Forms.Panel pnlMenu;
-		private System.Windows.Forms.Button btnLouvores;
+		private System.Windows.Forms.Button btnCores;
 		private System.Windows.Forms.Panel pnlCorpo;
 		private System.Windows.Forms.Label label1;
 		private AwesomeShapeControl.Line line1;
-		private System.Windows.Forms.Button btnLeitura;
+		private System.Windows.Forms.Button btnServidor;
 		private System.Windows.Forms.Button btnGeral;
-		private System.Windows.Forms.Button btnHarpa;
+		private System.Windows.Forms.Button btnImagem;
 		private System.Windows.Forms.Button btnAvisos;
 	}
 }

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcessoControlBLL.cs" />
+    <Compile Include="CongregacaoBLL.cs" />
     <Compile Include="ContribuinteBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

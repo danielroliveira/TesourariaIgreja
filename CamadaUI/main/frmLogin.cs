@@ -85,7 +85,7 @@ namespace CamadaUI.main
 					Logado = true;
 
 					var enumAcessoTipo = (EnumAcessoTipo)frmP.UsuarioAtual.UsuarioAcesso;
-					string AcessoTipo = enumAcessoTipo.ToString();
+					string AcessoTipo = enumAcessoTipo.ToString().Replace("_", " ");
 
 					//--- Bem-vindo
 					AbrirDialog("Seja Bem-Vindo: " + txtApelido.Text.ToUpper() + "\n \n" +

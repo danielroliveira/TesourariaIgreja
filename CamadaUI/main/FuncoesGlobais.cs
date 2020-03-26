@@ -39,18 +39,26 @@ namespace CamadaUI
 					new XElement("Configuracao",
 						new XElement("DefaultValues",
 							new XElement("IgrejaTitulo",""),
-							new XElement("IDVersiculoPadrao", 1),
-							new XElement("IDVersiculoUltimo", 1),
-							new XElement("IDHinoUltimo", 1)
-						),
-						new XElement("Folders",
-							new XElement("BackupFolder", "")
+							new XElement("DataPadrao", ""),
+							new XElement("CongregacaoPadrao", 1),
+							new XElement("CongregacaoDescricao", "Sede"),
+							new XElement("ContaPadrao", "1"),
+							new XElement("ContaDescricao", "Caixa Geral"),
+							new XElement("DataBloqueada", "")
 						),
 						new XElement("Colors",
 							new XElement("TopTitleColor", ""),
 							new XElement("PrincipalBackColor", ""),
 							new XElement("PrincipalBackImage", ""),
 							new XElement("PrincipalBackgroundImageLayout", "")
+						),
+						new XElement("ArquivoLogo",
+							new XElement("ArquivoLogoMono", ""),
+							new XElement("ArquivoLogoColor", "")
+						),
+						new XElement("ServidorDados",
+							new XElement("StringConexao", ""),
+							new XElement("ServidorLocal", "")
 						)
 					)
 				)
@@ -88,7 +96,7 @@ namespace CamadaUI
 
 		// GET CONFIG XML FILE
 		// =============================================================================
-		static XmlDocument MyConfig()
+		public static XmlDocument MyConfig()
 		{
 			if (VerificaConfigXML())
 			{
@@ -159,6 +167,13 @@ namespace CamadaUI
 			try
 			{
 				XmlDocument xmlConfig = MyConfig();
+
+				if (xmlConfig == null)
+				{
+					CriarConfigXML();
+					xmlConfig = MyConfig();
+				}
+
 				XmlNodeList elemList = xmlConfig.GetElementsByTagName(NodeName);
 
 				if(elemList.Count > 0)
@@ -179,5 +194,43 @@ namespace CamadaUI
 			}
 		}
 
+		//=================================================================================================
+		// BOOLEAN VERIFICA CONTROLES E RETORNA MENSAGEM
+		//=================================================================================================
+		public static bool VerificaControle(Control controle, string controleNome)
+		{
+			switch (controle.GetType())
+			{
+				case Type textboxType when textboxType == typeof(TextBox):
+					
+					if (controle.Text.Trim().Length == 0)
+					{
+						AbrirDialog("O campo: " + controleNome + "\nnão pode ficar vazio...\n" +
+									"Favor preencher o campo informado.",
+									"Campo Obrigatório", DialogType.OK, DialogIcon.Exclamation);
+						controle.Focus();
+						return false;
+					}
+					break;
+
+				case Type DTPickerType when DTPickerType == typeof(DateTimePicker):
+
+					DateTimePicker dtPicker = (DateTimePicker)controle;
+					if (dtPicker.Value == null)
+					{
+						AbrirDialog("O campo: " + controleNome + "\nnão pode ficar vazio...\n" +
+									"Favor preencher o campo informado.",
+									"Campo Obrigatório", DialogType.OK, DialogIcon.Exclamation);
+						controle.Focus();
+						return false;
+					}
+					break;
+
+				default:
+					break;
+			}
+
+			return true;
+		}
 	}
 }

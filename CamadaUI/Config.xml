@@ -1,15 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configuracao>
   <DefaultValues>
-    <IgrejaTitulo>Assembleia de Deus - Ministério FAES</IgrejaTitulo>
+    <IgrejaTitulo>Assembleia de Deus do Rio de Janeiro</IgrejaTitulo>
+	<DataPadrao>18/06/2019</DataPadrao>
+    <CongregacaoPadrao>1</CongregacaoPadrao>
+    <CongregacaoDescricao>Nova Sião</CongregacaoDescricao>
+    <ContaPadrao>1</ContaPadrao>
+    <ContaDescricao>Caixa Geral</ContaDescricao>
+    <DataBloqueada>18/06/2019</DataBloqueada>
   </DefaultValues>
-  <Folders>
-    <BackupFolder></BackupFolder>
-  </Folders>
   <Colors>
     <TopTitleColor></TopTitleColor>
     <PrincipalBackColor></PrincipalBackColor>
     <PrincipalBackImage></PrincipalBackImage>
     <PrincipalBackgroundImageLayout></PrincipalBackgroundImageLayout>
   </Colors>
+  <ArquivoLogo>
+    <ArquivoLogoMono>D:\VB Projetos\NovaSiao\NovaSiao\bin\Debug\Imagens\LogoMono.png</ArquivoLogoMono>
+    <ArquivoLogoColor>D:\VB Projetos\NovaSiao\NovaSiao\bin\Debug\Imagens\LogoColor.png</ArquivoLogoColor>
+    <BackupDir />
+  </ArquivoLogo>
+  <ServidorDados>
+    <StringConexao>Server=tcp:novasiaoserver.database.windows.net,1433;Initial Catalog=ProgramaLoja;Persist Security Info=False;User ID=Daniel;Password=!1qaz@2wsx;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</StringConexao>
+    <ServidorLocal>False</ServidorLocal>
+  </ServidorDados>
 </Configuracao>

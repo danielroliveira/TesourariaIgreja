@@ -9,8 +9,8 @@ namespace CamadaDTO
 	public enum EnumAcessoTipo : byte
 	{
 		Administrador = 1,
-		UsuarioSenior = 2,
-		UsuarioComum = 3,
+		Usuario_Senior = 2,
+		Usuario_Comum = 3,
 		Operador = 4
 	}
 

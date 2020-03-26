@@ -28,24 +28,29 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.btnInserirFolder = new System.Windows.Forms.Button();
-			this.btnRemoverFolder = new System.Windows.Forms.Button();
+			this.btnSalvarConfig = new System.Windows.Forms.Button();
+			this.btnCancelar = new System.Windows.Forms.Button();
 			this.pnlPastas = new System.Windows.Forms.Panel();
+			this.label4 = new System.Windows.Forms.Label();
+			this.btnEditarFilial = new System.Windows.Forms.Button();
+			this.txtIgrejaTitulo = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.btnLimparHistoricoLeitura = new System.Windows.Forms.Button();
-			this.btnLimparHistoricoHinos = new System.Windows.Forms.Button();
-			this.btnLimparHistoricoLouvor = new System.Windows.Forms.Button();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.label2 = new System.Windows.Forms.Label();
-			this.btnConverterPPT = new System.Windows.Forms.Button();
-			this.pgbConfig = new System.Windows.Forms.ProgressBar();
+			this.btnContaAdd = new System.Windows.Forms.Button();
+			this.Label34 = new System.Windows.Forms.Label();
+			this.btnAlteraConta = new System.Windows.Forms.Button();
+			this.Label15 = new System.Windows.Forms.Label();
+			this.btnFilialAdd = new System.Windows.Forms.Button();
+			this.Label35 = new System.Windows.Forms.Label();
+			this.btnAlteraFilial = new System.Windows.Forms.Button();
+			this.dtpDataPadrao = new System.Windows.Forms.DateTimePicker();
+			this.lblDataBloqueio = new System.Windows.Forms.Label();
+			this.txtCongregacaoPadrao = new System.Windows.Forms.TextBox();
+			this.Label22 = new System.Windows.Forms.Label();
+			this.txtContaPadrao = new System.Windows.Forms.TextBox();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.label3 = new System.Windows.Forms.Label();
-			this.txtIgrejaTitulo = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
-			this.panel2.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -71,252 +76,320 @@
 			// 
 			this.panel1.Size = new System.Drawing.Size(744, 30);
 			// 
-			// btnInserirFolder
+			// btnSalvarConfig
 			// 
-			this.btnInserirFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnInserirFolder.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-			this.btnInserirFolder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnInserirFolder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnInserirFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnInserirFolder.Image = global::CamadaUI.Properties.Resources.add_24;
-			this.btnInserirFolder.Location = new System.Drawing.Point(484, 531);
-			this.btnInserirFolder.Name = "btnInserirFolder";
-			this.btnInserirFolder.Size = new System.Drawing.Size(121, 36);
-			this.btnInserirFolder.TabIndex = 6;
-			this.btnInserirFolder.Text = "Inserir";
-			this.btnInserirFolder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnInserirFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnInserirFolder.UseVisualStyleBackColor = true;
+			this.btnSalvarConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSalvarConfig.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+			this.btnSalvarConfig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
+			this.btnSalvarConfig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
+			this.btnSalvarConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSalvarConfig.Image = global::CamadaUI.Properties.Resources.save_24;
+			this.btnSalvarConfig.Location = new System.Drawing.Point(484, 531);
+			this.btnSalvarConfig.Name = "btnSalvarConfig";
+			this.btnSalvarConfig.Size = new System.Drawing.Size(121, 36);
+			this.btnSalvarConfig.TabIndex = 6;
+			this.btnSalvarConfig.Text = "&Salvar";
+			this.btnSalvarConfig.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSalvarConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSalvarConfig.UseVisualStyleBackColor = true;
+			this.btnSalvarConfig.Click += new System.EventHandler(this.btnSalvarConfig_Click);
 			// 
-			// btnRemoverFolder
+			// btnCancelar
 			// 
-			this.btnRemoverFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRemoverFolder.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-			this.btnRemoverFolder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnRemoverFolder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnRemoverFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnRemoverFolder.Image = global::CamadaUI.Properties.Resources.delete_24;
-			this.btnRemoverFolder.Location = new System.Drawing.Point(611, 531);
-			this.btnRemoverFolder.Name = "btnRemoverFolder";
-			this.btnRemoverFolder.Size = new System.Drawing.Size(121, 36);
-			this.btnRemoverFolder.TabIndex = 7;
-			this.btnRemoverFolder.Text = "Remover";
-			this.btnRemoverFolder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnRemoverFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnRemoverFolder.UseVisualStyleBackColor = true;
+			this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+			this.btnCancelar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
+			this.btnCancelar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
+			this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.delete_24;
+			this.btnCancelar.Location = new System.Drawing.Point(611, 531);
+			this.btnCancelar.Name = "btnCancelar";
+			this.btnCancelar.Size = new System.Drawing.Size(121, 36);
+			this.btnCancelar.TabIndex = 7;
+			this.btnCancelar.Text = "&Cancelar";
+			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnCancelar.UseVisualStyleBackColor = true;
 			// 
 			// pnlPastas
 			// 
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.pnlPastas.Controls.Add(this.label4);
+			this.pnlPastas.Controls.Add(this.btnEditarFilial);
+			this.pnlPastas.Controls.Add(this.txtIgrejaTitulo);
 			this.pnlPastas.Controls.Add(this.label1);
-			this.pnlPastas.Controls.Add(this.btnLimparHistoricoLeitura);
-			this.pnlPastas.Controls.Add(this.btnLimparHistoricoHinos);
-			this.pnlPastas.Controls.Add(this.btnLimparHistoricoLouvor);
-			this.pnlPastas.Location = new System.Drawing.Point(12, 99);
+			this.pnlPastas.Controls.Add(this.btnContaAdd);
+			this.pnlPastas.Controls.Add(this.Label34);
+			this.pnlPastas.Controls.Add(this.btnAlteraConta);
+			this.pnlPastas.Controls.Add(this.Label15);
+			this.pnlPastas.Controls.Add(this.btnFilialAdd);
+			this.pnlPastas.Controls.Add(this.Label35);
+			this.pnlPastas.Controls.Add(this.btnAlteraFilial);
+			this.pnlPastas.Controls.Add(this.dtpDataPadrao);
+			this.pnlPastas.Controls.Add(this.lblDataBloqueio);
+			this.pnlPastas.Controls.Add(this.txtCongregacaoPadrao);
+			this.pnlPastas.Controls.Add(this.Label22);
+			this.pnlPastas.Controls.Add(this.txtContaPadrao);
+			this.pnlPastas.Location = new System.Drawing.Point(12, 42);
 			this.pnlPastas.Name = "pnlPastas";
-			this.pnlPastas.Size = new System.Drawing.Size(285, 181);
+			this.pnlPastas.Size = new System.Drawing.Size(720, 231);
 			this.pnlPastas.TabIndex = 2;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point(70, 53);
+			this.label4.Margin = new System.Windows.Forms.Padding(0);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(111, 19);
+			this.label4.TabIndex = 0;
+			this.label4.Text = "Título da Igreja:";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// btnEditarFilial
+			// 
+			this.btnEditarFilial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.btnEditarFilial.FlatAppearance.BorderSize = 0;
+			this.btnEditarFilial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnEditarFilial.Image = global::CamadaUI.Properties.Resources.editar_16;
+			this.btnEditarFilial.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnEditarFilial.Location = new System.Drawing.Point(590, 114);
+			this.btnEditarFilial.Name = "btnEditarFilial";
+			this.btnEditarFilial.Size = new System.Drawing.Size(81, 30);
+			this.btnEditarFilial.TabIndex = 19;
+			this.btnEditarFilial.TabStop = false;
+			this.btnEditarFilial.Text = "Editar";
+			this.btnEditarFilial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnEditarFilial.UseVisualStyleBackColor = false;
+			// 
+			// txtIgrejaTitulo
+			// 
+			this.txtIgrejaTitulo.Font = new System.Drawing.Font("Verdana", 12F);
+			this.txtIgrejaTitulo.Location = new System.Drawing.Point(187, 50);
+			this.txtIgrejaTitulo.Name = "txtIgrejaTitulo";
+			this.txtIgrejaTitulo.Size = new System.Drawing.Size(484, 27);
+			this.txtIgrejaTitulo.TabIndex = 1;
+			this.txtIgrejaTitulo.Validating += new System.ComponentModel.CancelEventHandler(this.txtIgrejaTitulo_Validating);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(93, 11);
+			this.label1.Location = new System.Drawing.Point(9, 13);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(95, 23);
+			this.label1.Size = new System.Drawing.Size(133, 23);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Históricos:";
+			this.label1.Text = "Valores Padrão:";
 			// 
-			// btnLimparHistoricoLeitura
+			// btnContaAdd
 			// 
-			this.btnLimparHistoricoLeitura.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnLimparHistoricoLeitura.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnLimparHistoricoLeitura.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnLimparHistoricoLeitura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnLimparHistoricoLeitura.Image = global::CamadaUI.Properties.Resources.deletepage_24;
-			this.btnLimparHistoricoLeitura.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnLimparHistoricoLeitura.Location = new System.Drawing.Point(18, 128);
-			this.btnLimparHistoricoLeitura.Name = "btnLimparHistoricoLeitura";
-			this.btnLimparHistoricoLeitura.Size = new System.Drawing.Size(245, 36);
-			this.btnLimparHistoricoLeitura.TabIndex = 3;
-			this.btnLimparHistoricoLeitura.Text = "&Limpar Histórico de Leitura";
-			this.btnLimparHistoricoLeitura.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnLimparHistoricoLeitura.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnLimparHistoricoLeitura.UseVisualStyleBackColor = true;
-			this.btnLimparHistoricoLeitura.Click += new System.EventHandler(this.btnLimparHistoricoLeitura_Click);
+			this.btnContaAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.btnContaAdd.FlatAppearance.BorderSize = 0;
+			this.btnContaAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnContaAdd.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnContaAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnContaAdd.Location = new System.Drawing.Point(503, 147);
+			this.btnContaAdd.Name = "btnContaAdd";
+			this.btnContaAdd.Size = new System.Drawing.Size(81, 30);
+			this.btnContaAdd.TabIndex = 23;
+			this.btnContaAdd.TabStop = false;
+			this.btnContaAdd.Text = "Nova";
+			this.btnContaAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnContaAdd.UseVisualStyleBackColor = false;
 			// 
-			// btnLimparHistoricoHinos
+			// Label34
 			// 
-			this.btnLimparHistoricoHinos.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnLimparHistoricoHinos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnLimparHistoricoHinos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnLimparHistoricoHinos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnLimparHistoricoHinos.Image = global::CamadaUI.Properties.Resources.deletepage_24;
-			this.btnLimparHistoricoHinos.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnLimparHistoricoHinos.Location = new System.Drawing.Point(18, 86);
-			this.btnLimparHistoricoHinos.Name = "btnLimparHistoricoHinos";
-			this.btnLimparHistoricoHinos.Size = new System.Drawing.Size(245, 36);
-			this.btnLimparHistoricoHinos.TabIndex = 2;
-			this.btnLimparHistoricoHinos.Text = "&Limpar Histórico de Hinos";
-			this.btnLimparHistoricoHinos.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnLimparHistoricoHinos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnLimparHistoricoHinos.UseVisualStyleBackColor = true;
-			this.btnLimparHistoricoHinos.Click += new System.EventHandler(this.btnLimparHistoricoHinos_Click);
+			this.Label34.AutoSize = true;
+			this.Label34.BackColor = System.Drawing.Color.Transparent;
+			this.Label34.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label34.Location = new System.Drawing.Point(88, 87);
+			this.Label34.Name = "Label34";
+			this.Label34.Size = new System.Drawing.Size(93, 19);
+			this.Label34.TabIndex = 13;
+			this.Label34.Text = "Data Padrão:";
+			this.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// btnLimparHistoricoLouvor
+			// btnAlteraConta
 			// 
-			this.btnLimparHistoricoLouvor.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnLimparHistoricoLouvor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnLimparHistoricoLouvor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnLimparHistoricoLouvor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnLimparHistoricoLouvor.Image = global::CamadaUI.Properties.Resources.deletepage_24;
-			this.btnLimparHistoricoLouvor.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnLimparHistoricoLouvor.Location = new System.Drawing.Point(18, 44);
-			this.btnLimparHistoricoLouvor.Name = "btnLimparHistoricoLouvor";
-			this.btnLimparHistoricoLouvor.Size = new System.Drawing.Size(245, 36);
-			this.btnLimparHistoricoLouvor.TabIndex = 1;
-			this.btnLimparHistoricoLouvor.Text = "&Limpar Histórico de Louvor";
-			this.btnLimparHistoricoLouvor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnLimparHistoricoLouvor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnLimparHistoricoLouvor.UseVisualStyleBackColor = true;
-			this.btnLimparHistoricoLouvor.Click += new System.EventHandler(this.btnLimparHistoricoLouvor_Click);
+			this.btnAlteraConta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.btnAlteraConta.FlatAppearance.BorderSize = 0;
+			this.btnAlteraConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnAlteraConta.Image = global::CamadaUI.Properties.Resources.refresh_16;
+			this.btnAlteraConta.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAlteraConta.Location = new System.Drawing.Point(412, 147);
+			this.btnAlteraConta.Name = "btnAlteraConta";
+			this.btnAlteraConta.Size = new System.Drawing.Size(81, 30);
+			this.btnAlteraConta.TabIndex = 22;
+			this.btnAlteraConta.TabStop = false;
+			this.btnAlteraConta.Text = "Alterar";
+			this.btnAlteraConta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnAlteraConta.UseVisualStyleBackColor = false;
 			// 
-			// panel2
+			// Label15
 			// 
-			this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
-			this.panel2.Controls.Add(this.label2);
-			this.panel2.Controls.Add(this.btnConverterPPT);
-			this.panel2.Location = new System.Drawing.Point(12, 300);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(285, 97);
-			this.panel2.TabIndex = 3;
+			this.Label15.AutoSize = true;
+			this.Label15.BackColor = System.Drawing.Color.Transparent;
+			this.Label15.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label15.Location = new System.Drawing.Point(34, 120);
+			this.Label15.Name = "Label15";
+			this.Label15.Size = new System.Drawing.Size(147, 19);
+			this.Label15.TabIndex = 15;
+			this.Label15.Text = "Congregação Padrão:";
+			this.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// label2
+			// btnFilialAdd
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(41, 9);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(197, 23);
-			this.label2.TabIndex = 0;
-			this.label2.Text = "Utilitário de Conversão:";
+			this.btnFilialAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.btnFilialAdd.FlatAppearance.BorderSize = 0;
+			this.btnFilialAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnFilialAdd.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnFilialAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnFilialAdd.Location = new System.Drawing.Point(503, 114);
+			this.btnFilialAdd.Name = "btnFilialAdd";
+			this.btnFilialAdd.Size = new System.Drawing.Size(81, 30);
+			this.btnFilialAdd.TabIndex = 18;
+			this.btnFilialAdd.TabStop = false;
+			this.btnFilialAdd.Text = "Nova";
+			this.btnFilialAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnFilialAdd.UseVisualStyleBackColor = false;
 			// 
-			// btnConverterPPT
+			// Label35
 			// 
-			this.btnConverterPPT.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnConverterPPT.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnConverterPPT.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnConverterPPT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnConverterPPT.Image = global::CamadaUI.Properties.Resources.refresh_24;
-			this.btnConverterPPT.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnConverterPPT.Location = new System.Drawing.Point(18, 44);
-			this.btnConverterPPT.Name = "btnConverterPPT";
-			this.btnConverterPPT.Size = new System.Drawing.Size(245, 36);
-			this.btnConverterPPT.TabIndex = 1;
-			this.btnConverterPPT.Text = "&Converter PPT | PPTX em PPS";
-			this.btnConverterPPT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnConverterPPT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnConverterPPT.UseVisualStyleBackColor = true;
-			this.btnConverterPPT.Click += new System.EventHandler(this.btnConverterPPT_Click);
+			this.Label35.AutoSize = true;
+			this.Label35.BackColor = System.Drawing.Color.Transparent;
+			this.Label35.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label35.Location = new System.Drawing.Point(81, 152);
+			this.Label35.Name = "Label35";
+			this.Label35.Size = new System.Drawing.Size(100, 19);
+			this.Label35.TabIndex = 20;
+			this.Label35.Text = "Conta Padrão:";
+			this.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// pgbConfig
+			// btnAlteraFilial
 			// 
-			this.pgbConfig.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pgbConfig.Location = new System.Drawing.Point(12, 535);
-			this.pgbConfig.Name = "pgbConfig";
-			this.pgbConfig.Size = new System.Drawing.Size(454, 30);
-			this.pgbConfig.TabIndex = 5;
-			this.pgbConfig.Visible = false;
+			this.btnAlteraFilial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.btnAlteraFilial.FlatAppearance.BorderSize = 0;
+			this.btnAlteraFilial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnAlteraFilial.Image = global::CamadaUI.Properties.Resources.refresh_16;
+			this.btnAlteraFilial.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAlteraFilial.Location = new System.Drawing.Point(412, 114);
+			this.btnAlteraFilial.Name = "btnAlteraFilial";
+			this.btnAlteraFilial.Size = new System.Drawing.Size(81, 30);
+			this.btnAlteraFilial.TabIndex = 17;
+			this.btnAlteraFilial.TabStop = false;
+			this.btnAlteraFilial.Text = "Alterar";
+			this.btnAlteraFilial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnAlteraFilial.UseVisualStyleBackColor = false;
+			// 
+			// dtpDataPadrao
+			// 
+			this.dtpDataPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dtpDataPadrao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpDataPadrao.Location = new System.Drawing.Point(187, 83);
+			this.dtpDataPadrao.Name = "dtpDataPadrao";
+			this.dtpDataPadrao.Size = new System.Drawing.Size(155, 27);
+			this.dtpDataPadrao.TabIndex = 14;
+			// 
+			// lblDataBloqueio
+			// 
+			this.lblDataBloqueio.BackColor = System.Drawing.Color.Transparent;
+			this.lblDataBloqueio.Location = new System.Drawing.Point(307, 179);
+			this.lblDataBloqueio.Name = "lblDataBloqueio";
+			this.lblDataBloqueio.Size = new System.Drawing.Size(92, 18);
+			this.lblDataBloqueio.TabIndex = 25;
+			this.lblDataBloqueio.Text = "01/01/2018";
+			// 
+			// txtCongregacaoPadrao
+			// 
+			this.txtCongregacaoPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtCongregacaoPadrao.Location = new System.Drawing.Point(187, 116);
+			this.txtCongregacaoPadrao.Name = "txtCongregacaoPadrao";
+			this.txtCongregacaoPadrao.Size = new System.Drawing.Size(212, 27);
+			this.txtCongregacaoPadrao.TabIndex = 16;
+			// 
+			// Label22
+			// 
+			this.Label22.AutoSize = true;
+			this.Label22.BackColor = System.Drawing.Color.Transparent;
+			this.Label22.Location = new System.Drawing.Point(184, 179);
+			this.Label22.Name = "Label22";
+			this.Label22.Size = new System.Drawing.Size(117, 19);
+			this.Label22.TabIndex = 24;
+			this.Label22.Text = "Data Bloqueada:";
+			// 
+			// txtContaPadrao
+			// 
+			this.txtContaPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtContaPadrao.Location = new System.Drawing.Point(187, 149);
+			this.txtContaPadrao.Name = "txtContaPadrao";
+			this.txtContaPadrao.Size = new System.Drawing.Size(212, 27);
+			this.txtContaPadrao.TabIndex = 21;
 			// 
 			// panel3
 			// 
 			this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
 			this.panel3.Controls.Add(this.label3);
-			this.panel3.Location = new System.Drawing.Point(315, 99);
+			this.panel3.Location = new System.Drawing.Point(12, 333);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(417, 298);
+			this.panel3.Size = new System.Drawing.Size(720, 107);
 			this.panel3.TabIndex = 4;
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(127, 11);
+			this.label3.Location = new System.Drawing.Point(9, 9);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(163, 23);
 			this.label3.TabIndex = 0;
 			this.label3.Text = "Definição de Cores:";
 			// 
-			// txtIgrejaTitulo
-			// 
-			this.txtIgrejaTitulo.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtIgrejaTitulo.Location = new System.Drawing.Point(151, 48);
-			this.txtIgrejaTitulo.Name = "txtIgrejaTitulo";
-			this.txtIgrejaTitulo.Size = new System.Drawing.Size(462, 31);
-			this.txtIgrejaTitulo.TabIndex = 1;
-			this.txtIgrejaTitulo.Validating += new System.ComponentModel.CancelEventHandler(this.txtIgrejaTitulo_Validating);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point(12, 51);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(133, 23);
-			this.label4.TabIndex = 0;
-			this.label4.Text = "Título da Igreja:";
-			// 
 			// frmConfigGeral
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(744, 579);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.txtIgrejaTitulo);
 			this.Controls.Add(this.panel3);
-			this.Controls.Add(this.pgbConfig);
-			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.pnlPastas);
-			this.Controls.Add(this.btnRemoverFolder);
-			this.Controls.Add(this.btnInserirFolder);
+			this.Controls.Add(this.btnCancelar);
+			this.Controls.Add(this.btnSalvarConfig);
 			this.Name = "frmConfigGeral";
 			this.Load += new System.EventHandler(this.frmConfigGeral_Load);
-			this.Controls.SetChildIndex(this.btnInserirFolder, 0);
-			this.Controls.SetChildIndex(this.btnRemoverFolder, 0);
+			this.Controls.SetChildIndex(this.btnSalvarConfig, 0);
+			this.Controls.SetChildIndex(this.btnCancelar, 0);
 			this.Controls.SetChildIndex(this.pnlPastas, 0);
-			this.Controls.SetChildIndex(this.panel2, 0);
-			this.Controls.SetChildIndex(this.pgbConfig, 0);
 			this.Controls.SetChildIndex(this.panel3, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
-			this.Controls.SetChildIndex(this.txtIgrejaTitulo, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
 			this.panel1.ResumeLayout(false);
 			this.pnlPastas.ResumeLayout(false);
 			this.pnlPastas.PerformLayout();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
 			this.panel3.ResumeLayout(false);
 			this.panel3.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.Button btnInserirFolder;
-		private System.Windows.Forms.Button btnRemoverFolder;
+		private System.Windows.Forms.Button btnSalvarConfig;
+		private System.Windows.Forms.Button btnCancelar;
 		private System.Windows.Forms.Panel pnlPastas;
-		private System.Windows.Forms.Button btnLimparHistoricoLouvor;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button btnLimparHistoricoLeitura;
-		private System.Windows.Forms.Button btnLimparHistoricoHinos;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button btnConverterPPT;
-		private System.Windows.Forms.ProgressBar pgbConfig;
 		private System.Windows.Forms.Panel panel3;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox txtIgrejaTitulo;
 		private System.Windows.Forms.Label label4;
+		internal System.Windows.Forms.Button btnEditarFilial;
+		internal System.Windows.Forms.Button btnContaAdd;
+		internal System.Windows.Forms.Button btnAlteraConta;
+		internal System.Windows.Forms.Button btnFilialAdd;
+		internal System.Windows.Forms.Button btnAlteraFilial;
+		internal System.Windows.Forms.Label lblDataBloqueio;
+		internal System.Windows.Forms.Label Label22;
+		internal System.Windows.Forms.TextBox txtContaPadrao;
+		internal System.Windows.Forms.TextBox txtCongregacaoPadrao;
+		internal System.Windows.Forms.DateTimePicker dtpDataPadrao;
+		internal System.Windows.Forms.Label Label35;
+		internal System.Windows.Forms.Label Label34;
+		internal System.Windows.Forms.Label Label15;
 	}
 }

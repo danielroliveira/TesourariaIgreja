@@ -141,7 +141,7 @@ namespace CamadaUI
 		//=================================================================================================
 		private bool VerificaConfig()
 		{
-			if (File.Exists(Application.StartupPath + "\\ConfigFiles\\Config.xml"))
+			if (File.Exists(Application.StartupPath + "\\Config.xml"))
 			{
 				return true;
 			}
@@ -150,7 +150,7 @@ namespace CamadaUI
 				if (UsuarioAtual.UsuarioAcesso > 1) // não é administrador do sistema
 				{
 					AbrirDialog("Arquivo de Configuração não foi encontrado! \n" +
-								"Seu LOGIN não tem acesso ao arquivo de Configuração... \n" +
+								"Seu LOGIN não tem acesso à Configuração... \n" +
 								"Comunique-se com o administrador do sistema.",
 								"Erro de Arquivo",
 								DialogType.OK,
@@ -160,7 +160,7 @@ namespace CamadaUI
 			}
 
 			AbrirDialog("Arquivo de Configuração não foi encontrado!",
-						"Erro de Arquivo",
+						"Gerar CONFIG",
 						DialogType.OK,
 						DialogIcon.Warning);
 
@@ -169,18 +169,19 @@ namespace CamadaUI
 			frmC.ShowDialog();
 
 			//--- se não existe o config, então fecha a aplicação
-			if (File.Exists(Application.StartupPath + "\\ConfigFiles\\Config.xml"))
+			if (File.Exists(Application.StartupPath + "\\Config.xml"))
 			{
-				AbrirDialog("Arquivo de Configuração ainda não foi encontrado! \n" +
-							"A aplicação será fechada...",
+				return true;
+			}
+			else
+			{
+				AbrirDialog("Arquivo de Configuração ainda não foi encontrado! \n" + 
+							"Sem CONFIGURAÇÃO não será possível continuar... \n" +
+							"Comunique-se com o administrador do Sistema.",
 							"Erro de Arquivo",
 							DialogType.OK,
 							DialogIcon.Warning);
 				return false;
-			}
-			else
-			{
-				return true;
 			}
 		}
 
@@ -283,10 +284,10 @@ namespace CamadaUI
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//Form f = new Config.frmConfig(this);
+				Form f = new Config.frmConfig(this);
 				MenuEnabled(false);
-				//f.MdiParent = this;
-				//f.Show();
+				f.MdiParent = this;
+				f.Show();
 			}
 			catch (Exception ex)
 			{

@@ -19,7 +19,7 @@ namespace CamadaBLL
 		//=================================================================================================
 		public object GetAuthorization(
 			string UsuarioApelido, 
-			string UsuarioSenha, EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.UsuarioComum,
+			string UsuarioSenha, EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.Usuario_Comum,
 			string AuthDescription = "Acesso Login"
 			)
 		{

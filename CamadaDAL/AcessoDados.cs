@@ -138,13 +138,14 @@ namespace CamadaDAL
         {
             ParamList.Add(new SqlParameter(nomeParametro, valorParametro));
         }
-               
+
         #endregion
 
         // ==============================================================================
         #region DATABASE CRUD COMMANDS
 
         // EXECUTAR MANIPULACAO
+        //------------------------------------------------------------------------------------------------------------
         public void ExecutarManipulacao(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
         {
             try
@@ -185,6 +186,8 @@ namespace CamadaDAL
             }
         }
 
+        // EXECUTE QUERY RETURN DATATABLE
+        //------------------------------------------------------------------------------------------------------------
         public DataTable ExecutarConsulta(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
         {
             try
@@ -223,6 +226,103 @@ namespace CamadaDAL
             {
                 throw ex;
             }
+        }
+
+        // EXECUTAR INSERT AND RETURN NEW ID
+        //------------------------------------------------------------------------------------------------------------
+        public int ExecutarInsertAndGetID(string query)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    // try connect
+                    Connect();
+                    // Check Again
+                    if (conn.State == ConnectionState.Closed)
+                        throw new Exception("Sem conexão ao Database...");
+                }
+
+                cmd = new SqlConnection().CreateCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
+                cmd.CommandText = query;
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
+                cmd.CommandTimeout = 7200;
+
+                ParamList.ForEach(p => cmd.Parameters.Add(p));
+
+                if (!isTran)
+                {
+                    //--- EXECUTE
+                    cmd.ExecuteScalar();
+
+                    //--- GET NEW ID
+                    int? obj = GetNewID();
+
+                    //--- CLOSE DB CONNECTION
+                    CloseConn();
+
+                    if (obj == null)
+                    {
+                        throw new Exception("Não foi retornado novo ID...");
+                    }
+                    
+                    //--- RETURN
+                    return (int)obj;
+                }
+                else
+                {
+                    //--- ADD TRANSACTION TO COMMAND
+                    cmd.Transaction = trans;
+
+                    //--- EXECUTE
+                    cmd.ExecuteScalar();
+
+                    //--- GET NEW ID
+                    int? obj = GetNewID();
+
+                    if (obj == null)
+                    {
+                        throw new Exception("Não foi retornado novo ID...");
+                    }
+
+                    //--- RETURN
+                    return (int)obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        // GET NEW ID OF INSERT
+        //------------------------------------------------------------------------------------------------------------
+        private int? GetNewID()
+        {
+            //--- obter NewID
+            LimparParametros();
+            string myQuery = "SELECT @@IDENTITY As LastID";
+            DataTable dt = ExecutarConsulta(CommandType.Text, myQuery);
+        
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            object newID = dt.Rows[0][0];
+
+            if (int.TryParse(newID.ToString(), out int j))
+            {
+                return j;
+            }
+            else
+            {
+                throw new Exception(newID.ToString());
+            }
+
         }
 
         #endregion

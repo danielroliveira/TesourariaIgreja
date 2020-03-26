@@ -40,16 +40,16 @@ namespace CamadaUI.Config
 				switch (_OpenedForm.Name)
 				{
 					case "frmConfigLouvor":
-						btnLouvores.BackColor = btnColorSelected;
+						btnCores.BackColor = btnColorSelected;
 						break;
 					case "frmConfigGeral":
 						btnGeral.BackColor = btnColorSelected;
 						break;
 					case "frmConfigHarpa":
-						btnHarpa.BackColor = btnColorSelected;
+						btnImagem.BackColor = btnColorSelected;
 						break;
 					case "frmConfigLeitura":
-						btnLeitura.BackColor = btnColorSelected;
+						btnServidor.BackColor = btnColorSelected;
 						break;
 					case "frmConfigAvisos":
 						btnAvisos.BackColor = btnColorSelected;
@@ -106,29 +106,29 @@ namespace CamadaUI.Config
 			OpenedForm = null;
 		}
 
-		private void btnLouvores_Click(object sender, EventArgs e)
-		{
-			//AbrirFormNoPanel<frmConfigLouvor>();
-		}
-
 		private void btnGeral_Click(object sender, EventArgs e)
 		{
-			//AbrirFormNoPanel<frmConfigGeral>();
+			AbrirFormNoPanel<frmConfigGeral>();
 		}
 
-		private void btnHarpa_Click(object sender, EventArgs e)
+		private void btnAparencia_Click(object sender, EventArgs e)
 		{
-			//AbrirFormNoPanel<frmConfigHarpa>();
+			AbrirFormNoPanel<frmConfigAparencia>();
 		}
 
-		private void btnLeitura_Click(object sender, EventArgs e)
+		private void btnImagem_Click(object sender, EventArgs e)
 		{
-			//AbrirFormNoPanel<frmConfigLeitura>();
+			AbrirFormNoPanel<frmConfigImagem>();
+		}
+
+		private void btnServidor_Click(object sender, EventArgs e)
+		{
+			AbrirFormNoPanel<frmConfigServidor>();
 		}
 
 		private void btnAvisos_Click(object sender, EventArgs e)
 		{
-			//AbrirFormNoPanel<frmConfigAvisos>();
+			AbrirFormNoPanel<frmConfigAvisos>();
 		}
 	}
 }

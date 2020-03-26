@@ -5,15 +5,15 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using System.Xml;
 
 namespace CamadaUI.Config
 {
-	public partial class frmConfigGeral : CamadaUI.modals.frmModConfig
+	public partial class frmConfigGeral : modals.frmModConfig
 	{
-		string db = FuncoesGlobais.DBPath();
-		//LouvorBLL lBLL;
-		//HarpaBLL hBLL;
-		//VersiculoBLL vBLL;
+		private int? IDCongregacao;
+		private int? IDConta;
+		string db = DBPath();
 
 		#region SUB NEW | LOAD
 
@@ -21,12 +21,7 @@ namespace CamadaUI.Config
 		public frmConfigGeral()
 		{
 			InitializeComponent();
-
-			//lBLL = new LouvorBLL(db);
-			//hBLL = new HarpaBLL(db);
-			//vBLL = new VersiculoBLL(db);
-
-			txtIgrejaTitulo.Text = ObterDefault("IgrejaTitulo");
+			LoadConfig();
 		}
 
 		// LOAD
@@ -39,100 +34,6 @@ namespace CamadaUI.Config
 
 		#region BUTTONS FUNCTION
 
-		// LIMPAR HISTORICO LOUVOR
-		// =============================================================================
-		private void btnLimparHistoricoLouvor_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// ASK USER
-				if (AbrirDialog("Deseja limpar o Histórico de LOUVOR?", "Tem Certeza?",
-					 DialogType.SIM_NAO,
-					 DialogIcon.Warning,
-					 DialogDefaultButton.Second) == DialogResult.No)
-				{
-					return;
-				}
-
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-				//lBLL.ClearHistorico(FuncoesGlobais.DBPath());
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Limpar Histórico..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		// LIMPAR HISTORICO HINOS
-		// =============================================================================
-		private void btnLimparHistoricoHinos_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// ASK USER
-				if (AbrirDialog("Deseja limpar o Histórico de Hinos da Harpa?", "Tem Certeza?",
-					 DialogType.SIM_NAO,
-					 DialogIcon.Warning,
-					 DialogDefaultButton.Second) == DialogResult.No)
-				{
-					return;
-				}
-
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-				//hBLL.ClearHistorico();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Limpar Histórico de Hinos..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		// LIMPAR HISTORICO VERSICULOS
-		// =============================================================================
-		private void btnLimparHistoricoLeitura_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// ASK USER
-				if (AbrirDialog("Deseja limpar o Histórico de Versículos Lidos?", "Tem Certeza?",
-					 DialogType.SIM_NAO,
-					 DialogIcon.Warning,
-					 DialogDefaultButton.Second) == DialogResult.No)
-				{
-					return;
-				}
-
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//vBLL.ClearHistorico();
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Limpar Histórico de Versículos..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
 
 		// CLOSE
 		// =============================================================================
@@ -144,91 +45,71 @@ namespace CamadaUI.Config
 
 		#endregion
 
-		#region OTHER FUNCTIONS
+		#region XML FUNCTIONS
 
-		// CONVERT ALL PPT OR PPTX IN PPS FILE
-		// =============================================================================
-		private void btnConverterPPT_Click(object sender, EventArgs e)
+		private void LoadConfig()
 		{
-			string myPath = "";
+			try
+			{
+				XmlDocument doc = MyConfig();
 
-			// GET NEW FOLDER
-			using (FolderBrowserDialog FBDiag = new FolderBrowserDialog()
-			{
-				Description = "Pasta das Projeções",
-				SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-			})
-			{
-				DialogResult result = FBDiag.ShowDialog();
-				if (result == DialogResult.OK)
+				if (doc == null)
 				{
-					myPath = FBDiag.SelectedPath;
+					throw new Exception("Arquivo de Configuração Inválido...");
 				}
-				else
-				{
-					return;
-				}
+
+				txtIgrejaTitulo.Text = LoadNode(doc, "IgrejaTitulo");
+
+				// CONGREGACAO
+				string strIDCong = LoadNode(doc, "CongregacaoPadrao");
+				IDCongregacao = string.IsNullOrEmpty(strIDCong) ? null : int.Parse(strIDCong) as int?;
+				txtCongregacaoPadrao.Text = LoadNode(doc, "CongregacaoDescricao");
+
+				// CONTA
+				string strIDConta = LoadNode(doc, "ContaPadrao");
+				IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
+				txtContaPadrao.Text = LoadNode(doc, "ContaDescricao");
+				
+				// DATA BLOQUEIO | DATA PADRAO
+				lblDataBloqueio.Text = LoadNode(doc, "DataBloqueada");
+				string DataPadrao = LoadNode(doc, "DataPadrao");
+				dtpDataPadrao.Value =  string.IsNullOrEmpty(DataPadrao) ? DateTime.Today : Convert.ToDateTime(DataPadrao);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Ler arquivo XML..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			
-			DirectoryInfo dir = new DirectoryInfo(myPath);
+		}
 
-			// get number of PPT PPTX files
-			int countFiles = dir.GetFiles("*.ppt").Length;
-			countFiles += dir.GetFiles("*.pptx").Length;
+		private string LoadNode(XmlDocument doc, string nodeName)
+		{
+			XmlNodeList elemList = doc.GetElementsByTagName(nodeName);
+			string myValor = "";
 
-			if(countFiles == 0)
+			for (int i = 0; i < elemList.Count; i++)
 			{
-				AbrirDialog("Não foi encontrado nenhum arquivo PPT ou PPTX para converter...",
-					"Conversão de Arquivos", DialogType.OK, DialogIcon.Exclamation);
-				return;
+				myValor = elemList[i].InnerXml;
 			}
 
-			// create new Directory to converted Files
-			string convertedPath = myPath + "\\Convertidas";
-
-			if (!Directory.Exists(convertedPath))
-			{
-				Directory.CreateDirectory(convertedPath);
-			}
-
-			// Ampulheta ON
-			Cursor.Current = Cursors.WaitCursor;
-
-			// inicia o progress bar
-			pgbConfig.Value = 0;
-			pgbConfig.Visible = true;
-			pgbConfig.Maximum = countFiles;
-
-			// copia os arquivos
-			foreach (FileInfo file in dir.GetFiles())
-			{
-				if ((file.Extension == ".ppt" || file.Extension == ".pptx"))
-				{
-					string newFileFullName = $"{convertedPath}\\{Path.GetFileNameWithoutExtension(file.FullName)}.pps";
-					file.CopyTo(newFileFullName, true);
-
-					pgbConfig.Value += 1;
-				}
-			}
-
-			// finaliza o progress bar
-			pgbConfig.Visible = false;
-
-			// Ampulheta OFF
-			Cursor.Current = Cursors.Default;
-
-			AbrirDialog("Arquivos convertidos com sucesso em:\n" +
-				convertedPath, "Arquivos Convertidos");
+			return myValor;
 		}
 
 		#endregion
+
 
 		private void txtIgrejaTitulo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			try
 			{
+				frmConfig fConfig = Application.OpenForms.OfType<frmConfig>().FirstOrDefault();
+
 				frmPrincipal f = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				f.AplicacaoTitulo = txtIgrejaTitulo.Text;
+
+
+
 			}
 			catch (Exception ex)
 			{
@@ -236,6 +117,31 @@ namespace CamadaUI.Config
 					ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}
-		
+
+		private void btnSalvarConfig_Click(object sender, EventArgs e)
+		{
+			// check controls
+			if (!VerificaControles()) return;
+
+			// save items
+			SaveConfigValorNode("IgrejaTitulo", txtIgrejaTitulo.Text);
+			SaveConfigValorNode("CongregacaoDescricao", txtCongregacaoPadrao.Text);
+			SaveConfigValorNode("CongregacaoPadrao", IDCongregacao.ToString());
+			SaveConfigValorNode("ContaDescricao", txtContaPadrao.Text);
+			SaveConfigValorNode("ContaPadrao", IDConta.ToString());
+			SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
+
+		}
+
+		private bool VerificaControles()
+		{
+			if (!VerificaControle(txtIgrejaTitulo, "TÍTULO DA IGREJA")) return false;
+			if (!VerificaControle(dtpDataPadrao, "DATA PADRÃO")) return false;
+			if (!VerificaControle(txtCongregacaoPadrao, "CONGREGAÇÃO PADRÃO")) return false;
+			if (!VerificaControle(txtContaPadrao, "CONTA PADRÃO")) return false;
+
+			return true;
+		}
+
 	}
 }
