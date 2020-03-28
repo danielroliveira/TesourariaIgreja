@@ -5,369 +5,386 @@ using System.Data.SqlClient;
 
 namespace CamadaDAL
 {
-    public class AcessoDados
-    {
-        //-------------------------------------------------------------------------------------------------------
-        // DECLARAÇÃO DAS VARIÁVEIS
-        //-------------------------------------------------------------------------------------------------------
-        SqlConnection conn;
-        SqlCommand cmd;
-        private SqlTransaction trans;
-        public List<SqlParameter> ParamList = new List<SqlParameter>();
+	public class AcessoDados
+	{
+		//-------------------------------------------------------------------------------------------------------
+		// DECLARAÇÃO DAS VARIÁVEIS
+		//-------------------------------------------------------------------------------------------------------
+		SqlConnection conn;
+		SqlCommand cmd;
+		private SqlTransaction trans;
+		public List<SqlParameter> ParamList = new List<SqlParameter>();
 
-        // ==============================================================================
-        #region CONEXAO
+		// ==============================================================================
+		#region CONEXAO
 
-        // NEW CONSTRUCTOR
-        //-------------------------------------------------------------------------------------------------
-        public AcessoDados()
-        {
-            if (!Connect())
-            {
-                return;
-            }
-        }
+		// NEW CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		public AcessoDados()
+		{
+			if (!Connect())
+			{
+				return;
+			}
+		}
 
-        // GET CONNECTION STRING
-        //------------------------------------------------------------------------------------------------------------
-        public static string GetConnectionString()
-        {
-            string retorno;
+		// GET CONNECTION STRING
+		//------------------------------------------------------------------------------------------------------------
+		public static string GetConnectionString()
+		{
+			string retorno;
 
-            try
-            {
-                //string connFile = ConfigurationManager.AppSettings["ConexaoStringFile"];
-                string connFile = Properties.Settings.Default.ConexaoStringFile;
+			try
+			{
+				//string connFile = ConfigurationManager.AppSettings["ConexaoStringFile"];
+				string connFile = Properties.Settings.Default.ConexaoStringFile;
 
-                //string connName = ConfigurationManager.AppSettings["ConexaoStringName"];
-                string connName = Properties.Settings.Default.ConexaoStringName;
+				//string connName = ConfigurationManager.AppSettings["ConexaoStringName"];
+				string connName = Properties.Settings.Default.ConexaoStringName;
 
-                GetConnection getConn = new GetConnection();
+				GetConnection getConn = new GetConnection();
 
-                retorno = getConn.LoadConnectionString(connFile, connName);
+				retorno = getConn.LoadConnectionString(connFile, connName);
 
-                if (string.IsNullOrEmpty(retorno.Trim()))
-                {
-                    throw new Exception("Arquivo de Conexão Database inválido...");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+				if (string.IsNullOrEmpty(retorno.Trim()))
+				{
+					throw new Exception("Arquivo de Conexão Database inválido...");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 
-            return retorno;
+			return retorno;
 
-        }
+		}
 
-        // GET CONFIG DB - CONNECTION XML PATH
-        //------------------------------------------------------------------------------------------------------------
-        public static string GetConfigXMLPath()
-        {
-            try
-            {
-                return Properties.Settings.Default.ConexaoStringFile;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+		// GET CONFIG DB - CONNECTION XML PATH
+		//------------------------------------------------------------------------------------------------------------
+		public static string GetConfigXMLPath()
+		{
+			try
+			{
+				return Properties.Settings.Default.ConexaoStringFile;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
-        // OPEN CONNECTION
-        private bool Connect()
-        {
-            string connstr = "";
-            bool bln = false;
+		// OPEN CONNECTION
+		private bool Connect()
+		{
+			string connstr = "";
+			bool bln = false;
 
-            if (conn == null)
-            {
-                try
-                {
-                    connstr = GetConnectionString();
+			if (conn == null)
+			{
+				try
+				{
+					connstr = GetConnectionString();
 
-                    if (connstr != string.Empty)
-                    {
-                        conn = new SqlConnection(connstr);
-                        bln = true;
-                    }
-                    else
-                    {
-                        bln = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
+					if (connstr != string.Empty)
+					{
+						conn = new SqlConnection(connstr);
+						bln = true;
+					}
+					else
+					{
+						bln = false;
+					}
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+			}
 
-            if (conn.State == ConnectionState.Closed)
-            {
-                try
-                {
-                    conn.Open();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
+			if (conn.State == ConnectionState.Closed)
+			{
+				try
+				{
+					conn.Open();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+			}
 
-            return bln;
+			return bln;
 
-        }
+		}
 
-        // CLOSE CONNECTION
-        public void CloseConn()
-        {
-            if (conn.State != ConnectionState.Closed)
-            {
-                conn.Close();
-            }
-        }
+		// CLOSE CONNECTION
+		public void CloseConn()
+		{
+			if (conn.State != ConnectionState.Closed)
+			{
+				conn.Close();
+			}
+		}
 
-        // CLEAR PARAMETERS
-        public void LimparParametros()
-        {
-            ParamList.Clear();
-        }
+		// CLEAR PARAMETERS
+		public void LimparParametros()
+		{
+			ParamList.Clear();
+		}
 
-        // ADD PARAMETERS
-        public void AdicionarParametros(string nomeParametro, object valorParametro)
-        {
-            ParamList.Add(new SqlParameter(nomeParametro, valorParametro));
-        }
+		// ADD PARAMETERS
+		public void AdicionarParametros(string nomeParametro, object valorParametro)
+		{
+			ParamList.Add(new SqlParameter(nomeParametro, valorParametro));
+		}
 
-        #endregion
+		// TRANSFORM NULL PARAMETERS
+		public void ConvertNullParams()
+		{
+			foreach (SqlParameter parameter in ParamList)
+			{
+				if (parameter.Value == null)
+				{
+					parameter.Value = DBNull.Value;
+				}
+				else if (parameter.Value is string && (string)parameter.Value == "")
+				{
+					parameter.Value = DBNull.Value;
+				}
+			}
 
-        // ==============================================================================
-        #region DATABASE CRUD COMMANDS
+		}
 
-        // EXECUTAR MANIPULACAO
-        //------------------------------------------------------------------------------------------------------------
-        public void ExecutarManipulacao(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
-        {
-            try
-            {
-                if (conn.State == ConnectionState.Closed)
-                {
-                    // try connect
-                    Connect();
-                    // Check Again
-                    if (conn.State == ConnectionState.Closed)
-                        throw new Exception("Sem conexão ao Database...");
-                }
+		#endregion
 
-                cmd = new SqlConnection().CreateCommand();
-                cmd.Connection = conn;
-                cmd.CommandType = commandType;
+		// ==============================================================================
+		#region DATABASE CRUD COMMANDS
+
+		// EXECUTAR MANIPULACAO
+		//------------------------------------------------------------------------------------------------------------
+		public void ExecutarManipulacao(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
+		{
+			try
+			{
+				if (conn.State == ConnectionState.Closed)
+				{
+					// try connect
+					Connect();
+					// Check Again
+					if (conn.State == ConnectionState.Closed)
+						throw new Exception("Sem conexão ao Database...");
+				}
+
+				cmd = new SqlConnection().CreateCommand();
+				cmd.Connection = conn;
+				cmd.CommandType = commandType;
 #pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
-                cmd.CommandText = nomeStoredProcedureOuTextoSQL;
+				cmd.CommandText = nomeStoredProcedureOuTextoSQL;
 #pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
-                 cmd.CommandTimeout = 7200;
+				cmd.CommandTimeout = 7200;
 
-                ParamList.ForEach(p => cmd.Parameters.Add(p));
+				ParamList.ForEach(p => cmd.Parameters.Add(p));
 
-                if (!isTran)
-                {
-                    cmd.ExecuteScalar();
-                    CloseConn();
-                }
-                else
-                {
-                    cmd.Transaction = trans;
-                    cmd.ExecuteScalar();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+				if (!isTran)
+				{
+					cmd.ExecuteScalar();
+					CloseConn();
+				}
+				else
+				{
+					cmd.Transaction = trans;
+					cmd.ExecuteScalar();
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
-        // EXECUTE QUERY RETURN DATATABLE
-        //------------------------------------------------------------------------------------------------------------
-        public DataTable ExecutarConsulta(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
-        {
-            try
-            {
-                if (conn.State == ConnectionState.Closed)
-                {
-                    // try connect
-                    Connect();
-                    // Check Again
-                    if (conn.State == ConnectionState.Closed)
-                        throw new Exception("Sem conexão ao Database...");
-                }
+		// EXECUTE QUERY RETURN DATATABLE
+		//------------------------------------------------------------------------------------------------------------
+		public DataTable ExecutarConsulta(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
+		{
+			try
+			{
+				if (conn.State == ConnectionState.Closed)
+				{
+					// try connect
+					Connect();
+					// Check Again
+					if (conn.State == ConnectionState.Closed)
+						throw new Exception("Sem conexão ao Database...");
+				}
 
-                cmd = new SqlConnection().CreateCommand();
-                cmd.Connection = conn;
-                cmd.CommandType = commandType;
+				cmd = new SqlConnection().CreateCommand();
+				cmd.Connection = conn;
+				cmd.CommandType = commandType;
 #pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
-                cmd.CommandText = nomeStoredProcedureOuTextoSQL;
+				cmd.CommandText = nomeStoredProcedureOuTextoSQL;
 #pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
-                cmd.CommandTimeout = 7200;
+				cmd.CommandTimeout = 7200;
 
-                if (isTran) cmd.Transaction = trans;
+				if (isTran) cmd.Transaction = trans;
 
-                ParamList.ForEach(p => cmd.Parameters.Add(p));
+				ParamList.ForEach(p => cmd.Parameters.Add(p));
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+				SqlDataAdapter da = new SqlDataAdapter(cmd);
+				DataTable dt = new DataTable();
+				da.Fill(dt);
 
-                if (!isTran) CloseConn();
+				if (!isTran) CloseConn();
 
-                return dt;
+				return dt;
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
-        // EXECUTAR INSERT AND RETURN NEW ID
-        //------------------------------------------------------------------------------------------------------------
-        public int ExecutarInsertAndGetID(string query)
-        {
-            try
-            {
-                if (conn.State == ConnectionState.Closed)
-                {
-                    // try connect
-                    Connect();
-                    // Check Again
-                    if (conn.State == ConnectionState.Closed)
-                        throw new Exception("Sem conexão ao Database...");
-                }
+		// EXECUTAR INSERT AND RETURN NEW ID
+		//------------------------------------------------------------------------------------------------------------
+		public int ExecutarInsertAndGetID(string query)
+		{
+			try
+			{
+				if (conn.State == ConnectionState.Closed)
+				{
+					// try connect
+					Connect();
+					// Check Again
+					if (conn.State == ConnectionState.Closed)
+						throw new Exception("Sem conexão ao Database...");
+				}
 
-                cmd = new SqlConnection().CreateCommand();
-                cmd.Connection = conn;
-                cmd.CommandType = CommandType.Text;
+				cmd = new SqlConnection().CreateCommand();
+				cmd.Connection = conn;
+				cmd.CommandType = CommandType.Text;
 #pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
-                cmd.CommandText = query;
+				cmd.CommandText = query;
 #pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
-                cmd.CommandTimeout = 7200;
+				cmd.CommandTimeout = 7200;
 
-                ParamList.ForEach(p => cmd.Parameters.Add(p));
+				ParamList.ForEach(p => cmd.Parameters.Add(p));
 
-                if (!isTran)
-                {
-                    //--- EXECUTE
-                    cmd.ExecuteScalar();
+				if (!isTran)
+				{
+					//--- EXECUTE
+					cmd.ExecuteScalar();
 
-                    //--- GET NEW ID
-                    int? obj = GetNewID();
+					//--- GET NEW ID
+					int? obj = GetNewID();
 
-                    //--- CLOSE DB CONNECTION
-                    CloseConn();
+					//--- CLOSE DB CONNECTION
+					CloseConn();
 
-                    if (obj == null)
-                    {
-                        throw new Exception("Não foi retornado novo ID...");
-                    }
-                    
-                    //--- RETURN
-                    return (int)obj;
-                }
-                else
-                {
-                    //--- ADD TRANSACTION TO COMMAND
-                    cmd.Transaction = trans;
+					if (obj == null)
+					{
+						throw new Exception("Não foi retornado novo ID...");
+					}
 
-                    //--- EXECUTE
-                    cmd.ExecuteScalar();
+					//--- RETURN
+					return (int)obj;
+				}
+				else
+				{
+					//--- ADD TRANSACTION TO COMMAND
+					cmd.Transaction = trans;
 
-                    //--- GET NEW ID
-                    int? obj = GetNewID();
+					//--- EXECUTE
+					cmd.ExecuteScalar();
 
-                    if (obj == null)
-                    {
-                        throw new Exception("Não foi retornado novo ID...");
-                    }
+					//--- GET NEW ID
+					int? obj = GetNewID();
 
-                    //--- RETURN
-                    return (int)obj;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+					if (obj == null)
+					{
+						throw new Exception("Não foi retornado novo ID...");
+					}
 
-        // GET NEW ID OF INSERT
-        //------------------------------------------------------------------------------------------------------------
-        private int? GetNewID()
-        {
-            //--- obter NewID
-            LimparParametros();
-            string myQuery = "SELECT @@IDENTITY As LastID";
-            DataTable dt = ExecutarConsulta(CommandType.Text, myQuery);
-        
-            if (dt.Rows.Count == 0)
-            {
-                return null;
-            }
+					//--- RETURN
+					return (int)obj;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
-            object newID = dt.Rows[0][0];
+		// GET NEW ID OF INSERT
+		//------------------------------------------------------------------------------------------------------------
+		private int? GetNewID()
+		{
+			//--- obter NewID
+			LimparParametros();
+			string myQuery = "SELECT @@IDENTITY As LastID";
+			DataTable dt = ExecutarConsulta(CommandType.Text, myQuery);
 
-            if (int.TryParse(newID.ToString(), out int j))
-            {
-                return j;
-            }
-            else
-            {
-                throw new Exception(newID.ToString());
-            }
+			if (dt.Rows.Count == 0)
+			{
+				return null;
+			}
 
-        }
+			object newID = dt.Rows[0][0];
 
-        #endregion
+			if (int.TryParse(newID.ToString(), out int j))
+			{
+				return j;
+			}
+			else
+			{
+				throw new Exception(newID.ToString());
+			}
 
-        // ==============================================================================
-        #region TRANSACTION
+		}
 
-        // BEGIN TRANSACTION
-        public void BeginTransaction()
-        {
-            if (isTran) return;
+		#endregion
 
-            if (conn.State == ConnectionState.Closed)
-            {
-                conn.Open();
-            }
+		// ==============================================================================
+		#region TRANSACTION
 
-            trans = conn.BeginTransaction();
-            isTran = true;
+		// BEGIN TRANSACTION
+		public void BeginTransaction()
+		{
+			if (isTran) return;
 
-        }
+			if (conn.State == ConnectionState.Closed)
+			{
+				conn.Open();
+			}
 
-        // COMMIT TRANSACTION
-        public void CommitTransaction()
-        {
-            if (!isTran) return;
-            trans.Commit();
-            conn.Close();
-            trans = null;
-            isTran = false;
-        }
+			trans = conn.BeginTransaction();
+			isTran = true;
 
-        // ROOLBACK TRANSACTION
-        public void RollBackTransaction()
-        {
-            if (!isTran) return;
-            trans.Rollback();
-            conn.Close();
-            trans = null;
-            isTran = false;
-        }
+		}
 
-        // PROPERTY ISTRAN
-        public bool isTran { get; set; } = false;
+		// COMMIT TRANSACTION
+		public void CommitTransaction()
+		{
+			if (!isTran) return;
+			trans.Commit();
+			conn.Close();
+			trans = null;
+			isTran = false;
+		}
 
-        #endregion
-    }
+		// ROOLBACK TRANSACTION
+		public void RollBackTransaction()
+		{
+			if (!isTran) return;
+			trans.Rollback();
+			conn.Close();
+			trans = null;
+			isTran = false;
+		}
+
+		// PROPERTY ISTRAN
+		public bool isTran { get; set; } = false;
+
+		#endregion
+	}
 }

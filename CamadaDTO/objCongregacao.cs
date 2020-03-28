@@ -4,7 +4,10 @@ using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
 {
-    public class objCongregacao : IEditableObject, INotifyPropertyChanged
+	//=================================================================================================
+	// CLASSE CONGREGACAO
+	//=================================================================================================
+	public class objCongregacao : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
@@ -21,6 +24,7 @@ namespace CamadaDTO
 			internal string _CEP;
 			internal string _TelefoneFixo;
 			internal string _TelefoneDirigente;
+			internal string _Email;
 			internal string _Dirigente;
 			internal string _Tesoureiro;
 			internal bool _Ativo;
@@ -35,11 +39,12 @@ namespace CamadaDTO
 
 		public objCongregacao(int? ID) : base()
 		{
-			EditData = new StructCongregacao() {
+			EditData = new StructCongregacao()
+			{
 				_IDCongregacao = ID,
-				_Congregacao = "", 
-				_Ativo = true, 
-				_EnderecoLogradouro = "", 
+				_Congregacao = "",
+				_Ativo = true,
+				_EnderecoLogradouro = "",
 				_IDCongregacaoSetor = null
 			};
 		}
@@ -90,17 +95,18 @@ namespace CamadaDTO
 			return EditData._Congregacao;
 		}
 
-		public bool RegistroAlterado 
+		public bool RegistroAlterado
 		{
-			get => inTxn;  
+			get => inTxn;
 		}
 
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
 		public int? IDCongregacao
-		{ 
-			get => EditData._IDCongregacao; 
+		{
+			get => EditData._IDCongregacao;
+			set => EditData._IDCongregacao = value;
 		}
 
 		// Property Congregacao
@@ -167,11 +173,11 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Endereco
 		{
-			get 
+			get
 			{
 				string retorno = "";
 
-				if (!string.IsNullOrEmpty(EnderecoLogradouro)) 
+				if (!string.IsNullOrEmpty(EnderecoLogradouro))
 				{
 					retorno = EnderecoLogradouro;
 				}
@@ -190,7 +196,7 @@ namespace CamadaDTO
 					retorno += " " + EnderecoComplemento;
 				}
 
-				return retorno; 
+				return retorno;
 			}
 		}
 
@@ -285,6 +291,21 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property Email
+		//---------------------------------------------------------------
+		public string Email
+		{
+			get => EditData._Email;
+			set
+			{
+				if (value != EditData._Email)
+				{
+					EditData._Email = value;
+					NotifyPropertyChanged("Email");
+				}
+			}
+		}
+
 		// Property Dirigente
 		//---------------------------------------------------------------
 		public string Dirigente
@@ -349,4 +370,161 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string CongregacaoSetor { get; set; }
 	}
+
+
+	//=================================================================================================
+	// CLASSE CONGREGACAO SETOR
+	//=================================================================================================
+	public class objCongregacaoSetor
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructSetor
+		{
+			internal int? _IDCongregacaoSetor;
+			internal string _CongregacaoSetor;
+			internal string _CoordenadorNome;
+			internal string _CoordenadorTelefone;
+			internal bool _Ativo;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructSetor EditData;
+		private StructSetor BackupData;
+		private bool inTxn = false;
+
+		public objCongregacaoSetor(int? ID) : base()
+		{
+			EditData = new StructSetor()
+			{
+				_IDCongregacaoSetor = ID,
+				_CongregacaoSetor = "",
+				_CoordenadorNome = "",
+				_CoordenadorTelefone = null,
+				_Ativo = true
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructSetor();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
+		public override string ToString()
+		{
+			return EditData._CongregacaoSetor;
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+		public int? IDCongregacaoSetor
+		{
+			get => EditData._IDCongregacaoSetor;
+			set => EditData._IDCongregacaoSetor = value;
+		}
+
+		// Property CongregacaoSetor
+		//----------------------------------------------------------------
+		public string CongregacaoSetor
+		{
+			get => EditData._CongregacaoSetor;
+			set
+			{
+				if (value != EditData._CongregacaoSetor)
+				{
+					EditData._CongregacaoSetor = value;
+					NotifyPropertyChanged("CongregacaoSetor");
+				}
+			}
+		}
+
+		// Property CoordenadorNome
+		//---------------------------------------------------------------
+		public string CoordenadorNome
+		{
+			get => EditData._CoordenadorNome;
+			set
+			{
+				if (value != EditData._CoordenadorNome)
+				{
+					EditData._CoordenadorNome = value;
+					NotifyPropertyChanged("CoordenadorNome");
+				}
+			}
+		}
+
+		// Property CoordenadorTelefone
+		//---------------------------------------------------------------
+		public string CoordenadorTelefone
+		{
+			get => EditData._CoordenadorTelefone;
+			set
+			{
+				if (value != EditData._CoordenadorTelefone)
+				{
+					EditData._CoordenadorTelefone = value;
+					NotifyPropertyChanged("CoordenadorTelefone");
+				}
+			}
+		}
+
+		// Property Ativo
+		//---------------------------------------------------------------
+		public bool Ativo
+		{
+			get => EditData._Ativo;
+			set
+			{
+				if (value != EditData._Ativo)
+				{
+					EditData._Ativo = value;
+					NotifyPropertyChanged("Ativo");
+				}
+			}
+		}
+	}
+
 }

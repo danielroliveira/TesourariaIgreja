@@ -13,7 +13,6 @@ namespace CamadaUI.Config
 	{
 		private int? IDCongregacao;
 		private int? IDConta;
-		string db = DBPath();
 
 		#region SUB NEW | LOAD
 
@@ -69,18 +68,18 @@ namespace CamadaUI.Config
 				string strIDConta = LoadNode(doc, "ContaPadrao");
 				IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
 				txtContaPadrao.Text = LoadNode(doc, "ContaDescricao");
-				
+
 				// DATA BLOQUEIO | DATA PADRAO
 				lblDataBloqueio.Text = LoadNode(doc, "DataBloqueada");
 				string DataPadrao = LoadNode(doc, "DataPadrao");
-				dtpDataPadrao.Value =  string.IsNullOrEmpty(DataPadrao) ? DateTime.Today : Convert.ToDateTime(DataPadrao);
+				dtpDataPadrao.Value = string.IsNullOrEmpty(DataPadrao) ? DateTime.Today : Convert.ToDateTime(DataPadrao);
 			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Ler arquivo XML..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
-			
+
 		}
 
 		private string LoadNode(XmlDocument doc, string nodeName)

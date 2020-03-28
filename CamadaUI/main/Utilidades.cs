@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -9,6 +10,7 @@ namespace CamadaUI
 	public enum DialogType { SIM_NAO, OK, OK_CANCELAR, SIM_NAO_CANCELAR }
 	public enum DialogIcon { Question, Information, Exclamation, Warning }
 	public enum DialogDefaultButton { First, Second, Third }
+	public enum EnumFlagEstado { RegistroSalvo = 1, Alterado = 2, NovoRegistro = 3, RegistroBloqueado = 4 }
 
 	static class Utilidades
 	{
@@ -44,7 +46,38 @@ namespace CamadaUI
 				lblFont = new Font(myLabel.Font.FontFamily, myLabel.Font.Size, myLabel.Font.Style);
 			}
 		}
-			   
+
+		// HANDLER DEFAULT FOR TEXTBOX ENTER => TAB
+		// =============================================================================
+		public static void HandlerKeyDownControl(Form form)
+		{
+			//--- Tipos de Controles
+			List<Type> types = new List<Type>()
+			{
+				typeof(TextBox),
+				typeof(ComboBox),
+				typeof(MaskedTextBox)
+			};
+
+			//--- para cada TabPage no tabPrincipal
+			foreach (Control control in form.Controls)
+			{
+				if (types.Contains(control.GetType()))
+				{
+					control.KeyDown += Control_KeyDown;
+				}
+			}
+		}
+
+		static void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			};
+		}
+
 	}
 
 }

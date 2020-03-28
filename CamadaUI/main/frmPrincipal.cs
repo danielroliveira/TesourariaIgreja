@@ -6,6 +6,7 @@ using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using CamadaDTO;
 using CamadaBLL;
+using CamadaUI.Registres;
 
 namespace CamadaUI
 {
@@ -42,7 +43,7 @@ namespace CamadaUI
 		private void frmPrincipal_Load(object sender, EventArgs e)
 		{
 			//--- INICIA APLICACAO COM O MENU DESABILITADO
-			mnuPrincipal.Enabled = false;
+			//mnuPrincipal.Enabled = false;
 
 			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
 			try
@@ -59,7 +60,7 @@ namespace CamadaUI
 					main.frmConnString fcString = new main.frmConnString();
 					fcString.ShowDialog();
 
-					if(fcString.DialogResult == DialogResult.Cancel)
+					if (fcString.DialogResult == DialogResult.Cancel)
 					{
 						Application.Exit();
 						return;
@@ -112,10 +113,10 @@ namespace CamadaUI
 		// =============================================================================
 		public objUsuario UsuarioAtual
 		{
-			get => _UsuarioAtual; 
-			set 
-			{ 
-				_UsuarioAtual = value; 
+			get => _UsuarioAtual;
+			set
+			{
+				_UsuarioAtual = value;
 			}
 		}
 
@@ -175,7 +176,7 @@ namespace CamadaUI
 			}
 			else
 			{
-				AbrirDialog("Arquivo de Configuração ainda não foi encontrado! \n" + 
+				AbrirDialog("Arquivo de Configuração ainda não foi encontrado! \n" +
 							"Sem CONFIGURAÇÃO não será possível continuar... \n" +
 							"Comunique-se com o administrador do Sistema.",
 							"Erro de Arquivo",
@@ -187,7 +188,6 @@ namespace CamadaUI
 
 		#endregion
 
-
 		#region BUTTONS
 		private void MenuOpen_Handler()
 		{
@@ -195,7 +195,7 @@ namespace CamadaUI
 			{
 				//MessageBox.Show(control.GetType().ToString());
 
-				if(control.GetType() == typeof(ToolStripSplitButton))
+				if (control.GetType() == typeof(ToolStripSplitButton))
 				{
 					ToolStripSplitButton splitButton = (ToolStripSplitButton)control;
 					splitButton.ButtonClick += ToolStripSplitButton_ButtonClick;
@@ -359,5 +359,19 @@ namespace CamadaUI
 
 		#endregion
 
+		private void mnuCongregacoes_Click(object sender, EventArgs e)
+		{
+			frmCongregacao frm = new frmCongregacao(new objCongregacao(null));
+			frm.MdiParent = this;
+			frm.Show();
+
+		}
+
+		private void mnuSetores_Click(object sender, EventArgs e)
+		{
+			frmCongregacaoSetorListagem frm = new frmCongregacaoSetorListagem(false, this);
+			frm.MdiParent = this;
+			frm.Show();
+		}
 	}
 }

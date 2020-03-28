@@ -10,7 +10,6 @@ namespace CamadaUI.Config
 {
 	public partial class frmConfigServidor : modals.frmModConfig
 	{
-		string db = DBPath();
 
 		#region SUB NEW | LOAD
 

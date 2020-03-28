@@ -37,7 +37,12 @@
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.btnAvisos = new System.Windows.Forms.ToolStripSplitButton();
+			this.btnCadastros = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuContribuintes = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCredores = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSetores = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop = new System.Windows.Forms.Panel();
 			this.lblTitulo = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
@@ -65,7 +70,7 @@
             this.btnSair,
             this.btnEntradas,
             this.btnSaidas,
-            this.btnAvisos});
+            this.btnCadastros});
 			this.mnuPrincipal.Location = new System.Drawing.Point(0, 39);
 			this.mnuPrincipal.Name = "mnuPrincipal";
 			this.mnuPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -109,18 +114,22 @@
 			// 
 			// toolStripMenuItem2
 			// 
+			this.toolStripMenuItem2.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(238, 22);
+			this.toolStripMenuItem2.Padding = new System.Windows.Forms.Padding(0);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(238, 20);
 			this.toolStripMenuItem2.Text = "toolStripMenuItem2";
 			// 
 			// toolStripMenuItem3
 			// 
+			this.toolStripMenuItem3.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
 			this.toolStripMenuItem3.Size = new System.Drawing.Size(238, 22);
 			this.toolStripMenuItem3.Text = "toolStripMenuItem3";
 			// 
 			// toolStripMenuItem4
 			// 
+			this.toolStripMenuItem4.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(238, 22);
 			this.toolStripMenuItem4.Text = "toolStripMenuItem4";
@@ -141,19 +150,65 @@
 			// 
 			// toolStripMenuItem1
 			// 
+			this.toolStripMenuItem1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(238, 22);
 			this.toolStripMenuItem1.Text = "toolStripMenuItem1";
 			// 
-			// btnAvisos
+			// btnCadastros
 			// 
-			this.btnAvisos.Image = global::CamadaUI.Properties.Resources.agenda_32;
-			this.btnAvisos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnAvisos.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnAvisos.Margin = new System.Windows.Forms.Padding(5);
-			this.btnAvisos.Name = "btnAvisos";
-			this.btnAvisos.Size = new System.Drawing.Size(117, 46);
-			this.btnAvisos.Text = "Avisos";
+			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuContribuintes,
+            this.mnuCredores,
+            this.toolStripSeparator1,
+            this.mnuCongregacoes,
+            this.mnuSetores});
+			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.adicionar_30;
+			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnCadastros.Margin = new System.Windows.Forms.Padding(5);
+			this.btnCadastros.Name = "btnCadastros";
+			this.btnCadastros.Size = new System.Drawing.Size(136, 46);
+			this.btnCadastros.Text = "Cadastros";
+			// 
+			// mnuContribuintes
+			// 
+			this.mnuContribuintes.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuContribuintes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContribuintes.Name = "mnuContribuintes";
+			this.mnuContribuintes.Size = new System.Drawing.Size(198, 30);
+			this.mnuContribuintes.Text = "Contribuintes";
+			// 
+			// mnuCredores
+			// 
+			this.mnuCredores.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuCredores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCredores.Name = "mnuCredores";
+			this.mnuCredores.Size = new System.Drawing.Size(198, 30);
+			this.mnuCredores.Text = "Credores";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(195, 6);
+			// 
+			// mnuCongregacoes
+			// 
+			this.mnuCongregacoes.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuCongregacoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCongregacoes.Name = "mnuCongregacoes";
+			this.mnuCongregacoes.Size = new System.Drawing.Size(198, 30);
+			this.mnuCongregacoes.Text = "Congregações";
+			this.mnuCongregacoes.Click += new System.EventHandler(this.mnuCongregacoes_Click);
+			// 
+			// mnuSetores
+			// 
+			this.mnuSetores.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSetores.Name = "mnuSetores";
+			this.mnuSetores.Size = new System.Drawing.Size(198, 30);
+			this.mnuSetores.Text = "Setores";
+			this.mnuSetores.Click += new System.EventHandler(this.mnuSetores_Click);
 			// 
 			// pnlTop
 			// 
@@ -401,7 +456,7 @@
         internal System.Windows.Forms.Button btnConfig;
         internal System.Windows.Forms.Button btnClose;
         internal System.Windows.Forms.Button btnMinimizer;
-		private System.Windows.Forms.ToolStripSplitButton btnAvisos;
+		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
 		private System.Windows.Forms.Label lblTitulo;
 		private System.Windows.Forms.ToolStripSplitButton btnEntradas;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
@@ -419,6 +474,11 @@
 		internal System.Windows.Forms.Label lblDataSis;
 		internal System.Windows.Forms.Label Label2;
 		internal System.Windows.Forms.Label lblHora;
+		private System.Windows.Forms.ToolStripMenuItem mnuCongregacoes;
+		private System.Windows.Forms.ToolStripMenuItem mnuSetores;
+		private System.Windows.Forms.ToolStripMenuItem mnuCredores;
+		private System.Windows.Forms.ToolStripMenuItem mnuContribuintes;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }
 

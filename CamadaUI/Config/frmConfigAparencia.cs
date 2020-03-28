@@ -10,15 +10,12 @@ namespace CamadaUI.Config
 {
 	public partial class frmConfigAparencia : modals.frmModConfig
 	{
-		string db = DBPath();
-
 		#region SUB NEW | LOAD
 
 		// SUB NEW
 		public frmConfigAparencia()
 		{
 			InitializeComponent();
-
 		}
 
 		// LOAD
