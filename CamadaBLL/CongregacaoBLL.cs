@@ -163,7 +163,7 @@ namespace CamadaBLL
 
 		// GET LIST OF CONGREGACAO SETOR
 		//------------------------------------------------------------------------------------------------------------
-		public List<objCongregacaoSetor> GetListCongregacaoSetor(bool? Ativas = null)
+		public List<objCongregacaoSetor> GetListCongregacaoSetor(bool? Ativa = null)
 		{
 			try
 			{
@@ -171,10 +171,10 @@ namespace CamadaBLL
 
 				string query = "SELECT * FROM tblCongregacaoSetor";
 
-				if (Ativas != null)
+				if (Ativa != null)
 				{
 					db.LimparParametros();
-					db.AdicionarParametros("@Ativos", Ativas);
+					db.AdicionarParametros("@Ativo", Ativa);
 					query += " WHERE Ativo = @Ativo";
 				}
 

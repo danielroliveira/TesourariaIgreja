@@ -9,6 +9,7 @@ using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using System.Linq;
 
 namespace CamadaUI.Registres
 {
@@ -41,6 +42,7 @@ namespace CamadaUI.Registres
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+			AtivoButtonImage();
 			HandlerKeyDownControl(this);
 		}
 
@@ -100,8 +102,6 @@ namespace CamadaUI.Registres
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
-			bind.CurrentChanged += BindRegistroChanged;
-
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -115,10 +115,6 @@ namespace CamadaUI.Registres
 			{
 				Sit = EnumFlagEstado.Alterado;
 			}
-		}
-		private void BindRegistroChanged(object sender, EventArgs e)
-		{
-			MessageBox.Show("alterado");
 		}
 
 		#endregion
@@ -137,6 +133,7 @@ namespace CamadaUI.Registres
 				return;
 			}
 
+			new frmCongregacaoSetorListagem().Show();
 			Close();
 		}
 
@@ -149,7 +146,11 @@ namespace CamadaUI.Registres
 				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
 							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
 
-				if (response == DialogResult.Yes) Close();
+				if (response == DialogResult.Yes)
+				{
+					new frmCongregacaoSetorListagem().Show();
+					Close();
+				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
@@ -161,6 +162,19 @@ namespace CamadaUI.Registres
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+		}
+
+		// INSERIR NOVO REGISTRO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnNovo_Click(object sender, EventArgs e)
+		{
+			if (Sit != EnumFlagEstado.RegistroSalvo) return;
+
+			_setor = new objCongregacaoSetor(null);
+			Sit = EnumFlagEstado.NovoRegistro;
+			AtivoButtonImage();
+			bind.DataSource = _setor;
+			txtCongregacaoSetor.Focus();
 		}
 
 		private void btnAtivo_Click(object sender, EventArgs e)
@@ -225,7 +239,6 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
-
 			try
 			{
 				// --- Ampulheta ON
@@ -234,18 +247,25 @@ namespace CamadaUI.Registres
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				//--- save | Insert
 				CongregacaoBLL cBLL = new CongregacaoBLL();
-				int ID = cBLL.InsertCongregacaoSetor(_setor);
 
-				//--- define newID
-				_setor.IDCongregacaoSetor = ID;
+				//--- SAVE: INSERT OR UPDATE
+				if (_setor.IDCongregacaoSetor == null) //--- save | Insert
+				{
+					int ID = cBLL.InsertCongregacaoSetor(_setor);
+					//--- define newID
+					_setor.IDCongregacaoSetor = ID;
+				}
+				else //--- update
+				{
+					cBLL.UpdateCongregacaoSetor(_setor);
+				}
+
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
-
 			}
 			catch (Exception ex)
 			{
@@ -263,10 +283,10 @@ namespace CamadaUI.Registres
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtCongregacaoSetor, "Congregação Setor", _setor)) return false;
-
 			return true;
 		}
 
 		#endregion
+
 	}
 }

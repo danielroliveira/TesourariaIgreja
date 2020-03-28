@@ -7,9 +7,16 @@ using System.Xml.Linq;
 using static CamadaUI.Utilidades;
 using CamadaDTO;
 using System.Collections.Generic;
+using System.Linq;
+using System.Drawing;
 
 namespace CamadaUI
 {
+	public enum DialogType { SIM_NAO, OK, OK_CANCELAR, SIM_NAO_CANCELAR }
+	public enum DialogIcon { Question, Information, Exclamation, Warning }
+	public enum DialogDefaultButton { First, Second, Third }
+	public enum EnumFlagEstado { RegistroSalvo = 1, Alterado = 2, NovoRegistro = 3, RegistroBloqueado = 4 }
+
 	public static class FuncoesGlobais
 	{
 		#region CONFIG CREATE | LOAD | CHANGE
@@ -308,6 +315,38 @@ namespace CamadaUI
 
 			//--- RETORNA
 			return true;
+		}
+
+		#endregion
+
+		#region CONTROLE DO MENU
+
+		//--- OCULTAR E REVELAR O MENU PRINCIPAL
+		public static void OcultaMenuPrincipal()
+		{
+			frmPrincipal frm = Application.OpenForms.OfType<frmPrincipal>().First();
+			frm.mnuPrincipal.Visible = false;
+			frm.pnlTop.BackColor = Color.Gainsboro;
+			frm.btnConfig.Enabled = false;
+		}
+
+		//--- REVELA MENU PRINCIPAL
+		public static void MostraMenuPrincipal()
+		{
+			frmPrincipal frm = Application.OpenForms.OfType<frmPrincipal>().First();
+			frm.mnuPrincipal.Visible = true;
+			frm.mnuPrincipal.Enabled = true;
+			frm.pnlTop.BackColor = Color.SlateGray;
+			frm.btnConfig.Enabled = true;
+		}
+
+		//--- DESABILITA MENU PRINCIPAL
+		public static void DesativaMenuPrincipal()
+		{
+			frmPrincipal frm = Application.OpenForms.OfType<frmPrincipal>().First();
+			frm.mnuPrincipal.Enabled = false;
+			frm.pnlTop.BackColor = Color.SlateGray;
+			frm.btnConfig.Enabled = false;
 		}
 
 		#endregion

@@ -7,11 +7,6 @@ using System.Windows.Forms;
 
 namespace CamadaUI
 {
-	public enum DialogType { SIM_NAO, OK, OK_CANCELAR, SIM_NAO_CANCELAR }
-	public enum DialogIcon { Question, Information, Exclamation, Warning }
-	public enum DialogDefaultButton { First, Second, Third }
-	public enum EnumFlagEstado { RegistroSalvo = 1, Alterado = 2, NovoRegistro = 3, RegistroBloqueado = 4 }
-
 	static class Utilidades
 	{
 		// MESSAGE DIALOG BOX
@@ -68,7 +63,6 @@ namespace CamadaUI
 				}
 			}
 		}
-
 		static void Control_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)

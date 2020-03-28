@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
+using static CamadaUI.FuncoesGlobais;
 using System.Linq;
 
 namespace CamadaUI.Registres
@@ -15,55 +16,39 @@ namespace CamadaUI.Registres
 	public partial class frmCongregacaoSetorListagem : CamadaUI.modals.frmModFinBorder
 	{
 		private List<objCongregacaoSetor> listSetor = new List<objCongregacaoSetor>();
-		private bool _Procura;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
-		private Form _formOrigem;
 
-		//--- PROPRIEDADE DE ESCOLHA
-		public objCongregacaoSetor propEscolha { get; set; }
+		#region NEW | OPEN FUNCTIONS
 
-		public frmCongregacaoSetorListagem(bool Procura = false, Form formOrigem = null)
+		public frmCongregacaoSetorListagem()
 		{
 			InitializeComponent();
 
 			//--- Add any initialization after the InitializeComponent() call.
 			CarregaCmbAtivo();
-			_Procura = Procura;
-			_formOrigem = formOrigem;
-
-			//--- Verifica se o form foi aberto para PROCURA ou para CONTROLE 
-			if (Procura == true) //--- nesse caso foi aberto para procura
-			{
-				btnEditar.Text = "&Escolher";
-				btnEditar.Image = Properties.Resources.accept_24;
-				btnAdicionar.Enabled = false;
-				btnFechar.Text = "&Cancelar";
-				lblTitulo.Text = "Escolher Fornecedor";
-			}
-			else
-			{
-				btnEditar.Text = "&Editar";
-				btnEditar.Image = Properties.Resources.editar_24;
-				btnAdicionar.Enabled = true;
-				btnFechar.Text = "&Fechar";
-				lblTitulo.Text = "Procurar Fornecedor";
-			}
-
-			ObterDados();
+			ObterDados(this, new EventArgs());
 			FormataListagem();
+
+			//--- get dados
+			cmbAtivo.SelectedValueChanged += ObterDados;
+			dgvListagem.CellDoubleClick += btnEditar_Click;
+			txtProcura.TextChanged += FiltrarListagem;
 		}
 
-		private void ObterDados()
+		//--- PROPRIEDADE DE ESCOLHA
+		public objCongregacaoSetor propEscolha { get; set; }
+
+		// GET DATA
+		//------------------------------------------------------------------------------------------------------------
+		private void ObterDados(object sender, EventArgs e)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-
 				CongregacaoBLL cBLL = new CongregacaoBLL();
-				listSetor = cBLL.GetListCongregacaoSetor();
-
+				listSetor = cBLL.GetListCongregacaoSetor(Convert.ToBoolean(cmbAtivo.SelectedValue));
 				dgvListagem.DataSource = listSetor;
 			}
 			catch (Exception ex)
@@ -79,6 +64,8 @@ namespace CamadaUI.Registres
 
 		}
 
+		// CARREGA COMBO
+		//------------------------------------------------------------------------------------------------------------
 		private void CarregaCmbAtivo()
 		{
 			//--- Create DataTable
@@ -95,6 +82,12 @@ namespace CamadaUI.Registres
 			cmbAtivo.SelectedValue = true;
 		}
 
+		#endregion
+
+		#region DATAGRID LIST FUNCTIONS
+
+		// FORMATA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
 		private void FormataListagem()
 		{
 			dgvListagem.Columns.Clear();
@@ -107,6 +100,7 @@ namespace CamadaUI.Registres
 			dgvListagem.RowHeadersWidth = 36;
 			dgvListagem.RowTemplate.Height = 30;
 			dgvListagem.StandardTab = true;
+			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
@@ -137,20 +131,157 @@ namespace CamadaUI.Registres
 			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
 		}
 
+		// CONTROL IMAGES OF LIST DATAGRID
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.ColumnIndex == 2)
+			{
+				objCongregacaoSetor item = (objCongregacaoSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				if (item.Ativo) e.Value = ImgAtivo;
+				else e.Value = ImgInativo;
+			}
+		}
+
+		#endregion
+
+		#region BUTTONS FUNCTION
+
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
+			MostraMenuPrincipal();
 		}
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
 			frmCongregacaoSetor frm = new frmCongregacaoSetor(new objCongregacaoSetor(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
 		}
 
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Editar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
 
+			//--- get Selected item
+			objCongregacaoSetor item = (objCongregacaoSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//--- open edit form
+			frmCongregacaoSetor frm = new frmCongregacaoSetor(item);
+			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
+		}
+
+		#endregion
+
+		#region "FILTRAGEM PROCURA"
+
+		private void FiltrarListagem(object sender, EventArgs e)
+		{
+			dgvListagem.DataSource = listSetor.FindAll(FiltrarDelegate);
+		}
+
+		private bool FiltrarDelegate(objCongregacaoSetor obj)
+		{
+			if (obj.CongregacaoSetor.ToLower().Contains(txtProcura.Text.ToLower())) return true;
+			else return false;
+		}
+
+		#endregion // FILTRAGEM PROCURA --- END
+
+		#region "ATIVAR DESATIVAR MENU"
+
+
+
+		#endregion // ATIVAR DESATIVAR MENU --- END
+
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				Control c = (Control)sender;
+				DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+				dgvListagem.ClearSelection();
+
+				//---VERIFICAÇÕES NECESSARIAS
+				if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+				// seleciona o ROW
+				dgvListagem.Rows[hit.RowIndex].Cells[0].Selected = true;
+				dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+				// mostra o MENU ativar e desativar
+				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
+				{
+					objCongregacaoSetor Setor = (objCongregacaoSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+					if (Setor.Ativo == true)
+					{
+						AtivarToolStripMenuItem.Enabled = false;
+						DesativarToolStripMenuItem.Enabled = true;
+					}
+					else
+					{
+						AtivarToolStripMenuItem.Enabled = true;
+						DesativarToolStripMenuItem.Enabled = false;
+					}
+
+					// revela menu
+					MenuListagem.Show(c.PointToScreen(e.Location));
+				}
+			}
+		}
+
+		private void AtivarDesativar_Setor_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return;
+
+			//--- Verifica o item
+			objCongregacaoSetor setor = (objCongregacaoSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//---pergunta ao usuário
+			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativo ? "DESATIVAR " : "ATIVAR")} esse Setor?\n" +
+									  setor.CongregacaoSetor.ToUpper(), (setor.Ativo ? "DESATIVAR " : "ATIVAR"),
+									  DialogType.SIM_NAO, DialogIcon.Question);
+			if (reponse == DialogResult.No) return;
+
+			//--- altera o valor
+			setor.Ativo = !setor.Ativo;
+
+			//--- Salvar o Registro
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				CongregacaoBLL cBLL = new CongregacaoBLL();
+				cBLL.UpdateCongregacaoSetor(setor);
+
+				//--- altera a imagem
+				FiltrarListagem(sender, e);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Alterar Setor..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 	}
 }

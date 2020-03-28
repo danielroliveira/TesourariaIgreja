@@ -80,7 +80,7 @@
 			this.Label9.AutoSize = true;
 			this.Label9.BackColor = System.Drawing.Color.Transparent;
 			this.Label9.ForeColor = System.Drawing.Color.Black;
-			this.Label9.Location = new System.Drawing.Point(62, 161);
+			this.Label9.Location = new System.Drawing.Point(62, 194);
 			this.Label9.Name = "Label9";
 			this.Label9.Size = new System.Drawing.Size(65, 19);
 			this.Label9.TabIndex = 24;
@@ -88,7 +88,7 @@
 			// 
 			// txtCoordenadorTelefone
 			// 
-			this.txtCoordenadorTelefone.Location = new System.Drawing.Point(134, 158);
+			this.txtCoordenadorTelefone.Location = new System.Drawing.Point(134, 191);
 			this.txtCoordenadorTelefone.Mask = "(99) 99000-0000";
 			this.txtCoordenadorTelefone.Name = "txtCoordenadorTelefone";
 			this.txtCoordenadorTelefone.Size = new System.Drawing.Size(144, 27);
@@ -99,7 +99,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(85, 77);
+			this.lblCongregacao.Location = new System.Drawing.Point(85, 94);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(42, 19);
 			this.lblCongregacao.TabIndex = 1;
@@ -108,7 +108,7 @@
 			// txtCongregacaoSetor
 			// 
 			this.txtCongregacaoSetor.BackColor = System.Drawing.Color.White;
-			this.txtCongregacaoSetor.Location = new System.Drawing.Point(134, 74);
+			this.txtCongregacaoSetor.Location = new System.Drawing.Point(134, 91);
 			this.txtCongregacaoSetor.Name = "txtCongregacaoSetor";
 			this.txtCongregacaoSetor.Size = new System.Drawing.Size(371, 27);
 			this.txtCongregacaoSetor.TabIndex = 2;
@@ -118,7 +118,7 @@
 			this.lblID.BackColor = System.Drawing.Color.Transparent;
 			this.lblID.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblID.ForeColor = System.Drawing.Color.AliceBlue;
-			this.lblID.Location = new System.Drawing.Point(4, 18);
+			this.lblID.Location = new System.Drawing.Point(4, 16);
 			this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblID.Name = "lblID";
 			this.lblID.Size = new System.Drawing.Size(94, 30);
@@ -132,7 +132,7 @@
 			this.lbl_IdTexto.BackColor = System.Drawing.Color.Transparent;
 			this.lbl_IdTexto.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lbl_IdTexto.ForeColor = System.Drawing.Color.LightGray;
-			this.lbl_IdTexto.Location = new System.Drawing.Point(31, 5);
+			this.lbl_IdTexto.Location = new System.Drawing.Point(31, 3);
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
 			this.lbl_IdTexto.Size = new System.Drawing.Size(35, 13);
@@ -145,7 +145,7 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(35, 128);
+			this.label3.Location = new System.Drawing.Point(35, 161);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(92, 19);
 			this.label3.TabIndex = 3;
@@ -154,7 +154,7 @@
 			// txtCoordenadorNome
 			// 
 			this.txtCoordenadorNome.BackColor = System.Drawing.Color.White;
-			this.txtCoordenadorNome.Location = new System.Drawing.Point(134, 125);
+			this.txtCoordenadorNome.Location = new System.Drawing.Point(134, 158);
 			this.txtCoordenadorNome.Name = "txtCoordenadorNome";
 			this.txtCoordenadorNome.Size = new System.Drawing.Size(268, 27);
 			this.txtCoordenadorNome.TabIndex = 4;
@@ -175,7 +175,7 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 209);
+			this.tspMenu.Location = new System.Drawing.Point(2, 273);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
 			this.tspMenu.TabIndex = 30;
@@ -191,6 +191,7 @@
 			this.btnNovo.Size = new System.Drawing.Size(86, 41);
 			this.btnNovo.Text = "&Nova";
 			this.btnNovo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -258,7 +259,7 @@
 			this.line1.EndPoint = new System.Drawing.Point(495, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 107);
+			this.line1.Location = new System.Drawing.Point(25, 132);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(500, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
@@ -267,7 +268,7 @@
 			// frmCongregacaoSetor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 255);
+			this.ClientSize = new System.Drawing.Size(560, 319);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.txtCoordenadorTelefone);

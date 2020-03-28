@@ -449,11 +449,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip mnuPrincipal;
-        private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.ToolStripButton btnSair;
-        internal System.Windows.Forms.Button btnConfig;
         internal System.Windows.Forms.Button btnClose;
         internal System.Windows.Forms.Button btnMinimizer;
 		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
@@ -479,6 +475,9 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuCredores;
 		private System.Windows.Forms.ToolStripMenuItem mnuContribuintes;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		public System.Windows.Forms.Panel pnlTop;
+		public System.Windows.Forms.ToolStrip mnuPrincipal;
+		public System.Windows.Forms.Button btnConfig;
 	}
 }
 

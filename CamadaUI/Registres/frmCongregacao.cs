@@ -151,6 +151,7 @@ namespace CamadaUI.Registres
 			}
 
 			Close();
+			MostraMenuPrincipal();
 		}
 
 		// CANCELAR ALTERACAO
@@ -162,7 +163,11 @@ namespace CamadaUI.Registres
 				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
 							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
 
-				if (response == DialogResult.Yes) Close();
+				if (response == DialogResult.Yes)
+				{
+					Close();
+					MostraMenuPrincipal();
+				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{

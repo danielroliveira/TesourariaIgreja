@@ -359,19 +359,24 @@ namespace CamadaUI
 
 		#endregion
 
+		#region MENU FUNCOES
+
 		private void mnuCongregacoes_Click(object sender, EventArgs e)
 		{
 			frmCongregacao frm = new frmCongregacao(new objCongregacao(null));
 			frm.MdiParent = this;
+			DesativaMenuPrincipal();
 			frm.Show();
-
 		}
 
 		private void mnuSetores_Click(object sender, EventArgs e)
 		{
-			frmCongregacaoSetorListagem frm = new frmCongregacaoSetorListagem(false, this);
+			frmCongregacaoSetorListagem frm = new frmCongregacaoSetorListagem();
 			frm.MdiParent = this;
+			DesativaMenuPrincipal();
 			frm.Show();
 		}
+
+		#endregion
 	}
 }

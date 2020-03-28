@@ -28,8 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnEditar = new System.Windows.Forms.Button();
@@ -41,8 +42,12 @@
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
+			this.MenuListagem.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -109,17 +114,17 @@
 			this.txtProcura.Location = new System.Drawing.Point(90, 67);
 			this.txtProcura.Margin = new System.Windows.Forms.Padding(6);
 			this.txtProcura.Name = "txtProcura";
-			this.txtProcura.Size = new System.Drawing.Size(285, 27);
+			this.txtProcura.Size = new System.Drawing.Size(282, 27);
 			this.txtProcura.TabIndex = 9;
 			// 
 			// Label2
 			// 
 			this.Label2.AutoSize = true;
-			this.Label2.Location = new System.Drawing.Point(402, 70);
+			this.Label2.Location = new System.Drawing.Point(396, 70);
 			this.Label2.Name = "Label2";
-			this.Label2.Size = new System.Drawing.Size(42, 19);
+			this.Label2.Size = new System.Drawing.Size(64, 19);
 			this.Label2.TabIndex = 10;
-			this.Label2.Text = "Ativo";
+			this.Label2.Text = "Situação";
 			// 
 			// Label1
 			// 
@@ -135,9 +140,9 @@
 			this.cmbAtivo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbAtivo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbAtivo.FormattingEnabled = true;
-			this.cmbAtivo.Location = new System.Drawing.Point(450, 67);
+			this.cmbAtivo.Location = new System.Drawing.Point(466, 67);
 			this.cmbAtivo.Name = "cmbAtivo";
-			this.cmbAtivo.Size = new System.Drawing.Size(119, 27);
+			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
 			this.cmbAtivo.TabIndex = 15;
 			// 
 			// dgvListagem
@@ -146,24 +151,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -181,8 +186,11 @@
 			this.dgvListagem.RowTemplate.Height = 30;
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(547, 371);
 			this.dgvListagem.TabIndex = 16;
+			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
+			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
 			// clnID
 			// 
@@ -204,6 +212,30 @@
 			this.clnImage.Name = "clnImage";
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
+			// 
+			// MenuListagem
+			// 
+			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AtivarToolStripMenuItem,
+            this.DesativarToolStripMenuItem});
+			this.MenuListagem.Name = "MenuFab";
+			this.MenuListagem.Size = new System.Drawing.Size(153, 48);
+			// 
+			// AtivarToolStripMenuItem
+			// 
+			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
+			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
+			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.AtivarToolStripMenuItem.Text = "Ativar Setor";
+			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			// 
+			// DesativarToolStripMenuItem
+			// 
+			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
+			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
+			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
+			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
 			// 
 			// frmCongregacaoSetorListagem
 			// 
@@ -229,6 +261,7 @@
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
+			this.MenuListagem.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -247,5 +280,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
+		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
+		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
+		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
 	}
 }
