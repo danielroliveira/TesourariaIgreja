@@ -53,6 +53,9 @@
     <Compile Include="ucComboLimitedValues.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ucData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ucTelefone.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -13,15 +13,15 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacaoSetorListagem : CamadaUI.modals.frmModFinBorder
+	public partial class frmCongregacaoListagem : CamadaUI.modals.frmModFinBorder
 	{
-		private List<objCongregacaoSetor> listSetor = new List<objCongregacaoSetor>();
+		private List<objCongregacao> listCong = new List<objCongregacao>();
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmCongregacaoSetorListagem()
+		public frmCongregacaoListagem()
 		{
 			InitializeComponent();
 
@@ -49,8 +49,8 @@ namespace CamadaUI.Registres
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				CongregacaoBLL cBLL = new CongregacaoBLL();
-				listSetor = cBLL.GetListCongregacaoSetor(Convert.ToBoolean(cmbAtivo.SelectedValue));
-				dgvListagem.DataSource = listSetor;
+				listCong = cBLL.GetListCongregacao(Convert.ToBoolean(cmbAtivo.SelectedValue));
+				dgvListagem.DataSource = listCong;
 			}
 			catch (Exception ex)
 			{
@@ -105,7 +105,7 @@ namespace CamadaUI.Registres
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDCongregacaoSetor";
+			clnID.DataPropertyName = "IDCongregacao";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -114,7 +114,7 @@ namespace CamadaUI.Registres
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "CongregacaoSetor";
+			clnCadastro.DataPropertyName = "Congregacao";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = true;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -138,7 +138,7 @@ namespace CamadaUI.Registres
 		{
 			if (e.ColumnIndex == 2)
 			{
-				objCongregacaoSetor item = (objCongregacaoSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				objCongregacao item = (objCongregacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 				if (item.Ativo) e.Value = ImgAtivo;
 				else e.Value = ImgInativo;
 			}
@@ -168,7 +168,7 @@ namespace CamadaUI.Registres
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmCongregacaoSetor frm = new frmCongregacaoSetor(new objCongregacaoSetor(null));
+			frmCongregacao frm = new frmCongregacao(new objCongregacao(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -186,10 +186,10 @@ namespace CamadaUI.Registres
 			}
 
 			//--- get Selected item
-			objCongregacaoSetor item = (objCongregacaoSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+			objCongregacao item = (objCongregacao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			frmCongregacaoSetor frm = new frmCongregacaoSetor(item);
+			frmCongregacao frm = new frmCongregacao(item);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -202,12 +202,12 @@ namespace CamadaUI.Registres
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
-			dgvListagem.DataSource = listSetor.FindAll(FiltrarDelegate);
+			dgvListagem.DataSource = listCong.FindAll(FiltrarDelegate);
 		}
 
-		private bool FiltrarDelegate(objCongregacaoSetor obj)
+		private bool FiltrarDelegate(objCongregacao obj)
 		{
-			if (obj.CongregacaoSetor.ToLower().Contains(txtProcura.Text.ToLower())) return true;
+			if (obj.Congregacao.ToLower().Contains(txtProcura.Text.ToLower())) return true;
 			else return false;
 		}
 
@@ -299,7 +299,7 @@ namespace CamadaUI.Registres
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacaoSetorListagem_KeyDown(object sender, KeyEventArgs e)
+		private void frmCongregacaoListagem_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{

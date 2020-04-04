@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CamadaUI
 {
-	static class Utilidades
+	public static class Utilidades
 	{
 		// MESSAGE DIALOG BOX
 		// =============================================================================
@@ -72,6 +72,25 @@ namespace CamadaUI
 			};
 		}
 
+		// GET TEXT AND RETURN CNPJ OR CPF FORMAT STRING
+		//=================================================================================================
+		public static string CNPConvert(string CNP)
+		{
+			if (CNP.Length == 11)
+			{
+				// txtCNPJ.Mask = "000,000,000-00"
+				return CNP.Insert(3, ".").Insert(7, ".").Insert(11, "-");
+			}
+			else if (CNP.Length == 14)
+			{
+				// txtCNPJ.Mask = "00,000,000/0000-00"
+				return CNP.Insert(2, ".").Insert(6, ".").Insert(10, "/").Insert(15, "-");
+			}
+			else
+			{
+				throw new CamadaDTO.AppException("Número de CNPJ ou CPF inválido...");
+			}
+		}
 	}
 
 }

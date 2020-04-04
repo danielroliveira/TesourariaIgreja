@@ -9,13 +9,12 @@ using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacao : CamadaUI.modals.frmModFinBorder
+	public partial class frmCredor : CamadaUI.modals.frmModFinBorder
 	{
-		private objCongregacao _congregacao;
+		private objCredor _credor;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 
@@ -23,17 +22,18 @@ namespace CamadaUI.Registres
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmCongregacao(objCongregacao obj)
+		public frmCredor(objCredor obj)
 		{
 			InitializeComponent();
 
-			_congregacao = obj;
-			bind.DataSource = _congregacao;
+			_credor = obj;
+			bind.DataSource = _credor;
 			BindingCreator();
+			CheckCredorTipo();
 
-			_congregacao.PropertyChanged += RegistroAlterado;
+			_credor.PropertyChanged += RegistroAlterado;
 
-			if (_congregacao.IDCongregacao == null)
+			if (_credor.IDCredor == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 			}
@@ -44,6 +44,9 @@ namespace CamadaUI.Registres
 
 			AtivoButtonImage();
 			HandlerKeyDownControl(this);
+			chkWhatsapp.GotFocus += chkWathsapp_ControleFocus;
+			chkWhatsapp.LostFocus += chkWathsapp_ControleFocus;
+
 		}
 
 		// PROPERTY SITUACAO
@@ -95,10 +98,9 @@ namespace CamadaUI.Registres
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDcongregacao", true);
-			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDirigente.DataBindings.Add("Text", bind, "Dirigente", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtTesoureiro.DataBindings.Add("Text", bind, "Tesoureiro", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblID.DataBindings.Add("Text", bind, "IDCredor", true);
+			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCNP.DataBindings.Add("Text", bind, "CNP", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoLogradouro.DataBindings.Add("Text", bind, "EnderecoLogradouro", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoNumero.DataBindings.Add("Text", bind, "EnderecoNumero", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoComplemento.DataBindings.Add("Text", bind, "EnderecoComplemento", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -107,9 +109,12 @@ namespace CamadaUI.Registres
 			txtUF.DataBindings.Add("Text", bind, "UF", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCEP.DataBindings.Add("Text", bind, "CEP", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtTelefoneFixo.DataBindings.Add("Text", bind, "TelefoneFixo", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtTelefoneDirigente.DataBindings.Add("Text", bind, "TelefoneDirigente", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtTelefoneCelular.DataBindings.Add("Text", bind, "TelefoneCelular", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEmail.DataBindings.Add("Text", bind, "Email", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtSetor.DataBindings.Add("Text", bind, "CongregacaoSetor");
+			chkWhatsapp.DataBindings.Add("Checked", bind, "Whatsapp", true, DataSourceUpdateMode.OnPropertyChanged);
+
+			// CARREGA COMBO
+			CarregaCmbCredorTipo();
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -134,6 +139,26 @@ namespace CamadaUI.Registres
 			MessageBox.Show("alterado");
 		}
 
+		// CARREGA COMBO
+		//------------------------------------------------------------------------------------------------------------
+		private void CarregaCmbCredorTipo()
+		{
+			//--- Create DataTable
+			DataTable dtAtivo = new DataTable();
+			dtAtivo.Columns.Add("ID");
+			dtAtivo.Columns.Add("Tipo");
+			dtAtivo.Rows.Add(new object[] { 1, "Pessoa Física" });
+			dtAtivo.Rows.Add(new object[] { 2, "Pessoa Jurídica" });
+			dtAtivo.Rows.Add(new object[] { 3, "Órgão Público" });
+			dtAtivo.Rows.Add(new object[] { 4, "Credor Simples" });
+
+			//--- Set DataTable
+			cmbCredorTipo.DataSource = dtAtivo;
+			cmbCredorTipo.ValueMember = "ID";
+			cmbCredorTipo.DisplayMember = "Tipo";
+			cmbCredorTipo.DataBindings.Add("SelectedValue", bind, "CredorTipo", true, DataSourceUpdateMode.OnPropertyChanged);
+		}
+
 		#endregion
 
 		#region BUTTONS
@@ -144,11 +169,11 @@ namespace CamadaUI.Registres
 		{
 			if (Sit != EnumFlagEstado.RegistroSalvo) return;
 
-			_congregacao = new objCongregacao(null);
+			_credor = new objCredor(null);
 			Sit = EnumFlagEstado.NovoRegistro;
 			AtivoButtonImage();
-			bind.DataSource = _congregacao;
-			txtCongregacao.Focus();
+			bind.DataSource = _credor;
+			txtCredor.Focus();
 		}
 
 		// FECHAR FORM
@@ -184,7 +209,7 @@ namespace CamadaUI.Registres
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
-				_congregacao.CancelEdit();
+				_credor.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
 				AtivoButtonImage();
 			}
@@ -195,53 +220,34 @@ namespace CamadaUI.Registres
 
 		}
 
-		// OPEN SETOR PROCURA FORM
-		//------------------------------------------------------------------------------------------------------------
-		private void btnSetorEscolher_Click(object sender, EventArgs e)
-		{
-			frmCongregacaoSetorProcura frm = new frmCongregacaoSetorProcura(this, _congregacao.IDCongregacaoSetor);
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				_congregacao.IDCongregacaoSetor = frm.propEscolha.IDCongregacaoSetor;
-				txtSetor.Text = frm.propEscolha.CongregacaoSetor;
-			}
-
-			//--- select
-			txtSetor.Focus();
-			txtSetor.SelectAll();
-		}
-
 		// CONTROLA ATIVO BUTTON
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAtivo_Click(object sender, EventArgs e)
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
-				MessageBox.Show("Você não pode DESATIVAR uma Nova Congregação", "Desativar Congregação",
+				MessageBox.Show("Você não pode DESATIVAR um Novo Credor", "Desativar Credor",
 								MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 
-			if (_congregacao.Ativo == true) //--- ATIVA
+			if (_credor.Ativo == true) //--- ATIVA
 			{
-				var response = AbrirDialog("Você deseja realmente DESATIVAR a Congregação:\n" +
-							   txtCongregacao.Text.ToUpper(),
-							   "Desativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+				var response = AbrirDialog("Você deseja realmente DESATIVAR o Credor:\n" +
+							   txtCredor.Text.ToUpper(),
+							   "Desativar Credor", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 			else //--- INATIVO
 			{
-				var response = AbrirDialog("Você deseja realmente ATIVAR a Congregação:\n" +
-							   txtCongregacao.Text.ToUpper(),
-							   "Ativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+				var response = AbrirDialog("Você deseja realmente ATIVAR o Credor:\n" +
+							   txtCredor.Text.ToUpper(),
+							   "Ativar Credor", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 
-			_congregacao.BeginEdit();
-			_congregacao.Ativo = !_congregacao.Ativo;
+			_credor.BeginEdit();
+			_credor.Ativo = !_credor.Ativo;
 
 			if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
@@ -254,20 +260,20 @@ namespace CamadaUI.Registres
 		{
 			try
 			{
-				if (_congregacao.Ativo == true) //--- Nesse caso é Forma Ativo
+				if (_credor.Ativo == true) //--- Nesse caso é Forma Ativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchON_30;
-					btnAtivo.Text = "Ativa";
+					btnAtivo.Text = "Ativo";
 				}
-				else if (_congregacao.Ativo == false) //--- Nesse caso é Forma Inativo
+				else if (_credor.Ativo == false) //--- Nesse caso é Forma Inativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchOFF_30;
-					btnAtivo.Text = "Inativa";
+					btnAtivo.Text = "Inativo";
 				}
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Ativar a congregação..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Ativar o Credor..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}
@@ -290,11 +296,11 @@ namespace CamadaUI.Registres
 				if (!CheckSaveData()) return;
 
 				//--- save | Insert
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				int ID = cBLL.InsertCongregacao(_congregacao);
+				CredorBLL cBLL = new CredorBLL();
+				int ID = cBLL.InsertCredor(_credor);
 
 				//--- define newID
-				_congregacao.IDCongregacao = ID;
+				_credor.IDCredor = ID;
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
 				//--- emit massage
@@ -304,7 +310,7 @@ namespace CamadaUI.Registres
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Congregação..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Credor..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -317,78 +323,124 @@ namespace CamadaUI.Registres
 
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtCongregacao, "Congregação", _congregacao)) return false;
+			if (!VerificaDadosClasse(txtCredor, "Credor", _credor)) return false;
+			if (!VerificaDadosClasse(cmbCredorTipo, "CredorTipo", _credor)) return false;
 			return true;
 		}
 
 		#endregion
 
-		#region FORM CONTROLS FUCTIONS
+		#region CONTROLS
 
-		// FORM KEYPRESS: BLOQUEIA (+)
-		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacao_KeyPress(object sender, KeyPressEventArgs e)
+		private void chkWathsapp_ControleFocus(object sender, EventArgs e)
 		{
-			if (e.KeyChar == 43)
-			{
-				//--- cria uma lista de controles que serao impedidos de receber '+'
-				string[] controlesBloqueados = {
-					"txtSetor"
-				};
-
-				if (controlesBloqueados.Contains(ActiveControl.Name)) e.Handled = true;
-			}
-		}
-		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
-		//------------------------------------------------------------------------------------------------------------
-		private void Control_KeyDown(object sender, KeyEventArgs e)
-		{
-
-			Control ctr = (Control)sender;
-
-			if (e.KeyCode == Keys.Add)
-			{
-				e.Handled = true;
-
-				switch (ctr.Name)
-				{
-					case "txtSetor":
-						btnSetorEscolher_Click(sender, new EventArgs());
-						break;
-					default:
-						break;
-				}
-			}
-			else if (e.KeyCode == Keys.Delete)
-			{
-				e.Handled = true;
-
-				switch (ctr.Name)
-				{
-					case "txtSetor":
-						if (_congregacao.IDCongregacaoSetor != null) Sit = EnumFlagEstado.Alterado;
-						txtSetor.Clear();
-						_congregacao.IDCongregacaoSetor = null;
-						break;
-					default:
-						break;
-				}
-			}
+			if (chkWhatsapp.Focused)
+				pnlChk.BackColor = Color.Gainsboro;
 			else
-			{
-				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtSetor" };
+				pnlChk.BackColor = Color.Transparent;
+		}
+		private void picWathsapp_Click(object sender, EventArgs e)
+		{
+			chkWhatsapp.Focus();
+		}
 
-				if (controlesBloqueados.Contains(ctr.Name))
-				{
-					e.Handled = true;
-					e.SuppressKeyPress = true;
-				}
+		#endregion // CONTROLS --- END
+
+		// CONTROL CHANGES COMBOBOX CREDOR TIPO
+		//------------------------------------------------------------------------------------------------------------
+		private void cmbCredorTipo_SelectionChangeCommitted(object sender, EventArgs e)
+		{
+			cmbCredorTipo.DataBindings["SelectedValue"].WriteValue();
+			CheckCredorTipo();
+		}
+
+		// CHECK CREDOR TIPO TO ENABLE OR DISABLE CONTROLS
+		//------------------------------------------------------------------------------------------------------------
+		private void CheckCredorTipo()
+		{
+			// lista de controles que serao desabilitados
+			List<Control> controls = new List<Control>()
+			{
+				txtEnderecoComplemento, txtEnderecoLogradouro,
+				txtEnderecoNumero, txtBairro, txtCidade,
+				txtUF, txtCEP, txtTelefoneCelular, txtTelefoneFixo, txtEmail
+			};
+
+			// verifica valor do combo Tipo do Credor
+			switch (_credor.CredorTipo)
+			{
+				case 1: // PESSOA FISICA
+					lblCNP.Text = "CPF";
+					txtCNP.Enabled = true;
+					if (txtCNP.Text.Trim().Replace("/", "").Replace(".", "").Replace("-", "").Length != 11)
+					{
+						txtCNP.Clear();
+					}
+
+					controls.ForEach(x => x.Enabled = true);
+					pnlChk.Visible = true;
+
+					break;
+
+				case 2: // PESSOA JURIDICA
+					lblCNP.Text = "CNPJ";
+					txtCNP.Enabled = true;
+					if (txtCNP.Text.Trim().Replace("/", "").Replace(".", "").Replace("-", "").Length != 14)
+					{
+						txtCNP.Clear();
+					}
+
+					controls.ForEach(x => x.Enabled = true);
+					pnlChk.Visible = true;
+
+					break;
+
+				case 3: // ORGAO PUBLICO
+					lblCNP.Text = "";
+					txtCNP.Enabled = false;
+					txtCNP.Clear();
+					controls.ForEach(x => x.Enabled = false);
+					controls.ForEach(x => x.Text = "");
+					pnlChk.Visible = false;
+
+					break;
+
+				case 4: // CREDOR SIMPLES
+					lblCNP.Text = "";
+					txtCNP.Enabled = false;
+					txtCNP.Clear();
+					controls.ForEach(x => x.Enabled = false);
+					controls.ForEach(x => x.Text = "");
+					pnlChk.Visible = false;
+
+					break;
+
+				default:
+					break;
 			}
 		}
 
+		// FORMATA CPF OU CNPJ
+		//------------------------------------------------------------------------------------------------------------
+		private void txtCNP_Leave(object sender, EventArgs e)
+		{
+			if (txtCNP.Text.Trim().Length > 0)
+			{
+				try
+				{
+					txtCNP.Text = CNPConvert(txtCNP.Text);
+				}
+				catch (AppException ex)
+				{
+					AbrirDialog(ex.Message, "Valor Inválido", DialogType.OK, DialogIcon.Exclamation);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Uma exceção ocorreu ao formatar CNP...\n" +
+									ex.Message, "Exceção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 
-		#endregion // FORM CONTROLS FUCTIONS --- END
-
+			}
+		}
 	}
 }

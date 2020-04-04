@@ -13,9 +13,9 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacao : CamadaUI.modals.frmModFinBorder
+	public partial class frmContribuinte : CamadaUI.modals.frmModFinBorder
 	{
-		private objCongregacao _congregacao;
+		private objContribuinte _contribuinte;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 
@@ -23,17 +23,17 @@ namespace CamadaUI.Registres
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmCongregacao(objCongregacao obj)
+		public frmContribuinte(objContribuinte obj)
 		{
 			InitializeComponent();
 
-			_congregacao = obj;
-			bind.DataSource = _congregacao;
+			_contribuinte = obj;
+			bind.DataSource = _contribuinte;
 			BindingCreator();
 
-			_congregacao.PropertyChanged += RegistroAlterado;
+			_contribuinte.PropertyChanged += RegistroAlterado;
 
-			if (_congregacao.IDCongregacao == null)
+			if (_contribuinte.IDCongregacao == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 			}
@@ -43,7 +43,12 @@ namespace CamadaUI.Registres
 			}
 
 			AtivoButtonImage();
+
+			// ADD HANDLERS
 			HandlerKeyDownControl(this);
+			txtIDMembro.LostFocus += TxtIDMembro_LostFocus;
+			txtIDMembro.GotFocus += TxtIDMembro_GotFocus;
+
 		}
 
 		// PROPERTY SITUACAO
@@ -95,24 +100,20 @@ namespace CamadaUI.Registres
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDcongregacao", true);
-			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDirigente.DataBindings.Add("Text", bind, "Dirigente", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtTesoureiro.DataBindings.Add("Text", bind, "Tesoureiro", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtEnderecoLogradouro.DataBindings.Add("Text", bind, "EnderecoLogradouro", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtEnderecoNumero.DataBindings.Add("Text", bind, "EnderecoNumero", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtEnderecoComplemento.DataBindings.Add("Text", bind, "EnderecoComplemento", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtBairro.DataBindings.Add("Text", bind, "Bairro", true, DataSourceUpdateMode.OnPropertyChanged, DBNull.Value);
-			txtCidade.DataBindings.Add("Text", bind, "Cidade", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtUF.DataBindings.Add("Text", bind, "UF", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCEP.DataBindings.Add("Text", bind, "CEP", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtTelefoneFixo.DataBindings.Add("Text", bind, "TelefoneFixo", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtTelefoneDirigente.DataBindings.Add("Text", bind, "TelefoneDirigente", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtEmail.DataBindings.Add("Text", bind, "Email", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtSetor.DataBindings.Add("Text", bind, "CongregacaoSetor");
+			lblID.DataBindings.Add("Text", bind, "IDContribuinte", true);
+			txtContribuinte.DataBindings.Add("Text", bind, "Contribuinte", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtIDMembro.DataBindings.Add("Text", bind, "IDMembro", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtNascimentoData.DataBindings.Add("Text", bind, "NascimentoData", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtTelefoneCelular.DataBindings.Add("Text", bind, "TelefoneCelular", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCNP.DataBindings.Add("Text", bind, "CNP", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao");
+
+			// CARREGA COMBOS
+			CarregaCmbDizimista();
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
+			txtIDMembro.DataBindings["Text"].Format += FormatID;
 			bind.CurrentChanged += BindRegistroChanged;
 
 		}
@@ -134,22 +135,27 @@ namespace CamadaUI.Registres
 			MessageBox.Show("alterado");
 		}
 
+		// CARREGA COMBO
+		//------------------------------------------------------------------------------------------------------------
+		private void CarregaCmbDizimista()
+		{
+			//--- Create DataTable
+			DataTable dtAtivo = new DataTable();
+			dtAtivo.Columns.Add("Ativo");
+			dtAtivo.Columns.Add("Texto");
+			dtAtivo.Rows.Add(new object[] { false, "NÃO" });
+			dtAtivo.Rows.Add(new object[] { true, "SIM" });
+
+			//--- Set DataTable
+			cmbDizimista.DataSource = dtAtivo;
+			cmbDizimista.ValueMember = "Ativo";
+			cmbDizimista.DisplayMember = "Texto";
+			cmbDizimista.DataBindings.Add("SelectedValue", bind, "Dizimista", true, DataSourceUpdateMode.OnPropertyChanged);
+		}
+
 		#endregion
 
 		#region BUTTONS
-
-		// INSERIR NOVO REGISTRO
-		//------------------------------------------------------------------------------------------------------------
-		private void btnNovo_Click(object sender, EventArgs e)
-		{
-			if (Sit != EnumFlagEstado.RegistroSalvo) return;
-
-			_congregacao = new objCongregacao(null);
-			Sit = EnumFlagEstado.NovoRegistro;
-			AtivoButtonImage();
-			bind.DataSource = _congregacao;
-			txtCongregacao.Focus();
-		}
 
 		// FECHAR FORM
 		//------------------------------------------------------------------------------------------------------------
@@ -178,13 +184,14 @@ namespace CamadaUI.Registres
 
 				if (response == DialogResult.Yes)
 				{
+					AutoValidate = AutoValidate.Disable;
 					Close();
 					MostraMenuPrincipal();
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
-				_congregacao.CancelEdit();
+				_contribuinte.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
 				AtivoButtonImage();
 			}
@@ -197,21 +204,23 @@ namespace CamadaUI.Registres
 
 		// OPEN SETOR PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
-		private void btnSetorEscolher_Click(object sender, EventArgs e)
+		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
 		{
-			frmCongregacaoSetorProcura frm = new frmCongregacaoSetorProcura(this, _congregacao.IDCongregacaoSetor);
+
+			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, _contribuinte.IDCongregacao);
 			frm.ShowDialog();
 
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_congregacao.IDCongregacaoSetor = frm.propEscolha.IDCongregacaoSetor;
-				txtSetor.Text = frm.propEscolha.CongregacaoSetor;
+				_contribuinte.IDCongregacao = frm.propEscolha.IDCongregacao;
+				txtCongregacao.Text = frm.propEscolha.Congregacao;
 			}
 
 			//--- select
-			txtSetor.Focus();
-			txtSetor.SelectAll();
+			txtCongregacao.Focus();
+			txtCongregacao.SelectAll();
+
 		}
 
 		// CONTROLA ATIVO BUTTON
@@ -220,28 +229,28 @@ namespace CamadaUI.Registres
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
-				MessageBox.Show("Você não pode DESATIVAR uma Nova Congregação", "Desativar Congregação",
+				MessageBox.Show("Você não pode DESATIVAR um Novo Contribuinte", "Desativar Contribuinte",
 								MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 
-			if (_congregacao.Ativo == true) //--- ATIVA
+			if (_contribuinte.Ativo == true) //--- ATIVA
 			{
-				var response = AbrirDialog("Você deseja realmente DESATIVAR a Congregação:\n" +
-							   txtCongregacao.Text.ToUpper(),
+				var response = AbrirDialog("Você deseja realmente DESATIVAR o Contribuinte:\n" +
+							   txtContribuinte.Text.ToUpper(),
 							   "Desativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 			else //--- INATIVO
 			{
-				var response = AbrirDialog("Você deseja realmente ATIVAR a Congregação:\n" +
-							   txtCongregacao.Text.ToUpper(),
+				var response = AbrirDialog("Você deseja realmente ATIVAR o Contribuinte:\n" +
+							   txtContribuinte.Text.ToUpper(),
 							   "Ativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 
-			_congregacao.BeginEdit();
-			_congregacao.Ativo = !_congregacao.Ativo;
+			_contribuinte.BeginEdit();
+			_contribuinte.Ativo = !_contribuinte.Ativo;
 
 			if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
@@ -254,22 +263,35 @@ namespace CamadaUI.Registres
 		{
 			try
 			{
-				if (_congregacao.Ativo == true) //--- Nesse caso é Forma Ativo
+				if (_contribuinte.Ativo == true) //--- Nesse caso é Forma Ativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchON_30;
-					btnAtivo.Text = "Ativa";
+					btnAtivo.Text = "Ativo";
 				}
-				else if (_congregacao.Ativo == false) //--- Nesse caso é Forma Inativo
+				else if (_contribuinte.Ativo == false) //--- Nesse caso é Forma Inativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchOFF_30;
-					btnAtivo.Text = "Inativa";
+					btnAtivo.Text = "Inativo";
 				}
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Ativar a congregação..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Ativar o Contribuinte..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
+		}
+
+		// NOVO REGISTRO INSERIR
+		//------------------------------------------------------------------------------------------------------------
+		private void btnNovo_Click(object sender, EventArgs e)
+		{
+			if (Sit != EnumFlagEstado.RegistroSalvo) return;
+
+			_contribuinte = new objContribuinte(null);
+			Sit = EnumFlagEstado.NovoRegistro;
+			AtivoButtonImage();
+			bind.DataSource = _contribuinte;
+			txtContribuinte.Focus();
 		}
 
 		#endregion
@@ -289,12 +311,21 @@ namespace CamadaUI.Registres
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				//--- save | Insert
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				int ID = cBLL.InsertCongregacao(_congregacao);
+				ContribuinteBLL cBLL = new ContribuinteBLL();
 
-				//--- define newID
-				_congregacao.IDCongregacao = ID;
+				if (_contribuinte.IDContribuinte == null)
+				{
+					//--- save | Insert
+					int ID = cBLL.InsertContribuinte(_contribuinte);
+					//--- define newID
+					_contribuinte.IDCongregacao = ID;
+				}
+				else
+				{
+					//--- update
+					cBLL.UpdateContribuinte(_contribuinte);
+				}
+
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
 				//--- emit massage
@@ -304,7 +335,7 @@ namespace CamadaUI.Registres
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Congregação..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Contribuinte..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -317,7 +348,7 @@ namespace CamadaUI.Registres
 
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtCongregacao, "Congregação", _congregacao)) return false;
+			if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuinte)) return false;
 			return true;
 		}
 
@@ -327,13 +358,13 @@ namespace CamadaUI.Registres
 
 		// FORM KEYPRESS: BLOQUEIA (+)
 		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacao_KeyPress(object sender, KeyPressEventArgs e)
+		private void frmContribuinte_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == 43)
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				string[] controlesBloqueados = {
-					"txtSetor"
+					"txtCongregacao"
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl.Name)) e.Handled = true;
@@ -352,8 +383,8 @@ namespace CamadaUI.Registres
 
 				switch (ctr.Name)
 				{
-					case "txtSetor":
-						btnSetorEscolher_Click(sender, new EventArgs());
+					case "txtCongregacao":
+						btnCongregacaoEscolher_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -366,9 +397,9 @@ namespace CamadaUI.Registres
 				switch (ctr.Name)
 				{
 					case "txtSetor":
-						if (_congregacao.IDCongregacaoSetor != null) Sit = EnumFlagEstado.Alterado;
-						txtSetor.Clear();
-						_congregacao.IDCongregacaoSetor = null;
+						if (_contribuinte.IDCongregacao != null) Sit = EnumFlagEstado.Alterado;
+						txtCongregacao.Clear();
+						_contribuinte.IDCongregacao = null;
 						break;
 					default:
 						break;
@@ -377,7 +408,7 @@ namespace CamadaUI.Registres
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtSetor" };
+				string[] controlesBloqueados = { "txtCongregacao" };
 
 				if (controlesBloqueados.Contains(ctr.Name))
 				{
@@ -387,6 +418,35 @@ namespace CamadaUI.Registres
 			}
 		}
 
+		// DIGITA SOMENTE NUMEROS
+		//------------------------------------------------------------------------------------------------------------
+		private void txtIDMembro_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
+				e.Handled = true;
+		}
+
+		// VALIDA O ID MEMBRO
+		//------------------------------------------------------------------------------------------------------------
+		private void txtIDMembro_Validating(object sender, CancelEventArgs e)
+		{
+			if (txtIDMembro.Text.Length == 0)
+			{
+				e.Cancel = false;
+			}
+		}
+
+		// GOT LOST FOCUS IDMEMBRO
+		//------------------------------------------------------------------------------------------------------------
+		private void TxtIDMembro_LostFocus(object sender, EventArgs e)
+		{
+			AutoValidate = AutoValidate.EnablePreventFocusChange;
+		}
+
+		private void TxtIDMembro_GotFocus(object sender, EventArgs e)
+		{
+			AutoValidate = AutoValidate.EnableAllowFocusChange;
+		}
 
 		#endregion // FORM CONTROLS FUCTIONS --- END
 

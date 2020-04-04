@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AppEnum.cs" />
     <Compile Include="AppException.cs" />
+    <Compile Include="objCredor.cs" />
     <Compile Include="objCongregacao.cs" />
     <Compile Include="objUsuario.cs" />
     <Compile Include="objConta.cs" />

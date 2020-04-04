@@ -156,6 +156,7 @@ namespace CamadaUI.Registres
 			{
 				_setor.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
+				AtivoButtonImage();
 			}
 			else
 			{
@@ -287,6 +288,18 @@ namespace CamadaUI.Registres
 		}
 
 		#endregion
+
+		#region CONTROL FUNCTIONS
+		private void frmCongregacaoSetor_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.Handled = true;
+				btnFechar_Click(sender, new EventArgs());
+			}
+		}
+
+		#endregion // CONTROL FUNCTIONS --- END
 
 	}
 }

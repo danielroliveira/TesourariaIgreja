@@ -363,7 +363,7 @@ namespace CamadaUI
 
 		private void mnuCongregacoes_Click(object sender, EventArgs e)
 		{
-			frmCongregacao frm = new frmCongregacao(new objCongregacao(null));
+			frmCongregacaoListagem frm = new frmCongregacaoListagem();
 			frm.MdiParent = this;
 			DesativaMenuPrincipal();
 			frm.Show();
@@ -378,5 +378,21 @@ namespace CamadaUI
 		}
 
 		#endregion
+
+		private void mnuContribuintes_Click(object sender, EventArgs e)
+		{
+			frmContribuinteListagem frm = new frmContribuinteListagem(false, this);
+			frm.MdiParent = this;
+			DesativaMenuPrincipal();
+			frm.Show();
+		}
+
+		private void mnuCredores_Click(object sender, EventArgs e)
+		{
+			frmCredorListagem frm = new frmCredorListagem(false, this);
+			frm.MdiParent = this;
+			DesativaMenuPrincipal();
+			frm.Show();
+		}
 	}
 }

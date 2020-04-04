@@ -29,8 +29,8 @@ namespace CamadaUI.main
 
 		// PROPERTY SELECTED STRING
 		//------------------------------------------------------------------------------------------------------------
-		public string SelectedString 
-		{ 
+		public string SelectedString
+		{
 			get => _SelectedString;
 			set
 			{
@@ -64,8 +64,8 @@ namespace CamadaUI.main
 		public bool ArquivoAlterado
 		{
 			get => _ArquivoAlterado;
-			set 
-			{ 
+			set
+			{
 				_ArquivoAlterado = value;
 
 				if (value = true && lstConn.Items.Count > 0)
@@ -129,8 +129,8 @@ namespace CamadaUI.main
 			{
 				MessageBox.Show("String de Conexão inválida... \n" +
 					"Favor entrar com uma nova String de Conexão válida",
-					"String Inválida", 
-					MessageBoxButtons.OK, 
+					"String Inválida",
+					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 				txtConnString.Focus();
 				txtConnString.SelectAll();
@@ -149,8 +149,8 @@ namespace CamadaUI.main
 				{
 					MessageBox.Show("Já existe uma string de conexão com esse mesmo nome... \n" +
 					"Favor entrar com um nome diferente.",
-					"Nome Inválido", 
-					MessageBoxButtons.OK, 
+					"Nome Inválido",
+					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 					return;
 				}
@@ -197,7 +197,7 @@ namespace CamadaUI.main
 			//--- check text on txtConnString
 			if (txtConnString.Text.Trim().Length < 10)
 			{
-				MessageBox.Show("String de Conexão inválida... \n" + 
+				MessageBox.Show("String de Conexão inválida... \n" +
 								"Favor entrar com uma nova String de Conexão válida",
 								"String Inválida", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				txtConnString.Focus();
@@ -392,12 +392,12 @@ namespace CamadaUI.main
 
 		private void lstConn_DrawColumnHeader(object sender, BetterListViewDrawColumnHeaderEventArgs eventArgs)
 		{
-			if(eventArgs.ColumnHeaderBounds.BoundsOuter.Width > 0 && eventArgs.ColumnHeaderBounds.BoundsOuter.Height > 0)
+			if (eventArgs.ColumnHeaderBounds.BoundsOuter.Width > 0 && eventArgs.ColumnHeaderBounds.BoundsOuter.Height > 0)
 			{
 				Brush brush = new LinearGradientBrush(
-					eventArgs.ColumnHeaderBounds.BoundsOuter, 
-					Color.Transparent, 
-					Color.FromArgb(64, Color.SteelBlue), 
+					eventArgs.ColumnHeaderBounds.BoundsOuter,
+					Color.Transparent,
+					Color.FromArgb(64, Color.SteelBlue),
 					LinearGradientMode.Vertical
 					);
 				eventArgs.Graphics.FillRectangle(brush, eventArgs.ColumnHeaderBounds.BoundsOuter);

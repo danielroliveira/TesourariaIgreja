@@ -178,6 +178,7 @@
 			this.mnuContribuintes.Name = "mnuContribuintes";
 			this.mnuContribuintes.Size = new System.Drawing.Size(198, 30);
 			this.mnuContribuintes.Text = "Contribuintes";
+			this.mnuContribuintes.Click += new System.EventHandler(this.mnuContribuintes_Click);
 			// 
 			// mnuCredores
 			// 
@@ -186,6 +187,7 @@
 			this.mnuCredores.Name = "mnuCredores";
 			this.mnuCredores.Size = new System.Drawing.Size(198, 30);
 			this.mnuCredores.Text = "Credores";
+			this.mnuCredores.Click += new System.EventHandler(this.mnuCredores_Click);
 			// 
 			// toolStripSeparator1
 			// 

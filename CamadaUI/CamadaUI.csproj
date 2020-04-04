@@ -97,49 +97,49 @@
     <Compile Include="Config\frmConfigServidor.designer.cs">
       <DependentUpon>frmConfigServidor.cs</DependentUpon>
     </Compile>
-    <Compile Include="main\frmConnString.cs">
+    <Compile Include="Main\frmConnString.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main\frmConnString.Designer.cs">
+    <Compile Include="Main\frmConnString.Designer.cs">
       <DependentUpon>frmConnString.cs</DependentUpon>
     </Compile>
-    <Compile Include="main\frmLogin.cs">
+    <Compile Include="Main\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main\frmLogin.Designer.cs">
+    <Compile Include="Main\frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="main\frmMessage.cs">
+    <Compile Include="Main\frmMessage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main\frmMessage.designer.cs">
+    <Compile Include="Main\frmMessage.designer.cs">
       <DependentUpon>frmMessage.cs</DependentUpon>
     </Compile>
-    <Compile Include="main\frmPrincipal.cs">
+    <Compile Include="Main\frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main\frmPrincipal.designer.cs">
+    <Compile Include="Main\frmPrincipal.designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="main\FuncoesGlobais.cs" />
-    <Compile Include="main\InputBox.cs" />
-    <Compile Include="main\Utilidades.cs" />
-    <Compile Include="modals\frmModConfig.cs">
+    <Compile Include="Main\FuncoesGlobais.cs" />
+    <Compile Include="Main\InputBox.cs" />
+    <Compile Include="Main\Utilidades.cs" />
+    <Compile Include="Modals\frmModConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modals\frmModConfig.designer.cs">
+    <Compile Include="Modals\frmModConfig.designer.cs">
       <DependentUpon>frmModConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="modals\frmModFinBorder.cs">
+    <Compile Include="Modals\frmModFinBorder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modals\frmModFinBorder.designer.cs">
+    <Compile Include="Modals\frmModFinBorder.designer.cs">
       <DependentUpon>frmModFinBorder.cs</DependentUpon>
     </Compile>
-    <Compile Include="modals\frmModNoBorder.cs">
+    <Compile Include="Modals\frmModNoBorder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modals\frmModNoBorder.designer.cs">
+    <Compile Include="Modals\frmModNoBorder.designer.cs">
       <DependentUpon>frmModNoBorder.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -149,6 +149,18 @@
     </Compile>
     <Compile Include="Registres\frmCongregacao.Designer.cs">
       <DependentUpon>frmCongregacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmCongregacaoListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmCongregacaoListagem.designer.cs">
+      <DependentUpon>frmCongregacaoListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmCongregacaoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmCongregacaoProcura.designer.cs">
+      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
     </Compile>
     <Compile Include="Registres\frmCongregacaoSetor.cs">
       <SubType>Form</SubType>
@@ -161,6 +173,36 @@
     </Compile>
     <Compile Include="Registres\frmCongregacaoSetorListagem.Designer.cs">
       <DependentUpon>frmCongregacaoSetorListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmCongregacaoSetorProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmCongregacaoSetorProcura.designer.cs">
+      <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmContribuinte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmContribuinte.designer.cs">
+      <DependentUpon>frmContribuinte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmContribuinteListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmContribuinteListagem.Designer.cs">
+      <DependentUpon>frmContribuinteListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmCredor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmCredor.designer.cs">
+      <DependentUpon>frmCredor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registres\frmCredorListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmCredorListagem.designer.cs">
+      <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
@@ -181,25 +223,25 @@
     <EmbeddedResource Include="Config\frmConfigServidor.resx">
       <DependentUpon>frmConfigServidor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main\frmConnString.resx">
+    <EmbeddedResource Include="Main\frmConnString.resx">
       <DependentUpon>frmConnString.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main\frmLogin.resx">
+    <EmbeddedResource Include="Main\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main\frmMessage.resx">
+    <EmbeddedResource Include="Main\frmMessage.resx">
       <DependentUpon>frmMessage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main\frmPrincipal.resx">
+    <EmbeddedResource Include="Main\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modals\frmModConfig.resx">
+    <EmbeddedResource Include="Modals\frmModConfig.resx">
       <DependentUpon>frmModConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modals\frmModFinBorder.resx">
+    <EmbeddedResource Include="Modals\frmModFinBorder.resx">
       <DependentUpon>frmModFinBorder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modals\frmModNoBorder.resx">
+    <EmbeddedResource Include="Modals\frmModNoBorder.resx">
       <DependentUpon>frmModNoBorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -215,11 +257,32 @@
     <EmbeddedResource Include="Registres\frmCongregacao.resx">
       <DependentUpon>frmCongregacao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmCongregacaoListagem.resx">
+      <DependentUpon>frmCongregacaoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmCongregacaoProcura.resx">
+      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmCongregacaoSetor.resx">
       <DependentUpon>frmCongregacaoSetor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmCongregacaoSetorListagem.resx">
       <DependentUpon>frmCongregacaoSetorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmCongregacaoSetorProcura.resx">
+      <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmContribuinte.resx">
+      <DependentUpon>frmContribuinte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmContribuinteListagem.resx">
+      <DependentUpon>frmContribuinteListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmCredor.resx">
+      <DependentUpon>frmCredor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmCredorListagem.resx">
+      <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -355,6 +418,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\block_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\whatsapp_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

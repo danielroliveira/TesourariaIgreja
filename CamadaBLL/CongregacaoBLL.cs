@@ -10,7 +10,7 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objCongregacao> GetListCongregacao(bool? Ativas = null)
+		public List<objCongregacao> GetListCongregacao(bool? Ativo = null)
 		{
 			try
 			{
@@ -18,10 +18,10 @@ namespace CamadaBLL
 
 				string query = "SELECT * FROM qryCongregacao";
 
-				if (Ativas != null)
+				if (Ativo != null)
 				{
 					db.LimparParametros();
-					db.AdicionarParametros("@Ativos", Ativas);
+					db.AdicionarParametros("@Ativo", Ativo);
 					query += " WHERE Ativo = @Ativo";
 				}
 
@@ -154,7 +154,51 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public bool UpdateCongregacao(objCongregacao congregacao)
 		{
-			return true;
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDCongregacao", congregacao.IDCongregacao);
+				db.AdicionarParametros("@Congregacao", congregacao.Congregacao);
+				db.AdicionarParametros("@EnderecoLogradouro", congregacao.EnderecoLogradouro);
+				db.AdicionarParametros("@EnderecoNumero", congregacao.EnderecoNumero);
+				db.AdicionarParametros("@EnderecoComplemento", congregacao.EnderecoComplemento);
+				db.AdicionarParametros("@Bairro", congregacao.Bairro);
+				db.AdicionarParametros("@Cidade", congregacao.Cidade);
+				db.AdicionarParametros("@UF", congregacao.UF);
+				db.AdicionarParametros("@CEP", congregacao.CEP);
+				db.AdicionarParametros("@TelefoneDirigente", congregacao.TelefoneDirigente);
+				db.AdicionarParametros("@TelefoneFixo", congregacao.TelefoneFixo);
+				db.AdicionarParametros("@Email", congregacao.Email);
+				db.AdicionarParametros("@Dirigente", congregacao.Dirigente);
+				db.AdicionarParametros("@IDCongregacaoSetor", congregacao.IDCongregacaoSetor);
+				db.AdicionarParametros("@Tesoureiro", congregacao.Tesoureiro);
+				db.AdicionarParametros("@Ativo", congregacao.Ativo);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = "UPDATE tblCongregacao SET " +
+							   "Congregacao = @Congregacao, EnderecoLogradouro = @EnderecoLogradouro, " +
+							   "EnderecoNumero = @EnderecoNumero, EnderecoComplemento = @EnderecoComplemento, " +
+							   "Bairro = @Bairro, Cidade = @Cidade, UF = @UF, CEP = @CEP, " +
+							   "Dirigente = @Dirigente, TelefoneDirigente = @TelefoneDirigente, TelefoneFixo = @TelefoneFixo, " +
+							   "Email = @Email, IDCongregacaoSetor = @IDCongregacaoSetor, Tesoureiro = @Tesoureiro " +
+							   "WHERE " +
+							   "IDCongregacao = @IDCongregacao";
+				//--- UPDATE
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		//=================================================================================================

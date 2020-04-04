@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
 {
-    public class objContribuinte : IEditableObject, INotifyPropertyChanged
+	public class objContribuinte : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
@@ -15,8 +15,10 @@ namespace CamadaDTO
 			internal string _CNP;
 			internal DateTime? _NascimentoData;
 			internal bool _Dizimista;
-			internal bool _Ativo;
 			internal int? _IDMembro;
+			internal string _TelefoneCelular;
+			internal int? _IDCongregacao;
+			internal bool _Ativo;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -27,14 +29,16 @@ namespace CamadaDTO
 
 		public objContribuinte(int? IDContribuinte) : base()
 		{
-			EditData = new StructContribuinte() {
+			EditData = new StructContribuinte()
+			{
 				_IDContribuinte = IDContribuinte,
-				_Contribuinte = "", 
-				_Ativo = true, 
-				_CNP = "", 
+				_Contribuinte = "",
+				_CNP = "",
 				_Dizimista = false,
 				_NascimentoData = null,
-				_IDMembro = null
+				_IDMembro = null,
+				_TelefoneCelular = "",
+				_Ativo = true
 			};
 		}
 
@@ -84,17 +88,17 @@ namespace CamadaDTO
 			return EditData._Contribuinte;
 		}
 
-		public bool RegistroAlterado 
+		public bool RegistroAlterado
 		{
-			get => inTxn;  
+			get => inTxn;
 		}
 
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
 		public int? IDContribuinte
-		{ 
-			get => EditData._IDContribuinte; 
+		{
+			get => EditData._IDContribuinte;
 		}
 
 		// Property Contribuinte
@@ -186,5 +190,38 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property TelefoneCelular
+		//---------------------------------------------------------------
+		public string TelefoneCelular
+		{
+			get => EditData._TelefoneCelular;
+			set
+			{
+				if (value != EditData._TelefoneCelular)
+				{
+					EditData._TelefoneCelular = value;
+					NotifyPropertyChanged("TelefoneCelular");
+				}
+			}
+		}
+
+		// Property IDCongregacao
+		//---------------------------------------------------------------
+		public int? IDCongregacao
+		{
+			get => EditData._IDCongregacao;
+			set
+			{
+				if (value != EditData._IDCongregacao)
+				{
+					EditData._IDCongregacao = value;
+					NotifyPropertyChanged("IDCongregacao");
+				}
+			}
+		}
+
+		public string Congregacao { get; set; }
+
 	}
 }

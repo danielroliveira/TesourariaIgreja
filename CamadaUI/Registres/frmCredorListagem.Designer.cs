@@ -1,6 +1,6 @@
 ﻿namespace CamadaUI.Registres
 {
-	partial class frmCongregacaoSetorListagem
+	partial class frmCredorListagem
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -39,12 +39,16 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lblProc = new System.Windows.Forms.Label();
+			this.btnProcurar = new System.Windows.Forms.Button();
+			this.btnEscolher = new System.Windows.Forms.Button();
+			this.lblRegistrosEncontrados = new System.Windows.Forms.Label();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -52,30 +56,35 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(292, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(468, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(130, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Setores de Congregação";
+			this.lblTitulo.Text = "Credores";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(551, 0);
+			this.btnClose.Location = new System.Drawing.Point(598, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(591, 50);
+			this.panel1.Controls.Add(this.lblRegistrosEncontrados);
+			this.panel1.Size = new System.Drawing.Size(638, 50);
+			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
+			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
+			this.panel1.Controls.SetChildIndex(this.lblRegistrosEncontrados, 0);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(443, 495);
+			this.btnFechar.Location = new System.Drawing.Point(510, 495);
 			this.btnFechar.Name = "btnFechar";
-			this.btnFechar.Size = new System.Drawing.Size(126, 42);
+			this.btnFechar.Size = new System.Drawing.Size(110, 42);
 			this.btnFechar.TabIndex = 8;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -87,9 +96,9 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(165, 495);
+			this.btnAdicionar.Location = new System.Drawing.Point(386, 495);
 			this.btnAdicionar.Name = "btnAdicionar";
-			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
+			this.btnAdicionar.Size = new System.Drawing.Size(110, 42);
 			this.btnAdicionar.TabIndex = 7;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -101,11 +110,11 @@
 			// 
 			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(22, 495);
+			this.btnEditar.Location = new System.Drawing.Point(262, 495);
 			this.btnEditar.Name = "btnEditar";
-			this.btnEditar.Size = new System.Drawing.Size(126, 42);
+			this.btnEditar.Size = new System.Drawing.Size(110, 42);
 			this.btnEditar.TabIndex = 6;
-			this.btnEditar.Text = "&Editar";
+			this.btnEditar.Text = "E&ditar";
 			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnEditar.UseVisualStyleBackColor = true;
@@ -118,6 +127,8 @@
 			this.txtProcura.Name = "txtProcura";
 			this.txtProcura.Size = new System.Drawing.Size(282, 27);
 			this.txtProcura.TabIndex = 2;
+			this.txtProcura.TextChanged += new System.EventHandler(this.txtProcura_TextChanged);
+			this.txtProcura.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtProcura_KeyDown);
 			// 
 			// Label2
 			// 
@@ -158,9 +169,6 @@
 			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -189,11 +197,96 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(547, 371);
+			this.dgvListagem.Size = new System.Drawing.Size(598, 371);
 			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.DataSourceChanged += new System.EventHandler(this.dgvListagem_DataSourceChanged);
+			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// MenuListagem
+			// 
+			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AtivarToolStripMenuItem,
+            this.DesativarToolStripMenuItem});
+			this.MenuListagem.Name = "MenuFab";
+			this.MenuListagem.Size = new System.Drawing.Size(162, 48);
+			// 
+			// AtivarToolStripMenuItem
+			// 
+			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
+			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
+			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+			this.AtivarToolStripMenuItem.Text = "Ativar Credor";
+			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			// 
+			// DesativarToolStripMenuItem
+			// 
+			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
+			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
+			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+			this.DesativarToolStripMenuItem.Text = "Desativar Credor";
+			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			// 
+			// lblProc
+			// 
+			this.lblProc.BackColor = System.Drawing.Color.White;
+			this.lblProc.Font = new System.Drawing.Font("Calibri Light", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblProc.Location = new System.Drawing.Point(198, 71);
+			this.lblProc.Margin = new System.Windows.Forms.Padding(0);
+			this.lblProc.Name = "lblProc";
+			this.lblProc.Size = new System.Drawing.Size(172, 19);
+			this.lblProc.TabIndex = 43;
+			this.lblProc.Text = "Digite algo para procurar...";
+			this.lblProc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblProc.Click += new System.EventHandler(this.lblProc_Click);
+			// 
+			// btnProcurar
+			// 
+			this.btnProcurar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnProcurar.Enabled = false;
+			this.btnProcurar.Image = global::CamadaUI.Properties.Resources.refresh_24;
+			this.btnProcurar.Location = new System.Drawing.Point(14, 495);
+			this.btnProcurar.Name = "btnProcurar";
+			this.btnProcurar.Size = new System.Drawing.Size(110, 42);
+			this.btnProcurar.TabIndex = 44;
+			this.btnProcurar.Tag = "Clique aqui para Procurar";
+			this.btnProcurar.Text = "&Procurar";
+			this.btnProcurar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnProcurar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnProcurar.UseVisualStyleBackColor = true;
+			this.btnProcurar.EnabledChanged += new System.EventHandler(this.btnProcurar_EnabledChanged);
+			this.btnProcurar.Click += new System.EventHandler(this.btnProcurar_Click);
+			// 
+			// btnEscolher
+			// 
+			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnEscolher.Enabled = false;
+			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnEscolher.Location = new System.Drawing.Point(138, 495);
+			this.btnEscolher.Name = "btnEscolher";
+			this.btnEscolher.Size = new System.Drawing.Size(110, 42);
+			this.btnEscolher.TabIndex = 44;
+			this.btnEscolher.Tag = "Clique aqui para Procurar";
+			this.btnEscolher.Text = "&Escolher";
+			this.btnEscolher.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnEscolher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnEscolher.UseVisualStyleBackColor = true;
+			this.btnEscolher.Click += new System.EventHandler(this.btnEscolher_Click);
+			// 
+			// lblRegistrosEncontrados
+			// 
+			this.lblRegistrosEncontrados.AutoSize = true;
+			this.lblRegistrosEncontrados.BackColor = System.Drawing.Color.SlateGray;
+			this.lblRegistrosEncontrados.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblRegistrosEncontrados.ForeColor = System.Drawing.SystemColors.ButtonFace;
+			this.lblRegistrosEncontrados.Location = new System.Drawing.Point(12, 11);
+			this.lblRegistrosEncontrados.Name = "lblRegistrosEncontrados";
+			this.lblRegistrosEncontrados.Size = new System.Drawing.Size(280, 26);
+			this.lblRegistrosEncontrados.TabIndex = 45;
+			this.lblRegistrosEncontrados.Text = "Nenhum registro encontrado...";
+			this.lblRegistrosEncontrados.Visible = false;
 			// 
 			// clnID
 			// 
@@ -204,10 +297,10 @@
 			// 
 			// clnCadastro
 			// 
-			this.clnCadastro.HeaderText = "Congregação Setor";
+			this.clnCadastro.HeaderText = "Credor";
 			this.clnCadastro.Name = "clnCadastro";
 			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 350;
+			this.clnCadastro.Width = 400;
 			// 
 			// clnImage
 			// 
@@ -216,34 +309,13 @@
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
 			// 
-			// MenuListagem
-			// 
-			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem});
-			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(153, 48);
-			// 
-			// AtivarToolStripMenuItem
-			// 
-			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
-			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.AtivarToolStripMenuItem.Text = "Ativar Setor";
-			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
-			// 
-			// DesativarToolStripMenuItem
-			// 
-			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
-			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
-			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
-			// 
-			// frmCongregacaoSetorListagem
+			// frmCredorListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(591, 549);
+			this.ClientSize = new System.Drawing.Size(638, 549);
+			this.Controls.Add(this.btnEscolher);
+			this.Controls.Add(this.btnProcurar);
+			this.Controls.Add(this.lblProc);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
@@ -253,8 +325,10 @@
 			this.Controls.Add(this.Label2);
 			this.Controls.Add(this.Label1);
 			this.KeyPreview = true;
-			this.Name = "frmCongregacaoSetorListagem";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCongregacaoSetorListagem_KeyDown);
+			this.Name = "frmCredorListagem";
+			this.Activated += new System.EventHandler(this.frmCredorListagem_Activated);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCredorListagem_FormClosed);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCredorListagem_KeyDown);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.Label1, 0);
 			this.Controls.SetChildIndex(this.Label2, 0);
@@ -264,7 +338,11 @@
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
+			this.Controls.SetChildIndex(this.lblProc, 0);
+			this.Controls.SetChildIndex(this.btnProcurar, 0);
+			this.Controls.SetChildIndex(this.btnEscolher, 0);
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.MenuListagem.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -282,11 +360,15 @@
 		internal System.Windows.Forms.Label Label1;
 		private CamadaUC.ucComboLimitedValues cmbAtivo;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
-		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		internal System.Windows.Forms.Label lblProc;
+		internal System.Windows.Forms.Button btnProcurar;
+		internal System.Windows.Forms.Button btnEscolher;
+		private System.Windows.Forms.Label lblRegistrosEncontrados;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
+		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 	}
 }
