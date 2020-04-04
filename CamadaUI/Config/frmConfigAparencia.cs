@@ -8,7 +8,7 @@ using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Config
 {
-	public partial class frmConfigAparencia : modals.frmModConfig
+	public partial class frmConfigAparencia : Modals.frmModConfig
 	{
 		#region SUB NEW | LOAD
 

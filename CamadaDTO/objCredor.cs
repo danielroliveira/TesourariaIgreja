@@ -139,7 +139,7 @@ namespace CamadaDTO
 			}
 		}
 
-		public string CredorTipoDescricacao { get; set; }
+		public string CredorTipoDescricao { get; set; }
 
 		// Property CNP
 		//---------------------------------------------------------------

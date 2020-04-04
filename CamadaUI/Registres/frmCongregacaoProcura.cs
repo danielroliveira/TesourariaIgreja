@@ -14,7 +14,7 @@ using System.Drawing.Drawing2D;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacaoProcura : CamadaUI.modals.frmModFinBorder
+	public partial class frmCongregacaoProcura : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<objCongregacao> listCong = new List<objCongregacao>();
 		private Form _formOrigem;

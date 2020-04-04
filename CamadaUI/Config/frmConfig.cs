@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace CamadaUI.Config
 {
-	public partial class frmConfig : CamadaUI.modals.frmModFinBorder
+	public partial class frmConfig : CamadaUI.Modals.frmModFinBorder
 	{
 		frmPrincipal _formOrigem;
 		Form _OpenedForm;
@@ -24,7 +24,8 @@ namespace CamadaUI.Config
 			_formOrigem = formOrigem;
 		}
 
-		private Form OpenedForm {
+		private Form OpenedForm
+		{
 			get => _OpenedForm;
 			set
 			{
@@ -62,7 +63,7 @@ namespace CamadaUI.Config
 		}
 
 		#endregion
-			   
+
 		private void btnClose_Click(object sender, EventArgs e)
 		{
 			Close();
@@ -74,7 +75,7 @@ namespace CamadaUI.Config
 			Form formulario;
 			formulario = pnlCorpo.Controls.OfType<Forms>().FirstOrDefault();
 
-			if(OpenedForm != null && formulario == null)
+			if (OpenedForm != null && formulario == null)
 			{
 				OpenedForm.Close();
 				OpenedForm = null;

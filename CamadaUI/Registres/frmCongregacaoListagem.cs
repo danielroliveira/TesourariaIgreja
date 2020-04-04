@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacaoListagem : CamadaUI.modals.frmModFinBorder
+	public partial class frmCongregacaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<objCongregacao> listCong = new List<objCongregacao>();
 		private Image ImgInativo = Properties.Resources.block_24;

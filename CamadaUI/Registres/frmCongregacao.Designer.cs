@@ -276,6 +276,7 @@
 			this.txtEnderecoNumero.Name = "txtEnderecoNumero";
 			this.txtEnderecoNumero.Size = new System.Drawing.Size(62, 27);
 			this.txtEnderecoNumero.TabIndex = 13;
+			this.txtEnderecoNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEnderecoNumero_KeyPress);
 			// 
 			// label2
 			// 

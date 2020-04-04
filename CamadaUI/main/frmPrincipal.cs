@@ -57,7 +57,7 @@ namespace CamadaUI
 				//--- open FRMCONNSTRING: to define the string de conexao
 				if (string.IsNullOrEmpty(TestAcesso))
 				{
-					main.frmConnString fcString = new main.frmConnString();
+					Main.frmConnString fcString = new Main.frmConnString();
 					fcString.ShowDialog();
 
 					if (fcString.DialogResult == DialogResult.Cancel)
@@ -68,7 +68,7 @@ namespace CamadaUI
 				}
 
 				//--- ABRE E VERIFICA O LOGIN DO USUARIO
-				main.frmLogin frmLog = new main.frmLogin();
+				Main.frmLogin frmLog = new Main.frmLogin();
 				objConta contaInicial = new objConta(null);
 
 				frmLog.ShowDialog();

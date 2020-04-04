@@ -11,9 +11,9 @@ using CamadaBLL;
 using CamadaDTO;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.main
+namespace CamadaUI.Main
 {
-	public partial class frmLogin : modals.frmModNoBorder
+	public partial class frmLogin : Modals.frmModNoBorder
 	{
 		private bool Logado = false;
 		AcessoControlBLL db = new AcessoControlBLL();

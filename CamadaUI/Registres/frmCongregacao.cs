@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacao : CamadaUI.modals.frmModFinBorder
+	public partial class frmCongregacao : CamadaUI.Modals.frmModFinBorder
 	{
 		private objCongregacao _congregacao;
 		private BindingSource bind = new BindingSource();
@@ -390,5 +390,10 @@ namespace CamadaUI.Registres
 
 		#endregion // FORM CONTROLS FUCTIONS --- END
 
+		private void txtEnderecoNumero_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
+				e.Handled = true;
+		}
 	}
 }

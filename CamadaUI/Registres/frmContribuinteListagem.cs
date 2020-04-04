@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmContribuinteListagem : CamadaUI.modals.frmModFinBorder
+	public partial class frmContribuinteListagem : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<objContribuinte> _sourceList = new List<objContribuinte>();
 		private bool _isProcura;

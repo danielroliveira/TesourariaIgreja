@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.modals
+﻿namespace CamadaUI.Modals
 {
 	partial class frmModFinBorder
 	{

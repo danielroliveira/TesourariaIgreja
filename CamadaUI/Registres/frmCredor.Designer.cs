@@ -105,7 +105,7 @@
 			// txtCidade
 			// 
 			this.txtCidade.BackColor = System.Drawing.Color.White;
-			this.txtCidade.Location = new System.Drawing.Point(134, 273);
+			this.txtCidade.Location = new System.Drawing.Point(148, 273);
 			this.txtCidade.MaxLength = 50;
 			this.txtCidade.Name = "txtCidade";
 			this.txtCidade.Size = new System.Drawing.Size(268, 27);
@@ -115,7 +115,7 @@
 			// 
 			this.txtUF.BackColor = System.Drawing.Color.White;
 			this.txtUF.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.txtUF.Location = new System.Drawing.Point(459, 276);
+			this.txtUF.Location = new System.Drawing.Point(473, 276);
 			this.txtUF.MaxLength = 2;
 			this.txtUF.Name = "txtUF";
 			this.txtUF.Size = new System.Drawing.Size(46, 27);
@@ -124,7 +124,7 @@
 			// txtEnderecoLogradouro
 			// 
 			this.txtEnderecoLogradouro.BackColor = System.Drawing.Color.White;
-			this.txtEnderecoLogradouro.Location = new System.Drawing.Point(134, 207);
+			this.txtEnderecoLogradouro.Location = new System.Drawing.Point(148, 207);
 			this.txtEnderecoLogradouro.Name = "txtEnderecoLogradouro";
 			this.txtEnderecoLogradouro.Size = new System.Drawing.Size(268, 27);
 			this.txtEnderecoLogradouro.TabIndex = 8;
@@ -134,7 +134,7 @@
 			this.Label16.AutoSize = true;
 			this.Label16.BackColor = System.Drawing.Color.Transparent;
 			this.Label16.ForeColor = System.Drawing.Color.Black;
-			this.Label16.Location = new System.Drawing.Point(76, 375);
+			this.Label16.Location = new System.Drawing.Point(90, 375);
 			this.Label16.Name = "Label16";
 			this.Label16.Size = new System.Drawing.Size(51, 19);
 			this.Label16.TabIndex = 26;
@@ -143,7 +143,7 @@
 			// txtEmail
 			// 
 			this.txtEmail.BackColor = System.Drawing.Color.White;
-			this.txtEmail.Location = new System.Drawing.Point(134, 372);
+			this.txtEmail.Location = new System.Drawing.Point(148, 372);
 			this.txtEmail.MaxLength = 200;
 			this.txtEmail.Name = "txtEmail";
 			this.txtEmail.Size = new System.Drawing.Size(371, 27);
@@ -154,7 +154,7 @@
 			this.Label5.AutoSize = true;
 			this.Label5.BackColor = System.Drawing.Color.Transparent;
 			this.Label5.ForeColor = System.Drawing.Color.Black;
-			this.Label5.Location = new System.Drawing.Point(58, 210);
+			this.Label5.Location = new System.Drawing.Point(72, 210);
 			this.Label5.Name = "Label5";
 			this.Label5.Size = new System.Drawing.Size(69, 19);
 			this.Label5.TabIndex = 7;
@@ -163,7 +163,7 @@
 			// txtCEP
 			// 
 			this.txtCEP.BackColor = System.Drawing.Color.White;
-			this.txtCEP.Location = new System.Drawing.Point(134, 306);
+			this.txtCEP.Location = new System.Drawing.Point(148, 306);
 			this.txtCEP.Mask = "00000-000";
 			this.txtCEP.Name = "txtCEP";
 			this.txtCEP.Size = new System.Drawing.Size(94, 27);
@@ -175,7 +175,7 @@
 			this.Label9.AutoSize = true;
 			this.Label9.BackColor = System.Drawing.Color.Transparent;
 			this.Label9.ForeColor = System.Drawing.Color.Black;
-			this.Label9.Location = new System.Drawing.Point(62, 342);
+			this.Label9.Location = new System.Drawing.Point(76, 342);
 			this.Label9.Name = "Label9";
 			this.Label9.Size = new System.Drawing.Size(65, 19);
 			this.Label9.TabIndex = 21;
@@ -186,7 +186,7 @@
 			this.Label15.AutoSize = true;
 			this.Label15.BackColor = System.Drawing.Color.Transparent;
 			this.Label15.ForeColor = System.Drawing.Color.Black;
-			this.Label15.Location = new System.Drawing.Point(93, 310);
+			this.Label15.Location = new System.Drawing.Point(107, 310);
 			this.Label15.Name = "Label15";
 			this.Label15.Size = new System.Drawing.Size(34, 19);
 			this.Label15.TabIndex = 19;
@@ -197,7 +197,7 @@
 			this.Label10.AutoSize = true;
 			this.Label10.BackColor = System.Drawing.Color.Transparent;
 			this.Label10.ForeColor = System.Drawing.Color.Black;
-			this.Label10.Location = new System.Drawing.Point(266, 342);
+			this.Label10.Location = new System.Drawing.Point(280, 342);
 			this.Label10.Name = "Label10";
 			this.Label10.Size = new System.Drawing.Size(55, 19);
 			this.Label10.TabIndex = 23;
@@ -208,7 +208,7 @@
 			this.Label8.AutoSize = true;
 			this.Label8.BackColor = System.Drawing.Color.Transparent;
 			this.Label8.ForeColor = System.Drawing.Color.Black;
-			this.Label8.Location = new System.Drawing.Point(425, 279);
+			this.Label8.Location = new System.Drawing.Point(439, 279);
 			this.Label8.Name = "Label8";
 			this.Label8.Size = new System.Drawing.Size(26, 19);
 			this.Label8.TabIndex = 17;
@@ -219,7 +219,7 @@
 			this.Label7.AutoSize = true;
 			this.Label7.BackColor = System.Drawing.Color.Transparent;
 			this.Label7.ForeColor = System.Drawing.Color.Black;
-			this.Label7.Location = new System.Drawing.Point(73, 276);
+			this.Label7.Location = new System.Drawing.Point(87, 276);
 			this.Label7.Name = "Label7";
 			this.Label7.Size = new System.Drawing.Size(54, 19);
 			this.Label7.TabIndex = 15;
@@ -228,7 +228,7 @@
 			// txtTelefoneFixo
 			// 
 			this.txtTelefoneFixo.BackColor = System.Drawing.Color.White;
-			this.txtTelefoneFixo.Location = new System.Drawing.Point(134, 339);
+			this.txtTelefoneFixo.Location = new System.Drawing.Point(148, 339);
 			this.txtTelefoneFixo.Mask = "(99) 99000-0000";
 			this.txtTelefoneFixo.Name = "txtTelefoneFixo";
 			this.txtTelefoneFixo.Size = new System.Drawing.Size(125, 27);
@@ -237,7 +237,7 @@
 			// txtTelefoneCelular
 			// 
 			this.txtTelefoneCelular.BackColor = System.Drawing.Color.White;
-			this.txtTelefoneCelular.Location = new System.Drawing.Point(328, 339);
+			this.txtTelefoneCelular.Location = new System.Drawing.Point(342, 339);
 			this.txtTelefoneCelular.Mask = "(99) 99000-0000";
 			this.txtTelefoneCelular.Name = "txtTelefoneCelular";
 			this.txtTelefoneCelular.Size = new System.Drawing.Size(125, 27);
@@ -248,7 +248,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(413, 210);
+			this.label1.Location = new System.Drawing.Point(427, 210);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(24, 19);
 			this.label1.TabIndex = 9;
@@ -258,18 +258,19 @@
 			// 
 			this.txtEnderecoNumero.BackColor = System.Drawing.Color.White;
 			this.txtEnderecoNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.txtEnderecoNumero.Location = new System.Drawing.Point(443, 207);
+			this.txtEnderecoNumero.Location = new System.Drawing.Point(457, 207);
 			this.txtEnderecoNumero.MaxLength = 8;
 			this.txtEnderecoNumero.Name = "txtEnderecoNumero";
 			this.txtEnderecoNumero.Size = new System.Drawing.Size(62, 27);
 			this.txtEnderecoNumero.TabIndex = 10;
+			this.txtEnderecoNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSoNumeros_KeyPress);
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(28, 243);
+			this.label2.Location = new System.Drawing.Point(42, 243);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(99, 19);
 			this.label2.TabIndex = 11;
@@ -278,8 +279,7 @@
 			// txtEnderecoComplemento
 			// 
 			this.txtEnderecoComplemento.BackColor = System.Drawing.Color.White;
-			this.txtEnderecoComplemento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.txtEnderecoComplemento.Location = new System.Drawing.Point(134, 240);
+			this.txtEnderecoComplemento.Location = new System.Drawing.Point(148, 240);
 			this.txtEnderecoComplemento.MaxLength = 20;
 			this.txtEnderecoComplemento.Name = "txtEnderecoComplemento";
 			this.txtEnderecoComplemento.Size = new System.Drawing.Size(104, 27);
@@ -290,7 +290,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(75, 77);
+			this.lblCongregacao.Location = new System.Drawing.Point(89, 77);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(52, 19);
 			this.lblCongregacao.TabIndex = 1;
@@ -299,7 +299,7 @@
 			// txtCredor
 			// 
 			this.txtCredor.BackColor = System.Drawing.Color.White;
-			this.txtCredor.Location = new System.Drawing.Point(134, 74);
+			this.txtCredor.Location = new System.Drawing.Point(148, 74);
 			this.txtCredor.MaxLength = 100;
 			this.txtCredor.Name = "txtCredor";
 			this.txtCredor.Size = new System.Drawing.Size(371, 27);
@@ -337,7 +337,7 @@
 			this.lblCNP.AutoSize = true;
 			this.lblCNP.BackColor = System.Drawing.Color.Transparent;
 			this.lblCNP.ForeColor = System.Drawing.Color.Black;
-			this.lblCNP.Location = new System.Drawing.Point(91, 159);
+			this.lblCNP.Location = new System.Drawing.Point(105, 159);
 			this.lblCNP.Name = "lblCNP";
 			this.lblCNP.Size = new System.Drawing.Size(36, 19);
 			this.lblCNP.TabIndex = 5;
@@ -345,20 +345,20 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.toolStripSeparator2,
-            this.btnAtivo,
-            this.btnFechar});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.toolStripSeparator2,
+			this.btnAtivo,
+			this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 417);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
@@ -444,7 +444,7 @@
 			this.label11.AutoSize = true;
 			this.label11.BackColor = System.Drawing.Color.Transparent;
 			this.label11.ForeColor = System.Drawing.Color.Black;
-			this.label11.Location = new System.Drawing.Point(244, 243);
+			this.label11.Location = new System.Drawing.Point(258, 243);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(48, 19);
 			this.label11.TabIndex = 13;
@@ -453,7 +453,7 @@
 			// txtBairro
 			// 
 			this.txtBairro.BackColor = System.Drawing.Color.White;
-			this.txtBairro.Location = new System.Drawing.Point(298, 240);
+			this.txtBairro.Location = new System.Drawing.Point(312, 240);
 			this.txtBairro.MaxLength = 30;
 			this.txtBairro.Name = "txtBairro";
 			this.txtBairro.Size = new System.Drawing.Size(207, 27);
@@ -461,25 +461,25 @@
 			// 
 			// line1
 			// 
-			this.line1.EndPoint = new System.Drawing.Point(495, 5);
+			this.line1.EndPoint = new System.Drawing.Point(508, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 107);
+			this.line1.Location = new System.Drawing.Point(30, 107);
 			this.line1.Name = "line1";
-			this.line1.Size = new System.Drawing.Size(500, 10);
+			this.line1.Size = new System.Drawing.Size(513, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
 			this.line1.TabIndex = 29;
 			this.line1.TabStop = false;
 			// 
 			// line2
 			// 
-			this.line2.EndPoint = new System.Drawing.Point(495, 5);
+			this.line2.EndPoint = new System.Drawing.Point(506, 5);
 			this.line2.LineColor = System.Drawing.Color.SlateGray;
 			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(25, 191);
+			this.line2.Location = new System.Drawing.Point(30, 190);
 			this.line2.Name = "line2";
-			this.line2.Size = new System.Drawing.Size(500, 10);
-			this.line2.StartPoint = new System.Drawing.Point(5, 5);
+			this.line2.Size = new System.Drawing.Size(511, 11);
+			this.line2.StartPoint = new System.Drawing.Point(5, 6);
 			this.line2.TabIndex = 30;
 			this.line2.TabStop = false;
 			// 
@@ -488,7 +488,7 @@
 			this.cmbCredorTipo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbCredorTipo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbCredorTipo.FormattingEnabled = true;
-			this.cmbCredorTipo.Location = new System.Drawing.Point(134, 123);
+			this.cmbCredorTipo.Location = new System.Drawing.Point(148, 123);
 			this.cmbCredorTipo.Name = "cmbCredorTipo";
 			this.cmbCredorTipo.Size = new System.Drawing.Size(177, 27);
 			this.cmbCredorTipo.TabIndex = 4;
@@ -499,7 +499,7 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(23, 126);
+			this.label4.Location = new System.Drawing.Point(37, 126);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(104, 19);
 			this.label4.TabIndex = 3;
@@ -511,7 +511,7 @@
 			this.pnlChk.CausesValidation = false;
 			this.pnlChk.Controls.Add(this.picWathsapp);
 			this.pnlChk.Controls.Add(this.chkWhatsapp);
-			this.pnlChk.Location = new System.Drawing.Point(458, 336);
+			this.pnlChk.Location = new System.Drawing.Point(472, 336);
 			this.pnlChk.Name = "pnlChk";
 			this.pnlChk.Size = new System.Drawing.Size(55, 32);
 			this.pnlChk.TabIndex = 25;
@@ -539,7 +539,8 @@
 			// 
 			// txtCNP
 			// 
-			this.txtCNP.Location = new System.Drawing.Point(134, 156);
+			this.txtCNP.BackColor = System.Drawing.Color.White;
+			this.txtCNP.Location = new System.Drawing.Point(148, 156);
 			this.txtCNP.MaxLength = 14;
 			this.txtCNP.Name = "txtCNP";
 			this.txtCNP.Size = new System.Drawing.Size(177, 27);

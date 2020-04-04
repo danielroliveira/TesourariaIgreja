@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.main
+﻿namespace CamadaUI.Main
 {
 	partial class frmLogin
 	{

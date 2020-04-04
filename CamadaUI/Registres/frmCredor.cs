@@ -12,7 +12,7 @@ using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCredor : CamadaUI.modals.frmModFinBorder
+	public partial class frmCredor : CamadaUI.Modals.frmModFinBorder
 	{
 		private objCredor _credor;
 		private BindingSource bind = new BindingSource();
@@ -46,7 +46,8 @@ namespace CamadaUI.Registres
 			HandlerKeyDownControl(this);
 			chkWhatsapp.GotFocus += chkWathsapp_ControleFocus;
 			chkWhatsapp.LostFocus += chkWathsapp_ControleFocus;
-
+			txtEnderecoNumero.KeyPress += txtSoNumeros_KeyPress;
+			txtCNP.KeyPress += txtSoNumeros_KeyPress;
 		}
 
 		// PROPERTY SITUACAO
@@ -321,10 +322,28 @@ namespace CamadaUI.Registres
 
 		}
 
+		// CHECK DATA TO SAVE
+		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtCredor, "Credor", _credor)) return false;
 			if (!VerificaDadosClasse(cmbCredorTipo, "CredorTipo", _credor)) return false;
+
+			if (_credor.CredorTipo == 1 || _credor.CredorTipo == 2) // check CNP if Credor PJ or PF
+			{
+				if (!VerificaDadosClasse(txtCNP, "CNP", _credor)) return false;
+
+				if (!ValidacaoCNP.ValidaCNP(_credor.CNP))
+				{
+					AbrirDialog("CPF ou CNPJ inválido,\n favor inserir um CPF/CNPJ válido...",
+						"CPF ou CNPJ inválido!",
+						DialogType.OK,
+						DialogIcon.Warning);
+					txtCNP.Focus();
+					return false;
+				}
+			}
+
 			return true;
 		}
 
@@ -380,6 +399,13 @@ namespace CamadaUI.Registres
 					controls.ForEach(x => x.Enabled = true);
 					pnlChk.Visible = true;
 
+					// get default config value
+					if (Sit == EnumFlagEstado.NovoRegistro)
+					{
+						txtCidade.Text = ObterDefault("CidadePadrao");
+						txtUF.Text = ObterDefault("UFPadrao");
+					}
+
 					break;
 
 				case 2: // PESSOA JURIDICA
@@ -392,6 +418,13 @@ namespace CamadaUI.Registres
 
 					controls.ForEach(x => x.Enabled = true);
 					pnlChk.Visible = true;
+
+					// get default config value
+					if (Sit == EnumFlagEstado.NovoRegistro)
+					{
+						txtCidade.Text = ObterDefault("CidadePadrao");
+						txtUF.Text = ObterDefault("UFPadrao");
+					}
 
 					break;
 
@@ -442,5 +475,14 @@ namespace CamadaUI.Registres
 
 			}
 		}
+
+		// KEYPRESS ONLY NUMBERS CHAR
+		//------------------------------------------------------------------------------------------------------------
+		private void txtSoNumeros_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
+				e.Handled = true;
+		}
+
 	}
 }

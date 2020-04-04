@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCredorListagem : CamadaUI.modals.frmModFinBorder
+	public partial class frmCredorListagem : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<objCredor> _sourceList = new List<objCredor>();
 		private bool _isProcura;

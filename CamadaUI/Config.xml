@@ -8,6 +8,8 @@
     <ContaPadrao>1</ContaPadrao>
     <ContaDescricao>Caixa Geral</ContaDescricao>
     <DataBloqueada>18/06/2019</DataBloqueada>
+	<CidadePadrao></CidadePadrao>
+	<UFPadrao></UFPadrao>
   </DefaultValues>
   <Colors>
     <TopTitleColor></TopTitleColor>

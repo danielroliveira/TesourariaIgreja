@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmContribuinte : CamadaUI.modals.frmModFinBorder
+	public partial class frmContribuinte : CamadaUI.Modals.frmModFinBorder
 	{
 		private objContribuinte _contribuinte;
 		private BindingSource bind = new BindingSource();
@@ -346,9 +346,22 @@ namespace CamadaUI.Registres
 
 		}
 
+		// CHECK DATA BEFORE SAVE
+		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuinte)) return false;
+
+			if (!ValidacaoCNP.ValidaCNP(_contribuinte.CNP))
+			{
+				AbrirDialog("CPF ou CNPJ inválido,\n favor inserir um CPF/CNPJ válido...",
+					"CPF ou CNPJ inválido!",
+					DialogType.OK,
+					DialogIcon.Warning);
+				txtCNP.Focus();
+				return false;
+			}
+
 			return true;
 		}
 

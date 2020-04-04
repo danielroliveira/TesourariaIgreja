@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace CamadaUI.Config
 {
-	public partial class frmConfigGeral : modals.frmModConfig
+	public partial class frmConfigGeral : Modals.frmModConfig
 	{
 		private int? IDCongregacao;
 		private int? IDConta;
@@ -21,6 +21,8 @@ namespace CamadaUI.Config
 		{
 			InitializeComponent();
 			LoadConfig();
+
+			HandlerKeyDownControl(this);
 		}
 
 		// LOAD
@@ -73,6 +75,13 @@ namespace CamadaUI.Config
 				lblDataBloqueio.Text = LoadNode(doc, "DataBloqueada");
 				string DataPadrao = LoadNode(doc, "DataPadrao");
 				dtpDataPadrao.Value = string.IsNullOrEmpty(DataPadrao) ? DateTime.Today : Convert.ToDateTime(DataPadrao);
+
+				// CIDADE PADRAO
+				txtCidadePadrao.Text = LoadNode(doc, "CidadePadrao");
+
+				// UF PADRAO
+				txtUFPadrao.Text = LoadNode(doc, "UFPadrao");
+
 			}
 			catch (Exception ex)
 			{
@@ -129,6 +138,11 @@ namespace CamadaUI.Config
 			SaveConfigValorNode("ContaDescricao", txtContaPadrao.Text);
 			SaveConfigValorNode("ContaPadrao", IDConta.ToString());
 			SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
+			SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
+			SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
+
+			AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
+				DialogType.OK, DialogIcon.Information);
 
 		}
 
@@ -138,9 +152,61 @@ namespace CamadaUI.Config
 			if (!VerificaControle(dtpDataPadrao, "DATA PADRÃO")) return false;
 			if (!VerificaControle(txtCongregacaoPadrao, "CONGREGAÇÃO PADRÃO")) return false;
 			if (!VerificaControle(txtContaPadrao, "CONTA PADRÃO")) return false;
+			if (!VerificaControle(txtCidadePadrao, "CIDADE PADRÃO")) return false;
+			if (!VerificaControle(txtUFPadrao, "UF PADRÃO")) return false;
 
 			return true;
 		}
 
+		private void btnCancelar_Click(object sender, EventArgs e)
+		{
+			LoadConfig();
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCongregacaoPadrao":
+						btnAlteraFilial_Click(sender, new EventArgs());
+						break;
+					case "txtContaPadrao":
+						btnAlteraConta_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				string[] controlesBloqueados = { "txtCongregacaoPadrao", "txtContaPadrao" };
+
+				if (controlesBloqueados.Contains(ctr.Name))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
+
+		private void btnAlteraFilial_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnAlteraConta_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

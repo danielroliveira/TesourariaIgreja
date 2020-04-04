@@ -93,7 +93,7 @@ namespace CamadaBLL
 			{
 				Credor = (string)row["Credor"],
 				CredorTipo = row["CredorTipo"] == DBNull.Value ? (byte)0 : (byte)row["CredorTipo"],
-				CredorTipoDescricacao = row["CredorTipoDescricacao"] == DBNull.Value ? "" : (string)row["CredorTipoDescricacao"],
+				CredorTipoDescricao = row["CredorTipoDescricao"] == DBNull.Value ? "" : (string)row["CredorTipoDescricao"],
 				CNP = row["CNP"] == DBNull.Value ? "" : (string)row["CNP"],
 				EnderecoLogradouro = row["EnderecoLogradouro"] == DBNull.Value ? "" : (string)row["EnderecoLogradouro"],
 				EnderecoComplemento = row["EnderecoComplemento"] == DBNull.Value ? "" : (string)row["EnderecoComplemento"],
@@ -103,8 +103,8 @@ namespace CamadaBLL
 				UF = row["UF"] == DBNull.Value ? "" : (string)row["UF"],
 				CEP = row["CEP"] == DBNull.Value ? "" : (string)row["CEP"],
 				TelefoneCelular = row["TelefoneCelular"] == DBNull.Value ? "" : (string)row["TelefoneCelular"],
-				TelefoneFixo = row["Whatsapp"] == DBNull.Value ? "" : (string)row["TelefoneFixo"],
-				Whatsapp = row["CongregacaoSetor"] == DBNull.Value ? false : (bool)row["CongregacaoSetor"],
+				TelefoneFixo = row["TelefoneFixo"] == DBNull.Value ? "" : (string)row["TelefoneFixo"],
+				Whatsapp = row["Whatsapp"] == DBNull.Value ? false : (bool)row["Whatsapp"],
 				Email = row["Email"] == DBNull.Value ? "" : (string)row["Email"],
 				Ativo = (bool)row["Ativo"]
 			};
@@ -145,14 +145,12 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblCongregacao (" +
+				string query = "INSERT INTO tblCredor (" +
 							   "Credor, CredorTipo, CNP, EnderecoLogradouro, EnderecoNumero, EnderecoComplemento, " +
-							   "Bairro, Cidade, UF, CEP, Dirigente, TelefoneCelular, TelefoneFixo, Email, " +
-							   "IDCongregacaoSetor, Tesoureiro, Whatsapp " +
+							   "Bairro, Cidade, UF, CEP, TelefoneFixo, TelefoneCelular, Email, Whatsapp, Ativo " +
 							   ") VALUES (" +
 							   "@Credor, @CredorTipo, @CNP, @EnderecoLogradouro, @EnderecoNumero, @EnderecoComplemento, " +
-							   "@Bairro, @Cidade, @UF, @CEP, @Dirigente, @TelefoneCelular, @TelefoneFixo, @Email, " +
-							   "@IDCongregacaoSetor, @Tesoureiro, @Whatsapp)";
+							   "@Bairro, @Cidade, @UF, @CEP, @TelefoneFixo, @TelefoneCelular, @Email, @Whatsapp, @Ativo) ";
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 
@@ -196,7 +194,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblCongregacao SET " +
+				string query = "UPDATE tblCredor SET " +
 							   "Credor = @Credor, " +
 							   "CredorTipo = @CredorTipo, " +
 							   "CNP = @CNP, " +

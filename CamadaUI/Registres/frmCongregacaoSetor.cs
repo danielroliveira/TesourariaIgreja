@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCongregacaoSetor : CamadaUI.modals.frmModFinBorder
+	public partial class frmCongregacaoSetor : CamadaUI.Modals.frmModFinBorder
 	{
 		private objCongregacaoSetor _setor;
 		private BindingSource bind = new BindingSource();

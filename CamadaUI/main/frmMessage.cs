@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using CamadaUI.Properties;
 
-namespace CamadaUI.main
+namespace CamadaUI.Main
 {
-	public partial class frmMessage : modals.frmModFinBorder
+	public partial class frmMessage : Modals.frmModFinBorder
 	{
 		private DialogType _dialogType;
 		private DialogIcon _icon;

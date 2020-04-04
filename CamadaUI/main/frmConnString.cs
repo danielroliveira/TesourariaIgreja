@@ -9,9 +9,9 @@ using CamadaBLL;
 using static CamadaUI.Utilidades;
 using System.Linq;
 
-namespace CamadaUI.main
+namespace CamadaUI.Main
 {
-	public partial class frmConnString : CamadaUI.modals.frmModFinBorder
+	public partial class frmConnString : CamadaUI.Modals.frmModFinBorder
 	{
 		private string SourceXMLFile = "";
 		private bool ArquivoNovo = false;

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CamadaUI.modals
+namespace CamadaUI.Modals
 {
 	public partial class frmModFinBorder : Form
 	{
@@ -40,7 +40,7 @@ namespace CamadaUI.modals
 
 			if (IsMdiChild)
 				Py = Cursor.Position.Y - Top + 98;
-				//Py = Cursor.Position.Y - Top + Screen.PrimaryScreen.WorkingArea.Height - Parent.ClientSize.Height + 3;
+			//Py = Cursor.Position.Y - Top + Screen.PrimaryScreen.WorkingArea.Height - Parent.ClientSize.Height + 3;
 			else
 			{
 				Py = Cursor.Position.Y - Top;

@@ -40,12 +40,16 @@
 			this.btnAlteraConta = new System.Windows.Forms.Button();
 			this.Label15 = new System.Windows.Forms.Label();
 			this.btnFilialAdd = new System.Windows.Forms.Button();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
 			this.Label35 = new System.Windows.Forms.Label();
 			this.btnAlteraFilial = new System.Windows.Forms.Button();
 			this.dtpDataPadrao = new System.Windows.Forms.DateTimePicker();
 			this.lblDataBloqueio = new System.Windows.Forms.Label();
 			this.txtCongregacaoPadrao = new System.Windows.Forms.TextBox();
 			this.Label22 = new System.Windows.Forms.Label();
+			this.txtUFPadrao = new System.Windows.Forms.TextBox();
+			this.txtCidadePadrao = new System.Windows.Forms.TextBox();
 			this.txtContaPadrao = new System.Windows.Forms.TextBox();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.label3 = new System.Windows.Forms.Label();
@@ -87,7 +91,7 @@
 			this.btnSalvarConfig.Location = new System.Drawing.Point(484, 531);
 			this.btnSalvarConfig.Name = "btnSalvarConfig";
 			this.btnSalvarConfig.Size = new System.Drawing.Size(121, 36);
-			this.btnSalvarConfig.TabIndex = 6;
+			this.btnSalvarConfig.TabIndex = 2;
 			this.btnSalvarConfig.Text = "&Salvar";
 			this.btnSalvarConfig.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnSalvarConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -105,11 +109,12 @@
 			this.btnCancelar.Location = new System.Drawing.Point(611, 531);
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(121, 36);
-			this.btnCancelar.TabIndex = 7;
+			this.btnCancelar.TabIndex = 3;
 			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCancelar.UseVisualStyleBackColor = true;
+			this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
 			// 
 			// pnlPastas
 			// 
@@ -123,17 +128,21 @@
 			this.pnlPastas.Controls.Add(this.btnAlteraConta);
 			this.pnlPastas.Controls.Add(this.Label15);
 			this.pnlPastas.Controls.Add(this.btnFilialAdd);
+			this.pnlPastas.Controls.Add(this.label5);
+			this.pnlPastas.Controls.Add(this.label2);
 			this.pnlPastas.Controls.Add(this.Label35);
 			this.pnlPastas.Controls.Add(this.btnAlteraFilial);
 			this.pnlPastas.Controls.Add(this.dtpDataPadrao);
 			this.pnlPastas.Controls.Add(this.lblDataBloqueio);
 			this.pnlPastas.Controls.Add(this.txtCongregacaoPadrao);
 			this.pnlPastas.Controls.Add(this.Label22);
+			this.pnlPastas.Controls.Add(this.txtUFPadrao);
+			this.pnlPastas.Controls.Add(this.txtCidadePadrao);
 			this.pnlPastas.Controls.Add(this.txtContaPadrao);
 			this.pnlPastas.Location = new System.Drawing.Point(12, 42);
 			this.pnlPastas.Name = "pnlPastas";
-			this.pnlPastas.Size = new System.Drawing.Size(720, 231);
-			this.pnlPastas.TabIndex = 2;
+			this.pnlPastas.Size = new System.Drawing.Size(720, 309);
+			this.pnlPastas.TabIndex = 0;
 			// 
 			// label4
 			// 
@@ -143,7 +152,7 @@
 			this.label4.Margin = new System.Windows.Forms.Padding(0);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(111, 19);
-			this.label4.TabIndex = 0;
+			this.label4.TabIndex = 1;
 			this.label4.Text = "Título da Igreja:";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -157,7 +166,7 @@
 			this.btnEditarFilial.Location = new System.Drawing.Point(590, 114);
 			this.btnEditarFilial.Name = "btnEditarFilial";
 			this.btnEditarFilial.Size = new System.Drawing.Size(81, 30);
-			this.btnEditarFilial.TabIndex = 19;
+			this.btnEditarFilial.TabIndex = 9;
 			this.btnEditarFilial.TabStop = false;
 			this.btnEditarFilial.Text = "Editar";
 			this.btnEditarFilial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -169,7 +178,7 @@
 			this.txtIgrejaTitulo.Location = new System.Drawing.Point(187, 50);
 			this.txtIgrejaTitulo.Name = "txtIgrejaTitulo";
 			this.txtIgrejaTitulo.Size = new System.Drawing.Size(484, 27);
-			this.txtIgrejaTitulo.TabIndex = 1;
+			this.txtIgrejaTitulo.TabIndex = 2;
 			this.txtIgrejaTitulo.Validating += new System.ComponentModel.CancelEventHandler(this.txtIgrejaTitulo_Validating);
 			// 
 			// label1
@@ -192,7 +201,7 @@
 			this.btnContaAdd.Location = new System.Drawing.Point(503, 147);
 			this.btnContaAdd.Name = "btnContaAdd";
 			this.btnContaAdd.Size = new System.Drawing.Size(81, 30);
-			this.btnContaAdd.TabIndex = 23;
+			this.btnContaAdd.TabIndex = 13;
 			this.btnContaAdd.TabStop = false;
 			this.btnContaAdd.Text = "Nova";
 			this.btnContaAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -206,7 +215,7 @@
 			this.Label34.Location = new System.Drawing.Point(88, 87);
 			this.Label34.Name = "Label34";
 			this.Label34.Size = new System.Drawing.Size(93, 19);
-			this.Label34.TabIndex = 13;
+			this.Label34.TabIndex = 3;
 			this.Label34.Text = "Data Padrão:";
 			this.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -220,11 +229,12 @@
 			this.btnAlteraConta.Location = new System.Drawing.Point(412, 147);
 			this.btnAlteraConta.Name = "btnAlteraConta";
 			this.btnAlteraConta.Size = new System.Drawing.Size(81, 30);
-			this.btnAlteraConta.TabIndex = 22;
+			this.btnAlteraConta.TabIndex = 12;
 			this.btnAlteraConta.TabStop = false;
 			this.btnAlteraConta.Text = "Alterar";
 			this.btnAlteraConta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlteraConta.UseVisualStyleBackColor = false;
+			this.btnAlteraConta.Click += new System.EventHandler(this.btnAlteraConta_Click);
 			// 
 			// Label15
 			// 
@@ -234,7 +244,7 @@
 			this.Label15.Location = new System.Drawing.Point(34, 120);
 			this.Label15.Name = "Label15";
 			this.Label15.Size = new System.Drawing.Size(147, 19);
-			this.Label15.TabIndex = 15;
+			this.Label15.TabIndex = 5;
 			this.Label15.Text = "Congregação Padrão:";
 			this.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -248,11 +258,35 @@
 			this.btnFilialAdd.Location = new System.Drawing.Point(503, 114);
 			this.btnFilialAdd.Name = "btnFilialAdd";
 			this.btnFilialAdd.Size = new System.Drawing.Size(81, 30);
-			this.btnFilialAdd.TabIndex = 18;
+			this.btnFilialAdd.TabIndex = 8;
 			this.btnFilialAdd.TabStop = false;
 			this.btnFilialAdd.Text = "Nova";
 			this.btnFilialAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnFilialAdd.UseVisualStyleBackColor = false;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.BackColor = System.Drawing.Color.Transparent;
+			this.label5.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(418, 216);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(79, 19);
+			this.label5.TabIndex = 18;
+			this.label5.Text = "UF Padrão:";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.BackColor = System.Drawing.Color.Transparent;
+			this.label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.Location = new System.Drawing.Point(74, 216);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(107, 19);
+			this.label2.TabIndex = 16;
+			this.label2.Text = "Cidade Padrão:";
+			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// Label35
 			// 
@@ -262,7 +296,7 @@
 			this.Label35.Location = new System.Drawing.Point(81, 152);
 			this.Label35.Name = "Label35";
 			this.Label35.Size = new System.Drawing.Size(100, 19);
-			this.Label35.TabIndex = 20;
+			this.Label35.TabIndex = 10;
 			this.Label35.Text = "Conta Padrão:";
 			this.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -276,11 +310,12 @@
 			this.btnAlteraFilial.Location = new System.Drawing.Point(412, 114);
 			this.btnAlteraFilial.Name = "btnAlteraFilial";
 			this.btnAlteraFilial.Size = new System.Drawing.Size(81, 30);
-			this.btnAlteraFilial.TabIndex = 17;
+			this.btnAlteraFilial.TabIndex = 7;
 			this.btnAlteraFilial.TabStop = false;
 			this.btnAlteraFilial.Text = "Alterar";
 			this.btnAlteraFilial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlteraFilial.UseVisualStyleBackColor = false;
+			this.btnAlteraFilial.Click += new System.EventHandler(this.btnAlteraFilial_Click);
 			// 
 			// dtpDataPadrao
 			// 
@@ -289,7 +324,7 @@
 			this.dtpDataPadrao.Location = new System.Drawing.Point(187, 83);
 			this.dtpDataPadrao.Name = "dtpDataPadrao";
 			this.dtpDataPadrao.Size = new System.Drawing.Size(155, 27);
-			this.dtpDataPadrao.TabIndex = 14;
+			this.dtpDataPadrao.TabIndex = 4;
 			// 
 			// lblDataBloqueio
 			// 
@@ -297,7 +332,7 @@
 			this.lblDataBloqueio.Location = new System.Drawing.Point(307, 179);
 			this.lblDataBloqueio.Name = "lblDataBloqueio";
 			this.lblDataBloqueio.Size = new System.Drawing.Size(92, 18);
-			this.lblDataBloqueio.TabIndex = 25;
+			this.lblDataBloqueio.TabIndex = 15;
 			this.lblDataBloqueio.Text = "01/01/2018";
 			// 
 			// txtCongregacaoPadrao
@@ -306,7 +341,8 @@
 			this.txtCongregacaoPadrao.Location = new System.Drawing.Point(187, 116);
 			this.txtCongregacaoPadrao.Name = "txtCongregacaoPadrao";
 			this.txtCongregacaoPadrao.Size = new System.Drawing.Size(212, 27);
-			this.txtCongregacaoPadrao.TabIndex = 16;
+			this.txtCongregacaoPadrao.TabIndex = 6;
+			this.txtCongregacaoPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// Label22
 			// 
@@ -315,8 +351,27 @@
 			this.Label22.Location = new System.Drawing.Point(184, 179);
 			this.Label22.Name = "Label22";
 			this.Label22.Size = new System.Drawing.Size(117, 19);
-			this.Label22.TabIndex = 24;
+			this.Label22.TabIndex = 14;
 			this.Label22.Text = "Data Bloqueada:";
+			// 
+			// txtUFPadrao
+			// 
+			this.txtUFPadrao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.txtUFPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtUFPadrao.Location = new System.Drawing.Point(503, 213);
+			this.txtUFPadrao.MaxLength = 2;
+			this.txtUFPadrao.Name = "txtUFPadrao";
+			this.txtUFPadrao.Size = new System.Drawing.Size(46, 27);
+			this.txtUFPadrao.TabIndex = 19;
+			// 
+			// txtCidadePadrao
+			// 
+			this.txtCidadePadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtCidadePadrao.Location = new System.Drawing.Point(187, 213);
+			this.txtCidadePadrao.MaxLength = 50;
+			this.txtCidadePadrao.Name = "txtCidadePadrao";
+			this.txtCidadePadrao.Size = new System.Drawing.Size(212, 27);
+			this.txtCidadePadrao.TabIndex = 17;
 			// 
 			// txtContaPadrao
 			// 
@@ -324,16 +379,17 @@
 			this.txtContaPadrao.Location = new System.Drawing.Point(187, 149);
 			this.txtContaPadrao.Name = "txtContaPadrao";
 			this.txtContaPadrao.Size = new System.Drawing.Size(212, 27);
-			this.txtContaPadrao.TabIndex = 21;
+			this.txtContaPadrao.TabIndex = 11;
+			this.txtContaPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// panel3
 			// 
 			this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
 			this.panel3.Controls.Add(this.label3);
-			this.panel3.Location = new System.Drawing.Point(12, 333);
+			this.panel3.Location = new System.Drawing.Point(12, 396);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(720, 107);
-			this.panel3.TabIndex = 4;
+			this.panel3.TabIndex = 1;
 			// 
 			// label3
 			// 
@@ -391,5 +447,9 @@
 		internal System.Windows.Forms.Label Label35;
 		internal System.Windows.Forms.Label Label34;
 		internal System.Windows.Forms.Label Label15;
+		internal System.Windows.Forms.Label label5;
+		internal System.Windows.Forms.Label label2;
+		internal System.Windows.Forms.TextBox txtUFPadrao;
+		internal System.Windows.Forms.TextBox txtCidadePadrao;
 	}
 }
