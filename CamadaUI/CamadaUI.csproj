@@ -97,6 +97,24 @@
     <Compile Include="Config\frmConfigServidor.designer.cs">
       <DependentUpon>frmConfigServidor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contas\frmConta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contas\frmConta.designer.cs">
+      <DependentUpon>frmConta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contas\frmContaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contas\frmContaListagem.designer.cs">
+      <DependentUpon>frmContaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contas\frmContaProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contas\frmContaProcura.designer.cs">
+      <DependentUpon>frmContaProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmConnString.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +222,24 @@
     <Compile Include="Registres\frmCredorListagem.designer.cs">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setores\frmSetor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setores\frmSetor.designer.cs">
+      <DependentUpon>frmSetor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setores\frmSetorListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setores\frmSetorListagem.designer.cs">
+      <DependentUpon>frmSetorListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setores\frmSetorProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setores\frmSetorProcura.designer.cs">
+      <DependentUpon>frmSetorProcura.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -222,6 +258,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigServidor.resx">
       <DependentUpon>frmConfigServidor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contas\frmConta.resx">
+      <DependentUpon>frmConta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contas\frmContaListagem.resx">
+      <DependentUpon>frmContaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contas\frmContaProcura.resx">
+      <DependentUpon>frmContaProcura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmConnString.resx">
       <DependentUpon>frmConnString.cs</DependentUpon>
@@ -283,6 +328,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmCredorListagem.resx">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setores\frmSetor.resx">
+      <DependentUpon>frmSetor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setores\frmSetorListagem.resx">
+      <DependentUpon>frmSetorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setores\frmSetorProcura.resx">
+      <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -422,5 +476,6 @@
   <ItemGroup>
     <None Include="Resources\whatsapp_32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

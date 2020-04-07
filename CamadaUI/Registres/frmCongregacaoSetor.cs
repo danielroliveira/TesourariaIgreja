@@ -154,7 +154,7 @@ namespace CamadaUI.Registres
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
-				_setor.CancelEdit();
+				bind.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
 				AtivoButtonImage();
 			}

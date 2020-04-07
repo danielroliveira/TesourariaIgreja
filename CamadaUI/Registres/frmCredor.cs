@@ -210,7 +210,7 @@ namespace CamadaUI.Registres
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
-				_credor.CancelEdit();
+				bind.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
 				AtivoButtonImage();
 			}
@@ -296,12 +296,21 @@ namespace CamadaUI.Registres
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				//--- save | Insert
 				CredorBLL cBLL = new CredorBLL();
-				int ID = cBLL.InsertCredor(_credor);
 
-				//--- define newID
-				_credor.IDCredor = ID;
+				//--- SAVE: INSERT OR UPDATE
+				if (_credor.IDCredor == null) //--- save | Insert
+				{
+					//--- save | Insert
+					int ID = cBLL.InsertCredor(_credor);
+					//--- define newID
+					_credor.IDCredor = ID;
+				}
+				else //--- update
+				{
+					cBLL.UpdateCredor(_credor);
+				}
+
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
 				//--- emit massage
@@ -362,8 +371,6 @@ namespace CamadaUI.Registres
 		{
 			chkWhatsapp.Focus();
 		}
-
-		#endregion // CONTROLS --- END
 
 		// CONTROL CHANGES COMBOBOX CREDOR TIPO
 		//------------------------------------------------------------------------------------------------------------
@@ -483,6 +490,8 @@ namespace CamadaUI.Registres
 			if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
 				e.Handled = true;
 		}
+
+		#endregion // CONTROLS --- END
 
 	}
 }

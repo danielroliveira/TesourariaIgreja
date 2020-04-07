@@ -48,6 +48,8 @@ namespace CamadaUI
 							new XElement("CongregacaoDescricao", "Sede"),
 							new XElement("ContaPadrao", "1"),
 							new XElement("ContaDescricao", "Caixa Geral"),
+							new XElement("SetorPadrao", "1"),
+							new XElement("SetorDescricao", ""),
 							new XElement("DataBloqueada", ""),
 							new XElement("CidadePadrao", ""),
 							new XElement("UFPadrao", "")

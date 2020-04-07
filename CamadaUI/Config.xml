@@ -7,7 +7,9 @@
     <CongregacaoDescricao>Nova Sião</CongregacaoDescricao>
     <ContaPadrao>1</ContaPadrao>
     <ContaDescricao>Caixa Geral</ContaDescricao>
-    <DataBloqueada>18/06/2019</DataBloqueada>
+    <SetorPadrao></SetorPadrao>
+    <SetorDescricao></SetorDescricao>
+	<DataBloqueada>18/06/2019</DataBloqueada>
 	<CidadePadrao></CidadePadrao>
 	<UFPadrao></UFPadrao>
   </DefaultValues>

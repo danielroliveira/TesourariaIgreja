@@ -417,7 +417,7 @@ namespace CamadaDTO
 			}
 		}
 
-		public void EndEdit()
+		public void CancelEdit()
 		{
 			if (inTxn)
 			{
@@ -426,7 +426,7 @@ namespace CamadaDTO
 			}
 		}
 
-		public void CancelEdit()
+		public void EndEdit()
 		{
 			if (inTxn)
 			{

@@ -9,31 +9,34 @@ using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using CamadaUI.Registres;
 using System.Linq;
 
-namespace CamadaUI.Registres
+namespace CamadaUI.Contas
 {
-	public partial class frmContribuinte : CamadaUI.Modals.frmModFinBorder
+	public partial class frmConta : CamadaUI.Modals.frmModFinBorder
 	{
-		private objContribuinte _contribuinte;
+		private objConta _conta;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
+		private int? _IDCongregacao;
 
 		#region SUB NEW | PROPERTIES
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuinte(objContribuinte obj)
+		public frmConta(objConta obj)
 		{
 			InitializeComponent();
 
-			_contribuinte = obj;
-			bind.DataSource = _contribuinte;
+			_conta = obj;
+			bind.DataSource = _conta;
 			BindingCreator();
+			_IDCongregacao = _conta.IDCongregacao;
 
-			_contribuinte.PropertyChanged += RegistroAlterado;
+			_conta.PropertyChanged += RegistroAlterado;
 
-			if (_contribuinte.IDCongregacao == null)
+			if (_conta.IDConta == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 			}
@@ -43,12 +46,13 @@ namespace CamadaUI.Registres
 			}
 
 			AtivoButtonImage();
-
-			// ADD HANDLERS
 			HandlerKeyDownControl(this);
-			txtIDMembro.LostFocus += TxtIDMembro_LostFocus;
-			txtIDMembro.GotFocus += TxtIDMembro_GotFocus;
 
+			// controle do focus dos checkboxes
+			chkBancaria.GotFocus += chkBox_ControleFocus;
+			chkBancaria.LostFocus += chkBox_ControleFocus;
+			chkOperadoraCartao.GotFocus += chkBox_ControleFocus;
+			chkOperadoraCartao.LostFocus += chkBox_ControleFocus;
 		}
 
 		// PROPERTY SITUACAO
@@ -100,27 +104,27 @@ namespace CamadaUI.Registres
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDContribuinte", true);
-			txtContribuinte.DataBindings.Add("Text", bind, "Contribuinte", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtIDMembro.DataBindings.Add("Text", bind, "IDMembro", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtNascimentoData.DataBindings.Add("Text", bind, "NascimentoData", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtTelefoneCelular.DataBindings.Add("Text", bind, "TelefoneCelular", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCNP.DataBindings.Add("Text", bind, "CNP", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao");
-
-			// CARREGA COMBOS
-			CarregaCmbDizimista();
+			lblID.DataBindings.Add("Text", bind, "IDConta", true);
+			txtConta.DataBindings.Add("Text", bind, "Conta", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblContaSaldo.DataBindings.Add("Text", bind, "ContaSaldo", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblBloqueioData.DataBindings.Add("Text", bind, "BloqueioData", true, DataSourceUpdateMode.OnPropertyChanged);
+			chkOperadoraCartao.DataBindings.Add("Checked", bind, "OperadoraCartao", true, DataSourceUpdateMode.OnPropertyChanged);
+			chkBancaria.DataBindings.Add("Checked", bind, "Bancaria", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
-			txtIDMembro.DataBindings["Text"].Format += FormatID;
-			bind.CurrentChanged += BindRegistroChanged;
-
+			lblContaSaldo.DataBindings["Text"].Format += FormatCurrency;
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
 		{
 			e.Value = e.Value == DBNull.Value ? null : $"{e.Value: 0000}";
+		}
+
+		private void FormatCurrency(object sender, ConvertEventArgs e)
+		{
+			e.Value = string.Format("{0:c}", e.Value);
 		}
 
 		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
@@ -129,28 +133,6 @@ namespace CamadaUI.Registres
 			{
 				Sit = EnumFlagEstado.Alterado;
 			}
-		}
-		private void BindRegistroChanged(object sender, EventArgs e)
-		{
-			MessageBox.Show("alterado");
-		}
-
-		// CARREGA COMBO
-		//------------------------------------------------------------------------------------------------------------
-		private void CarregaCmbDizimista()
-		{
-			//--- Create DataTable
-			DataTable dtAtivo = new DataTable();
-			dtAtivo.Columns.Add("Ativo");
-			dtAtivo.Columns.Add("Texto");
-			dtAtivo.Rows.Add(new object[] { false, "NÃO" });
-			dtAtivo.Rows.Add(new object[] { true, "SIM" });
-
-			//--- Set DataTable
-			cmbDizimista.DataSource = dtAtivo;
-			cmbDizimista.ValueMember = "Ativo";
-			cmbDizimista.DisplayMember = "Texto";
-			cmbDizimista.DataBindings.Add("SelectedValue", bind, "Dizimista", true, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
 		#endregion
@@ -169,8 +151,8 @@ namespace CamadaUI.Registres
 				return;
 			}
 
+			new frmContaListagem().Show();
 			Close();
-			MostraMenuPrincipal();
 		}
 
 		// CANCELAR ALTERACAO
@@ -184,9 +166,8 @@ namespace CamadaUI.Registres
 
 				if (response == DialogResult.Yes)
 				{
-					AutoValidate = AutoValidate.Disable;
+					new frmContaListagem().Show();
 					Close();
-					MostraMenuPrincipal();
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -202,96 +183,71 @@ namespace CamadaUI.Registres
 
 		}
 
-		// OPEN CONGREGACAO PROCURA FORM
+		// INSERIR NOVO REGISTRO
 		//------------------------------------------------------------------------------------------------------------
-		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
+		private void btnNovo_Click(object sender, EventArgs e)
 		{
+			if (Sit != EnumFlagEstado.RegistroSalvo) return;
 
-			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, _contribuinte.IDCongregacao);
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				_contribuinte.IDCongregacao = frm.propEscolha.IDCongregacao;
-				txtCongregacao.Text = frm.propEscolha.Congregacao;
-			}
-
-			//--- select
-			txtCongregacao.Focus();
-			txtCongregacao.SelectAll();
-
+			_conta = new objConta(null);
+			Sit = EnumFlagEstado.NovoRegistro;
+			AtivoButtonImage();
+			bind.DataSource = _conta;
+			txtConta.Focus();
 		}
 
-		// CONTROLA ATIVO BUTTON
-		//------------------------------------------------------------------------------------------------------------
 		private void btnAtivo_Click(object sender, EventArgs e)
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
-				MessageBox.Show("Você não pode DESATIVAR um Novo Contribuinte", "Desativar Contribuinte",
+				MessageBox.Show("Você não pode DESATIVAR uma Nova Conta", "Desativar Conta",
 								MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 
-			if (_contribuinte.Ativo == true) //--- ATIVA
+			if (_conta.Ativa == true) //--- ATIVA
 			{
-				var response = AbrirDialog("Você deseja realmente DESATIVAR o Contribuinte:\n" +
-							   txtContribuinte.Text.ToUpper(),
+				var response = AbrirDialog("Você deseja realmente DESATIVAR a Conta:\n" +
+							   txtConta.Text.ToUpper(),
 							   "Desativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 			else //--- INATIVO
 			{
-				var response = AbrirDialog("Você deseja realmente ATIVAR o Contribuinte:\n" +
-							   txtContribuinte.Text.ToUpper(),
+				var response = AbrirDialog("Você deseja realmente ATIVAR a Conta:\n" +
+							   txtConta.Text.ToUpper(),
 							   "Ativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 
-			_contribuinte.BeginEdit();
-			_contribuinte.Ativo = !_contribuinte.Ativo;
+			_conta.BeginEdit();
+			_conta.Ativa = !_conta.Ativa;
 
 			if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
 			AtivoButtonImage();
 		}
 
-		// CONTROLA IMAGEM CONTROLE ATIVO
-		//------------------------------------------------------------------------------------------------------------
 		private void AtivoButtonImage()
 		{
 			try
 			{
-				if (_contribuinte.Ativo == true) //--- Nesse caso é Forma Ativo
+				if (_conta.Ativa == true) //--- Nesse caso é Forma Ativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchON_30;
-					btnAtivo.Text = "Ativo";
+					btnAtivo.Text = "Ativa";
 				}
-				else if (_contribuinte.Ativo == false) //--- Nesse caso é Forma Inativo
+				else if (_conta.Ativa == false) //--- Nesse caso é Forma Inativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchOFF_30;
-					btnAtivo.Text = "Inativo";
+					btnAtivo.Text = "Inativa";
 				}
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Ativar o Contribuinte..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Ativar a conta..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
-		}
-
-		// NOVO REGISTRO INSERIR
-		//------------------------------------------------------------------------------------------------------------
-		private void btnNovo_Click(object sender, EventArgs e)
-		{
-			if (Sit != EnumFlagEstado.RegistroSalvo) return;
-
-			_contribuinte = new objContribuinte(null);
-			Sit = EnumFlagEstado.NovoRegistro;
-			AtivoButtonImage();
-			bind.DataSource = _contribuinte;
-			txtContribuinte.Focus();
 		}
 
 		#endregion
@@ -302,7 +258,6 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
-
 			try
 			{
 				// --- Ampulheta ON
@@ -311,19 +266,18 @@ namespace CamadaUI.Registres
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				ContribuinteBLL cBLL = new ContribuinteBLL();
+				ContaBLL cBLL = new ContaBLL();
 
-				if (_contribuinte.IDContribuinte == null)
+				//--- SAVE: INSERT OR UPDATE
+				if (_conta.IDConta == null) //--- save | Insert
 				{
-					//--- save | Insert
-					int ID = cBLL.InsertContribuinte(_contribuinte);
+					int ID = cBLL.InsertConta(_conta);
 					//--- define newID
-					_contribuinte.IDCongregacao = ID;
+					_conta.IDConta = ID;
 				}
-				else
+				else //--- update
 				{
-					//--- update
-					cBLL.UpdateContribuinte(_contribuinte);
+					cBLL.UpdateConta(_conta);
 				}
 
 				//--- change Sit
@@ -331,11 +285,10 @@ namespace CamadaUI.Registres
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
-
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Contribuinte..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Conta..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -346,41 +299,24 @@ namespace CamadaUI.Registres
 
 		}
 
-		// CHECK DATA BEFORE SAVE
-		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuinte)) return false;
-
-			if (!ValidacaoCNP.ValidaCNP(_contribuinte.CNP))
-			{
-				AbrirDialog("CPF ou CNPJ inválido,\n favor inserir um CPF/CNPJ válido...",
-					"CPF ou CNPJ inválido!",
-					DialogType.OK,
-					DialogIcon.Warning);
-				txtCNP.Focus();
-				return false;
-			}
-
+			if (!VerificaDadosClasse(txtConta, "Congregação Setor", _conta)) return false;
 			return true;
 		}
 
 		#endregion
 
-		#region FORM CONTROLS FUCTIONS
+		#region CONTROL FUNCTIONS
 
-		// FORM KEYPRESS: BLOQUEIA (+)
+		// CLOSE WHEN PRESS ESC
 		//------------------------------------------------------------------------------------------------------------
-		private void frmContribuinte_KeyPress(object sender, KeyPressEventArgs e)
+		private void frmConta_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyChar == 43)
+			if (e.KeyCode == Keys.Escape)
 			{
-				//--- cria uma lista de controles que serao impedidos de receber '+'
-				string[] controlesBloqueados = {
-					"txtCongregacao"
-				};
-
-				if (controlesBloqueados.Contains(ActiveControl.Name)) e.Handled = true;
+				e.Handled = true;
+				btnFechar_Click(sender, new EventArgs());
 			}
 		}
 
@@ -410,10 +346,10 @@ namespace CamadaUI.Registres
 
 				switch (ctr.Name)
 				{
-					case "txtSetor":
-						if (_contribuinte.IDCongregacao != null) Sit = EnumFlagEstado.Alterado;
+					case "txtCongregacao":
+						if (_conta.IDCongregacao != null) Sit = EnumFlagEstado.Alterado;
 						txtCongregacao.Clear();
-						_contribuinte.IDCongregacao = null;
+						_conta.IDCongregacao = null;
 						break;
 					default:
 						break;
@@ -432,37 +368,45 @@ namespace CamadaUI.Registres
 			}
 		}
 
-		// DIGITA SOMENTE NUMEROS
+		// OPEN CONGREGACAO PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
-		private void txtIDMembro_KeyPress(object sender, KeyPressEventArgs e)
+		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
 		{
-			if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
-				e.Handled = true;
+
+			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, _conta.IDCongregacao);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				_conta.IDCongregacao = frm.propEscolha.IDCongregacao;
+				txtCongregacao.Text = frm.propEscolha.Congregacao;
+			}
+
+			//--- select
+			txtCongregacao.Focus();
+			txtCongregacao.SelectAll();
+
 		}
 
-		// VALIDA O ID MEMBRO
+		// WHEN SELECT RADIO CHANGE COLOR OF PANEL
 		//------------------------------------------------------------------------------------------------------------
-		private void txtIDMembro_Validating(object sender, CancelEventArgs e)
+		private void chkBox_ControleFocus(object sender, EventArgs e)
 		{
-			if (txtIDMembro.Text.Length == 0)
+			pnlChk1.BackColor = Color.Transparent;
+			pnlChk2.BackColor = Color.Transparent;
+
+			if (chkBancaria.Focused)
 			{
-				e.Cancel = false;
+				pnlChk1.BackColor = Color.Gainsboro;
+			}
+			else if (chkOperadoraCartao.Focused)
+			{
+				pnlChk2.BackColor = Color.Gainsboro;
 			}
 		}
 
-		// GOT LOST FOCUS IDMEMBRO
-		//------------------------------------------------------------------------------------------------------------
-		private void TxtIDMembro_LostFocus(object sender, EventArgs e)
-		{
-			AutoValidate = AutoValidate.EnablePreventFocusChange;
-		}
-
-		private void TxtIDMembro_GotFocus(object sender, EventArgs e)
-		{
-			AutoValidate = AutoValidate.EnableAllowFocusChange;
-		}
-
-		#endregion // FORM CONTROLS FUCTIONS --- END
+		#endregion // CONTROL FUNCTIONS --- END
 
 	}
 }

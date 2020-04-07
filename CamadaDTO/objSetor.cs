@@ -4,19 +4,16 @@ using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
 {
-	public class objConta : IEditableObject, INotifyPropertyChanged
+	public class objSetor : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
 		struct StructConta
 		{
-			internal int? _IDConta;
-			internal string _Conta;
+			internal int? _IDSetor;
+			internal string _Setor;
 			internal int? _IDCongregacao;
-			internal decimal _ContaSaldo;
-			internal bool _Bancaria;
-			internal bool _OperadoraCartao;
-			internal DateTime? _BloqueioData;
+			internal decimal _SetorSaldo;
 			internal bool _Ativa;
 		}
 
@@ -26,18 +23,15 @@ namespace CamadaDTO
 		private StructConta BackupData;
 		private bool inTxn = false;
 
-		public objConta(int? IDConta) : base()
+		public objSetor(int? IDConta) : base()
 		{
 			EditData = new StructConta()
 			{
-				_IDConta = IDConta,
-				_Conta = "",
+				_IDSetor = IDConta,
+				_Setor = "",
 				_IDCongregacao = null,
-				_ContaSaldo = 0,
-				_Bancaria = false,
-				_OperadoraCartao = false,
-				_Ativa = true,
-				_BloqueioData = DateTime.Today
+				_SetorSaldo = 0,
+				_Ativa = true
 			};
 		}
 
@@ -84,7 +78,7 @@ namespace CamadaDTO
 
 		public override string ToString()
 		{
-			return EditData._Conta;
+			return EditData._Setor;
 		}
 
 		public bool RegistroAlterado
@@ -95,23 +89,23 @@ namespace CamadaDTO
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public int? IDConta
+		public int? IDSetor
 		{
-			get => EditData._IDConta;
-			set => EditData._IDConta = value;
+			get => EditData._IDSetor;
+			set => EditData._IDSetor = value;
 		}
 
-		// Property Conta
+		// Property Setor
 		//----------------------------------------------------------------
-		public string Conta
+		public string Setor
 		{
-			get => EditData._Conta;
+			get => EditData._Setor;
 			set
 			{
-				if (value != EditData._Conta)
+				if (value != EditData._Setor)
 				{
-					EditData._Conta = value;
-					NotifyPropertyChanged("Conta");
+					EditData._Setor = value;
+					NotifyPropertyChanged("Setor");
 				}
 			}
 		}
@@ -133,65 +127,21 @@ namespace CamadaDTO
 
 		public string Congregacao { get; set; }
 
-		// Property ContaSaldo
+		// Property SetorSaldo
 		//---------------------------------------------------------------
-		public decimal ContaSaldo
+		public decimal SetorSaldo
 		{
-			get => EditData._ContaSaldo;
+			get => EditData._SetorSaldo;
 			set
 			{
-				if (value != EditData._ContaSaldo)
+				if (value != EditData._SetorSaldo)
 				{
-					EditData._ContaSaldo = value;
-					NotifyPropertyChanged("ContaSaldo");
+					EditData._SetorSaldo = value;
+					NotifyPropertyChanged("SetorSaldo");
 				}
 			}
 		}
 
-		// Property Bancaria
-		//---------------------------------------------------------------
-		public bool Bancaria
-		{
-			get => EditData._Bancaria;
-			set
-			{
-				if (value != EditData._Bancaria)
-				{
-					EditData._Bancaria = value;
-					NotifyPropertyChanged("Bancaria");
-				}
-			}
-		}
-
-		// Property Operadora
-		//---------------------------------------------------------------
-		public bool OperadoraCartao
-		{
-			get => EditData._OperadoraCartao;
-			set
-			{
-				if (value != EditData._OperadoraCartao)
-				{
-					EditData._OperadoraCartao = value;
-					NotifyPropertyChanged("Operadora");
-				}
-			}
-		}
-
-		// Property BloqueioData
-		//---------------------------------------------------------------
-		public DateTime? BloqueioData
-		{
-			get => EditData._BloqueioData;
-			set
-			{
-				if (value != EditData._BloqueioData)
-				{
-					EditData._BloqueioData = value;
-					NotifyPropertyChanged("BloqueioData");
-				}
-			}
-		}
 
 		// Property Ativa
 		//---------------------------------------------------------------

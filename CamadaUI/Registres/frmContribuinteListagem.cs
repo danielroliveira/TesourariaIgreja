@@ -110,7 +110,7 @@ namespace CamadaUI.Registres
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDCongregacao";
+			clnID.DataPropertyName = "IDContribuinte";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;

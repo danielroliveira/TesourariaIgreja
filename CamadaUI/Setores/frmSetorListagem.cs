@@ -11,19 +11,18 @@ using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using System.Linq;
 
-namespace CamadaUI.Registres
+namespace CamadaUI.Setores
 {
-	public partial class frmCongregacaoListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmSetorListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objCongregacao> listCong = new List<objCongregacao>();
+		private List<objSetor> listSetor = new List<objSetor>();
+		private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 
-		private Form _formOrigem;
-
 		#region NEW | OPEN FUNCTIONS
 
-		public frmCongregacaoListagem(Form formOrigem = null)
+		public frmSetorListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
 
@@ -41,7 +40,7 @@ namespace CamadaUI.Registres
 		}
 
 		//--- PROPRIEDADE DE ESCOLHA
-		public objCongregacao propEscolha { get; set; }
+		public objSetor propEscolha { get; set; }
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
@@ -51,9 +50,9 @@ namespace CamadaUI.Registres
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				listCong = cBLL.GetListCongregacao(Convert.ToBoolean(cmbAtivo.SelectedValue));
-				dgvListagem.DataSource = listCong;
+				SetorBLL sBLL = new SetorBLL();
+				listSetor = sBLL.GetListSetor("", Convert.ToBoolean(cmbAtivo.SelectedValue));
+				dgvListagem.DataSource = listSetor;
 			}
 			catch (Exception ex)
 			{
@@ -108,7 +107,7 @@ namespace CamadaUI.Registres
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDCongregacao";
+			clnID.DataPropertyName = "IDSetor";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -117,7 +116,7 @@ namespace CamadaUI.Registres
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "Congregacao";
+			clnCadastro.DataPropertyName = "Setor";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = true;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -126,7 +125,7 @@ namespace CamadaUI.Registres
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
 			//--- (3) Coluna da imagem
-			clnImage.Name = "Ativo";
+			clnImage.Name = "Ativa";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -141,8 +140,8 @@ namespace CamadaUI.Registres
 		{
 			if (e.ColumnIndex == 2)
 			{
-				objCongregacao item = (objCongregacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				if (item.Ativo) e.Value = ImgAtivo;
+				objSetor item = (objSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				if (item.Ativa) e.Value = ImgAtivo;
 				else e.Value = ImgInativo;
 			}
 		}
@@ -163,17 +162,21 @@ namespace CamadaUI.Registres
 
 		#region BUTTONS FUNCTION
 
+		// FECHAR FORMULARIO
+		//------------------------------------------------------------------------------------------------------------
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
 			MostraMenuPrincipal();
 		}
 
+		// ADICIONAR CONTA
+		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
 			if (_formOrigem == null)
 			{
-				frmCongregacao frm = new frmCongregacao(new objCongregacao(null));
+				frmSetor frm = new frmSetor(new objSetor(null));
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
@@ -181,11 +184,13 @@ namespace CamadaUI.Registres
 			}
 			else
 			{
-				propEscolha = new objCongregacao(null);
+				propEscolha = new objSetor(null);
 				DialogResult = DialogResult.Yes;
 			}
 		}
 
+		// EDITAR CONTA ESCOLHIDA
+		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
@@ -197,12 +202,12 @@ namespace CamadaUI.Registres
 			}
 
 			//--- get Selected item
-			objCongregacao item = (objCongregacao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objSetor item = (objSetor)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
 			if (_formOrigem == null)
 			{
-				frmCongregacao frm = new frmCongregacao(item);
+				frmSetor frm = new frmSetor(item);
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
@@ -221,12 +226,12 @@ namespace CamadaUI.Registres
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
-			dgvListagem.DataSource = listCong.FindAll(FiltrarDelegate);
+			dgvListagem.DataSource = listSetor.FindAll(FiltrarDelegate);
 		}
 
-		private bool FiltrarDelegate(objCongregacao obj)
+		private bool FiltrarDelegate(objSetor obj)
 		{
-			if (obj.Congregacao.ToLower().Contains(txtProcura.Text.ToLower())) return true;
+			if (obj.Setor.ToLower().Contains(txtProcura.Text.ToLower())) return true;
 			else return false;
 		}
 
@@ -252,9 +257,9 @@ namespace CamadaUI.Registres
 				// mostra o MENU ativar e desativar
 				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objCongregacaoSetor Setor = (objCongregacaoSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objSetor Setor = (objSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (Setor.Ativo == true)
+					if (Setor.Ativa == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -277,16 +282,16 @@ namespace CamadaUI.Registres
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objCongregacaoSetor setor = (objCongregacaoSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+			objSetor setor = (objSetor)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativo ? "DESATIVAR " : "ATIVAR")} esse Setor?\n" +
-									  setor.CongregacaoSetor.ToUpper(), (setor.Ativo ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativa ? "DESATIVAR " : "ATIVAR")} esse Setor?\n" +
+									  setor.Setor.ToUpper(), (setor.Ativa ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			setor.Ativo = !setor.Ativo;
+			setor.Ativa = !setor.Ativa;
 
 			//--- Salvar o Registro
 			try
@@ -294,8 +299,8 @@ namespace CamadaUI.Registres
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				cBLL.UpdateCongregacaoSetor(setor);
+				SetorBLL cBLL = new SetorBLL();
+				cBLL.UpdateSetor(setor);
 
 				//--- altera a imagem
 				FiltrarListagem(sender, e);
@@ -318,7 +323,7 @@ namespace CamadaUI.Registres
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacaoListagem_KeyDown(object sender, KeyEventArgs e)
+		private void frmSetorListagem_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{

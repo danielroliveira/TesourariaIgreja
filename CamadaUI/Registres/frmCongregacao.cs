@@ -184,7 +184,7 @@ namespace CamadaUI.Registres
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
-				_congregacao.CancelEdit();
+				bind.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
 				AtivoButtonImage();
 			}
@@ -289,12 +289,21 @@ namespace CamadaUI.Registres
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				//--- save | Insert
 				CongregacaoBLL cBLL = new CongregacaoBLL();
-				int ID = cBLL.InsertCongregacao(_congregacao);
 
-				//--- define newID
-				_congregacao.IDCongregacao = ID;
+				//--- SAVE: INSERT OR UPDATE
+				if (_congregacao.IDCongregacao == null) //--- save | Insert
+				{
+					//--- save | Insert
+					int ID = cBLL.InsertCongregacao(_congregacao);
+					//--- define newID
+					_congregacao.IDCongregacao = ID;
+				}
+				else //--- update
+				{
+					cBLL.UpdateCongregacao(_congregacao);
+				}
+
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
 				//--- emit massage

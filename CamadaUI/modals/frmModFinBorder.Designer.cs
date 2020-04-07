@@ -101,6 +101,6 @@
 		#endregion
 		protected internal System.Windows.Forms.Label lblTitulo;
 		protected internal System.Windows.Forms.Button btnClose;
-		protected System.Windows.Forms.Panel panel1;
+		public System.Windows.Forms.Panel panel1;
 	}
 }

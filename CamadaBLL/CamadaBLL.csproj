@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcessoControlBLL.cs" />
+    <Compile Include="SetorBLL.cs" />
+    <Compile Include="ContaBLL.cs" />
     <Compile Include="CredorBLL.cs" />
     <Compile Include="CongregacaoBLL.cs" />
     <Compile Include="ContribuinteBLL.cs" />

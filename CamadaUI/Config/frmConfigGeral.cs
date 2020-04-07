@@ -1,22 +1,26 @@
-﻿using CamadaBLL;
-using System;
-using System.IO;
+﻿using System;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using CamadaUI.Contas;
+using CamadaUI.Setores;
+using CamadaUI.Registres;
 using System.Xml;
+using CamadaDTO;
+using System.Drawing;
 
 namespace CamadaUI.Config
 {
 	public partial class frmConfigGeral : Modals.frmModConfig
 	{
-		private int? IDCongregacao;
-		private int? IDConta;
+		private int? _IDCongregacao;
+		private int? _IDConta;
+		private int? _IDSetor;
 
 		#region SUB NEW | LOAD
 
-		// SUB NEW
+		// SUB NEW | CONSTRUCTOR
 		public frmConfigGeral()
 		{
 			InitializeComponent();
@@ -63,13 +67,18 @@ namespace CamadaUI.Config
 
 				// CONGREGACAO
 				string strIDCong = LoadNode(doc, "CongregacaoPadrao");
-				IDCongregacao = string.IsNullOrEmpty(strIDCong) ? null : int.Parse(strIDCong) as int?;
+				_IDCongregacao = string.IsNullOrEmpty(strIDCong) ? null : int.Parse(strIDCong) as int?;
 				txtCongregacaoPadrao.Text = LoadNode(doc, "CongregacaoDescricao");
 
 				// CONTA
 				string strIDConta = LoadNode(doc, "ContaPadrao");
-				IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
+				_IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
 				txtContaPadrao.Text = LoadNode(doc, "ContaDescricao");
+
+				// SETOR
+				string strIDSetor = LoadNode(doc, "SetorPadrao");
+				_IDSetor = string.IsNullOrEmpty(strIDSetor) ? null : int.Parse(strIDSetor) as int?;
+				txtSetorPadrao.Text = LoadNode(doc, "SetorDescricao");
 
 				// DATA BLOQUEIO | DATA PADRAO
 				lblDataBloqueio.Text = LoadNode(doc, "DataBloqueada");
@@ -131,19 +140,36 @@ namespace CamadaUI.Config
 			// check controls
 			if (!VerificaControles()) return;
 
-			// save items
-			SaveConfigValorNode("IgrejaTitulo", txtIgrejaTitulo.Text);
-			SaveConfigValorNode("CongregacaoDescricao", txtCongregacaoPadrao.Text);
-			SaveConfigValorNode("CongregacaoPadrao", IDCongregacao.ToString());
-			SaveConfigValorNode("ContaDescricao", txtContaPadrao.Text);
-			SaveConfigValorNode("ContaPadrao", IDConta.ToString());
-			SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
-			SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
-			SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
-			AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
-				DialogType.OK, DialogIcon.Information);
+				// save items
+				SaveConfigValorNode("IgrejaTitulo", txtIgrejaTitulo.Text);
+				SaveConfigValorNode("CongregacaoDescricao", txtCongregacaoPadrao.Text);
+				SaveConfigValorNode("CongregacaoPadrao", _IDCongregacao.ToString());
+				SaveConfigValorNode("ContaDescricao", txtContaPadrao.Text);
+				SaveConfigValorNode("ContaPadrao", _IDConta.ToString());
+				SaveConfigValorNode("SetorDescricao", txtSetorPadrao.Text);
+				SaveConfigValorNode("SetorPadrao", _IDSetor.ToString());
+				SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
+				SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
+				SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
 
+				AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
+					DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Salvar o arquivo de Configuração..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		private bool VerificaControles()
@@ -152,6 +178,7 @@ namespace CamadaUI.Config
 			if (!VerificaControle(dtpDataPadrao, "DATA PADRÃO")) return false;
 			if (!VerificaControle(txtCongregacaoPadrao, "CONGREGAÇÃO PADRÃO")) return false;
 			if (!VerificaControle(txtContaPadrao, "CONTA PADRÃO")) return false;
+			if (!VerificaControle(txtSetorPadrao, "SETOR PADRÃO")) return false;
 			if (!VerificaControle(txtCidadePadrao, "CIDADE PADRÃO")) return false;
 			if (!VerificaControle(txtUFPadrao, "UF PADRÃO")) return false;
 
@@ -177,10 +204,13 @@ namespace CamadaUI.Config
 				switch (ctr.Name)
 				{
 					case "txtCongregacaoPadrao":
-						btnAlteraFilial_Click(sender, new EventArgs());
+						btnFilialAlterar_Click(sender, new EventArgs());
 						break;
 					case "txtContaPadrao":
-						btnAlteraConta_Click(sender, new EventArgs());
+						btnContaAlterar_Click(sender, new EventArgs());
+						break;
+					case "txtSetorPadrao":
+						btnSetorAlterar_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -189,7 +219,7 @@ namespace CamadaUI.Config
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtCongregacaoPadrao", "txtContaPadrao" };
+				string[] controlesBloqueados = { "txtCongregacaoPadrao", "txtContaPadrao", "txtSetorPadrao" };
 
 				if (controlesBloqueados.Contains(ctr.Name))
 				{
@@ -199,14 +229,157 @@ namespace CamadaUI.Config
 			}
 		}
 
-		private void btnAlteraFilial_Click(object sender, EventArgs e)
+		private void btnContaAlterar_Click(object sender, EventArgs e)
 		{
+			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
 
+			frmContaProcura frm = new frmContaProcura(this, _IDConta);
+
+			// disable forms
+			this.lblTitulo.BackColor = Color.Silver;
+			config.panel1.BackColor = Color.Silver;
+			// show
+			frm.ShowDialog();
+			// return
+			this.lblTitulo.BackColor = Color.SlateGray;
+			config.panel1.BackColor = Color.Goldenrod;
+
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				txtContaPadrao.Text = frm.propEscolha.Conta;
+				_IDConta = frm.propEscolha.IDConta;
+			}
+
+			// focus control
+			txtContaPadrao.Focus();
 		}
 
-		private void btnAlteraConta_Click(object sender, EventArgs e)
+		private void btnContaEditar_Click(object sender, EventArgs e)
 		{
+			Form config = Application.OpenForms.OfType<frmConfig>().First();
 
+			frmContaListagem frm = new frmContaListagem(this);
+
+			// disable forms
+			this.Visible = false;
+			config.Visible = false;
+			// show
+			frm.ShowDialog();
+
+			if (frm.DialogResult == DialogResult.Yes)
+			{
+				frmConta frmC = new frmConta(frm.propEscolha);
+				DesativaMenuPrincipal();
+				frmC.ShowDialog();
+			}
+
+			// return
+			config.Visible = true;
+			this.Visible = true;
+			// focus control
+			txtContaPadrao.Focus();
+		}
+
+		private void btnFilialAlterar_Click(object sender, EventArgs e)
+		{
+			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmCongregacaoProcura fProc = new frmCongregacaoProcura(this, _IDCongregacao);
+
+			// disable forms
+			this.lblTitulo.BackColor = Color.Silver;
+			config.panel1.BackColor = Color.Silver;
+			// show
+			fProc.ShowDialog();
+			// return
+			this.lblTitulo.BackColor = Color.SlateGray;
+			config.panel1.BackColor = Color.Goldenrod;
+
+			if (fProc.DialogResult == DialogResult.OK)
+			{
+				txtCongregacaoPadrao.Text = fProc.propEscolha.Congregacao;
+				_IDCongregacao = fProc.propEscolha.IDCongregacao;
+			}
+
+			// focus control
+			txtCongregacaoPadrao.Focus();
+		}
+
+		private void btnFilialEditar_Click(object sender, EventArgs e)
+		{
+			Form config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmCongregacaoListagem frmList = new frmCongregacaoListagem(this);
+
+			// disable forms
+			this.Visible = false;
+			config.Visible = false;
+			// show
+			frmList.ShowDialog();
+
+			if (frmList.DialogResult == DialogResult.Yes)
+			{
+				frmCongregacao frmC = new frmCongregacao(frmList.propEscolha);
+				DesativaMenuPrincipal();
+				frmC.ShowDialog();
+			}
+
+			// return
+			config.Visible = true;
+			this.Visible = true;
+			// focus control
+			txtCongregacaoPadrao.Focus();
+		}
+
+		private void btnSetorAlterar_Click(object sender, EventArgs e)
+		{
+			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmSetorProcura fProc = new frmSetorProcura(this, _IDCongregacao);
+
+			// disable forms
+			this.lblTitulo.BackColor = Color.Silver;
+			config.panel1.BackColor = Color.Silver;
+			// show
+			fProc.ShowDialog();
+			// return
+			this.lblTitulo.BackColor = Color.SlateGray;
+			config.panel1.BackColor = Color.Goldenrod;
+
+			if (fProc.DialogResult == DialogResult.OK)
+			{
+				txtSetorPadrao.Text = fProc.propEscolha.Setor;
+				_IDSetor = fProc.propEscolha.IDSetor;
+			}
+
+			// focus control
+			txtSetorPadrao.Focus();
+		}
+
+		private void btnSetorEditar_Click(object sender, EventArgs e)
+		{
+			Form config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmSetorListagem frmList = new frmSetorListagem(this);
+
+			// disable forms
+			this.Visible = false;
+			config.Visible = false;
+			// show
+			frmList.ShowDialog();
+
+			if (frmList.DialogResult == DialogResult.Yes)
+			{
+				frmSetor frmC = new frmSetor(frmList.propEscolha);
+				DesativaMenuPrincipal();
+				frmC.ShowDialog();
+			}
+
+			// return
+			config.Visible = true;
+			this.Visible = true;
+			// focus control
+			txtCongregacaoPadrao.Focus();
 		}
 	}
 }

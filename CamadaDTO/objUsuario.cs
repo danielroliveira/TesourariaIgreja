@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
 {
-    public class objUsuario : IEditableObject, INotifyPropertyChanged
+	public class objUsuario : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
@@ -25,11 +25,12 @@ namespace CamadaDTO
 
 		public objUsuario(int? IDUsuario) : base()
 		{
-			EditData = new StructUsuario() {
+			EditData = new StructUsuario()
+			{
 				_IDUsuario = IDUsuario,
-				_UsuarioApelido = "", 
+				_UsuarioApelido = "",
 				_UsuarioAcesso = 3,
-				_UsuarioSenha = "", 
+				_UsuarioSenha = "",
 				_UsuarioAtivo = true,
 			};
 		}
@@ -45,7 +46,7 @@ namespace CamadaDTO
 			}
 		}
 
-		public void EndEdit()
+		public void CancelEdit()
 		{
 			if (inTxn)
 			{
@@ -54,7 +55,7 @@ namespace CamadaDTO
 			}
 		}
 
-		public void CancelEdit()
+		public void EndEdit()
 		{
 			if (inTxn)
 			{
@@ -80,17 +81,17 @@ namespace CamadaDTO
 			return EditData._UsuarioApelido;
 		}
 
-		public bool RegistroAlterado 
+		public bool RegistroAlterado
 		{
-			get => inTxn;  
+			get => inTxn;
 		}
 
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
 		public int? IDUsuario
-		{ 
-			get => EditData._IDUsuario; 
+		{
+			get => EditData._IDUsuario;
 		}
 
 		// Property UsuarioApelido

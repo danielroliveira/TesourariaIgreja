@@ -176,7 +176,7 @@
 			this.mnuContribuintes.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuContribuintes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContribuintes.Name = "mnuContribuintes";
-			this.mnuContribuintes.Size = new System.Drawing.Size(198, 30);
+			this.mnuContribuintes.Size = new System.Drawing.Size(283, 30);
 			this.mnuContribuintes.Text = "Contribuintes";
 			this.mnuContribuintes.Click += new System.EventHandler(this.mnuContribuintes_Click);
 			// 
@@ -185,21 +185,21 @@
 			this.mnuCredores.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuCredores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCredores.Name = "mnuCredores";
-			this.mnuCredores.Size = new System.Drawing.Size(198, 30);
+			this.mnuCredores.Size = new System.Drawing.Size(283, 30);
 			this.mnuCredores.Text = "Credores";
 			this.mnuCredores.Click += new System.EventHandler(this.mnuCredores_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(195, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(280, 6);
 			// 
 			// mnuCongregacoes
 			// 
 			this.mnuCongregacoes.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuCongregacoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCongregacoes.Name = "mnuCongregacoes";
-			this.mnuCongregacoes.Size = new System.Drawing.Size(198, 30);
+			this.mnuCongregacoes.Size = new System.Drawing.Size(283, 30);
 			this.mnuCongregacoes.Text = "Congregações";
 			this.mnuCongregacoes.Click += new System.EventHandler(this.mnuCongregacoes_Click);
 			// 
@@ -208,8 +208,8 @@
 			this.mnuSetores.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSetores.Name = "mnuSetores";
-			this.mnuSetores.Size = new System.Drawing.Size(198, 30);
-			this.mnuSetores.Text = "Setores";
+			this.mnuSetores.Size = new System.Drawing.Size(283, 30);
+			this.mnuSetores.Text = "Setores de Congregação";
 			this.mnuSetores.Click += new System.EventHandler(this.mnuSetores_Click);
 			// 
 			// pnlTop
