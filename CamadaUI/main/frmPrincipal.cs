@@ -7,6 +7,7 @@ using static CamadaUI.FuncoesGlobais;
 using CamadaDTO;
 using CamadaBLL;
 using CamadaUI.Registres;
+using CamadaUI.Config;
 
 namespace CamadaUI
 {
@@ -14,7 +15,7 @@ namespace CamadaUI
 	{
 		private DateTime _DataPadrao;
 		private objConta _ContaPadrao;
-		private objUsuario _UsuarioAtual;
+		private objSetor _SetorPadrao;
 
 		#region SUB NEW | LOAD
 
@@ -43,9 +44,10 @@ namespace CamadaUI
 		private void frmPrincipal_Load(object sender, EventArgs e)
 		{
 			//--- INICIA APLICACAO COM O MENU DESABILITADO
-			//mnuPrincipal.Enabled = false;
+			mnuPrincipal.Enabled = false;
 
 			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
+			//------------------------------------------------------------------------------------------------------------
 			try
 			{
 				//--- Ampulheta ON
@@ -68,6 +70,7 @@ namespace CamadaUI
 				}
 
 				//--- ABRE E VERIFICA O LOGIN DO USUARIO
+				//------------------------------------------------------------------------------------------------------------
 				Main.frmLogin frmLog = new Main.frmLogin();
 				objConta contaInicial = new objConta(null);
 
@@ -80,17 +83,74 @@ namespace CamadaUI
 				}
 
 				//--- VERFICA SE O ARQUIVO DE CONFIG FOI ENCONTRADO
+				//------------------------------------------------------------------------------------------------------------
 				if (VerificaConfig() == false)
 				{
 					Application.Exit();
 					return;
 				}
 
-				/*
-				'
-				'----------------------------------------------------------------
-				*/
+				// VERIFICA CONTA PADRAO
+				//------------------------------------------------------------------------------------------------------------
+				contaInicial = Verifica_ContaFilial();
 
+				if (contaInicial == null || contaInicial.IDConta == null)
+				{
+					Application.Exit();
+					return;
+				}
+
+				// DETERMINA A CONTA ATIVA | FILIAL ATIVA | DATAPADRAO
+				//------------------------------------------------------------------------------------------------------------
+				try
+				{
+					// --- Ampulheta ON
+					Cursor.Current = Cursors.WaitCursor;
+
+					if (contaInicial.IDCongregacao == null)
+					{
+						throw new Exception("Não foi possível salvar arquivo de configuração...");
+					}
+
+					SaveDefault("CongregacaoPadrao", contaInicial.IDCongregacao.ToString());
+					propContaPadrao = contaInicial;
+
+					//--- configurar DATAPADRAO
+					if (contaInicial.BloqueioData != null)
+					{
+						//--  adiciona um dia à data do caixa final ???
+						DateTime dtPadrao = (DateTime)contaInicial.BloqueioData;
+						//dtPadrao = dtPadrao.AddDays(1)
+
+						//-- verifica se a data adicionada é DOMINGO, sendo adiciona um dia
+						if (dtPadrao.DayOfWeek == DayOfWeek.Sunday) dtPadrao.AddDays(1);
+
+						//-- define a propriedade DATA PADRAO
+						propDataPadrao = dtPadrao;
+					}
+					else
+					{
+						AbrirDialog("A CONTA PADRÃO escolhida: " + contaInicial.Conta.ToUpper() + "\n" +
+									"ainda não tem data de bloqueio definida...\n" +
+									"Logo a DATA PADRÃO do sistema será escolhida para " +
+									"DATA ATUAL: " + string.Format("dd de MMMM de yyyy", DateTime.Now),
+									"Data Padrão",
+									DialogType.OK,
+									DialogIcon.Exclamation);
+
+						propDataPadrao = DateTime.Today;
+					}
+				}
+				catch (Exception ex)
+				{
+					AbrirDialog("Uma exceção ocorreu ao Determinar a Conta Ativa..." + "\n" +
+								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				}
+				finally
+				{
+					// --- Ampulheta OFF
+					Cursor.Current = Cursors.Default;
+				}
 			}
 			catch (Exception ex)
 			{
@@ -103,24 +163,37 @@ namespace CamadaUI
 				Cursor.Current = Cursors.Default;
 			}
 
+			//--- HABILITA A VERSAO E O TITULO
+			//----------------------------------------------------------------
+			string Versao = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			lblVersao.Text = Versao;
+
+			//-- HABILITA O MENU
+			//----------------------------------------------------------------
+			mnuPrincipal.Enabled = true;
+
+			//--- ATUALIZA O MENU CONFORME O USUARIO ACESSO
+			//----------------------------------------------------------------
+			MenuUserAcesso();
+
+			//---- INICIALIZA O TIMER DA HORA
+			//----------------------------------------------------------------
+			//lblHora.Text = DateTime.Now.ToShortTimeString;
+
+			//--- HABILITA O HANDLER DE ABERTURA DO MENU
+			//----------------------------------------------------------------
+			MenuOpen_Handler();
 			mnuPrincipal.Focus();
 			btnEntradas.Select();
 
-			MenuOpen_Handler();
 		}
 
-		//--- PROPERTY PUBLIC
-		// =============================================================================
-		public objUsuario UsuarioAtual
-		{
-			get => _UsuarioAtual;
-			set
-			{
-				_UsuarioAtual = value;
-			}
-		}
+		#endregion
 
+		#region PROPERTIES
 
+		// Property Titulo da Aplicacao
+		//------------------------------------------------------------------------------------------------------------
 		public string AplicacaoTitulo
 		{
 			get
@@ -134,7 +207,46 @@ namespace CamadaUI
 			}
 		}
 
-		#endregion
+		// Property Conta Padrao
+		//------------------------------------------------------------------------------------------------------------
+		public objConta propContaPadrao
+		{
+			get
+			{
+				return _ContaPadrao;
+			}
+			set
+			{
+				_ContaPadrao = value;
+
+				//--- define a conta no config
+				SaveDefault("ContaDescricao", value.Conta);
+				SaveDefault("CongregacaoDescricao", value.Congregacao);
+
+				//--- define as labels da conta e Filial
+				lblConta.Text = value.Conta;
+				lblFilial.Text = value.Congregacao;
+			}
+		}
+
+		// Property Data Padrao
+		//------------------------------------------------------------------------------------------------------------
+		public DateTime propDataPadrao
+		{
+			get { return _DataPadrao; }
+			set
+			{
+				_DataPadrao = value;
+				//--- define a data padrao no config
+				SaveDefault("DataPadrao", value.ToShortDateString());
+
+				//--- define a label da data padrao
+				lblDataSis.Text = string.Format("dd/MM", value);
+				lblDataSis.Text = $"{value.Day:00}/{value.Month:00}";
+			}
+		}
+
+		#endregion // PROPERTIES --- END
 
 		#region CONFIGURACAO INICIAL
 
@@ -148,7 +260,7 @@ namespace CamadaUI
 			}
 			else
 			{
-				if (UsuarioAtual.UsuarioAcesso > 1) // não é administrador do sistema
+				if (Program.usuarioAtual.UsuarioAcesso > 1) // não é administrador do sistema
 				{
 					AbrirDialog("Arquivo de Configuração não foi encontrado! \n" +
 								"Seu LOGIN não tem acesso à Configuração... \n" +
@@ -183,6 +295,76 @@ namespace CamadaUI
 							DialogType.OK,
 							DialogIcon.Warning);
 				return false;
+			}
+		}
+
+		// VERIFICA CONTA INICIAL
+		//=================================================================================================
+		private objConta Verifica_ContaFilial()
+		{
+			objConta conta = new objConta(null);
+
+			if (!CheckContaPadrao(ref conta))
+			{
+				MessageBox.Show("Ainda não foi encontrada nenhuma CONTA PADRÃO no sistema...\n\n" +
+								"Favor inserir e escolher uma CONTA padrão no arquivo do sistema",
+								"Conta Padrão",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Exclamation);
+
+				// abre o form de config
+				frmConfig frmC = new frmConfig(this);
+				frmC.ShowDialog();
+
+				// testa novamente
+				if (!CheckContaPadrao(ref conta))
+				{
+					MessageBox.Show("Ainda não foi encontrado nenhuma Conta Padrão no sistema!\n" +
+									"A aplicação será fechada...",
+									"Conta Inespecífica",
+									MessageBoxButtons.OK,
+									MessageBoxIcon.Exclamation);
+					return null;
+				}
+			}
+
+			return conta;
+
+		}
+
+		// CHECK CONTA PADRAO
+		//------------------------------------------------------------------------------------------------------------
+		private bool CheckContaPadrao(ref objConta conta)
+		{
+			//--- VERIFICA CONTA
+			string ContaPadrao = ObterDefault("ContaPadrao");
+			ContaBLL cBLL = new ContaBLL();
+
+			if (string.IsNullOrEmpty(ContaPadrao))
+			{
+				return false;
+			}
+			else
+			{
+				try
+				{
+					// --- Ampulheta ON
+					Cursor.Current = Cursors.WaitCursor;
+
+					conta = cBLL.GetConta(Convert.ToInt32(ContaPadrao));
+					return (conta != null && conta.IDConta != null);
+				}
+				catch (Exception ex)
+				{
+					AbrirDialog("Uma exceção ocorreu ao Obter Conta Padrao..." + "\n" +
+								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+				finally
+				{
+					// --- Ampulheta OFF
+					Cursor.Current = Cursors.Default;
+				}
 			}
 		}
 
@@ -356,6 +538,59 @@ namespace CamadaUI
 			btnConfig.Enabled = IsEnabled;
 		}
 
+		//=================================================================================================
+		// PERMITIR OU PROIBIR ACESSO DOS USERS AO MENU PRINCIPAL
+		//=================================================================================================
+		private void MenuUserAcesso()
+		{
+			ToolStripSplitButton t;
+
+			foreach (ToolStripItem c in mnuPrincipal.Items)
+			{
+				if (c.GetType() == typeof(ToolStripSplitButton))
+				{
+					t = (ToolStripSplitButton)c;
+
+					foreach (ToolStripItem itm in t.DropDownItems)
+					{
+						if (itm.GetType() == typeof(ToolStripMenuItem))
+						{
+							switch (Program.usuarioAtual.UsuarioAcesso)
+							{
+								case 1: // Administrador
+									itm.Enabled = true; // somente adminsitrador acesso ao config
+									btnConfig.Visible = true;
+									break;
+								case 2: //Usuario Senior
+									btnConfig.Visible = false;
+									if (itm.Tag != null && Convert.ToInt32(itm.Tag) == 1)
+										itm.Enabled = false;
+									else
+										itm.Enabled = true;
+									break;
+								case 3: // Usuario Comum
+									btnConfig.Visible = false;
+									if (itm.Tag != null && Convert.ToInt32(itm.Tag) <= 2)
+										itm.Enabled = false;
+									else
+										itm.Enabled = true;
+									break;
+								case 4: // Usuario Local
+									btnConfig.Visible = false;
+									if (itm.Tag != null && Convert.ToInt32(itm.Tag) <= 3)
+										itm.Enabled = false;
+									else
+										itm.Enabled = true;
+									break;
+								default:
+									btnConfig.Visible = false;
+									break;
+							}
+						}
+					}
+				}
+			}
+		}
 
 		#endregion
 
@@ -376,9 +611,6 @@ namespace CamadaUI
 			DesativaMenuPrincipal();
 			frm.Show();
 		}
-
-		#endregion
-
 		private void mnuContribuintes_Click(object sender, EventArgs e)
 		{
 			frmContribuinteListagem frm = new frmContribuinteListagem(false, this);
@@ -394,5 +626,8 @@ namespace CamadaUI
 			DesativaMenuPrincipal();
 			frm.Show();
 		}
+
+		#endregion
+
 	}
 }

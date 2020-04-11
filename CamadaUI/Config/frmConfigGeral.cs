@@ -135,6 +135,21 @@ namespace CamadaUI.Config
 			}
 		}
 
+		// FORM KEYPRESS: BLOQUEIA (+)
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtCongregacaoPadrao, txtContaPadrao, txtSetorPadrao
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
 		private void btnSalvarConfig_Click(object sender, EventArgs e)
 		{
 			// check controls
@@ -219,9 +234,9 @@ namespace CamadaUI.Config
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtCongregacaoPadrao", "txtContaPadrao", "txtSetorPadrao" };
+				Control[] controlesBloqueados = { txtCongregacaoPadrao, txtContaPadrao, txtSetorPadrao };
 
-				if (controlesBloqueados.Contains(ctr.Name))
+				if (controlesBloqueados.Contains(ctr))
 				{
 					e.Handled = true;
 					e.SuppressKeyPress = true;

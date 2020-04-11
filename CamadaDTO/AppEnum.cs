@@ -11,7 +11,7 @@ namespace CamadaDTO
 		Administrador = 1,
 		Usuario_Senior = 2,
 		Usuario_Comum = 3,
-		Operador = 4
+		Usuario_Local = 4
 	}
 
 }

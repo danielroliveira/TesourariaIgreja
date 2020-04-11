@@ -200,6 +200,7 @@
 			this.mnuCongregacoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCongregacoes.Name = "mnuCongregacoes";
 			this.mnuCongregacoes.Size = new System.Drawing.Size(283, 30);
+			this.mnuCongregacoes.Tag = "1";
 			this.mnuCongregacoes.Text = "Congregações";
 			this.mnuCongregacoes.Click += new System.EventHandler(this.mnuCongregacoes_Click);
 			// 
@@ -209,6 +210,7 @@
 			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSetores.Name = "mnuSetores";
 			this.mnuSetores.Size = new System.Drawing.Size(283, 30);
+			this.mnuSetores.Tag = "1";
 			this.mnuSetores.Text = "Setores de Congregação";
 			this.mnuSetores.Click += new System.EventHandler(this.mnuSetores_Click);
 			// 
@@ -295,6 +297,7 @@
 			this.btnConfig.TabIndex = 11;
 			this.btnConfig.TabStop = false;
 			this.btnConfig.UseVisualStyleBackColor = false;
+			this.btnConfig.Visible = false;
 			this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
 			// 
 			// PainelInferior

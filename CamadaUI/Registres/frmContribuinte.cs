@@ -376,11 +376,11 @@ namespace CamadaUI.Registres
 			if (e.KeyChar == 43)
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
-				string[] controlesBloqueados = {
-					"txtCongregacao"
+				Control[] controlesBloqueados = {
+					txtCongregacao
 				};
 
-				if (controlesBloqueados.Contains(ActiveControl.Name)) e.Handled = true;
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
 			}
 		}
 
@@ -422,9 +422,9 @@ namespace CamadaUI.Registres
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtCongregacao" };
+				Control[] controlesBloqueados = { txtCongregacao };
 
-				if (controlesBloqueados.Contains(ctr.Name))
+				if (controlesBloqueados.Contains(ctr))
 				{
 					e.Handled = true;
 					e.SuppressKeyPress = true;

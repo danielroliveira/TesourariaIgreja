@@ -17,9 +17,9 @@ namespace CamadaBLL
 		//=================================================================================================
 		// GET NEW LOGIN ACESSO
 		//=================================================================================================
-		public object GetAuthorization(
-			string UsuarioApelido, 
-			string UsuarioSenha, EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.Usuario_Comum,
+		public objUsuario GetAuthorization(
+			string UsuarioApelido,
+			string UsuarioSenha, EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.Usuario_Local, // usuario_local = 4
 			string AuthDescription = "Acesso Login"
 			)
 		{
@@ -39,32 +39,32 @@ namespace CamadaBLL
 				if (dt.Rows.Count == 0)
 				{
 					TentativasAcesso += 1;
-					return null;
+					throw new AppException("Não há Usuários no sistema, comunique com o administrador...");
 				}
-				else
+
+				DataRow row = dt.Rows[0];
+
+				if (row.ItemArray.Length == 1)
 				{
-					DataRow row = dt.Rows[0];
-
-					if (row.ItemArray.Length == 1)
-					{
-						TentativasAcesso += 1;
-						return dt.Rows[0].ItemArray[0];
-					}
-					else
-					{
-						objUsuario UsuarioAtual = new objUsuario((int)row["IDUsuario"])
-						{
-							UsuarioAcesso = (byte)row["UsuarioAcesso"],
-							UsuarioApelido = (string)row["UsuarioApelido"]
-						};
-
-						return UsuarioAtual;
-					}
+					TentativasAcesso += 1;
+					throw new AppException(dt.Rows[0].ItemArray[0].ToString());
 				}
+
+				objUsuario UsuarioAtual = new objUsuario((int)row["IDUsuario"])
+				{
+					UsuarioAcesso = (byte)row["UsuarioAcesso"],
+					UsuarioApelido = (string)row["UsuarioApelido"]
+				};
+
+				return UsuarioAtual;
 			}
-			catch
+			catch (AppException ex)
 			{
-				return null;
+				throw ex;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
 			}
 
 		}
@@ -95,7 +95,7 @@ namespace CamadaBLL
 			{
 				return AcessoDados.GetConnectionString();
 			}
-			catch 
+			catch
 			{
 				return null;
 			}
@@ -118,14 +118,14 @@ namespace CamadaBLL
 		//=================================================================================================
 		public bool CommitAcessoWithTransaction(object myDB)
 		{
-			if(myDB.GetType() == typeof(AcessoDados))
+			if (myDB.GetType() == typeof(AcessoDados))
 			{
 				AcessoDados DB = (AcessoDados)myDB;
 				DB.CommitTransaction();
 
 				// return
 				return true;
-			} 
+			}
 			else
 			{
 				return false;

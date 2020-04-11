@@ -55,6 +55,9 @@ namespace CamadaUI.Config
 					case "frmConfigAvisos":
 						btnAvisos.BackColor = btnColorSelected;
 						break;
+					case "frmConfigUsuarios":
+						btnUsuarios.BackColor = btnColorSelected;
+						break;
 					default:
 						break;
 				}
@@ -130,6 +133,11 @@ namespace CamadaUI.Config
 		private void btnAvisos_Click(object sender, EventArgs e)
 		{
 			AbrirFormNoPanel<frmConfigAvisos>();
+		}
+
+		private void btnUsuarios_Click(object sender, EventArgs e)
+		{
+			AbrirFormNoPanel<frmConfigUsuarios>();
 		}
 	}
 }

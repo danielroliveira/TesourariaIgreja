@@ -76,65 +76,61 @@ namespace CamadaUI.Main
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				object obj = db.GetAuthorization(txtApelido.Text, txtSenha.Text);
+				objUsuario obj = db.GetAuthorization(txtApelido.Text, txtSenha.Text);
 
-				if (obj.GetType() == typeof(objUsuario))
+				frmPrincipal frmP = (frmPrincipal)Application.OpenForms[0];
+				Program.usuarioAtual = obj;
+				Logado = true;
+
+				string AcessoTipo = Program.usuarioAtual.UsuarioAcessoDesc;
+
+				//--- Bem-vindo
+				AbrirDialog("Seja Bem-Vindo: " + txtApelido.Text.ToUpper() + "\n \n" +
+							"Acesso: " + AcessoTipo.ToUpper(), Fantasia,
+							DialogType.OK,
+							DialogIcon.Information);
+				DialogResult = DialogResult.Yes;
+				Close();
+			}
+			catch (AppException ex)
+			{
+				switch (db.TentativasAcesso)
 				{
-					frmPrincipal frmP = (frmPrincipal)Application.OpenForms[0];
-					frmP.UsuarioAtual = (objUsuario)obj;
-					Logado = true;
-
-					var enumAcessoTipo = (EnumAcessoTipo)frmP.UsuarioAtual.UsuarioAcesso;
-					string AcessoTipo = enumAcessoTipo.ToString().Replace("_", " ");
-
-					//--- Bem-vindo
-					AbrirDialog("Seja Bem-Vindo: " + txtApelido.Text.ToUpper() + "\n \n" +
-								"Acesso: " + AcessoTipo.ToUpper(), Fantasia,
-								DialogType.OK,
-								DialogIcon.Information);
-					DialogResult = DialogResult.Yes;
-					Close();
-				}
-				else
-				{
-					switch (db.TentativasAcesso)
-					{
-						case 1:
-							MessageBox.Show(obj.ToString() + "\n" +
-											"Tente novamente..." + "\n" +
-											"PRIMEIRA TENTATIVA, você pode tentar mais DUAS vezes",
-											"Senha e/ou Usuário Incorreto",
-											MessageBoxButtons.OK, MessageBoxIcon.Information);
-							txtApelido.Focus();
-							break;
-						case 2:
-							MessageBox.Show("Usuário ou Senha estão incorretas! \n" +
-											"Tente novamente...\n" +
-											"SEGUNDA TENTATIVA, você pode tentar mais UMA vezes",
-											"Senha e/ou Usuário Incorreto",
-											MessageBoxButtons.OK, MessageBoxIcon.Information);
-							txtApelido.Focus();
-							break;
-						case 3:
-							MessageBox.Show("Usuário ou Senha estão incorretas!\n" +
-											"TERCEIRA TENTATIVA, a aplicação será encerrada...",
-											"Erro de Senha e Usuário",
-											MessageBoxButtons.OK, MessageBoxIcon.Stop);
-							Logado = false;
-							Close();
-							return;
-						default:
-							break;
-					}
+					case 1:
+						MessageBox.Show(ex.Message + "\n" +
+										"Tente novamente..." + "\n" +
+										"PRIMEIRA TENTATIVA, você pode tentar mais DUAS vezes",
+										"Senha e/ou Usuário Incorreto",
+										MessageBoxButtons.OK, MessageBoxIcon.Information);
+						txtApelido.Focus();
+						break;
+					case 2:
+						MessageBox.Show("Usuário ou Senha estão incorretas! \n" +
+										"Tente novamente...\n" +
+										"SEGUNDA TENTATIVA, você pode tentar mais UMA vezes",
+										"Senha e/ou Usuário Incorreto",
+										MessageBoxButtons.OK, MessageBoxIcon.Information);
+						txtApelido.Focus();
+						break;
+					case 3:
+						MessageBox.Show("Usuário ou Senha estão incorretas!\n" +
+										"TERCEIRA TENTATIVA, a aplicação será encerrada...",
+										"Erro de Senha e Usuário",
+										MessageBoxButtons.OK, MessageBoxIcon.Stop);
+						Logado = false;
+						Close();
+						return;
+					default:
+						break;
 				}
 			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Conectar o BD SQL... \n" +
-					"Verique a conexão com o servidor e tente novamente... \n" +
-					ex.Message, "Conexão Inválida",
-					DialogType.OK,
-					DialogIcon.Exclamation);
+							"Verique a conexão com o servidor e tente novamente... \n" +
+							ex.Message, "Conexão Inválida",
+							DialogType.OK,
+							DialogIcon.Exclamation);
 				Logado = false;
 				Close();
 				return;
@@ -155,7 +151,7 @@ namespace CamadaUI.Main
 			//--- Verifica se o campo Apelido tem algum valor
 			if (txtApelido.Text.Trim().Length == 0)
 			{
-				AbrirDialog("Por Favor, preencha o campo Nome do Usuário...", 
+				AbrirDialog("Por Favor, preencha o campo Nome do Usuário...",
 					"Nome do Usuário Vazio", DialogType.OK, DialogIcon.Exclamation);
 				txtApelido.Focus();
 				return false;
@@ -164,7 +160,7 @@ namespace CamadaUI.Main
 			if (txtSenha.Text.Trim().Length < 8)
 			{
 				AbrirDialog("Por Favor, preencha o campo da SENHA...\n" +
-					   "Sua SENHA precisa ter pelo menos 8 caracteres", 
+					   "Sua SENHA precisa ter pelo menos 8 caracteres",
 					   "Senha Incompleta", DialogType.OK, DialogIcon.Exclamation);
 				txtSenha.Focus();
 				return false;
@@ -209,7 +205,7 @@ namespace CamadaUI.Main
 
 		private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if( Logado == true)
+			if (Logado == true)
 			{
 				DialogResult = DialogResult.OK;
 			}

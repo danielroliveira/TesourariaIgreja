@@ -349,9 +349,9 @@ namespace CamadaUI.Setores
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtCongregacao" };
+				Control[] controlesBloqueados = { txtCongregacao };
 
-				if (controlesBloqueados.Contains(ctr.Name))
+				if (controlesBloqueados.Contains(ctr))
 				{
 					e.Handled = true;
 					e.SuppressKeyPress = true;

@@ -37,6 +37,7 @@
 			this.btnImagem = new System.Windows.Forms.Button();
 			this.btnCores = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
+			this.btnUsuarios = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.pnlMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -59,6 +60,7 @@
 			// pnlMenu
 			// 
 			this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.pnlMenu.Controls.Add(this.btnUsuarios);
 			this.pnlMenu.Controls.Add(this.line1);
 			this.pnlMenu.Controls.Add(this.label1);
 			this.pnlMenu.Controls.Add(this.btnAvisos);
@@ -188,6 +190,23 @@
 			this.pnlCorpo.Size = new System.Drawing.Size(744, 579);
 			this.pnlCorpo.TabIndex = 2;
 			// 
+			// btnUsuarios
+			// 
+			this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnUsuarios.FlatAppearance.BorderSize = 0;
+			this.btnUsuarios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnUsuarios.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnUsuarios.ForeColor = System.Drawing.Color.White;
+			this.btnUsuarios.Location = new System.Drawing.Point(1, 367);
+			this.btnUsuarios.Name = "btnUsuarios";
+			this.btnUsuarios.Size = new System.Drawing.Size(198, 55);
+			this.btnUsuarios.TabIndex = 2;
+			this.btnUsuarios.Text = "Usuários";
+			this.btnUsuarios.UseVisualStyleBackColor = false;
+			this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
+			// 
 			// frmConfig
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -217,5 +236,6 @@
 		private System.Windows.Forms.Button btnGeral;
 		private System.Windows.Forms.Button btnImagem;
 		private System.Windows.Forms.Button btnAvisos;
+		private System.Windows.Forms.Button btnUsuarios;
 	}
 }

@@ -97,6 +97,12 @@
     <Compile Include="Config\frmConfigServidor.designer.cs">
       <DependentUpon>frmConfigServidor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Config\frmConfigUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfigUsuarios.designer.cs">
+      <DependentUpon>frmConfigUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contas\frmConta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,12 @@
     </Compile>
     <Compile Include="Main\frmPrincipal.designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmUsuario.designer.cs">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\FuncoesGlobais.cs" />
     <Compile Include="Main\InputBox.cs" />
@@ -259,6 +271,9 @@
     <EmbeddedResource Include="Config\frmConfigServidor.resx">
       <DependentUpon>frmConfigServidor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Config\frmConfigUsuarios.resx">
+      <DependentUpon>frmConfigUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmConta.resx">
       <DependentUpon>frmConta.cs</DependentUpon>
     </EmbeddedResource>
@@ -279,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmUsuario.resx">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modals\frmModConfig.resx">
       <DependentUpon>frmModConfig.cs</DependentUpon>

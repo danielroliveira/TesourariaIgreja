@@ -341,11 +341,11 @@ namespace CamadaUI.Registres
 			if (e.KeyChar == 43)
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
-				string[] controlesBloqueados = {
-					"txtSetor"
+				Control[] controlesBloqueados = {
+					txtSetor
 				};
 
-				if (controlesBloqueados.Contains(ActiveControl.Name)) e.Handled = true;
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
 			}
 		}
 		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
@@ -386,9 +386,9 @@ namespace CamadaUI.Registres
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				string[] controlesBloqueados = { "txtSetor" };
+				Control[] controlesBloqueados = { txtSetor };
 
-				if (controlesBloqueados.Contains(ctr.Name))
+				if (controlesBloqueados.Contains(ctr))
 				{
 					e.Handled = true;
 					e.SuppressKeyPress = true;

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CamadaDTO;
 
 namespace CamadaUI
 {
 	static class Program
 	{
+		public static objUsuario usuarioAtual;
+
 		/// <summary>
 		/// The Main entry point for the application.
 		/// </summary>
