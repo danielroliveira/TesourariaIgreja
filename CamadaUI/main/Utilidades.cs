@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace CamadaUI
@@ -107,6 +108,82 @@ namespace CamadaUI
 			{
 				throw new CamadaDTO.AppException("Número de CNPJ ou CPF inválido...");
 			}
+		}
+
+		// REMOVE ACENTOS FUNCTION
+		//=================================================================================================
+		public static string RemoveAcentos(string texto)
+		{
+			for (int i = 0; i < texto.Length; i++)
+			{
+
+			}
+
+			int vPos;
+
+			const string vComAcento = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜàáâãäåçèéêëìíîïòóôõöùúûü`´^~";
+			const string vSemAcento = "AAAAAACEEEEIIIIOOOOOUUUUaaaaaaceeeeiiiiooooouuuu    ";
+			string newTexto = "";
+
+			for (int i = 0; i < texto.Length; i++)
+			{
+				vPos = vComAcento.IndexOf(texto.ElementAt(i));
+
+				if (vPos != -1)
+				{
+					newTexto += vSemAcento.ElementAt(vPos);
+				}
+				else
+				{
+					newTexto += texto.ElementAt(i);
+				}
+			}
+
+			return newTexto.Trim();
+		}
+
+		// PRIMEIRA LETRA MAIUSCULA
+		//=================================================================================================
+		public static string PrimeiraLetraMaiuscula(string texto)
+		{
+			//--- Get chars quantity
+			if (texto.Length == 0) return "";
+
+			//--- CONVERT TO LOWER FIRST
+			texto = texto.Trim().ToLower();
+
+			string[] palavrasExcluidas = {
+				"de", "da", "do", "e", "das", "dos"
+			};
+
+			string resposta = "";
+			string[] palavras = texto.Split(' ');  //texto.Split(" ");
+
+			foreach (string palavra in palavras)
+			{
+				string newPalavra = palavra;
+
+				if (!palavrasExcluidas.Contains(palavra))
+				{
+					char[] caracteres = palavra.ToArray();
+					caracteres[0] = caracteres[0].ToString().ToUpper()[0];
+					newPalavra = string.Join("", caracteres);
+				}
+
+				resposta = resposta + " " + newPalavra;
+			}
+
+			return resposta.Trim();
+		}
+
+		// VALIDA EMAIL
+		//=================================================================================================
+		public static bool ValidaEmail(string email)
+		{
+			string pattern = @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$";
+			Match emailAddressMatch = Regex.Match(email, pattern);
+
+			return emailAddressMatch.Success;
 		}
 	}
 

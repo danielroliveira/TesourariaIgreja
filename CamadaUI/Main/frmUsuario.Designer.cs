@@ -44,6 +44,7 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.txtSenhaNovaAlterar = new System.Windows.Forms.TextBox();
 			this.pnlAlterarSenha = new System.Windows.Forms.Panel();
+			this.btnTurnPassVisible = new System.Windows.Forms.Button();
 			this.lblUsuarioSenhaAlterar = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.pnlNovoUsuario = new System.Windows.Forms.Panel();
@@ -64,6 +65,7 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.lblUsuarioEmailAlterar = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlAlterarSenha.SuspendLayout();
@@ -154,6 +156,7 @@
 			this.txtSenhaAntigaAlterar.Margin = new System.Windows.Forms.Padding(6);
 			this.txtSenhaAntigaAlterar.MaxLength = 8;
 			this.txtSenhaAntigaAlterar.Name = "txtSenhaAntigaAlterar";
+			this.txtSenhaAntigaAlterar.PasswordChar = '*';
 			this.txtSenhaAntigaAlterar.Size = new System.Drawing.Size(120, 27);
 			this.txtSenhaAntigaAlterar.TabIndex = 3;
 			// 
@@ -178,7 +181,7 @@
 			// 
 			// btnSalvar
 			// 
-			this.btnSalvar.Image = global::CamadaUI.Properties.Resources.salvar_30;
+			this.btnSalvar.Image = global::CamadaUI.Properties.Resources.adicionar_30;
 			this.btnSalvar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnSalvar.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnSalvar.Name = "btnSalvar";
@@ -190,7 +193,7 @@
 			// 
 			// btnCancelar
 			// 
-			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.delete_page_30;
+			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.salvar_30;
 			this.btnCancelar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnCancelar.Name = "btnCancelar";
@@ -253,6 +256,7 @@
 			this.txtSenhaConfirmarAlterar.Margin = new System.Windows.Forms.Padding(6);
 			this.txtSenhaConfirmarAlterar.MaxLength = 8;
 			this.txtSenhaConfirmarAlterar.Name = "txtSenhaConfirmarAlterar";
+			this.txtSenhaConfirmarAlterar.PasswordChar = '*';
 			this.txtSenhaConfirmarAlterar.Size = new System.Drawing.Size(120, 27);
 			this.txtSenhaConfirmarAlterar.TabIndex = 7;
 			// 
@@ -274,11 +278,14 @@
 			this.txtSenhaNovaAlterar.Margin = new System.Windows.Forms.Padding(6);
 			this.txtSenhaNovaAlterar.MaxLength = 8;
 			this.txtSenhaNovaAlterar.Name = "txtSenhaNovaAlterar";
+			this.txtSenhaNovaAlterar.PasswordChar = '*';
 			this.txtSenhaNovaAlterar.Size = new System.Drawing.Size(120, 27);
 			this.txtSenhaNovaAlterar.TabIndex = 5;
 			// 
 			// pnlAlterarSenha
 			// 
+			this.pnlAlterarSenha.BackColor = System.Drawing.Color.Transparent;
+			this.pnlAlterarSenha.Controls.Add(this.btnTurnPassVisible);
 			this.pnlAlterarSenha.Controls.Add(this.lblUsuarioSenhaAlterar);
 			this.pnlAlterarSenha.Controls.Add(this.label12);
 			this.pnlAlterarSenha.Controls.Add(this.txtSenhaAntigaAlterar);
@@ -291,6 +298,23 @@
 			this.pnlAlterarSenha.Name = "pnlAlterarSenha";
 			this.pnlAlterarSenha.Size = new System.Drawing.Size(509, 139);
 			this.pnlAlterarSenha.TabIndex = 2;
+			// 
+			// btnTurnPassVisible
+			// 
+			this.btnTurnPassVisible.BackColor = System.Drawing.Color.White;
+			this.btnTurnPassVisible.BackgroundImage = global::CamadaUI.Properties.Resources.visible_32;
+			this.btnTurnPassVisible.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.btnTurnPassVisible.FlatAppearance.BorderSize = 0;
+			this.btnTurnPassVisible.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Azure;
+			this.btnTurnPassVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnTurnPassVisible.Location = new System.Drawing.Point(215, 56);
+			this.btnTurnPassVisible.Name = "btnTurnPassVisible";
+			this.btnTurnPassVisible.Size = new System.Drawing.Size(20, 20);
+			this.btnTurnPassVisible.TabIndex = 8;
+			this.btnTurnPassVisible.TabStop = false;
+			this.btnTurnPassVisible.UseVisualStyleBackColor = false;
+			this.btnTurnPassVisible.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnTurnPassVisible_MouseDown);
+			this.btnTurnPassVisible.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnTurnPassVisible_MouseUp);
 			// 
 			// lblUsuarioSenhaAlterar
 			// 
@@ -316,6 +340,7 @@
 			// 
 			// pnlNovoUsuario
 			// 
+			this.pnlNovoUsuario.Controls.Add(this.button1);
 			this.pnlNovoUsuario.Controls.Add(this.txtEmailNovo);
 			this.pnlNovoUsuario.Controls.Add(this.label10);
 			this.pnlNovoUsuario.Controls.Add(this.txtUsuarioNovo);
@@ -340,6 +365,8 @@
 			this.txtEmailNovo.Name = "txtEmailNovo";
 			this.txtEmailNovo.Size = new System.Drawing.Size(371, 27);
 			this.txtEmailNovo.TabIndex = 5;
+			this.txtEmailNovo.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
+			this.txtEmailNovo.Validated += new System.EventHandler(this.txtEmail_Validated);
 			// 
 			// label10
 			// 
@@ -361,6 +388,7 @@
 			this.txtUsuarioNovo.Name = "txtUsuarioNovo";
 			this.txtUsuarioNovo.Size = new System.Drawing.Size(371, 27);
 			this.txtUsuarioNovo.TabIndex = 1;
+			this.txtUsuarioNovo.Validated += new System.EventHandler(this.txtUsuarioNovo_Validated);
 			// 
 			// label5
 			// 
@@ -481,6 +509,8 @@
 			this.txtEmailAlterar.Name = "txtEmailAlterar";
 			this.txtEmailAlterar.Size = new System.Drawing.Size(371, 27);
 			this.txtEmailAlterar.TabIndex = 3;
+			this.txtEmailAlterar.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
+			this.txtEmailAlterar.Validated += new System.EventHandler(this.txtEmail_Validated);
 			// 
 			// label13
 			// 
@@ -514,6 +544,23 @@
 			this.label11.Size = new System.Drawing.Size(59, 19);
 			this.label11.TabIndex = 0;
 			this.label11.Text = "Usuário";
+			// 
+			// button1
+			// 
+			this.button1.BackColor = System.Drawing.Color.White;
+			this.button1.BackgroundImage = global::CamadaUI.Properties.Resources.visible_32;
+			this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Azure;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Location = new System.Drawing.Point(215, 137);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(20, 20);
+			this.button1.TabIndex = 8;
+			this.button1.TabStop = false;
+			this.button1.UseVisualStyleBackColor = false;
+			this.button1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnTurnPassVisible_MouseDown);
+			this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnTurnPassVisible_MouseUp);
 			// 
 			// frmUsuario
 			// 
@@ -586,5 +633,7 @@
 		internal System.Windows.Forms.Label label11;
 		internal System.Windows.Forms.Label lblUsuarioSenhaAlterar;
 		internal System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Button btnTurnPassVisible;
+		private System.Windows.Forms.Button button1;
 	}
 }

@@ -254,69 +254,6 @@ namespace CamadaUI.Registres
 
 		#endregion
 
-		#region FILTRAGEM PROCURA
-
-		// PROPERTY PREENCHIDO
-		//------------------------------------------------------------------------------------------------------------
-		private bool? _propPreenchido;
-
-		public bool? propPreenchido
-		{
-			get => _propPreenchido;
-			set
-			{
-				if (value == null)
-				{
-					lblProc.Visible = false;
-					//-- btnProcurar
-					btnProcurar.Visible = false;
-					btnProcurar.Enabled = false;
-				}
-				else if (value == true)
-				{
-					lblProc.SendToBack();
-					int x = txtProcura.Location.X + 110;
-					int y = txtProcura.Location.Y - 17;
-					Point newPoint = new Point(x, y);
-					lblProc.Location = newPoint;
-
-					lblProc.Font = new Font("Calibri Light", 8F, FontStyle.Bold);
-					lblProc.Text = "Pressione ENTER...";
-					lblProc.ForeColor = Color.DarkBlue;
-					lblProc.BackColor = Color.Transparent;
-					lblProc.Visible = true;
-					//-- btnProcurar
-					btnProcurar.Visible = true;
-					btnProcurar.Enabled = true;
-				}
-				else if (value == false)
-				{
-					int x = txtProcura.Location.X + 107;
-					int y = txtProcura.Location.Y + 3;
-					Point newPoint = new Point(x, y);
-					lblProc.Location = newPoint;
-
-					lblProc.Font = new Font("Calibri Light", 11.25F, FontStyle.Italic);
-					lblProc.Text = "Digite algo para procurar...";
-					lblProc.ForeColor = Color.Black;
-					lblProc.BackColor = Color.White;
-					lblProc.BringToFront();
-					lblProc.Visible = true;
-					//-- btnProcurar
-					btnProcurar.Visible = true;
-					btnProcurar.Enabled = false;
-
-					dgvListagem.DataSource = null;
-
-				}
-
-				_propPreenchido = value;
-			}
-		}
-
-
-		#endregion // FILTRAGEM PROCURA --- END
-
 		#region ATIVAR DESATIVAR MENU
 
 		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
@@ -609,6 +546,64 @@ namespace CamadaUI.Registres
 		#endregion // DESIGN FORM FUNCTIONS --- END
 
 		#region PROCURA FUNCTIONS
+
+		// PROPERTY PREENCHIDO
+		//------------------------------------------------------------------------------------------------------------
+		private bool? _propPreenchido;
+
+		public bool? propPreenchido
+		{
+			get => _propPreenchido;
+			set
+			{
+				if (value == null)
+				{
+					lblProc.Visible = false;
+					//-- btnProcurar
+					btnProcurar.Visible = false;
+					btnProcurar.Enabled = false;
+				}
+				else if (value == true)
+				{
+					lblProc.SendToBack();
+					int x = txtProcura.Location.X + 110;
+					int y = txtProcura.Location.Y - 17;
+					Point newPoint = new Point(x, y);
+					lblProc.Location = newPoint;
+
+					lblProc.Font = new Font("Calibri Light", 8F, FontStyle.Bold);
+					lblProc.Text = "Pressione ENTER...";
+					lblProc.ForeColor = Color.DarkBlue;
+					lblProc.BackColor = Color.Transparent;
+					lblProc.Visible = true;
+					//-- btnProcurar
+					btnProcurar.Visible = true;
+					btnProcurar.Enabled = true;
+				}
+				else if (value == false)
+				{
+					int x = txtProcura.Location.X + 107;
+					int y = txtProcura.Location.Y + 3;
+					Point newPoint = new Point(x, y);
+					lblProc.Location = newPoint;
+
+					lblProc.Font = new Font("Calibri Light", 11.25F, FontStyle.Italic);
+					lblProc.Text = "Digite algo para procurar...";
+					lblProc.ForeColor = Color.Black;
+					lblProc.BackColor = Color.White;
+					lblProc.BringToFront();
+					lblProc.Visible = true;
+					//-- btnProcurar
+					btnProcurar.Visible = true;
+					btnProcurar.Enabled = false;
+
+					dgvListagem.DataSource = null;
+
+				}
+
+				_propPreenchido = value;
+			}
+		}
 
 		// BTN PROCURAR
 		//------------------------------------------------------------------------------------------------------------

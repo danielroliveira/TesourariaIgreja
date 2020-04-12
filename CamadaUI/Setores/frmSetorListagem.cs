@@ -226,13 +226,31 @@ namespace CamadaUI.Setores
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
-			dgvListagem.DataSource = listSetor.FindAll(FiltrarDelegate);
-		}
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objSetor, bool> FiltroItem = c => c.Setor.ToLower().Contains(txtProcura.Text.ToLower());
 
-		private bool FiltrarDelegate(objSetor obj)
-		{
-			if (obj.Setor.ToLower().Contains(txtProcura.Text.ToLower())) return true;
-			else return false;
+					// aply filter using function
+					dgvListagem.DataSource = listSetor.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objSetor, bool> FiltroID = c => c.IDSetor == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listSetor.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listSetor;
+			}
+
 		}
 
 		#endregion // FILTRAGEM PROCURA --- END

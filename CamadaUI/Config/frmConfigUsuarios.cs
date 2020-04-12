@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using System.Collections.Generic;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
+using CamadaUI.Main;
+using ComponentOwl.BetterListView;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using ComponentOwl.BetterListView;
-using CamadaUI.Main;
+using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Config
 {
@@ -146,7 +146,7 @@ namespace CamadaUI.Config
 		}
 		private void lstUsuarios_ItemActivate(object sender, BetterListViewItemActivateEventArgs eventArgs)
 		{
-			AlterarUsuario((Control)sender);
+			btnUserPermissao_Click(sender, null);
 		}
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
@@ -229,6 +229,30 @@ namespace CamadaUI.Config
 
 				// requery list
 				ObterDados();
+
+				// select old usuario in list
+				if (usuario != null && lstUsuarios.Items.Count > 0)
+				{
+					foreach (var item in lstUsuarios.Items)
+					{
+						if (Convert.ToInt32(item.Text) == usuario.IDUsuario)
+						{
+							item.Selected = true;
+							item.EnsureVisible();
+						}
+						else
+						{
+							item.Selected = false;
+						}
+					}
+				}
+				else
+				{
+					lstUsuarios.Items.ToList().ForEach(x => x.Selected = false); // unselect all items
+					lstUsuarios.Items.Last().Selected = true; // select last item
+				}
+
+				// restore Handler to list changed item
 				lstUsuarios.SelectedIndexChanged += lstUsuarios_SelectedIndexChanged;
 
 			}
@@ -288,6 +312,8 @@ namespace CamadaUI.Config
 			}
 		}
 
+		// ALTERA A IMAGEM DO BTN ALTERAR ATIVO
+		//------------------------------------------------------------------------------------------------------------
 		private void lstUsuarios_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			objUsuario usuario = GetSelectedItem();
@@ -308,6 +334,44 @@ namespace CamadaUI.Config
 			{
 				btnAlterarAtivo.Text = "Ativar Usuário";
 				btnAlterarAtivo.Image = Properties.Resources.accept_24;
+			}
+		}
+
+		private void btnUserPermissao_Click(object sender, EventArgs e)
+		{
+			objUsuario usuario = GetSelectedItem();
+
+			if (usuario == null)
+			{
+				btnAlterarAtivo.Enabled = false;
+				return;
+			}
+			else if (usuario.UsuarioAcesso == 1)
+			{
+				AbrirDialog("O acesso desse usuário já ilimitado...\n" +
+					"Não há necessidade de definir o acesso para um usuário ADMINISTRADOR.",
+					"Definir Acesso");
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmUsuarioContaAcesso frm = new frmUsuarioContaAcesso(usuario, this);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de Permissão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 	}

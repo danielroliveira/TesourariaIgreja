@@ -290,31 +290,28 @@ namespace CamadaUI.Setores
 		{
 			if (txtProcura.TextLength > 0)
 			{
-				if (int.TryParse(txtProcura.Text, out int i))
-					lstItens.DataSource = listSetor.FindAll(c => ProcurarFiltroID(c));
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objSetor, bool> FiltroItem = c => c.Setor.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					lstItens.DataSource = listSetor.FindAll(c => FiltroItem(c));
+				}
 				else
-					lstItens.DataSource = listSetor.FindAll(c => ProcurarFiltroItem(c));
+				{
+					// declare function
+					Func<objSetor, bool> FiltroID = c => c.IDSetor == i;
+
+					// aply filter using function
+					lstItens.DataSource = listSetor.FindAll(c => FiltroID(c));
+				}
 			}
 			else
 			{
 				lstItens.DataSource = listSetor;
 			}
-		}
-
-		private bool ProcurarFiltroItem(objSetor c)
-		{
-			if (c.Setor.ToLower().Contains(txtProcura.Text.ToLower()))
-				return true;
-			else
-				return false;
-		}
-
-		private bool ProcurarFiltroID(objSetor c)
-		{
-			if (c.IDSetor == Convert.ToInt32(txtProcura.Text))
-				return true;
-			else
-				return false;
 		}
 
 		#endregion // PROCURA BY TEXT --- END

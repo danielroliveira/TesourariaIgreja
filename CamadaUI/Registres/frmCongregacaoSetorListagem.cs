@@ -1,15 +1,13 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Registres
 {
@@ -202,13 +200,30 @@ namespace CamadaUI.Registres
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
-			dgvListagem.DataSource = listSetor.FindAll(FiltrarDelegate);
-		}
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objCongregacaoSetor, bool> FiltroItem = c => c.CongregacaoSetor.ToLower().Contains(txtProcura.Text.ToLower());
 
-		private bool FiltrarDelegate(objCongregacaoSetor obj)
-		{
-			if (obj.CongregacaoSetor.ToLower().Contains(txtProcura.Text.ToLower())) return true;
-			else return false;
+					// aply filter using function
+					dgvListagem.DataSource = listSetor.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objCongregacaoSetor, bool> FiltroID = c => c.IDCongregacaoSetor == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listSetor.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listSetor;
+			}
 		}
 
 		#endregion // FILTRAGEM PROCURA --- END

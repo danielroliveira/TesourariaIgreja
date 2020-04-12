@@ -243,6 +243,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fechar_24 {
+            get {
+                object obj = ResourceManager.GetObject("fechar_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fechar_30 {
             get {
                 object obj = ResourceManager.GetObject("fechar_30", resourceCulture);
@@ -406,6 +416,26 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap SwitchON_30 {
             get {
                 object obj = ResourceManager.GetObject("SwitchON_30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap unlock_24 {
+            get {
+                object obj = ResourceManager.GetObject("unlock_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap visible_32 {
+            get {
+                object obj = ResourceManager.GetObject("visible_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

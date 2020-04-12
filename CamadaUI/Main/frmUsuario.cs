@@ -281,6 +281,12 @@ namespace CamadaUI.Main
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
+				if (funcao == EnumFormUsuarioFuncao.Alterar_Senha)
+				{
+					txtSenhaAntigaAlterar.Clear();
+					txtSenhaConfirmarAlterar.Clear();
+				}
+
 				bind.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
@@ -373,30 +379,54 @@ namespace CamadaUI.Main
 						return false;
 					}
 
+					if (!ValidaEmail(txtEmailAlterar.Text))
+					{
+						AbrirDialog("Email não é válido...\n" + "Favor inserir um endereço de email válido.",
+							"Email inválido", DialogType.OK, DialogIcon.Exclamation);
+						txtEmailAlterar.Focus();
+						txtEmailAlterar.SelectAll();
+						return false;
+					}
+
 					break;
 
 				case EnumFormUsuarioFuncao.Alterar_Senha: // ALTERAR A SENHA
 
 					// Senha anterior
-					if (txtSenhaAntigaAlterar.Text.Trim().Length == 0)
+					if (txtSenhaAntigaAlterar.Text.Trim().Length != 8)
 					{
-						AbrirDialog("Prencha a senha anterior...", "Senha Anterior",
+						AbrirDialog("Prencha a senha anterior...\n" +
+							"A senha anterior deve ter 8 caracteres",
+							"Senha Anterior",
 							DialogType.OK, DialogIcon.Exclamation);
 						return false;
 					}
 
 					// Nova Senha
-					if (txtSenhaNovaAlterar.Text.Trim().Length == 0)
+					if (txtSenhaNovaAlterar.Text.Trim().Length != 8)
 					{
-						AbrirDialog("Prencha a senha nova...", "Senha Nova",
+						AbrirDialog("Prencha a senha nova...\n" +
+							"A senha nova deve ter 8 caracteres",
+							"Senha Nova",
 							DialogType.OK, DialogIcon.Exclamation);
 						return false;
 					}
 					// Senha anterior
-					if (txtSenhaConfirmarAlterar.Text.Trim().Length == 0)
+					if (txtSenhaConfirmarAlterar.Text.Trim().Length != 8)
 					{
-						AbrirDialog("Prencha a confirmação da senha...", "Senha Confirmação",
+						AbrirDialog("Prencha a confirmação da senha...\n" +
+							"A confirmação da senha deve ter 8 caracteres",
+							"Senha Confirmação",
 							DialogType.OK, DialogIcon.Exclamation);
+						return false;
+					}
+
+					// verifica semelhanca da password com confirmacao
+					if (txtSenhaNovo.Text != txtSenhaConfirmarAlterar.Text)
+					{
+						AbrirDialog("A Senha e a Confirmação da Senha não são idênticas...",
+							"Confirmação de Senha", DialogType.OK, DialogIcon.Exclamation);
+						txtSenhaNovo.Focus();
 						return false;
 					}
 
@@ -417,6 +447,7 @@ namespace CamadaUI.Main
 					{
 						AbrirDialog("Uma exceção ocorreu ao Confirmar a Senha do Usuário..." + "\n" +
 									ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+						return false;
 					}
 					finally
 					{
@@ -428,7 +459,17 @@ namespace CamadaUI.Main
 
 				case EnumFormUsuarioFuncao.Alterar_Email: // ALTERAR O EMAIL
 
+					if (!ValidaEmail(txtEmailAlterar.Text))
+					{
+						AbrirDialog("Email não é válido...\n" + "Favor inserir um endereço de email válido.",
+							"Email inválido", DialogType.OK, DialogIcon.Exclamation);
+						txtEmailAlterar.Focus();
+						txtEmailAlterar.SelectAll();
+						return false;
+					}
+
 					break;
+
 				case EnumFormUsuarioFuncao.Alterar_Acesso: // ALTERAR O ACESSO
 
 					break;
@@ -440,5 +481,54 @@ namespace CamadaUI.Main
 		}
 
 		#endregion
+
+		// TURN VISIBLE PASSWORDS TEXT
+		//------------------------------------------------------------------------------------------------------------
+		private void btnTurnPassVisible_MouseDown(object sender, MouseEventArgs e)
+		{
+			txtSenhaAntigaAlterar.PasswordChar = '\0';
+			txtSenhaNovaAlterar.PasswordChar = '\0';
+			txtSenhaConfirmarAlterar.PasswordChar = '\0';
+			txtSenhaNovo.PasswordChar = '\0';
+			txtSenhaConfirmarNovo.PasswordChar = '\0';
+		}
+		private void btnTurnPassVisible_MouseUp(object sender, MouseEventArgs e)
+		{
+			txtSenhaAntigaAlterar.PasswordChar = '*';
+			txtSenhaNovaAlterar.PasswordChar = '*';
+			txtSenhaConfirmarAlterar.PasswordChar = '*';
+			txtSenhaNovo.PasswordChar = '*';
+			txtSenhaConfirmarNovo.PasswordChar = '*';
+		}
+
+		// CONVERT NOME EM MAIUSCULO SEM ACENTO
+		//------------------------------------------------------------------------------------------------------------
+		private void txtUsuarioNovo_Validated(object sender, EventArgs e)
+		{
+			txtUsuarioNovo.Text = RemoveAcentos(txtUsuarioNovo.Text);
+			txtUsuarioNovo.Text = PrimeiraLetraMaiuscula(txtUsuarioNovo.Text);
+		}
+
+		// VALIDA EMAIL
+		//------------------------------------------------------------------------------------------------------------
+		private void txtEmail_Validated(object sender, EventArgs e)
+		{
+			TextBox textBox = (TextBox)sender;
+
+			// check valid email
+			if (!ValidaEmail(textBox.Text))
+			{
+				AbrirDialog("Email não é válido...\n" + "Favor inserir um endereço de email válido.",
+					"Email inválido", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
+
+		private void txtEmail_Validating(object sender, CancelEventArgs e)
+		{
+			TextBox textBox = (TextBox)sender;
+			// convert to LOWER CASE email
+			textBox.Text = _usuario.Email.ToLower();
+			//textBox.DataBindings["Text"].ReadValue();
+		}
 	}
 }

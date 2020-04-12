@@ -290,31 +290,28 @@ namespace CamadaUI.Registres
 		{
 			if (txtProcura.TextLength > 0)
 			{
-				if (int.TryParse(txtProcura.Text, out int i))
-					lstItens.DataSource = listCong.FindAll(c => ProcurarFiltroID(c));
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objCongregacao, bool> FiltroItem = c => c.Congregacao.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					lstItens.DataSource = listCong.FindAll(c => FiltroItem(c));
+				}
 				else
-					lstItens.DataSource = listCong.FindAll(c => ProcurarFiltroItem(c));
+				{
+					// declare function
+					Func<objCongregacao, bool> FiltroID = c => c.IDCongregacao == i;
+
+					// aply filter using function
+					lstItens.DataSource = listCong.FindAll(c => FiltroID(c));
+				}
 			}
 			else
 			{
 				lstItens.DataSource = listCong;
 			}
-		}
-
-		private bool ProcurarFiltroItem(objCongregacao c)
-		{
-			if (c.Congregacao.ToLower().Contains(txtProcura.Text.ToLower()))
-				return true;
-			else
-				return false;
-		}
-
-		private bool ProcurarFiltroID(objCongregacao c)
-		{
-			if (c.IDCongregacao == Convert.ToInt32(txtProcura.Text))
-				return true;
-			else
-				return false;
 		}
 
 		#endregion // PROCURA BY TEXT --- END

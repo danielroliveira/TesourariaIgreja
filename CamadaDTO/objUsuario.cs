@@ -306,6 +306,8 @@ namespace CamadaDTO
 			}
 		}
 
+		public string UsuarioApelido { get; set; }
+
 		// Property IDConta
 		//---------------------------------------------------------------
 		public int? IDConta
@@ -320,6 +322,8 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		public string Conta { get; set; }
 
 		// Property LiberacaoData
 		//---------------------------------------------------------------

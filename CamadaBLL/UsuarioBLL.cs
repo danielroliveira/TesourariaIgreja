@@ -65,7 +65,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET CONGREGACAO
+		// GET USUARIO
 		//------------------------------------------------------------------------------------------------------------
 		public objUsuario GetUsuario(int IDUsuario)
 		{
@@ -212,5 +212,131 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		//=================================================================================================
+		// USER ACCESS PERMISSION
+		//=================================================================================================
+
+		// GET USER ACCESS CONTA LIST
+		//------------------------------------------------------------------------------------------------------------
+		public List<objUsuarioConta> GetUserPermitedContaList(int IDUsuario)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryUserConta WHERE IDUsuario = @IDUsuario ORDER BY Conta";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDUsuario", IDUsuario);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				List<objUsuarioConta> listagem = new List<objUsuarioConta>();
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClassUserConta(row));
+				}
+
+				return listagem;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// CONVERT ROW IN CLASS
+		//------------------------------------------------------------------------------------------------------------
+		public objUsuarioConta ConvertRowInClassUserConta(DataRow row)
+		{
+			objUsuarioConta usuario = new objUsuarioConta((int)row["IDUsuario"], (int)row["IDConta"])
+			{
+				IDUserConta = (int)row["IDUserConta"],
+				UsuarioApelido = (string)row["UsuarioApelido"],
+				Conta = (string)row["Conta"],
+				LiberacaoData = row["LiberacaoData"] == DBNull.Value ? new DateTime() : (DateTime)row["LiberacaoData"],
+				Ativo = (bool)row["Ativo"],
+			};
+
+			return usuario;
+		}
+
+		// ADD USER PERMISSION CONTA
+		//------------------------------------------------------------------------------------------------------------
+		public int InsertUserPermissionConta(objUsuarioConta usuarioConta)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDUsuario", usuarioConta.IDUsuario);
+				db.AdicionarParametros("@IDConta", usuarioConta.IDConta);
+				db.AdicionarParametros("@LiberacaoData", DateTime.Today);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = "INSERT INTO tblUserConta (" +
+							   "IDUsuario, " +
+							   "IDConta, " +
+							   "LiberacaoData " +
+							   ") VALUES (" +
+							   "@IDUsuario, " +
+							   "@IDConta, " +
+							   "@LiberacaoData)";
+				//--- insert
+				return db.ExecutarInsertAndGetID(query);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// DELETE / REMOVE USER CONTA ACCESS
+		//------------------------------------------------------------------------------------------------------------
+		public bool DeleteUserPermissionConta(int IDUserConta)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDUserConta", IDUserConta);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblUserConta WHERE " +
+							   "IDUserConta = @IDUserConta";
+				//--- insert
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
 	}
 }

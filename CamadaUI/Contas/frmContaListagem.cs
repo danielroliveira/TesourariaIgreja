@@ -226,13 +226,30 @@ namespace CamadaUI.Contas
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
-			dgvListagem.DataSource = listConta.FindAll(FiltrarDelegate);
-		}
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objConta, bool> FiltroItem = c => c.Conta.ToLower().Contains(txtProcura.Text.ToLower());
 
-		private bool FiltrarDelegate(objConta obj)
-		{
-			if (obj.Conta.ToLower().Contains(txtProcura.Text.ToLower())) return true;
-			else return false;
+					// aply filter using function
+					dgvListagem.DataSource = listConta.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objConta, bool> FiltroID = c => c.IDConta == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listConta.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listConta;
+			}
 		}
 
 		#endregion // FILTRAGEM PROCURA --- END

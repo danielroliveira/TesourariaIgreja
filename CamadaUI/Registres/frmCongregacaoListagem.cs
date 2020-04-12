@@ -221,13 +221,30 @@ namespace CamadaUI.Registres
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
-			dgvListagem.DataSource = listCong.FindAll(FiltrarDelegate);
-		}
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objCongregacao, bool> FiltroItem = c => c.Congregacao.ToLower().Contains(txtProcura.Text.ToLower());
 
-		private bool FiltrarDelegate(objCongregacao obj)
-		{
-			if (obj.Congregacao.ToLower().Contains(txtProcura.Text.ToLower())) return true;
-			else return false;
+					// aply filter using function
+					dgvListagem.DataSource = listCong.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objCongregacao, bool> FiltroID = c => c.IDCongregacao == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listCong.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listCong;
+			}
 		}
 
 		#endregion // FILTRAGEM PROCURA --- END

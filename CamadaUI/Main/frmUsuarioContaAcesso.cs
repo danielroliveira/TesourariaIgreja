@@ -1,38 +1,39 @@
-﻿using CamadaBLL;
-using CamadaDTO;
-using ComponentOwl.BetterListView;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
+using CamadaDTO;
+using CamadaBLL;
 using static CamadaUI.Utilidades;
+using System.Linq;
+using ComponentOwl.BetterListView;
+using System.Drawing.Drawing2D;
+using CamadaUI.Contas;
 
-namespace CamadaUI.Contas
+namespace CamadaUI.Main
 {
-	public partial class frmContaProcura : CamadaUI.Modals.frmModFinBorder
+	public partial class frmUsuarioContaAcesso : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objConta> listConta = new List<objConta>();
+		private List<objUsuarioConta> listAcesso = new List<objUsuarioConta>();
 		private Form _formOrigem;
-		public objConta propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
+		private objUsuario _usuario;
+		UsuarioBLL uBLL = new UsuarioBLL();
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmContaProcura(Form formOrigem, int? DefaultID = null)
+		public frmUsuarioContaAcesso(objUsuario Usuario, Form formOrigem)
 		{
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
+			_usuario = Usuario;
+			lblUsuarioApelido.Text = _usuario.UsuarioApelido;
 
 			//--- Add any initialization after the InitializeComponent() call.
 			ObterDados(this, new EventArgs());
 
 			//--- Handlers
 			HandlerKeyDownControl(this);
-
-			//--- Select Default item
-			FindSelectDefautID(DefaultID);
 		}
 
 		// GET DATA
@@ -43,8 +44,7 @@ namespace CamadaUI.Contas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				ContaBLL cBLL = new ContaBLL();
-				listConta = cBLL.GetListConta("", true);
+				listAcesso = uBLL.GetUserPermitedContaList((int)_usuario.IDUsuario);
 				PreencheListagem();
 			}
 			catch (Exception ex)
@@ -62,33 +62,8 @@ namespace CamadaUI.Contas
 
 		private void PreencheListagem()
 		{
-			lstItens.DataSource = listConta;
+			lstItens.DataSource = listAcesso;
 			FormataListagem();
-		}
-
-		// FIND AND SELECT IN LIST PROVIDED DEFAULT ID 
-		//------------------------------------------------------------------------------------------------------------
-		private void FindSelectDefautID(int? DefaultID)
-		{
-			if (DefaultID != null)
-			{
-				foreach (BetterListViewItem item in lstItens)
-				{
-					if (Convert.ToInt32(item.Text) == DefaultID)
-					{
-						item.Selected = true;
-						propEscolha = GetSelectedItem();
-					}
-					else
-					{
-						item.Selected = false;
-					}
-				}
-			}
-			else
-			{
-				lstItens.Items[0].Selected = true;
-			}
 		}
 
 		#endregion
@@ -103,8 +78,8 @@ namespace CamadaUI.Contas
 			lstItens.MultiSelect = false;
 			lstItens.HideSelection = false;
 
-			clnID.DisplayMember = "IDConta";
-			clnID.ValueMember = "IDConta";
+			clnID.DisplayMember = "IDUserConta";
+			clnID.ValueMember = "IDUserConta";
 
 			clnItem.DisplayMember = "Conta";
 			clnItem.ValueMember = "Conta";
@@ -142,45 +117,105 @@ namespace CamadaUI.Contas
 			}
 		}
 
-		// HANDLER ITEM ACTIVATE TO BTN ESCOLHER
-		//------------------------------------------------------------------------------------------------------------
-		private void lstItens_ItemActivate(object sender, BetterListViewItemActivateEventArgs eventArgs)
-		{
-			btnEscolher_Click(sender, new EventArgs());
-		}
-
 		#endregion
 
 		#region BUTTONS FUNCTION
 
-		private void btnFechar_Click(object sender, EventArgs e)
+		private void btnClose_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.Cancel;
+			Close();
 		}
 
-		private void btnEscolher_Click(object sender, EventArgs e)
+		private void btnRemover_Click(object sender, EventArgs e)
 		{
-			objConta item = GetSelectedItem();
+			objUsuarioConta item = GetSelectedItem();
 
 			//--- check selected item
 			if (item == null)
 			{
-				AbrirDialog("Favor selecionar um registro para Editar...",
+				AbrirDialog("Favor selecionar um registro para remover...",
 					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
 				return;
 			}
 
-			//--- open edit form
-			propEscolha = item;
-			DialogResult = DialogResult.OK;
+			// message
+			DialogResult resp =
+			AbrirDialog($"Deseja realmente remover a autorização do Usuário {_usuario.UsuarioApelido.ToUpper()} " +
+				$"para movimentar a conta {item.Conta.ToUpper()}?", "Remover Autorização",
+				DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp == DialogResult.No) return; // exit if NO
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				uBLL.DeleteUserPermissionConta((int)item.IDUserConta);
+				//listAcesso.Remove(item);
+				lstItens.SelectedItems[0].Remove();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover acesso..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
-		private objConta GetSelectedItem()
+		private void btnAdicionar_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmContaProcura frm = new frmContaProcura(this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK)
+					return;
+
+				objUsuarioConta usuarioConta = new objUsuarioConta(_usuario.IDUsuario, frm.propEscolha.IDConta);
+
+				// insert
+				int newID = uBLL.InsertUserPermissionConta(usuarioConta);
+				usuarioConta.IDUserConta = newID;
+				usuarioConta.Conta = frm.propEscolha.Conta;
+				usuarioConta.Ativo = true;
+
+				//get dados
+				ObterDados(sender, null);
+
+				// message
+				AbrirDialog($"Usuário {_usuario.UsuarioApelido.ToUpper()} autorizado " +
+					$"para movimentar a conta {usuarioConta.Conta.ToUpper()}", "Autorização",
+					DialogType.OK, DialogIcon.Information);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de Conta..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		private objUsuarioConta GetSelectedItem()
 		{
 			if (lstItens.SelectedItems.Count == 0) return null;
 
 			int IDSelected = (int)lstItens.SelectedItems[0].Value;
-			return listConta.First(s => s.IDCongregacao == IDSelected);
+			return listAcesso.First(s => s.IDUserConta == IDSelected);
 		}
 
 		#endregion
@@ -189,12 +224,12 @@ namespace CamadaUI.Contas
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmContaProcura_KeyDown(object sender, KeyEventArgs e)
+		private void frmUsuarioContaAcesso_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
 				e.Handled = true;
-				btnFechar_Click(sender, new EventArgs());
+				btnClose_Click(sender, new EventArgs());
 			}
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
@@ -245,75 +280,24 @@ namespace CamadaUI.Contas
 
 		#region DESIGN FORM FUNCTIONS
 
-		private Color formOrigemPanelColor; // backup panel color
-
-		private void frmContaProcura_Activated(object sender, EventArgs e)
+		private void frmUsuarioContaAcesso_Activated(object sender, EventArgs e)
 		{
 			if (_formOrigem != null)
 			{
 				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				formOrigemPanelColor = pnl.BackColor;
 				pnl.BackColor = Color.Silver;
 			}
 		}
 
-		private void frmContaProcura_FormClosed(object sender, FormClosedEventArgs e)
+		private void frmUsuarioContaAcesso_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			if (_formOrigem != null)
 			{
 				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = formOrigemPanelColor;
+				pnl.BackColor = Color.SlateGray;
 			}
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
-
-		#region PROCURA BY TEXT
-
-		private void txtProcura_TextChanged(object sender, EventArgs e)
-		{
-			ProcurarTexto();
-			BetterListViewItemCollection itemsFound = new BetterListViewItemCollection();
-
-			if (txtProcura.Text.Length > 0)
-			{
-				itemsFound = lstItens.FindItemsWithText(txtProcura.Text);
-			}
-			else
-			{
-				lstItens.FindItemsWithText("?");
-				lstItens.SelectedItems.Clear();
-			}
-		}
-
-		private void ProcurarTexto()
-		{
-			if (txtProcura.TextLength > 0)
-			{
-				// filter
-				if (!int.TryParse(txtProcura.Text, out int i))
-				{
-					// declare function
-					Func<objConta, bool> FiltroItem = c => c.Conta.ToLower().Contains(txtProcura.Text.ToLower());
-
-					// aply filter using function
-					lstItens.DataSource = listConta.FindAll(c => FiltroItem(c));
-				}
-				else
-				{
-					// declare function
-					Func<objConta, bool> FiltroID = c => c.IDConta == i;
-
-					// aply filter using function
-					lstItens.DataSource = listConta.FindAll(c => FiltroID(c));
-				}
-			}
-			else
-			{
-				lstItens.DataSource = listConta;
-			}
-		}
-
-		#endregion // PROCURA BY TEXT --- END
 	}
 }

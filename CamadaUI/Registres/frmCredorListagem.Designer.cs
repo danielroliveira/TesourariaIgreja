@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnEditar = new System.Windows.Forms.Button();
@@ -39,6 +39,9 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,9 +49,6 @@
 			this.btnProcurar = new System.Windows.Forms.Button();
 			this.btnEscolher = new System.Windows.Forms.Button();
 			this.lblRegistrosEncontrados = new System.Windows.Forms.Label();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -164,21 +164,21 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -187,7 +187,7 @@
             this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(22, 111);
+			this.dgvListagem.Location = new System.Drawing.Point(14, 111);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
 			this.dgvListagem.ReadOnly = true;
@@ -197,13 +197,34 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(598, 371);
+			this.dgvListagem.Size = new System.Drawing.Size(606, 371);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.DataSourceChanged += new System.EventHandler(this.dgvListagem_DataSourceChanged);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnCadastro
+			// 
+			this.clnCadastro.HeaderText = "Credor";
+			this.clnCadastro.Name = "clnCadastro";
+			this.clnCadastro.ReadOnly = true;
+			this.clnCadastro.Width = 400;
+			// 
+			// clnImage
+			// 
+			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
 			// 
 			// MenuListagem
 			// 
@@ -287,27 +308,6 @@
 			this.lblRegistrosEncontrados.TabIndex = 45;
 			this.lblRegistrosEncontrados.Text = "Nenhum registro encontrado...";
 			this.lblRegistrosEncontrados.Visible = false;
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnCadastro
-			// 
-			this.clnCadastro.HeaderText = "Credor";
-			this.clnCadastro.Name = "clnCadastro";
-			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 400;
-			// 
-			// clnImage
-			// 
-			this.clnImage.HeaderText = "Ativo";
-			this.clnImage.Name = "clnImage";
-			this.clnImage.ReadOnly = true;
-			this.clnImage.Width = 70;
 			// 
 			// frmCredorListagem
 			// 

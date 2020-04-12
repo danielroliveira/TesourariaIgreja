@@ -54,11 +54,8 @@
 			this.txtSetorPadrao = new System.Windows.Forms.TextBox();
 			this.txtCidadePadrao = new System.Windows.Forms.TextBox();
 			this.txtContaPadrao = new System.Windows.Forms.TextBox();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.label3 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
-			this.panel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -429,30 +426,10 @@
 			this.txtContaPadrao.TabIndex = 10;
 			this.txtContaPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
-			// panel3
-			// 
-			this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
-			this.panel3.Controls.Add(this.label3);
-			this.panel3.Location = new System.Drawing.Point(12, 396);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(720, 107);
-			this.panel3.TabIndex = 1;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(9, 9);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(163, 23);
-			this.label3.TabIndex = 0;
-			this.label3.Text = "Definição de Cores:";
-			// 
 			// frmConfigGeral
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(744, 579);
-			this.Controls.Add(this.panel3);
 			this.Controls.Add(this.pnlPastas);
 			this.Controls.Add(this.btnCancelar);
 			this.Controls.Add(this.btnSalvarConfig);
@@ -463,13 +440,10 @@
 			this.Controls.SetChildIndex(this.btnSalvarConfig, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
 			this.Controls.SetChildIndex(this.pnlPastas, 0);
-			this.Controls.SetChildIndex(this.panel3, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.pnlPastas.ResumeLayout(false);
 			this.pnlPastas.PerformLayout();
-			this.panel3.ResumeLayout(false);
-			this.panel3.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -479,8 +453,6 @@
 		private System.Windows.Forms.Button btnCancelar;
 		private System.Windows.Forms.Panel pnlPastas;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Panel panel3;
-		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox txtIgrejaTitulo;
 		private System.Windows.Forms.Label label4;
 		internal System.Windows.Forms.Button btnFilialEditar;

@@ -33,6 +33,7 @@
 			this.pnlPastas = new System.Windows.Forms.Panel();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnAlterarAtivo = new System.Windows.Forms.Button();
+			this.btnUserPermissao = new System.Windows.Forms.Button();
 			this.btnAlterarAcesso = new System.Windows.Forms.Button();
 			this.btnAlterarEmail = new System.Windows.Forms.Button();
 			this.btnAlterarSenha = new System.Windows.Forms.Button();
@@ -79,7 +80,7 @@
 			this.btnCancelar.Location = new System.Drawing.Point(611, 531);
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(121, 36);
-			this.btnCancelar.TabIndex = 7;
+			this.btnCancelar.TabIndex = 1;
 			this.btnCancelar.Text = "&Fechar";
 			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -101,6 +102,7 @@
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(221)))), ((int)(((byte)(207)))));
 			this.pnlPastas.Controls.Add(this.btnAdicionar);
 			this.pnlPastas.Controls.Add(this.btnAlterarAtivo);
+			this.pnlPastas.Controls.Add(this.btnUserPermissao);
 			this.pnlPastas.Controls.Add(this.btnAlterarAcesso);
 			this.pnlPastas.Controls.Add(this.btnAlterarEmail);
 			this.pnlPastas.Controls.Add(this.btnAlterarSenha);
@@ -109,7 +111,7 @@
 			this.pnlPastas.Location = new System.Drawing.Point(12, 42);
 			this.pnlPastas.Name = "pnlPastas";
 			this.pnlPastas.Size = new System.Drawing.Size(720, 387);
-			this.pnlPastas.TabIndex = 2;
+			this.pnlPastas.TabIndex = 0;
 			// 
 			// btnAdicionar
 			// 
@@ -123,7 +125,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(498, 42);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(178, 40);
-			this.btnAdicionar.TabIndex = 9;
+			this.btnAdicionar.TabIndex = 2;
 			this.btnAdicionar.Text = "&Adicionar Usuário";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -142,12 +144,31 @@
 			this.btnAlterarAtivo.Location = new System.Drawing.Point(498, 258);
 			this.btnAlterarAtivo.Name = "btnAlterarAtivo";
 			this.btnAlterarAtivo.Size = new System.Drawing.Size(178, 40);
-			this.btnAlterarAtivo.TabIndex = 9;
+			this.btnAlterarAtivo.TabIndex = 6;
 			this.btnAlterarAtivo.Text = "&Desativar Usuário";
 			this.btnAlterarAtivo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAlterarAtivo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlterarAtivo.UseVisualStyleBackColor = false;
 			this.btnAlterarAtivo.Click += new System.EventHandler(this.btnAlterarAtivo_Click);
+			// 
+			// btnUserPermissao
+			// 
+			this.btnUserPermissao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUserPermissao.BackColor = System.Drawing.Color.MintCream;
+			this.btnUserPermissao.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+			this.btnUserPermissao.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
+			this.btnUserPermissao.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
+			this.btnUserPermissao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnUserPermissao.Image = global::CamadaUI.Properties.Resources.unlock_24;
+			this.btnUserPermissao.Location = new System.Drawing.Point(498, 304);
+			this.btnUserPermissao.Name = "btnUserPermissao";
+			this.btnUserPermissao.Size = new System.Drawing.Size(178, 40);
+			this.btnUserPermissao.TabIndex = 7;
+			this.btnUserPermissao.Text = "&Permissões";
+			this.btnUserPermissao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnUserPermissao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnUserPermissao.UseVisualStyleBackColor = false;
+			this.btnUserPermissao.Click += new System.EventHandler(this.btnUserPermissao_Click);
 			// 
 			// btnAlterarAcesso
 			// 
@@ -161,8 +182,8 @@
 			this.btnAlterarAcesso.Location = new System.Drawing.Point(498, 196);
 			this.btnAlterarAcesso.Name = "btnAlterarAcesso";
 			this.btnAlterarAcesso.Size = new System.Drawing.Size(178, 40);
-			this.btnAlterarAcesso.TabIndex = 9;
-			this.btnAlterarAcesso.Text = "&Alterar Acesso";
+			this.btnAlterarAcesso.TabIndex = 5;
+			this.btnAlterarAcesso.Text = "Alterar Acesso";
 			this.btnAlterarAcesso.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAlterarAcesso.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlterarAcesso.UseVisualStyleBackColor = false;
@@ -180,8 +201,8 @@
 			this.btnAlterarEmail.Location = new System.Drawing.Point(498, 150);
 			this.btnAlterarEmail.Name = "btnAlterarEmail";
 			this.btnAlterarEmail.Size = new System.Drawing.Size(178, 40);
-			this.btnAlterarEmail.TabIndex = 9;
-			this.btnAlterarEmail.Text = "&Alterar Email";
+			this.btnAlterarEmail.TabIndex = 4;
+			this.btnAlterarEmail.Text = "Alterar Email";
 			this.btnAlterarEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAlterarEmail.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlterarEmail.UseVisualStyleBackColor = false;
@@ -199,8 +220,8 @@
 			this.btnAlterarSenha.Location = new System.Drawing.Point(498, 104);
 			this.btnAlterarSenha.Name = "btnAlterarSenha";
 			this.btnAlterarSenha.Size = new System.Drawing.Size(178, 40);
-			this.btnAlterarSenha.TabIndex = 9;
-			this.btnAlterarSenha.Text = "&Alterar Senha";
+			this.btnAlterarSenha.TabIndex = 3;
+			this.btnAlterarSenha.Text = "Alterar Senha";
 			this.btnAlterarSenha.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAlterarSenha.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlterarSenha.UseVisualStyleBackColor = false;
@@ -227,7 +248,7 @@
 			this.lstUsuarios.MultiSelect = false;
 			this.lstUsuarios.Name = "lstUsuarios";
 			this.lstUsuarios.Size = new System.Drawing.Size(452, 330);
-			this.lstUsuarios.TabIndex = 8;
+			this.lstUsuarios.TabIndex = 1;
 			this.lstUsuarios.ItemActivate += new ComponentOwl.BetterListView.BetterListViewItemActivateEventHandler(this.lstUsuarios_ItemActivate);
 			this.lstUsuarios.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.lstUsuarios_DrawColumnHeader);
 			this.lstUsuarios.DrawItem += new ComponentOwl.BetterListView.BetterListViewDrawItemEventHandler(this.lstUsuarios_DrawItem);
@@ -291,5 +312,6 @@
 		private System.Windows.Forms.Button btnAlterarEmail;
 		private System.Windows.Forms.Button btnAlterarAcesso;
 		private System.Windows.Forms.Button btnAlterarAtivo;
+		private System.Windows.Forms.Button btnUserPermissao;
 	}
 }
