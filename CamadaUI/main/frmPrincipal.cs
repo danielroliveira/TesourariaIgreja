@@ -6,8 +6,6 @@ using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using CamadaDTO;
 using CamadaBLL;
-using CamadaUI.Registres;
-using CamadaUI.Config;
 
 namespace CamadaUI
 {
@@ -184,7 +182,12 @@ namespace CamadaUI
 			//----------------------------------------------------------------
 			MenuOpen_Handler();
 			mnuPrincipal.Focus();
-			btnEntradas.Select();
+			btnCadastros.Select();
+
+			// CREATE HANDLERS TO OPEN FORM ONCLICK
+			//----------------------------------------------------------------
+			HandlersMenuClickToOpenForm();
+
 
 		}
 
@@ -313,7 +316,7 @@ namespace CamadaUI
 								MessageBoxIcon.Exclamation);
 
 				// abre o form de config
-				frmConfig frmC = new frmConfig(this);
+				Config.frmConfig frmC = new Config.frmConfig(this);
 				frmC.ShowDialog();
 
 				// testa novamente
@@ -596,36 +599,30 @@ namespace CamadaUI
 
 		#region MENU FUNCOES
 
-		private void mnuCongregacoes_Click(object sender, EventArgs e)
+		private void HandlersMenuClickToOpenForm()
 		{
-			frmCongregacaoListagem frm = new frmCongregacaoListagem();
-			frm.MdiParent = this;
-			DesativaMenuPrincipal();
-			frm.Show();
+			// MENU CADASTROS
+			mnuContribuintes.Click += (a, b) => MenuClickOpenForm(new Registres.frmContribuinteListagem(false, this));
+			mnuCredores.Click += (a, b) => MenuClickOpenForm(new Registres.frmCredorListagem(false, this));
+			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Registres.frmCongregacaoListagem());
+			mnuSetoresCongregacao.Click += (a, b) => MenuClickOpenForm(new Registres.frmCongregacaoSetorListagem());
+
+			// MENU ENTRADAS
+			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());
+
+			// MENU MOVIMENTACAO
+			mnuContas.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());
+			mnuSetores.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
 		}
 
-		private void mnuSetores_Click(object sender, EventArgs e)
+		private void MenuClickOpenForm(Form form)
 		{
-			frmCongregacaoSetorListagem frm = new frmCongregacaoSetorListagem();
-			frm.MdiParent = this;
+			form.MdiParent = this;
 			DesativaMenuPrincipal();
-			frm.Show();
-		}
-		private void mnuContribuintes_Click(object sender, EventArgs e)
-		{
-			frmContribuinteListagem frm = new frmContribuinteListagem(false, this);
-			frm.MdiParent = this;
-			DesativaMenuPrincipal();
-			frm.Show();
+			form.Show();
 		}
 
-		private void mnuCredores_Click(object sender, EventArgs e)
-		{
-			frmCredorListagem frm = new frmCredorListagem(false, this);
-			frm.MdiParent = this;
-			DesativaMenuPrincipal();
-			frm.Show();
-		}
+
 
 		#endregion
 

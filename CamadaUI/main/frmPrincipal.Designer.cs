@@ -1,47 +1,55 @@
 ﻿namespace CamadaUI
 {
-    partial class frmPrincipal
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class frmPrincipal
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
 			this.mnuPrincipal = new System.Windows.Forms.ToolStrip();
 			this.btnSair = new System.Windows.Forms.ToolStripButton();
-			this.btnEntradas = new System.Windows.Forms.ToolStripSplitButton();
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnCadastros = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuContribuintes = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCredores = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSetoresCongregacao = new System.Windows.Forms.ToolStripMenuItem();
+			this.reuniõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnEntradas = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuEntradaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuEntradaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuCampanhas = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuSaidaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuFechamento = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuContas = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetores = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop = new System.Windows.Forms.Panel();
 			this.lblTitulo = new System.Windows.Forms.Label();
@@ -68,9 +76,10 @@
 			this.mnuPrincipal.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnSair,
+            this.btnCadastros,
             this.btnEntradas,
             this.btnSaidas,
-            this.btnCadastros});
+            this.btnMovimentação});
 			this.mnuPrincipal.Location = new System.Drawing.Point(0, 39);
 			this.mnuPrincipal.Name = "mnuPrincipal";
 			this.mnuPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -94,12 +103,82 @@
 			this.btnSair.ToolTipText = "Sair do Aplicativo";
 			this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
 			// 
+			// btnCadastros
+			// 
+			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuContribuintes,
+            this.mnuCredores,
+            this.toolStripSeparator1,
+            this.mnuCongregacoes,
+            this.mnuSetoresCongregacao,
+            this.reuniõesToolStripMenuItem});
+			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.adicionar_30;
+			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnCadastros.Margin = new System.Windows.Forms.Padding(5);
+			this.btnCadastros.Name = "btnCadastros";
+			this.btnCadastros.Size = new System.Drawing.Size(136, 46);
+			this.btnCadastros.Text = "Cadastros";
+			// 
+			// mnuContribuintes
+			// 
+			this.mnuContribuintes.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuContribuintes.Image = global::CamadaUI.Properties.Resources.contribuinte_32;
+			this.mnuContribuintes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContribuintes.Name = "mnuContribuintes";
+			this.mnuContribuintes.Size = new System.Drawing.Size(262, 38);
+			this.mnuContribuintes.Text = "Contribuintes";
+			// 
+			// mnuCredores
+			// 
+			this.mnuCredores.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCredores.Image = global::CamadaUI.Properties.Resources.credor_32;
+			this.mnuCredores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCredores.Name = "mnuCredores";
+			this.mnuCredores.Size = new System.Drawing.Size(262, 38);
+			this.mnuCredores.Text = "Credores";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
+			// 
+			// mnuCongregacoes
+			// 
+			this.mnuCongregacoes.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCongregacoes.Image = global::CamadaUI.Properties.Resources.igreja_32;
+			this.mnuCongregacoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCongregacoes.Name = "mnuCongregacoes";
+			this.mnuCongregacoes.Size = new System.Drawing.Size(262, 38);
+			this.mnuCongregacoes.Tag = "1";
+			this.mnuCongregacoes.Text = "Congregações";
+			// 
+			// mnuSetoresCongregacao
+			// 
+			this.mnuSetoresCongregacao.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSetoresCongregacao.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuSetoresCongregacao.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSetoresCongregacao.Name = "mnuSetoresCongregacao";
+			this.mnuSetoresCongregacao.Size = new System.Drawing.Size(262, 38);
+			this.mnuSetoresCongregacao.Tag = "1";
+			this.mnuSetoresCongregacao.Text = "Setores de Congregação";
+			// 
+			// reuniõesToolStripMenuItem
+			// 
+			this.reuniõesToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
+			this.reuniõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.reuniõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.reuniõesToolStripMenuItem.Name = "reuniõesToolStripMenuItem";
+			this.reuniõesToolStripMenuItem.Size = new System.Drawing.Size(262, 38);
+			this.reuniõesToolStripMenuItem.Text = "Reuniões de Congregação";
+			// 
 			// btnEntradas
 			// 
 			this.btnEntradas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem4});
+            this.mnuEntradaInserir,
+            this.mnuEntradaProcurar,
+            this.toolStripSeparator3,
+            this.mnuCampanhas});
 			this.btnEntradas.Image = global::CamadaUI.Properties.Resources.Entradas_32;
 			this.btnEntradas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnEntradas.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -112,32 +191,46 @@
 			this.btnEntradas.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
 			this.btnEntradas.ButtonClick += new System.EventHandler(this.btnEntradas_ButtonClick);
 			// 
-			// toolStripMenuItem2
+			// mnuEntradaInserir
 			// 
-			this.toolStripMenuItem2.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Padding = new System.Windows.Forms.Padding(0);
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(238, 20);
-			this.toolStripMenuItem2.Text = "toolStripMenuItem2";
+			this.mnuEntradaInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuEntradaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuEntradaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuEntradaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuEntradaInserir.Name = "mnuEntradaInserir";
+			this.mnuEntradaInserir.Padding = new System.Windows.Forms.Padding(0);
+			this.mnuEntradaInserir.Size = new System.Drawing.Size(240, 28);
+			this.mnuEntradaInserir.Text = "Inserir Entrada";
 			// 
-			// toolStripMenuItem3
+			// mnuEntradaProcurar
 			// 
-			this.toolStripMenuItem3.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(238, 22);
-			this.toolStripMenuItem3.Text = "toolStripMenuItem3";
+			this.mnuEntradaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuEntradaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuEntradaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuEntradaProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuEntradaProcurar.Name = "mnuEntradaProcurar";
+			this.mnuEntradaProcurar.Size = new System.Drawing.Size(240, 30);
+			this.mnuEntradaProcurar.Text = "Procurar Entrada";
 			// 
-			// toolStripMenuItem4
+			// toolStripSeparator3
 			// 
-			this.toolStripMenuItem4.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(238, 22);
-			this.toolStripMenuItem4.Text = "toolStripMenuItem4";
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(237, 6);
+			// 
+			// mnuCampanhas
+			// 
+			this.mnuCampanhas.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCampanhas.Image = global::CamadaUI.Properties.Resources.money_green_24;
+			this.mnuCampanhas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCampanhas.Name = "mnuCampanhas";
+			this.mnuCampanhas.Size = new System.Drawing.Size(240, 30);
+			this.mnuCampanhas.Text = "Controle de Campanhas";
 			// 
 			// btnSaidas
 			// 
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.mnuSaidaInserir,
+            this.mnuDespesaProcurar});
 			this.btnSaidas.Image = global::CamadaUI.Properties.Resources.Saidas;
 			this.btnSaidas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnSaidas.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -148,71 +241,73 @@
 			this.btnSaidas.Text = "Saídas";
 			this.btnSaidas.Click += new System.EventHandler(this.btnSaidas_ButtonClick);
 			// 
-			// toolStripMenuItem1
+			// mnuSaidaInserir
 			// 
-			this.toolStripMenuItem1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(238, 22);
-			this.toolStripMenuItem1.Text = "toolStripMenuItem1";
+			this.mnuSaidaInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSaidaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuSaidaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSaidaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuSaidaInserir.Name = "mnuSaidaInserir";
+			this.mnuSaidaInserir.Size = new System.Drawing.Size(199, 30);
+			this.mnuSaidaInserir.Text = "Inserir Despesa";
 			// 
-			// btnCadastros
+			// mnuDespesaProcurar
 			// 
-			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuContribuintes,
-            this.mnuCredores,
-            this.toolStripSeparator1,
-            this.mnuCongregacoes,
+			this.mnuDespesaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaProcurar.Name = "mnuDespesaProcurar";
+			this.mnuDespesaProcurar.Size = new System.Drawing.Size(199, 30);
+			this.mnuDespesaProcurar.Text = "Procurar Despesa";
+			// 
+			// btnMovimentação
+			// 
+			this.btnMovimentação.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuFechamento,
+            this.toolStripSeparator2,
+            this.mnuContas,
             this.mnuSetores});
-			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.adicionar_30;
-			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnCadastros.Margin = new System.Windows.Forms.Padding(5);
-			this.btnCadastros.Name = "btnCadastros";
-			this.btnCadastros.Size = new System.Drawing.Size(136, 46);
-			this.btnCadastros.Text = "Cadastros";
+			this.btnMovimentação.Image = global::CamadaUI.Properties.Resources.Caixa_32;
+			this.btnMovimentação.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnMovimentação.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnMovimentação.Margin = new System.Windows.Forms.Padding(5);
+			this.btnMovimentação.Name = "btnMovimentação";
+			this.btnMovimentação.Size = new System.Drawing.Size(173, 46);
+			this.btnMovimentação.Text = "Movimentação";
 			// 
-			// mnuContribuintes
+			// mnuFechamento
 			// 
-			this.mnuContribuintes.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuContribuintes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuContribuintes.Name = "mnuContribuintes";
-			this.mnuContribuintes.Size = new System.Drawing.Size(283, 30);
-			this.mnuContribuintes.Text = "Contribuintes";
-			this.mnuContribuintes.Click += new System.EventHandler(this.mnuContribuintes_Click);
+			this.mnuFechamento.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuFechamento.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuFechamento.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuFechamento.Name = "mnuFechamento";
+			this.mnuFechamento.Size = new System.Drawing.Size(253, 30);
+			this.mnuFechamento.Text = "Caixa Fechamento";
 			// 
-			// mnuCredores
+			// toolStripSeparator2
 			// 
-			this.mnuCredores.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuCredores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuCredores.Name = "mnuCredores";
-			this.mnuCredores.Size = new System.Drawing.Size(283, 30);
-			this.mnuCredores.Text = "Credores";
-			this.mnuCredores.Click += new System.EventHandler(this.mnuCredores_Click);
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(250, 6);
 			// 
-			// toolStripSeparator1
+			// mnuContas
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(280, 6);
-			// 
-			// mnuCongregacoes
-			// 
-			this.mnuCongregacoes.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuCongregacoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuCongregacoes.Name = "mnuCongregacoes";
-			this.mnuCongregacoes.Size = new System.Drawing.Size(283, 30);
-			this.mnuCongregacoes.Tag = "1";
-			this.mnuCongregacoes.Text = "Congregações";
-			this.mnuCongregacoes.Click += new System.EventHandler(this.mnuCongregacoes_Click);
+			this.mnuContas.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuContas.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuContas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContas.Name = "mnuContas";
+			this.mnuContas.Size = new System.Drawing.Size(253, 30);
+			this.mnuContas.Tag = "1";
+			this.mnuContas.Text = "Contas de Movimentação";
 			// 
 			// mnuSetores
 			// 
+			this.mnuSetores.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuSetores.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSetores.Name = "mnuSetores";
-			this.mnuSetores.Size = new System.Drawing.Size(283, 30);
+			this.mnuSetores.Size = new System.Drawing.Size(253, 30);
 			this.mnuSetores.Tag = "1";
-			this.mnuSetores.Text = "Setores de Congregação";
-			this.mnuSetores.Click += new System.EventHandler(this.mnuSetores_Click);
+			this.mnuSetores.Text = "Setores de Movimentação";
 			// 
 			// pnlTop
 			// 
@@ -451,20 +546,19 @@
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
-        private System.Windows.Forms.ToolStripButton btnSair;
-        internal System.Windows.Forms.Button btnClose;
-        internal System.Windows.Forms.Button btnMinimizer;
+		#endregion
+		private System.Windows.Forms.ToolStripButton btnSair;
+		internal System.Windows.Forms.Button btnClose;
+		internal System.Windows.Forms.Button btnMinimizer;
 		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
 		private System.Windows.Forms.Label lblTitulo;
 		private System.Windows.Forms.ToolStripSplitButton btnEntradas;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+		private System.Windows.Forms.ToolStripMenuItem mnuEntradaInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuEntradaProcurar;
 		private System.Windows.Forms.ToolStripSplitButton btnSaidas;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem mnuSaidaInserir;
 		internal System.Windows.Forms.Panel PainelInferior;
 		internal System.Windows.Forms.Label lblConta;
 		internal System.Windows.Forms.Label Label4;
@@ -476,13 +570,22 @@
 		internal System.Windows.Forms.Label Label2;
 		internal System.Windows.Forms.Label lblHora;
 		private System.Windows.Forms.ToolStripMenuItem mnuCongregacoes;
-		private System.Windows.Forms.ToolStripMenuItem mnuSetores;
+		private System.Windows.Forms.ToolStripMenuItem mnuSetoresCongregacao;
 		private System.Windows.Forms.ToolStripMenuItem mnuCredores;
 		private System.Windows.Forms.ToolStripMenuItem mnuContribuintes;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		public System.Windows.Forms.Panel pnlTop;
 		public System.Windows.Forms.ToolStrip mnuPrincipal;
 		public System.Windows.Forms.Button btnConfig;
+		private System.Windows.Forms.ToolStripSplitButton btnMovimentação;
+		private System.Windows.Forms.ToolStripMenuItem mnuFechamento;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem mnuContas;
+		private System.Windows.Forms.ToolStripMenuItem mnuSetores;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProcurar;
+		private System.Windows.Forms.ToolStripMenuItem reuniõesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem mnuCampanhas;
 	}
 }
 

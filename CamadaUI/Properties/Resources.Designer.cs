@@ -143,9 +143,39 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Caixa_32 {
+            get {
+                object obj = ResourceManager.GetObject("Caixa_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CloseIcon {
             get {
                 object obj = ResourceManager.GetObject("CloseIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap contribuinte_32 {
+            get {
+                object obj = ResourceManager.GetObject("contribuinte_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap credor_32 {
+            get {
+                object obj = ResourceManager.GetObject("credor_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -303,9 +333,29 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap igreja_32 {
+            get {
+                object obj = ResourceManager.GetObject("igreja_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logo_FAES_cinza_PNG_Borda {
             get {
                 object obj = ResourceManager.GetObject("Logo_FAES_cinza_PNG_Borda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap money_green_24 {
+            get {
+                object obj = ResourceManager.GetObject("money_green_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

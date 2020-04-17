@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>cofre_icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,6 +47,8 @@
   <ItemGroup>
     <Compile Include="AppEnum.cs" />
     <Compile Include="AppException.cs" />
+    <Compile Include="objReuniao.cs" />
+    <Compile Include="objCampanha.cs" />
     <Compile Include="objSetor.cs" />
     <Compile Include="objCredor.cs" />
     <Compile Include="objCongregacao.cs" />
@@ -53,9 +56,6 @@
     <Compile Include="objConta.cs" />
     <Compile Include="objContribuinte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="cofre_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

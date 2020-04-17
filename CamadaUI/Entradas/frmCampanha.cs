@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Registres;
+using CamadaUI.Setores;
+using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Setores
+namespace CamadaUI.Entradas
 {
-	public partial class frmSetor : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCampanha : CamadaUI.Modals.frmModFinBorder
 	{
-		private objSetor _setor;
+		private objCampanha _campanha;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private int? _IDSetor;
@@ -25,18 +21,18 @@ namespace CamadaUI.Setores
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmSetor(objSetor obj)
+		public frmCampanha(objCampanha obj)
 		{
 			InitializeComponent();
 
-			_setor = obj;
-			bind.DataSource = _setor;
+			_campanha = obj;
+			bind.DataSource = _campanha;
 			BindingCreator();
-			_IDSetor = _setor.IDSetor;
+			_IDSetor = _campanha.IDSetor;
 
-			_setor.PropertyChanged += RegistroAlterado;
+			_campanha.PropertyChanged += RegistroAlterado;
 
-			if (_setor.IDSetor == null)
+			if (_campanha.IDCampanha == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 			}
@@ -98,14 +94,17 @@ namespace CamadaUI.Setores
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDSetor", true);
+			lblID.DataBindings.Add("Text", bind, "IDCampanha", true);
+			txtCampanha.DataBindings.Add("Text", bind, "Campanha", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblContaSaldo.DataBindings.Add("Text", bind, "SetorSaldo", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblCampanhaSaldo.DataBindings.Add("Text", bind, "CampanhaSaldo", true, DataSourceUpdateMode.OnPropertyChanged);
+			dtpInicioData.DataBindings.Add("Value", bind, "InicioData", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblConclusaoData.DataBindings.Add("Text", bind, "ConclusaoData", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
-			lblContaSaldo.DataBindings["Text"].Format += FormatCurrency;
+			lblCampanhaSaldo.DataBindings["Text"].Format += FormatCurrency;
+			lblConclusaoData.DataBindings["Text"].Format += FormatNullDate;
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -116,6 +115,11 @@ namespace CamadaUI.Setores
 		private void FormatCurrency(object sender, ConvertEventArgs e)
 		{
 			e.Value = string.Format("{0:c}", e.Value);
+		}
+
+		private void FormatNullDate(object sender, ConvertEventArgs e)
+		{
+			e.Value = e.Value == null ? " Ativa" : e.Value;
 		}
 
 		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
@@ -142,7 +146,7 @@ namespace CamadaUI.Setores
 				return;
 			}
 
-			new frmSetorListagem().Show();
+			new frmCampanhaListagem().Show();
 			Close();
 		}
 
@@ -157,7 +161,7 @@ namespace CamadaUI.Setores
 
 				if (response == DialogResult.Yes)
 				{
-					new frmSetorListagem().Show();
+					new frmCampanhaListagem().Show();
 					Close();
 				}
 			}
@@ -180,55 +184,23 @@ namespace CamadaUI.Setores
 		{
 			if (Sit != EnumFlagEstado.RegistroSalvo) return;
 
-			_setor = new objSetor(null);
+			_campanha = new objCampanha(null);
 			Sit = EnumFlagEstado.NovoRegistro;
 			AtivoButtonImage();
-			bind.DataSource = _setor;
-			txtSetor.Focus();
-		}
-
-		private void btnAtivo_Click(object sender, EventArgs e)
-		{
-			if (Sit == EnumFlagEstado.NovoRegistro)
-			{
-				MessageBox.Show("Você não pode DESATIVAR um Novo Setor", "Desativar Setor",
-								MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
-			}
-
-			if (_setor.Ativa == true) //--- ATIVA
-			{
-				var response = AbrirDialog("Você deseja realmente DESATIVAR o Setor:\n" +
-							   txtSetor.Text.ToUpper(),
-							   "Desativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
-				if (response == DialogResult.No) return;
-			}
-			else //--- INATIVO
-			{
-				var response = AbrirDialog("Você deseja realmente ATIVAR o Setor:\n" +
-							   txtSetor.Text.ToUpper(),
-							   "Ativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
-				if (response == DialogResult.No) return;
-			}
-
-			_setor.BeginEdit();
-			_setor.Ativa = !_setor.Ativa;
-
-			if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
-
-			AtivoButtonImage();
+			bind.DataSource = _campanha;
+			txtCampanha.Focus();
 		}
 
 		private void AtivoButtonImage()
 		{
 			try
 			{
-				if (_setor.Ativa == true) //--- Nesse caso é Forma Ativo
+				if (_campanha.Ativa == true) //--- Nesse caso é Forma Ativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchON_30;
 					btnAtivo.Text = "Ativo";
 				}
-				else if (_setor.Ativa == false) //--- Nesse caso é Forma Inativo
+				else if (_campanha.Ativa == false) //--- Nesse caso é Forma Inativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchOFF_30;
 					btnAtivo.Text = "Inativo";
@@ -236,7 +208,7 @@ namespace CamadaUI.Setores
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Ativar o setor..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Ativar o campanha..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}
@@ -257,18 +229,18 @@ namespace CamadaUI.Setores
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				SetorBLL sBLL = new SetorBLL();
+				CampanhaBLL sBLL = new CampanhaBLL();
 
 				//--- SAVE: INSERT OR UPDATE
-				if (_setor.IDSetor == null) //--- save | Insert
+				if (_campanha.IDCampanha == null) //--- save | Insert
 				{
-					int ID = sBLL.InsertSetor(_setor);
+					int ID = sBLL.InsertCampanha(_campanha);
 					//--- define newID
-					_setor.IDSetor = ID;
+					_campanha.IDCampanha = ID;
 				}
 				else //--- update
 				{
-					sBLL.UpdateSetor(_setor);
+					sBLL.UpdateCampanha(_campanha);
 				}
 
 				//--- change Sit
@@ -279,7 +251,7 @@ namespace CamadaUI.Setores
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Setor..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Campanha..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -292,7 +264,10 @@ namespace CamadaUI.Setores
 
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtSetor, "Setor", _setor)) return false;
+			if (!VerificaDadosClasse(txtCampanha, "Campanha", _campanha)) return false;
+			if (!VerificaDadosClasse(txtSetor, "Setor", _campanha)) return false;
+			if (!VerificaDadosClasse(dtpInicioData, "Data de Início", _campanha)) return false;
+
 			return true;
 		}
 
@@ -302,7 +277,7 @@ namespace CamadaUI.Setores
 
 		// CLOSE WHEN PRESS ESC
 		//------------------------------------------------------------------------------------------------------------
-		private void frmSetor_KeyDown(object sender, KeyEventArgs e)
+		private void frm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -324,8 +299,8 @@ namespace CamadaUI.Setores
 
 				switch (ctr.Name)
 				{
-					case "txtCongregacao":
-						btnCongregacaoEscolher_Click(sender, new EventArgs());
+					case "txtSetor":
+						btnSetorEscolher_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -337,10 +312,10 @@ namespace CamadaUI.Setores
 
 				switch (ctr.Name)
 				{
-					case "txtCongregacao":
-						if (_setor.IDCongregacao != null) Sit = EnumFlagEstado.Alterado;
-						txtCongregacao.Clear();
-						_setor.IDCongregacao = null;
+					case "txtSetor":
+						if (_campanha.IDSetor != null) Sit = EnumFlagEstado.Alterado;
+						txtSetor.Clear();
+						_campanha.IDSetor = null;
 						break;
 					default:
 						break;
@@ -349,7 +324,7 @@ namespace CamadaUI.Setores
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtCongregacao };
+				Control[] controlesBloqueados = { txtSetor };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -359,24 +334,24 @@ namespace CamadaUI.Setores
 			}
 		}
 
-		// OPEN CONGREGACAO PROCURA FORM
+		// OPEN SETOR PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
-		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
+		private void btnSetorEscolher_Click(object sender, EventArgs e)
 		{
 
-			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, _setor.IDCongregacao);
+			frmSetorProcura frm = new frmSetorProcura(this, _campanha.IDSetor);
 			frm.ShowDialog();
 
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_setor.IDCongregacao = frm.propEscolha.IDCongregacao;
-				txtCongregacao.Text = frm.propEscolha.Congregacao;
+				_campanha.IDSetor = frm.propEscolha.IDSetor;
+				txtSetor.Text = frm.propEscolha.Setor;
 			}
 
 			//--- select
-			txtCongregacao.Focus();
-			txtCongregacao.SelectAll();
+			txtSetor.Focus();
+			txtSetor.SelectAll();
 
 		}
 

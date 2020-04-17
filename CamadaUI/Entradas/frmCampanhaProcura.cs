@@ -9,17 +9,17 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Contas
+namespace CamadaUI.Entradas
 {
-	public partial class frmContaProcura : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCampanhaProcura : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objConta> listConta = new List<objConta>();
+		private List<objCampanha> listCampanha = new List<objCampanha>();
 		private Form _formOrigem;
-		public objConta propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
+		public objCampanha propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmContaProcura(Form formOrigem, int? DefaultID = null)
+		public frmCampanhaProcura(Form formOrigem, int? DefaultID = null)
 		{
 			InitializeComponent();
 
@@ -43,8 +43,8 @@ namespace CamadaUI.Contas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				ContaBLL cBLL = new ContaBLL();
-				listConta = cBLL.GetListConta("", true);
+				CampanhaBLL cBLL = new CampanhaBLL();
+				listCampanha = cBLL.GetListCampanha("", true);
 				PreencheListagem();
 			}
 			catch (Exception ex)
@@ -62,11 +62,11 @@ namespace CamadaUI.Contas
 
 		private void PreencheListagem()
 		{
-			lstItens.DataSource = listConta;
+			lstItens.DataSource = listCampanha;
 			FormataListagem();
 		}
 
-		// FIND AND SELECT IN LIST PROVIDED DEFAULT ID 
+		// FIND AND SELECT IN LIST PROVIDED DEFAULT ID : ON OPEN
 		//------------------------------------------------------------------------------------------------------------
 		private void FindSelectDefautID(int? DefaultID)
 		{
@@ -103,11 +103,11 @@ namespace CamadaUI.Contas
 			lstItens.MultiSelect = false;
 			lstItens.HideSelection = false;
 
-			clnID.DisplayMember = "IDConta";
-			clnID.ValueMember = "IDConta";
+			clnID.DisplayMember = "IDCampanha";
+			clnID.ValueMember = "IDCampanha";
 
-			clnItem.DisplayMember = "Conta";
-			clnItem.ValueMember = "Conta";
+			clnItem.DisplayMember = "Campanha";
+			clnItem.ValueMember = "Campanha";
 
 			lstItens.SearchSettings = new BetterListViewSearchSettings(BetterListViewSearchMode.PrefixOrSubstring,
 																	   BetterListViewSearchOptions.UpdateSearchHighlight,
@@ -160,7 +160,7 @@ namespace CamadaUI.Contas
 
 		private void btnEscolher_Click(object sender, EventArgs e)
 		{
-			objConta item = GetSelectedItem();
+			objCampanha item = GetSelectedItem();
 
 			//--- check selected item
 			if (item == null)
@@ -175,12 +175,12 @@ namespace CamadaUI.Contas
 			DialogResult = DialogResult.OK;
 		}
 
-		private objConta GetSelectedItem()
+		private objCampanha GetSelectedItem()
 		{
 			if (lstItens.SelectedItems.Count == 0) return null;
 
 			int IDSelected = (int)lstItens.SelectedItems[0].Value;
-			return listConta.First(s => s.IDConta == IDSelected);
+			return listCampanha.First(s => s.IDCampanha == IDSelected);
 		}
 
 		#endregion
@@ -189,7 +189,7 @@ namespace CamadaUI.Contas
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmContaProcura_KeyDown(object sender, KeyEventArgs e)
+		private void frmCampanhaProcura_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -245,24 +245,21 @@ namespace CamadaUI.Contas
 
 		#region DESIGN FORM FUNCTIONS
 
-		private Color formOrigemPanelColor; // backup panel color
-
-		private void frmContaProcura_Activated(object sender, EventArgs e)
+		private void frmCampanhaProcura_Activated(object sender, EventArgs e)
 		{
 			if (_formOrigem != null)
 			{
 				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				formOrigemPanelColor = pnl.BackColor;
 				pnl.BackColor = Color.Silver;
 			}
 		}
 
-		private void frmContaProcura_FormClosed(object sender, FormClosedEventArgs e)
+		private void frmCampanhaProcura_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			if (_formOrigem != null)
 			{
 				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = formOrigemPanelColor;
+				pnl.BackColor = Color.SlateGray;
 			}
 		}
 
@@ -294,23 +291,23 @@ namespace CamadaUI.Contas
 				if (!int.TryParse(txtProcura.Text, out int i))
 				{
 					// declare function
-					Func<objConta, bool> FiltroItem = c => c.Conta.ToLower().Contains(txtProcura.Text.ToLower());
+					Func<objCampanha, bool> FiltroItem = c => c.Campanha.ToLower().Contains(txtProcura.Text.ToLower());
 
 					// aply filter using function
-					lstItens.DataSource = listConta.FindAll(c => FiltroItem(c));
+					lstItens.DataSource = listCampanha.FindAll(c => FiltroItem(c));
 				}
 				else
 				{
 					// declare function
-					Func<objConta, bool> FiltroID = c => c.IDConta == i;
+					Func<objCampanha, bool> FiltroID = c => c.IDCampanha == i;
 
 					// aply filter using function
-					lstItens.DataSource = listConta.FindAll(c => FiltroID(c));
+					lstItens.DataSource = listCampanha.FindAll(c => FiltroID(c));
 				}
 			}
 			else
 			{
-				lstItens.DataSource = listConta;
+				lstItens.DataSource = listCampanha;
 			}
 		}
 

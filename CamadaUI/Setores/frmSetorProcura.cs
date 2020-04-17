@@ -183,7 +183,7 @@ namespace CamadaUI.Setores
 			if (lstItens.SelectedItems.Count == 0) return null;
 
 			int IDSelected = (int)lstItens.SelectedItems[0].Value;
-			return listSetor.First(s => s.IDCongregacao == IDSelected);
+			return listSetor.First(s => s.IDSetor == IDSelected);
 		}
 
 		#endregion

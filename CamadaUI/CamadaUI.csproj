@@ -121,6 +121,24 @@
     <Compile Include="Contas\frmContaProcura.designer.cs">
       <DependentUpon>frmContaProcura.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entradas\frmCampanha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmCampanha.designer.cs">
+      <DependentUpon>frmCampanha.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmCampanhaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmCampanhaListagem.designer.cs">
+      <DependentUpon>frmCampanhaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmCampanhaProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmCampanhaProcura.designer.cs">
+      <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmConnString.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -293,6 +311,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmContaProcura.resx">
       <DependentUpon>frmContaProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmCampanha.resx">
+      <DependentUpon>frmCampanha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmCampanhaListagem.resx">
+      <DependentUpon>frmCampanhaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmCampanhaProcura.resx">
+      <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmConnString.resx">
       <DependentUpon>frmConnString.cs</DependentUpon>
@@ -511,6 +538,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fechar_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Caixa_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\igreja_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\contribuinte_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\credor_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money_green_24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
