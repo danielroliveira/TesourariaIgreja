@@ -37,7 +37,7 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetoresCongregacao = new System.Windows.Forms.ToolStripMenuItem();
-			this.reuniõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuReunioes = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnEntradas = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuEntradaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuEntradaProcurar = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +111,7 @@
             this.toolStripSeparator1,
             this.mnuCongregacoes,
             this.mnuSetoresCongregacao,
-            this.reuniõesToolStripMenuItem});
+            this.mnuReunioes});
 			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.adicionar_30;
 			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -163,14 +163,14 @@
 			this.mnuSetoresCongregacao.Tag = "1";
 			this.mnuSetoresCongregacao.Text = "Setores de Congregação";
 			// 
-			// reuniõesToolStripMenuItem
+			// mnuReunioes
 			// 
-			this.reuniõesToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
-			this.reuniõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.add_24;
-			this.reuniõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.reuniõesToolStripMenuItem.Name = "reuniõesToolStripMenuItem";
-			this.reuniõesToolStripMenuItem.Size = new System.Drawing.Size(262, 38);
-			this.reuniõesToolStripMenuItem.Text = "Reuniões de Congregação";
+			this.mnuReunioes.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuReunioes.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuReunioes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuReunioes.Name = "mnuReunioes";
+			this.mnuReunioes.Size = new System.Drawing.Size(262, 38);
+			this.mnuReunioes.Text = "Reuniões de Congregação";
 			// 
 			// btnEntradas
 			// 
@@ -583,7 +583,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuContas;
 		private System.Windows.Forms.ToolStripMenuItem mnuSetores;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProcurar;
-		private System.Windows.Forms.ToolStripMenuItem reuniõesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuReunioes;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem mnuCampanhas;
 	}

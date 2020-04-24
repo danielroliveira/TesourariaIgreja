@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
-using System.Linq;
 using ComponentOwl.BetterListView;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Registres
+namespace CamadaUI.Congregacoes
 {
-	public partial class frmCongregacaoSetorProcura : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCongregacaoReuniaoProcura : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objCongregacaoSetor> listSetor = new List<objCongregacaoSetor>();
+		private List<objReuniao> listReuniao = new List<objReuniao>();
 		private Form _formOrigem;
-		public objCongregacaoSetor propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
+		public objReuniao propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmCongregacaoSetorProcura(Form formOrigem, int? DefaultID = null)
+		public frmCongregacaoReuniaoProcura(Form formOrigem, int? DefaultID = null)
 		{
 			InitializeComponent();
 
@@ -47,8 +43,8 @@ namespace CamadaUI.Registres
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				listSetor = cBLL.GetListCongregacaoSetor(true);
+				ReuniaoBLL cBLL = new ReuniaoBLL();
+				listReuniao = cBLL.GetListReuniao("", true);
 				PreencheListagem();
 			}
 			catch (Exception ex)
@@ -66,7 +62,7 @@ namespace CamadaUI.Registres
 
 		private void PreencheListagem()
 		{
-			lstItens.DataSource = listSetor;
+			lstItens.DataSource = listReuniao;
 			FormataListagem();
 		}
 
@@ -107,11 +103,11 @@ namespace CamadaUI.Registres
 			lstItens.MultiSelect = false;
 			lstItens.HideSelection = false;
 
-			clnID.DisplayMember = "IDCongregacaoSetor";
-			clnID.ValueMember = "IDCongregacaoSetor";
+			clnID.DisplayMember = "IDReuniao";
+			clnID.ValueMember = "IDReuniao";
 
-			clnSetor.ValueMember = "CongregacaoSetor";
-			clnSetor.DisplayMember = "CongregacaoSetor";
+			clnItem.DisplayMember = "Reuniao";
+			clnItem.ValueMember = "Reuniao";
 
 			lstItens.SearchSettings = new BetterListViewSearchSettings(BetterListViewSearchMode.PrefixOrSubstring,
 																	   BetterListViewSearchOptions.UpdateSearchHighlight,
@@ -164,12 +160,12 @@ namespace CamadaUI.Registres
 
 		private void btnEscolher_Click(object sender, EventArgs e)
 		{
-			objCongregacaoSetor item = GetSelectedItem();
+			objReuniao item = GetSelectedItem();
 
 			//--- check selected item
 			if (item == null)
 			{
-				AbrirDialog("Favor selecionar um registro para Editar...",
+				AbrirDialog("Favor selecionar um registro para Selecionar...",
 					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
 				return;
 			}
@@ -179,12 +175,12 @@ namespace CamadaUI.Registres
 			DialogResult = DialogResult.OK;
 		}
 
-		private objCongregacaoSetor GetSelectedItem()
+		private objReuniao GetSelectedItem()
 		{
 			if (lstItens.SelectedItems.Count == 0) return null;
 
 			int IDSelected = (int)lstItens.SelectedItems[0].Value;
-			return listSetor.First(s => s.IDCongregacaoSetor == IDSelected);
+			return listReuniao.First(s => s.IDReuniao == IDSelected);
 		}
 
 		#endregion
@@ -193,7 +189,7 @@ namespace CamadaUI.Registres
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacaoSetorProcura_KeyDown(object sender, KeyEventArgs e)
+		private void frmReuniaoProcura_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -249,7 +245,7 @@ namespace CamadaUI.Registres
 
 		#region DESIGN FORM FUNCTIONS
 
-		private void frmCongregacaoSetorProcura_Activated(object sender, EventArgs e)
+		private void frmReuniaoProcura_Activated(object sender, EventArgs e)
 		{
 			if (_formOrigem != null)
 			{
@@ -258,7 +254,7 @@ namespace CamadaUI.Registres
 			}
 		}
 
-		private void frmCongregacaoSetorProcura_FormClosed(object sender, FormClosedEventArgs e)
+		private void frmReuniaoProcura_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			if (_formOrigem != null)
 			{
@@ -268,5 +264,53 @@ namespace CamadaUI.Registres
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
+		#region PROCURA BY TEXT
+
+		private void txtProcura_TextChanged(object sender, EventArgs e)
+		{
+			ProcurarTexto();
+			BetterListViewItemCollection itemsFound = new BetterListViewItemCollection();
+
+			if (txtProcura.Text.Length > 0)
+			{
+				itemsFound = lstItens.FindItemsWithText(txtProcura.Text);
+			}
+			else
+			{
+				lstItens.FindItemsWithText("?");
+				lstItens.SelectedItems.Clear();
+			}
+		}
+
+		private void ProcurarTexto()
+		{
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objReuniao, bool> FiltroItem = c => c.Reuniao.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					lstItens.DataSource = listReuniao.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objReuniao, bool> FiltroID = c => c.IDReuniao == i;
+
+					// aply filter using function
+					lstItens.DataSource = listReuniao.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				lstItens.DataSource = listReuniao;
+			}
+		}
+
+		#endregion // PROCURA BY TEXT --- END
 	}
 }

@@ -95,10 +95,13 @@ namespace CamadaBLL
 			reuniao.Reuniao = (string)row["Reuniao"];
 			reuniao.IDCongregacao = row["IDCongregacao"] == DBNull.Value ? null : (int?)row["IDCongregacao"];
 			reuniao.Congregacao = row["Congregacao"] == DBNull.Value ? "" : (string)row["Congregacao"];
-			reuniao.RecorrenciaTipo = row["RecorrenciaTipo"] == DBNull.Value ? (byte)0 : (byte)row["ReuniaoSaldo"];
+			reuniao.RecorrenciaTipo = row["RecorrenciaTipo"] == DBNull.Value ? (byte)0 : (byte)row["RecorrenciaTipo"];
 			reuniao.RecorrenciaTipoDescricao = row["RecorrenciaTipoDescricao"] == DBNull.Value ? "" : (string)row["RecorrenciaTipoDescricao"];
-			reuniao.RecorrenciaA = row["RecorrenciaA"] == DBNull.Value ? (byte)0 : (byte)row["RecorrenciaA"];
-			reuniao.RecorrenciaB = row["RecorrenciaB"] == DBNull.Value ? (byte)0 : (byte)row["RecorrenciaB"];
+			reuniao.RecorrenciaRepeticao = row["RecorrenciaRepeticao"] == DBNull.Value ? (short)0 : (short)row["RecorrenciaRepeticao"];
+			reuniao.RecorrenciaDia = row["RecorrenciaDia"] == DBNull.Value ? (byte)0 : (byte)row["RecorrenciaDia"];
+			reuniao.RecorrenciaSemana = row["RecorrenciaSemana"] == DBNull.Value ? (byte)0 : (byte)row["RecorrenciaSemana"];
+			reuniao.RecorrenciaMes = row["RecorrenciaMes"] == DBNull.Value ? (byte)0 : (byte)row["RecorrenciaMes"];
+			if (row["IniciarData"] != DBNull.Value) reuniao.IniciarData = (DateTime)row["IniciarData"];
 			reuniao.Ativa = (bool)row["Ativa"];
 
 			return reuniao;
@@ -119,8 +122,11 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Reuniao", reuniao.Reuniao);
 				db.AdicionarParametros("@IDCongregacao", reuniao.IDCongregacao);
 				db.AdicionarParametros("@RecorrenciaTipo", reuniao.RecorrenciaTipo);
-				db.AdicionarParametros("@RecorrenciaA", reuniao.RecorrenciaA);
-				db.AdicionarParametros("@RecorrenciaB", reuniao.RecorrenciaB);
+				db.AdicionarParametros("@RecorrenciaRepeticao", reuniao.RecorrenciaRepeticao);
+				db.AdicionarParametros("@RecorrenciaDia", reuniao.RecorrenciaDia);
+				db.AdicionarParametros("@RecorrenciaSemana", reuniao.RecorrenciaSemana);
+				db.AdicionarParametros("@RecorrenciaMes", reuniao.RecorrenciaMes);
+				db.AdicionarParametros("@IniciarData", reuniao.IniciarData);
 				db.AdicionarParametros("@Ativa", reuniao.Ativa);
 
 				//--- convert null parameters
@@ -131,15 +137,21 @@ namespace CamadaBLL
 							   "Reuniao, " +
 							   "IDCongregacao, " +
 							   "RecorrenciaTipo, " +
-							   "RecorrenciaA, " +
-							   "RecorrenciaB, " +
+							   "RecorrenciaRepeticao, " +
+							   "RecorrenciaDia, " +
+							   "RecorrenciaSemana, " +
+							   "RecorrenciaMes, " +
+							   "IniciarData, " +
 							   "Ativa " +
 							   ") VALUES (" +
 							   "@Reuniao, " +
 							   "@IDCongregacao, " +
 							   "@RecorrenciaTipo, " +
-							   "@RecorrenciaA, " +
-							   "@RecorrenciaB, " +
+							   "@RecorrenciaRepeticao, " +
+							   "@RecorrenciaDia, " +
+							   "@RecorrenciaSemana, " +
+							   "@RecorrenciaMes, " +
+							   "@IniciarData, " +
 							   "@Ativa)";
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
@@ -167,8 +179,11 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Reuniao", reuniao.Reuniao);
 				db.AdicionarParametros("@IDCongregacao", reuniao.IDCongregacao);
 				db.AdicionarParametros("@RecorrenciaTipo", reuniao.RecorrenciaTipo);
-				db.AdicionarParametros("@RecorrenciaA", reuniao.RecorrenciaA);
-				db.AdicionarParametros("@RecorrenciaB", reuniao.RecorrenciaB);
+				db.AdicionarParametros("@RecorrenciaRepeticao", reuniao.RecorrenciaRepeticao);
+				db.AdicionarParametros("@RecorrenciaDia", reuniao.RecorrenciaDia);
+				db.AdicionarParametros("@RecorrenciaSemana", reuniao.RecorrenciaSemana);
+				db.AdicionarParametros("@RecorrenciaMes", reuniao.RecorrenciaMes);
+				db.AdicionarParametros("@IniciarData", reuniao.IniciarData);
 				db.AdicionarParametros("@Ativa", reuniao.Ativa);
 
 				//--- convert null parameters
@@ -179,8 +194,11 @@ namespace CamadaBLL
 							   "Reuniao = @Reuniao, " +
 							   "IDCongregacao = @IDCongregacao, " +
 							   "RecorrenciaTipo = @RecorrenciaTipo, " +
-							   "RecorrenciaA = @RecorrenciaA, " +
-							   "RecorrenciaB = @RecorrenciaB, " +
+							   "RecorrenciaRepeticao = @RecorrenciaRepeticao, " +
+							   "RecorrenciaDia = @RecorrenciaDia, " +
+							   "RecorrenciaSemana = @RecorrenciaSemana, " +
+							   "RecorrenciaMes = @RecorrenciaMes, " +
+							   "IniciarData = @IniciarData, " +
 							   "Ativa = @Ativa " +
 							   "WHERE " +
 							   "IDReuniao = @IDReuniao";

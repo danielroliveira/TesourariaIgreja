@@ -5,7 +5,7 @@ using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using CamadaUI.Contas;
 using CamadaUI.Setores;
-using CamadaUI.Registres;
+using CamadaUI.Congregacoes;
 using System.Xml;
 using CamadaDTO;
 using System.Drawing;

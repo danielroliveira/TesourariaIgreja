@@ -9,21 +9,21 @@ using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using CamadaUI.Congregacoes;
 using System.Linq;
 
-namespace CamadaUI.Registres
+namespace CamadaUI.Congregacoes
 {
-	public partial class frmCongregacaoListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCongregacaoReuniaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objCongregacao> listCong = new List<objCongregacao>();
+		private List<objReuniao> listReuniao = new List<objReuniao>();
+		private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 
-		private Form _formOrigem;
-
 		#region NEW | OPEN FUNCTIONS
 
-		public frmCongregacaoListagem(Form formOrigem = null)
+		public frmCongregacaoReuniaoListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
 
@@ -37,11 +37,12 @@ namespace CamadaUI.Registres
 			cmbAtivo.SelectedValueChanged += ObterDados;
 			dgvListagem.CellDoubleClick += btnEditar_Click;
 			txtProcura.TextChanged += FiltrarListagem;
+			txtProcuraCongregacao.TextChanged += FiltrarListagem;
 			HandlerKeyDownControl(this);
 		}
 
 		//--- PROPRIEDADE DE ESCOLHA
-		public objCongregacao propEscolha { get; set; }
+		public objReuniao propEscolha { get; set; }
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
@@ -51,9 +52,9 @@ namespace CamadaUI.Registres
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				listCong = cBLL.GetListCongregacao(Convert.ToBoolean(cmbAtivo.SelectedValue));
-				dgvListagem.DataSource = listCong;
+				ReuniaoBLL sBLL = new ReuniaoBLL();
+				listReuniao = sBLL.GetListReuniao("", Convert.ToBoolean(cmbAtivo.SelectedValue));
+				dgvListagem.DataSource = listReuniao;
 			}
 			catch (Exception ex)
 			{
@@ -76,8 +77,8 @@ namespace CamadaUI.Registres
 			DataTable dtAtivo = new DataTable();
 			dtAtivo.Columns.Add("Ativo");
 			dtAtivo.Columns.Add("Texto");
-			dtAtivo.Rows.Add(new object[] { false, "Inativo" });
-			dtAtivo.Rows.Add(new object[] { true, "Ativo" });
+			dtAtivo.Rows.Add(new object[] { false, "Inativa" });
+			dtAtivo.Rows.Add(new object[] { true, "Ativa" });
 
 			//--- Set DataTable
 			cmbAtivo.DataSource = dtAtivo;
@@ -108,7 +109,7 @@ namespace CamadaUI.Registres
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDCongregacao";
+			clnID.DataPropertyName = "IDReuniao";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -117,7 +118,7 @@ namespace CamadaUI.Registres
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "Congregacao";
+			clnCadastro.DataPropertyName = "Reuniao";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = true;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -125,24 +126,33 @@ namespace CamadaUI.Registres
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-			//--- (3) Coluna da imagem
-			clnImage.Name = "Ativo";
+			//--- (3) COLUNA CONGREGACAO
+			clnCongregacao.DataPropertyName = "Congregacao";
+			clnCongregacao.Visible = true;
+			clnCongregacao.ReadOnly = true;
+			clnCongregacao.Resizable = DataGridViewTriState.False;
+			clnCongregacao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCongregacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCongregacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+			//--- (4) Coluna da imagem
+			clnImage.Name = "Ativa";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnCongregacao, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == 2)
+			if (e.ColumnIndex == 3)
 			{
-				objCongregacao item = (objCongregacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				if (item.Ativo) e.Value = ImgAtivo;
+				objReuniao item = (objReuniao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				if (item.Ativa) e.Value = ImgAtivo;
 				else e.Value = ImgInativo;
 			}
 		}
@@ -163,17 +173,21 @@ namespace CamadaUI.Registres
 
 		#region BUTTONS FUNCTION
 
+		// FECHAR FORMULARIO
+		//------------------------------------------------------------------------------------------------------------
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
 			MostraMenuPrincipal();
 		}
 
+		// ADICIONAR CONTA
+		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
 			if (_formOrigem == null)
 			{
-				frmCongregacao frm = new frmCongregacao(new objCongregacao(null));
+				frmCongregacaoReuniao frm = new frmCongregacaoReuniao(new objReuniao(null));
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
@@ -181,11 +195,13 @@ namespace CamadaUI.Registres
 			}
 			else
 			{
-				propEscolha = new objCongregacao(null);
+				propEscolha = new objReuniao(null);
 				DialogResult = DialogResult.Yes;
 			}
 		}
 
+		// EDITAR CONTA ESCOLHIDA
+		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
@@ -197,12 +213,12 @@ namespace CamadaUI.Registres
 			}
 
 			//--- get Selected item
-			objCongregacao item = (objCongregacao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objReuniao item = (objReuniao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
 			if (_formOrigem == null)
 			{
-				frmCongregacao frm = new frmCongregacao(item);
+				frmCongregacaoReuniao frm = new frmCongregacaoReuniao(item);
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
@@ -227,23 +243,35 @@ namespace CamadaUI.Registres
 				if (!int.TryParse(txtProcura.Text, out int i))
 				{
 					// declare function
-					Func<objCongregacao, bool> FiltroItem = c => c.Congregacao.ToLower().Contains(txtProcura.Text.ToLower());
+					Func<objReuniao, bool> FiltroItem = c => c.Reuniao.ToLower().Contains(txtProcura.Text.ToLower());
 
 					// aply filter using function
-					dgvListagem.DataSource = listCong.FindAll(c => FiltroItem(c));
+					dgvListagem.DataSource = listReuniao.FindAll(c => FiltroItem(c));
 				}
 				else
 				{
 					// declare function
-					Func<objCongregacao, bool> FiltroID = c => c.IDCongregacao == i;
+					Func<objReuniao, bool> FiltroID = c => c.IDReuniao == i;
 
 					// aply filter using function
-					dgvListagem.DataSource = listCong.FindAll(c => FiltroID(c));
+					dgvListagem.DataSource = listReuniao.FindAll(c => FiltroID(c));
 				}
 			}
 			else
 			{
-				dgvListagem.DataSource = listCong;
+				dgvListagem.DataSource = listReuniao;
+			}
+
+			if (txtProcuraCongregacao.TextLength > 0)
+			{
+				// get actual DataSource
+				List<objReuniao> list = dgvListagem.DataSource as List<objReuniao>;
+
+				// declare function
+				Func<objReuniao, bool> FiltroItem = c => c.Congregacao.ToLower().Contains(txtProcuraCongregacao.Text.ToLower());
+
+				// aply filter using function
+				dgvListagem.DataSource = list.FindAll(c => FiltroItem(c));
 			}
 		}
 
@@ -267,11 +295,11 @@ namespace CamadaUI.Registres
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
+				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativa")
 				{
-					objCongregacaoSetor Setor = (objCongregacaoSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objReuniao Reuniao = (objReuniao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (Setor.Ativo == true)
+					if (Reuniao.Ativa == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -288,22 +316,22 @@ namespace CamadaUI.Registres
 			}
 		}
 
-		private void AtivarDesativar_Setor_Click(object sender, EventArgs e)
+		private void AtivarDesativar_Reuniao_Click(object sender, EventArgs e)
 		{
 			//--- verifica se existe alguma cell 
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objCongregacaoSetor setor = (objCongregacaoSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+			objReuniao setor = (objReuniao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativo ? "DESATIVAR " : "ATIVAR")} esse Setor?\n" +
-									  setor.CongregacaoSetor.ToUpper(), (setor.Ativo ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativa ? "DESATIVAR " : "ATIVAR")} essa Reuniao?\n" +
+									  setor.Reuniao.ToUpper(), (setor.Ativa ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			setor.Ativo = !setor.Ativo;
+			setor.Ativa = !setor.Ativa;
 
 			//--- Salvar o Registro
 			try
@@ -311,15 +339,15 @@ namespace CamadaUI.Registres
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				CongregacaoBLL cBLL = new CongregacaoBLL();
-				cBLL.UpdateCongregacaoSetor(setor);
+				ReuniaoBLL cBLL = new ReuniaoBLL();
+				cBLL.UpdateReuniao(setor);
 
 				//--- altera a imagem
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar Setor..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Alterar Reuniao..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -335,7 +363,7 @@ namespace CamadaUI.Registres
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacaoListagem_KeyDown(object sender, KeyEventArgs e)
+		private void frmCongregacaoReuniaoListagem_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -389,5 +417,6 @@ namespace CamadaUI.Registres
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
+
 	}
 }

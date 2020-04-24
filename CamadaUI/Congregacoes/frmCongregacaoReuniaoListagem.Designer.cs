@@ -1,6 +1,6 @@
-﻿namespace CamadaUI.Registres
+﻿namespace CamadaUI.Congregacoes
 {
-	partial class frmCongregacaoListagem
+	partial class frmCongregacaoReuniaoListagem
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -41,10 +41,13 @@
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCongregacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.label3 = new System.Windows.Forms.Label();
+			this.txtProcuraCongregacao = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -52,32 +55,32 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(389, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(162, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(500, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(240, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Congregações";
+			this.lblTitulo.Text = "Congregação Reuniões";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(551, 0);
+			this.btnClose.Location = new System.Drawing.Point(740, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(591, 50);
+			this.panel1.Size = new System.Drawing.Size(780, 50);
 			// 
 			// btnFechar
 			// 
-			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(443, 495);
+			this.btnFechar.Location = new System.Drawing.Point(632, 495);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
-			this.btnFechar.TabIndex = 8;
+			this.btnFechar.TabIndex = 10;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -91,7 +94,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(165, 495);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 7;
+			this.btnAdicionar.TabIndex = 9;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -105,7 +108,7 @@
 			this.btnEditar.Location = new System.Drawing.Point(22, 495);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 6;
+			this.btnEditar.TabIndex = 8;
 			this.btnEditar.Text = "&Editar";
 			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -114,19 +117,19 @@
 			// 
 			// txtProcura
 			// 
-			this.txtProcura.Location = new System.Drawing.Point(90, 67);
+			this.txtProcura.Location = new System.Drawing.Point(93, 67);
 			this.txtProcura.Margin = new System.Windows.Forms.Padding(6);
 			this.txtProcura.Name = "txtProcura";
-			this.txtProcura.Size = new System.Drawing.Size(282, 27);
+			this.txtProcura.Size = new System.Drawing.Size(229, 27);
 			this.txtProcura.TabIndex = 2;
 			// 
 			// Label2
 			// 
 			this.Label2.AutoSize = true;
-			this.Label2.Location = new System.Drawing.Point(396, 70);
+			this.Label2.Location = new System.Drawing.Point(598, 70);
 			this.Label2.Name = "Label2";
 			this.Label2.Size = new System.Drawing.Size(64, 19);
-			this.Label2.TabIndex = 3;
+			this.Label2.TabIndex = 5;
 			this.Label2.Text = "Situação";
 			// 
 			// Label1
@@ -134,19 +137,19 @@
 			this.Label1.AutoSize = true;
 			this.Label1.Location = new System.Drawing.Point(26, 70);
 			this.Label1.Name = "Label1";
-			this.Label1.Size = new System.Drawing.Size(58, 19);
+			this.Label1.Size = new System.Drawing.Size(62, 19);
 			this.Label1.TabIndex = 1;
-			this.Label1.Text = "Procura";
+			this.Label1.Text = "Reunião";
 			// 
 			// cmbAtivo
 			// 
 			this.cmbAtivo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbAtivo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbAtivo.FormattingEnabled = true;
-			this.cmbAtivo.Location = new System.Drawing.Point(466, 67);
+			this.cmbAtivo.Location = new System.Drawing.Point(666, 67);
 			this.cmbAtivo.Name = "cmbAtivo";
-			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
-			this.cmbAtivo.TabIndex = 4;
+			this.cmbAtivo.Size = new System.Drawing.Size(92, 27);
+			this.cmbAtivo.TabIndex = 6;
 			// 
 			// dgvListagem
 			// 
@@ -177,6 +180,7 @@
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnID,
             this.clnCadastro,
+            this.clnCongregacao,
             this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
@@ -190,8 +194,8 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(547, 371);
-			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.Size = new System.Drawing.Size(736, 371);
+			this.dgvListagem.TabIndex = 7;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
@@ -201,18 +205,25 @@
 			this.clnID.HeaderText = "Reg.";
 			this.clnID.Name = "clnID";
 			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
+			this.clnID.Width = 70;
 			// 
 			// clnCadastro
 			// 
-			this.clnCadastro.HeaderText = "Congregação Setor";
+			this.clnCadastro.HeaderText = "Reunião Nome";
 			this.clnCadastro.Name = "clnCadastro";
 			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 350;
+			this.clnCadastro.Width = 300;
+			// 
+			// clnCongregacao
+			// 
+			this.clnCongregacao.HeaderText = "Congregação";
+			this.clnCongregacao.Name = "clnCongregacao";
+			this.clnCongregacao.ReadOnly = true;
+			this.clnCongregacao.Width = 250;
 			// 
 			// clnImage
 			// 
-			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.HeaderText = "Ativa";
 			this.clnImage.Name = "clnImage";
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
@@ -223,43 +234,64 @@
             this.AtivarToolStripMenuItem,
             this.DesativarToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(153, 48);
+			this.MenuListagem.Size = new System.Drawing.Size(169, 48);
 			// 
 			// AtivarToolStripMenuItem
 			// 
 			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
 			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.AtivarToolStripMenuItem.Text = "Ativar Setor";
-			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+			this.AtivarToolStripMenuItem.Text = "Ativar Reunião";
+			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Reuniao_Click);
 			// 
 			// DesativarToolStripMenuItem
 			// 
 			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
 			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
-			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+			this.DesativarToolStripMenuItem.Text = "Desativar Reunião";
+			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Reuniao_Click);
 			// 
-			// frmCongregacaoListagem
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(335, 70);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(94, 19);
+			this.label3.TabIndex = 3;
+			this.label3.Text = "Congregação";
+			// 
+			// txtProcuraCongregacao
+			// 
+			this.txtProcuraCongregacao.Location = new System.Drawing.Point(434, 67);
+			this.txtProcuraCongregacao.Margin = new System.Windows.Forms.Padding(6);
+			this.txtProcuraCongregacao.Name = "txtProcuraCongregacao";
+			this.txtProcuraCongregacao.Size = new System.Drawing.Size(153, 27);
+			this.txtProcuraCongregacao.TabIndex = 4;
+			// 
+			// frmCongregacaoReuniaoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(591, 549);
+			this.ClientSize = new System.Drawing.Size(780, 549);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnEditar);
+			this.Controls.Add(this.txtProcuraCongregacao);
 			this.Controls.Add(this.txtProcura);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.Label2);
 			this.Controls.Add(this.Label1);
 			this.KeyPreview = true;
-			this.Name = "frmCongregacaoListagem";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCongregacaoListagem_KeyDown);
+			this.Name = "frmCongregacaoReuniaoListagem";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCongregacaoReuniaoListagem_KeyDown);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.Label1, 0);
 			this.Controls.SetChildIndex(this.Label2, 0);
+			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtProcura, 0);
+			this.Controls.SetChildIndex(this.txtProcuraCongregacao, 0);
 			this.Controls.SetChildIndex(this.btnEditar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
@@ -283,11 +315,14 @@
 		internal System.Windows.Forms.Label Label1;
 		private CamadaUC.ucComboLimitedValues cmbAtivo;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
-		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCongregacao;
+		private System.Windows.Forms.DataGridViewImageColumn clnImage;
+		internal System.Windows.Forms.Label label3;
+		internal System.Windows.Forms.TextBox txtProcuraCongregacao;
 	}
 }

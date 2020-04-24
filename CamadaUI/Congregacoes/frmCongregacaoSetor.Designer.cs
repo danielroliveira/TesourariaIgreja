@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.Registres
+﻿namespace CamadaUI.Congregacoes
 {
 	partial class frmCongregacaoSetor
 	{

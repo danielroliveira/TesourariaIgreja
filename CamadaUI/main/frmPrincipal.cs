@@ -604,8 +604,9 @@ namespace CamadaUI
 			// MENU CADASTROS
 			mnuContribuintes.Click += (a, b) => MenuClickOpenForm(new Registres.frmContribuinteListagem(false, this));
 			mnuCredores.Click += (a, b) => MenuClickOpenForm(new Registres.frmCredorListagem(false, this));
-			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Registres.frmCongregacaoListagem());
-			mnuSetoresCongregacao.Click += (a, b) => MenuClickOpenForm(new Registres.frmCongregacaoSetorListagem());
+			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoListagem());
+			mnuSetoresCongregacao.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoSetorListagem());
+			mnuReunioes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoReuniaoListagem());
 
 			// MENU ENTRADAS
 			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());

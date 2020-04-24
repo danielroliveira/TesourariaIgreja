@@ -11,7 +11,7 @@ using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using System.Linq;
 
-namespace CamadaUI.Registres
+namespace CamadaUI.Congregacoes
 {
 	public partial class frmCongregacaoSetor : CamadaUI.Modals.frmModFinBorder
 	{

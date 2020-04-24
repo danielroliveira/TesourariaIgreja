@@ -207,7 +207,7 @@ namespace CamadaUI.Registres
 		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
 		{
 
-			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, _contribuinte.IDCongregacao);
+			Congregacoes.frmCongregacaoProcura frm = new Congregacoes.frmCongregacaoProcura(this, _contribuinte.IDCongregacao);
 			frm.ShowDialog();
 
 			//--- check return

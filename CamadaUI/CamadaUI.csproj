@@ -103,6 +103,60 @@
     <Compile Include="Config\frmConfigUsuarios.designer.cs">
       <DependentUpon>frmConfigUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Congregacoes\frmCongregacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacao.Designer.cs">
+      <DependentUpon>frmCongregacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoListagem.Designer.cs">
+      <DependentUpon>frmCongregacaoListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoProcura.Designer.cs">
+      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoReuniao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoReuniao.Designer.cs">
+      <DependentUpon>frmCongregacaoReuniao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoReuniaoListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoReuniaoListagem.Designer.cs">
+      <DependentUpon>frmCongregacaoReuniaoListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoReuniaoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoReuniaoProcura.Designer.cs">
+      <DependentUpon>frmCongregacaoReuniaoProcura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoSetor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoSetor.Designer.cs">
+      <DependentUpon>frmCongregacaoSetor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoSetorListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoSetorListagem.Designer.cs">
+      <DependentUpon>frmCongregacaoSetorListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoSetorProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Congregacoes\frmCongregacaoSetorProcura.Designer.cs">
+      <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contas\frmConta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,42 +257,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Registres\frmCongregacao.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registres\frmCongregacao.Designer.cs">
-      <DependentUpon>frmCongregacao.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoListagem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoListagem.designer.cs">
-      <DependentUpon>frmCongregacaoListagem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoProcura.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoProcura.designer.cs">
-      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoSetor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoSetor.designer.cs">
-      <DependentUpon>frmCongregacaoSetor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoSetorListagem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoSetorListagem.Designer.cs">
-      <DependentUpon>frmCongregacaoSetorListagem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoSetorProcura.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registres\frmCongregacaoSetorProcura.designer.cs">
-      <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
-    </Compile>
     <Compile Include="Registres\frmContribuinte.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +321,33 @@
     <EmbeddedResource Include="Config\frmConfigUsuarios.resx">
       <DependentUpon>frmConfigUsuarios.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacao.resx">
+      <DependentUpon>frmCongregacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoListagem.resx">
+      <DependentUpon>frmCongregacaoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoProcura.resx">
+      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoReuniao.resx">
+      <DependentUpon>frmCongregacaoReuniao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoReuniaoListagem.resx">
+      <DependentUpon>frmCongregacaoReuniaoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoReuniaoProcura.resx">
+      <DependentUpon>frmCongregacaoReuniaoProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoSetor.resx">
+      <DependentUpon>frmCongregacaoSetor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoSetorListagem.resx">
+      <DependentUpon>frmCongregacaoSetorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Congregacoes\frmCongregacaoSetorProcura.resx">
+      <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmConta.resx">
       <DependentUpon>frmConta.cs</DependentUpon>
     </EmbeddedResource>
@@ -352,24 +397,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Registres\frmCongregacao.resx">
-      <DependentUpon>frmCongregacao.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Registres\frmCongregacaoListagem.resx">
-      <DependentUpon>frmCongregacaoListagem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Registres\frmCongregacaoProcura.resx">
-      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Registres\frmCongregacaoSetor.resx">
-      <DependentUpon>frmCongregacaoSetor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Registres\frmCongregacaoSetorListagem.resx">
-      <DependentUpon>frmCongregacaoSetorListagem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Registres\frmCongregacaoSetorProcura.resx">
-      <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmContribuinte.resx">
       <DependentUpon>frmContribuinte.cs</DependentUpon>
@@ -554,5 +581,6 @@
   <ItemGroup>
     <None Include="Resources\money_green_24.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

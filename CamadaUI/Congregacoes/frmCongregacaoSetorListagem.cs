@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Registres
+namespace CamadaUI.Congregacoes
 {
 	public partial class frmCongregacaoSetorListagem : CamadaUI.Modals.frmModFinBorder
 	{

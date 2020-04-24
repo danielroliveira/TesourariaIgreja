@@ -9,7 +9,7 @@ using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Registres;
+using CamadaUI.Congregacoes;
 using System.Linq;
 
 namespace CamadaUI.Setores

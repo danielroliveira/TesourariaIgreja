@@ -103,7 +103,7 @@
 			this.Label6.Name = "Label6";
 			this.Label6.Size = new System.Drawing.Size(94, 19);
 			this.Label6.TabIndex = 14;
-			this.Label6.Text = "Congregacao";
+			this.Label6.Text = "Congregação";
 			// 
 			// Label15
 			// 
@@ -187,11 +187,11 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(35, 128);
+			this.label3.Location = new System.Drawing.Point(26, 128);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(92, 19);
+			this.label3.Size = new System.Drawing.Size(96, 19);
 			this.label3.TabIndex = 4;
-			this.label3.Text = "Reg.Membro";
+			this.label3.Text = "Reg. Membro";
 			// 
 			// txtIDMembro
 			// 
