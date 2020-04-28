@@ -129,22 +129,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblConta (" +
-							   "Conta, " +
-							   "ContaSaldo, " +
-							   "BloqueioData, " +
-							   "Bancaria, " +
-							   "OperadoraCartao, " +
-							   "IDCongregacao, " +
-							   "Ativa " +
-							   ") VALUES (" +
-							   "@Conta, " +
-							   "@ContaSaldo, " +
-							   "@BloqueioData, " +
-							   "@Bancaria, " +
-							   "@OperadoraCartao, " +
-							   "@IDCongregacao, " +
-							   "@Ativa)";
+				string query = db.CreateInsertSQL("tblConta");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 
@@ -180,16 +166,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblConta SET " +
-							   "Conta = @Conta, " +
-							   "ContaSaldo = @ContaSaldo, " +
-							   "BloqueioData = @BloqueioData, " +
-							   "Bancaria = @Bancaria, " +
-							   "OperadoraCartao = @OperadoraCartao, " +
-							   "IDCongregacao = @IDCongregacao, " +
-							   "Ativa = @Ativa " +
-							   "WHERE " +
-							   "IDConta = @IDConta";
+				string query = db.CreateUpdateSQL("tblConta", "IDConta");
+
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;

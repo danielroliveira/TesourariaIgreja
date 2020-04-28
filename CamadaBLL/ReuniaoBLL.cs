@@ -133,26 +133,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblReunioes (" +
-							   "Reuniao, " +
-							   "IDCongregacao, " +
-							   "RecorrenciaTipo, " +
-							   "RecorrenciaRepeticao, " +
-							   "RecorrenciaDia, " +
-							   "RecorrenciaSemana, " +
-							   "RecorrenciaMes, " +
-							   "IniciarData, " +
-							   "Ativa " +
-							   ") VALUES (" +
-							   "@Reuniao, " +
-							   "@IDCongregacao, " +
-							   "@RecorrenciaTipo, " +
-							   "@RecorrenciaRepeticao, " +
-							   "@RecorrenciaDia, " +
-							   "@RecorrenciaSemana, " +
-							   "@RecorrenciaMes, " +
-							   "@IniciarData, " +
-							   "@Ativa)";
+				string query = db.CreateInsertSQL("tblReunioes");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 
@@ -190,18 +172,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblReunioes SET " +
-							   "Reuniao = @Reuniao, " +
-							   "IDCongregacao = @IDCongregacao, " +
-							   "RecorrenciaTipo = @RecorrenciaTipo, " +
-							   "RecorrenciaRepeticao = @RecorrenciaRepeticao, " +
-							   "RecorrenciaDia = @RecorrenciaDia, " +
-							   "RecorrenciaSemana = @RecorrenciaSemana, " +
-							   "RecorrenciaMes = @RecorrenciaMes, " +
-							   "IniciarData = @IniciarData, " +
-							   "Ativa = @Ativa " +
-							   "WHERE " +
-							   "IDReuniao = @IDReuniao";
+				string query = db.CreateUpdateSQL("tblReunioes", "IDReuniao");
+
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;

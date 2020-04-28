@@ -145,12 +145,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblCredor (" +
-							   "Credor, CredorTipo, CNP, EnderecoLogradouro, EnderecoNumero, EnderecoComplemento, " +
-							   "Bairro, Cidade, UF, CEP, TelefoneFixo, TelefoneCelular, Email, Whatsapp, Ativo " +
-							   ") VALUES (" +
-							   "@Credor, @CredorTipo, @CNP, @EnderecoLogradouro, @EnderecoNumero, @EnderecoComplemento, " +
-							   "@Bairro, @Cidade, @UF, @CEP, @TelefoneFixo, @TelefoneCelular, @Email, @Whatsapp, @Ativo) ";
+				string query = db.CreateInsertSQL("tblCredor");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 
@@ -194,24 +190,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblCredor SET " +
-							   "Credor = @Credor, " +
-							   "CredorTipo = @CredorTipo, " +
-							   "CNP = @CNP, " +
-							   "EnderecoLogradouro = @EnderecoLogradouro, " +
-							   "EnderecoNumero = @EnderecoNumero, " +
-							   "EnderecoComplemento = @EnderecoComplemento, " +
-							   "Bairro = @Bairro, " +
-							   "Cidade = @Cidade, " +
-							   "UF = @UF, " +
-							   "CEP = @CEP, " +
-							   "TelefoneCelular = @TelefoneCelular, " +
-							   "TelefoneFixo = @TelefoneFixo, " +
-							   "Whatsapp = @Whatsapp, " +
-							   "Email = @Email, " +
-							   "Ativo = @Ativo, " +
-							   "WHERE " +
-							   "IDCredor = @IDCredor";
+				string query = db.CreateUpdateSQL("tblCredor", "IDCredor");
+
 				//--- UPDATE
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;

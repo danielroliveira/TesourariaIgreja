@@ -610,6 +610,7 @@ namespace CamadaUI
 
 			// MENU ENTRADAS
 			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());
+			mnuEntradaInserir.Click += (a, b) => MenuClickOpenForm(new Entradas.frmEntrada(new objEntrada(null)));
 
 			// MENU MOVIMENTACAO
 			mnuContas.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());

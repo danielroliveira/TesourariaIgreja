@@ -39,7 +39,11 @@
     <Reference Include="AwesomeShapeControl">
       <HintPath>..\ControlsDLL\AwesomeShapeControl.dll</HintPath>
     </Reference>
-    <Reference Include="BetterListViewExpress, Version=3.15.0.0, Culture=neutral, PublicKeyToken=e6c91a3add447be2, processorArchitecture=MSIL" />
+    <Reference Include="betterlistviewexpress, Version=3.15.0.0, Culture=neutral, PublicKeyToken=e6c91a3add447be2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Component Owl\Better ListView Express\Redistributable\betterlistviewexpress.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -192,6 +196,24 @@
     </Compile>
     <Compile Include="Entradas\frmCampanhaProcura.designer.cs">
       <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmEntrada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmEntrada.designer.cs">
+      <DependentUpon>frmEntrada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaListagem.designer.cs">
+      <DependentUpon>frmEntradaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmComboLista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmComboLista.Designer.cs">
+      <DependentUpon>frmComboLista.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmConnString.cs">
       <SubType>Form</SubType>
@@ -365,6 +387,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmCampanhaProcura.resx">
       <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmEntrada.resx">
+      <DependentUpon>frmEntrada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmEntradaListagem.resx">
+      <DependentUpon>frmEntradaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmComboLista.resx">
+      <DependentUpon>frmComboLista.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmConnString.resx">
       <DependentUpon>frmConnString.cs</DependentUpon>

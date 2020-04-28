@@ -118,23 +118,14 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDSetor", campanha.IDSetor);
 				db.AdicionarParametros("@CampanhaSaldo", campanha.CampanhaSaldo);
 				db.AdicionarParametros("@InicioData", campanha.InicioData);
+				db.AdicionarParametros("@Ativa", campanha.Ativa);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblCampanha (" +
-							   "Campanha, " +
-							   "IDSetor, " +
-							   "CampanhaSaldo, " +
-							   "InicioData, " +
-							   "Ativa " +
-							   ") VALUES (" +
-							   "@Campanha, " +
-							   "@IDSetor, " +
-							   "0, " +
-							   "@InicioData, " +
-							   "'TRUE')";
+				string query = db.CreateInsertSQL("tblCampanha");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 			}
@@ -168,15 +159,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblCampanha SET " +
-							   "Campanha = @Campanha, " +
-							   "IDSetor = @IDSetor, " +
-							   "CampanhaSaldo = @CampanhaSaldo, " +
-							   "InicioData = @InicioData, " +
-							   "ConclusaoData = @ConclusaoData, " +
-							   "Ativa = @Ativa " +
-							   "WHERE " +
-							   "IDCampanha = @IDCampanha";
+				string query = db.CreateUpdateSQL("tblCampanha", "IDCampanha");
+
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;

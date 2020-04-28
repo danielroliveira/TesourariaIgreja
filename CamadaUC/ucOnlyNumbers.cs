@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace CamadaUC
@@ -48,7 +49,7 @@ namespace CamadaUC
 			if (TextLength > 0)
 			{
 				// check is NUMBER
-				if (double.TryParse(Text, out double n) == false)
+				if (double.TryParse(Text, NumberStyles.Currency, new CultureInfo("pt-BR"), out double n) == false)
 				{
 					MessageBox.Show("Valor númerico incorreto...\n" +
 									"Digite um valor numérico",

@@ -132,14 +132,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblCongregacao (" +
-							   "Congregacao, EnderecoLogradouro, EnderecoNumero, EnderecoComplemento, " +
-							   "Bairro, Cidade, UF, CEP, Dirigente, TelefoneDirigente, TelefoneFixo, Email, " +
-							   "IDCongregacaoSetor, Tesoureiro " +
-							   ") VALUES (" +
-							   "@Congregacao, @EnderecoLogradouro, @EnderecoNumero, @EnderecoComplemento, " +
-							   "@Bairro, @Cidade, @UF, @CEP, @Dirigente, @TelefoneDirigente, @TelefoneFixo, @Email, " +
-							   "@IDCongregacaoSetor, @Tesoureiro)";
+				string query = db.CreateInsertSQL("tblCongregacao");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 
@@ -182,15 +176,9 @@ namespace CamadaBLL
 				//--- convert null parameters
 				db.ConvertNullParams();
 
-				//--- create query
-				string query = "UPDATE tblCongregacao SET " +
-							   "Congregacao = @Congregacao, EnderecoLogradouro = @EnderecoLogradouro, " +
-							   "EnderecoNumero = @EnderecoNumero, EnderecoComplemento = @EnderecoComplemento, " +
-							   "Bairro = @Bairro, Cidade = @Cidade, UF = @UF, CEP = @CEP, " +
-							   "Dirigente = @Dirigente, TelefoneDirigente = @TelefoneDirigente, TelefoneFixo = @TelefoneFixo, " +
-							   "Email = @Email, IDCongregacaoSetor = @IDCongregacaoSetor, Tesoureiro = @Tesoureiro " +
-							   "WHERE " +
-							   "IDCongregacao = @IDCongregacao";
+				////--- create query
+				string query = db.CreateUpdateSQL("tblCongregacao", "IDCongregacao");
+
 				//--- UPDATE
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;

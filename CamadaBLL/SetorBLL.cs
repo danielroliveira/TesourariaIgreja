@@ -125,16 +125,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblSetor (" +
-							   "Setor, " +
-							   "SetorSaldo, " +
-							   "IDCongregacao, " +
-							   "Ativa " +
-							   ") VALUES (" +
-							   "@Setor, " +
-							   "@SetorSaldo, " +
-							   "@IDCongregacao, " +
-							   "@Ativa)";
+				string query = db.CreateInsertSQL("tblSetor");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 
@@ -167,13 +159,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblSetor SET " +
-							   "Setor = @Setor, " +
-							   "SetorSaldo = @SetorSaldo, " +
-							   "IDCongregacao = @IDCongregacao, " +
-							   "Ativa = @Ativa " +
-							   "WHERE " +
-							   "IDSetor = @IDSetor";
+				string query = db.CreateUpdateSQL("tblSetor", "IDSetor");
+
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;

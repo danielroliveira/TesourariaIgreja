@@ -20,6 +20,7 @@ namespace CamadaUI.Contas
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private int? _IDCongregacao;
+		private List<objCongregacao> congregacaoList;// = CongBLL.GetListCongregacao();
 
 		#region SUB NEW | PROPERTIES
 
@@ -45,6 +46,9 @@ namespace CamadaUI.Contas
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+			// get list of congregacao
+			GetCongregacaoList();
+
 			AtivoButtonImage();
 			HandlerKeyDownControl(this);
 
@@ -53,6 +57,20 @@ namespace CamadaUI.Contas
 			chkBancaria.LostFocus += chkBox_ControleFocus;
 			chkOperadoraCartao.GotFocus += chkBox_ControleFocus;
 			chkOperadoraCartao.LostFocus += chkBox_ControleFocus;
+		}
+
+		// ON SHOW CHECK IF EXISTS CONGREGACAO
+		//------------------------------------------------------------------------------------------------------------
+		private void frmConta_Shown(object sender, EventArgs e)
+		{
+			if (congregacaoList.Count == 0)
+			{
+				AbrirDialog("Ainda não há congregações inseridas...\n" +
+					"Favor inserir congregações antes de inserir contas.",
+					"Inserir Congregações", DialogType.OK, DialogIcon.Exclamation);
+
+				btnFechar_Click(sender, e);
+			}
 		}
 
 		// PROPERTY SITUACAO
@@ -92,6 +110,28 @@ namespace CamadaUI.Contas
 					default:
 						break;
 				}
+			}
+		}
+
+		private void GetCongregacaoList()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var CongBLL = new CongregacaoBLL();
+				congregacaoList = CongBLL.GetListCongregacao();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de congregações..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
@@ -324,7 +364,6 @@ namespace CamadaUI.Contas
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
 		{
-
 			Control ctr = (Control)sender;
 
 			if (e.KeyCode == Keys.Add)
@@ -372,21 +411,29 @@ namespace CamadaUI.Contas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
 		{
+			if (congregacaoList.Count == 0)
+			{
+				AbrirDialog("Não há congregações cadastradas...", "Congregação",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
 
-			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, _conta.IDCongregacao);
+			var dic = congregacaoList.ToDictionary(x => (int)x.IDCongregacao, x => x.Congregacao);
+
+			Main.frmComboLista frm = new Main.frmComboLista(dic, txtCongregacao, _conta.IDCongregacao);
+
 			frm.ShowDialog();
 
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_conta.IDCongregacao = frm.propEscolha.IDCongregacao;
-				txtCongregacao.Text = frm.propEscolha.Congregacao;
+				_conta.IDCongregacao = frm.propEscolha.Key;
+				txtCongregacao.Text = frm.propEscolha.Value;
 			}
 
 			//--- select
 			txtCongregacao.Focus();
 			txtCongregacao.SelectAll();
-
 		}
 
 		// WHEN SELECT RADIO CHANGE COLOR OF PANEL
@@ -408,5 +455,17 @@ namespace CamadaUI.Contas
 
 		#endregion // CONTROL FUNCTIONS --- END
 
+		private void frmConta_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtCongregacao
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
 	}
 }

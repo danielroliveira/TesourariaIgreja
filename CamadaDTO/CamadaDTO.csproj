@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AppEnum.cs" />
     <Compile Include="AppException.cs" />
+    <Compile Include="objEntrada.cs" />
     <Compile Include="objReuniao.cs" />
     <Compile Include="objCampanha.cs" />
     <Compile Include="objSetor.cs" />

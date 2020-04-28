@@ -386,5 +386,56 @@ namespace CamadaDAL
 		public bool isTran { get; set; } = false;
 
 		#endregion
+
+		#region RETURN STRINGS INSERT | UPDATE
+
+		// CREATE INSERT STRING SQL
+		//------------------------------------------------------------------------------------------------------------
+		public string CreateInsertSQL(string tableName)
+		{
+			string sql = $"INSERT INTO {tableName} (";
+			string filds = "";
+			string pars = "";
+
+			// add fields and params
+			foreach (var param in ParamList)
+			{
+				filds += param.ParameterName.Replace("@", "") + ", ";
+				pars += param.ParameterName + ", ";
+			}
+
+			// create SQL string
+			sql += filds.Remove(filds.Length - 2, 2) + ") VALUES (" + pars.Remove(pars.Length - 2, 2) + ")";
+
+			// return
+			return sql;
+		}
+
+		// CREATE UPDATE STRING SQL
+		//------------------------------------------------------------------------------------------------------------
+		public string CreateUpdateSQL(string tableName, string IDParamName)
+		{
+			string sql = $"UPDATE {tableName} SET ";
+			string filds = "";
+
+			// add fields and params
+			foreach (var param in ParamList)
+			{
+				if (param.ParameterName.Replace("@", "") != IDParamName.Replace("@", ""))
+				{
+					filds += $"{param.ParameterName.Replace("@", "")} = {param.ParameterName}, ";
+				}
+			}
+
+			// create SQL string
+			IDParamName = IDParamName.Replace("@", "");
+			sql += $"{filds.Remove(filds.Length - 2, 2)} WHERE {IDParamName} = @{IDParamName}";
+
+			// return
+			return sql;
+		}
+
+		#endregion // RETURN STRINGS INSERT | UPDATE --- END
+
 	}
 }

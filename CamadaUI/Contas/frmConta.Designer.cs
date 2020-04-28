@@ -147,7 +147,7 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 337);
+			this.tspMenu.Location = new System.Drawing.Point(2, 313);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
 			this.tspMenu.TabIndex = 13;
@@ -232,7 +232,7 @@
 			this.line1.EndPoint = new System.Drawing.Point(495, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(27, 256);
+			this.line1.Location = new System.Drawing.Point(27, 232);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(500, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
@@ -304,7 +304,7 @@
 			this.Label34.AutoSize = true;
 			this.Label34.BackColor = System.Drawing.Color.Transparent;
 			this.Label34.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Label34.Location = new System.Drawing.Point(266, 282);
+			this.Label34.Location = new System.Drawing.Point(266, 268);
 			this.Label34.Name = "Label34";
 			this.Label34.Size = new System.Drawing.Size(125, 19);
 			this.Label34.TabIndex = 11;
@@ -337,7 +337,7 @@
 			this.lblContaSaldo.AutoSize = true;
 			this.lblContaSaldo.BackColor = System.Drawing.Color.Transparent;
 			this.lblContaSaldo.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblContaSaldo.Location = new System.Drawing.Point(144, 277);
+			this.lblContaSaldo.Location = new System.Drawing.Point(144, 263);
 			this.lblContaSaldo.Name = "lblContaSaldo";
 			this.lblContaSaldo.Size = new System.Drawing.Size(85, 29);
 			this.lblContaSaldo.TabIndex = 10;
@@ -349,7 +349,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(28, 282);
+			this.label1.Location = new System.Drawing.Point(28, 268);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(110, 19);
 			this.label1.TabIndex = 9;
@@ -361,7 +361,7 @@
 			this.lblBloqueioData.AutoSize = true;
 			this.lblBloqueioData.BackColor = System.Drawing.Color.Transparent;
 			this.lblBloqueioData.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblBloqueioData.Location = new System.Drawing.Point(397, 277);
+			this.lblBloqueioData.Location = new System.Drawing.Point(397, 263);
 			this.lblBloqueioData.Name = "lblBloqueioData";
 			this.lblBloqueioData.Size = new System.Drawing.Size(127, 29);
 			this.lblBloqueioData.TabIndex = 12;
@@ -371,7 +371,7 @@
 			// frmConta
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 383);
+			this.ClientSize = new System.Drawing.Size(560, 359);
 			this.Controls.Add(this.lblBloqueioData);
 			this.Controls.Add(this.lblContaSaldo);
 			this.Controls.Add(this.label1);
@@ -387,7 +387,9 @@
 			this.Controls.Add(this.lblCongregacao);
 			this.KeyPreview = true;
 			this.Name = "frmConta";
+			this.Shown += new System.EventHandler(this.frmConta_Shown);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmConta_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmConta_KeyPress);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
 			this.Controls.SetChildIndex(this.txtConta, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);

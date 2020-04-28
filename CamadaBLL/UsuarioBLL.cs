@@ -124,16 +124,8 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblUsuario (" +
-							   "UsuarioApelido, " +
-							   "UsuarioAcesso, " +
-							   "UsuarioSenha, " +
-							   "Email" +
-							   ") VALUES (" +
-							   "@UsuarioApelido, " +
-							   "@UsuarioAcesso, " +
-							   "@UsuarioSenha, " +
-							   "@Email)";
+				string query = db.CreateInsertSQL("tblUsuario");
+
 				//--- insert
 				return db.ExecutarInsertAndGetID(query);
 			}
