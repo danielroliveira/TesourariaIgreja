@@ -1,4 +1,5 @@
-﻿using CamadaDTO;
+﻿using CamadaBLL;
+using CamadaDTO;
 using System;
 using System.Drawing;
 using System.IO;
@@ -260,7 +261,7 @@ namespace CamadaUI
 
 			if (control.DataBindings["text"] != null)
 			{
-				myPropertyName = control.DataBindings["text"].BindingMemberInfo.BindingMember;
+				myPropertyName = control.DataBindings["text"].BindingMemberInfo.BindingField;
 			}
 			else if (control.DataBindings["SelectedValue"] != null)
 			{
@@ -282,7 +283,7 @@ namespace CamadaUI
 			var value = pInfo.GetValue(minhaClasse, null);
 
 			//--- GET TYPE OF VALUE
-			Type type = value.GetType();
+			Type type = value?.GetType();
 
 			//--- CHECK IF EMPTY OR NULL
 			bool IsEmptyOrNull = false;
@@ -353,5 +354,63 @@ namespace CamadaUI
 		}
 
 		#endregion
+
+		#region CONTROLA SALDO CONTA E SETOR
+
+		// GET O SALDO DA CONTA
+		//------------------------------------------------------------------------------------------------------------
+		public static decimal GetContaSaldo(int IDConta, decimal Valor)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// return
+				return new ContaBLL().ContaSaldoGet(IDConta, Valor); ;
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao OBTER o saldo da CONTA..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		// GET O SALDO DO SETOR
+		//------------------------------------------------------------------------------------------------------------
+		public static decimal GetSetorSaldo(int IDSetor, decimal Valor)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// return
+				return new SetorBLL().SetorSaldoGet(IDSetor, Valor); ;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao OBTER o saldo do SETOR..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		#endregion // CONTROLA SALDO CONTA E SETOR --- END
+
 	}
 }

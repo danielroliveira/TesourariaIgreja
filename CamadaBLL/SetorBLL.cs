@@ -171,5 +171,66 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// SALDO GET
+		//------------------------------------------------------------------------------------------------------------
+		public decimal SetorSaldoGet(int IDSetor, object dbTran)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT SetorSaldo FROM tblSetor WHERE IDSetor = @IDSetor";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDSetor", IDSetor);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("ID do SETOR não foi identificado...");
+				}
+				else if (decimal.TryParse(dt.Rows[0][0].ToString(), out decimal Saldo))
+				{
+					return Saldo;
+				}
+				else
+				{
+					throw new Exception(dt.Rows[0][0].ToString());
+				}
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// SALDO ALTERAR
+		//------------------------------------------------------------------------------------------------------------
+		public decimal SetorSaldoChange(int IDSetor, decimal valor, AcessoDados dbTran)
+		{
+			try
+			{
+				string query = "UPDATE tblSetor SET SetorSaldo = SetorSaldo + @valor WHERE IDSetor = @IDSetor";
+
+				// add params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDSetor", IDSetor);
+				dbTran.AdicionarParametros("@valor", valor);
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				decimal SaldoAtual = SetorSaldoGet(IDSetor, dbTran);
+
+				return SaldoAtual;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }

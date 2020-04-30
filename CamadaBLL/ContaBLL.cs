@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Security.AccessControl;
 
 namespace CamadaBLL
 {
@@ -62,7 +63,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET CONGREGACAO
+		// GET CONTA
 		//------------------------------------------------------------------------------------------------------------
 		public objConta GetConta(int IDConta)
 		{
@@ -172,6 +173,67 @@ namespace CamadaBLL
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;
 
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// CONTA SALDO GET
+		//------------------------------------------------------------------------------------------------------------
+		public decimal ContaSaldoGet(int IDConta, object dbTran)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT ContaSaldo FROM tblConta WHERE IDConta = @IDConta";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDConta", IDConta);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("ID da CONTA não foi identificado...");
+				}
+				else if (decimal.TryParse(dt.Rows[0][0].ToString(), out decimal Saldo))
+				{
+					return Saldo;
+				}
+				else
+				{
+					throw new Exception(dt.Rows[0][0].ToString());
+				}
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// CONTA SALDO ALTERAR
+		//------------------------------------------------------------------------------------------------------------
+		public decimal ContaSaldoChange(int IDConta, decimal valor, AcessoDados dbTran)
+		{
+			try
+			{
+				string query = "UPDATE tblConta SET ContaSaldo = ContaSaldo + @valor WHERE IDConta = @IDConta";
+
+				// add params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDConta", IDConta);
+				dbTran.AdicionarParametros("@valor", valor);
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				decimal SaldoAtual = ContaSaldoGet(IDConta, dbTran);
+
+				return SaldoAtual;
 			}
 			catch (Exception ex)
 			{

@@ -137,6 +137,7 @@
 			this.Controls.Add(this.lblMensagem);
 			this.Name = "frmMessage";
 			this.Text = "frmMessage";
+			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.frmMessage_Shown);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.lblMensagem, 0);

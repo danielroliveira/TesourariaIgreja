@@ -1,19 +1,16 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using System.Linq;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Entradas
 {
-	public partial class frmEntradaListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmContribuicaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<objSetor> listSetor = new List<objSetor>();
 		private Form _formOrigem;
@@ -22,7 +19,7 @@ namespace CamadaUI.Entradas
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmEntradaListagem(Form formOrigem = null)
+		public frmContribuicaoListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
 

@@ -1,6 +1,6 @@
 ﻿namespace CamadaUI.Entradas
 {
-	partial class frmEntrada
+	partial class frmContribuicao
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -38,13 +38,14 @@
 			this.btnSalvar = new System.Windows.Forms.ToolStripButton();
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.btnSetContribuinte = new VIBlend.WinForms.Controls.vButton();
 			this.txtContribuinte = new System.Windows.Forms.TextBox();
 			this.lblContribuinte = new System.Windows.Forms.Label();
 			this.txtValorBruto = new CamadaUC.ucOnlyNumbers();
 			this.label2 = new System.Windows.Forms.Label();
-			this.txtEntradaTipo = new System.Windows.Forms.TextBox();
+			this.txtContribuicaoTipo = new System.Windows.Forms.TextBox();
 			this.btnSetEntradaTipo = new VIBlend.WinForms.Controls.vButton();
 			this.label3 = new System.Windows.Forms.Label();
 			this.txtSetor = new System.Windows.Forms.TextBox();
@@ -66,16 +67,17 @@
 			this.cmbEntradaMes = new CamadaUC.ucComboLimitedValues();
 			this.txtEntradaAno = new CamadaUC.ucOnlyNumbers();
 			this.txtEntradaDia = new CamadaUC.ucOnlyNumbers();
+			this.line2 = new AwesomeShapeControl.Line();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(171, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(349, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(224, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(296, 50);
 			this.lblTitulo.TabIndex = 2;
-			this.lblTitulo.Text = "Cadastro de Entradas | Ofertas";
+			this.lblTitulo.Text = "Cadastro de Contribuição";
 			// 
 			// btnClose
 			// 
@@ -101,19 +103,21 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(97, 395);
+			this.lblCongregacao.Location = new System.Drawing.Point(97, 505);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
-			this.lblCongregacao.TabIndex = 23;
+			this.lblCongregacao.TabIndex = 30;
 			this.lblCongregacao.Text = "Descrição";
 			// 
 			// txtOrigemDescricao
 			// 
 			this.txtOrigemDescricao.BackColor = System.Drawing.Color.White;
-			this.txtOrigemDescricao.Location = new System.Drawing.Point(176, 392);
+			this.txtOrigemDescricao.Location = new System.Drawing.Point(176, 502);
+			this.txtOrigemDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtOrigemDescricao.MaxLength = 50;
 			this.txtOrigemDescricao.Name = "txtOrigemDescricao";
 			this.txtOrigemDescricao.Size = new System.Drawing.Size(319, 27);
-			this.txtOrigemDescricao.TabIndex = 24;
+			this.txtOrigemDescricao.TabIndex = 31;
 			// 
 			// lblID
 			// 
@@ -155,11 +159,12 @@
 			this.toolStripSeparator1,
 			this.btnSalvar,
 			this.btnCancelar,
-			this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 509);
+			this.btnFechar,
+			this.toolStripSeparator2});
+			this.tspMenu.Location = new System.Drawing.Point(2, 552);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
-			this.tspMenu.TabIndex = 31;
+			this.tspMenu.TabIndex = 32;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -218,16 +223,21 @@
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
+			// 
 			// line1
 			// 
 			this.line1.EndPoint = new System.Drawing.Point(495, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 85);
+			this.line1.Location = new System.Drawing.Point(25, 161);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(500, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 1;
+			this.line1.TabIndex = 7;
 			this.line1.TabStop = false;
 			// 
 			// btnSetContribuinte
@@ -236,12 +246,12 @@
 			this.btnSetContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetContribuinte.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetContribuinte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetContribuinte.Location = new System.Drawing.Point(410, 359);
+			this.btnSetContribuinte.Location = new System.Drawing.Point(410, 424);
 			this.btnSetContribuinte.Name = "btnSetContribuinte";
 			this.btnSetContribuinte.RoundedCornersMask = ((byte)(15));
 			this.btnSetContribuinte.RoundedCornersRadius = 0;
 			this.btnSetContribuinte.Size = new System.Drawing.Size(34, 27);
-			this.btnSetContribuinte.TabIndex = 22;
+			this.btnSetContribuinte.TabIndex = 26;
 			this.btnSetContribuinte.TabStop = false;
 			this.btnSetContribuinte.Text = "...";
 			this.btnSetContribuinte.UseCompatibleTextRendering = true;
@@ -251,11 +261,12 @@
 			// 
 			// txtContribuinte
 			// 
-			this.txtContribuinte.Location = new System.Drawing.Point(176, 359);
+			this.txtContribuinte.Location = new System.Drawing.Point(176, 424);
+			this.txtContribuinte.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtContribuinte.MaxLength = 30;
 			this.txtContribuinte.Name = "txtContribuinte";
 			this.txtContribuinte.Size = new System.Drawing.Size(228, 27);
-			this.txtContribuinte.TabIndex = 21;
+			this.txtContribuinte.TabIndex = 25;
 			this.txtContribuinte.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// lblContribuinte
@@ -263,21 +274,21 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(81, 362);
+			this.lblContribuinte.Location = new System.Drawing.Point(81, 427);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(89, 19);
-			this.lblContribuinte.TabIndex = 20;
+			this.lblContribuinte.TabIndex = 24;
 			this.lblContribuinte.Text = "Contribuinte";
 			// 
 			// txtValorBruto
 			// 
 			this.txtValorBruto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtValorBruto.Inteiro = false;
-			this.txtValorBruto.Location = new System.Drawing.Point(385, 130);
+			this.txtValorBruto.Location = new System.Drawing.Point(98, 269);
 			this.txtValorBruto.Name = "txtValorBruto";
 			this.txtValorBruto.Positivo = true;
-			this.txtValorBruto.Size = new System.Drawing.Size(140, 31);
-			this.txtValorBruto.TabIndex = 7;
+			this.txtValorBruto.Size = new System.Drawing.Size(120, 31);
+			this.txtValorBruto.TabIndex = 14;
 			this.txtValorBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label2
@@ -285,20 +296,21 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(59, 263);
+			this.label2.Location = new System.Drawing.Point(27, 349);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(111, 19);
-			this.label2.TabIndex = 11;
-			this.label2.Text = "Tipo de Entrada";
+			this.label2.Size = new System.Drawing.Size(143, 19);
+			this.label2.TabIndex = 18;
+			this.label2.Text = "Tipo de Contribuição";
 			// 
-			// txtEntradaTipo
+			// txtContribuicaoTipo
 			// 
-			this.txtEntradaTipo.Location = new System.Drawing.Point(176, 260);
-			this.txtEntradaTipo.MaxLength = 30;
-			this.txtEntradaTipo.Name = "txtEntradaTipo";
-			this.txtEntradaTipo.Size = new System.Drawing.Size(228, 27);
-			this.txtEntradaTipo.TabIndex = 12;
-			this.txtEntradaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtContribuicaoTipo.Location = new System.Drawing.Point(176, 346);
+			this.txtContribuicaoTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtContribuicaoTipo.MaxLength = 30;
+			this.txtContribuicaoTipo.Name = "txtContribuicaoTipo";
+			this.txtContribuicaoTipo.Size = new System.Drawing.Size(228, 27);
+			this.txtContribuicaoTipo.TabIndex = 19;
+			this.txtContribuicaoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetEntradaTipo
 			// 
@@ -306,37 +318,37 @@
 			this.btnSetEntradaTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEntradaTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetEntradaTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetEntradaTipo.Location = new System.Drawing.Point(410, 260);
+			this.btnSetEntradaTipo.Location = new System.Drawing.Point(410, 346);
 			this.btnSetEntradaTipo.Name = "btnSetEntradaTipo";
 			this.btnSetEntradaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaTipo.RoundedCornersRadius = 0;
 			this.btnSetEntradaTipo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetEntradaTipo.TabIndex = 13;
+			this.btnSetEntradaTipo.TabIndex = 20;
 			this.btnSetEntradaTipo.TabStop = false;
 			this.btnSetEntradaTipo.Text = "...";
 			this.btnSetEntradaTipo.UseCompatibleTextRendering = true;
 			this.btnSetEntradaTipo.UseVisualStyleBackColor = false;
 			this.btnSetEntradaTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnSetEntradaTipo.Click += new System.EventHandler(this.btnSetEntradaTipo_Click);
+			this.btnSetEntradaTipo.Click += new System.EventHandler(this.btnSetContribuicaoTipo_Click);
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(128, 296);
+			this.label3.Location = new System.Drawing.Point(61, 117);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(42, 19);
-			this.label3.TabIndex = 14;
-			this.label3.Text = "Setor";
+			this.label3.Size = new System.Drawing.Size(109, 19);
+			this.label3.TabIndex = 4;
+			this.label3.Text = "Setor Creditado";
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(176, 293);
+			this.txtSetor.Location = new System.Drawing.Point(176, 114);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
 			this.txtSetor.Size = new System.Drawing.Size(228, 27);
-			this.txtSetor.TabIndex = 15;
+			this.txtSetor.TabIndex = 5;
 			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetSetor
@@ -345,12 +357,12 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(410, 293);
+			this.btnSetSetor.Location = new System.Drawing.Point(410, 114);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
 			this.btnSetSetor.Size = new System.Drawing.Size(34, 27);
-			this.btnSetSetor.TabIndex = 16;
+			this.btnSetSetor.TabIndex = 6;
 			this.btnSetSetor.TabStop = false;
 			this.btnSetSetor.Text = "...";
 			this.btnSetSetor.UseCompatibleTextRendering = true;
@@ -363,19 +375,19 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(123, 329);
+			this.label4.Location = new System.Drawing.Point(56, 79);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(47, 19);
-			this.label4.TabIndex = 17;
-			this.label4.Text = "Conta";
+			this.label4.Size = new System.Drawing.Size(114, 19);
+			this.label4.TabIndex = 1;
+			this.label4.Text = "Conta Creditada";
 			// 
 			// txtConta
 			// 
-			this.txtConta.Location = new System.Drawing.Point(176, 326);
+			this.txtConta.Location = new System.Drawing.Point(176, 76);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
 			this.txtConta.Size = new System.Drawing.Size(228, 27);
-			this.txtConta.TabIndex = 18;
+			this.txtConta.TabIndex = 2;
 			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetConta
@@ -384,12 +396,12 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(410, 326);
+			this.btnSetConta.Location = new System.Drawing.Point(410, 76);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
 			this.btnSetConta.Size = new System.Drawing.Size(34, 27);
-			this.btnSetConta.TabIndex = 19;
+			this.btnSetConta.TabIndex = 3;
 			this.btnSetConta.TabStop = false;
 			this.btnSetConta.Text = "...";
 			this.btnSetConta.UseCompatibleTextRendering = true;
@@ -402,19 +414,20 @@
 			this.lblReuniao.AutoSize = true;
 			this.lblReuniao.BackColor = System.Drawing.Color.Transparent;
 			this.lblReuniao.ForeColor = System.Drawing.Color.Black;
-			this.lblReuniao.Location = new System.Drawing.Point(108, 428);
+			this.lblReuniao.Location = new System.Drawing.Point(108, 388);
 			this.lblReuniao.Name = "lblReuniao";
 			this.lblReuniao.Size = new System.Drawing.Size(62, 19);
-			this.lblReuniao.TabIndex = 25;
+			this.lblReuniao.TabIndex = 21;
 			this.lblReuniao.Text = "Reunião";
 			// 
 			// txtReuniao
 			// 
-			this.txtReuniao.Location = new System.Drawing.Point(176, 425);
+			this.txtReuniao.Location = new System.Drawing.Point(176, 385);
+			this.txtReuniao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtReuniao.MaxLength = 30;
 			this.txtReuniao.Name = "txtReuniao";
 			this.txtReuniao.Size = new System.Drawing.Size(228, 27);
-			this.txtReuniao.TabIndex = 26;
+			this.txtReuniao.TabIndex = 22;
 			this.txtReuniao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetReuniao
@@ -423,12 +436,12 @@
 			this.btnSetReuniao.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetReuniao.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetReuniao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetReuniao.Location = new System.Drawing.Point(410, 425);
+			this.btnSetReuniao.Location = new System.Drawing.Point(410, 385);
 			this.btnSetReuniao.Name = "btnSetReuniao";
 			this.btnSetReuniao.RoundedCornersMask = ((byte)(15));
 			this.btnSetReuniao.RoundedCornersRadius = 0;
 			this.btnSetReuniao.Size = new System.Drawing.Size(34, 27);
-			this.btnSetReuniao.TabIndex = 27;
+			this.btnSetReuniao.TabIndex = 23;
 			this.btnSetReuniao.TabStop = false;
 			this.btnSetReuniao.Text = "...";
 			this.btnSetReuniao.UseCompatibleTextRendering = true;
@@ -441,19 +454,20 @@
 			this.lblCampanha.AutoSize = true;
 			this.lblCampanha.BackColor = System.Drawing.Color.Transparent;
 			this.lblCampanha.ForeColor = System.Drawing.Color.Black;
-			this.lblCampanha.Location = new System.Drawing.Point(92, 461);
+			this.lblCampanha.Location = new System.Drawing.Point(92, 466);
 			this.lblCampanha.Name = "lblCampanha";
 			this.lblCampanha.Size = new System.Drawing.Size(78, 19);
-			this.lblCampanha.TabIndex = 28;
+			this.lblCampanha.TabIndex = 27;
 			this.lblCampanha.Text = "Campanha";
 			// 
 			// txtCampanha
 			// 
-			this.txtCampanha.Location = new System.Drawing.Point(176, 458);
+			this.txtCampanha.Location = new System.Drawing.Point(176, 463);
+			this.txtCampanha.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCampanha.MaxLength = 30;
 			this.txtCampanha.Name = "txtCampanha";
 			this.txtCampanha.Size = new System.Drawing.Size(279, 27);
-			this.txtCampanha.TabIndex = 29;
+			this.txtCampanha.TabIndex = 28;
 			this.txtCampanha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetCampanha
@@ -462,12 +476,12 @@
 			this.btnSetCampanha.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetCampanha.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetCampanha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetCampanha.Location = new System.Drawing.Point(461, 458);
+			this.btnSetCampanha.Location = new System.Drawing.Point(461, 463);
 			this.btnSetCampanha.Name = "btnSetCampanha";
 			this.btnSetCampanha.RoundedCornersMask = ((byte)(15));
 			this.btnSetCampanha.RoundedCornersRadius = 0;
 			this.btnSetCampanha.Size = new System.Drawing.Size(34, 27);
-			this.btnSetCampanha.TabIndex = 30;
+			this.btnSetCampanha.TabIndex = 29;
 			this.btnSetCampanha.TabStop = false;
 			this.btnSetCampanha.Text = "...";
 			this.btnSetCampanha.UseCompatibleTextRendering = true;
@@ -480,10 +494,10 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(381, 108);
+			this.label8.Location = new System.Drawing.Point(105, 247);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(116, 19);
-			this.label8.TabIndex = 6;
+			this.label8.TabIndex = 12;
 			this.label8.Text = "Valor da Entrada";
 			// 
 			// label1
@@ -491,10 +505,10 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(39, 108);
+			this.label1.Location = new System.Drawing.Point(136, 179);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(114, 19);
-			this.label1.TabIndex = 2;
+			this.label1.TabIndex = 8;
 			this.label1.Text = "Data da Entrada";
 			// 
 			// label9
@@ -502,19 +516,20 @@
 			this.label9.AutoSize = true;
 			this.label9.BackColor = System.Drawing.Color.Transparent;
 			this.label9.ForeColor = System.Drawing.Color.Black;
-			this.label9.Location = new System.Drawing.Point(54, 230);
+			this.label9.Location = new System.Drawing.Point(220, 247);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(116, 19);
-			this.label9.TabIndex = 8;
+			this.label9.TabIndex = 13;
 			this.label9.Text = "Meio de Entrada";
 			// 
 			// txtEntradaForma
 			// 
-			this.txtEntradaForma.Location = new System.Drawing.Point(176, 227);
+			this.txtEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtEntradaForma.Location = new System.Drawing.Point(224, 269);
 			this.txtEntradaForma.MaxLength = 30;
 			this.txtEntradaForma.Name = "txtEntradaForma";
-			this.txtEntradaForma.Size = new System.Drawing.Size(228, 27);
-			this.txtEntradaForma.TabIndex = 9;
+			this.txtEntradaForma.Size = new System.Drawing.Size(193, 31);
+			this.txtEntradaForma.TabIndex = 15;
 			this.txtEntradaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetEntradaForma
@@ -523,12 +538,12 @@
 			this.btnSetEntradaForma.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEntradaForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetEntradaForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetEntradaForma.Location = new System.Drawing.Point(410, 227);
+			this.btnSetEntradaForma.Location = new System.Drawing.Point(423, 269);
 			this.btnSetEntradaForma.Name = "btnSetEntradaForma";
 			this.btnSetEntradaForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaForma.RoundedCornersRadius = 0;
-			this.btnSetEntradaForma.Size = new System.Drawing.Size(34, 27);
-			this.btnSetEntradaForma.TabIndex = 10;
+			this.btnSetEntradaForma.Size = new System.Drawing.Size(34, 31);
+			this.btnSetEntradaForma.TabIndex = 16;
 			this.btnSetEntradaForma.TabStop = false;
 			this.btnSetEntradaForma.Text = "...";
 			this.btnSetEntradaForma.UseCompatibleTextRendering = true;
@@ -542,37 +557,49 @@
 			this.cmbEntradaMes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbEntradaMes.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmbEntradaMes.FormattingEnabled = true;
-			this.cmbEntradaMes.Location = new System.Drawing.Point(101, 130);
+			this.cmbEntradaMes.Location = new System.Drawing.Point(198, 201);
 			this.cmbEntradaMes.Name = "cmbEntradaMes";
 			this.cmbEntradaMes.Size = new System.Drawing.Size(150, 31);
-			this.cmbEntradaMes.TabIndex = 4;
+			this.cmbEntradaMes.TabIndex = 10;
 			// 
 			// txtEntradaAno
 			// 
 			this.txtEntradaAno.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtEntradaAno.Inteiro = true;
-			this.txtEntradaAno.Location = new System.Drawing.Point(257, 130);
+			this.txtEntradaAno.Location = new System.Drawing.Point(354, 201);
 			this.txtEntradaAno.Name = "txtEntradaAno";
 			this.txtEntradaAno.Positivo = true;
 			this.txtEntradaAno.Size = new System.Drawing.Size(63, 31);
-			this.txtEntradaAno.TabIndex = 5;
+			this.txtEntradaAno.TabIndex = 11;
 			this.txtEntradaAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// txtEntradaDia
 			// 
 			this.txtEntradaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtEntradaDia.Inteiro = true;
-			this.txtEntradaDia.Location = new System.Drawing.Point(43, 130);
+			this.txtEntradaDia.Location = new System.Drawing.Point(140, 201);
 			this.txtEntradaDia.Name = "txtEntradaDia";
 			this.txtEntradaDia.Positivo = true;
 			this.txtEntradaDia.Size = new System.Drawing.Size(52, 31);
-			this.txtEntradaDia.TabIndex = 3;
+			this.txtEntradaDia.TabIndex = 9;
 			this.txtEntradaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// line2
+			// 
+			this.line2.EndPoint = new System.Drawing.Point(495, 5);
+			this.line2.LineColor = System.Drawing.Color.SlateGray;
+			this.line2.LineWidth = 3F;
+			this.line2.Location = new System.Drawing.Point(25, 315);
+			this.line2.Name = "line2";
+			this.line2.Size = new System.Drawing.Size(500, 10);
+			this.line2.StartPoint = new System.Drawing.Point(5, 5);
+			this.line2.TabIndex = 17;
+			this.line2.TabStop = false;
 			// 
 			// frmEntrada
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 555);
+			this.ClientSize = new System.Drawing.Size(560, 598);
 			this.Controls.Add(this.txtEntradaDia);
 			this.Controls.Add(this.txtEntradaAno);
 			this.Controls.Add(this.cmbEntradaMes);
@@ -589,7 +616,7 @@
 			this.Controls.Add(this.txtSetor);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.txtEntradaForma);
-			this.Controls.Add(this.txtEntradaTipo);
+			this.Controls.Add(this.txtContribuicaoTipo);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.label9);
 			this.Controls.Add(this.label8);
@@ -600,6 +627,7 @@
 			this.Controls.Add(this.lblReuniao);
 			this.Controls.Add(this.txtContribuinte);
 			this.Controls.Add(this.lblContribuinte);
+			this.Controls.Add(this.line2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.txtOrigemDescricao);
@@ -612,6 +640,7 @@
 			this.Controls.SetChildIndex(this.txtOrigemDescricao, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
+			this.Controls.SetChildIndex(this.line2, 0);
 			this.Controls.SetChildIndex(this.lblContribuinte, 0);
 			this.Controls.SetChildIndex(this.txtContribuinte, 0);
 			this.Controls.SetChildIndex(this.lblReuniao, 0);
@@ -622,7 +651,7 @@
 			this.Controls.SetChildIndex(this.label8, 0);
 			this.Controls.SetChildIndex(this.label9, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.txtEntradaTipo, 0);
+			this.Controls.SetChildIndex(this.txtContribuicaoTipo, 0);
 			this.Controls.SetChildIndex(this.txtEntradaForma, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtSetor, 0);
@@ -666,7 +695,7 @@
 		internal System.Windows.Forms.Label lblContribuinte;
 		private CamadaUC.ucOnlyNumbers txtValorBruto;
 		internal System.Windows.Forms.Label label2;
-		internal System.Windows.Forms.TextBox txtEntradaTipo;
+		internal System.Windows.Forms.TextBox txtContribuicaoTipo;
 		internal VIBlend.WinForms.Controls.vButton btnSetEntradaTipo;
 		internal System.Windows.Forms.Label label3;
 		internal System.Windows.Forms.TextBox txtSetor;
@@ -688,5 +717,7 @@
 		private CamadaUC.ucComboLimitedValues cmbEntradaMes;
 		private CamadaUC.ucOnlyNumbers txtEntradaAno;
 		private CamadaUC.ucOnlyNumbers txtEntradaDia;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private AwesomeShapeControl.Line line2;
 	}
 }

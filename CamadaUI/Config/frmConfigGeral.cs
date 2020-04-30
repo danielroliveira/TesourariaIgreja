@@ -5,18 +5,17 @@ using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 using CamadaUI.Contas;
 using CamadaUI.Setores;
-using CamadaUI.Congregacoes;
 using System.Xml;
-using CamadaDTO;
 using System.Drawing;
+using CamadaDTO;
 
 namespace CamadaUI.Config
 {
 	public partial class frmConfigGeral : Modals.frmModConfig
 	{
 		private int? _IDCongregacao;
-		private int? _IDConta;
-		private int? _IDSetor;
+		private objConta _Conta;
+		private objSetor _Setor;
 
 		#region SUB NEW | LOAD
 
@@ -27,6 +26,10 @@ namespace CamadaUI.Config
 			LoadConfig();
 
 			HandlerKeyDownControl(this);
+
+			_Conta = Application.OpenForms.OfType<frmPrincipal>().First().propContaPadrao;
+			_Setor = Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao;
+
 		}
 
 		// LOAD
@@ -38,7 +41,6 @@ namespace CamadaUI.Config
 		#endregion
 
 		#region BUTTONS FUNCTION
-
 
 		// CLOSE
 		// =============================================================================
@@ -68,16 +70,16 @@ namespace CamadaUI.Config
 				// CONGREGACAO
 				string strIDCong = LoadNode(doc, "CongregacaoPadrao");
 				_IDCongregacao = string.IsNullOrEmpty(strIDCong) ? null : int.Parse(strIDCong) as int?;
-				txtCongregacaoPadrao.Text = LoadNode(doc, "CongregacaoDescricao");
+				lblCongregacao.Text = LoadNode(doc, "CongregacaoDescricao");
 
 				// CONTA
-				string strIDConta = LoadNode(doc, "ContaPadrao");
-				_IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
+				//string strIDConta = LoadNode(doc, "ContaPadrao");
+				//_Conta.IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
 				txtContaPadrao.Text = LoadNode(doc, "ContaDescricao");
 
 				// SETOR
-				string strIDSetor = LoadNode(doc, "SetorPadrao");
-				_IDSetor = string.IsNullOrEmpty(strIDSetor) ? null : int.Parse(strIDSetor) as int?;
+				//string strIDSetor = LoadNode(doc, "SetorPadrao");
+				//_Setor.IDSetor = string.IsNullOrEmpty(strIDSetor) ? null : int.Parse(strIDSetor) as int?;
 				txtSetorPadrao.Text = LoadNode(doc, "SetorDescricao");
 
 				// DATA BLOQUEIO | DATA PADRAO
@@ -143,7 +145,7 @@ namespace CamadaUI.Config
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtCongregacaoPadrao, txtContaPadrao, txtSetorPadrao
+					txtContaPadrao, txtSetorPadrao
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -162,12 +164,12 @@ namespace CamadaUI.Config
 
 				// save items
 				SaveConfigValorNode("IgrejaTitulo", txtIgrejaTitulo.Text);
-				SaveConfigValorNode("CongregacaoDescricao", txtCongregacaoPadrao.Text);
+				SaveConfigValorNode("CongregacaoDescricao", lblCongregacao.Text);
 				SaveConfigValorNode("CongregacaoPadrao", _IDCongregacao.ToString());
 				SaveConfigValorNode("ContaDescricao", txtContaPadrao.Text);
-				SaveConfigValorNode("ContaPadrao", _IDConta.ToString());
+				SaveConfigValorNode("ContaPadrao", _Conta.IDConta.ToString());
 				SaveConfigValorNode("SetorDescricao", txtSetorPadrao.Text);
-				SaveConfigValorNode("SetorPadrao", _IDSetor.ToString());
+				SaveConfigValorNode("SetorPadrao", _Setor.IDSetor.ToString());
 				SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
 				SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
 				SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
@@ -191,11 +193,23 @@ namespace CamadaUI.Config
 		{
 			if (!VerificaControle(txtIgrejaTitulo, "TÍTULO DA IGREJA")) return false;
 			if (!VerificaControle(dtpDataPadrao, "DATA PADRÃO")) return false;
-			if (!VerificaControle(txtCongregacaoPadrao, "CONGREGAÇÃO PADRÃO")) return false;
+			if (!VerificaControle(lblCongregacao, "CONGREGAÇÃO PADRÃO")) return false;
 			if (!VerificaControle(txtContaPadrao, "CONTA PADRÃO")) return false;
 			if (!VerificaControle(txtSetorPadrao, "SETOR PADRÃO")) return false;
 			if (!VerificaControle(txtCidadePadrao, "CIDADE PADRÃO")) return false;
 			if (!VerificaControle(txtUFPadrao, "UF PADRÃO")) return false;
+
+			if (_Conta == null || _Conta.IDConta == null)
+			{
+				AbrirDialog("Favor escolher a Conta Padrão", "Conta Padrão", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+
+			if (_Setor == null || _Setor.IDSetor == null)
+			{
+				AbrirDialog("Favor escolher o Setor Padrão", "Setor Padrão", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
 
 			return true;
 		}
@@ -218,9 +232,6 @@ namespace CamadaUI.Config
 
 				switch (ctr.Name)
 				{
-					case "txtCongregacaoPadrao":
-						btnFilialAlterar_Click(sender, new EventArgs());
-						break;
 					case "txtContaPadrao":
 						btnContaAlterar_Click(sender, new EventArgs());
 						break;
@@ -234,7 +245,7 @@ namespace CamadaUI.Config
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtCongregacaoPadrao, txtContaPadrao, txtSetorPadrao };
+				Control[] controlesBloqueados = { txtContaPadrao, txtSetorPadrao };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -248,7 +259,7 @@ namespace CamadaUI.Config
 		{
 			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
 
-			frmContaProcura frm = new frmContaProcura(this, _IDConta);
+			frmContaProcura frm = new frmContaProcura(this, _Conta?.IDConta);
 
 			// disable forms
 			this.lblTitulo.BackColor = Color.Silver;
@@ -261,8 +272,28 @@ namespace CamadaUI.Config
 
 			if (frm.DialogResult == DialogResult.OK)
 			{
+				Application.OpenForms.OfType<frmPrincipal>().First().propContaPadrao = frm.propEscolha;
+				_Conta = frm.propEscolha;
 				txtContaPadrao.Text = frm.propEscolha.Conta;
-				_IDConta = frm.propEscolha.IDConta;
+
+				// check SETOR
+				if (_Setor != null)
+				{
+					if (_Setor.IDCongregacao != _Conta.IDCongregacao)
+					{
+						// user message
+						AbrirDialog("A CONTA escolhida pertence a uma congregação diferente do SETOR padrão escolhido:\n" +
+							_Setor.Setor.ToUpper() +
+							"\nO Setor padrão atual será descartado. Favor definir um novo Setor...",
+							"Redefinir Setor", DialogType.OK, DialogIcon.Exclamation);
+
+						// clear controls
+						txtSetorPadrao.Clear();
+						_Setor = null;
+						Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao = null;
+					}
+				}
+
 			}
 
 			// focus control
@@ -295,57 +326,6 @@ namespace CamadaUI.Config
 			txtContaPadrao.Focus();
 		}
 
-		private void btnFilialAlterar_Click(object sender, EventArgs e)
-		{
-			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
-
-			frmCongregacaoProcura fProc = new frmCongregacaoProcura(this, _IDCongregacao);
-
-			// disable forms
-			this.lblTitulo.BackColor = Color.Silver;
-			config.panel1.BackColor = Color.Silver;
-			// show
-			fProc.ShowDialog();
-			// return
-			this.lblTitulo.BackColor = Color.SlateGray;
-			config.panel1.BackColor = Color.Goldenrod;
-
-			if (fProc.DialogResult == DialogResult.OK)
-			{
-				txtCongregacaoPadrao.Text = fProc.propEscolha.Congregacao;
-				_IDCongregacao = fProc.propEscolha.IDCongregacao;
-			}
-
-			// focus control
-			txtCongregacaoPadrao.Focus();
-		}
-
-		private void btnFilialEditar_Click(object sender, EventArgs e)
-		{
-			Form config = Application.OpenForms.OfType<frmConfig>().First();
-
-			frmCongregacaoListagem frmList = new frmCongregacaoListagem(this);
-
-			// disable forms
-			this.Visible = false;
-			config.Visible = false;
-			// show
-			frmList.ShowDialog();
-
-			if (frmList.DialogResult == DialogResult.Yes)
-			{
-				frmCongregacao frmC = new frmCongregacao(frmList.propEscolha);
-				DesativaMenuPrincipal();
-				frmC.ShowDialog();
-			}
-
-			// return
-			config.Visible = true;
-			this.Visible = true;
-			// focus control
-			txtCongregacaoPadrao.Focus();
-		}
-
 		private void btnSetorAlterar_Click(object sender, EventArgs e)
 		{
 			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
@@ -363,8 +343,21 @@ namespace CamadaUI.Config
 
 			if (fProc.DialogResult == DialogResult.OK)
 			{
-				txtSetorPadrao.Text = fProc.propEscolha.Setor;
-				_IDSetor = fProc.propEscolha.IDSetor;
+				// check SETOR
+				if (_Conta != null && fProc.propEscolha.IDCongregacao != _Conta.IDCongregacao)
+				{
+					// user message
+					AbrirDialog("O SETOR escolhido pertence a uma congregação diferente da CONTA padrão atual:\n" +
+						_Conta.Conta.ToUpper() +
+						"\nO Setor escolhido será descartado. Favor escolher um novo Setor...",
+						"Redefinir Setor", DialogType.OK, DialogIcon.Exclamation);
+				}
+				else
+				{
+					Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao = fProc.propEscolha;
+					txtSetorPadrao.Text = fProc.propEscolha.Setor;
+					_Setor = fProc.propEscolha;
+				}
 			}
 
 			// focus control
@@ -393,8 +386,9 @@ namespace CamadaUI.Config
 			// return
 			config.Visible = true;
 			this.Visible = true;
+
 			// focus control
-			txtCongregacaoPadrao.Focus();
+			txtSetorPadrao.Focus();
 		}
 	}
 }

@@ -39,8 +39,8 @@
 			this.mnuSetoresCongregacao = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuReunioes = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnEntradas = new System.Windows.Forms.ToolStripSplitButton();
-			this.mnuEntradaInserir = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuEntradaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuContribuicaoInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuContribuicaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCampanhas = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
@@ -57,6 +57,8 @@
 			this.btnMinimizer = new System.Windows.Forms.Button();
 			this.btnConfig = new System.Windows.Forms.Button();
 			this.PainelInferior = new System.Windows.Forms.Panel();
+			this.lblSetor = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
 			this.lblConta = new System.Windows.Forms.Label();
 			this.Label4 = new System.Windows.Forms.Label();
 			this.lblVersao = new System.Windows.Forms.Label();
@@ -175,8 +177,8 @@
 			// btnEntradas
 			// 
 			this.btnEntradas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuEntradaInserir,
-            this.mnuEntradaProcurar,
+            this.mnuContribuicaoInserir,
+            this.mnuContribuicaoProcurar,
             this.toolStripSeparator3,
             this.mnuCampanhas});
 			this.btnEntradas.Image = global::CamadaUI.Properties.Resources.Entradas_32;
@@ -191,26 +193,26 @@
 			this.btnEntradas.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
 			this.btnEntradas.ButtonClick += new System.EventHandler(this.btnEntradas_ButtonClick);
 			// 
-			// mnuEntradaInserir
+			// mnuContribuicaoInserir
 			// 
-			this.mnuEntradaInserir.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuEntradaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
-			this.mnuEntradaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuEntradaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuEntradaInserir.Name = "mnuEntradaInserir";
-			this.mnuEntradaInserir.Padding = new System.Windows.Forms.Padding(0);
-			this.mnuEntradaInserir.Size = new System.Drawing.Size(240, 28);
-			this.mnuEntradaInserir.Text = "Inserir Entrada";
+			this.mnuContribuicaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuContribuicaoInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuContribuicaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContribuicaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuContribuicaoInserir.Name = "mnuContribuicaoInserir";
+			this.mnuContribuicaoInserir.Padding = new System.Windows.Forms.Padding(0);
+			this.mnuContribuicaoInserir.Size = new System.Drawing.Size(240, 28);
+			this.mnuContribuicaoInserir.Text = "Inserir Contribuição";
 			// 
-			// mnuEntradaProcurar
+			// mnuContribuicaoProcurar
 			// 
-			this.mnuEntradaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuEntradaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuEntradaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuEntradaProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuEntradaProcurar.Name = "mnuEntradaProcurar";
-			this.mnuEntradaProcurar.Size = new System.Drawing.Size(240, 30);
-			this.mnuEntradaProcurar.Text = "Procurar Entrada";
+			this.mnuContribuicaoProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuContribuicaoProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuContribuicaoProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContribuicaoProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuContribuicaoProcurar.Name = "mnuContribuicaoProcurar";
+			this.mnuContribuicaoProcurar.Size = new System.Drawing.Size(240, 30);
+			this.mnuContribuicaoProcurar.Text = "Procurar Contribuição";
 			// 
 			// toolStripSeparator3
 			// 
@@ -398,6 +400,8 @@
 			// PainelInferior
 			// 
 			this.PainelInferior.BackColor = System.Drawing.Color.SlateGray;
+			this.PainelInferior.Controls.Add(this.lblSetor);
+			this.PainelInferior.Controls.Add(this.label5);
 			this.PainelInferior.Controls.Add(this.lblConta);
 			this.PainelInferior.Controls.Add(this.Label4);
 			this.PainelInferior.Controls.Add(this.lblVersao);
@@ -413,45 +417,90 @@
 			this.PainelInferior.Size = new System.Drawing.Size(1110, 35);
 			this.PainelInferior.TabIndex = 3;
 			// 
+			// lblSetor
+			// 
+			this.lblSetor.AutoSize = true;
+			this.lblSetor.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.lblSetor.Dock = System.Windows.Forms.DockStyle.Left;
+			this.lblSetor.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSetor.ForeColor = System.Drawing.Color.Transparent;
+			this.lblSetor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblSetor.Location = new System.Drawing.Point(410, 0);
+			this.lblSetor.Name = "lblSetor";
+			this.lblSetor.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.lblSetor.Size = new System.Drawing.Size(23, 24);
+			this.lblSetor.TabIndex = 5;
+			this.lblSetor.Text = "...";
+			this.lblSetor.Click += new System.EventHandler(this.lblSetor_Click);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.label5.Dock = System.Windows.Forms.DockStyle.Left;
+			this.label5.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.Color.Transparent;
+			this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.label5.Location = new System.Drawing.Point(340, 0);
+			this.label5.Name = "label5";
+			this.label5.Padding = new System.Windows.Forms.Padding(20, 6, 0, 0);
+			this.label5.Size = new System.Drawing.Size(70, 25);
+			this.label5.TabIndex = 4;
+			this.label5.Text = "Setor:";
+			this.label5.Click += new System.EventHandler(this.lblSetor_Click);
+			// 
 			// lblConta
 			// 
+			this.lblConta.AutoSize = true;
+			this.lblConta.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.lblConta.Dock = System.Windows.Forms.DockStyle.Left;
+			this.lblConta.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblConta.ForeColor = System.Drawing.Color.Transparent;
 			this.lblConta.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.lblConta.Location = new System.Drawing.Point(396, 7);
+			this.lblConta.Location = new System.Drawing.Point(317, 0);
 			this.lblConta.Name = "lblConta";
-			this.lblConta.Size = new System.Drawing.Size(186, 19);
+			this.lblConta.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.lblConta.Size = new System.Drawing.Size(23, 24);
 			this.lblConta.TabIndex = 5;
 			this.lblConta.Text = "...";
+			this.lblConta.Click += new System.EventHandler(this.lblConta_Click);
 			// 
 			// Label4
 			// 
 			this.Label4.AutoSize = true;
-			this.Label4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label4.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.Label4.Dock = System.Windows.Forms.DockStyle.Left;
+			this.Label4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Label4.ForeColor = System.Drawing.Color.Transparent;
 			this.Label4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.Label4.Location = new System.Drawing.Point(351, 7);
+			this.Label4.Location = new System.Drawing.Point(244, 0);
 			this.Label4.Name = "Label4";
-			this.Label4.Size = new System.Drawing.Size(51, 19);
+			this.Label4.Padding = new System.Windows.Forms.Padding(20, 6, 0, 0);
+			this.Label4.Size = new System.Drawing.Size(73, 25);
 			this.Label4.TabIndex = 4;
 			this.Label4.Text = "Conta:";
+			this.Label4.Click += new System.EventHandler(this.lblConta_Click);
 			// 
 			// lblVersao
 			// 
+			this.lblVersao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblVersao.AutoSize = true;
 			this.lblVersao.ForeColor = System.Drawing.Color.Transparent;
 			this.lblVersao.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.lblVersao.Location = new System.Drawing.Point(643, 7);
+			this.lblVersao.Location = new System.Drawing.Point(900, 7);
 			this.lblVersao.Name = "lblVersao";
-			this.lblVersao.Size = new System.Drawing.Size(102, 19);
+			this.lblVersao.Size = new System.Drawing.Size(26, 18);
 			this.lblVersao.TabIndex = 3;
 			this.lblVersao.Text = "...";
 			// 
 			// Label1
 			// 
+			this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.Label1.AutoSize = true;
 			this.Label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Label1.ForeColor = System.Drawing.Color.Transparent;
 			this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.Label1.Location = new System.Drawing.Point(590, 7);
+			this.Label1.Location = new System.Drawing.Point(847, 7);
 			this.Label1.Name = "Label1";
 			this.Label1.Size = new System.Drawing.Size(57, 19);
 			this.Label1.TabIndex = 2;
@@ -459,47 +508,60 @@
 			// 
 			// lblFilial
 			// 
-			this.lblFilial.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblFilial.AutoSize = true;
+			this.lblFilial.Dock = System.Windows.Forms.DockStyle.Left;
+			this.lblFilial.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblFilial.ForeColor = System.Drawing.Color.Transparent;
 			this.lblFilial.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.lblFilial.Location = new System.Drawing.Point(248, 7);
+			this.lblFilial.Location = new System.Drawing.Point(221, 0);
 			this.lblFilial.Name = "lblFilial";
-			this.lblFilial.Size = new System.Drawing.Size(102, 19);
+			this.lblFilial.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.lblFilial.Size = new System.Drawing.Size(23, 24);
 			this.lblFilial.TabIndex = 3;
 			this.lblFilial.Text = "...";
 			// 
 			// Label3
 			// 
 			this.Label3.AutoSize = true;
+			this.Label3.Dock = System.Windows.Forms.DockStyle.Left;
 			this.Label3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Label3.ForeColor = System.Drawing.Color.Transparent;
 			this.Label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.Label3.Location = new System.Drawing.Point(205, 7);
+			this.Label3.Location = new System.Drawing.Point(151, 0);
+			this.Label3.Margin = new System.Windows.Forms.Padding(0);
 			this.Label3.Name = "Label3";
-			this.Label3.Size = new System.Drawing.Size(44, 19);
+			this.Label3.Padding = new System.Windows.Forms.Padding(20, 6, 0, 0);
+			this.Label3.Size = new System.Drawing.Size(70, 25);
 			this.Label3.TabIndex = 2;
-			this.Label3.Text = "Filial:";
+			this.Label3.Text = "Igreja:";
 			// 
 			// lblDataSis
 			// 
+			this.lblDataSis.AutoSize = true;
+			this.lblDataSis.Dock = System.Windows.Forms.DockStyle.Left;
 			this.lblDataSis.ForeColor = System.Drawing.Color.Transparent;
 			this.lblDataSis.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.lblDataSis.Location = new System.Drawing.Point(131, 7);
+			this.lblDataSis.Location = new System.Drawing.Point(125, 0);
 			this.lblDataSis.Name = "lblDataSis";
-			this.lblDataSis.Size = new System.Drawing.Size(68, 19);
+			this.lblDataSis.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+			this.lblDataSis.Size = new System.Drawing.Size(26, 24);
 			this.lblDataSis.TabIndex = 1;
 			this.lblDataSis.Text = "...";
+			this.lblDataSis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// Label2
 			// 
 			this.Label2.AutoSize = true;
+			this.Label2.Dock = System.Windows.Forms.DockStyle.Left;
 			this.Label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Label2.ForeColor = System.Drawing.Color.Transparent;
-			this.Label2.Location = new System.Drawing.Point(12, 7);
+			this.Label2.Location = new System.Drawing.Point(0, 0);
 			this.Label2.Name = "Label2";
-			this.Label2.Size = new System.Drawing.Size(119, 19);
+			this.Label2.Padding = new System.Windows.Forms.Padding(6, 6, 0, 0);
+			this.Label2.Size = new System.Drawing.Size(125, 25);
 			this.Label2.TabIndex = 0;
 			this.Label2.Text = "Data do Sistema:";
+			this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lblHora
 			// 
@@ -555,8 +617,8 @@
 		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
 		private System.Windows.Forms.Label lblTitulo;
 		private System.Windows.Forms.ToolStripSplitButton btnEntradas;
-		private System.Windows.Forms.ToolStripMenuItem mnuEntradaInserir;
-		private System.Windows.Forms.ToolStripMenuItem mnuEntradaProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoProcurar;
 		private System.Windows.Forms.ToolStripSplitButton btnSaidas;
 		private System.Windows.Forms.ToolStripMenuItem mnuSaidaInserir;
 		internal System.Windows.Forms.Panel PainelInferior;
@@ -586,6 +648,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuReunioes;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem mnuCampanhas;
+		internal System.Windows.Forms.Label lblSetor;
+		internal System.Windows.Forms.Label label5;
 	}
 }
 

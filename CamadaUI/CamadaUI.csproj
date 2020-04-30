@@ -197,17 +197,17 @@
     <Compile Include="Entradas\frmCampanhaProcura.designer.cs">
       <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmEntrada.cs">
+    <Compile Include="Entradas\frmContribuicao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmEntrada.designer.cs">
-      <DependentUpon>frmEntrada.cs</DependentUpon>
+    <Compile Include="Entradas\frmContribuicao.designer.cs">
+      <DependentUpon>frmContribuicao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmEntradaListagem.cs">
+    <Compile Include="Entradas\frmContribuicaoListagem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmEntradaListagem.designer.cs">
-      <DependentUpon>frmEntradaListagem.cs</DependentUpon>
+    <Compile Include="Entradas\frmContribuicaoListagem.designer.cs">
+      <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmComboLista.cs">
       <SubType>Form</SubType>
@@ -388,11 +388,11 @@
     <EmbeddedResource Include="Entradas\frmCampanhaProcura.resx">
       <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmEntrada.resx">
-      <DependentUpon>frmEntrada.cs</DependentUpon>
+    <EmbeddedResource Include="Entradas\frmContribuicao.resx">
+      <DependentUpon>frmContribuicao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmEntradaListagem.resx">
-      <DependentUpon>frmEntradaListagem.cs</DependentUpon>
+    <EmbeddedResource Include="Entradas\frmContribuicaoListagem.resx">
+      <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmComboLista.resx">
       <DependentUpon>frmComboLista.cs</DependentUpon>

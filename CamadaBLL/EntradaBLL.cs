@@ -8,56 +8,17 @@ namespace CamadaBLL
 {
 	public class EntradaBLL
 	{
-		// GET LIST OF
-		//------------------------------------------------------------------------------------------------------------
-		public List<objEntrada> GetListEntrada(bool? Ativo = null)
-		{
-			try
-			{
-				AcessoDados db = new AcessoDados();
-
-				string query = "SELECT * FROM qryEntrada";
-
-				// add params
-				db.LimparParametros();
-
-				if (Ativo != null)
-				{
-					db.AdicionarParametros("@Ativo", Ativo);
-					query += " WHERE Ativo = @Ativo";
-				}
-
-				query += " ORDER BY IDEntrada";
-
-				List<objEntrada> listagem = new List<objEntrada>();
-				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
-
-				if (dt.Rows.Count == 0)
-				{
-					return listagem;
-				}
-
-				foreach (DataRow row in dt.Rows)
-				{
-					listagem.Add(ConvertRowInClass(row));
-				}
-
-				return listagem;
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
+		//=================================================================================================
+		// ENTRADA BLL
+		//=================================================================================================
 
 		// GET ENTRADA
 		//------------------------------------------------------------------------------------------------------------
-		public objEntrada GetEntrada(int IDEntrada)
+		public objEntrada GetEntrada(long IDEntrada, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM qryEntrada WHERE IDEntrada = @IDEntrada";
 				db.LimparParametros();
@@ -78,27 +39,16 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public objEntrada ConvertRowInClass(DataRow row)
 		{
-			objEntrada entrada = new objEntrada((int)row["IDEntrada"])
+			objEntrada entrada = new objEntrada((long)row["IDEntrada"])
 			{
 				EntradaData = (DateTime)row["EntradaData"],
-				CompensacaoData = (DateTime)row["CompensacaoData"],
-				IDEntradaForma = (byte)row["IDEntradaForma"],
-				EntradaForma = (string)row["EntradaForma"],
-				ValorBruto = (decimal)row["ValorBruto"],
-				ValorLiquido = (decimal)row["ValorLiquido"],
-				IDEntradaTipo = (byte)row["IDEntradaTipo"],
-				EntradaTipo = (string)row["EntradaTipo"],
+				IDOrigem = (long)row["IDOrigem"],
+				Origem = (int)row["Origem"],
+				EntradaValor = (decimal)row["EntradaValor"],
 				IDSetor = (int)row["IDSetor"],
 				Setor = (string)row["Setor"],
 				IDConta = (int)row["IDConta"],
-				Conta = (string)row["Conta"],
-				IDContribuinte = row["IDContribuinte"] == DBNull.Value ? null : (int?)row["IDContribuinte"],
-				Contribuinte = row["Contribuinte"] == DBNull.Value ? null : (string)row["Contribuinte"],
-				OrigemDescricao = row["OrigemDescricao"] == DBNull.Value ? null : (string)row["OrigemDescricao"],
-				IDReuniao = row["IDReuniao"] == DBNull.Value ? null : (int?)row["IDReuniao"],
-				Reuniao = row["Reuniao"] == DBNull.Value ? null : (string)row["Reuniao"],
-				IDCampanha = row["IDCampanha"] == DBNull.Value ? null : (int?)row["IDCampanha"],
-				Campanha = row["Campanha"] == DBNull.Value ? null : (string)row["Campanha"],
+				Conta = (string)row["Conta"]
 			};
 
 			return entrada;
@@ -106,51 +56,70 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertEntrada(objEntrada entrada)
+		public int InsertEntrada(objEntrada entrada, object dbTran = null)
 		{
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				if (!db.isTran) db.BeginTransaction();
 
 				//--- clear Params
 				db.LimparParametros();
 
 				//--- define Params
 				db.AdicionarParametros("@EntradaData", entrada.EntradaData);
-				db.AdicionarParametros("@CompensacaoData", entrada.CompensacaoData);
-				db.AdicionarParametros("@IDEntradaForma", entrada.IDEntradaForma);
-				db.AdicionarParametros("@ValorBruto", entrada.ValorBruto);
-				db.AdicionarParametros("@ValorLiquido", entrada.ValorLiquido);
-				db.AdicionarParametros("@IDEntradaTipo", entrada.IDEntradaTipo);
+				db.AdicionarParametros("@EntradaValor", entrada.EntradaValor);
+				db.AdicionarParametros("@IDOrigem", entrada.IDOrigem);
+				db.AdicionarParametros("@Origem", entrada.Origem);
 				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
 				db.AdicionarParametros("@IDConta", entrada.IDConta);
-				db.AdicionarParametros("@IDContribuinte", entrada.IDContribuinte);
-				db.AdicionarParametros("@OrigemDescricao", entrada.OrigemDescricao);
-				db.AdicionarParametros("@IDReuniao", entrada.IDReuniao);
-				db.AdicionarParametros("@IDCampanha", entrada.IDCampanha);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
 
 				string query = db.CreateInsertSQL("tblEntradas");
 
-				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				//--- insert and Get new ID
+				int newID = db.ExecutarInsertAndGetID(query);
+
+				//--- altera o saldo da CONTA
+				new ContaBLL().ContaSaldoChange(entrada.IDConta, entrada.EntradaValor, db);
+
+				//--- altera o saldo do SETOR
+				new SetorBLL().SetorSaldoChange(entrada.IDSetor, entrada.EntradaValor, db);
+
+				if (!db.isTran) db.CommitTransaction();
+				return newID;
 
 			}
 			catch (Exception ex)
 			{
+				if (!db.isTran) db.RollBackTransaction();
 				throw ex;
 			}
 		}
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateEntrada(objEntrada entrada)
+		public bool UpdateEntrada(objEntrada entrada, object dbTran = null)
 		{
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				// check and begin transaction
+				if (!db.isTran) db.BeginTransaction();
+
+				// get old Entrada IDSetor, IDConta, and Value
+				var oldEntrada = GetEntrada((int)entrada.IDEntrada, db);
+
+				// return old Values SALDO CONTA AND SETOR
+				ContaBLL cBLL = new ContaBLL();
+				SetorBLL sBLL = new SetorBLL();
+
+				cBLL.ContaSaldoChange(oldEntrada.IDConta, oldEntrada.EntradaValor * (-1), db);
+				sBLL.SetorSaldoChange(oldEntrada.IDSetor, oldEntrada.EntradaValor * (-1), db);
 
 				//--- clear Params
 				db.LimparParametros();
@@ -158,17 +127,11 @@ namespace CamadaBLL
 				//--- define Params
 				db.AdicionarParametros("@IDEntrada", entrada.IDEntrada);
 				db.AdicionarParametros("@EntradaData", entrada.EntradaData);
-				db.AdicionarParametros("@CompensacaoData", entrada.CompensacaoData);
-				db.AdicionarParametros("@IDEntradaForma", entrada.IDEntradaForma);
-				db.AdicionarParametros("@ValorBruto", entrada.ValorBruto);
-				db.AdicionarParametros("@ValorLiquido", entrada.ValorLiquido);
-				db.AdicionarParametros("@IDEntradaTipo", entrada.IDEntradaTipo);
+				db.AdicionarParametros("@EntradaValor", entrada.EntradaValor);
+				db.AdicionarParametros("@IDOrigem", entrada.IDOrigem);
+				db.AdicionarParametros("@Origem", entrada.Origem);
 				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
 				db.AdicionarParametros("@IDConta", entrada.IDConta);
-				db.AdicionarParametros("@IDContribuinte", entrada.IDContribuinte);
-				db.AdicionarParametros("@OrigemDescricao", entrada.OrigemDescricao);
-				db.AdicionarParametros("@IDReuniao", entrada.IDReuniao);
-				db.AdicionarParametros("@IDCampanha", entrada.IDCampanha);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -178,14 +141,23 @@ namespace CamadaBLL
 
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- altera o saldo da CONTA e SETOR
+				cBLL.ContaSaldoChange(entrada.IDConta, entrada.EntradaValor, db);
+				sBLL.SetorSaldoChange(entrada.IDSetor, entrada.EntradaValor, db);
+
+				//--- commit and return
+				if (!db.isTran) db.CommitTransaction();
 				return true;
 
 			}
 			catch (Exception ex)
 			{
+				if (!db.isTran) db.RollBackTransaction();
 				throw ex;
 			}
 		}
+
 
 		//=============================================================================
 		//=============================================================================
@@ -226,52 +198,8 @@ namespace CamadaBLL
 						EntradaForma = (string)row["EntradaForma"],
 						CompensacaoDias = (byte)row["CompensacaoDias"],
 						TaxaComissao = (decimal)row["TaxaComissao"],
-						Ativa = (bool)row["Ativa"]
-					};
-
-					listagem.Add(forma);
-				}
-
-				return listagem;
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
-		// GET ENTRADA TIPOS
-		//------------------------------------------------------------------------------------------------------------
-		public List<objEntradaTipo> GetEntradaTiposList()
-		{
-			try
-			{
-				AcessoDados db = new AcessoDados();
-
-				string query = "SELECT * FROM tblEntradaTipo";
-
-				// add params
-				db.LimparParametros();
-
-				query += " ORDER BY EntradaTipo";
-
-				List<objEntradaTipo> listagem = new List<objEntradaTipo>();
-				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
-
-				if (dt.Rows.Count == 0)
-				{
-					return listagem;
-				}
-
-				foreach (DataRow row in dt.Rows)
-				{
-					objEntradaTipo forma = new objEntradaTipo((byte)row["IDEntradaTipo"])
-					{
-						EntradaTipo = (string)row["EntradaTipo"],
-						ComAtividade = (bool)row["ComAtividade"],
-						ComCampanha = (bool)row["ComCampanha"],
-						ComOrigem = (bool)row["ComOrigem"]
+						Ativa = (bool)row["Ativa"],
+						IDContaProvisoria = row["IDContaProvisoria"] == DBNull.Value ? null : (int?)row["IDContaProvisoria"]
 					};
 
 					listagem.Add(forma);

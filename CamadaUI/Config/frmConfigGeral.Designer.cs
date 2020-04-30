@@ -32,7 +32,6 @@
 			this.btnCancelar = new System.Windows.Forms.Button();
 			this.pnlPastas = new System.Windows.Forms.Panel();
 			this.label4 = new System.Windows.Forms.Label();
-			this.btnFilialEditar = new System.Windows.Forms.Button();
 			this.txtIgrejaTitulo = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnSetorEditar = new System.Windows.Forms.Button();
@@ -40,15 +39,14 @@
 			this.Label34 = new System.Windows.Forms.Label();
 			this.btnSetorAlterar = new System.Windows.Forms.Button();
 			this.btnContaAlterar = new System.Windows.Forms.Button();
+			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.Label15 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.Label35 = new System.Windows.Forms.Label();
-			this.btnFiliarlAlterar = new System.Windows.Forms.Button();
 			this.dtpDataPadrao = new System.Windows.Forms.DateTimePicker();
 			this.lblDataBloqueio = new System.Windows.Forms.Label();
-			this.txtCongregacaoPadrao = new System.Windows.Forms.TextBox();
 			this.Label22 = new System.Windows.Forms.Label();
 			this.txtUFPadrao = new System.Windows.Forms.TextBox();
 			this.txtSetorPadrao = new System.Windows.Forms.TextBox();
@@ -89,6 +87,7 @@
 			this.btnSalvarConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSalvarConfig.Image = global::CamadaUI.Properties.Resources.save_24;
 			this.btnSalvarConfig.Location = new System.Drawing.Point(484, 531);
+			this.btnSalvarConfig.Margin = new System.Windows.Forms.Padding(6);
 			this.btnSalvarConfig.Name = "btnSalvarConfig";
 			this.btnSalvarConfig.Size = new System.Drawing.Size(121, 36);
 			this.btnSalvarConfig.TabIndex = 2;
@@ -120,7 +119,6 @@
 			// 
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
 			this.pnlPastas.Controls.Add(this.label4);
-			this.pnlPastas.Controls.Add(this.btnFilialEditar);
 			this.pnlPastas.Controls.Add(this.txtIgrejaTitulo);
 			this.pnlPastas.Controls.Add(this.label1);
 			this.pnlPastas.Controls.Add(this.btnSetorEditar);
@@ -128,23 +126,23 @@
 			this.pnlPastas.Controls.Add(this.Label34);
 			this.pnlPastas.Controls.Add(this.btnSetorAlterar);
 			this.pnlPastas.Controls.Add(this.btnContaAlterar);
+			this.pnlPastas.Controls.Add(this.lblCongregacao);
 			this.pnlPastas.Controls.Add(this.Label15);
 			this.pnlPastas.Controls.Add(this.label5);
 			this.pnlPastas.Controls.Add(this.label6);
 			this.pnlPastas.Controls.Add(this.label2);
 			this.pnlPastas.Controls.Add(this.Label35);
-			this.pnlPastas.Controls.Add(this.btnFiliarlAlterar);
 			this.pnlPastas.Controls.Add(this.dtpDataPadrao);
 			this.pnlPastas.Controls.Add(this.lblDataBloqueio);
-			this.pnlPastas.Controls.Add(this.txtCongregacaoPadrao);
 			this.pnlPastas.Controls.Add(this.Label22);
 			this.pnlPastas.Controls.Add(this.txtUFPadrao);
 			this.pnlPastas.Controls.Add(this.txtSetorPadrao);
 			this.pnlPastas.Controls.Add(this.txtCidadePadrao);
 			this.pnlPastas.Controls.Add(this.txtContaPadrao);
 			this.pnlPastas.Location = new System.Drawing.Point(12, 42);
+			this.pnlPastas.Margin = new System.Windows.Forms.Padding(6);
 			this.pnlPastas.Name = "pnlPastas";
-			this.pnlPastas.Size = new System.Drawing.Size(720, 309);
+			this.pnlPastas.Size = new System.Drawing.Size(720, 477);
 			this.pnlPastas.TabIndex = 0;
 			// 
 			// label4
@@ -158,23 +156,6 @@
 			this.label4.TabIndex = 1;
 			this.label4.Text = "Título da Igreja:";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// btnFilialEditar
-			// 
-			this.btnFilialEditar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
-			this.btnFilialEditar.FlatAppearance.BorderSize = 0;
-			this.btnFilialEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFilialEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnFilialEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnFilialEditar.Location = new System.Drawing.Point(503, 113);
-			this.btnFilialEditar.Name = "btnFilialEditar";
-			this.btnFilialEditar.Size = new System.Drawing.Size(81, 30);
-			this.btnFilialEditar.TabIndex = 8;
-			this.btnFilialEditar.TabStop = false;
-			this.btnFilialEditar.Text = "Editar";
-			this.btnFilialEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnFilialEditar.UseVisualStyleBackColor = false;
-			this.btnFilialEditar.Click += new System.EventHandler(this.btnFilialEditar_Click);
 			// 
 			// txtIgrejaTitulo
 			// 
@@ -202,7 +183,7 @@
 			this.btnSetorEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSetorEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
 			this.btnSetorEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnSetorEditar.Location = new System.Drawing.Point(503, 206);
+			this.btnSetorEditar.Location = new System.Drawing.Point(612, 206);
 			this.btnSetorEditar.Name = "btnSetorEditar";
 			this.btnSetorEditar.Size = new System.Drawing.Size(81, 30);
 			this.btnSetorEditar.TabIndex = 18;
@@ -219,7 +200,7 @@
 			this.btnContaEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnContaEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
 			this.btnContaEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnContaEditar.Location = new System.Drawing.Point(503, 147);
+			this.btnContaEditar.Location = new System.Drawing.Point(612, 114);
 			this.btnContaEditar.Name = "btnContaEditar";
 			this.btnContaEditar.Size = new System.Drawing.Size(81, 30);
 			this.btnContaEditar.TabIndex = 12;
@@ -248,7 +229,7 @@
 			this.btnSetorAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSetorAlterar.Image = global::CamadaUI.Properties.Resources.refresh_16;
 			this.btnSetorAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnSetorAlterar.Location = new System.Drawing.Point(412, 206);
+			this.btnSetorAlterar.Location = new System.Drawing.Point(527, 206);
 			this.btnSetorAlterar.Name = "btnSetorAlterar";
 			this.btnSetorAlterar.Size = new System.Drawing.Size(81, 30);
 			this.btnSetorAlterar.TabIndex = 17;
@@ -265,7 +246,7 @@
 			this.btnContaAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnContaAlterar.Image = global::CamadaUI.Properties.Resources.refresh_16;
 			this.btnContaAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnContaAlterar.Location = new System.Drawing.Point(412, 147);
+			this.btnContaAlterar.Location = new System.Drawing.Point(527, 114);
 			this.btnContaAlterar.Name = "btnContaAlterar";
 			this.btnContaAlterar.Size = new System.Drawing.Size(81, 30);
 			this.btnContaAlterar.TabIndex = 11;
@@ -275,16 +256,28 @@
 			this.btnContaAlterar.UseVisualStyleBackColor = false;
 			this.btnContaAlterar.Click += new System.EventHandler(this.btnContaAlterar_Click);
 			// 
+			// lblCongregacao
+			// 
+			this.lblCongregacao.AutoSize = true;
+			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
+			this.lblCongregacao.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblCongregacao.Location = new System.Drawing.Point(307, 150);
+			this.lblCongregacao.Name = "lblCongregacao";
+			this.lblCongregacao.Size = new System.Drawing.Size(94, 19);
+			this.lblCongregacao.TabIndex = 5;
+			this.lblCongregacao.Text = "Congregação";
+			this.lblCongregacao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// Label15
 			// 
 			this.Label15.AutoSize = true;
 			this.Label15.BackColor = System.Drawing.Color.Transparent;
 			this.Label15.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Label15.Location = new System.Drawing.Point(34, 120);
+			this.Label15.Location = new System.Drawing.Point(203, 150);
 			this.Label15.Name = "Label15";
-			this.Label15.Size = new System.Drawing.Size(147, 19);
+			this.Label15.Size = new System.Drawing.Size(98, 19);
 			this.Label15.TabIndex = 5;
-			this.Label15.Text = "Congregação Padrão:";
+			this.Label15.Text = "Congregação:";
 			this.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label5
@@ -328,29 +321,12 @@
 			this.Label35.AutoSize = true;
 			this.Label35.BackColor = System.Drawing.Color.Transparent;
 			this.Label35.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Label35.Location = new System.Drawing.Point(81, 152);
+			this.Label35.Location = new System.Drawing.Point(81, 119);
 			this.Label35.Name = "Label35";
 			this.Label35.Size = new System.Drawing.Size(100, 19);
 			this.Label35.TabIndex = 9;
 			this.Label35.Text = "Conta Padrão:";
 			this.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// btnFiliarlAlterar
-			// 
-			this.btnFiliarlAlterar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
-			this.btnFiliarlAlterar.FlatAppearance.BorderSize = 0;
-			this.btnFiliarlAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFiliarlAlterar.Image = global::CamadaUI.Properties.Resources.refresh_16;
-			this.btnFiliarlAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnFiliarlAlterar.Location = new System.Drawing.Point(412, 114);
-			this.btnFiliarlAlterar.Name = "btnFiliarlAlterar";
-			this.btnFiliarlAlterar.Size = new System.Drawing.Size(81, 30);
-			this.btnFiliarlAlterar.TabIndex = 7;
-			this.btnFiliarlAlterar.TabStop = false;
-			this.btnFiliarlAlterar.Text = "Alterar";
-			this.btnFiliarlAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnFiliarlAlterar.UseVisualStyleBackColor = false;
-			this.btnFiliarlAlterar.Click += new System.EventHandler(this.btnFilialAlterar_Click);
 			// 
 			// dtpDataPadrao
 			// 
@@ -364,26 +340,17 @@
 			// lblDataBloqueio
 			// 
 			this.lblDataBloqueio.BackColor = System.Drawing.Color.Transparent;
-			this.lblDataBloqueio.Location = new System.Drawing.Point(307, 179);
+			this.lblDataBloqueio.Location = new System.Drawing.Point(307, 177);
 			this.lblDataBloqueio.Name = "lblDataBloqueio";
 			this.lblDataBloqueio.Size = new System.Drawing.Size(92, 18);
 			this.lblDataBloqueio.TabIndex = 14;
 			this.lblDataBloqueio.Text = "01/01/2018";
 			// 
-			// txtCongregacaoPadrao
-			// 
-			this.txtCongregacaoPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtCongregacaoPadrao.Location = new System.Drawing.Point(187, 116);
-			this.txtCongregacaoPadrao.Name = "txtCongregacaoPadrao";
-			this.txtCongregacaoPadrao.Size = new System.Drawing.Size(212, 27);
-			this.txtCongregacaoPadrao.TabIndex = 6;
-			this.txtCongregacaoPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
-			// 
 			// Label22
 			// 
 			this.Label22.AutoSize = true;
 			this.Label22.BackColor = System.Drawing.Color.Transparent;
-			this.Label22.Location = new System.Drawing.Point(184, 179);
+			this.Label22.Location = new System.Drawing.Point(184, 177);
 			this.Label22.Name = "Label22";
 			this.Label22.Size = new System.Drawing.Size(117, 19);
 			this.Label22.TabIndex = 13;
@@ -404,7 +371,7 @@
 			this.txtSetorPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtSetorPadrao.Location = new System.Drawing.Point(187, 208);
 			this.txtSetorPadrao.Name = "txtSetorPadrao";
-			this.txtSetorPadrao.Size = new System.Drawing.Size(212, 27);
+			this.txtSetorPadrao.Size = new System.Drawing.Size(334, 27);
 			this.txtSetorPadrao.TabIndex = 16;
 			this.txtSetorPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -420,9 +387,9 @@
 			// txtContaPadrao
 			// 
 			this.txtContaPadrao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtContaPadrao.Location = new System.Drawing.Point(187, 149);
+			this.txtContaPadrao.Location = new System.Drawing.Point(187, 116);
 			this.txtContaPadrao.Name = "txtContaPadrao";
-			this.txtContaPadrao.Size = new System.Drawing.Size(212, 27);
+			this.txtContaPadrao.Size = new System.Drawing.Size(334, 27);
 			this.txtContaPadrao.TabIndex = 10;
 			this.txtContaPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -455,14 +422,11 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox txtIgrejaTitulo;
 		private System.Windows.Forms.Label label4;
-		internal System.Windows.Forms.Button btnFilialEditar;
 		internal System.Windows.Forms.Button btnContaEditar;
 		internal System.Windows.Forms.Button btnContaAlterar;
-		internal System.Windows.Forms.Button btnFiliarlAlterar;
 		internal System.Windows.Forms.Label lblDataBloqueio;
 		internal System.Windows.Forms.Label Label22;
 		internal System.Windows.Forms.TextBox txtContaPadrao;
-		internal System.Windows.Forms.TextBox txtCongregacaoPadrao;
 		internal System.Windows.Forms.DateTimePicker dtpDataPadrao;
 		internal System.Windows.Forms.Label Label35;
 		internal System.Windows.Forms.Label Label34;
@@ -475,5 +439,6 @@
 		internal System.Windows.Forms.Button btnSetorAlterar;
 		internal System.Windows.Forms.Label label6;
 		internal System.Windows.Forms.TextBox txtSetorPadrao;
+		internal System.Windows.Forms.Label lblCongregacao;
 	}
 }

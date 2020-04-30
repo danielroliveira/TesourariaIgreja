@@ -1,11 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
+using System;
+using System.IO;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI
 {
@@ -88,9 +87,9 @@ namespace CamadaUI
 					return;
 				}
 
-				// VERIFICA CONTA PADRAO
+				// VERIFICA AND GET CONTA PADRAO
 				//------------------------------------------------------------------------------------------------------------
-				contaInicial = Verifica_ContaFilial();
+				contaInicial = VerificaAndGet_ContaAndCongregacao();
 
 				if (contaInicial == null || contaInicial.IDConta == null)
 				{
@@ -98,19 +97,21 @@ namespace CamadaUI
 					return;
 				}
 
-				// DETERMINA A CONTA ATIVA | FILIAL ATIVA | DATAPADRAO
+				// VERIFICA AND GET SETOR PADRAO
+				//------------------------------------------------------------------------------------------------------------
+
+				propSetorPadrao = VerificaAndGet_Setor();
+
+				// DETERMINA A CONTA ATIVA | CONGREGACAO ATIVA | DATAPADRAO
 				//------------------------------------------------------------------------------------------------------------
 				try
 				{
 					// --- Ampulheta ON
 					Cursor.Current = Cursors.WaitCursor;
 
-					if (contaInicial.IDCongregacao == null)
-					{
+					if (contaInicial.IDConta == null)
 						throw new Exception("Não foi possível salvar arquivo de configuração...");
-					}
 
-					SaveDefault("CongregacaoPadrao", contaInicial.IDCongregacao.ToString());
 					propContaPadrao = contaInicial;
 
 					//--- configurar DATAPADRAO
@@ -210,7 +211,7 @@ namespace CamadaUI
 			}
 		}
 
-		// Property Conta Padrao
+		// Property Conta Padrao | define Default Conta and Congregacao
 		//------------------------------------------------------------------------------------------------------------
 		public objConta propContaPadrao
 		{
@@ -223,8 +224,10 @@ namespace CamadaUI
 				_ContaPadrao = value;
 
 				//--- define a conta no config
+				SaveDefault("ContaPadrao", value.IDConta.ToString());
 				SaveDefault("ContaDescricao", value.Conta);
-				SaveDefault("CongregacaoDescricao", value.Congregacao);
+				SaveDefault("CongregacaoPadrao", value.IDCongregacao.ToString());
+				SaveDefault("CongregacaoDescricao", value.Congregacao.ToString());
 
 				//--- define as labels da conta e Filial
 				lblConta.Text = value.Conta;
@@ -232,6 +235,38 @@ namespace CamadaUI
 			}
 		}
 
+		// Property SETOR Padrao
+		//------------------------------------------------------------------------------------------------------------
+		public objSetor propSetorPadrao
+		{
+			get
+			{
+				return _SetorPadrao;
+			}
+			set
+			{
+				_SetorPadrao = value;
+
+				if (value != null)
+				{
+					//--- define a conta no config
+					SaveDefault("SetorPadrao", value.IDSetor.ToString());
+					SaveDefault("SetorDescricao", value.Setor);
+
+					//--- define as labels da conta e Filial
+					lblSetor.Text = value.Setor;
+				}
+				else
+				{
+					//--- define a conta no config
+					SaveDefault("SetorPadrao", string.Empty);
+					SaveDefault("SetorDescricao", string.Empty);
+
+					//--- define as labels da conta e Filial
+					lblSetor.Text = "Definir Setor Padrão";
+				}
+			}
+		}
 		// Property Data Padrao
 		//------------------------------------------------------------------------------------------------------------
 		public DateTime propDataPadrao
@@ -301,9 +336,9 @@ namespace CamadaUI
 			}
 		}
 
-		// VERIFICA CONTA INICIAL
+		// VERIFICA CONTA and CONGREGACAO INICIAL
 		//=================================================================================================
-		private objConta Verifica_ContaFilial()
+		private objConta VerificaAndGet_ContaAndCongregacao()
 		{
 			objConta conta = new objConta(null);
 
@@ -332,7 +367,6 @@ namespace CamadaUI
 			}
 
 			return conta;
-
 		}
 
 		// CHECK CONTA PADRAO
@@ -341,7 +375,6 @@ namespace CamadaUI
 		{
 			//--- VERIFICA CONTA
 			string ContaPadrao = ObterDefault("ContaPadrao");
-			ContaBLL cBLL = new ContaBLL();
 
 			if (string.IsNullOrEmpty(ContaPadrao))
 			{
@@ -354,12 +387,69 @@ namespace CamadaUI
 					// --- Ampulheta ON
 					Cursor.Current = Cursors.WaitCursor;
 
+					ContaBLL cBLL = new ContaBLL();
 					conta = cBLL.GetConta(Convert.ToInt32(ContaPadrao));
 					return (conta != null && conta.IDConta != null);
 				}
 				catch (Exception ex)
 				{
 					AbrirDialog("Uma exceção ocorreu ao Obter Conta Padrao..." + "\n" +
+								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+				finally
+				{
+					// --- Ampulheta OFF
+					Cursor.Current = Cursors.Default;
+				}
+			}
+		}
+
+		// VERIFICA SETOR INICIAL
+		//=================================================================================================
+		private objSetor VerificaAndGet_Setor()
+		{
+			objSetor setor = new objSetor(null);
+
+			if (!CheckSetorPadrao(ref setor))
+			{
+				MessageBox.Show("Ainda não foi encontrada nenhum SETOR PADRÃO no sistema...\n\n" +
+								"Favor inserir e escolher um SETOR padrão no arquivo do sistema",
+								"Setor Padrão",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Exclamation);
+
+				return null;
+			}
+
+			return setor;
+		}
+
+		// CHECK SETOR PADRAO
+		//------------------------------------------------------------------------------------------------------------
+		private bool CheckSetorPadrao(ref objSetor setor)
+		{
+			//--- VERIFICA SETOR
+			string SetorPadrao = ObterDefault("SetorPadrao");
+			SetorBLL sBLL = new SetorBLL();
+
+			if (string.IsNullOrEmpty(SetorPadrao))
+			{
+				return false;
+			}
+			else
+			{
+				try
+				{
+					// --- Ampulheta ON
+					Cursor.Current = Cursors.WaitCursor;
+
+					setor = sBLL.GetSetor(Convert.ToInt32(SetorPadrao));
+					return (setor != null && setor.IDSetor != null);
+				}
+				catch (Exception ex)
+				{
+					AbrirDialog("Uma exceção ocorreu ao Obter SETOR Padrao..." + "\n" +
 								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 					return false;
 				}
@@ -595,6 +685,65 @@ namespace CamadaUI
 			}
 		}
 
+		// CLICK LABEL TO DEFINE CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void lblConta_Click(object sender, EventArgs e)
+		{
+			// check if exists open forms
+			if (Application.OpenForms.Count > 1)
+				return;
+
+			Contas.frmContaProcura frm = new Contas.frmContaProcura(null, propContaPadrao.IDConta);
+
+			// show
+			frm.ShowDialog();
+
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				// check SETOR
+				if (propContaPadrao.IDCongregacao != frm.propEscolha.IDCongregacao)
+				{
+					AbrirDialog("Essa CONTA pertence a uma congregação diferente do SETOR padrão escolhido:\n" +
+						propSetorPadrao.Setor.ToUpper() +
+						"\nO Setor padrão atual será descartado. Favor definir um novo Setor...",
+						"Definir Setor", DialogType.OK, DialogIcon.Exclamation);
+
+					propSetorPadrao = null;
+				}
+
+				propContaPadrao = frm.propEscolha;
+			}
+		}
+
+		// CLICK LABEL TO DEFINE SETOR
+		//------------------------------------------------------------------------------------------------------------
+		private void lblSetor_Click(object sender, EventArgs e)
+		{
+			// check if exists open forms
+			if (Application.OpenForms.Count > 1)
+				return;
+
+			Setores.frmSetorProcura frm = new Setores.frmSetorProcura(null, propSetorPadrao?.IDSetor);
+
+			// show
+			frm.ShowDialog();
+
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				// check Conta and Congregacao
+				if (propContaPadrao.IDCongregacao != frm.propEscolha.IDCongregacao)
+				{
+					AbrirDialog("Esse setor não pertence à CONGREGAÇÃO padrão escolhida:\n" +
+						propContaPadrao.Congregacao.ToUpper() +
+						"\nFavor escolher um Setor que pertence à essa congregação.",
+						"Definir Setor", DialogType.OK, DialogIcon.Exclamation);
+					return;
+				}
+
+				propSetorPadrao = frm.propEscolha;
+			}
+		}
+
 		#endregion
 
 		#region MENU FUNCOES
@@ -610,7 +759,7 @@ namespace CamadaUI
 
 			// MENU ENTRADAS
 			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());
-			mnuEntradaInserir.Click += (a, b) => MenuClickOpenForm(new Entradas.frmEntrada(new objEntrada(null)));
+			mnuContribuicaoInserir.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicao(new objContribuicao(null)));
 
 			// MENU MOVIMENTACAO
 			mnuContas.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());
@@ -623,8 +772,6 @@ namespace CamadaUI
 			DesativaMenuPrincipal();
 			form.Show();
 		}
-
-
 
 		#endregion
 
