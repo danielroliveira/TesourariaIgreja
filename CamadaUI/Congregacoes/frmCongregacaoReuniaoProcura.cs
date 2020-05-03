@@ -19,14 +19,28 @@ namespace CamadaUI.Congregacoes
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmCongregacaoReuniaoProcura(Form formOrigem, int? DefaultID = null)
+		public frmCongregacaoReuniaoProcura(
+			Form formOrigem,
+			int? DefaultID = null,
+			KeyValuePair<int, string>? FilterCongregacao = null)
 		{
 			InitializeComponent();
+			//--- Add any initialization after the InitializeComponent() call.
 
 			_formOrigem = formOrigem;
 
-			//--- Add any initialization after the InitializeComponent() call.
-			ObterDados(this, new EventArgs());
+			if (FilterCongregacao != null)
+			{
+				ObterDados(FilterCongregacao.Value.Key);
+				lblCongregacao.Text = FilterCongregacao.Value.Value;
+				lblCongregacao.Visible = true;
+			}
+			else
+			{
+				ObterDados(null);
+				lblCongregacao.Visible = false;
+			}
+
 
 			//--- Handlers
 			HandlerKeyDownControl(this);
@@ -37,14 +51,14 @@ namespace CamadaUI.Congregacoes
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
-		private void ObterDados(object sender, EventArgs e)
+		private void ObterDados(int? IDCongregacao)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				ReuniaoBLL cBLL = new ReuniaoBLL();
-				listReuniao = cBLL.GetListReuniao("", true);
+				listReuniao = cBLL.GetListReuniao("", true, IDCongregacao);
 				PreencheListagem();
 			}
 			catch (Exception ex)
@@ -87,7 +101,10 @@ namespace CamadaUI.Congregacoes
 			}
 			else
 			{
-				lstItens.Items[0].Selected = true;
+				if (lstItens.Items.Count > 0)
+				{
+					lstItens.Items[0].Selected = true;
+				}
 			}
 		}
 
@@ -108,6 +125,9 @@ namespace CamadaUI.Congregacoes
 
 			clnItem.DisplayMember = "Reuniao";
 			clnItem.ValueMember = "Reuniao";
+
+			clnCongregacao.DisplayMember = "Congregacao";
+			clnCongregacao.ValueMember = "IDCongregacao";
 
 			lstItens.SearchSettings = new BetterListViewSearchSettings(BetterListViewSearchMode.PrefixOrSubstring,
 																	   BetterListViewSearchOptions.UpdateSearchHighlight,

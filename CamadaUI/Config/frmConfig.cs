@@ -40,16 +40,16 @@ namespace CamadaUI.Config
 
 				switch (_OpenedForm.Name)
 				{
-					case "frmConfigLouvor":
-						btnCores.BackColor = btnColorSelected;
+					case "frmConfigAparencia":
+						btnAparencia.BackColor = btnColorSelected;
 						break;
 					case "frmConfigGeral":
 						btnGeral.BackColor = btnColorSelected;
 						break;
-					case "frmConfigHarpa":
+					case "frmConfigImagem":
 						btnImagem.BackColor = btnColorSelected;
 						break;
-					case "frmConfigLeitura":
+					case "frmConfigServidor":
 						btnServidor.BackColor = btnColorSelected;
 						break;
 					case "frmConfigAvisos":

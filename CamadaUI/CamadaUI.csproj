@@ -65,6 +65,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caixa\frmCartaoControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmCartaoControle.designer.cs">
+      <DependentUpon>frmCartaoControle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Caixa\frmCartaoTaxa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmCartaoTaxa.designer.cs">
+      <DependentUpon>frmCartaoTaxa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +215,12 @@
     <Compile Include="Entradas\frmContribuicao.designer.cs">
       <DependentUpon>frmContribuicao.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entradas\frmContribuicaoCartao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmContribuicaoCartao.designer.cs">
+      <DependentUpon>frmContribuicaoCartao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entradas\frmContribuicaoListagem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -321,6 +339,12 @@
     <Compile Include="Setores\frmSetorProcura.designer.cs">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Caixa\frmCartaoControle.resx">
+      <DependentUpon>frmCartaoControle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\frmCartaoTaxa.resx">
+      <DependentUpon>frmCartaoTaxa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -390,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmContribuicao.resx">
       <DependentUpon>frmContribuicao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmContribuicaoCartao.resx">
+      <DependentUpon>frmContribuicaoCartao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmContribuicaoListagem.resx">
       <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>

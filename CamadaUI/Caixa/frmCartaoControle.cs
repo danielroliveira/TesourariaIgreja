@@ -1,28 +1,26 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Contas
+namespace CamadaUI.Caixa
 {
-	public partial class frmContaListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCartaoControle : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objConta> listConta = new List<objConta>();
+		private List<objCartaoTaxa> listTaxas = new List<objCartaoTaxa>();
 		private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmContaListagem(Form formOrigem = null)
+		public frmCartaoControle(Form formOrigem = null)
 		{
 			InitializeComponent();
 
@@ -40,7 +38,7 @@ namespace CamadaUI.Contas
 		}
 
 		//--- PROPRIEDADE DE ESCOLHA
-		public objConta propEscolha { get; set; }
+		public objSetor propEscolha { get; set; }
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
@@ -50,9 +48,9 @@ namespace CamadaUI.Contas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				ContaBLL cBLL = new ContaBLL();
-				listConta = cBLL.GetListConta("", Convert.ToBoolean(cmbAtivo.SelectedValue), false);
-				dgvListagem.DataSource = listConta;
+				var cBLL = new CartaoBLL();
+				listTaxas = cBLL.GetListCartaoTaxas(Convert.ToBoolean(cmbAtivo.SelectedValue));
+				dgvListagem.DataSource = listTaxas;
 			}
 			catch (Exception ex)
 			{
@@ -75,8 +73,8 @@ namespace CamadaUI.Contas
 			DataTable dtAtivo = new DataTable();
 			dtAtivo.Columns.Add("Ativo");
 			dtAtivo.Columns.Add("Texto");
-			dtAtivo.Rows.Add(new object[] { false, "Inativo" });
-			dtAtivo.Rows.Add(new object[] { true, "Ativo" });
+			dtAtivo.Rows.Add(new object[] { false, "Inativa" });
+			dtAtivo.Rows.Add(new object[] { true, "Ativa" });
 
 			//--- Set DataTable
 			cmbAtivo.DataSource = dtAtivo;
@@ -107,7 +105,7 @@ namespace CamadaUI.Contas
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDConta";
+			clnID.DataPropertyName = "IDCartaoTaxa";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -116,7 +114,7 @@ namespace CamadaUI.Contas
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "Conta";
+			clnCadastro.DataPropertyName = "CartaoOperadora";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = true;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -124,14 +122,23 @@ namespace CamadaUI.Contas
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-			//--- (3) Coluna da imagem
+			//--- (3) COLUNA CADASTRO
+			clnBandeira.DataPropertyName = "CartaoBandeira";
+			clnBandeira.Visible = true;
+			clnBandeira.ReadOnly = true;
+			clnBandeira.Resizable = DataGridViewTriState.False;
+			clnBandeira.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnBandeira.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnBandeira.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+			//--- (4) Coluna da imagem
 			clnImage.Name = "Ativa";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnBandeira, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
@@ -140,8 +147,13 @@ namespace CamadaUI.Contas
 		{
 			if (e.ColumnIndex == 2)
 			{
-				objConta item = (objConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				if (item.Ativa) e.Value = ImgAtivo;
+				objCartaoTaxa item = (objCartaoTaxa)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				if (item.CartaoBandeira == string.Empty) e.Value = "Todas Bandeiras";
+			}
+			else if (e.ColumnIndex == 3)
+			{
+				objCartaoTaxa item = (objCartaoTaxa)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				if (item.Ativo) e.Value = ImgAtivo;
 				else e.Value = ImgInativo;
 			}
 		}
@@ -170,26 +182,18 @@ namespace CamadaUI.Contas
 			MostraMenuPrincipal();
 		}
 
-		// ADICIONAR CONTA
+		// ADICIONAR TAXA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			if (_formOrigem == null)
-			{
-				frmConta frm = new frmConta(new objConta(null));
-				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
-			}
-			else
-			{
-				propEscolha = new objConta(null);
-				DialogResult = DialogResult.Yes;
-			}
+			frmCartaoTaxa frm = new frmCartaoTaxa(new objCartaoTaxa(null));
+			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
 		}
 
-		// EDITAR CONTA ESCOLHIDA
+		// EDITAR TAXA ESCOLHIDA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
@@ -202,22 +206,14 @@ namespace CamadaUI.Contas
 			}
 
 			//--- get Selected item
-			objConta item = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
+			objCartaoTaxa item = (objCartaoTaxa)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			if (_formOrigem == null)
-			{
-				frmConta frm = new frmConta(item);
-				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
-			}
-			else
-			{
-				propEscolha = item;
-				DialogResult = DialogResult.Yes;
-			}
+			frmCartaoTaxa frm = new frmCartaoTaxa(item);
+			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
 		}
 
 		#endregion
@@ -228,28 +224,17 @@ namespace CamadaUI.Contas
 		{
 			if (txtProcura.TextLength > 0)
 			{
-				// filter
-				if (!int.TryParse(txtProcura.Text, out int i))
-				{
-					// declare function
-					Func<objConta, bool> FiltroItem = c => c.Conta.ToLower().Contains(txtProcura.Text.ToLower());
+				// declare function
+				Func<objCartaoTaxa, bool> FiltroItem = c => c.CartaoOperadora.ToLower().Contains(txtProcura.Text.ToLower());
 
-					// aply filter using function
-					dgvListagem.DataSource = listConta.FindAll(c => FiltroItem(c));
-				}
-				else
-				{
-					// declare function
-					Func<objConta, bool> FiltroID = c => c.IDConta == i;
-
-					// aply filter using function
-					dgvListagem.DataSource = listConta.FindAll(c => FiltroID(c));
-				}
+				// aply filter using function
+				dgvListagem.DataSource = listTaxas.FindAll(c => FiltroItem(c));
 			}
 			else
 			{
-				dgvListagem.DataSource = listConta;
+				dgvListagem.DataSource = listTaxas;
 			}
+
 		}
 
 		#endregion // FILTRAGEM PROCURA --- END
@@ -274,9 +259,9 @@ namespace CamadaUI.Contas
 				// mostra o MENU ativar e desativar
 				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativa")
 				{
-					objConta Conta = (objConta)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objSetor Setor = (objSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (Conta.Ativa == true)
+					if (Setor.Ativa == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -293,22 +278,22 @@ namespace CamadaUI.Contas
 			}
 		}
 
-		private void AtivarDesativar_Conta_Click(object sender, EventArgs e)
+		private void AtivarDesativar_Setor_Click(object sender, EventArgs e)
 		{
 			//--- verifica se existe alguma cell 
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
+			objSetor setor = (objSetor)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(conta.Ativa ? "DESATIVAR " : "ATIVAR")} essa Conta?\n" +
-									  conta.Conta.ToUpper(), (conta.Ativa ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativa ? "DESATIVAR " : "ATIVAR")} essa Taxa de Operadora?\n" +
+									  setor.Setor.ToUpper(), (setor.Ativa ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			conta.Ativa = !conta.Ativa;
+			setor.Ativa = !setor.Ativa;
 
 			//--- Salvar o Registro
 			try
@@ -316,15 +301,15 @@ namespace CamadaUI.Contas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				ContaBLL cBLL = new ContaBLL();
-				cBLL.UpdateConta(conta);
+				SetorBLL cBLL = new SetorBLL();
+				cBLL.UpdateSetor(setor);
 
 				//--- altera a imagem
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar Conta..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Alterar Taxa de Operadora..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -340,7 +325,7 @@ namespace CamadaUI.Contas
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmContaListagem_KeyDown(object sender, KeyEventArgs e)
+		private void frmCartaoControle_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{

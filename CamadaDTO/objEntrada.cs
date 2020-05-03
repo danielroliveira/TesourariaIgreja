@@ -277,9 +277,6 @@ namespace CamadaDTO
 			internal byte? _IDEntradaForma;
 			internal string _EntradaForma;
 			internal bool _Ativa;
-			internal byte _CompensacaoDias;
-			internal decimal _TaxaComissao;
-			internal int? _IDContaProvisoria;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -295,9 +292,6 @@ namespace CamadaDTO
 				_IDEntradaForma = IDEntradaForma,
 				_EntradaForma = "",
 				_Ativa = true,
-				_CompensacaoDias = 0,
-				_TaxaComissao = 0,
-				_IDContaProvisoria = null,
 			};
 		}
 
@@ -387,51 +381,5 @@ namespace CamadaDTO
 				}
 			}
 		}
-
-		// Property CompensacaoDias
-		//---------------------------------------------------------------
-		public byte CompensacaoDias
-		{
-			get => EditData._CompensacaoDias;
-			set
-			{
-				if (value != EditData._CompensacaoDias)
-				{
-					EditData._CompensacaoDias = value;
-					NotifyPropertyChanged("CompensacaoDias");
-				}
-			}
-		}
-
-		// Property TaxaComissao
-		//---------------------------------------------------------------
-		public decimal TaxaComissao
-		{
-			get => EditData._TaxaComissao;
-			set
-			{
-				if (value != EditData._TaxaComissao)
-				{
-					EditData._TaxaComissao = value;
-					NotifyPropertyChanged("TaxaComissao");
-				}
-			}
-		}
-
-		// Property IDContaProvisoria
-		//---------------------------------------------------------------
-		public int? IDContaProvisoria
-		{
-			get => EditData._IDContaProvisoria;
-			set
-			{
-				if (value != EditData._IDContaProvisoria)
-				{
-					EditData._IDContaProvisoria = value;
-					NotifyPropertyChanged("IDContaProvisoria");
-				}
-			}
-		}
 	}
-
 }

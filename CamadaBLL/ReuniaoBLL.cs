@@ -10,7 +10,7 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objReuniao> GetListReuniao(string reuniao, bool? Ativa = null)
+		public List<objReuniao> GetListReuniao(string reuniao, bool? Ativa = null, int? IDCongregacao = null)
 		{
 			try
 			{
@@ -36,6 +36,17 @@ namespace CamadaBLL
 						query += " AND Ativa = @Ativa";
 					else
 						query += " WHERE Ativa = @Ativa";
+
+					haveWhere = true;
+				}
+
+				if (IDCongregacao != null)
+				{
+					db.AdicionarParametros("@IDCongregacao", IDCongregacao);
+					if (haveWhere)
+						query += " AND IDCongregacao = @IDCongregacao";
+					else
+						query += " WHERE IDCongregacao = @IDCongregacao";
 				}
 
 				query += " ORDER BY Reuniao";

@@ -208,6 +208,10 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property IDContaProvisoria
+		//---------------------------------------------------------------
+		public int IDContaProvisoria { get; set; }
+
 		// Property EntradaForma
 		//---------------------------------------------------------------
 		public string EntradaForma { get; set; }
@@ -344,6 +348,196 @@ namespace CamadaDTO
 
 		public string Campanha { get; set; }
 
+	}
+
+	//=================================================================================================
+	// CONTRIBUICAO CARTAO
+	//=================================================================================================
+	public class objContribuicaoCartao : IEditableObject, INotifyPropertyChanged
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructEntrada
+		{
+			internal long? _IDContribuicao;
+			internal byte _CartaoTipo;
+			internal int _IDCartaoOperadora;
+			internal int _IDContaProvisoria;
+			internal int _IDCartaoBandeira;
+			internal byte _Parcelas;
+			internal decimal _TaxaAplicada;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructEntrada EditData;
+		private StructEntrada BackupData;
+		private bool inTxn = false;
+
+		public objContribuicaoCartao(long? IDContribuicao) : base()
+		{
+			EditData = new StructEntrada()
+			{
+				_IDContribuicao = IDContribuicao,
+				_TaxaAplicada = 0,
+				_Parcelas = 1,
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructEntrada();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._IDContribuicao?.ToString("D4");
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+		public long? IDContribuicao
+		{
+			get => EditData._IDContribuicao;
+			set => EditData._IDContribuicao = value;
+		}
+
+		// Property CartaoTipo
+		//---------------------------------------------------------------
+		public byte CartaoTipo
+		{
+			get => EditData._CartaoTipo;
+			set
+			{
+				if (value != EditData._CartaoTipo)
+				{
+					EditData._CartaoTipo = value;
+					NotifyPropertyChanged("CartaoTipo");
+				}
+			}
+		}
+
+		public string CartaoTipoDescricao { get; set; }
+
+		// Property IDCartaoOperadora
+		//---------------------------------------------------------------
+		public int IDCartaoOperadora
+		{
+			get => EditData._IDCartaoOperadora;
+			set
+			{
+				if (value != EditData._IDCartaoOperadora)
+				{
+					EditData._IDCartaoOperadora = value;
+					NotifyPropertyChanged("IDCartaoOperadora");
+				}
+			}
+		}
+
+		public string CartaoOperadora { get; set; }
+
+		// Property IDContaProvisoria
+		//---------------------------------------------------------------
+		public int IDContaProvisoria
+		{
+			get => EditData._IDContaProvisoria;
+			set
+			{
+				if (value != EditData._IDContaProvisoria)
+				{
+					EditData._IDContaProvisoria = value;
+					NotifyPropertyChanged("IDContaProvisoria");
+				}
+			}
+		}
+
+		public string ContaProvisoria { get; set; }
+
+		// Property IDCartaoBandeira
+		//---------------------------------------------------------------
+		public int IDCartaoBandeira
+		{
+			get => EditData._IDCartaoBandeira;
+			set
+			{
+				if (value != EditData._IDCartaoBandeira)
+				{
+					EditData._IDCartaoBandeira = value;
+					NotifyPropertyChanged("IDCartaoBandeira");
+				}
+			}
+		}
+
+		public string CartaoBandeira { get; set; }
+
+		// Property Parcelas
+		//---------------------------------------------------------------
+		public byte Parcelas
+		{
+			get => EditData._Parcelas;
+			set
+			{
+				if (value != EditData._Parcelas)
+				{
+					EditData._Parcelas = value;
+					NotifyPropertyChanged("Parcelas");
+				}
+			}
+		}
+
+		// Property TaxaAplicada
+		//---------------------------------------------------------------
+		public decimal TaxaAplicada
+		{
+			get => EditData._TaxaAplicada;
+			set
+			{
+				if (value != EditData._TaxaAplicada)
+				{
+					EditData._TaxaAplicada = value;
+					NotifyPropertyChanged("TaxaAplicada");
+				}
+			}
+		}
 	}
 
 	//=================================================================================================

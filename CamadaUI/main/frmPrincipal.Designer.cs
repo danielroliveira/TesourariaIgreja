@@ -51,6 +51,7 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuContas = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetores = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCartao = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop = new System.Windows.Forms.Panel();
 			this.lblTitulo = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
@@ -268,7 +269,8 @@
             this.mnuFechamento,
             this.toolStripSeparator2,
             this.mnuContas,
-            this.mnuSetores});
+            this.mnuSetores,
+            this.mnuCartao});
 			this.btnMovimentação.Image = global::CamadaUI.Properties.Resources.Caixa_32;
 			this.btnMovimentação.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnMovimentação.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -283,13 +285,13 @@
 			this.mnuFechamento.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuFechamento.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuFechamento.Name = "mnuFechamento";
-			this.mnuFechamento.Size = new System.Drawing.Size(253, 30);
+			this.mnuFechamento.Size = new System.Drawing.Size(278, 30);
 			this.mnuFechamento.Text = "Caixa Fechamento";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(250, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(275, 6);
 			// 
 			// mnuContas
 			// 
@@ -297,7 +299,7 @@
 			this.mnuContas.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuContas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContas.Name = "mnuContas";
-			this.mnuContas.Size = new System.Drawing.Size(253, 30);
+			this.mnuContas.Size = new System.Drawing.Size(278, 30);
 			this.mnuContas.Tag = "1";
 			this.mnuContas.Text = "Contas de Movimentação";
 			// 
@@ -307,9 +309,19 @@
 			this.mnuSetores.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSetores.Name = "mnuSetores";
-			this.mnuSetores.Size = new System.Drawing.Size(253, 30);
+			this.mnuSetores.Size = new System.Drawing.Size(278, 30);
 			this.mnuSetores.Tag = "1";
 			this.mnuSetores.Text = "Setores de Movimentação";
+			// 
+			// mnuCartao
+			// 
+			this.mnuCartao.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuCartao.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuCartao.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCartao.Name = "mnuCartao";
+			this.mnuCartao.Size = new System.Drawing.Size(278, 30);
+			this.mnuCartao.Tag = "1";
+			this.mnuCartao.Text = "Controle de Cartão de Crédito";
 			// 
 			// pnlTop
 			// 
@@ -650,6 +662,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuCampanhas;
 		internal System.Windows.Forms.Label lblSetor;
 		internal System.Windows.Forms.Label label5;
+		private System.Windows.Forms.ToolStripMenuItem mnuCartao;
 	}
 }
 

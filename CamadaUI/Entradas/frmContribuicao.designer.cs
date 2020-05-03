@@ -74,7 +74,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(224, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(269, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(296, 50);
 			this.lblTitulo.TabIndex = 2;
 			this.lblTitulo.Text = "Cadastro de Contribuição";
@@ -84,7 +84,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(520, 0);
+			this.btnClose.Location = new System.Drawing.Point(565, 0);
 			this.btnClose.TabIndex = 3;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -92,7 +92,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblID);
 			this.panel1.Controls.Add(this.lbl_IdTexto);
-			this.panel1.Size = new System.Drawing.Size(560, 50);
+			this.panel1.Size = new System.Drawing.Size(605, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lbl_IdTexto, 0);
@@ -103,7 +103,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(97, 505);
+			this.lblCongregacao.Location = new System.Drawing.Point(32, 505);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 30;
@@ -112,12 +112,15 @@
 			// txtOrigemDescricao
 			// 
 			this.txtOrigemDescricao.BackColor = System.Drawing.Color.White;
-			this.txtOrigemDescricao.Location = new System.Drawing.Point(176, 502);
+			this.txtOrigemDescricao.Location = new System.Drawing.Point(111, 502);
 			this.txtOrigemDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtOrigemDescricao.MaxLength = 50;
+			this.txtOrigemDescricao.MaxLength = 200;
+			this.txtOrigemDescricao.Multiline = true;
 			this.txtOrigemDescricao.Name = "txtOrigemDescricao";
-			this.txtOrigemDescricao.Size = new System.Drawing.Size(319, 27);
+			this.txtOrigemDescricao.Size = new System.Drawing.Size(433, 50);
 			this.txtOrigemDescricao.TabIndex = 31;
+			this.txtOrigemDescricao.Tag = "Pressione a tecla (+) para preencher automaticamente";
+			this.txtOrigemDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// lblID
 			// 
@@ -148,22 +151,22 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnNovo,
-			this.toolStripSeparator1,
-			this.btnSalvar,
-			this.btnCancelar,
-			this.btnFechar,
-			this.toolStripSeparator2});
-			this.tspMenu.Location = new System.Drawing.Point(2, 552);
+            this.btnNovo,
+            this.toolStripSeparator1,
+            this.btnSalvar,
+            this.btnCancelar,
+            this.btnFechar,
+            this.toolStripSeparator2});
+			this.tspMenu.Location = new System.Drawing.Point(2, 585);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(555, 44);
+			this.tspMenu.Size = new System.Drawing.Size(600, 44);
 			this.tspMenu.TabIndex = 32;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -230,12 +233,12 @@
 			// 
 			// line1
 			// 
-			this.line1.EndPoint = new System.Drawing.Point(495, 5);
+			this.line1.EndPoint = new System.Drawing.Point(540, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
 			this.line1.Location = new System.Drawing.Point(25, 161);
 			this.line1.Name = "line1";
-			this.line1.Size = new System.Drawing.Size(500, 10);
+			this.line1.Size = new System.Drawing.Size(545, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
 			this.line1.TabIndex = 7;
 			this.line1.TabStop = false;
@@ -246,7 +249,7 @@
 			this.btnSetContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetContribuinte.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetContribuinte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetContribuinte.Location = new System.Drawing.Point(410, 424);
+			this.btnSetContribuinte.Location = new System.Drawing.Point(415, 424);
 			this.btnSetContribuinte.Name = "btnSetContribuinte";
 			this.btnSetContribuinte.RoundedCornersMask = ((byte)(15));
 			this.btnSetContribuinte.RoundedCornersRadius = 0;
@@ -261,12 +264,13 @@
 			// 
 			// txtContribuinte
 			// 
-			this.txtContribuinte.Location = new System.Drawing.Point(176, 424);
+			this.txtContribuinte.Location = new System.Drawing.Point(181, 424);
 			this.txtContribuinte.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtContribuinte.MaxLength = 30;
 			this.txtContribuinte.Name = "txtContribuinte";
 			this.txtContribuinte.Size = new System.Drawing.Size(228, 27);
 			this.txtContribuinte.TabIndex = 25;
+			this.txtContribuinte.Tag = "Pressione a tecla (+) para procurar";
 			this.txtContribuinte.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// lblContribuinte
@@ -274,7 +278,7 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(81, 427);
+			this.lblContribuinte.Location = new System.Drawing.Point(86, 427);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(89, 19);
 			this.lblContribuinte.TabIndex = 24;
@@ -296,7 +300,7 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(27, 349);
+			this.label2.Location = new System.Drawing.Point(32, 349);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(143, 19);
 			this.label2.TabIndex = 18;
@@ -304,12 +308,13 @@
 			// 
 			// txtContribuicaoTipo
 			// 
-			this.txtContribuicaoTipo.Location = new System.Drawing.Point(176, 346);
+			this.txtContribuicaoTipo.Location = new System.Drawing.Point(181, 346);
 			this.txtContribuicaoTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtContribuicaoTipo.MaxLength = 30;
 			this.txtContribuicaoTipo.Name = "txtContribuicaoTipo";
 			this.txtContribuicaoTipo.Size = new System.Drawing.Size(228, 27);
 			this.txtContribuicaoTipo.TabIndex = 19;
+			this.txtContribuicaoTipo.Tag = "Pressione a tecla (+) para procurar";
 			this.txtContribuicaoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetEntradaTipo
@@ -318,7 +323,7 @@
 			this.btnSetEntradaTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEntradaTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetEntradaTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetEntradaTipo.Location = new System.Drawing.Point(410, 346);
+			this.btnSetEntradaTipo.Location = new System.Drawing.Point(415, 346);
 			this.btnSetEntradaTipo.Name = "btnSetEntradaTipo";
 			this.btnSetEntradaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaTipo.RoundedCornersRadius = 0;
@@ -414,7 +419,7 @@
 			this.lblReuniao.AutoSize = true;
 			this.lblReuniao.BackColor = System.Drawing.Color.Transparent;
 			this.lblReuniao.ForeColor = System.Drawing.Color.Black;
-			this.lblReuniao.Location = new System.Drawing.Point(108, 388);
+			this.lblReuniao.Location = new System.Drawing.Point(113, 388);
 			this.lblReuniao.Name = "lblReuniao";
 			this.lblReuniao.Size = new System.Drawing.Size(62, 19);
 			this.lblReuniao.TabIndex = 21;
@@ -422,12 +427,13 @@
 			// 
 			// txtReuniao
 			// 
-			this.txtReuniao.Location = new System.Drawing.Point(176, 385);
+			this.txtReuniao.Location = new System.Drawing.Point(181, 385);
 			this.txtReuniao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtReuniao.MaxLength = 30;
 			this.txtReuniao.Name = "txtReuniao";
 			this.txtReuniao.Size = new System.Drawing.Size(228, 27);
 			this.txtReuniao.TabIndex = 22;
+			this.txtReuniao.Tag = "Pressione a tecla (+) para procurar";
 			this.txtReuniao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetReuniao
@@ -436,7 +442,7 @@
 			this.btnSetReuniao.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetReuniao.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetReuniao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetReuniao.Location = new System.Drawing.Point(410, 385);
+			this.btnSetReuniao.Location = new System.Drawing.Point(415, 385);
 			this.btnSetReuniao.Name = "btnSetReuniao";
 			this.btnSetReuniao.RoundedCornersMask = ((byte)(15));
 			this.btnSetReuniao.RoundedCornersRadius = 0;
@@ -454,7 +460,7 @@
 			this.lblCampanha.AutoSize = true;
 			this.lblCampanha.BackColor = System.Drawing.Color.Transparent;
 			this.lblCampanha.ForeColor = System.Drawing.Color.Black;
-			this.lblCampanha.Location = new System.Drawing.Point(92, 466);
+			this.lblCampanha.Location = new System.Drawing.Point(27, 466);
 			this.lblCampanha.Name = "lblCampanha";
 			this.lblCampanha.Size = new System.Drawing.Size(78, 19);
 			this.lblCampanha.TabIndex = 27;
@@ -462,12 +468,13 @@
 			// 
 			// txtCampanha
 			// 
-			this.txtCampanha.Location = new System.Drawing.Point(176, 463);
+			this.txtCampanha.Location = new System.Drawing.Point(111, 463);
 			this.txtCampanha.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCampanha.MaxLength = 30;
 			this.txtCampanha.Name = "txtCampanha";
-			this.txtCampanha.Size = new System.Drawing.Size(279, 27);
+			this.txtCampanha.Size = new System.Drawing.Size(393, 27);
 			this.txtCampanha.TabIndex = 28;
+			this.txtCampanha.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCampanha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetCampanha
@@ -476,7 +483,7 @@
 			this.btnSetCampanha.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetCampanha.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetCampanha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetCampanha.Location = new System.Drawing.Point(461, 463);
+			this.btnSetCampanha.Location = new System.Drawing.Point(510, 463);
 			this.btnSetCampanha.Name = "btnSetCampanha";
 			this.btnSetCampanha.RoundedCornersMask = ((byte)(15));
 			this.btnSetCampanha.RoundedCornersRadius = 0;
@@ -586,20 +593,20 @@
 			// 
 			// line2
 			// 
-			this.line2.EndPoint = new System.Drawing.Point(495, 5);
+			this.line2.EndPoint = new System.Drawing.Point(537, 5);
 			this.line2.LineColor = System.Drawing.Color.SlateGray;
 			this.line2.LineWidth = 3F;
 			this.line2.Location = new System.Drawing.Point(25, 315);
 			this.line2.Name = "line2";
-			this.line2.Size = new System.Drawing.Size(500, 10);
+			this.line2.Size = new System.Drawing.Size(542, 10);
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
 			this.line2.TabIndex = 17;
 			this.line2.TabStop = false;
 			// 
-			// frmEntrada
+			// frmContribuicao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 598);
+			this.ClientSize = new System.Drawing.Size(605, 631);
 			this.Controls.Add(this.txtEntradaDia);
 			this.Controls.Add(this.txtEntradaAno);
 			this.Controls.Add(this.cmbEntradaMes);
@@ -633,7 +640,7 @@
 			this.Controls.Add(this.txtOrigemDescricao);
 			this.Controls.Add(this.lblCongregacao);
 			this.KeyPreview = true;
-			this.Name = "frmEntrada";
+			this.Name = "frmContribuicao";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmEntrada_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);

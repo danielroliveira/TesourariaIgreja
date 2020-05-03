@@ -3,7 +3,6 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Security.AccessControl;
 
 namespace CamadaBLL
 {
@@ -11,7 +10,7 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objConta> GetListConta(string conta, bool? Ativa = null)
+		public List<objConta> GetListConta(string conta, bool? Ativa = null, bool SemOperadoras = true)
 		{
 			try
 			{
@@ -37,6 +36,16 @@ namespace CamadaBLL
 						query += " AND Ativa = @Ativa";
 					else
 						query += " WHERE Ativa = @Ativa";
+
+					haveWhere = true;
+				}
+
+				if (SemOperadoras == true)
+				{
+					if (haveWhere)
+						query += " AND OperadoraCartao = 'false'";
+					else
+						query += " WHERE OperadoraCartao = 'false'";
 				}
 
 				query += " ORDER BY Conta";

@@ -35,13 +35,15 @@
 			this.clnItem = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
 			this.txtProcura = new System.Windows.Forms.TextBox();
 			this.Label1 = new System.Windows.Forms.Label();
+			this.clnCongregacao = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
+			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(150, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(394, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(191, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Escolher Reunião";
@@ -51,19 +53,23 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(341, 0);
+			this.btnClose.Location = new System.Drawing.Point(585, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(381, 50);
+			this.panel1.Controls.Add(this.lblCongregacao);
+			this.panel1.Size = new System.Drawing.Size(625, 50);
+			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
+			this.panel1.Controls.SetChildIndex(this.lblCongregacao, 0);
+			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			// 
 			// btnFechar
 			// 
-			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_24;
-			this.btnFechar.Location = new System.Drawing.Point(216, 382);
+			this.btnFechar.Location = new System.Drawing.Point(460, 382);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(142, 42);
 			this.btnFechar.TabIndex = 5;
@@ -89,19 +95,20 @@
 			// 
 			// lstItens
 			// 
-			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstItens.ColorSortedColumn = System.Drawing.Color.Transparent;
 			this.lstItens.Columns.Add(this.clnID);
 			this.lstItens.Columns.Add(this.clnItem);
+			this.lstItens.Columns.Add(this.clnCongregacao);
 			this.lstItens.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstItens.HeaderStyle = ComponentOwl.BetterListView.BetterListViewHeaderStyle.Nonclickable;
 			this.lstItens.HideSelectionMode = ComponentOwl.BetterListView.BetterListViewHideSelectionMode.KeepSelection;
 			this.lstItens.HotTracking = ComponentOwl.BetterListView.BetterListViewHotTracking.ItemHot;
 			this.lstItens.Location = new System.Drawing.Point(22, 105);
 			this.lstItens.Name = "lstItens";
-			this.lstItens.Size = new System.Drawing.Size(336, 265);
+			this.lstItens.Size = new System.Drawing.Size(580, 265);
 			this.lstItens.TabIndex = 3;
 			this.lstItens.ItemActivate += new ComponentOwl.BetterListView.BetterListViewItemActivateEventHandler(this.lstItens_ItemActivate);
 			this.lstItens.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.lstItens_DrawColumnHeader);
@@ -119,7 +126,7 @@
 			// 
 			this.clnItem.AllowResize = false;
 			this.clnItem.Name = "clnItem";
-			this.clnItem.Text = "Setor de Recursos";
+			this.clnItem.Text = "Reuniões";
 			this.clnItem.Width = 230;
 			// 
 			// txtProcura
@@ -140,10 +147,32 @@
 			this.Label1.TabIndex = 1;
 			this.Label1.Text = "Procura";
 			// 
+			// clnCongregacao
+			// 
+			this.clnCongregacao.Name = "clnCongregacao";
+			this.clnCongregacao.Text = "Congregação";
+			this.clnCongregacao.Width = 250;
+			// 
+			// lblCongregacao
+			// 
+			this.lblCongregacao.AutoSize = true;
+			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
+			this.lblCongregacao.Dock = System.Windows.Forms.DockStyle.Left;
+			this.lblCongregacao.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblCongregacao.ForeColor = System.Drawing.Color.White;
+			this.lblCongregacao.Location = new System.Drawing.Point(0, 0);
+			this.lblCongregacao.Name = "lblCongregacao";
+			this.lblCongregacao.Padding = new System.Windows.Forms.Padding(8, 8, 0, 0);
+			this.lblCongregacao.Size = new System.Drawing.Size(149, 37);
+			this.lblCongregacao.TabIndex = 1;
+			this.lblCongregacao.Tag = "";
+			this.lblCongregacao.Text = "Congregacao";
+			this.lblCongregacao.Visible = false;
+			// 
 			// frmCongregacaoReuniaoProcura
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(381, 436);
+			this.ClientSize = new System.Drawing.Size(625, 436);
 			this.Controls.Add(this.txtProcura);
 			this.Controls.Add(this.Label1);
 			this.Controls.Add(this.lstItens);
@@ -161,6 +190,7 @@
 			this.Controls.SetChildIndex(this.Label1, 0);
 			this.Controls.SetChildIndex(this.txtProcura, 0);
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -176,5 +206,7 @@
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnItem;
 		internal System.Windows.Forms.TextBox txtProcura;
 		internal System.Windows.Forms.Label Label1;
+		private ComponentOwl.BetterListView.BetterListViewColumnHeader clnCongregacao;
+		internal System.Windows.Forms.Label lblCongregacao;
 	}
 }

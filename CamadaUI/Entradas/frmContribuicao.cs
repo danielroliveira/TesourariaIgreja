@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -67,6 +68,13 @@ namespace CamadaUI.Entradas
 			// handlers
 			_contribuicao.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+
+			txtContribuicaoTipo.Enter += text_Enter;
+			txtReuniao.Enter += text_Enter;
+			txtContribuinte.Enter += text_Enter;
+			txtCampanha.Enter += text_Enter;
+			txtOrigemDescricao.Enter += text_Enter;
+
 		}
 
 		// GET LIST OF ENTRADA FORMAS AND TIPOS
@@ -372,6 +380,17 @@ namespace CamadaUI.Entradas
 				//--- check data
 				if (!CheckSaveData()) return;
 
+
+				//--- check Cartao
+				if (_contribuicao.IDEntradaForma >= 3)
+				{
+					var cartao = new objContribuicaoCartao(_contribuicao.IDContribuicao);
+					var frm = new frmContribuicaoCartao(ref cartao, this);
+					frm.ShowDialog();
+				}
+
+				return;
+
 				ContribuicaoBLL sBLL = new ContribuicaoBLL();
 
 				//--- SAVE: INSERT OR UPDATE
@@ -467,7 +486,14 @@ namespace CamadaUI.Entradas
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtEntradaForma, txtCampanha, txtConta, txtContribuinte, txtContribuicaoTipo, txtReuniao, txtSetor
+					txtEntradaForma,
+					txtCampanha,
+					txtConta,
+					txtContribuinte,
+					txtContribuicaoTipo,
+					txtReuniao,
+					txtSetor,
+					txtOrigemDescricao
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -518,6 +544,9 @@ namespace CamadaUI.Entradas
 					case "txtCampanha":
 						btnSetCampanha_Click(sender, new EventArgs());
 						break;
+					case "txtOrigemDescricao":
+						defineDescricao();
+						break;
 					default:
 						break;
 				}
@@ -567,6 +596,41 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+		// EMITE TOOLTIP ON ENTER E DESABILITA
+		//------------------------------------------------------------------------------------------------------------
+		private void text_Enter(object sender, EventArgs e)
+		{
+			ShowToolTip(sender as Control);
+			((TextBox)sender).Enter -= text_Enter;
+		}
+
+		// DEFINE CRIA UM TEXTO AUTOMATICA PARA DESCRICAO
+		//------------------------------------------------------------------------------------------------------------
+		private void defineDescricao()
+		{
+			if (!string.IsNullOrEmpty(_contribuicao.OrigemDescricao)) return;
+
+			// Oferta:   TIPO + REUNIAO + DATA
+			// dizimo:   TIPO + CONTRIBUINTE
+			// CAMPANHA: TIPO + CAMPANHA
+
+			string descricao = _contribuicao.ContribuicaoTipo + " - ";
+
+			if (!string.IsNullOrEmpty(_contribuicao.Contribuinte))
+			{
+				descricao += _contribuicao.Contribuinte;
+
+				if (!string.IsNullOrEmpty(_contribuicao.Campanha))
+					descricao += " - " + _contribuicao.Campanha;
+			}
+			else if (!string.IsNullOrEmpty(_contribuicao.Campanha))
+				descricao += _contribuicao.Campanha;
+			else
+				descricao += _contribuicao.Reuniao + " - " + _contribuicao.ContribuicaoData.ToShortDateString();
+
+			txtOrigemDescricao.Text = descricao;
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region BUTTONS PROCURA
@@ -589,6 +653,7 @@ namespace CamadaUI.Entradas
 					if (_contribuicao.IDConta != frm.propEscolha.IDConta) Sit = EnumFlagEstado.Alterado;
 					_contribuicao.IDConta = (int)frm.propEscolha.IDConta;
 					txtConta.Text = frm.propEscolha.Conta;
+					contaPadrao = frm.propEscolha;
 				}
 
 				//--- select
@@ -657,6 +722,7 @@ namespace CamadaUI.Entradas
 				_contribuicao.IDContribuicaoTipo = (byte)frm.propEscolha.Key;
 				txtContribuicaoTipo.Text = frm.propEscolha.Value;
 				propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+				txtOrigemDescricao.Clear();
 			}
 
 			//--- select
@@ -739,7 +805,10 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmCongregacaoReuniaoProcura frm = new frmCongregacaoReuniaoProcura(this, _contribuicao.IDReuniao);
+				//--- create filter congregacao
+				var filter = new KeyValuePair<int, string>((int)contaPadrao.IDCongregacao, contaPadrao.Congregacao);
+
+				frmCongregacaoReuniaoProcura frm = new frmCongregacaoReuniaoProcura(this, _contribuicao.IDReuniao, filter);
 				frm.ShowDialog();
 
 				//--- check return
@@ -800,8 +869,34 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+
 		#endregion // BUTTONS PROCURA --- END
 
+		#region TOOLTIP
 
+		private void ShowToolTip(Control controle)
+		{
+			//Cria a ToolTip e associa com o Form container.
+			ToolTip toolTip1 = new ToolTip()
+			{
+				AutoPopDelay = 2000, // Define o delay para a ToolTip
+				InitialDelay = 2000,
+				ReshowDelay = 500,
+				IsBalloon = true,
+				UseAnimation = true,
+				UseFading = true
+			};
+
+			if (controle.Tag.ToString() == "")
+			{
+				toolTip1.Show("Clique aqui...", controle, controle.Width - 30, -40, 2000);
+			}
+			else
+			{
+				toolTip1.Show(controle.Tag.ToString(), controle, controle.Width - 30, -40, 2000);
+			}
+		}
+
+		#endregion
 	}
 }

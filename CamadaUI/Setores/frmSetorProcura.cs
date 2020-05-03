@@ -90,7 +90,10 @@ namespace CamadaUI.Setores
 			}
 			else
 			{
-				lstItens.Items[0].Selected = true;
+				if (lstItens.Items.Count > 0)
+				{
+					lstItens.Items[0].Selected = true;
+				}
 			}
 		}
 

@@ -158,7 +158,6 @@ namespace CamadaBLL
 			}
 		}
 
-
 		//=============================================================================
 		//=============================================================================
 
@@ -196,10 +195,7 @@ namespace CamadaBLL
 					objEntradaForma forma = new objEntradaForma((byte)row["IDEntradaForma"])
 					{
 						EntradaForma = (string)row["EntradaForma"],
-						CompensacaoDias = (byte)row["CompensacaoDias"],
-						TaxaComissao = (decimal)row["TaxaComissao"],
 						Ativa = (bool)row["Ativa"],
-						IDContaProvisoria = row["IDContaProvisoria"] == DBNull.Value ? null : (int?)row["IDContaProvisoria"]
 					};
 
 					listagem.Add(forma);
