@@ -476,6 +476,10 @@ namespace CamadaUI.Caixa
 						break;
 				}
 			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
@@ -539,6 +543,8 @@ namespace CamadaUI.Caixa
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
+				if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
 				_taxa.IDCartaoBandeira = frm.propEscolha.Key;
 				txtCartaoBandeira.Text = frm.propEscolha.Value;
 			}
@@ -548,8 +554,7 @@ namespace CamadaUI.Caixa
 			txtCartaoBandeira.SelectAll();
 		}
 
-		#endregion // CONTROL FUNCTIONS --- END
-
+		// CONTROL KEYPRESS (+)
 		private void frmCartaoTaxa_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == 43)
@@ -562,5 +567,8 @@ namespace CamadaUI.Caixa
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
 			}
 		}
+
+		#endregion // CONTROL FUNCTIONS --- END
+
 	}
 }

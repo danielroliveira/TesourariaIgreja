@@ -13,6 +13,7 @@ namespace CamadaDTO
 			internal int? _IDCampanha;
 			internal string _Campanha;
 			internal int? _IDSetor;
+			internal string _Setor;
 			internal decimal _CampanhaSaldo;
 			internal DateTime _InicioData;
 			internal DateTime? _ConclusaoData;
@@ -127,7 +128,11 @@ namespace CamadaDTO
 
 		// Property Setor
 		//---------------------------------------------------------------
-		public string Setor { get; set; }
+		public string Setor
+		{
+			get => EditData._Setor;
+			set => EditData._Setor = value;
+		}
 
 		// Property CampanhaSaldo
 		//---------------------------------------------------------------

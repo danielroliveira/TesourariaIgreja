@@ -13,6 +13,7 @@ namespace CamadaDTO
 			internal int? _IDSetor;
 			internal string _Setor;
 			internal int? _IDCongregacao;
+			internal string _Congregacao;
 			internal decimal _SetorSaldo;
 			internal bool _Ativa;
 		}
@@ -122,7 +123,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Congregacao { get; set; }
+		// Property Congregacao
+		//---------------------------------------------------------------
+		public string Congregacao
+		{
+			get => EditData._Congregacao;
+			set => EditData._Congregacao = value;
+		}
 
 		// Property SetorSaldo
 		//---------------------------------------------------------------

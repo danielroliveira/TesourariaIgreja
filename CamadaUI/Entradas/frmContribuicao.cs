@@ -10,7 +10,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -26,8 +25,10 @@ namespace CamadaUI.Entradas
 		private List<objContribuicaoTipo> listTipos;
 		private List<objEntradaForma> listFormas;
 
-		private objConta contaPadrao;
-		private objSetor setorPadrao;
+		private objConta contaSelected;
+		private objSetor setorSelected;
+
+		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
 		#region SUB NEW | PROPERTIES
 
@@ -42,8 +43,8 @@ namespace CamadaUI.Entradas
 
 			// Define Conta and Setor padrao
 			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			contaPadrao = principal.propContaPadrao;
-			setorPadrao = principal.propSetorPadrao;
+			contaSelected = principal.propContaPadrao;
+			setorSelected = principal.propSetorPadrao;
 
 			// binding
 			bind.DataSource = typeof(objContribuicao);
@@ -55,10 +56,10 @@ namespace CamadaUI.Entradas
 			if (_contribuicao.IDContribuicao == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
-				_contribuicao.IDConta = (int)contaPadrao.IDConta;
-				_contribuicao.Conta = contaPadrao.Conta;
-				_contribuicao.IDSetor = (int)setorPadrao.IDSetor;
-				_contribuicao.Setor = setorPadrao.Setor;
+				_contribuicao.IDConta = (int)contaSelected.IDConta;
+				_contribuicao.Conta = contaSelected.Conta;
+				_contribuicao.IDSetor = (int)setorSelected.IDSetor;
+				_contribuicao.Setor = setorSelected.Setor;
 			}
 			else
 			{
@@ -196,13 +197,12 @@ namespace CamadaUI.Entradas
 				// change labels color
 				Action<Control, Label> ChangeLblColor = (ctrl, lbl) =>
 				{
-					lbl.ForeColor = ctrl.Enabled ? Color.Black : Color.Gainsboro;
+					lbl.ForeColor = ctrl.Enabled ? Color.Black : Color.Silver;
 				};
 
 				ChangeLblColor(txtReuniao, lblReuniao);
 				ChangeLblColor(txtCampanha, lblCampanha);
 				ChangeLblColor(txtContribuinte, lblContribuinte);
-
 			}
 		}
 
@@ -261,7 +261,14 @@ namespace CamadaUI.Entradas
 
 		private void FormatID(object sender, ConvertEventArgs e)
 		{
-			e.Value = e.Value == DBNull.Value ? null : $"{e.Value: 0000}";
+			if (e.Value == DBNull.Value || e.Value == null)
+			{
+				e.Value = "NOVA";
+			}
+			else
+			{
+				e.Value = $"{e.Value: 0000}";
+			}
 		}
 
 		private void FormatCurrency(object sender, ConvertEventArgs e)
@@ -275,6 +282,8 @@ namespace CamadaUI.Entradas
 			{
 				Sit = EnumFlagEstado.Alterado;
 			}
+
+			EP.Clear();
 		}
 
 		// CARREGA COMBO
@@ -380,16 +389,20 @@ namespace CamadaUI.Entradas
 				//--- check data
 				if (!CheckSaveData()) return;
 
-
 				//--- check Cartao
-				if (_contribuicao.IDEntradaForma >= 3)
+				if (_contribuicao.IDEntradaForma == 3) // cartao
 				{
-					var cartao = new objContribuicaoCartao(_contribuicao.IDContribuicao);
+					var cartao = new objContribuicaoCartao(null);
 					var frm = new frmContribuicaoCartao(ref cartao, this);
 					frm.ShowDialog();
 				}
+				else if (_contribuicao.IDEntradaForma == 2) // cheque 
+				{
+					var cheque = new objContribuicaoCheque(null);
+					var frm = new frmContribuicaoCheque(ref cheque, this);
+					frm.ShowDialog();
+				}
 
-				return;
 
 				ContribuicaoBLL sBLL = new ContribuicaoBLL();
 
@@ -428,19 +441,34 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtEntradaForma, "Forma da Entrada", _contribuicao)) return false;
-			if (!VerificaDadosClasse(txtValorBruto, "Valor Bruto", _contribuicao)) return false;
-			if (!VerificaDadosClasse(txtContribuicaoTipo, "Tipo de Entrada", _contribuicao)) return false;
-			if (!VerificaDadosClasse(txtSetor, "Setor de Entrada", _contribuicao)) return false;
-			if (!VerificaDadosClasse(txtConta, "Conta de Entrada", _contribuicao)) return false;
-			if (!VerificaDadosClasse(txtOrigemDescricao, "Descrição da Origem", _contribuicao)) return false;
+			if (!VerificaDadosClasse(txtEntradaForma, "Forma da Entrada", _contribuicao, EP)) return false;
+			if (!VerificaDadosClasse(txtContribuicaoTipo, "Tipo de Entrada", _contribuicao, EP)) return false;
+			if (!VerificaDadosClasse(txtSetor, "Setor de Entrada", _contribuicao, EP)) return false;
+			if (!VerificaDadosClasse(txtConta, "Conta de Entrada", _contribuicao, EP)) return false;
+
+			// check VALOR BRUTO
+			if (!VerificaDadosClasse(txtValorBruto, "Valor Bruto", _contribuicao, EP)) return false;
+
+			if (_contribuicao.ValorBruto <= 0)
+			{
+				// message
+				AbrirDialog("O valor da contribuição não pode ser igual a zero...\n" +
+					"Favor preecher esse campo com um valor maior que zero.", "Valor da Contribuição",
+					DialogType.OK, DialogIcon.Exclamation);
+				// error provider
+				EP.SetError(txtValorBruto, "Preencha o valor desse campo!");
+				// select
+				txtValorBruto.Focus();
+				// return
+				return false;
+			}
 
 			// check CAMPANHA
 			bool ComCampanha = listTipos.First(x => x.IDContribuicaoTipo == _contribuicao.IDContribuicaoTipo).ComCampanha;
 
 			if (ComCampanha)
 			{
-				if (!VerificaDadosClasse(txtCampanha, "Campanha", _contribuicao)) return false;
+				if (!VerificaDadosClasse(txtCampanha, "Campanha", _contribuicao, EP)) return false;
 			}
 			else
 			{
@@ -452,7 +480,7 @@ namespace CamadaUI.Entradas
 
 			if (ComAtividade)
 			{
-				if (!VerificaDadosClasse(txtReuniao, "Reunião", _contribuicao)) return false;
+				if (!VerificaDadosClasse(txtReuniao, "Reunião", _contribuicao, EP)) return false;
 			}
 			else
 			{
@@ -464,12 +492,15 @@ namespace CamadaUI.Entradas
 
 			if (ComOrigem)
 			{
-				if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuicao)) return false;
+				if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuicao, EP)) return false;
 			}
 			else
 			{
 				_contribuicao.IDContribuinte = null;
 			}
+
+			// CHECK DESCRICAO
+			if (!VerificaDadosClasse(txtOrigemDescricao, "Descrição da Origem", _contribuicao, EP)) return false;
 
 			return true;
 		}
@@ -576,6 +607,10 @@ namespace CamadaUI.Entradas
 						break;
 				}
 			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
@@ -650,10 +685,12 @@ namespace CamadaUI.Entradas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (_contribuicao.IDConta != frm.propEscolha.IDConta) Sit = EnumFlagEstado.Alterado;
+					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDConta != frm.propEscolha.IDConta)
+						Sit = EnumFlagEstado.Alterado;
+
 					_contribuicao.IDConta = (int)frm.propEscolha.IDConta;
 					txtConta.Text = frm.propEscolha.Conta;
-					contaPadrao = frm.propEscolha;
+					contaSelected = frm.propEscolha;
 				}
 
 				//--- select
@@ -743,7 +780,9 @@ namespace CamadaUI.Entradas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (_contribuicao.IDSetor != frm.propEscolha.IDSetor) Sit = EnumFlagEstado.Alterado;
+					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDSetor != frm.propEscolha.IDSetor)
+						Sit = EnumFlagEstado.Alterado;
+
 					_contribuicao.IDSetor = (int)frm.propEscolha.IDSetor;
 					txtSetor.Text = frm.propEscolha.Setor;
 				}
@@ -777,7 +816,9 @@ namespace CamadaUI.Entradas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (_contribuicao.IDContribuinte != frm.propEscolha.IDContribuinte) Sit = EnumFlagEstado.Alterado;
+					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDContribuinte != frm.propEscolha.IDContribuinte)
+						Sit = EnumFlagEstado.Alterado;
+
 					_contribuicao.IDContribuinte = (int)frm.propEscolha.IDContribuinte;
 					txtContribuinte.Text = frm.propEscolha.Contribuinte;
 				}
@@ -806,7 +847,7 @@ namespace CamadaUI.Entradas
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- create filter congregacao
-				var filter = new KeyValuePair<int, string>((int)contaPadrao.IDCongregacao, contaPadrao.Congregacao);
+				var filter = new KeyValuePair<int, string>((int)contaSelected.IDCongregacao, contaSelected.Congregacao);
 
 				frmCongregacaoReuniaoProcura frm = new frmCongregacaoReuniaoProcura(this, _contribuicao.IDReuniao, filter);
 				frm.ShowDialog();
@@ -814,7 +855,9 @@ namespace CamadaUI.Entradas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (_contribuicao.IDReuniao != frm.propEscolha.IDReuniao) Sit = EnumFlagEstado.Alterado;
+					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDReuniao != frm.propEscolha.IDReuniao)
+						Sit = EnumFlagEstado.Alterado;
+
 					_contribuicao.IDReuniao = (int)frm.propEscolha.IDReuniao;
 					txtReuniao.Text = frm.propEscolha.Reuniao;
 				}
@@ -848,7 +891,9 @@ namespace CamadaUI.Entradas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (_contribuicao.IDCampanha != frm.propEscolha.IDCampanha) Sit = EnumFlagEstado.Alterado;
+					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDCampanha != frm.propEscolha.IDCampanha)
+						Sit = EnumFlagEstado.Alterado;
+
 					_contribuicao.IDCampanha = (int)frm.propEscolha.IDCampanha;
 					txtCampanha.Text = frm.propEscolha.Campanha;
 				}

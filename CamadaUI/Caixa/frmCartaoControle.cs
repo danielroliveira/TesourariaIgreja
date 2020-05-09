@@ -15,6 +15,7 @@ namespace CamadaUI.Caixa
 	{
 		private List<objCartaoTaxa> listTaxas = new List<objCartaoTaxa>();
 		private Form _formOrigem;
+		CartaoBLL cBLL = new CartaoBLL();
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 
@@ -48,7 +49,6 @@ namespace CamadaUI.Caixa
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				var cBLL = new CartaoBLL();
 				listTaxas = cBLL.GetListCartaoTaxas(Convert.ToBoolean(cmbAtivo.SelectedValue));
 				dgvListagem.DataSource = listTaxas;
 			}
@@ -257,11 +257,11 @@ namespace CamadaUI.Caixa
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativa")
+				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objSetor Setor = (objSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objCartaoTaxa taxa = (objCartaoTaxa)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (Setor.Ativa == true)
+					if (taxa.Ativo == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -284,16 +284,16 @@ namespace CamadaUI.Caixa
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objSetor setor = (objSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+			objCartaoTaxa cartao = (objCartaoTaxa)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativa ? "DESATIVAR " : "ATIVAR")} essa Taxa de Operadora?\n" +
-									  setor.Setor.ToUpper(), (setor.Ativa ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(cartao.Ativo ? "DESATIVAR " : "ATIVAR")} essa Taxa de Operadora?\n" +
+									  cartao.CartaoOperadora.ToUpper(), (cartao.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			setor.Ativa = !setor.Ativa;
+			cartao.Ativo = !cartao.Ativo;
 
 			//--- Salvar o Registro
 			try
@@ -301,8 +301,7 @@ namespace CamadaUI.Caixa
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				SetorBLL cBLL = new SetorBLL();
-				cBLL.UpdateSetor(setor);
+				cBLL.UpdateCartaoTaxas(cartao);
 
 				//--- altera a imagem
 				FiltrarListagem(sender, e);

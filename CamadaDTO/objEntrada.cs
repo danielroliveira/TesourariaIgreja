@@ -20,7 +20,9 @@ namespace CamadaDTO
 			internal DateTime _EntradaData;
 			internal decimal _EntradaValor;
 			internal int _IDSetor;
+			internal string _Setor;
 			internal int _IDConta;
+			internal string _Conta;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -244,7 +246,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Setor { get; set; }
+		// Property Setor
+		//---------------------------------------------------------------
+		public string Setor
+		{
+			get => EditData._Setor;
+			set => EditData._Setor = value;
+		}
 
 		// Property IDConta
 		//---------------------------------------------------------------
@@ -261,7 +269,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Conta { get; set; }
+		// Property Conta
+		//---------------------------------------------------------------
+		public string Conta
+		{
+			get => EditData._Conta;
+			set => EditData._Conta = value;
+		}
 
 	}
 

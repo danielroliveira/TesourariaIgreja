@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CamadaBLL
 {
@@ -104,42 +105,120 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertContribuicao(objContribuicao entrada)
+		public int InsertContribuicao(objContribuicao cont, object forma = null)
 		{
 			AcessoDados db = new AcessoDados();
+			int newID = 0;
 
 			try
 			{
 				db.BeginTransaction();
 
-				//--- clear Params
-				db.LimparParametros();
+				switch (cont.IDContribuicaoTipo)
+				{
+					case 1: // DINHEIRO
 
-				//--- define Params
-				db.AdicionarParametros("@ContribuicaoData", entrada.ContribuicaoData);
-				db.AdicionarParametros("@IDEntradaForma", entrada.IDEntradaForma);
-				db.AdicionarParametros("@ValorBruto", entrada.ValorBruto);
-				db.AdicionarParametros("@IDContribuicaoTipo", entrada.IDContribuicaoTipo);
-				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
-				db.AdicionarParametros("@IDConta", entrada.IDConta);
-				db.AdicionarParametros("@IDContribuinte", entrada.IDContribuinte);
-				db.AdicionarParametros("@OrigemDescricao", entrada.OrigemDescricao);
-				db.AdicionarParametros("@IDReuniao", entrada.IDReuniao);
-				db.AdicionarParametros("@IDCampanha", entrada.IDCampanha);
+						//--- Insert Contribuicao
+						newID = AddContribuicao(cont, db);
 
-				//--- convert null parameters
-				db.ConvertNullParams();
+						//--- Create NEW Entrada
+						var entrada = new objEntrada(null)
+						{
+							IDConta = cont.IDConta,
+							IDSetor = cont.IDSetor,
+							IDOrigem = newID,
+							Origem = 1,
+							EntradaData = cont.ContribuicaoData,
+							EntradaValor = cont.ValorBruto,
+						};
 
-				string query = db.CreateInsertSQL("tblContribuicaos");
+						//--- Insert Entrada
+						new EntradaBLL().InsertEntrada(entrada, db);
 
-				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+						break;
 
-				//--- altera o saldo da CONTA
-				//  new ContaBLL().ContaSaldoChange(entrada.IDConta, entrada.ValorLiquido, db);
+					case 2: // CHEQUE
 
-				//--- altera o saldo do SETOR
+						if (forma == null || forma.GetType() != typeof(objContribuicaoCheque))
+							throw new Exception("Não há registro de informação do cheque...");
 
+						//--- Insert Contribuicao
+						newID = AddContribuicao(cont, db);
+						cont.IDContribuicao = newID;
+
+						//--- Insert ContribuicaoCheque
+						objContribuicaoCheque cheque = (objContribuicaoCheque)forma;
+
+						cheque.IDContribuicao = newID;
+						AddContribuicaoCheque(cheque, db);
+
+						//--- Create AReceber
+						var areceber = new objAReceber(null)
+						{
+							CompensacaoData = cheque.DepositoData,
+							IDContaProvisoria = cont.IDConta,
+							IDContribuicao = (long)cont.IDContribuicao,
+							Situacao = 1,
+							ValorBruto = cont.ValorBruto,
+							ValorLiquido = cont.ValorBruto,
+							ValorRecebido = 0
+						};
+
+						//--- Insert AReceber Parcela
+						new AReceberBLL().InsertAReceber(areceber);
+
+						break;
+					case 3: // CARTAO
+
+						if (forma == null || forma.GetType() != typeof(objContribuicaoCartao))
+							throw new Exception("Não há registro de informação do cartão...");
+
+						//--- Insert Contribuicao
+						newID = AddContribuicao(cont, db);
+						cont.IDContribuicao = newID;
+
+						//--- Insert ContribuicaoCartao
+						objContribuicaoCartao cartao = (objContribuicaoCartao)forma;
+
+						cartao.IDContribuicao = newID;
+						AddContribuicaoCartao(cartao, db);
+
+						//--- Insert ListOf AReceber
+						var listAReceber = new List<objAReceber>();
+
+						for (int i = 0; i < cartao.Parcelas; i++)
+						{
+							var parcela = new objAReceber(null)
+							{
+								CompensacaoData = cont.ContribuicaoData.AddDays(cartao.Prazo * (i + 1)),
+								IDContaProvisoria = cartao.IDContaProvisoria,
+								IDContribuicao = (long)cont.IDContribuicao,
+								Situacao = 1,
+								ValorBruto = cont.ValorBruto,
+								ValorLiquido = cont.ValorBruto * (100 - cartao.TaxaAplicada),
+								ValorRecebido = 0
+							};
+
+							listAReceber.Add(parcela);
+						}
+
+						var rBLL = new AReceberBLL();
+
+						//--- Insert ListOf AReceber Parcelas
+						foreach (var parcela in listAReceber)
+						{
+							rBLL.InsertAReceber(parcela);
+						}
+
+						break;
+					default:
+						break;
+				}
+
+				if (newID == 0)
+				{
+					throw new Exception("Não foi possível inserir um novo registro de Contribuição...");
+				}
 
 				db.CommitTransaction();
 				return newID;
@@ -148,6 +227,45 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				db.RollBackTransaction();
+				throw ex;
+			}
+
+		}
+
+		// INSERT CONTRIBUICAO SIMPLES
+		//------------------------------------------------------------------------------------------------------------
+		private int AddContribuicao(objContribuicao cont, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@ContribuicaoData", cont.ContribuicaoData);
+				dbTran.AdicionarParametros("@IDEntradaForma", cont.IDEntradaForma);
+				dbTran.AdicionarParametros("@ValorBruto", cont.ValorBruto);
+				dbTran.AdicionarParametros("@IDContribuicaoTipo", cont.IDContribuicaoTipo);
+				dbTran.AdicionarParametros("@IDSetor", cont.IDSetor);
+				dbTran.AdicionarParametros("@IDConta", cont.IDConta);
+				dbTran.AdicionarParametros("@IDContribuinte", cont.IDContribuinte);
+				dbTran.AdicionarParametros("@OrigemDescricao", cont.OrigemDescricao);
+				dbTran.AdicionarParametros("@IDReuniao", cont.IDReuniao);
+				dbTran.AdicionarParametros("@IDCampanha", cont.IDCampanha);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblContribuicao");
+
+				//--- insert and Get new ID
+				int newID = dbTran.ExecutarInsertAndGetID(query);
+
+				return newID;
+
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}
@@ -186,6 +304,72 @@ namespace CamadaBLL
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;
 
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		//=================================================================================================
+		// CONTRIBUICAO CARTAO / CHEQUE
+		//=================================================================================================
+
+		// INSERT CONTRIBUICAO CARTAO
+		//------------------------------------------------------------------------------------------------------------
+		private void AddContribuicaoCartao(objContribuicaoCartao cartao, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@IDContribuicao", cartao.IDContribuicao);
+				dbTran.AdicionarParametros("@IDEntradaForma", cartao.CartaoTipo);
+				dbTran.AdicionarParametros("@ValorBruto", cartao.IDCartaoBandeira);
+				dbTran.AdicionarParametros("@IDContribuicaoTipo", cartao.IDCartaoOperadora);
+				dbTran.AdicionarParametros("@IDSetor", cartao.IDContaProvisoria);
+				dbTran.AdicionarParametros("@IDConta", cartao.Parcelas);
+				dbTran.AdicionarParametros("@IDContribuinte", cartao.TaxaAplicada);
+				dbTran.AdicionarParametros("@Prazo", cartao.Prazo);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblContribuicaoCartao");
+
+				//--- insert and Get new ID
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// INSERT CONTRIBUICAO CHEQUE
+		//------------------------------------------------------------------------------------------------------------
+		private void AddContribuicaoCheque(objContribuicaoCheque cheque, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@IDContribuicao", cheque.IDContribuicao);
+				dbTran.AdicionarParametros("@IDEntradaForma", cheque.ChequeNumero);
+				dbTran.AdicionarParametros("@ValorBruto", cheque.DepositoData);
+				dbTran.AdicionarParametros("@IDContribuicaoTipo", cheque.IDBanco);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblContribuicaoCheque");
+
+				//--- insert and Get new ID
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
 			}
 			catch (Exception ex)
 			{

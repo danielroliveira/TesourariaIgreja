@@ -13,6 +13,7 @@ namespace CamadaDTO
 			internal int? _IDConta;
 			internal string _Conta;
 			internal int? _IDCongregacao;
+			internal string _Congregacao;
 			internal decimal _ContaSaldo;
 			internal bool _Bancaria;
 			internal bool _OperadoraCartao;
@@ -128,7 +129,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Congregacao { get; set; }
+		// Property Congregacao
+		//---------------------------------------------------------------
+		public string Congregacao
+		{
+			get => EditData._Congregacao;
+			set => EditData._Congregacao = value;
+		}
 
 		// Property ContaSaldo
 		//---------------------------------------------------------------

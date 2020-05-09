@@ -14,17 +14,24 @@ namespace CamadaDTO
 		//-------------------------------------------------------------------------------------------------
 		struct StructEntrada
 		{
-			internal int? _IDContribuicao;
+			internal long? _IDContribuicao;
 			internal DateTime _ContribuicaoData;
 			internal byte _IDEntradaForma; // dinheiro, cheque, cartao
+			internal string _EntradaForma;
 			internal decimal _ValorBruto;
 			internal byte _IDContribuicaoTipo;
+			internal string _ContribuicaoTipo;
 			internal int _IDSetor;
+			internal string _Setor;
 			internal int _IDConta;
+			internal string _Conta;
 			internal int? _IDContribuinte;
+			internal string _Contribuinte;
 			internal string _OrigemDescricao;
 			internal int? _IDReuniao;
+			internal string _Reuniao;
 			internal int? _IDCampanha;
+			internal string _Campanha;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -99,7 +106,7 @@ namespace CamadaDTO
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public int? IDContribuicao
+		public long? IDContribuicao
 		{
 			get => EditData._IDContribuicao;
 			set => EditData._IDContribuicao = value;
@@ -208,13 +215,13 @@ namespace CamadaDTO
 			}
 		}
 
-		// Property IDContaProvisoria
-		//---------------------------------------------------------------
-		public int IDContaProvisoria { get; set; }
-
 		// Property EntradaForma
 		//---------------------------------------------------------------
-		public string EntradaForma { get; set; }
+		public string EntradaForma
+		{
+			get => EditData._EntradaForma;
+			set => EditData._EntradaForma = value;
+		}
 
 		// Property ValorBruto
 		//---------------------------------------------------------------
@@ -246,7 +253,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string ContribuicaoTipo { get; set; }
+		// Property ContribuicaoTipo
+		//---------------------------------------------------------------
+		public string ContribuicaoTipo
+		{
+			get => EditData._ContribuicaoTipo;
+			set => EditData._ContribuicaoTipo = value;
+		}
 
 		// Property IDSetor
 		//---------------------------------------------------------------
@@ -263,7 +276,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Setor { get; set; }
+		// Property Setor
+		//---------------------------------------------------------------
+		public string Setor
+		{
+			get => EditData._Setor;
+			set => EditData._Setor = value;
+		}
 
 		// Property IDConta
 		//---------------------------------------------------------------
@@ -280,7 +299,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Conta { get; set; }
+		// Property Conta
+		//---------------------------------------------------------------
+		public string Conta
+		{
+			get => EditData._Conta;
+			set => EditData._Conta = value;
+		}
 
 		// Property IDContribuinte
 		//---------------------------------------------------------------
@@ -297,7 +322,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Contribuinte { get; set; }
+		// Property Contribuinte
+		//---------------------------------------------------------------
+		public string Contribuinte
+		{
+			get => EditData._Contribuinte;
+			set => EditData._Contribuinte = value;
+		}
 
 		// Property OrigemDescricao
 		//---------------------------------------------------------------
@@ -329,7 +360,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Reuniao { get; set; }
+		// Property Reuniao
+		//---------------------------------------------------------------
+		public string Reuniao
+		{
+			get => EditData._Reuniao;
+			set => EditData._Reuniao = value;
+		}
 
 		// Property IDCampanha
 		//---------------------------------------------------------------
@@ -346,7 +383,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Campanha { get; set; }
+		// Property Campanha
+		//---------------------------------------------------------------
+		public string Campanha
+		{
+			get => EditData._Campanha;
+			set => EditData._Campanha = value;
+		}
 
 	}
 
@@ -362,10 +405,14 @@ namespace CamadaDTO
 			internal long? _IDContribuicao;
 			internal byte _CartaoTipo;
 			internal int _IDCartaoOperadora;
+			internal string _CartaoOperadora;
 			internal int _IDContaProvisoria;
+			internal string _ContaProvisoria;
 			internal int _IDCartaoBandeira;
+			internal string _CartaoBandeira;
 			internal byte _Parcelas;
 			internal decimal _TaxaAplicada;
+			internal byte _Prazo;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -473,7 +520,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string CartaoOperadora { get; set; }
+		// Property CartaoOperadora
+		//---------------------------------------------------------------
+		public string CartaoOperadora
+		{
+			get => EditData._CartaoOperadora;
+			set => EditData._CartaoOperadora = value;
+		}
 
 		// Property IDContaProvisoria
 		//---------------------------------------------------------------
@@ -490,7 +543,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string ContaProvisoria { get; set; }
+		// Property ContaProvisoria
+		//---------------------------------------------------------------
+		public string ContaProvisoria
+		{
+			get => EditData._ContaProvisoria;
+			set => EditData._ContaProvisoria = value;
+		}
 
 		// Property IDCartaoBandeira
 		//---------------------------------------------------------------
@@ -507,7 +566,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string CartaoBandeira { get; set; }
+		// Property CartaoBandeira
+		//---------------------------------------------------------------
+		public string CartaoBandeira
+		{
+			get => EditData._CartaoBandeira;
+			set => EditData._CartaoBandeira = value;
+		}
 
 		// Property Parcelas
 		//---------------------------------------------------------------
@@ -538,6 +603,164 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property Prazo
+		//---------------------------------------------------------------
+		public byte Prazo
+		{
+			get => EditData._Prazo;
+			set
+			{
+				if (value != EditData._Prazo)
+				{
+					EditData._Prazo = value;
+					NotifyPropertyChanged("Prazo");
+				}
+			}
+		}
+	}
+
+	//=================================================================================================
+	// CONTRIBUICAO CHEQUE
+	//=================================================================================================
+	public class objContribuicaoCheque : IEditableObject, INotifyPropertyChanged
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructEntrada
+		{
+			internal long? _IDContribuicao;
+			internal string _ChequeNumero;
+			internal int _IDBanco;
+			internal string _Banco;
+			internal DateTime _DepositoData;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructEntrada EditData;
+		private StructEntrada BackupData;
+		private bool inTxn = false;
+
+		public objContribuicaoCheque(long? IDContribuicao) : base()
+		{
+			EditData = new StructEntrada()
+			{
+				_IDContribuicao = IDContribuicao,
+				_DepositoData = DateTime.Today,
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructEntrada();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._IDContribuicao?.ToString("D4");
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+		public long? IDContribuicao
+		{
+			get => EditData._IDContribuicao;
+			set => EditData._IDContribuicao = value;
+		}
+
+		// Property ChequeNumero
+		//---------------------------------------------------------------
+		public string ChequeNumero
+		{
+			get => EditData._ChequeNumero;
+			set
+			{
+				if (value != EditData._ChequeNumero)
+				{
+					EditData._ChequeNumero = value;
+					NotifyPropertyChanged("ChequeNumero");
+				}
+			}
+		}
+
+		// Property IDBanco
+		//---------------------------------------------------------------
+		public int IDBanco
+		{
+			get => EditData._IDBanco;
+			set
+			{
+				if (value != EditData._IDBanco)
+				{
+					EditData._IDBanco = value;
+					NotifyPropertyChanged("IDBanco");
+				}
+			}
+		}
+
+		// Property Banco
+		//---------------------------------------------------------------
+		public string Banco
+		{
+			get => EditData._Banco;
+			set => EditData._Banco = value;
+		}
+
+		// Property DepositoData
+		//---------------------------------------------------------------
+		public DateTime DepositoData
+		{
+			get => EditData._DepositoData;
+			set
+			{
+				if (value != EditData._DepositoData)
+				{
+					EditData._DepositoData = value;
+					NotifyPropertyChanged("DepositoData");
+				}
+			}
+		}
+
 	}
 
 	//=================================================================================================

@@ -29,6 +29,7 @@ namespace CamadaDTO
 			internal string _Tesoureiro;
 			internal bool _Ativo;
 			internal int? _IDCongregacaoSetor;
+			internal string _CongregacaoSetor;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -368,7 +369,11 @@ namespace CamadaDTO
 
 		// Property CongregacaoSetor
 		//---------------------------------------------------------------
-		public string CongregacaoSetor { get; set; }
+		public string CongregacaoSetor
+		{
+			get => EditData._CongregacaoSetor;
+			set => EditData._CongregacaoSetor = value;
+		}
 	}
 
 

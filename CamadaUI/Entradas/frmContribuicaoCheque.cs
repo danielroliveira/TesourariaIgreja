@@ -11,14 +11,13 @@ using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Entradas
 {
-	public partial class frmContribuicaoCartao : CamadaUI.Modals.frmModFinBorder
+	public partial class frmContribuicaoCheque : CamadaUI.Modals.frmModFinBorder
 	{
-		private objContribuicaoCartao _cartao;
+		private objContribuicaoCheque _cheque;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 
-		private List<objCartaoOperadora> listOperadoras;
-		private List<objCartaoBandeira> listBandeiras;
+		private List<objBanco> listBancos;
 
 		private Form _formOrigem;
 
@@ -28,49 +27,44 @@ namespace CamadaUI.Entradas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuicaoCartao(ref objContribuicaoCartao obj, Form formOrigem)
+		public frmContribuicaoCheque(ref objContribuicaoCheque obj, Form formOrigem)
 		{
 			InitializeComponent();
 
-			_cartao = obj;
+			_cheque = obj;
 			_formOrigem = formOrigem;
-			GetOperadorasList();
-			GetBandeirasList();
+			GetBancosList();
 
 			// binding
 			bind.DataSource = typeof(objContribuicaoCartao);
-			bind.Add(_cartao);
+			bind.Add(_cheque);
 			BindingCreator();
 
-			if (_cartao.IDContribuicao == null)
-			{
+			if (_cheque.IDContribuicao == null)
 				Sit = EnumFlagEstado.NovoRegistro;
-			}
 			else
-			{
 				Sit = EnumFlagEstado.RegistroSalvo;
-			}
 
 			// handlers
-			_cartao.PropertyChanged += RegistroAlterado;
+			_cheque.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
 		}
 
-		// GET LIST OF OPERADORA E BANDEIRA
+		// GET LIST OF BANCOS
 		//------------------------------------------------------------------------------------------------------------
-		private void GetOperadorasList()
+		private void GetBancosList()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				var cartaoBLL = new CartaoBLL();
-				listOperadoras = cartaoBLL.GetCartaoOperadora();
+				var bancoBLL = new BancoBLL();
+				listBancos = bancoBLL.GetListBanco();
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de operadoras..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de bancos..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -80,27 +74,6 @@ namespace CamadaUI.Entradas
 			}
 		}
 
-		private void GetBandeirasList()
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				var cartaoBLL = new CartaoBLL();
-				listBandeiras = cartaoBLL.GetCartaoBandeiras();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de bandeiras de cartão..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
 
 		// PROPERTY SITUACAO
 		//------------------------------------------------------------------------------------------------------------
@@ -147,27 +120,18 @@ namespace CamadaUI.Entradas
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDContribuicao", true);
-			txtCartaoTipo.DataBindings.Add("Text", bind, "CartaoTipoDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCartaoBandeira.DataBindings.Add("Text", bind, "CartaoBandeira", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCartaoOperadora.DataBindings.Add("Text", bind, "CartaoOperadora", true, DataSourceUpdateMode.OnPropertyChanged);
-			numParcelas.DataBindings.Add("Value", bind, "Parcelas", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtChequeNumero.DataBindings.Add("Text", bind, "ChequeNumero", true, DataSourceUpdateMode.OnPropertyChanged);
+			dtpDepositoData.DataBindings.Add("Text", bind, "DepositoData", true, DataSourceUpdateMode.OnPropertyChanged);
 
-			// FORMAT HANDLERS
-			lblID.DataBindings["Text"].Format += FormatID;
+			txtChequeNumero.DataBindings["Text"].Format += FormatD6;
 		}
 
-
-		private void FormatID(object sender, ConvertEventArgs e)
-		{
-			e.Value = e.Value == DBNull.Value ? null : $"{e.Value: 0000}";
-		}
-
-		private void Format00(object sender, ConvertEventArgs e)
+		private void FormatD6(object sender, ConvertEventArgs e)
 		{
 			if (e.Value != null)
 			{
-				((byte)e.Value).ToString("D2");
+				((byte)e.Value).ToString("D6");
 			}
 		}
 
@@ -199,9 +163,8 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtCartaoTipo, "Tipo de Cartão", _cartao, EP)) return false;
-			if (!VerificaDadosClasse(txtCartaoOperadora, "Operadora de Crédito", _cartao, EP)) return false;
-			if (!VerificaDadosClasse(txtCartaoBandeira, "Bandeira do Cartão", _cartao, EP)) return false;
+			if (!VerificaDadosClasse(txtBanco, "Banco do Cheque", _cheque, EP)) return false;
+			if (!VerificaDadosClasse(txtChequeNumero, "Número do Cheque", _cheque, EP)) return false;
 
 			return true;
 		}
@@ -225,7 +188,7 @@ namespace CamadaUI.Entradas
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtCartaoBandeira, txtCartaoTipo, txtCartaoOperadora
+					txtBanco
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -234,7 +197,7 @@ namespace CamadaUI.Entradas
 
 		// CLOSE WHEN PRESS ESC
 		//------------------------------------------------------------------------------------------------------------
-		private void frmEntrada_KeyDown(object sender, KeyEventArgs e)
+		private void frm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -255,14 +218,8 @@ namespace CamadaUI.Entradas
 
 				switch (ctr.Name)
 				{
-					case "txtCartaoTipo":
-						btnSetCartaoTipo_Click(sender, new EventArgs());
-						break;
-					case "txtCartaoOperadora":
-						btnSetOperadora_Click(sender, new EventArgs());
-						break;
-					case "txtCartaoBandeira":
-						btnSetBandeira_Click(sender, new EventArgs());
+					case "txtBanco":
+						btnSetBanco_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -274,11 +231,7 @@ namespace CamadaUI.Entradas
 
 				switch (ctr.Name)
 				{
-					case "txtCartaoTipo":
-						break;
-					case "txtCartaoOperadora":
-						break;
-					case "txtCartaoBandeira":
+					case "txtBanco":
 						break;
 					default:
 						break;
@@ -292,9 +245,8 @@ namespace CamadaUI.Entradas
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
-					txtCartaoTipo,
-					txtCartaoOperadora,
-					txtCartaoBandeira, };
+					txtBanco,
+				};
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -304,116 +256,24 @@ namespace CamadaUI.Entradas
 			}
 		}
 
-		// KEY DOWN ENTER OF NUMERIC UPDOWN
-		private void numParcelas_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Enter)
-			{
-				e.SuppressKeyPress = true;
-				SendKeys.Send("{Tab}");
-			};
-		}
-
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region BUTTONS PROCURA
 
 		// OPEN LIST
 		//------------------------------------------------------------------------------------------------------------
-		private void btnSetCartaoTipo_Click(object sender, EventArgs e)
+		private void btnSetBanco_Click(object sender, EventArgs e)
 		{
-			var dic = new Dictionary<int, string>();
-			dic.Add(1, "Débito");
-			dic.Add(2, "Crédito");
-			dic.Add(3, "Parcelado");
-
-			// seleciona o TextBox
-			TextBox textBox = txtCartaoTipo;
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cartao.CartaoTipo);
-
-			// show form
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
+			if (listBancos.Count == 0)
 			{
-				_cartao.CartaoTipo = (byte)frm.propEscolha.Key;
-				textBox.Text = frm.propEscolha.Value;
-
-				// enable disable numeric parcelas
-				switch (_cartao.CartaoTipo)
-				{
-					case 1: // debito
-						numParcelas.Enabled = false;
-						numParcelas.Minimum = 0;
-						numParcelas.Value = 0;
-						break;
-					case 2: // credito
-						numParcelas.Enabled = false;
-						numParcelas.Minimum = 1;
-						numParcelas.Value = 1;
-						break;
-					case 3: // parcelado
-						numParcelas.Enabled = true;
-						numParcelas.Minimum = 2;
-						numParcelas.Value = 2;
-						break;
-					default:
-						break;
-				}
-
-				lblParcelas.ForeColor = numParcelas.Enabled ? Color.Black : Color.Silver;
-			}
-
-			//--- select
-			textBox.Focus();
-			textBox.SelectAll();
-		}
-
-		private void btnSetOperadora_Click(object sender, EventArgs e)
-		{
-			if (listOperadoras.Count == 0)
-			{
-				AbrirDialog("Não há Operadoras de Cartão cadastradas...", "Operadoras",
+				AbrirDialog("Não há Bancos cadastrados...", "Bancos",
 					DialogType.OK, DialogIcon.Exclamation);
 				return;
 			}
 
-			var dic = listOperadoras.ToDictionary(x => (int)x.IDCartaoOperadora, x => x.CartaoOperadora);
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, txtCartaoOperadora, _cartao.IDCartaoOperadora);
-
-			// show form
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				_cartao.IDCartaoOperadora = (byte)frm.propEscolha.Key;
-				txtCartaoOperadora.Text = frm.propEscolha.Value;
-			}
-
-			//--- select
-			txtCartaoOperadora.Focus();
-			txtCartaoOperadora.SelectAll();
-		}
-
-		private void btnSetBandeira_Click(object sender, EventArgs e)
-		{
-			if (listBandeiras.Count == 0)
-			{
-				AbrirDialog("Não há Bandeiras de Cartão cadastradas...", "Bandeiras",
-					DialogType.OK, DialogIcon.Exclamation);
-				return;
-			}
-
-			// seleciona o TextBox
-			TextBox textBox = txtCartaoBandeira;
-
-			var dic = listBandeiras.ToDictionary(x => (int)x.IDCartaoBandeira, x => x.CartaoBandeira);
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cartao.IDCartaoBandeira);
+			var dic = listBancos.ToDictionary(x => (int)x.IDBanco, x => x.BancoNome);
+			var textBox = txtBanco;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cheque.IDBanco);
 
 			// show form
 			frm.ShowDialog();
@@ -421,7 +281,7 @@ namespace CamadaUI.Entradas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_cartao.IDCartaoBandeira = (byte)frm.propEscolha.Key;
+				_cheque.IDBanco = (byte)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 

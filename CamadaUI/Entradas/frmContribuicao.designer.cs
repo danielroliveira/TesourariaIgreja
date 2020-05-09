@@ -288,7 +288,7 @@
 			// 
 			this.txtValorBruto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtValorBruto.Inteiro = false;
-			this.txtValorBruto.Location = new System.Drawing.Point(98, 269);
+			this.txtValorBruto.Location = new System.Drawing.Point(111, 269);
 			this.txtValorBruto.Name = "txtValorBruto";
 			this.txtValorBruto.Positivo = true;
 			this.txtValorBruto.Size = new System.Drawing.Size(120, 31);
@@ -341,7 +341,7 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(61, 117);
+			this.label3.Location = new System.Drawing.Point(66, 116);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(109, 19);
 			this.label3.TabIndex = 4;
@@ -349,7 +349,7 @@
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(176, 114);
+			this.txtSetor.Location = new System.Drawing.Point(181, 113);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
 			this.txtSetor.Size = new System.Drawing.Size(228, 27);
@@ -362,7 +362,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(410, 114);
+			this.btnSetSetor.Location = new System.Drawing.Point(415, 113);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -380,7 +380,7 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(56, 79);
+			this.label4.Location = new System.Drawing.Point(61, 78);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(114, 19);
 			this.label4.TabIndex = 1;
@@ -388,7 +388,7 @@
 			// 
 			// txtConta
 			// 
-			this.txtConta.Location = new System.Drawing.Point(176, 76);
+			this.txtConta.Location = new System.Drawing.Point(181, 75);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
 			this.txtConta.Size = new System.Drawing.Size(228, 27);
@@ -401,7 +401,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(410, 76);
+			this.btnSetConta.Location = new System.Drawing.Point(415, 75);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
@@ -501,7 +501,7 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(105, 247);
+			this.label8.Location = new System.Drawing.Point(118, 247);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(116, 19);
 			this.label8.TabIndex = 12;
@@ -512,7 +512,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(136, 179);
+			this.label1.Location = new System.Drawing.Point(149, 179);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(114, 19);
 			this.label1.TabIndex = 8;
@@ -523,7 +523,7 @@
 			this.label9.AutoSize = true;
 			this.label9.BackColor = System.Drawing.Color.Transparent;
 			this.label9.ForeColor = System.Drawing.Color.Black;
-			this.label9.Location = new System.Drawing.Point(220, 247);
+			this.label9.Location = new System.Drawing.Point(233, 247);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(116, 19);
 			this.label9.TabIndex = 13;
@@ -532,7 +532,7 @@
 			// txtEntradaForma
 			// 
 			this.txtEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtEntradaForma.Location = new System.Drawing.Point(224, 269);
+			this.txtEntradaForma.Location = new System.Drawing.Point(237, 269);
 			this.txtEntradaForma.MaxLength = 30;
 			this.txtEntradaForma.Name = "txtEntradaForma";
 			this.txtEntradaForma.Size = new System.Drawing.Size(193, 31);
@@ -545,7 +545,7 @@
 			this.btnSetEntradaForma.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEntradaForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetEntradaForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetEntradaForma.Location = new System.Drawing.Point(423, 269);
+			this.btnSetEntradaForma.Location = new System.Drawing.Point(436, 269);
 			this.btnSetEntradaForma.Name = "btnSetEntradaForma";
 			this.btnSetEntradaForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaForma.RoundedCornersRadius = 0;
@@ -564,7 +564,7 @@
 			this.cmbEntradaMes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbEntradaMes.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmbEntradaMes.FormattingEnabled = true;
-			this.cmbEntradaMes.Location = new System.Drawing.Point(198, 201);
+			this.cmbEntradaMes.Location = new System.Drawing.Point(211, 201);
 			this.cmbEntradaMes.Name = "cmbEntradaMes";
 			this.cmbEntradaMes.Size = new System.Drawing.Size(150, 31);
 			this.cmbEntradaMes.TabIndex = 10;
@@ -573,7 +573,7 @@
 			// 
 			this.txtEntradaAno.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtEntradaAno.Inteiro = true;
-			this.txtEntradaAno.Location = new System.Drawing.Point(354, 201);
+			this.txtEntradaAno.Location = new System.Drawing.Point(367, 201);
 			this.txtEntradaAno.Name = "txtEntradaAno";
 			this.txtEntradaAno.Positivo = true;
 			this.txtEntradaAno.Size = new System.Drawing.Size(63, 31);
@@ -584,7 +584,7 @@
 			// 
 			this.txtEntradaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtEntradaDia.Inteiro = true;
-			this.txtEntradaDia.Location = new System.Drawing.Point(140, 201);
+			this.txtEntradaDia.Location = new System.Drawing.Point(153, 201);
 			this.txtEntradaDia.Name = "txtEntradaDia";
 			this.txtEntradaDia.Positivo = true;
 			this.txtEntradaDia.Size = new System.Drawing.Size(52, 31);

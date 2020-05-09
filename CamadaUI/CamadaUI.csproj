@@ -65,6 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caixa\frmBancosControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmBancosControle.Designer.cs">
+      <DependentUpon>frmBancosControle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmCartaoControle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +227,12 @@
     <Compile Include="Entradas\frmContribuicaoCartao.designer.cs">
       <DependentUpon>frmContribuicaoCartao.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entradas\frmContribuicaoCheque.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmContribuicaoCheque.designer.cs">
+      <DependentUpon>frmContribuicaoCheque.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entradas\frmContribuicaoListagem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -339,6 +351,9 @@
     <Compile Include="Setores\frmSetorProcura.designer.cs">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Caixa\frmBancosControle.resx">
+      <DependentUpon>frmBancosControle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmCartaoControle.resx">
       <DependentUpon>frmCartaoControle.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmContribuicaoCartao.resx">
       <DependentUpon>frmContribuicaoCartao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmContribuicaoCheque.resx">
+      <DependentUpon>frmContribuicaoCheque.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmContribuicaoListagem.resx">
       <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
@@ -639,6 +657,8 @@
   <ItemGroup>
     <None Include="Resources\money_green_24.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\novo_peq_24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

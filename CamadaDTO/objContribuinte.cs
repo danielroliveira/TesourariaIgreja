@@ -18,6 +18,7 @@ namespace CamadaDTO
 			internal int? _IDMembro;
 			internal string _TelefoneCelular;
 			internal int? _IDCongregacao;
+			internal string _Congregacao;
 			internal bool _Ativo;
 		}
 
@@ -218,7 +219,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Congregacao { get; set; }
+		// Property Congregacao
+		//---------------------------------------------------------------
+		public string Congregacao
+		{
+			get => EditData._Congregacao;
+			set => EditData._Congregacao = value;
+		}
 
 	}
 }

@@ -14,7 +14,9 @@ namespace CamadaDTO
 		{
 			internal int? _IDCartaoTaxa;
 			internal int _IDCartaoOperadora;
+			internal string _CartaoOperadora;
 			internal int? _IDCartaoBandeira;
+			internal string _CartaoBandeira;
 			internal byte _PrazoDebito;
 			internal byte _PrazoCredito;
 			internal decimal? _TaxaDebito;
@@ -125,7 +127,11 @@ namespace CamadaDTO
 
 		// Property CartaoOperadora
 		//---------------------------------------------------------------
-		public string CartaoOperadora { get; set; }
+		public string CartaoOperadora
+		{
+			get => EditData._CartaoOperadora;
+			set => EditData._CartaoOperadora = value;
+		}
 
 		// Property IDContaProvisoria
 		//---------------------------------------------------------------
@@ -150,12 +156,10 @@ namespace CamadaDTO
 			}
 		}
 
-		private string _CartaoBandeira;
-
 		public string CartaoBandeira
 		{
-			get => (IDCartaoBandeira == null) ? "qualquer bandeira..." : _CartaoBandeira;
-			set => _CartaoBandeira = value;
+			get => (IDCartaoBandeira == null) ? "qualquer bandeira..." : EditData._CartaoBandeira;
+			set => EditData._CartaoBandeira = value;
 		}
 
 		// Property PrazoDebito

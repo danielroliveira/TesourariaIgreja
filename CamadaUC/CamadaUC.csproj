@@ -56,6 +56,9 @@
     <Compile Include="ucData.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ucDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ucOnlyNumbers.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -13,6 +13,7 @@ namespace CamadaDTO
 			internal int? _IDReuniao;
 			internal string _Reuniao;
 			internal int? _IDCongregacao;
+			internal string _Congregacao;
 			internal int _RecorrenciaTipo; // 1:Diaria | 2:Semanal | 3:Mensal por Dia | 4:Mensal por Semana | 5:Anual | 6: Anual por Mês Semana Dia
 			internal short _RecorrenciaRepeticao; // Quantas Vezes?
 			internal byte? _RecorrenciaDia; // Dia da reuniao
@@ -134,7 +135,11 @@ namespace CamadaDTO
 
 		// Property Congregacao
 		//---------------------------------------------------------------
-		public string Congregacao { get; set; }
+		public string Congregacao
+		{
+			get => EditData._Congregacao;
+			set => EditData._Congregacao = value;
+		}
 
 		// Property RecorrenciaTipo
 		//---------------------------------------------------------------

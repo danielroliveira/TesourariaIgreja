@@ -765,6 +765,7 @@ namespace CamadaUI
 			mnuContas.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());
 			mnuSetores.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
 			mnuCartao.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCartaoControle());
+			mnuBanco.Click += (a, b) => MenuClickOpenForm(new Caixa.frmBancosControle());
 		}
 
 		private void MenuClickOpenForm(Form form)

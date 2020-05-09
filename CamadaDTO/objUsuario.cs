@@ -209,6 +209,7 @@ namespace CamadaDTO
 			internal int? _IDUserConta;
 			internal int? _IDUsuario;
 			internal int? _IDConta;
+			internal string _Conta;
 			internal DateTime _LiberacaoData;
 			internal bool _Ativo;
 		}
@@ -320,7 +321,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Conta { get; set; }
+		// Property Conta
+		//---------------------------------------------------------------
+		public string Conta
+		{
+			get => EditData._Conta;
+			set => EditData._Conta = value;
+		}
 
 		// Property LiberacaoData
 		//---------------------------------------------------------------

@@ -38,7 +38,7 @@
 			this.btnSetBandeira = new VIBlend.WinForms.Controls.vButton();
 			this.label4 = new System.Windows.Forms.Label();
 			this.txtCartaoOperadora = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.lblParcelas = new System.Windows.Forms.Label();
 			this.btnSetOperadora = new VIBlend.WinForms.Controls.vButton();
 			this.numParcelas = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
@@ -131,6 +131,7 @@
 			this.btnOK.Size = new System.Drawing.Size(110, 41);
 			this.btnOK.Text = "&OK";
 			this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
 			// btnCancelar
 			// 
@@ -206,16 +207,16 @@
 			this.txtCartaoOperadora.TabIndex = 5;
 			this.txtCartaoOperadora.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
-			// label1
+			// lblParcelas
 			// 
-			this.label1.AutoSize = true;
-			this.label1.BackColor = System.Drawing.Color.Transparent;
-			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(95, 196);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(64, 19);
-			this.label1.TabIndex = 10;
-			this.label1.Text = "Parcelas";
+			this.lblParcelas.AutoSize = true;
+			this.lblParcelas.BackColor = System.Drawing.Color.Transparent;
+			this.lblParcelas.ForeColor = System.Drawing.Color.Silver;
+			this.lblParcelas.Location = new System.Drawing.Point(95, 196);
+			this.lblParcelas.Name = "lblParcelas";
+			this.lblParcelas.Size = new System.Drawing.Size(64, 19);
+			this.lblParcelas.TabIndex = 10;
+			this.lblParcelas.Text = "Parcelas";
 			// 
 			// btnSetOperadora
 			// 
@@ -238,6 +239,7 @@
 			// 
 			// numParcelas
 			// 
+			this.numParcelas.Enabled = false;
 			this.numParcelas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numParcelas.Location = new System.Drawing.Point(165, 191);
 			this.numParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
@@ -259,6 +261,7 @@
             0,
             0,
             0});
+			this.numParcelas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numParcelas_KeyDown);
 			// 
 			// label2
 			// 
@@ -314,7 +317,7 @@
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.txtCartaoBandeira);
 			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.lblParcelas);
 			this.Controls.Add(this.tspMenu);
 			this.KeyPreview = true;
 			this.Name = "frmContribuicaoCartao";
@@ -323,7 +326,7 @@
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmEntrada_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.lblParcelas, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtCartaoBandeira, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
@@ -356,7 +359,7 @@
 		internal VIBlend.WinForms.Controls.vButton btnSetBandeira;
 		internal System.Windows.Forms.Label label4;
 		internal System.Windows.Forms.TextBox txtCartaoOperadora;
-		internal System.Windows.Forms.Label label1;
+		internal System.Windows.Forms.Label lblParcelas;
 		internal VIBlend.WinForms.Controls.vButton btnSetOperadora;
 		private System.Windows.Forms.NumericUpDown numParcelas;
 		internal System.Windows.Forms.Label label2;

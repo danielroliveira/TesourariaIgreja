@@ -20,6 +20,7 @@ namespace CamadaDTO
 			internal decimal _ValorLiquido;
 			internal decimal _ValorRecebido;
 			internal int _IDContaProvisoria;
+			internal string _Conta;
 			internal byte _Situacao; // 1: EmAberto | 2: Recebido
 		}
 
@@ -189,7 +190,13 @@ namespace CamadaDTO
 			}
 		}
 
-		public string Conta { get; set; }
+		// Property Conta
+		//---------------------------------------------------------------
+		public string Conta
+		{
+			get => EditData._Conta;
+			set => EditData._Conta = value;
+		}
 
 		// Property Situacao
 		//---------------------------------------------------------------

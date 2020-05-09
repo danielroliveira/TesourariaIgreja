@@ -394,6 +394,10 @@ namespace CamadaUI.Contas
 						break;
 				}
 			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao

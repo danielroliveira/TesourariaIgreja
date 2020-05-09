@@ -52,6 +52,7 @@
 			this.mnuContas = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetores = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCartao = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuBanco = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop = new System.Windows.Forms.Panel();
 			this.lblTitulo = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
@@ -270,7 +271,8 @@
             this.toolStripSeparator2,
             this.mnuContas,
             this.mnuSetores,
-            this.mnuCartao});
+            this.mnuCartao,
+            this.mnuBanco});
 			this.btnMovimentação.Image = global::CamadaUI.Properties.Resources.Caixa_32;
 			this.btnMovimentação.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnMovimentação.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -322,6 +324,16 @@
 			this.mnuCartao.Size = new System.Drawing.Size(278, 30);
 			this.mnuCartao.Tag = "1";
 			this.mnuCartao.Text = "Controle de Cartão de Crédito";
+			// 
+			// mnuBanco
+			// 
+			this.mnuBanco.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuBanco.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuBanco.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuBanco.Name = "mnuBanco";
+			this.mnuBanco.Size = new System.Drawing.Size(278, 30);
+			this.mnuBanco.Tag = "1";
+			this.mnuBanco.Text = "Controle de Banco";
 			// 
 			// pnlTop
 			// 
@@ -663,6 +675,7 @@
 		internal System.Windows.Forms.Label lblSetor;
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ToolStripMenuItem mnuCartao;
+		private System.Windows.Forms.ToolStripMenuItem mnuBanco;
 	}
 }
 
