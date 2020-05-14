@@ -46,7 +46,7 @@
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(216, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(225, 50);
-			this.lblTitulo.TabIndex = 2;
+			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Detalhes do Cheque";
 			// 
 			// btnClose
@@ -55,7 +55,7 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(441, 0);
-			this.btnClose.TabIndex = 3;
+			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -76,7 +76,7 @@
 			this.tspMenu.Location = new System.Drawing.Point(2, 222);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(476, 44);
-			this.tspMenu.TabIndex = 12;
+			this.tspMenu.TabIndex = 8;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -165,7 +165,7 @@
 			this.txtChequeNumero.Name = "txtChequeNumero";
 			this.txtChequeNumero.Positivo = true;
 			this.txtChequeNumero.Size = new System.Drawing.Size(100, 27);
-			this.txtChequeNumero.TabIndex = 13;
+			this.txtChequeNumero.TabIndex = 5;
 			this.txtChequeNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// dtpDepositoData
@@ -175,7 +175,7 @@
 			this.dtpDepositoData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpDepositoData.Name = "dtpDepositoData";
 			this.dtpDepositoData.Size = new System.Drawing.Size(138, 27);
-			this.dtpDepositoData.TabIndex = 14;
+			this.dtpDepositoData.TabIndex = 7;
 			// 
 			// label1
 			// 
@@ -185,7 +185,7 @@
 			this.label1.Location = new System.Drawing.Point(27, 162);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(122, 19);
-			this.label1.TabIndex = 4;
+			this.label1.TabIndex = 6;
 			this.label1.Text = "Data do Depósito";
 			// 
 			// frmContribuicaoCheque

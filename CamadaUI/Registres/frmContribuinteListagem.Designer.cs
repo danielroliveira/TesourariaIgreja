@@ -59,7 +59,6 @@
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(586, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(162, 50);
-			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Contribuintes";
 			// 
 			// btnClose
@@ -68,7 +67,7 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(748, 0);
-			this.btnClose.TabIndex = 1;
+			this.btnClose.TabIndex = 2;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -86,7 +85,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(640, 495);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
-			this.btnFechar.TabIndex = 8;
+			this.btnFechar.TabIndex = 11;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -100,7 +99,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(508, 495);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 7;
+			this.btnAdicionar.TabIndex = 10;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -114,7 +113,7 @@
 			this.btnEditar.Location = new System.Drawing.Point(376, 495);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 6;
+			this.btnEditar.TabIndex = 9;
 			this.btnEditar.Text = "E&ditar";
 			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -137,7 +136,7 @@
 			this.Label2.Location = new System.Drawing.Point(396, 70);
 			this.Label2.Name = "Label2";
 			this.Label2.Size = new System.Drawing.Size(64, 19);
-			this.Label2.TabIndex = 3;
+			this.Label2.TabIndex = 4;
 			this.Label2.Text = "Situação";
 			// 
 			// Label1
@@ -157,7 +156,8 @@
 			this.cmbAtivo.Location = new System.Drawing.Point(466, 67);
 			this.cmbAtivo.Name = "cmbAtivo";
 			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
-			this.cmbAtivo.TabIndex = 4;
+			this.cmbAtivo.TabIndex = 5;
+			this.cmbAtivo.TabStop = false;
 			// 
 			// dgvListagem
 			// 
@@ -170,9 +170,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -186,10 +186,10 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnCadastro,
-			this.clnCongregacao,
-			this.clnImage});
+            this.clnID,
+            this.clnCadastro,
+            this.clnCongregacao,
+            this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 111);
@@ -203,7 +203,7 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(744, 371);
-			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.TabIndex = 6;
 			this.dgvListagem.DataSourceChanged += new System.EventHandler(this.dgvListagem_DataSourceChanged);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
@@ -241,8 +241,8 @@
 			// MenuListagem
 			// 
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.AtivarToolStripMenuItem,
-			this.DesativarToolStripMenuItem});
+            this.AtivarToolStripMenuItem,
+            this.DesativarToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
 			this.MenuListagem.Size = new System.Drawing.Size(193, 48);
 			// 
@@ -270,7 +270,7 @@
 			this.lblProc.Margin = new System.Windows.Forms.Padding(0);
 			this.lblProc.Name = "lblProc";
 			this.lblProc.Size = new System.Drawing.Size(172, 19);
-			this.lblProc.TabIndex = 43;
+			this.lblProc.TabIndex = 3;
 			this.lblProc.Text = "Digite algo para procurar...";
 			this.lblProc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.lblProc.Click += new System.EventHandler(this.lblProc_Click);
@@ -283,7 +283,7 @@
 			this.btnProcurar.Location = new System.Drawing.Point(22, 495);
 			this.btnProcurar.Name = "btnProcurar";
 			this.btnProcurar.Size = new System.Drawing.Size(120, 42);
-			this.btnProcurar.TabIndex = 44;
+			this.btnProcurar.TabIndex = 7;
 			this.btnProcurar.Tag = "Clique aqui para Procurar";
 			this.btnProcurar.Text = "&Procurar";
 			this.btnProcurar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -300,7 +300,7 @@
 			this.btnEscolher.Location = new System.Drawing.Point(148, 495);
 			this.btnEscolher.Name = "btnEscolher";
 			this.btnEscolher.Size = new System.Drawing.Size(120, 42);
-			this.btnEscolher.TabIndex = 44;
+			this.btnEscolher.TabIndex = 8;
 			this.btnEscolher.Tag = "Clique aqui para Procurar";
 			this.btnEscolher.Text = "&Escolher";
 			this.btnEscolher.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -317,7 +317,7 @@
 			this.lblRegistrosEncontrados.Location = new System.Drawing.Point(12, 11);
 			this.lblRegistrosEncontrados.Name = "lblRegistrosEncontrados";
 			this.lblRegistrosEncontrados.Size = new System.Drawing.Size(280, 26);
-			this.lblRegistrosEncontrados.TabIndex = 45;
+			this.lblRegistrosEncontrados.TabIndex = 0;
 			this.lblRegistrosEncontrados.Text = "Nenhum registro encontrado...";
 			this.lblRegistrosEncontrados.Visible = false;
 			// 
@@ -338,8 +338,8 @@
 			this.Controls.Add(this.Label1);
 			this.KeyPreview = true;
 			this.Name = "frmContribuinteListagem";
-			this.Activated += new System.EventHandler(this.frmContribuinteListagem_Activated);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmContribuinteListagem_FormClosed);
+			this.Activated += new System.EventHandler(this.form_Activated);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmContribuinteListagem_KeyDown);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.Label1, 0);

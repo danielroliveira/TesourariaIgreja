@@ -36,7 +36,7 @@ namespace CamadaUI.Entradas
 			GetBancosList();
 
 			// binding
-			bind.DataSource = typeof(objContribuicaoCartao);
+			bind.DataSource = typeof(objContribuicaoCheque);
 			bind.Add(_cheque);
 			BindingCreator();
 
@@ -131,7 +131,7 @@ namespace CamadaUI.Entradas
 		{
 			if (e.Value != null)
 			{
-				((byte)e.Value).ToString("D6");
+				(int.Parse(e.Value.ToString())).ToString("D6");
 			}
 		}
 

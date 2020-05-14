@@ -31,6 +31,18 @@ namespace CamadaUI.Registres
 			_formOrigem = formOrigem;
 			_isProcura = IsProcura;
 
+			if (IsProcura)
+			{
+				btnEscolher.Enabled = true;
+				btnEditar.Enabled = false;
+			}
+			else
+			{
+				btnEscolher.Enabled = false;
+				btnEditar.Enabled = true;
+			}
+
+
 			CarregaCmbAtivo();
 			FormataListagem();
 
@@ -166,7 +178,23 @@ namespace CamadaUI.Registres
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-				btnEditar_Click(sender, new EventArgs());
+
+				if (dgvListagem.Rows.Count > 0)
+				{
+					if (_isProcura)
+					{
+						btnEscolher_Click(sender, null);
+					}
+					else
+					{
+						btnEditar_Click(sender, new EventArgs());
+					}
+				}
+				else
+				{
+					SendKeys.Send("{TAB}");
+				}
+
 			}
 		}
 
@@ -203,17 +231,27 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmContribuinte frm = new frmContribuinte(new objContribuinte(null));
-			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-			DesativaMenuPrincipal();
-			Close();
-			frm.Show();
+			if (_formOrigem.GetType() == typeof(frmPrincipal))
+			{
+				frmContribuinte frm = new frmContribuinte(new objContribuinte(null), null);
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				DesativaMenuPrincipal();
+				Close();
+				frm.Show();
+			}
+			else
+			{
+				DialogResult = DialogResult.Yes; // return to Origem that is new Contribuinte
+			}
 		}
 
 		// BTN EDITAR
 		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
+			//--- check formOrigem
+			if (_formOrigem.GetType() != typeof(frmPrincipal)) return;
+
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
@@ -226,7 +264,7 @@ namespace CamadaUI.Registres
 			objContribuinte item = (objContribuinte)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			frmContribuinte frm = new frmContribuinte(item);
+			frmContribuinte frm = new frmContribuinte(item, null);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -348,7 +386,6 @@ namespace CamadaUI.Registres
 		------------------------------------------------------------------------------------------------*/
 		private void frmContribuinteListagem_KeyDown(object sender, KeyEventArgs e)
 		{
-
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
@@ -430,64 +467,7 @@ namespace CamadaUI.Registres
 					e.Handled = false;
 					break;
 			}
-
-
-			if (e.KeyCode == Keys.Escape)
-			{
-				e.Handled = true;
-				btnFechar_Click(sender, new EventArgs());
-			}
-			else if (e.KeyCode == Keys.Add)
-			{
-				e.Handled = true;
-				btnAdicionar_Click(sender, new EventArgs());
-			}
-			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
-			{
-				e.Handled = true;
-
-				if (dgvListagem.Rows.Count > 0)
-				{
-					if (dgvListagem.SelectedRows.Count > 0)
-					{
-						int i = dgvListagem.SelectedRows[0].Index;
-						dgvListagem.Rows[i].Selected = false;
-						if (i == 0) i = dgvListagem.Rows.Count;
-						dgvListagem.Rows[i - 1].Selected = true;
-					}
-					else
-					{
-						dgvListagem.Rows[0].Selected = true;
-					}
-
-					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
-					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
-				}
-			}
-			else if (e.KeyCode == Keys.Down && ActiveControl.GetType().BaseType.Name != "ComboBox")
-			{
-				e.Handled = true;
-
-				if (dgvListagem.Rows.Count > 0)
-				{
-					if (dgvListagem.SelectedRows.Count > 0)
-					{
-						int i = dgvListagem.SelectedRows[0].Index;
-						dgvListagem.Rows[i].Selected = false;
-						if (i == dgvListagem.Rows.Count - 1) i = -1;
-						dgvListagem.Rows[i + 1].Selected = true;
-					}
-					else
-					{
-						dgvListagem.Rows[0].Selected = true;
-					}
-
-					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
-					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
-				}
-			}
 		}
-
 
 		#endregion // CONTROLS FUNCTION --- END
 
@@ -495,7 +475,7 @@ namespace CamadaUI.Registres
 
 		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
 		//------------------------------------------------------------------------------------------------------------
-		private void frmContribuinteListagem_Activated(object sender, EventArgs e)
+		private void form_Activated(object sender, EventArgs e)
 		{
 			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
 			{
@@ -504,7 +484,7 @@ namespace CamadaUI.Registres
 			}
 		}
 
-		private void frmContribuinteListagem_FormClosed(object sender, FormClosedEventArgs e)
+		private void form_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
 			{
@@ -611,9 +591,17 @@ namespace CamadaUI.Registres
 		{
 			if (propPreenchido == true)
 			{
-				dgvListagem.Focus();
 				ObterDados(sender, null);
-				//AtualizaRegistrosEncontradosLabel();
+
+				if (_sourceList.Count > 0)
+				{
+					dgvListagem.Focus();
+				}
+				else
+				{
+					txtProcura.Focus();
+					txtProcura.SelectAll();
+				}
 			}
 
 		}

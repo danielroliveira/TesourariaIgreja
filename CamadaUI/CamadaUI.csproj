@@ -239,6 +239,12 @@
     <Compile Include="Entradas\frmContribuicaoListagem.designer.cs">
       <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entradas\frmContribuicaoListagemFiltro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmContribuicaoListagemFiltro.Designer.cs">
+      <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmComboLista.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +256,12 @@
     </Compile>
     <Compile Include="Main\frmConnString.Designer.cs">
       <DependentUpon>frmConnString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmDateGet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmDateGet.Designer.cs">
+      <DependentUpon>frmDateGet.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmLogin.cs">
       <SubType>Form</SubType>
@@ -439,11 +451,17 @@
     <EmbeddedResource Include="Entradas\frmContribuicaoListagem.resx">
       <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmContribuicaoListagemFiltro.resx">
+      <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\frmComboLista.resx">
       <DependentUpon>frmComboLista.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmConnString.resx">
       <DependentUpon>frmConnString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmDateGet.resx">
+      <DependentUpon>frmDateGet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
@@ -659,6 +677,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\novo_peq_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imprimir_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Saidas\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

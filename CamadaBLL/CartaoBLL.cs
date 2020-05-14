@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CamadaBLL
 {
@@ -41,6 +42,53 @@ namespace CamadaBLL
 				}
 
 				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET CARTAO TAXA OF SPECIFIC OPERADORA | BANDEIRA | PARCELA
+		//------------------------------------------------------------------------------------------------------------
+		public objCartaoTaxa GetCartaoTaxa(int IDCartaoOperadora, int IDCartaoBandeira)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryCartaoTaxas";
+
+				// add params
+				db.LimparParametros();
+
+				db.AdicionarParametros("@IDCartaoOperadora", IDCartaoOperadora);
+
+				query += " WHERE IDCartaoOperadora = @IDCartaoOperadora";
+				query += " ORDER BY IDCartaoTaxa";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+					return null;
+
+				// create list to find Bandeira
+				List<objCartaoTaxa> listagem = new List<objCartaoTaxa>();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				if (listagem.Count == 1)
+				{
+					return listagem[0];
+				}
+				else
+				{
+					return listagem.First(x => x.IDCartaoBandeira == IDCartaoBandeira);
+				}
 
 			}
 			catch (Exception ex)

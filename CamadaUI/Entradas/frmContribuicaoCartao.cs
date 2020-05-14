@@ -14,11 +14,13 @@ namespace CamadaUI.Entradas
 	public partial class frmContribuicaoCartao : CamadaUI.Modals.frmModFinBorder
 	{
 		private objContribuicaoCartao _cartao;
+		private CartaoBLL cBLL = new CartaoBLL();
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 
 		private List<objCartaoOperadora> listOperadoras;
 		private List<objCartaoBandeira> listBandeiras;
+		private Dictionary<int, string> dicTipo = new Dictionary<int, string>();
 
 		private Form _formOrigem;
 
@@ -36,6 +38,7 @@ namespace CamadaUI.Entradas
 			_formOrigem = formOrigem;
 			GetOperadorasList();
 			GetBandeirasList();
+			PreencheDictionary();
 
 			// binding
 			bind.DataSource = typeof(objContribuicaoCartao);
@@ -65,8 +68,7 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				var cartaoBLL = new CartaoBLL();
-				listOperadoras = cartaoBLL.GetCartaoOperadora();
+				listOperadoras = cBLL.GetCartaoOperadora();
 			}
 			catch (Exception ex)
 			{
@@ -87,8 +89,7 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				var cartaoBLL = new CartaoBLL();
-				listBandeiras = cartaoBLL.GetCartaoBandeiras();
+				listBandeiras = cBLL.GetCartaoBandeiras();
 			}
 			catch (Exception ex)
 			{
@@ -100,6 +101,13 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
+
+		private void PreencheDictionary()
+		{
+			dicTipo.Add(1, "Débito");
+			dicTipo.Add(2, "Crédito");
+			dicTipo.Add(3, "Parcelado");
 		}
 
 		// PROPERTY SITUACAO
@@ -190,8 +198,14 @@ namespace CamadaUI.Entradas
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			//--- check data
-			if (!CheckSaveData()) return;
+			if (!CheckSaveData())
+			{
+				txtCartaoTipo.Focus();
+				return;
+			}
 
+			//--- save and close
+			bind.EndEdit();
 			DialogResult = DialogResult.OK;
 		}
 
@@ -203,7 +217,138 @@ namespace CamadaUI.Entradas
 			if (!VerificaDadosClasse(txtCartaoOperadora, "Operadora de Crédito", _cartao, EP)) return false;
 			if (!VerificaDadosClasse(txtCartaoBandeira, "Bandeira do Cartão", _cartao, EP)) return false;
 
+			// get taxa
+			if (!GetAndCheckTaxa()) return false;
+
 			return true;
+		}
+
+		// CHECK CARTAO OPERADORA TAXAS
+		//------------------------------------------------------------------------------------------------------------
+		private bool GetAndCheckTaxa()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objCartaoTaxa taxa = cBLL.GetCartaoTaxa(_cartao.IDCartaoOperadora, _cartao.IDCartaoBandeira);
+
+				// CHECK TAXA
+				if (taxa == null)
+				{
+					AbrirDialog("Não há configuração de TAXA para essa operadora e/ou bandeira...",
+						"Configurar Taxa", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+
+				// DEFINE TAXA with PARCELAS
+				if (_cartao.CartaoTipo == 1) // DEBITO
+				{
+					if (taxa.TaxaDebito == null)
+					{
+						AbrirDialog("Não há configuração de TAXA de DÉBITO para essa operadora e bandeira...",
+							"Configurar Taxa", DialogType.OK, DialogIcon.Exclamation);
+						return false;
+					}
+
+					_cartao.TaxaAplicada = (decimal)taxa.TaxaDebito;
+				}
+				else if (_cartao.CartaoTipo == 2) // CREDITO
+				{
+					if (taxa.TaxaCredito == null)
+					{
+						AbrirDialog("Não há configuração de TAXA de CRÉDITO para essa operadora e bandeira...",
+							"Configurar Taxa", DialogType.OK, DialogIcon.Exclamation);
+						return false;
+					}
+
+					_cartao.TaxaAplicada = (decimal)taxa.TaxaCredito;
+				}
+				else if (_cartao.CartaoTipo == 3) // PARCELADO
+				{
+					decimal? taxaAplicada = null;
+
+					switch (_cartao.Parcelas)
+					{
+						case 2:
+							taxaAplicada = taxa.Taxa2;
+							break;
+						case 3:
+							taxaAplicada = taxa.Taxa3;
+							break;
+						case 4:
+							taxaAplicada = taxa.Taxa4;
+							break;
+						case 5:
+							taxaAplicada = taxa.Taxa5;
+							break;
+						case 6:
+							taxaAplicada = taxa.Taxa6;
+							break;
+						case 7:
+							taxaAplicada = taxa.Taxa7;
+							break;
+						case 8:
+							taxaAplicada = taxa.Taxa8;
+							break;
+						case 9:
+							taxaAplicada = taxa.Taxa9;
+							break;
+						case 10:
+							taxaAplicada = taxa.Taxa10;
+							break;
+						case 11:
+							taxaAplicada = taxa.Taxa11;
+							break;
+						case 12:
+							taxaAplicada = taxa.Taxa12;
+							break;
+						default:
+							break;
+					}
+
+					if (taxaAplicada == null)
+					{
+						AbrirDialog($"Não há configuração de TAXA de PARCELAMENTO em {_cartao.Parcelas} " +
+							"vezes para essa operadora e bandeira...",
+							"Configurar Taxa",
+							DialogType.OK,
+							DialogIcon.Exclamation);
+						return false;
+					}
+
+					_cartao.TaxaAplicada = (decimal)taxaAplicada;
+				}
+
+				// DEFINE PRAZO
+				if (_cartao.CartaoTipo == 1) // DEBITO
+				{
+					_cartao.Prazo = taxa.PrazoDebito;
+				}
+				else // CREDITO OU PARCELADO
+				{
+					_cartao.Prazo = taxa.PrazoCredito;
+				}
+
+				// DEFINE CONTA PROVISORIA
+				_cartao.IDContaProvisoria = taxa.IDContaProvisoria;
+
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter as taxas do cartão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
 		}
 
 		// FECHAR FORM
@@ -284,6 +429,25 @@ namespace CamadaUI.Entradas
 						break;
 				}
 			}
+			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtCartaoTipo,
+					txtCartaoOperadora,
+					txtCartaoBandeira
+				};
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
 			else if (e.Alt)
 			{
 				e.Handled = false;
@@ -301,6 +465,80 @@ namespace CamadaUI.Entradas
 					e.Handled = true;
 					e.SuppressKeyPress = true;
 				}
+			}
+		}
+
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (char.IsDigit(e.KeyChar))
+			{
+				Control ctr = (Control)sender;
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCartaoTipo":
+
+						if (dicTipo.Count > 0)
+						{
+							if (dicTipo.ContainsKey(byte.Parse(e.KeyChar.ToString())))
+							{
+								var tipo = dicTipo.FirstOrDefault(x => x.Key == byte.Parse(e.KeyChar.ToString()));
+
+								if (tipo.Key != _cartao.CartaoTipo)
+								{
+									if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+									_cartao.CartaoTipo = (byte)tipo.Key;
+									txtCartaoTipo.Text = tipo.Value;
+
+									CartaoTipoUpdate();
+								}
+							}
+						}
+						break;
+
+					case "txtCartaoOperadora":
+
+						if (listOperadoras.Count > 0)
+						{
+							var tipo = listOperadoras.FirstOrDefault(x => x.IDCartaoOperadora == int.Parse(e.KeyChar.ToString()));
+
+							if (tipo == null) return;
+
+							if (tipo.IDCartaoOperadora != _cartao.IDCartaoOperadora)
+							{
+								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+								_cartao.IDCartaoOperadora = (byte)tipo.IDCartaoOperadora;
+								txtCartaoOperadora.Text = tipo.CartaoOperadora;
+							}
+						}
+						break;
+
+					case "txtCartaoBandeira":
+
+						if (listBandeiras.Count > 0)
+						{
+							var tipo = listBandeiras.FirstOrDefault(x => x.IDCartaoBandeira == int.Parse(e.KeyChar.ToString()));
+
+							if (tipo == null) return;
+
+							if (tipo.IDCartaoBandeira != _cartao.IDCartaoBandeira)
+							{
+								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+								_cartao.IDCartaoBandeira = (int)tipo.IDCartaoBandeira;
+								txtCartaoBandeira.Text = tipo.CartaoBandeira;
+							}
+						}
+						break;
+					default:
+						break;
+				}
+
 			}
 		}
 
@@ -322,15 +560,10 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSetCartaoTipo_Click(object sender, EventArgs e)
 		{
-			var dic = new Dictionary<int, string>();
-			dic.Add(1, "Débito");
-			dic.Add(2, "Crédito");
-			dic.Add(3, "Parcelado");
-
 			// seleciona o TextBox
 			TextBox textBox = txtCartaoTipo;
 
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cartao.CartaoTipo);
+			Main.frmComboLista frm = new Main.frmComboLista(dicTipo, textBox, _cartao.CartaoTipo);
 
 			// show form
 			frm.ShowDialog();
@@ -340,35 +573,41 @@ namespace CamadaUI.Entradas
 			{
 				_cartao.CartaoTipo = (byte)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
-
-				// enable disable numeric parcelas
-				switch (_cartao.CartaoTipo)
-				{
-					case 1: // debito
-						numParcelas.Enabled = false;
-						numParcelas.Minimum = 0;
-						numParcelas.Value = 0;
-						break;
-					case 2: // credito
-						numParcelas.Enabled = false;
-						numParcelas.Minimum = 1;
-						numParcelas.Value = 1;
-						break;
-					case 3: // parcelado
-						numParcelas.Enabled = true;
-						numParcelas.Minimum = 2;
-						numParcelas.Value = 2;
-						break;
-					default:
-						break;
-				}
-
-				lblParcelas.ForeColor = numParcelas.Enabled ? Color.Black : Color.Silver;
+				CartaoTipoUpdate();
 			}
 
 			//--- select
 			textBox.Focus();
 			textBox.SelectAll();
+		}
+
+		// ENABLE | DISABLE numParcelas to CartaoTipo
+		//------------------------------------------------------------------------------------------------------------
+		private void CartaoTipoUpdate()
+		{
+			// enable disable numeric parcelas
+			switch (_cartao.CartaoTipo)
+			{
+				case 1: // debito
+					numParcelas.Enabled = false;
+					numParcelas.Minimum = 0;
+					numParcelas.Value = 0;
+					break;
+				case 2: // credito
+					numParcelas.Enabled = false;
+					numParcelas.Minimum = 1;
+					numParcelas.Value = 1;
+					break;
+				case 3: // parcelado
+					numParcelas.Enabled = true;
+					numParcelas.Minimum = 2;
+					numParcelas.Value = 2;
+					break;
+				default:
+					break;
+			}
+
+			lblParcelas.ForeColor = numParcelas.Enabled ? Color.Black : Color.Silver;
 		}
 
 		private void btnSetOperadora_Click(object sender, EventArgs e)

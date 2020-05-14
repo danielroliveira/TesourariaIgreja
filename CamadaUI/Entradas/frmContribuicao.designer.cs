@@ -68,14 +68,15 @@
 			this.txtEntradaAno = new CamadaUC.ucOnlyNumbers();
 			this.txtEntradaDia = new CamadaUC.ucOnlyNumbers();
 			this.line2 = new AwesomeShapeControl.Line();
+			this.lblSitBlock = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(269, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(296, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(286, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(279, 50);
 			this.lblTitulo.TabIndex = 2;
 			this.lblTitulo.Text = "Cadastro de Contribuição";
 			// 
@@ -103,7 +104,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(32, 505);
+			this.lblCongregacao.Location = new System.Drawing.Point(47, 505);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 30;
@@ -112,7 +113,7 @@
 			// txtOrigemDescricao
 			// 
 			this.txtOrigemDescricao.BackColor = System.Drawing.Color.White;
-			this.txtOrigemDescricao.Location = new System.Drawing.Point(111, 502);
+			this.txtOrigemDescricao.Location = new System.Drawing.Point(126, 502);
 			this.txtOrigemDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtOrigemDescricao.MaxLength = 200;
 			this.txtOrigemDescricao.Multiline = true;
@@ -151,19 +152,19 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.btnFechar,
-            this.toolStripSeparator2});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.btnFechar,
+			this.toolStripSeparator2});
 			this.tspMenu.Location = new System.Drawing.Point(2, 585);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(600, 44);
@@ -238,7 +239,7 @@
 			this.line1.LineWidth = 3F;
 			this.line1.Location = new System.Drawing.Point(25, 161);
 			this.line1.Name = "line1";
-			this.line1.Size = new System.Drawing.Size(545, 10);
+			this.line1.Size = new System.Drawing.Size(551, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
 			this.line1.TabIndex = 7;
 			this.line1.TabStop = false;
@@ -249,7 +250,7 @@
 			this.btnSetContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetContribuinte.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetContribuinte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetContribuinte.Location = new System.Drawing.Point(415, 424);
+			this.btnSetContribuinte.Location = new System.Drawing.Point(525, 424);
 			this.btnSetContribuinte.Name = "btnSetContribuinte";
 			this.btnSetContribuinte.RoundedCornersMask = ((byte)(15));
 			this.btnSetContribuinte.RoundedCornersRadius = 0;
@@ -264,11 +265,11 @@
 			// 
 			// txtContribuinte
 			// 
-			this.txtContribuinte.Location = new System.Drawing.Point(181, 424);
+			this.txtContribuinte.Location = new System.Drawing.Point(126, 424);
 			this.txtContribuinte.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtContribuinte.MaxLength = 30;
 			this.txtContribuinte.Name = "txtContribuinte";
-			this.txtContribuinte.Size = new System.Drawing.Size(228, 27);
+			this.txtContribuinte.Size = new System.Drawing.Size(393, 27);
 			this.txtContribuinte.TabIndex = 25;
 			this.txtContribuinte.Tag = "Pressione a tecla (+) para procurar";
 			this.txtContribuinte.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -278,7 +279,7 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(86, 427);
+			this.lblContribuinte.Location = new System.Drawing.Point(31, 427);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(89, 19);
 			this.lblContribuinte.TabIndex = 24;
@@ -294,13 +295,14 @@
 			this.txtValorBruto.Size = new System.Drawing.Size(120, 31);
 			this.txtValorBruto.TabIndex = 14;
 			this.txtValorBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtValorBruto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(32, 349);
+			this.label2.Location = new System.Drawing.Point(47, 349);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(143, 19);
 			this.label2.TabIndex = 18;
@@ -308,14 +310,16 @@
 			// 
 			// txtContribuicaoTipo
 			// 
-			this.txtContribuicaoTipo.Location = new System.Drawing.Point(181, 346);
+			this.txtContribuicaoTipo.BackColor = System.Drawing.Color.White;
+			this.txtContribuicaoTipo.Location = new System.Drawing.Point(196, 346);
 			this.txtContribuicaoTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtContribuicaoTipo.MaxLength = 30;
 			this.txtContribuicaoTipo.Name = "txtContribuicaoTipo";
 			this.txtContribuicaoTipo.Size = new System.Drawing.Size(228, 27);
 			this.txtContribuicaoTipo.TabIndex = 19;
-			this.txtContribuicaoTipo.Tag = "Pressione a tecla (+) para procurar";
+			this.txtContribuicaoTipo.Tag = "Pressione a tecla (+) para procurar ou atalho numérico";
 			this.txtContribuicaoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtContribuicaoTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// btnSetEntradaTipo
 			// 
@@ -323,14 +327,14 @@
 			this.btnSetEntradaTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEntradaTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetEntradaTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetEntradaTipo.Location = new System.Drawing.Point(415, 346);
+			this.btnSetEntradaTipo.Location = new System.Drawing.Point(430, 346);
 			this.btnSetEntradaTipo.Name = "btnSetEntradaTipo";
 			this.btnSetEntradaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaTipo.RoundedCornersRadius = 0;
 			this.btnSetEntradaTipo.Size = new System.Drawing.Size(34, 27);
 			this.btnSetEntradaTipo.TabIndex = 20;
 			this.btnSetEntradaTipo.TabStop = false;
-			this.btnSetEntradaTipo.Text = "...";
+			this.btnSetEntradaTipo.Text = "n";
 			this.btnSetEntradaTipo.UseCompatibleTextRendering = true;
 			this.btnSetEntradaTipo.UseVisualStyleBackColor = false;
 			this.btnSetEntradaTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
@@ -419,15 +423,15 @@
 			this.lblReuniao.AutoSize = true;
 			this.lblReuniao.BackColor = System.Drawing.Color.Transparent;
 			this.lblReuniao.ForeColor = System.Drawing.Color.Black;
-			this.lblReuniao.Location = new System.Drawing.Point(113, 388);
+			this.lblReuniao.Location = new System.Drawing.Point(79, 388);
 			this.lblReuniao.Name = "lblReuniao";
-			this.lblReuniao.Size = new System.Drawing.Size(62, 19);
+			this.lblReuniao.Size = new System.Drawing.Size(111, 19);
 			this.lblReuniao.TabIndex = 21;
-			this.lblReuniao.Text = "Reunião";
+			this.lblReuniao.Text = "Reunião | Culto";
 			// 
 			// txtReuniao
 			// 
-			this.txtReuniao.Location = new System.Drawing.Point(181, 385);
+			this.txtReuniao.Location = new System.Drawing.Point(196, 385);
 			this.txtReuniao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtReuniao.MaxLength = 30;
 			this.txtReuniao.Name = "txtReuniao";
@@ -442,7 +446,7 @@
 			this.btnSetReuniao.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetReuniao.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetReuniao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetReuniao.Location = new System.Drawing.Point(415, 385);
+			this.btnSetReuniao.Location = new System.Drawing.Point(430, 385);
 			this.btnSetReuniao.Name = "btnSetReuniao";
 			this.btnSetReuniao.RoundedCornersMask = ((byte)(15));
 			this.btnSetReuniao.RoundedCornersRadius = 0;
@@ -460,7 +464,7 @@
 			this.lblCampanha.AutoSize = true;
 			this.lblCampanha.BackColor = System.Drawing.Color.Transparent;
 			this.lblCampanha.ForeColor = System.Drawing.Color.Black;
-			this.lblCampanha.Location = new System.Drawing.Point(27, 466);
+			this.lblCampanha.Location = new System.Drawing.Point(42, 466);
 			this.lblCampanha.Name = "lblCampanha";
 			this.lblCampanha.Size = new System.Drawing.Size(78, 19);
 			this.lblCampanha.TabIndex = 27;
@@ -468,7 +472,7 @@
 			// 
 			// txtCampanha
 			// 
-			this.txtCampanha.Location = new System.Drawing.Point(111, 463);
+			this.txtCampanha.Location = new System.Drawing.Point(126, 463);
 			this.txtCampanha.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCampanha.MaxLength = 30;
 			this.txtCampanha.Name = "txtCampanha";
@@ -483,7 +487,7 @@
 			this.btnSetCampanha.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetCampanha.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetCampanha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetCampanha.Location = new System.Drawing.Point(510, 463);
+			this.btnSetCampanha.Location = new System.Drawing.Point(525, 463);
 			this.btnSetCampanha.Name = "btnSetCampanha";
 			this.btnSetCampanha.RoundedCornersMask = ((byte)(15));
 			this.btnSetCampanha.RoundedCornersRadius = 0;
@@ -531,13 +535,16 @@
 			// 
 			// txtEntradaForma
 			// 
+			this.txtEntradaForma.BackColor = System.Drawing.Color.White;
 			this.txtEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtEntradaForma.Location = new System.Drawing.Point(237, 269);
 			this.txtEntradaForma.MaxLength = 30;
 			this.txtEntradaForma.Name = "txtEntradaForma";
 			this.txtEntradaForma.Size = new System.Drawing.Size(193, 31);
 			this.txtEntradaForma.TabIndex = 15;
+			this.txtEntradaForma.Tag = "Pressione a tecla (+) para procurar  ou atalho numérico";
 			this.txtEntradaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtEntradaForma.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// btnSetEntradaForma
 			// 
@@ -552,7 +559,7 @@
 			this.btnSetEntradaForma.Size = new System.Drawing.Size(34, 31);
 			this.btnSetEntradaForma.TabIndex = 16;
 			this.btnSetEntradaForma.TabStop = false;
-			this.btnSetEntradaForma.Text = "...";
+			this.btnSetEntradaForma.Text = "n";
 			this.btnSetEntradaForma.UseCompatibleTextRendering = true;
 			this.btnSetEntradaForma.UseVisualStyleBackColor = false;
 			this.btnSetEntradaForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
@@ -568,6 +575,8 @@
 			this.cmbEntradaMes.Name = "cmbEntradaMes";
 			this.cmbEntradaMes.Size = new System.Drawing.Size(150, 31);
 			this.cmbEntradaMes.TabIndex = 10;
+			this.cmbEntradaMes.SelectionChangeCommitted += new System.EventHandler(this.cmbEntradaMes_SelectionChangeCommitted);
+			this.cmbEntradaMes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
 			// 
 			// txtEntradaAno
 			// 
@@ -579,6 +588,7 @@
 			this.txtEntradaAno.Size = new System.Drawing.Size(63, 31);
 			this.txtEntradaAno.TabIndex = 11;
 			this.txtEntradaAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtEntradaAno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
 			// 
 			// txtEntradaDia
 			// 
@@ -590,23 +600,37 @@
 			this.txtEntradaDia.Size = new System.Drawing.Size(52, 31);
 			this.txtEntradaDia.TabIndex = 9;
 			this.txtEntradaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtEntradaDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
 			// 
 			// line2
 			// 
-			this.line2.EndPoint = new System.Drawing.Point(537, 5);
+			this.line2.EndPoint = new System.Drawing.Point(546, 5);
 			this.line2.LineColor = System.Drawing.Color.SlateGray;
 			this.line2.LineWidth = 3F;
 			this.line2.Location = new System.Drawing.Point(25, 315);
 			this.line2.Name = "line2";
-			this.line2.Size = new System.Drawing.Size(542, 10);
+			this.line2.Size = new System.Drawing.Size(551, 10);
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
 			this.line2.TabIndex = 17;
 			this.line2.TabStop = false;
+			// 
+			// lblSitBlock
+			// 
+			this.lblSitBlock.AutoSize = true;
+			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
+			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
+			this.lblSitBlock.Location = new System.Drawing.Point(334, 594);
+			this.lblSitBlock.Name = "lblSitBlock";
+			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
+			this.lblSitBlock.TabIndex = 33;
+			this.lblSitBlock.Text = "- Apenas Visualização -";
 			// 
 			// frmContribuicao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(605, 631);
+			this.Controls.Add(this.lblSitBlock);
 			this.Controls.Add(this.txtEntradaDia);
 			this.Controls.Add(this.txtEntradaAno);
 			this.Controls.Add(this.cmbEntradaMes);
@@ -676,6 +700,7 @@
 			this.Controls.SetChildIndex(this.cmbEntradaMes, 0);
 			this.Controls.SetChildIndex(this.txtEntradaAno, 0);
 			this.Controls.SetChildIndex(this.txtEntradaDia, 0);
+			this.Controls.SetChildIndex(this.lblSitBlock, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -726,5 +751,6 @@
 		private CamadaUC.ucOnlyNumbers txtEntradaDia;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private AwesomeShapeControl.Line line2;
+		private System.Windows.Forms.Label lblSitBlock;
 	}
 }

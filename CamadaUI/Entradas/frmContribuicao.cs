@@ -75,7 +75,7 @@ namespace CamadaUI.Entradas
 			txtContribuinte.Enter += text_Enter;
 			txtCampanha.Enter += text_Enter;
 			txtOrigemDescricao.Enter += text_Enter;
-
+			txtEntradaForma.Enter += text_Enter;
 		}
 
 		// GET LIST OF ENTRADA FORMAS AND TIPOS
@@ -113,31 +113,30 @@ namespace CamadaUI.Entradas
 			set
 			{
 				_Sit = value;
-				switch (value)
+
+				if (value == EnumFlagEstado.NovoRegistro)
 				{
-					case EnumFlagEstado.RegistroSalvo:
-						btnNovo.Enabled = true;
-						btnSalvar.Enabled = false;
-						btnCancelar.Enabled = false;
-						break;
-					case EnumFlagEstado.Alterado:
-						btnNovo.Enabled = false;
-						btnSalvar.Enabled = true;
-						btnCancelar.Enabled = true;
-						break;
-					case EnumFlagEstado.NovoRegistro:
-						btnNovo.Enabled = false;
-						btnSalvar.Enabled = true;
-						btnCancelar.Enabled = true;
-						break;
-					case EnumFlagEstado.RegistroBloqueado:
-						btnNovo.Enabled = true;
-						btnSalvar.Enabled = false;
-						btnCancelar.Enabled = false;
-						break;
-					default:
-						break;
+					btnNovo.Enabled = false;
+					btnSalvar.Enabled = true;
+					btnCancelar.Enabled = true;
+					lblSitBlock.Visible = false;
 				}
+				else
+				{
+					btnNovo.Enabled = true;
+					btnSalvar.Enabled = false;
+					btnCancelar.Enabled = false;
+					lblSitBlock.Visible = true;
+				}
+
+				// btnSET
+				btnSetConta.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetEntradaForma.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetContribuinte.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetCampanha.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetReuniao.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetEntradaTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
@@ -321,12 +320,21 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
-			if (Sit == EnumFlagEstado.Alterado || Sit == EnumFlagEstado.NovoRegistro)
+			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
 				AbrirDialog("Esse registro ainda não foi salvo... \n" +
 					"Favor SALVAR ou CANCELAR a edição do registro atual antes de fechar.",
-					"Registro Novo ou Alterado", DialogType.OK, DialogIcon.Exclamation);
+					"Registro Novo", DialogType.OK, DialogIcon.Exclamation);
 				return;
+			}
+			else if (Sit == EnumFlagEstado.Alterado)
+			{
+				AbrirDialog("Esse registro de Contribuição não pode ser alterado... \n" +
+							"O formulário será fechado, e não será salvo.",
+							"Registro Alterado", DialogType.OK, DialogIcon.Exclamation);
+				bind.CancelEdit();
+				propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
 			new frmContribuicaoListagem().Show();
@@ -344,7 +352,9 @@ namespace CamadaUI.Entradas
 
 				if (response == DialogResult.Yes)
 				{
-					new frmContribuicaoListagem().Show();
+					var frmList = new frmContribuicaoListagem();
+					frmList.MdiParent = Application.OpenForms[0];
+					frmList.Show();
 					Close();
 				}
 			}
@@ -389,33 +399,47 @@ namespace CamadaUI.Entradas
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				//--- check Cartao
+				//--- define FORMA
+				object forma = null;
+
+				//--- check Cartao | Cheque
 				if (_contribuicao.IDEntradaForma == 3) // cartao
 				{
 					var cartao = new objContribuicaoCartao(null);
 					var frm = new frmContribuicaoCartao(ref cartao, this);
+
 					frm.ShowDialog();
+					if (frm.DialogResult == DialogResult.Cancel) return;
+
+					forma = cartao;
 				}
 				else if (_contribuicao.IDEntradaForma == 2) // cheque 
 				{
 					var cheque = new objContribuicaoCheque(null);
 					var frm = new frmContribuicaoCheque(ref cheque, this);
-					frm.ShowDialog();
-				}
 
+					frm.ShowDialog();
+					if (frm.DialogResult == DialogResult.Cancel) return;
+
+					forma = cheque;
+				}
 
 				ContribuicaoBLL sBLL = new ContribuicaoBLL();
 
 				//--- SAVE: INSERT OR UPDATE
 				if (_contribuicao.IDContribuicao == null) //--- save | Insert
 				{
-					int ID = sBLL.InsertContribuicao(_contribuicao);
+					int ID = sBLL.InsertContribuicao(_contribuicao, forma);
+
 					//--- define newID
 					_contribuicao.IDContribuicao = ID;
+					lblID.DataBindings["Text"].ReadValue();
 				}
 				else //--- update
 				{
-					sBLL.UpdateContribuicao(_contribuicao);
+					AbrirDialog("Não é possível atualizar uma Entrada...", "Atualização",
+						DialogType.OK, DialogIcon.Exclamation);
+					// sBLL.UpdateContribuicao(_contribuicao);
 				}
 
 				//--- change Sit
@@ -546,6 +570,16 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
 		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+			//---------------------------------------------------
+
 			Control ctr = (Control)sender;
 
 			if (e.KeyCode == Keys.Add)
@@ -607,6 +641,23 @@ namespace CamadaUI.Entradas
 						break;
 				}
 			}
+			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtEntradaForma,
+					txtContribuicaoTipo };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
 			else if (e.Alt)
 			{
 				e.Handled = false;
@@ -628,6 +679,62 @@ namespace CamadaUI.Entradas
 					e.Handled = true;
 					e.SuppressKeyPress = true;
 				}
+			}
+		}
+
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (char.IsDigit(e.KeyChar))
+			{
+				Control ctr = (Control)sender;
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtEntradaForma":
+
+						if (listFormas.Count > 0)
+						{
+							var forma = listFormas.FirstOrDefault(x => x.IDEntradaForma == int.Parse(e.KeyChar.ToString()));
+
+							if (forma == null) return;
+
+							if (forma.IDEntradaForma != _contribuicao.IDEntradaForma)
+							{
+								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+								_contribuicao.IDEntradaForma = (byte)forma.IDEntradaForma;
+								txtEntradaForma.Text = forma.EntradaForma;
+							}
+
+						}
+						break;
+
+					case "txtContribuicaoTipo":
+
+						if (listTipos.Count > 0)
+						{
+							var tipo = listTipos.FirstOrDefault(x => x.IDContribuicaoTipo == int.Parse(e.KeyChar.ToString()));
+
+							if (tipo == null) return;
+
+							if (tipo.IDContribuicaoTipo != _contribuicao.IDContribuicaoTipo)
+							{
+								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+								_contribuicao.IDContribuicaoTipo = (byte)tipo.IDContribuicaoTipo;
+								propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+								txtContribuicaoTipo.Text = tipo.ContribuicaoTipo;
+							}
+						}
+						break;
+
+					default:
+						break;
+				}
+
 			}
 		}
 
@@ -664,6 +771,29 @@ namespace CamadaUI.Entradas
 				descricao += _contribuicao.Reuniao + " - " + _contribuicao.ContribuicaoData.ToShortDateString();
 
 			txtOrigemDescricao.Text = descricao;
+		}
+
+		// PREVINE CHANGES IN SIT => REGISTRO SALVO
+		private void cmbEntradaMes_SelectionChangeCommitted(object sender, EventArgs e)
+		{
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				cmbEntradaMes.SelectedValue = _contribuicao.EntradaMes;
+			}
+		}
+
+		// PREVINE BLOCK CHANGES IN SIT => REGISTRO SALVO
+		private void txt_KeyDown_Block(object sender, KeyEventArgs e)
+		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+			//---------------------------------------------------
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END
@@ -814,13 +944,27 @@ namespace CamadaUI.Entradas
 				frm.ShowDialog();
 
 				//--- check return
-				if (frm.DialogResult == DialogResult.OK)
+				if (frm.DialogResult == DialogResult.OK) // SEARCH CONTRIBUINTE
 				{
 					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDContribuinte != frm.propEscolha.IDContribuinte)
 						Sit = EnumFlagEstado.Alterado;
 
 					_contribuicao.IDContribuinte = (int)frm.propEscolha.IDContribuinte;
 					txtContribuinte.Text = frm.propEscolha.Contribuinte;
+				}
+				else if (frm.DialogResult == DialogResult.Yes) // ADD NEW CONTRIBUINTE
+				{
+					frmContribuinte frmNovo = new frmContribuinte(new objContribuinte(null), this);
+					frmNovo.ShowDialog();
+
+					if (frmNovo.DialogResult == DialogResult.OK)
+					{
+						if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDContribuinte != frmNovo.propEscolha.IDContribuinte)
+							Sit = EnumFlagEstado.Alterado;
+
+						_contribuicao.IDContribuinte = (int)frmNovo.propEscolha.IDContribuinte;
+						txtContribuinte.Text = frmNovo.propEscolha.Contribuinte;
+					}
 				}
 
 				//--- select
@@ -932,7 +1076,7 @@ namespace CamadaUI.Entradas
 				UseFading = true
 			};
 
-			if (controle.Tag.ToString() == "")
+			if (controle.Tag == null)
 			{
 				toolTip1.Show("Clique aqui...", controle, controle.Width - 30, -40, 2000);
 			}
@@ -943,5 +1087,6 @@ namespace CamadaUI.Entradas
 		}
 
 		#endregion
+
 	}
 }

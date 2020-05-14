@@ -40,7 +40,7 @@ namespace CamadaDTO
 		private StructEntrada BackupData;
 		private bool inTxn = false;
 
-		public objContribuicao(int? IDContribuicao) : base()
+		public objContribuicao(long? IDContribuicao) : base()
 		{
 			EditData = new StructEntrada()
 			{

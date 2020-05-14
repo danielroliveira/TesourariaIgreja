@@ -166,6 +166,7 @@
 			this.txtCartaoBandeira.Size = new System.Drawing.Size(228, 27);
 			this.txtCartaoBandeira.TabIndex = 8;
 			this.txtCartaoBandeira.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtCartaoBandeira.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// btnSetBandeira
 			// 
@@ -180,7 +181,7 @@
 			this.btnSetBandeira.Size = new System.Drawing.Size(34, 27);
 			this.btnSetBandeira.TabIndex = 9;
 			this.btnSetBandeira.TabStop = false;
-			this.btnSetBandeira.Text = "...";
+			this.btnSetBandeira.Text = "n";
 			this.btnSetBandeira.UseCompatibleTextRendering = true;
 			this.btnSetBandeira.UseVisualStyleBackColor = false;
 			this.btnSetBandeira.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
@@ -206,6 +207,7 @@
 			this.txtCartaoOperadora.Size = new System.Drawing.Size(228, 27);
 			this.txtCartaoOperadora.TabIndex = 5;
 			this.txtCartaoOperadora.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtCartaoOperadora.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// lblParcelas
 			// 
@@ -231,7 +233,7 @@
 			this.btnSetOperadora.Size = new System.Drawing.Size(34, 27);
 			this.btnSetOperadora.TabIndex = 6;
 			this.btnSetOperadora.TabStop = false;
-			this.btnSetOperadora.Text = "...";
+			this.btnSetOperadora.Text = "n";
 			this.btnSetOperadora.UseCompatibleTextRendering = true;
 			this.btnSetOperadora.UseVisualStyleBackColor = false;
 			this.btnSetOperadora.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
@@ -283,6 +285,7 @@
 			this.txtCartaoTipo.Size = new System.Drawing.Size(228, 27);
 			this.txtCartaoTipo.TabIndex = 2;
 			this.txtCartaoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtCartaoTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// vButton1
 			// 
@@ -297,7 +300,7 @@
 			this.vButton1.Size = new System.Drawing.Size(34, 27);
 			this.vButton1.TabIndex = 3;
 			this.vButton1.TabStop = false;
-			this.vButton1.Text = "...";
+			this.vButton1.Text = "n";
 			this.vButton1.UseCompatibleTextRendering = true;
 			this.vButton1.UseVisualStyleBackColor = false;
 			this.vButton1.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;

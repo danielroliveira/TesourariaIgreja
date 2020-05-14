@@ -16,6 +16,7 @@ namespace CamadaUI
 	public enum DialogIcon { Question, Information, Exclamation, Warning }
 	public enum DialogDefaultButton { First, Second, Third }
 	public enum EnumFlagEstado { RegistroSalvo = 1, Alterado = 2, NovoRegistro = 3, RegistroBloqueado = 4 }
+	public enum EnumDataTipo { PassadoOuFuturo = 0, Passado = 1, PassadoPresente = 2, Futuro = 3, FuturoPresente = 4 } // ENUM PARA frmDataInformar
 
 	public static class FuncoesGlobais
 	{

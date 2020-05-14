@@ -18,16 +18,19 @@ namespace CamadaUI.Registres
 		private objContribuinte _contribuinte;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
+		private Form _formOrigem;
+		public objContribuinte propEscolha { get; set; }
 
 		#region SUB NEW | PROPERTIES
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuinte(objContribuinte obj)
+		public frmContribuinte(objContribuinte obj, Form formOrigem)
 		{
 			InitializeComponent();
 
 			_contribuinte = obj;
+			_formOrigem = formOrigem;
 			bind.DataSource = _contribuinte;
 			BindingCreator();
 
@@ -48,6 +51,7 @@ namespace CamadaUI.Registres
 			HandlerKeyDownControl(this);
 			txtIDMembro.LostFocus += TxtIDMembro_LostFocus;
 			txtIDMembro.GotFocus += TxtIDMembro_GotFocus;
+			txtCongregacao.Enter += text_Enter;
 
 		}
 
@@ -166,6 +170,7 @@ namespace CamadaUI.Registres
 				AbrirDialog("Esse registro ainda não foi salvo... \n" +
 					"Favor SALVAR ou CANCELAR a edição do registro atual antes de fechar.",
 					"Registro Novo ou Alterado", DialogType.OK, DialogIcon.Exclamation);
+				txtContribuinte.Focus();
 				return;
 			}
 
@@ -182,11 +187,19 @@ namespace CamadaUI.Registres
 				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
 							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
 
-				if (response == DialogResult.Yes)
+				if (response != DialogResult.Yes) return;
+
+				//--- check origem
+				if (_formOrigem.GetType() == typeof(frmPrincipal)) // return to frmPrincipal
 				{
 					AutoValidate = AutoValidate.Disable;
 					Close();
 					MostraMenuPrincipal();
+				}
+				else // return to formOrigem
+				{
+					propEscolha = null;
+					DialogResult = DialogResult.Cancel;
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -302,7 +315,6 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
-
 			try
 			{
 				// --- Ampulheta ON
@@ -331,6 +343,13 @@ namespace CamadaUI.Registres
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
+
+				//--- Return value
+				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				{
+					propEscolha = _contribuinte;
+					DialogResult = DialogResult.OK;
+				}
 
 			}
 			catch (Exception ex)
@@ -468,5 +487,80 @@ namespace CamadaUI.Registres
 
 		#endregion // FORM CONTROLS FUCTIONS --- END
 
+		#region DESIGN FORM FUNCTIONS
+
+		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
+		//------------------------------------------------------------------------------------------------------------
+		private void form_Activated(object sender, EventArgs e)
+		{
+			if (_formOrigem != null)
+			{
+				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				{
+					Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
+					pnl.BackColor = Color.Silver;
+				}
+				else
+				{
+					DesativaMenuPrincipal();
+				}
+			}
+		}
+
+		private void form_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			if (_formOrigem != null)
+			{
+				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				{
+					Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
+					pnl.BackColor = Color.SlateGray;
+				}
+				else
+				{
+					MostraMenuPrincipal();
+				}
+
+			}
+		}
+
+		// EMITE TOOLTIP ON ENTER E DESABILITA
+		//------------------------------------------------------------------------------------------------------------
+		private void text_Enter(object sender, EventArgs e)
+		{
+			ShowToolTip(sender as Control);
+			((TextBox)sender).Enter -= text_Enter;
+		}
+
+		// CONTROLA TOOLTIP
+		//------------------------------------------------------------------------------------------------------------
+		private void ShowToolTip(Control control)
+		{
+			//--- Cria a ToolTip e associa com o Form container.
+			ToolTip toolTip1 = new ToolTip();
+
+			//--- Define o delay para a ToolTip.
+			toolTip1.AutoPopDelay = 2000;
+			toolTip1.InitialDelay = 2000;
+			toolTip1.ReshowDelay = 500;
+			toolTip1.IsBalloon = true;
+			toolTip1.UseAnimation = true;
+			toolTip1.UseFading = true;
+
+			if (string.IsNullOrEmpty(control.Tag.ToString()))
+				toolTip1.Show("Clique aqui...", control, control.Width - 30, -40, 2000);
+			else
+				toolTip1.Show(control.Tag.ToString(), control, control.Width - 30, -40, 2000);
+		}
+
+		private void btnProcurar_EnabledChanged(object sender, EventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (control.Enabled == true)
+				ShowToolTip(control);
+		}
+
+		#endregion // DESIGN FORM FUNCTIONS --- END
 	}
 }

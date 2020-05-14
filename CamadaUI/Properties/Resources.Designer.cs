@@ -343,6 +343,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap imprimir_24 {
+            get {
+                object obj = ResourceManager.GetObject("imprimir_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logo_FAES_cinza_PNG_Borda {
             get {
                 object obj = ResourceManager.GetObject("Logo_FAES_cinza_PNG_Borda", resourceCulture);

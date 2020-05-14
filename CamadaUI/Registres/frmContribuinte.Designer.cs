@@ -87,11 +87,13 @@
 			// 
 			// txtCongregacao
 			// 
-			this.txtCongregacao.Location = new System.Drawing.Point(134, 224);
+			this.txtCongregacao.Location = new System.Drawing.Point(134, 265);
+			this.txtCongregacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCongregacao.MaxLength = 30;
 			this.txtCongregacao.Name = "txtCongregacao";
 			this.txtCongregacao.Size = new System.Drawing.Size(228, 27);
 			this.txtCongregacao.TabIndex = 15;
+			this.txtCongregacao.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCongregacao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// Label6
@@ -99,7 +101,7 @@
 			this.Label6.AutoSize = true;
 			this.Label6.BackColor = System.Drawing.Color.Transparent;
 			this.Label6.ForeColor = System.Drawing.Color.Black;
-			this.Label6.Location = new System.Drawing.Point(33, 227);
+			this.Label6.Location = new System.Drawing.Point(34, 268);
 			this.Label6.Name = "Label6";
 			this.Label6.Size = new System.Drawing.Size(94, 19);
 			this.Label6.TabIndex = 14;
@@ -110,7 +112,7 @@
 			this.Label15.AutoSize = true;
 			this.Label15.BackColor = System.Drawing.Color.Transparent;
 			this.Label15.ForeColor = System.Drawing.Color.Black;
-			this.Label15.Location = new System.Drawing.Point(292, 161);
+			this.Label15.Location = new System.Drawing.Point(292, 190);
 			this.Label15.Name = "Label15";
 			this.Label15.Size = new System.Drawing.Size(105, 19);
 			this.Label15.TabIndex = 10;
@@ -121,7 +123,7 @@
 			this.Label10.AutoSize = true;
 			this.Label10.BackColor = System.Drawing.Color.Transparent;
 			this.Label10.ForeColor = System.Drawing.Color.Black;
-			this.Label10.Location = new System.Drawing.Point(72, 194);
+			this.Label10.Location = new System.Drawing.Point(73, 229);
 			this.Label10.Name = "Label10";
 			this.Label10.Size = new System.Drawing.Size(55, 19);
 			this.Label10.TabIndex = 12;
@@ -129,7 +131,8 @@
 			// 
 			// txtTelefoneCelular
 			// 
-			this.txtTelefoneCelular.Location = new System.Drawing.Point(134, 191);
+			this.txtTelefoneCelular.Location = new System.Drawing.Point(134, 226);
+			this.txtTelefoneCelular.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtTelefoneCelular.Mask = "(99) 99000-0000";
 			this.txtTelefoneCelular.Name = "txtTelefoneCelular";
 			this.txtTelefoneCelular.Size = new System.Drawing.Size(133, 27);
@@ -140,7 +143,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(33, 77);
+			this.lblCongregacao.Location = new System.Drawing.Point(39, 77);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(89, 19);
 			this.lblCongregacao.TabIndex = 1;
@@ -187,7 +190,7 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(26, 128);
+			this.label3.Location = new System.Drawing.Point(32, 151);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(96, 19);
 			this.label3.TabIndex = 4;
@@ -196,7 +199,8 @@
 			// txtIDMembro
 			// 
 			this.txtIDMembro.BackColor = System.Drawing.Color.White;
-			this.txtIDMembro.Location = new System.Drawing.Point(134, 125);
+			this.txtIDMembro.Location = new System.Drawing.Point(134, 148);
+			this.txtIDMembro.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtIDMembro.MaxLength = 50;
 			this.txtIDMembro.Name = "txtIDMembro";
 			this.txtIDMembro.Size = new System.Drawing.Size(81, 27);
@@ -220,7 +224,7 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 290);
+			this.tspMenu.Location = new System.Drawing.Point(2, 324);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
 			this.tspMenu.TabIndex = 17;
@@ -306,7 +310,7 @@
 			this.btnCongEscolher.BackColor = System.Drawing.Color.Transparent;
 			this.btnCongEscolher.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnCongEscolher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnCongEscolher.Location = new System.Drawing.Point(368, 224);
+			this.btnCongEscolher.Location = new System.Drawing.Point(368, 265);
 			this.btnCongEscolher.Name = "btnCongEscolher";
 			this.btnCongEscolher.RoundedCornersMask = ((byte)(15));
 			this.btnCongEscolher.RoundedCornersRadius = 0;
@@ -324,7 +328,7 @@
 			this.line1.EndPoint = new System.Drawing.Point(495, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 107);
+			this.line1.Location = new System.Drawing.Point(25, 119);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(500, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
@@ -333,7 +337,8 @@
 			// 
 			// txtNascimentoData
 			// 
-			this.txtNascimentoData.Location = new System.Drawing.Point(405, 158);
+			this.txtNascimentoData.Location = new System.Drawing.Point(405, 187);
+			this.txtNascimentoData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtNascimentoData.Mask = "00/00/0000";
 			this.txtNascimentoData.Name = "txtNascimentoData";
 			this.txtNascimentoData.Size = new System.Drawing.Size(100, 27);
@@ -341,7 +346,8 @@
 			// 
 			// txtCNP
 			// 
-			this.txtCNP.Location = new System.Drawing.Point(134, 158);
+			this.txtCNP.Location = new System.Drawing.Point(134, 187);
+			this.txtCNP.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCNP.Mask = "000\\.000\\.000-00";
 			this.txtCNP.Name = "txtCNP";
 			this.txtCNP.Size = new System.Drawing.Size(133, 27);
@@ -352,7 +358,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(89, 161);
+			this.label1.Location = new System.Drawing.Point(95, 190);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(33, 19);
 			this.label1.TabIndex = 8;
@@ -363,7 +369,8 @@
 			this.cmbDizimista.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbDizimista.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbDizimista.FormattingEnabled = true;
-			this.cmbDizimista.Location = new System.Drawing.Point(405, 125);
+			this.cmbDizimista.Location = new System.Drawing.Point(405, 148);
+			this.cmbDizimista.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbDizimista.Name = "cmbDizimista";
 			this.cmbDizimista.Size = new System.Drawing.Size(75, 27);
 			this.cmbDizimista.TabIndex = 7;
@@ -373,7 +380,7 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(309, 128);
+			this.label2.Location = new System.Drawing.Point(309, 151);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(88, 19);
 			this.label2.TabIndex = 6;
@@ -382,7 +389,7 @@
 			// frmContribuinte
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 336);
+			this.ClientSize = new System.Drawing.Size(560, 370);
 			this.Controls.Add(this.cmbDizimista);
 			this.Controls.Add(this.txtCNP);
 			this.Controls.Add(this.txtNascimentoData);
@@ -402,6 +409,8 @@
 			this.Controls.Add(this.label3);
 			this.KeyPreview = true;
 			this.Name = "frmContribuinte";
+			this.Activated += new System.EventHandler(this.form_Activated);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmContribuinte_KeyPress);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
