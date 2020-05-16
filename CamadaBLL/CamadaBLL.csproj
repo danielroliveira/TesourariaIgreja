@@ -46,6 +46,7 @@
     <Compile Include="CampanhaBLL.cs" />
     <Compile Include="AReceberBLL.cs" />
     <Compile Include="CartaoBLL.cs" />
+    <Compile Include="DespesaBLL.cs" />
     <Compile Include="EntradaBLL.cs" />
     <Compile Include="ContribuicaoBLL.cs" />
     <Compile Include="ReuniaoBLL.cs" />

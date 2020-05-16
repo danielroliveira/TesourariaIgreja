@@ -345,6 +345,12 @@
     <Compile Include="Registres\frmCredorListagem.designer.cs">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesa.Designer.cs">
+      <DependentUpon>frmDespesa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setores\frmSetor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -503,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmCredorListagem.resx">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesa.resx">
+      <DependentUpon>frmDespesa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setores\frmSetor.resx">
       <DependentUpon>frmSetor.cs</DependentUpon>
@@ -681,8 +690,6 @@
   <ItemGroup>
     <None Include="Resources\imprimir_24.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Saidas\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

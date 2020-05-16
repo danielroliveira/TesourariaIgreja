@@ -3,8 +3,6 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CamadaBLL
 {
@@ -417,6 +415,13 @@ namespace CamadaBLL
 			{
 				throw ex;
 			}
+		}
+
+		// DELETE
+		//------------------------------------------------------------------------------------------------------------
+		public bool DeleteContribuicao(int IDContribuicao)
+		{
+			throw new NotImplementedException("Em implementação");
 		}
 
 		//=================================================================================================

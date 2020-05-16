@@ -50,10 +50,12 @@
     <Compile Include="objAReceber.cs" />
     <Compile Include="objBanco.cs" />
     <Compile Include="objCartao.cs" />
+    <Compile Include="objAPagar.cs" />
     <Compile Include="objEntrada.cs" />
     <Compile Include="objContribuicao.cs" />
     <Compile Include="objReuniao.cs" />
     <Compile Include="objCampanha.cs" />
+    <Compile Include="objDespesa.cs" />
     <Compile Include="objSetor.cs" />
     <Compile Include="objCredor.cs" />
     <Compile Include="objCongregacao.cs" />
