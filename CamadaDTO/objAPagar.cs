@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
 {
+	//=================================================================================================
+	// A PAGAR
+	//=================================================================================================
 	public class objAPagar : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
@@ -15,19 +18,19 @@ namespace CamadaDTO
 			internal string _DespesaDescricao;
 			internal string _Identificador;
 			internal byte? _Parcela;
-			internal byte _IDCobrancaForma;
+			internal int _IDCobrancaForma;
 			internal string _CobrancaForma;
-			internal int? _IDAPagarCartao;
-			internal string _CartaoDescricao;
 			internal decimal _APagarValor;
 			internal byte _IDSituacao;
 			internal string _Situacao;
+			internal int? _IDBanco;
+			internal string _Banco;
 			internal DateTime _Vencimento;
 			internal DateTime? _PagamentoData;
 			internal byte _Prioridade;
 			internal decimal _ValorPago;
-			internal int _ReferenciaMes;
-			internal int _ReferenciaAno;
+			internal int? _ReferenciaMes;
+			internal int? _ReferenciaAno;
 			internal bool _Imagem;
 		}
 
@@ -46,6 +49,7 @@ namespace CamadaDTO
 				_IDCobrancaForma = 1,
 				_APagarValor = 0,
 				_IDSituacao = 1,
+				_IDBanco = null,
 				_Prioridade = 1,
 				_ValorPago = 0,
 				_Imagem = false,
@@ -164,7 +168,7 @@ namespace CamadaDTO
 
 		// Property IDCobrancaForma
 		//---------------------------------------------------------------
-		public byte IDCobrancaForma
+		public int IDCobrancaForma
 		{
 			get => EditData._IDCobrancaForma;
 			set
@@ -183,29 +187,6 @@ namespace CamadaDTO
 		{
 			get => EditData._CobrancaForma;
 			set => EditData._CobrancaForma = value;
-		}
-
-		// Property IDAPagarCartao
-		//---------------------------------------------------------------
-		public int? IDAPagarCartao
-		{
-			get => EditData._IDAPagarCartao;
-			set
-			{
-				if (value != EditData._IDAPagarCartao)
-				{
-					EditData._IDAPagarCartao = value;
-					NotifyPropertyChanged("IDAPagarCartao");
-				}
-			}
-		}
-
-		// Property CartaoDescricao
-		//---------------------------------------------------------------
-		public string CartaoDescricao
-		{
-			get => EditData._CartaoDescricao;
-			set => EditData._CartaoDescricao = value;
 		}
 
 		// Property APagarValor
@@ -244,6 +225,29 @@ namespace CamadaDTO
 		{
 			get => EditData._Situacao;
 			set => EditData._Situacao = value;
+		}
+
+		// Property IDBanco
+		//---------------------------------------------------------------
+		public int? IDBanco
+		{
+			get => EditData._IDBanco;
+			set
+			{
+				if (value != EditData._IDBanco)
+				{
+					EditData._IDBanco = value;
+					NotifyPropertyChanged("IDBanco");
+				}
+			}
+		}
+
+		// Property Banco
+		//---------------------------------------------------------------
+		public string Banco
+		{
+			get => EditData._Banco;
+			set => EditData._Banco = value;
 		}
 
 		// Property Vencimento
@@ -308,7 +312,7 @@ namespace CamadaDTO
 
 		// Property ReferenciaMes
 		//---------------------------------------------------------------
-		public int ReferenciaMes
+		public int? ReferenciaMes
 		{
 			get => EditData._ReferenciaMes;
 			set
@@ -323,7 +327,7 @@ namespace CamadaDTO
 
 		// Property ReferenciaAno
 		//---------------------------------------------------------------
-		public int ReferenciaAno
+		public int? ReferenciaAno
 		{
 			get => EditData._ReferenciaAno;
 			set
@@ -351,4 +355,179 @@ namespace CamadaDTO
 			}
 		}
 	}
+
+	//=================================================================================================
+	// FORMAS DE COBRANCA
+	//=================================================================================================
+	public class objCobrancaForma : IEditableObject, INotifyPropertyChanged
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructCobranca
+		{
+			internal int? _IDCobrancaForma;
+			internal string _CobrancaForma;
+			internal int? _IDBanco;
+			internal string _BancoNome;
+			internal int? _IDCartaoBandeira;
+			internal string _CartaoBandeira;
+			internal bool _Ativo;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructCobranca EditData;
+		private StructCobranca BackupData;
+		private bool inTxn = false;
+
+		public objCobrancaForma()
+		{
+			EditData = new StructCobranca()
+			{
+				_IDCobrancaForma = null,
+				_IDBanco = null,
+				_IDCartaoBandeira = null,
+				_Ativo = true
+			};
+		}
+
+		public objCobrancaForma(int? IDCobrancaForma) : base()
+		{
+			EditData._IDCobrancaForma = IDCobrancaForma;
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructCobranca();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._IDCobrancaForma.ToString();
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+		public int? IDCobrancaForma
+		{
+			get => EditData._IDCobrancaForma;
+			set => EditData._IDCobrancaForma = value;
+		}
+
+		// Property CobrancaForma
+		//---------------------------------------------------------------
+		public string CobrancaForma
+		{
+			get => EditData._CobrancaForma;
+			set
+			{
+				if (value != EditData._CobrancaForma)
+				{
+					EditData._CobrancaForma = value;
+					NotifyPropertyChanged("CobrancaForma");
+				}
+			}
+		}
+
+		// Property IDBanco
+		//---------------------------------------------------------------
+		public int? IDBanco
+		{
+			get => EditData._IDBanco;
+			set
+			{
+				if (value != EditData._IDBanco)
+				{
+					EditData._IDBanco = value;
+					NotifyPropertyChanged("IDBanco");
+				}
+			}
+		}
+
+		// Property Banco
+		//---------------------------------------------------------------
+		public string BancoNome
+		{
+			get => EditData._BancoNome;
+			set => EditData._BancoNome = value;
+		}
+
+		// Property IDCartaoBandeira
+		//---------------------------------------------------------------
+		public int? IDCartaoBandeira
+		{
+			get => EditData._IDCartaoBandeira;
+			set
+			{
+				if (value != EditData._IDCartaoBandeira)
+				{
+					EditData._IDCartaoBandeira = value;
+					NotifyPropertyChanged("IDCartaoBandeira");
+				}
+			}
+		}
+
+		// Property CartaoBandeira
+		//---------------------------------------------------------------
+		public string CartaoBandeira
+		{
+			get => EditData._CartaoBandeira;
+			set => EditData._CartaoBandeira = value;
+		}
+
+		// Property Ativo
+		//---------------------------------------------------------------
+		public bool Ativo
+		{
+			get => EditData._Ativo;
+			set
+			{
+				if (value != EditData._Ativo)
+				{
+					EditData._Ativo = value;
+					NotifyPropertyChanged("Ativo");
+				}
+			}
+		}
+	}
+
 }

@@ -48,6 +48,7 @@
 			this.mnuDespesaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuDespesaTipo = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuFechamento = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -72,7 +73,7 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCobrancaForma = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -240,7 +241,8 @@
             this.mnuDespesaProcurar,
             this.toolStripSeparator4,
             this.mnuDespesaTipo,
-            this.mnuDespesaGrupo});
+            this.mnuDespesaGrupo,
+            this.mnuCobrancaForma});
 			this.btnSaidas.Image = global::CamadaUI.Properties.Resources.Saidas;
 			this.btnSaidas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnSaidas.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -258,7 +260,7 @@
 			this.mnuDespesaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.mnuDespesaInserir.Name = "mnuDespesaInserir";
-			this.mnuDespesaInserir.Size = new System.Drawing.Size(211, 30);
+			this.mnuDespesaInserir.Size = new System.Drawing.Size(217, 30);
 			this.mnuDespesaInserir.Text = "Inserir Despesa";
 			// 
 			// mnuDespesaProcurar
@@ -267,13 +269,13 @@
 			this.mnuDespesaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuDespesaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaProcurar.Name = "mnuDespesaProcurar";
-			this.mnuDespesaProcurar.Size = new System.Drawing.Size(211, 30);
+			this.mnuDespesaProcurar.Size = new System.Drawing.Size(217, 30);
 			this.mnuDespesaProcurar.Text = "Procurar Despesa";
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(208, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
 			// 
 			// mnuDespesaTipo
 			// 
@@ -281,8 +283,17 @@
 			this.mnuDespesaTipo.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuDespesaTipo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaTipo.Name = "mnuDespesaTipo";
-			this.mnuDespesaTipo.Size = new System.Drawing.Size(211, 30);
+			this.mnuDespesaTipo.Size = new System.Drawing.Size(217, 30);
 			this.mnuDespesaTipo.Text = "Tipos de Despesa";
+			// 
+			// mnuDespesaGrupo
+			// 
+			this.mnuDespesaGrupo.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaGrupo.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaGrupo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
+			this.mnuDespesaGrupo.Size = new System.Drawing.Size(217, 30);
+			this.mnuDespesaGrupo.Text = "Grupos de Despesa";
 			// 
 			// btnMovimentação
 			// 
@@ -622,14 +633,14 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// mnuDespesaGrupo
+			// mnuCobrancaForma
 			// 
-			this.mnuDespesaGrupo.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuDespesaGrupo.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuDespesaGrupo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
-			this.mnuDespesaGrupo.Size = new System.Drawing.Size(211, 30);
-			this.mnuDespesaGrupo.Text = "Grupos de Despesa";
+			this.mnuCobrancaForma.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCobrancaForma.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuCobrancaForma.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
+			this.mnuCobrancaForma.Size = new System.Drawing.Size(217, 30);
+			this.mnuCobrancaForma.Text = "Formas de Cobrança";
 			// 
 			// frmPrincipal
 			// 
@@ -708,6 +719,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaTipo;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaGrupo;
+		private System.Windows.Forms.ToolStripMenuItem mnuCobrancaForma;
 	}
 }
 

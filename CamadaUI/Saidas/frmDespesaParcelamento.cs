@@ -8,11 +8,10 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Caixa;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Saidas
 {
-	public partial class frmContribuicaoCheque : CamadaUI.Modals.frmModFinBorder
+	public partial class frmDespesaParcelamento : CamadaUI.Modals.frmModFinBorder
 	{
 		private objContribuicaoCheque _cheque;
 		private BindingSource bind = new BindingSource();
@@ -28,7 +27,7 @@ namespace CamadaUI.Entradas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuicaoCheque(ref objContribuicaoCheque obj, Form formOrigem)
+		public frmDespesaParcelamento(ref objContribuicaoCheque obj, Form formOrigem)
 		{
 			InitializeComponent();
 
@@ -122,10 +121,10 @@ namespace CamadaUI.Entradas
 		{
 			// CREATE BINDINGS
 			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtChequeNumero.DataBindings.Add("Text", bind, "ChequeNumero", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtIdentificador.DataBindings.Add("Text", bind, "ChequeNumero", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpDepositoData.DataBindings.Add("Text", bind, "DepositoData", true, DataSourceUpdateMode.OnPropertyChanged);
 
-			txtChequeNumero.DataBindings["Text"].Format += FormatD6;
+			txtIdentificador.DataBindings["Text"].Format += FormatD6;
 		}
 
 		private void FormatD6(object sender, ConvertEventArgs e)
@@ -165,7 +164,7 @@ namespace CamadaUI.Entradas
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtBanco, "Banco do Cheque", _cheque, EP)) return false;
-			if (!VerificaDadosClasse(txtChequeNumero, "Número do Cheque", _cheque, EP)) return false;
+			if (!VerificaDadosClasse(txtIdentificador, "Número do Cheque", _cheque, EP)) return false;
 
 			return true;
 		}
@@ -265,38 +264,30 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSetBanco_Click(object sender, EventArgs e)
 		{
-			try
+			if (listBancos.Count == 0)
 			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				frmBancoProcura frm = new frmBancoProcura(this, _cheque.IDBanco == 0 ? null : (int?)_cheque.IDBanco);
-				frm.ShowDialog();
-
-				//--- check return
-				if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
-				{
-					if (Sit != EnumFlagEstado.NovoRegistro && _cheque.IDBanco != frm.propEscolha.IDBanco)
-						Sit = EnumFlagEstado.Alterado;
-
-					_cheque.IDBanco = (int)frm.propEscolha.IDBanco;
-					txtBanco.Text = frm.propEscolha.BancoNome;
-				}
-
-				//--- select
-				txtBanco.Focus();
-				txtBanco.SelectAll();
+				AbrirDialog("Não há Bancos cadastrados...", "Bancos",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
 			}
-			catch (Exception ex)
+
+			var dic = listBancos.ToDictionary(x => (int)x.IDBanco, x => x.BancoNome);
+			var textBox = txtBanco;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cheque.IDBanco);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
 			{
-				AbrirDialog("Uma exceção ocorreu ao abrir formulário de procura..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				_cheque.IDBanco = (byte)frm.propEscolha.Key;
+				textBox.Text = frm.propEscolha.Value;
 			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
+
+			//--- select
+			textBox.Focus();
+			textBox.SelectAll();
 		}
 
 		#endregion // BUTTONS PROCURA --- END

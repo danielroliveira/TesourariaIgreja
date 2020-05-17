@@ -1,17 +1,15 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Registres;
+using CamadaUI.Setores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Setores;
-using CamadaUI.Registres;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Saidas
 {
@@ -45,7 +43,7 @@ namespace CamadaUI.Saidas
 			bind.Add(_despesa);
 			BindingCreator();
 
-			propParcelado = _despesa.Parcelas > 1;
+			ChangeParcelado(_despesa.Parcelas > 1);
 
 			if (_despesa.IDDespesa == null)
 			{
@@ -142,6 +140,7 @@ namespace CamadaUI.Saidas
 			txtDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpDespesaData.DataBindings.Add("Value", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			numParcelas.DataBindings.Add("Value", bind, "Parcelas", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -564,6 +563,48 @@ namespace CamadaUI.Saidas
 			//---------------------------------------------------
 		}
 
+		// CHECKBOX CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		private void chkParcelado_CheckedChanged(object sender, EventArgs e)
+		{
+			ChangeParcelado(chkParcelado.Checked);
+		}
+
+		// CHANGE PARCELADO PROPERTY
+		//------------------------------------------------------------------------------------------------------------
+		private void ChangeParcelado(bool parcelado)
+		{
+			bool _parcelado = _despesa.Parcelas > 1;
+
+			if (parcelado != _parcelado)
+			{
+				numParcelas.Enabled = parcelado;
+				lblParcelas.ForeColor = parcelado == true ? Color.Black : Color.WhiteSmoke;
+				btnParcelasGerar.Enabled = parcelado;
+
+				if (parcelado == true)
+				{
+					_despesa.Parcelas = 2;
+					numParcelas.DataBindings["value"].ReadValue();
+				}
+				else
+				{
+					_despesa.Parcelas = 1;
+					numParcelas.DataBindings["value"].ReadValue();
+				}
+			}
+		}
+
+		// KEY DOWN ENTER OF NUMERIC UPDOWN
+		private void numParcelas_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			};
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region TOOLTIP
@@ -596,40 +637,6 @@ namespace CamadaUI.Saidas
 
 
 		#endregion
-
-		private void chkParcelado_CheckedChanged(object sender, EventArgs e)
-		{
-			propParcelado = chkParcelado.Checked;
-		}
-
-		public bool propParcelado
-		{
-			get
-			{
-				return _despesa.Parcelas > 1;
-			}
-			set
-			{
-				bool _parcelado = _despesa.Parcelas > 1;
-
-				if (value != _parcelado)
-				{
-					numParcelas.Enabled = value;
-					lblParcelas.ForeColor = value == true ? Color.Black : Color.WhiteSmoke;
-					btnParcelasGerar.Enabled = value;
-
-					if (value == true)
-					{
-						_despesa.Parcelas = 2;
-					}
-					else
-					{
-						_despesa.Parcelas = 1;
-					}
-				}
-
-			}
-		}
 
 	}
 }

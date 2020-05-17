@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
@@ -150,7 +150,7 @@
 			this.tspMenu.Location = new System.Drawing.Point(2, 693);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(704, 44);
-			this.tspMenu.TabIndex = 23;
+			this.tspMenu.TabIndex = 26;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -245,7 +245,7 @@
 			this.dtpDespesaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpDespesaData.Name = "dtpDespesaData";
 			this.dtpDespesaData.Size = new System.Drawing.Size(145, 31);
-			this.dtpDespesaData.TabIndex = 18;
+			this.dtpDespesaData.TabIndex = 19;
 			// 
 			// label1
 			// 
@@ -255,7 +255,7 @@
 			this.label1.Location = new System.Drawing.Point(71, 338);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(120, 19);
-			this.label1.TabIndex = 17;
+			this.label1.TabIndex = 18;
 			this.label1.Text = "Data da Despesa";
 			// 
 			// txtDespesaValor
@@ -267,7 +267,7 @@
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
 			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 20;
+			this.txtDespesaValor.TabIndex = 21;
 			this.txtDespesaValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label8
@@ -278,7 +278,7 @@
 			this.label8.Location = new System.Drawing.Point(357, 338);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 19;
+			this.label8.TabIndex = 20;
 			this.label8.Text = "Valor da Despesa";
 			// 
 			// label2
@@ -459,7 +459,7 @@
 			this.pnlParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnlParcelas.Name = "pnlParcelas";
 			this.pnlParcelas.Size = new System.Drawing.Size(610, 45);
-			this.pnlParcelas.TabIndex = 21;
+			this.pnlParcelas.TabIndex = 23;
 			// 
 			// numParcelas
 			// 
@@ -479,12 +479,13 @@
             0});
 			this.numParcelas.Name = "numParcelas";
 			this.numParcelas.Size = new System.Drawing.Size(65, 31);
-			this.numParcelas.TabIndex = 25;
+			this.numParcelas.TabIndex = 2;
 			this.numParcelas.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+			this.numParcelas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numParcelas_KeyDown);
 			// 
 			// lblParcelas
 			// 
@@ -494,7 +495,7 @@
 			this.lblParcelas.Location = new System.Drawing.Point(214, 13);
 			this.lblParcelas.Name = "lblParcelas";
 			this.lblParcelas.Size = new System.Drawing.Size(64, 19);
-			this.lblParcelas.TabIndex = 24;
+			this.lblParcelas.TabIndex = 1;
 			this.lblParcelas.Text = "Parcelas";
 			// 
 			// btnParcelasGerar
@@ -509,7 +510,6 @@
 			this.btnParcelasGerar.RoundedCornersRadius = 0;
 			this.btnParcelasGerar.Size = new System.Drawing.Size(159, 27);
 			this.btnParcelasGerar.TabIndex = 3;
-			this.btnParcelasGerar.TabStop = false;
 			this.btnParcelasGerar.Text = "Gerar Parcelamento";
 			this.btnParcelasGerar.UseCompatibleTextRendering = true;
 			this.btnParcelasGerar.UseVisualStyleBackColor = false;
@@ -573,7 +573,7 @@
 			this.dgvAPagar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvAPagar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvAPagar.Size = new System.Drawing.Size(610, 174);
-			this.dgvAPagar.TabIndex = 22;
+			this.dgvAPagar.TabIndex = 25;
 			// 
 			// clnID
 			// 
@@ -597,9 +597,9 @@
 			// 
 			// clnVencimento
 			// 
-			dataGridViewCellStyle16.Format = "C2";
-			dataGridViewCellStyle16.NullValue = "0";
-			this.clnVencimento.DefaultCellStyle = dataGridViewCellStyle16;
+			dataGridViewCellStyle19.Format = "C2";
+			dataGridViewCellStyle19.NullValue = "0";
+			this.clnVencimento.DefaultCellStyle = dataGridViewCellStyle19;
 			this.clnVencimento.HeaderText = "Vencimento";
 			this.clnVencimento.Name = "clnVencimento";
 			this.clnVencimento.ReadOnly = true;
@@ -621,7 +621,7 @@
 			this.line1.Opacity = 0.5F;
 			this.line1.Size = new System.Drawing.Size(650, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 24;
+			this.line1.TabIndex = 17;
 			this.line1.TabStop = false;
 			// 
 			// line2
@@ -634,7 +634,7 @@
 			this.line2.Opacity = 0.5F;
 			this.line2.Size = new System.Drawing.Size(650, 10);
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
-			this.line2.TabIndex = 25;
+			this.line2.TabIndex = 22;
 			this.line2.TabStop = false;
 			// 
 			// label6
@@ -646,7 +646,7 @@
 			this.label6.Location = new System.Drawing.Point(42, 468);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(130, 26);
-			this.label6.TabIndex = 19;
+			this.label6.TabIndex = 24;
 			this.label6.Text = "Parcelamento";
 			// 
 			// frmDespesa

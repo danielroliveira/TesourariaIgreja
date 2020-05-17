@@ -12,10 +12,8 @@ using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Config
 {
-
 	public partial class frmConfigUsuarios : Modals.frmModConfig
 	{
-
 		private Image ItemAtivo = Properties.Resources.accept_24;
 		private Image ItemInativo = Properties.Resources.block_24;
 		UsuarioBLL uBLL = new UsuarioBLL();
@@ -94,61 +92,6 @@ namespace CamadaUI.Config
 			f.FormNoPanelClosed(this);
 		}
 
-		#endregion
-
-		private void lstUsuarios_DrawColumnHeader(object sender, ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventArgs eventArgs)
-		{
-			if (eventArgs.ColumnHeaderBounds.BoundsOuter.Width > 0 && eventArgs.ColumnHeaderBounds.BoundsOuter.Height > 0)
-			{
-				Brush brush = new LinearGradientBrush(
-					eventArgs.ColumnHeaderBounds.BoundsOuter,
-					Color.Transparent,
-					Color.FromArgb(64, Color.SteelBlue),
-					LinearGradientMode.Vertical
-				);
-
-				eventArgs.Graphics.FillRectangle(brush, eventArgs.ColumnHeaderBounds.BoundsOuter);
-				brush.Dispose();
-			}
-		}
-
-		private void lstUsuarios_DrawItem(object sender, BetterListViewDrawItemEventArgs eventArgs)
-		{
-			if (int.TryParse(eventArgs.Item.Text, out int intValue))
-			{
-				eventArgs.Item.Text = $"{intValue: 0000}";
-			}
-
-			if (eventArgs.Item.SubItems[3].Value != null)
-			{
-				eventArgs.Item.SubItems[3].AlignHorizontalImage = BetterListViewImageAlignmentHorizontal.OverlayCenter;
-
-				if ((bool)eventArgs.Item.SubItems[3].Value == true)
-					eventArgs.Item.SubItems[3].Image = ItemAtivo;
-				else if ((bool)eventArgs.Item.SubItems[3].Value == false)
-					eventArgs.Item.SubItems[3].Image = ItemInativo;
-			}
-
-		}
-
-		// GET THE SELECTED USER IF EXISTS
-		private objUsuario GetSelectedItem()
-		{
-			if (lstUsuarios.SelectedItems.Count == 0)
-			{
-				AbrirDialog("Não há usuário selecionada na listagem. Favor selecionar um usúario...",
-					"Selecionar", DialogType.OK, DialogIcon.Exclamation);
-				lstUsuarios.Focus();
-				return null;
-			}
-
-			return (objUsuario)lstUsuarios.SelectedItems[0].Value;
-		}
-		private void lstUsuarios_ItemActivate(object sender, BetterListViewItemActivateEventArgs eventArgs)
-		{
-			btnUserPermissao_Click(sender, null);
-		}
-
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
 			AlterarUsuario((Control)sender);
@@ -169,6 +112,183 @@ namespace CamadaUI.Config
 			AlterarUsuario((Control)sender);
 		}
 
+		private void btnAlterarAtivo_Click(object sender, EventArgs e)
+		{
+			// get selected user on list
+			objUsuario usuario = GetSelectedItem();
+
+			if (usuario == null)
+				return;
+
+			// check if is actual user
+			if (usuario.UsuarioAtivo && usuario.IDUsuario == Program.usuarioAtual.IDUsuario)
+			{
+				AbrirDialog("Você não pode desabilitar o usuário atual...",
+					"Desativar", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			// change ATIVO value
+			usuario.UsuarioAtivo = !usuario.UsuarioAtivo;
+
+			// Save DB
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// update
+				uBLL.UpdateUsuario(usuario);
+
+				// redraw itens and button
+				lstUsuarios.RedrawItems();
+				lstUsuarios_SelectedIndexChanged(sender, null);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Ativar/Desativar Usuário..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnUserPermissao_Click(object sender, EventArgs e)
+		{
+			objUsuario usuario = GetSelectedItem();
+
+			if (usuario == null)
+			{
+				btnAlterarAtivo.Enabled = false;
+				return;
+			}
+			else if (usuario.UsuarioAcesso == 1)
+			{
+				AbrirDialog("O acesso desse usuário já ilimitado...\n" +
+					"Não há necessidade de definir o acesso para um usuário ADMINISTRADOR.",
+					"Definir Acesso");
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmUsuarioContaAcesso frm = new frmUsuarioContaAcesso(usuario, this);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de Permissão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion
+
+		#region LISTAGEM CONTROL
+
+		// DRAW COLUMN HEADER
+		//------------------------------------------------------------------------------------------------------------
+		private void lstUsuarios_DrawColumnHeader(object sender, ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventArgs eventArgs)
+		{
+			if (eventArgs.ColumnHeaderBounds.BoundsOuter.Width > 0 && eventArgs.ColumnHeaderBounds.BoundsOuter.Height > 0)
+			{
+				Brush brush = new LinearGradientBrush(
+					eventArgs.ColumnHeaderBounds.BoundsOuter,
+					Color.Transparent,
+					Color.FromArgb(64, Color.SteelBlue),
+					LinearGradientMode.Vertical
+				);
+
+				eventArgs.Graphics.FillRectangle(brush, eventArgs.ColumnHeaderBounds.BoundsOuter);
+				brush.Dispose();
+			}
+		}
+
+		// DRAW ITEMS
+		//------------------------------------------------------------------------------------------------------------
+		private void lstUsuarios_DrawItem(object sender, BetterListViewDrawItemEventArgs eventArgs)
+		{
+			if (int.TryParse(eventArgs.Item.Text, out int intValue))
+			{
+				eventArgs.Item.Text = $"{intValue: 0000}";
+			}
+
+			if (eventArgs.Item.SubItems[3].Value != null)
+			{
+				eventArgs.Item.SubItems[3].AlignHorizontalImage = BetterListViewImageAlignmentHorizontal.OverlayCenter;
+
+				if ((bool)eventArgs.Item.SubItems[3].Value == true)
+					eventArgs.Item.SubItems[3].Image = ItemAtivo;
+				else if ((bool)eventArgs.Item.SubItems[3].Value == false)
+					eventArgs.Item.SubItems[3].Image = ItemInativo;
+			}
+
+		}
+
+		// ACTIVATE ITEM
+		//------------------------------------------------------------------------------------------------------------
+		private void lstUsuarios_ItemActivate(object sender, BetterListViewItemActivateEventArgs eventArgs)
+		{
+			btnUserPermissao_Click(sender, null);
+		}
+
+		// ALTERA A IMAGEM DO BTN ALTERAR ATIVO
+		//------------------------------------------------------------------------------------------------------------
+		private void lstUsuarios_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			objUsuario usuario = GetSelectedItem();
+
+			if (usuario == null)
+			{
+				btnAlterarAtivo.Enabled = false;
+				return;
+			}
+
+			btnAlterarAtivo.Enabled = true;
+			if (usuario.UsuarioAtivo)
+			{
+				btnAlterarAtivo.Text = "Desativar Usuário";
+				btnAlterarAtivo.Image = Properties.Resources.block_24;
+			}
+			else
+			{
+				btnAlterarAtivo.Text = "Ativar Usuário";
+				btnAlterarAtivo.Image = Properties.Resources.accept_24;
+			}
+		}
+
+		#endregion // LISTAGEM CONTROL --- END
+
+		#region FUNCTIONS
+
+		// GET THE SELECTED USER IF EXISTS
+		private objUsuario GetSelectedItem()
+		{
+			if (lstUsuarios.SelectedItems.Count == 0)
+			{
+				AbrirDialog("Não há usuário selecionada na listagem. Favor selecionar um usúario...",
+					"Selecionar", DialogType.OK, DialogIcon.Exclamation);
+				lstUsuarios.Focus();
+				return null;
+			}
+
+			return (objUsuario)lstUsuarios.SelectedItems[0].Value;
+		}
+
+		// CHANGE USUARIO
+		//------------------------------------------------------------------------------------------------------------
 		private void AlterarUsuario(Control controle)
 		{
 			try
@@ -268,111 +388,6 @@ namespace CamadaUI.Config
 			}
 		}
 
-		private void btnAlterarAtivo_Click(object sender, EventArgs e)
-		{
-			// get selected user on list
-			objUsuario usuario = GetSelectedItem();
-
-			if (usuario == null)
-				return;
-
-			// check if is actual user
-			if (usuario.UsuarioAtivo && usuario.IDUsuario == Program.usuarioAtual.IDUsuario)
-			{
-				AbrirDialog("Você não pode desabilitar o usuário atual...",
-					"Desativar", DialogType.OK, DialogIcon.Exclamation);
-				return;
-			}
-
-			// change ATIVO value
-			usuario.UsuarioAtivo = !usuario.UsuarioAtivo;
-
-			// Save DB
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				// update
-				uBLL.UpdateUsuario(usuario);
-
-				// redraw itens and button
-				lstUsuarios.RedrawItems();
-				lstUsuarios_SelectedIndexChanged(sender, null);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Ativar/Desativar Usuário..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		// ALTERA A IMAGEM DO BTN ALTERAR ATIVO
-		//------------------------------------------------------------------------------------------------------------
-		private void lstUsuarios_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			objUsuario usuario = GetSelectedItem();
-
-			if (usuario == null)
-			{
-				btnAlterarAtivo.Enabled = false;
-				return;
-			}
-
-			btnAlterarAtivo.Enabled = true;
-			if (usuario.UsuarioAtivo)
-			{
-				btnAlterarAtivo.Text = "Desativar Usuário";
-				btnAlterarAtivo.Image = Properties.Resources.block_24;
-			}
-			else
-			{
-				btnAlterarAtivo.Text = "Ativar Usuário";
-				btnAlterarAtivo.Image = Properties.Resources.accept_24;
-			}
-		}
-
-		private void btnUserPermissao_Click(object sender, EventArgs e)
-		{
-			objUsuario usuario = GetSelectedItem();
-
-			if (usuario == null)
-			{
-				btnAlterarAtivo.Enabled = false;
-				return;
-			}
-			else if (usuario.UsuarioAcesso == 1)
-			{
-				AbrirDialog("O acesso desse usuário já ilimitado...\n" +
-					"Não há necessidade de definir o acesso para um usuário ADMINISTRADOR.",
-					"Definir Acesso");
-				return;
-			}
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				frmUsuarioContaAcesso frm = new frmUsuarioContaAcesso(usuario, this);
-				frm.ShowDialog();
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de Permissão..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
+		#endregion // FUNCTIONS --- END
 	}
 }

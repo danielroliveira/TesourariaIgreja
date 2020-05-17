@@ -65,6 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caixa\frmBancoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmBancoProcura.designer.cs">
+      <DependentUpon>frmBancoProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmBancosControle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -345,11 +351,23 @@
     <Compile Include="Registres\frmCredorListagem.designer.cs">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmCobrancaForma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmCobrancaForma.designer.cs">
+      <DependentUpon>frmCobrancaForma.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmDespesa.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Saidas\frmDespesa.Designer.cs">
       <DependentUpon>frmDespesa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaParcelamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaParcelamento.designer.cs">
+      <DependentUpon>frmDespesaParcelamento.cs</DependentUpon>
     </Compile>
     <Compile Include="Saidas\frmDespesaTipo.cs">
       <SubType>Form</SubType>
@@ -393,6 +411,9 @@
     <Compile Include="Setores\frmSetorProcura.designer.cs">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Caixa\frmBancoProcura.resx">
+      <DependentUpon>frmBancoProcura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancosControle.resx">
       <DependentUpon>frmBancosControle.cs</DependentUpon>
     </EmbeddedResource>
@@ -534,8 +555,14 @@
     <EmbeddedResource Include="Registres\frmCredorListagem.resx">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmCobrancaForma.resx">
+      <DependentUpon>frmCobrancaForma.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesa.resx">
       <DependentUpon>frmDespesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaParcelamento.resx">
+      <DependentUpon>frmDespesaParcelamento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaTipo.resx">
       <DependentUpon>frmDespesaTipo.cs</DependentUpon>
