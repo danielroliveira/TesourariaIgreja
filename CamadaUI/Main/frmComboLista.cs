@@ -35,6 +35,8 @@ namespace CamadaUI.Main
 			// SIZE FORM
 			Height = origemLista.Count * 29;
 			Width = SourceControl.Width;
+			lstItens.Width = SourceControl.Width;
+			clnItem.Width = SourceControl.Width - clnID.Width;
 
 			// HANDLERS
 			lstItens.ItemActivate += (a, b) => ReturnSelectedItem();

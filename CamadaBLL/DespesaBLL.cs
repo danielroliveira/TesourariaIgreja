@@ -311,7 +311,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblDespesaTipo";
+				string query = "SELECT * FROM qryDespesaTipo";
 
 				// add params
 				db.LimparParametros();
@@ -334,13 +334,14 @@ namespace CamadaBLL
 
 				foreach (DataRow row in dt.Rows)
 				{
-					objDespesaTipo forma = new objDespesaTipo((byte)row["IDDespesaTipo"])
+					objDespesaTipo forma = new objDespesaTipo((int)row["IDDespesaTipo"])
 					{
 						DespesaTipo = (string)row["DespesaTipo"],
 						Periodicidade = (byte)row["Periodicidade"],
 						DespesaFixa = (bool)row["DespesaFixa"],
 						IDDespesaTipoGrupo = (byte)row["IDDespesaTipoGrupo"],
-						Ativo = (bool)row["DespesaFixa"],
+						DespesaTipoGrupo = (string)row["DespesaTipoGrupo"],
+						Ativo = (bool)row["Ativo"],
 					};
 
 					listagem.Add(forma);
@@ -439,7 +440,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblDespesaGrupo";
+				string query = "SELECT * FROM tblDespesaTipoGrupo";
 
 				// add params
 				db.LimparParametros();
@@ -450,7 +451,7 @@ namespace CamadaBLL
 					query += " WHERE Ativo = @Ativo";
 				}
 
-				query += " ORDER BY DespesaGrupo";
+				query += " ORDER BY DespesaTipoGrupo";
 
 				List<objDespesaTipoGrupo> listagem = new List<objDespesaTipoGrupo>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
@@ -464,8 +465,8 @@ namespace CamadaBLL
 				{
 					objDespesaTipoGrupo forma = new objDespesaTipoGrupo()
 					{
-						IDDespesaTipoGrupo = (int)row["IDDespesaGrupo"],
-						DespesaTipoGrupo = (string)row["DespesaGrupo"],
+						IDDespesaTipoGrupo = (byte)row["IDDespesaTipoGrupo"],
+						DespesaTipoGrupo = (string)row["DespesaTipoGrupo"],
 						Ativo = (bool)row["Ativo"],
 					};
 
@@ -499,7 +500,7 @@ namespace CamadaBLL
 				//--- convert null parameters
 				db.ConvertNullParams();
 
-				string query = db.CreateInsertSQL("tblDespesaGrupo");
+				string query = db.CreateInsertSQL("tblDespesaTipoGrupo");
 
 				//--- insert and Get new ID
 				int newID = db.ExecutarInsertAndGetID(query);
@@ -533,7 +534,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateUpdateSQL("tblDespesaGrupo", "@IDDespesaGrupo");
+				string query = db.CreateUpdateSQL("tblDespesaTipoGrupo", "@IDDespesaTipoGrupo");
 
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
@@ -569,7 +570,7 @@ namespace CamadaBLL
 					query += " WHERE Ativo = @Ativo";
 				}
 
-				query += " ORDER BY DespesaDocumentoTipo";
+				query += " ORDER BY DocumentoTipo";
 
 				List<objDespesaDocumentoTipo> listagem = new List<objDespesaDocumentoTipo>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
@@ -583,7 +584,7 @@ namespace CamadaBLL
 				{
 					objDespesaDocumentoTipo forma = new objDespesaDocumentoTipo()
 					{
-						IDDocumentoTipo = (int)row["IDDocumentoTipo"],
+						IDDocumentoTipo = (byte)row["IDDocumentoTipo"],
 						DocumentoTipo = (string)row["DocumentoTipo"],
 						Ativo = (bool)row["Ativo"],
 					};

@@ -31,6 +31,17 @@ namespace CamadaUI.Registres
 			_formOrigem = formOrigem;
 			_isProcura = IsProcura;
 
+			if (IsProcura)
+			{
+				btnEscolher.Enabled = true;
+				btnEditar.Enabled = false;
+			}
+			else
+			{
+				btnEscolher.Enabled = false;
+				btnEditar.Enabled = true;
+			}
+
 			CarregaCmbAtivo();
 			FormataListagem();
 
@@ -157,7 +168,16 @@ namespace CamadaUI.Registres
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-				btnEditar_Click(sender, new EventArgs());
+
+				//--- check formOrigem
+				if (_formOrigem.GetType() == typeof(frmPrincipal))
+				{
+					btnEditar_Click(sender, new EventArgs());
+				}
+				else
+				{
+					btnEscolher_Click(sender, new EventArgs());
+				}
 			}
 		}
 
@@ -194,17 +214,27 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmCredor frm = new frmCredor(new objCredor(null));
-			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-			DesativaMenuPrincipal();
-			Close();
-			frm.Show();
+			if (_formOrigem.GetType() == typeof(frmPrincipal))
+			{
+				frmCredor frm = new frmCredor(new objCredor(null), null);
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				DesativaMenuPrincipal();
+				Close();
+				frm.Show();
+			}
+			else
+			{
+				DialogResult = DialogResult.Yes; // return to Origem that is new Contribuinte
+			}
 		}
 
 		// BTN EDITAR
 		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
+			//--- check formOrigem
+			if (_formOrigem.GetType() != typeof(frmPrincipal)) return;
+
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
@@ -217,7 +247,7 @@ namespace CamadaUI.Registres
 			objCredor item = (objCredor)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			frmCredor frm = new frmCredor(item);
+			frmCredor frm = new frmCredor(item, null);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();

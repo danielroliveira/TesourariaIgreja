@@ -17,15 +17,18 @@ namespace CamadaUI.Registres
 		private objCredor _credor;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
+		private Form _formOrigem;
+		public objCredor propEscolha { get; set; }
 
 		#region SUB NEW | PROPERTIES
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmCredor(objCredor obj)
+		public frmCredor(objCredor obj, Form formOrigem)
 		{
 			InitializeComponent();
 
+			_formOrigem = formOrigem;
 			_credor = obj;
 			bind.DataSource = _credor;
 			BindingCreator();
@@ -202,10 +205,19 @@ namespace CamadaUI.Registres
 				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
 							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
 
-				if (response == DialogResult.Yes)
+				if (response != DialogResult.Yes) return;
+
+				//--- check origem
+				if (_formOrigem.GetType() == typeof(frmPrincipal)) // return to frmPrincipal
 				{
+					AutoValidate = AutoValidate.Disable;
 					Close();
 					MostraMenuPrincipal();
+				}
+				else // return to formOrigem
+				{
+					propEscolha = null;
+					DialogResult = DialogResult.Cancel;
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -316,6 +328,13 @@ namespace CamadaUI.Registres
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
+
+				//--- Return value
+				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				{
+					propEscolha = _credor;
+					DialogResult = DialogResult.OK;
+				}
 
 			}
 			catch (Exception ex)
@@ -492,6 +511,45 @@ namespace CamadaUI.Registres
 		}
 
 		#endregion // CONTROLS --- END
+
+		#region FORM DESIGN
+
+		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
+		//------------------------------------------------------------------------------------------------------------
+		private void form_Activated(object sender, EventArgs e)
+		{
+			if (_formOrigem != null)
+			{
+				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				{
+					Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
+					pnl.BackColor = Color.Silver;
+				}
+				else
+				{
+					DesativaMenuPrincipal();
+				}
+			}
+		}
+
+		private void form_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			if (_formOrigem != null)
+			{
+				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				{
+					Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
+					pnl.BackColor = Color.SlateGray;
+				}
+				else
+				{
+					MostraMenuPrincipal();
+				}
+
+			}
+		}
+
+		#endregion // FORM DESIGN --- END
 
 	}
 }

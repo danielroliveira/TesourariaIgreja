@@ -351,6 +351,30 @@
     <Compile Include="Saidas\frmDespesa.Designer.cs">
       <DependentUpon>frmDespesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesaTipo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipo.designer.cs">
+      <DependentUpon>frmDespesaTipo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipoGrupoControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipoGrupoControle.designer.cs">
+      <DependentUpon>frmDespesaTipoGrupoControle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipoListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipoListagem.designer.cs">
+      <DependentUpon>frmDespesaTipoListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaTipoProcura.designer.cs">
+      <DependentUpon>frmDespesaTipoProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setores\frmSetor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -512,6 +536,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesa.resx">
       <DependentUpon>frmDespesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaTipo.resx">
+      <DependentUpon>frmDespesaTipo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaTipoGrupoControle.resx">
+      <DependentUpon>frmDespesaTipoGrupoControle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaTipoListagem.resx">
+      <DependentUpon>frmDespesaTipoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaTipoProcura.resx">
+      <DependentUpon>frmDespesaTipoProcura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setores\frmSetor.resx">
       <DependentUpon>frmSetor.cs</DependentUpon>

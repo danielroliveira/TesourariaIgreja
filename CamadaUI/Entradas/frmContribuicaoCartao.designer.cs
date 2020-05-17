@@ -43,7 +43,7 @@
 			this.numParcelas = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtCartaoTipo = new System.Windows.Forms.TextBox();
-			this.vButton1 = new VIBlend.WinForms.Controls.vButton();
+			this.btnSetCartaoTipo = new VIBlend.WinForms.Controls.vButton();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).BeginInit();
@@ -287,24 +287,24 @@
 			this.txtCartaoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtCartaoTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
-			// vButton1
+			// btnSetCartaoTipo
 			// 
-			this.vButton1.AllowAnimations = true;
-			this.vButton1.BackColor = System.Drawing.Color.Transparent;
-			this.vButton1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.vButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.vButton1.Location = new System.Drawing.Point(399, 74);
-			this.vButton1.Name = "vButton1";
-			this.vButton1.RoundedCornersMask = ((byte)(15));
-			this.vButton1.RoundedCornersRadius = 0;
-			this.vButton1.Size = new System.Drawing.Size(34, 27);
-			this.vButton1.TabIndex = 3;
-			this.vButton1.TabStop = false;
-			this.vButton1.Text = "n";
-			this.vButton1.UseCompatibleTextRendering = true;
-			this.vButton1.UseVisualStyleBackColor = false;
-			this.vButton1.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.vButton1.Click += new System.EventHandler(this.btnSetCartaoTipo_Click);
+			this.btnSetCartaoTipo.AllowAnimations = true;
+			this.btnSetCartaoTipo.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetCartaoTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetCartaoTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetCartaoTipo.Location = new System.Drawing.Point(399, 74);
+			this.btnSetCartaoTipo.Name = "btnSetCartaoTipo";
+			this.btnSetCartaoTipo.RoundedCornersMask = ((byte)(15));
+			this.btnSetCartaoTipo.RoundedCornersRadius = 0;
+			this.btnSetCartaoTipo.Size = new System.Drawing.Size(34, 27);
+			this.btnSetCartaoTipo.TabIndex = 3;
+			this.btnSetCartaoTipo.TabStop = false;
+			this.btnSetCartaoTipo.Text = "n";
+			this.btnSetCartaoTipo.UseCompatibleTextRendering = true;
+			this.btnSetCartaoTipo.UseVisualStyleBackColor = false;
+			this.btnSetCartaoTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetCartaoTipo.Click += new System.EventHandler(this.btnSetCartaoTipo_Click);
 			// 
 			// frmContribuicaoCartao
 			// 
@@ -312,7 +312,7 @@
 			this.ClientSize = new System.Drawing.Size(481, 293);
 			this.Controls.Add(this.numParcelas);
 			this.Controls.Add(this.btnSetBandeira);
-			this.Controls.Add(this.vButton1);
+			this.Controls.Add(this.btnSetCartaoTipo);
 			this.Controls.Add(this.btnSetOperadora);
 			this.Controls.Add(this.txtCartaoTipo);
 			this.Controls.Add(this.label2);
@@ -337,7 +337,7 @@
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.txtCartaoTipo, 0);
 			this.Controls.SetChildIndex(this.btnSetOperadora, 0);
-			this.Controls.SetChildIndex(this.vButton1, 0);
+			this.Controls.SetChildIndex(this.btnSetCartaoTipo, 0);
 			this.Controls.SetChildIndex(this.btnSetBandeira, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.numParcelas, 0);
@@ -367,6 +367,6 @@
 		private System.Windows.Forms.NumericUpDown numParcelas;
 		internal System.Windows.Forms.Label label2;
 		internal System.Windows.Forms.TextBox txtCartaoTipo;
-		internal VIBlend.WinForms.Controls.vButton vButton1;
+		internal VIBlend.WinForms.Controls.vButton btnSetCartaoTipo;
 	}
 }

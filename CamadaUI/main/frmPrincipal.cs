@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Saidas;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -762,6 +763,11 @@ namespace CamadaUI
 			mnuContribuicaoInserir.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicao(new objContribuicao(null)));
 			mnuContribuicaoProcurar.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicaoListagem());
 
+			// MENU SAIDAS
+			mnuDespesaInserir.Click += (a, b) => MenuClickOpenForm(new frmDespesa(new objDespesa(null)));
+			mnuDespesaTipo.Click += (a, b) => MenuClickOpenForm(new frmDespesaTipoListagem());
+			mnuDespesaGrupo.Click += (a, b) => MenuClickOpenForm(new frmDespesaTipoGrupoControle());
+
 			// MENU MOVIMENTACAO
 			mnuContas.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());
 			mnuSetores.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
@@ -771,9 +777,26 @@ namespace CamadaUI
 
 		private void MenuClickOpenForm(Form form)
 		{
-			form.MdiParent = this;
-			DesativaMenuPrincipal();
-			form.Show();
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				form.MdiParent = this;
+				DesativaMenuPrincipal();
+				form.Show();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion

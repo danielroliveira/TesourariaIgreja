@@ -8,13 +8,13 @@ using static CamadaUI.FuncoesGlobais;
 using CamadaBLL;
 using System.Diagnostics;
 
-namespace CamadaUI.Caixa
+namespace CamadaUI.Saidas
 {
-	public partial class frmBancosControle : CamadaUI.Modals.frmModFinBorder
+	public partial class frmDespesaTipoGrupoControle : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<classBanco> list;
+		private List<classGrupo> list;
 		private BindingSource bindList = new BindingSource();
-		BancoBLL bBLL = new BancoBLL();
+		DespesaBLL dBLL = new DespesaBLL();
 
 		private Form _formOrigem;
 
@@ -24,22 +24,22 @@ namespace CamadaUI.Caixa
 
 		private EnumFlagEstado _Sit;
 
-		public objBanco propEscolhido { get; set; }
+		public objDespesaTipoGrupo propEscolhido { get; set; }
 
 		//=================================================================================================
 		// SUB NEW
 		//=================================================================================================
 		#region CONSTRUCTOR | SUB NEW
 
-		public frmBancosControle(Form formOrigem = null)
+		public frmDespesaTipoGrupoControle(Form formOrigem = null)
 		{
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
-			AtivarToolStripMenuItem.Text = "Ativar Banco";
-			DesativarToolStripMenuItem.Text = "Desativar Banco";
+			AtivarToolStripMenuItem.Text = "Ativar Classificação";
+			DesativarToolStripMenuItem.Text = "Desativar Classificação";
 
-			bindList.DataSource = typeof(classBanco);
+			bindList.DataSource = typeof(classGrupo);
 			ObterDados();
 			FormataListagem();
 
@@ -53,7 +53,7 @@ namespace CamadaUI.Caixa
 		}
 
 		// ON SHOW GOTO CONTROL COLLUN CADASTRO
-		private void frmBancosControle_Shown(object sender, EventArgs e)
+		private void frmDespesaTipoGrupoControle_Shown(object sender, EventArgs e)
 		{
 			if (list.Count == 0)
 			{
@@ -65,23 +65,22 @@ namespace CamadaUI.Caixa
 
 		}
 
-		private class classBanco : objBanco
+		private class classGrupo : objDespesaTipoGrupo
 		{
 			public EnumFlagEstado RowSit { get; set; }
 
-			public static List<classBanco> convertFrom(List<objBanco> lstBanco)
+			public static List<classGrupo> convertFrom(List<objDespesaTipoGrupo> lstGrupo)
 			{
-				var novaClasse = new List<classBanco>();
+				var novaClasse = new List<classGrupo>();
 
-				foreach (var banco in lstBanco)
+				foreach (var grupo in lstGrupo)
 				{
-					var cl = new classBanco()
+					var cl = new classGrupo()
 					{
-						BancoNome = banco.BancoNome,
-						Ativo = banco.Ativo,
-						IDBanco = banco.IDBanco,
-						Sigla = banco.Sigla,
-						RowSit = banco.IDBanco == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
+						IDDespesaTipoGrupo = grupo.IDDespesaTipoGrupo,
+						Ativo = grupo.Ativo,
+						DespesaTipoGrupo = grupo.DespesaTipoGrupo,
+						RowSit = grupo.IDDespesaTipoGrupo == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
 					};
 
 					novaClasse.Add(cl);
@@ -115,6 +114,7 @@ namespace CamadaUI.Caixa
 						btnNovo.Enabled = false;
 						lblAcao.Visible = true;
 						lblAcao.Text = $"Editando {dgvListagem.CurrentRow.Cells[1].Value}";
+						ResizeFontLabel(lblAcao);
 						break;
 					case EnumFlagEstado.NovoRegistro:
 						btnSalvar.Enabled = true;
@@ -122,6 +122,7 @@ namespace CamadaUI.Caixa
 						btnNovo.Enabled = false;
 						lblAcao.Visible = true;
 						lblAcao.Text = "Adicionando Novo Registro";
+						ResizeFontLabel(lblAcao);
 						break;
 					default:
 						break;
@@ -137,7 +138,7 @@ namespace CamadaUI.Caixa
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				list = classBanco.convertFrom(bBLL.GetListBanco());
+				list = classGrupo.convertFrom(dBLL.GetDespesaTipoGruposList());
 				bindList.DataSource = list;
 				dgvListagem.DataSource = bindList;
 
@@ -180,7 +181,7 @@ namespace CamadaUI.Caixa
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDBanco";
+			clnID.DataPropertyName = "IDDespesaTipoGrupo";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -189,22 +190,13 @@ namespace CamadaUI.Caixa
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "BancoNome";
+			clnCadastro.DataPropertyName = "DespesaTipoGrupo";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = false;
 			clnCadastro.Resizable = DataGridViewTriState.False;
 			clnCadastro.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-			//--- (3) COLUNA SIGLA
-			clnSigla.DataPropertyName = "Sigla";
-			clnSigla.Visible = true;
-			clnSigla.ReadOnly = false;
-			clnSigla.Resizable = DataGridViewTriState.False;
-			clnSigla.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSigla.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnSigla.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
 			//--- (4) Coluna da imagem
 			clnImage.Name = "Ativo";
@@ -214,7 +206,7 @@ namespace CamadaUI.Caixa
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnSigla, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
@@ -223,9 +215,9 @@ namespace CamadaUI.Caixa
 		{
 			if (e.ColumnIndex == clnImage.Index)
 			{
-				objBanco item = (objBanco)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				objDespesaTipoGrupo item = (objDespesaTipoGrupo)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (item.IDBanco == null)
+				if (item.IDDespesaTipoGrupo == null)
 				{
 					e.Value = ImgNew;
 				}
@@ -253,7 +245,7 @@ namespace CamadaUI.Caixa
 				return;
 			}
 
-			classBanco currentItem = (classBanco)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+			classGrupo currentItem = (classGrupo)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
 			if (Sit != EnumFlagEstado.RegistroSalvo && currentItem.RowSit == EnumFlagEstado.RegistroSalvo)
 			{
@@ -261,7 +253,7 @@ namespace CamadaUI.Caixa
 				return;
 			}
 
-			if (currentItem.IDBanco == null)
+			if (currentItem.IDDespesaTipoGrupo == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				currentItem.RowSit = EnumFlagEstado.NovoRegistro;
@@ -310,24 +302,6 @@ namespace CamadaUI.Caixa
 				}
 
 			}
-			else if (e.KeyCode == Keys.Delete)
-			{
-				e.SuppressKeyPress = true;
-				e.Handled = true;
-
-				classBanco myItem = (classBanco)dgvListagem.CurrentRow.DataBoundItem;
-
-				if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
-				{
-					dgvListagem.Rows.Remove(dgvListagem.CurrentRow);
-				}
-
-				if (!list.Exists(x => x.RowSit != EnumFlagEstado.RegistroSalvo))
-				{
-					Sit = EnumFlagEstado.RegistroSalvo;
-				}
-
-			}
 		}
 
 		// VALIDA CELL | PROCURA DUPLICADO
@@ -344,23 +318,7 @@ namespace CamadaUI.Caixa
 					return;
 				}
 
-				if (ProcuraBancoDuplicado(e.FormattedValue.ToString()) == false)
-				{
-					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
-					e.Cancel = true;
-					return;
-				}
-			}
-
-			if (e.ColumnIndex == 2)
-			{
-				if (String.IsNullOrEmpty(e.FormattedValue.ToString()))
-				{
-					e.Cancel = false;
-					return;
-				}
-
-				if (ProcuraSiglaDuplicado(e.FormattedValue.ToString()) == false)
+				if (ProcuraGrupoDuplicado(e.FormattedValue.ToString()) == false)
 				{
 					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
 					e.Cancel = true;
@@ -369,32 +327,15 @@ namespace CamadaUI.Caixa
 			}
 		}
 
-		// PROCURA DUPLICADO BANCO NOME & BANCO NUMERO
-		private bool ProcuraBancoDuplicado(string valor)
+		// PROCURA DUPLICADO
+		private bool ProcuraGrupoDuplicado(string valor)
 		{
-			foreach (classBanco banco in bindList.List)
+			foreach (classGrupo grupo in bindList.List)
 			{
-				if (banco.BancoNome?.ToUpper() == valor.ToUpper())
+				if (grupo.DespesaTipoGrupo?.ToUpper() == valor.ToUpper())
 				{
-					AbrirDialog($"Banco duplicado...\n O banco {valor.ToUpper()} já foi inserido.",
-						"Duplicado",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private bool ProcuraSiglaDuplicado(string valor)
-		{
-			foreach (classBanco banco in bindList.List)
-			{
-				if (banco.Sigla?.ToUpper() == valor.ToUpper())
-				{
-					AbrirDialog($"O número do Banco precisa ser exclusivo...\n O número {valor.ToUpper()} já foi inserido.",
-						"Duplicado",
+					AbrirDialog($"Classificação de Despesa duplicada...\n A classificação {valor.ToUpper()} já foi inserida.",
+						"Duplicada",
 						DialogType.OK,
 						DialogIcon.Exclamation);
 					return false;
@@ -411,7 +352,7 @@ namespace CamadaUI.Caixa
 			{
 				SendKeys.Send("{TAB}");
 			}
-			else if (e.ColumnIndex == 3)
+			else if (e.ColumnIndex == 2)
 			{
 				SendKeys.Send("+{TAB}");
 			}
@@ -438,7 +379,6 @@ namespace CamadaUI.Caixa
 			bindList.AddNew();
 			Sit = EnumFlagEstado.NovoRegistro;
 			dgvListagem.CurrentCell = dgvListagem.CurrentRow.Cells[0];
-			//dgvListagem.CurrentCell = dgvListagem.CurrentRow.Cells[1];
 			dgvListagem.BeginEdit(false);
 		}
 
@@ -466,21 +406,22 @@ namespace CamadaUI.Caixa
 			if (VerificaItems() == false) return;
 
 			//--- verifica se é um ROW editado ou novo
-			classBanco myItem;
+			classGrupo myItem;
 			bool everyOK = true;
 
 			foreach (DataGridViewRow row in dgvListagem.Rows)
 			{
 				try
 				{
-					myItem = (classBanco)row.DataBoundItem;
+					myItem = (classGrupo)row.DataBoundItem;
 
 					if (myItem.RowSit == EnumFlagEstado.NovoRegistro || myItem.RowSit == EnumFlagEstado.Alterado)
 					{
 						if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
 						{
+							myItem.Ativo = true; // define ATIVO
 							var newItem = ItemInserir(myItem);
-							myItem.IDBanco = newItem;
+							myItem.IDDespesaTipoGrupo = newItem;
 							bindList.ResetBindings(false);
 						}
 						else if (myItem.RowSit == EnumFlagEstado.Alterado)
@@ -510,7 +451,7 @@ namespace CamadaUI.Caixa
 		//--- VERIFICACAO SE O ITEM ESTA PRONTO PARA SER INSERIDO OU ALTERADO
 		private bool VerificaItems()
 		{
-			classBanco Item = null;
+			classGrupo Item = null;
 
 			foreach (DataGridViewRow row in dgvListagem.Rows)
 			{
@@ -518,27 +459,17 @@ namespace CamadaUI.Caixa
 
 				try
 				{
-					Item = (classBanco)row.DataBoundItem;
+					Item = (classGrupo)row.DataBoundItem;
 				}
 				catch
 				{
 					continue;
 				}
 
-				if (string.IsNullOrEmpty(Item.BancoNome))
+				if (string.IsNullOrEmpty(Item.DespesaTipoGrupo))
 				{
 					dgvListagem.CurrentCell = row.Cells[1];
-					MessageBox.Show("A descrição do Banco não pode ficar vazia...",
-									"Campo Vazio",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Information);
-					return false;
-				}
-
-				if (string.IsNullOrEmpty(Item.Sigla))
-				{
-					dgvListagem.CurrentCell = row.Cells[2];
-					MessageBox.Show("O número do Banco não pode ficar vazio...",
+					MessageBox.Show("A descrição da Classificação de Despesa não pode ficar vazia...",
 									"Campo Vazio",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
@@ -549,21 +480,21 @@ namespace CamadaUI.Caixa
 			return true;
 		}
 
-		//--- INSERE NOVO ITEM NO TBL BANCO
-		public int ItemInserir(objBanco banco)
+		//--- INSERE NOVO ITEM NO TBL
+		public int ItemInserir(objDespesaTipoGrupo grupo)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				int newID = bBLL.InsertBanco(banco);
-				banco.IDBanco = newID;
+				int newID = dBLL.InsertDespesaTipoGrupo(grupo);
+				grupo.IDDespesaTipoGrupo = newID;
 				return newID;
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Ocorreu uma exceção ao inserir um novo banco\n" +
+				MessageBox.Show("Ocorreu uma exceção ao inserir uma nova classificação\n" +
 								ex.Message, "Exceção",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 				throw ex;
@@ -577,18 +508,18 @@ namespace CamadaUI.Caixa
 		}
 
 		//--- INSERE NOVO ITEM NO TBL BANCO
-		public void ItemAlterar(objBanco banco)
+		public void ItemAlterar(objDespesaTipoGrupo grupo)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				bBLL.UpdateBanco(banco);
+				dBLL.UpdateDespesaTipoGrupo(grupo);
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Ocorreu uma exceção ao atualizar o banco/n" +
+				MessageBox.Show("Ocorreu uma exceção ao atualizar a classificação/n" +
 								ex.Message, "Exceção",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 				throw ex;
@@ -620,28 +551,26 @@ namespace CamadaUI.Caixa
 				if (hit.Type != DataGridViewHitTestType.Cell) return;
 
 				// seleciona o ROW
-				dgvListagem.Rows[hit.RowIndex].Cells[0].Selected = true;
+				dgvListagem.Rows[hit.RowIndex].Cells[1].Selected = true;
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
+				objDespesaTipoGrupo grupo = (objDespesaTipoGrupo)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+				if (grupo.Ativo == true)
 				{
-					objBanco banco = (objBanco)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
-
-					if (banco.Ativo == true)
-					{
-						AtivarToolStripMenuItem.Enabled = false;
-						DesativarToolStripMenuItem.Enabled = true;
-					}
-					else
-					{
-						AtivarToolStripMenuItem.Enabled = true;
-						DesativarToolStripMenuItem.Enabled = false;
-					}
-
-					// revela menu
-					MenuListagem.Show(c.PointToScreen(e.Location));
+					AtivarToolStripMenuItem.Enabled = false;
+					DesativarToolStripMenuItem.Enabled = true;
 				}
+				else
+				{
+					AtivarToolStripMenuItem.Enabled = true;
+					DesativarToolStripMenuItem.Enabled = false;
+				}
+
+				// revela menu
+				MenuListagem.Show(c.PointToScreen(e.Location));
+
 			}
 		}
 
@@ -651,16 +580,16 @@ namespace CamadaUI.Caixa
 			if (dgvListagem.SelectedCells.Count == 0) return;
 
 			//--- Verifica o item
-			objBanco banco = (objBanco)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
+			objDespesaTipoGrupo grupo = (objDespesaTipoGrupo)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(banco.Ativo ? "DESATIVAR " : "ATIVAR")} esse Banco?\n" +
-									  banco.BancoNome.ToUpper(), (banco.Ativo ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(grupo.Ativo ? "DESATIVAR " : "ATIVAR")} esse Banco?\n" +
+									  grupo.DespesaTipoGrupo.ToUpper(), (grupo.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			banco.Ativo = !banco.Ativo;
+			grupo.Ativo = !grupo.Ativo;
 
 			//--- Salvar o Registro
 			try
@@ -668,7 +597,7 @@ namespace CamadaUI.Caixa
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				bBLL.UpdateBanco(banco);
+				dBLL.UpdateDespesaTipoGrupo(grupo);
 
 				//--- altera a imagem
 				dgvListagem.Refresh();
@@ -676,7 +605,7 @@ namespace CamadaUI.Caixa
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar o registro do Banco..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Alterar a Classificação de Despesa..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally

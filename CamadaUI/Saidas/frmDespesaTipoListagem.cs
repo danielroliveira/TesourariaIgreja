@@ -1,58 +1,54 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Contas
+namespace CamadaUI.Saidas
 {
-	public partial class frmContaListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmDespesaTipoListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objConta> listConta = new List<objConta>();
-		private Form _formOrigem;
+		private List<objDespesaTipo> listTipo = new List<objDespesaTipo>();
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
+		private DespesaBLL dBLL = new DespesaBLL();
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmContaListagem(Form formOrigem = null)
+		public frmDespesaTipoListagem()
 		{
 			InitializeComponent();
 
 			//--- Add any initialization after the InitializeComponent() call.
-			_formOrigem = formOrigem;
 			CarregaCmbAtivo();
-			ObterDados(this, new EventArgs());
+			ObterDados();
 			FormataListagem();
 
 			//--- get dados
-			cmbAtivo.SelectedValueChanged += ObterDados;
+			cmbAtivo.SelectedValueChanged += (a, b) => ObterDados();
 			dgvListagem.CellDoubleClick += btnEditar_Click;
 			txtProcura.TextChanged += FiltrarListagem;
 			HandlerKeyDownControl(this);
 		}
 
 		//--- PROPRIEDADE DE ESCOLHA
-		public objConta propEscolha { get; set; }
+		public objDespesaTipo propEscolha { get; set; }
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
-		private void ObterDados(object sender, EventArgs e)
+		private void ObterDados()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				ContaBLL cBLL = new ContaBLL();
-				listConta = cBLL.GetListConta("", Convert.ToBoolean(cmbAtivo.SelectedValue), false);
-				dgvListagem.DataSource = listConta;
+				listTipo = dBLL.GetDespesaTiposList(Convert.ToBoolean(cmbAtivo.SelectedValue));
+				dgvListagem.DataSource = listTipo;
 			}
 			catch (Exception ex)
 			{
@@ -107,7 +103,7 @@ namespace CamadaUI.Contas
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDConta";
+			clnID.DataPropertyName = "IDDespesaTipo";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -116,7 +112,7 @@ namespace CamadaUI.Contas
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "Conta";
+			clnCadastro.DataPropertyName = "DespesaTipo";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = true;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -124,24 +120,33 @@ namespace CamadaUI.Contas
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
+			//--- (3) COLUNA GRUPO
+			clnGrupo.DataPropertyName = "DespesaTipoGrupo";
+			clnGrupo.Visible = true;
+			clnGrupo.ReadOnly = true;
+			clnGrupo.Resizable = DataGridViewTriState.False;
+			clnGrupo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnGrupo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnGrupo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
 			//--- (3) Coluna da imagem
-			clnImage.Name = "Ativa";
+			clnImage.Name = "Ativo";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnGrupo, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == 2)
+			if (e.ColumnIndex == clnImage.Index)
 			{
-				objConta item = (objConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				if (item.Ativa) e.Value = ImgAtivo;
+				objDespesaTipo item = (objDespesaTipo)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				if (item.Ativo) e.Value = ImgAtivo;
 				else e.Value = ImgInativo;
 			}
 		}
@@ -154,9 +159,6 @@ namespace CamadaUI.Contas
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-
-
-
 				btnEditar_Click(sender, new EventArgs());
 			}
 		}
@@ -165,35 +167,21 @@ namespace CamadaUI.Contas
 
 		#region BUTTONS FUNCTION
 
-		// FECHAR FORMULARIO
-		//------------------------------------------------------------------------------------------------------------
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
 			MostraMenuPrincipal();
 		}
 
-		// ADICIONAR CONTA
-		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			if (_formOrigem == null)
-			{
-				frmConta frm = new frmConta(new objConta(null));
-				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
-			}
-			else
-			{
-				propEscolha = new objConta(null);
-				DialogResult = DialogResult.Yes;
-			}
+			frmDespesaTipo frm = new frmDespesaTipo(new objDespesaTipo(null), null);
+			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
 		}
 
-		// EDITAR CONTA ESCOLHIDA
-		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
@@ -205,22 +193,14 @@ namespace CamadaUI.Contas
 			}
 
 			//--- get Selected item
-			objConta item = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaTipo item = (objDespesaTipo)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			if (_formOrigem == null)
-			{
-				frmConta frm = new frmConta(item);
-				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
-			}
-			else
-			{
-				propEscolha = item;
-				DialogResult = DialogResult.Yes;
-			}
+			frmDespesaTipo frm = new frmDespesaTipo(item, null);
+			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
 		}
 
 		#endregion
@@ -235,23 +215,23 @@ namespace CamadaUI.Contas
 				if (!int.TryParse(txtProcura.Text, out int i))
 				{
 					// declare function
-					Func<objConta, bool> FiltroItem = c => c.Conta.ToLower().Contains(txtProcura.Text.ToLower());
+					Func<objDespesaTipo, bool> FiltroItem = c => c.DespesaTipo.ToLower().Contains(txtProcura.Text.ToLower());
 
 					// aply filter using function
-					dgvListagem.DataSource = listConta.FindAll(c => FiltroItem(c));
+					dgvListagem.DataSource = listTipo.FindAll(c => FiltroItem(c));
 				}
 				else
 				{
 					// declare function
-					Func<objConta, bool> FiltroID = c => c.IDConta == i;
+					Func<objDespesaTipo, bool> FiltroID = c => c.IDDespesaTipo == i;
 
 					// aply filter using function
-					dgvListagem.DataSource = listConta.FindAll(c => FiltroID(c));
+					dgvListagem.DataSource = listTipo.FindAll(c => FiltroID(c));
 				}
 			}
 			else
 			{
-				dgvListagem.DataSource = listConta;
+				dgvListagem.DataSource = listTipo;
 			}
 		}
 
@@ -275,11 +255,11 @@ namespace CamadaUI.Contas
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativa")
+				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objConta Conta = (objConta)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objDespesaTipo Setor = (objDespesaTipo)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (Conta.Ativa == true)
+					if (Setor.Ativo == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -296,22 +276,22 @@ namespace CamadaUI.Contas
 			}
 		}
 
-		private void AtivarDesativar_Conta_Click(object sender, EventArgs e)
+		private void AtivarDesativar_Setor_Click(object sender, EventArgs e)
 		{
 			//--- verifica se existe alguma cell 
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaTipo tipo = (objDespesaTipo)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(conta.Ativa ? "DESATIVAR " : "ATIVAR")} essa Conta?\n" +
-									  conta.Conta.ToUpper(), (conta.Ativa ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(tipo.Ativo ? "DESATIVAR " : "ATIVAR")} esse Tipo de Despesa?\n" +
+									  tipo.DespesaTipo.ToUpper(), (tipo.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			conta.Ativa = !conta.Ativa;
+			tipo.Ativo = !tipo.Ativo;
 
 			//--- Salvar o Registro
 			try
@@ -319,15 +299,14 @@ namespace CamadaUI.Contas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				ContaBLL cBLL = new ContaBLL();
-				cBLL.UpdateConta(conta);
+				dBLL.UpdateDespesaTipo(tipo);
 
 				//--- altera a imagem
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar Conta..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Alterar Tipo de Despesa..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -343,7 +322,7 @@ namespace CamadaUI.Contas
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmContaListagem_KeyDown(object sender, KeyEventArgs e)
+		private void frmDespesaTipoListagem_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{

@@ -44,8 +44,10 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCampanhas = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
-			this.mnuSaidaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuDespesaTipo = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuFechamento = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,6 +72,7 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -233,8 +236,11 @@
 			// btnSaidas
 			// 
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuSaidaInserir,
-            this.mnuDespesaProcurar});
+            this.mnuDespesaInserir,
+            this.mnuDespesaProcurar,
+            this.toolStripSeparator4,
+            this.mnuDespesaTipo,
+            this.mnuDespesaGrupo});
 			this.btnSaidas.Image = global::CamadaUI.Properties.Resources.Saidas;
 			this.btnSaidas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnSaidas.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -245,15 +251,15 @@
 			this.btnSaidas.Text = "Saídas";
 			this.btnSaidas.Click += new System.EventHandler(this.btnSaidas_ButtonClick);
 			// 
-			// mnuSaidaInserir
+			// mnuDespesaInserir
 			// 
-			this.mnuSaidaInserir.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuSaidaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
-			this.mnuSaidaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuSaidaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuSaidaInserir.Name = "mnuSaidaInserir";
-			this.mnuSaidaInserir.Size = new System.Drawing.Size(199, 30);
-			this.mnuSaidaInserir.Text = "Inserir Despesa";
+			this.mnuDespesaInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuDespesaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuDespesaInserir.Name = "mnuDespesaInserir";
+			this.mnuDespesaInserir.Size = new System.Drawing.Size(211, 30);
+			this.mnuDespesaInserir.Text = "Inserir Despesa";
 			// 
 			// mnuDespesaProcurar
 			// 
@@ -261,8 +267,22 @@
 			this.mnuDespesaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuDespesaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaProcurar.Name = "mnuDespesaProcurar";
-			this.mnuDespesaProcurar.Size = new System.Drawing.Size(199, 30);
+			this.mnuDespesaProcurar.Size = new System.Drawing.Size(211, 30);
 			this.mnuDespesaProcurar.Text = "Procurar Despesa";
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(208, 6);
+			// 
+			// mnuDespesaTipo
+			// 
+			this.mnuDespesaTipo.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaTipo.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaTipo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaTipo.Name = "mnuDespesaTipo";
+			this.mnuDespesaTipo.Size = new System.Drawing.Size(211, 30);
+			this.mnuDespesaTipo.Text = "Tipos de Despesa";
 			// 
 			// btnMovimentação
 			// 
@@ -602,6 +622,15 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuDespesaGrupo
+			// 
+			this.mnuDespesaGrupo.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaGrupo.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaGrupo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
+			this.mnuDespesaGrupo.Size = new System.Drawing.Size(211, 30);
+			this.mnuDespesaGrupo.Text = "Grupos de Despesa";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -644,7 +673,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoProcurar;
 		private System.Windows.Forms.ToolStripSplitButton btnSaidas;
-		private System.Windows.Forms.ToolStripMenuItem mnuSaidaInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaInserir;
 		internal System.Windows.Forms.Panel PainelInferior;
 		internal System.Windows.Forms.Label lblConta;
 		internal System.Windows.Forms.Label Label4;
@@ -676,6 +705,9 @@
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ToolStripMenuItem mnuCartao;
 		private System.Windows.Forms.ToolStripMenuItem mnuBanco;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaTipo;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaGrupo;
 	}
 }
 

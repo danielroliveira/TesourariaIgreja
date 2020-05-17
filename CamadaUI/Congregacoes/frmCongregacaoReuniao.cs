@@ -550,6 +550,9 @@ namespace CamadaUI.Congregacoes
 
 		#endregion // CONTROL FUNCTIONS --- END
 
+
+		// CHANGE COMBO SELECTION
+		//------------------------------------------------------------------------------------------------------------
 		private void cmbRecorrenciaTipo_SelectionChangeCommitted(object sender, EventArgs e)
 		{
 			cmbRecorrenciaTipo.DataBindings["SelectedValue"].WriteValue();

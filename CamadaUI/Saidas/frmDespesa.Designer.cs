@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
@@ -58,6 +58,8 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.chkParcelado = new System.Windows.Forms.CheckBox();
 			this.pnlParcelas = new System.Windows.Forms.Panel();
+			this.numParcelas = new System.Windows.Forms.NumericUpDown();
+			this.lblParcelas = new System.Windows.Forms.Label();
 			this.btnParcelasGerar = new VIBlend.WinForms.Controls.vButton();
 			this.txtDocumentoTipo = new System.Windows.Forms.TextBox();
 			this.btnSetDocumentoTipo = new VIBlend.WinForms.Controls.vButton();
@@ -67,13 +69,14 @@
 			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.numParcelas = new System.Windows.Forms.NumericUpDown();
-			this.lblParcelas = new System.Windows.Forms.Label();
+			this.line1 = new AwesomeShapeControl.Line();
+			this.line2 = new AwesomeShapeControl.Line();
+			this.label6 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlParcelas.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvAPagar)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvAPagar)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -144,7 +147,7 @@
             this.btnCancelar,
             this.btnFechar,
             this.toolStripSeparator2});
-			this.tspMenu.Location = new System.Drawing.Point(2, 656);
+			this.tspMenu.Location = new System.Drawing.Point(2, 693);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(704, 44);
 			this.tspMenu.TabIndex = 23;
@@ -214,20 +217,21 @@
 			// txtDespesaDescricao
 			// 
 			this.txtDespesaDescricao.BackColor = System.Drawing.Color.White;
-			this.txtDespesaDescricao.Location = new System.Drawing.Point(197, 238);
+			this.txtDespesaDescricao.Location = new System.Drawing.Point(197, 277);
 			this.txtDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaDescricao.MaxLength = 100;
 			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
 			this.txtDespesaDescricao.Size = new System.Drawing.Size(433, 27);
 			this.txtDespesaDescricao.TabIndex = 16;
 			this.txtDespesaDescricao.Tag = "";
+			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// lblCongregacao
 			// 
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(118, 241);
+			this.lblCongregacao.Location = new System.Drawing.Point(118, 280);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 15;
@@ -237,7 +241,7 @@
 			// 
 			this.dtpDespesaData.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpDespesaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpDespesaData.Location = new System.Drawing.Point(197, 293);
+			this.dtpDespesaData.Location = new System.Drawing.Point(197, 332);
 			this.dtpDespesaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpDespesaData.Name = "dtpDespesaData";
 			this.dtpDespesaData.Size = new System.Drawing.Size(145, 31);
@@ -248,7 +252,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(71, 299);
+			this.label1.Location = new System.Drawing.Point(71, 338);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(120, 19);
 			this.label1.TabIndex = 17;
@@ -258,7 +262,7 @@
 			// 
 			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDespesaValor.Inteiro = false;
-			this.txtDespesaValor.Location = new System.Drawing.Point(485, 293);
+			this.txtDespesaValor.Location = new System.Drawing.Point(485, 332);
 			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
@@ -271,7 +275,7 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(357, 299);
+			this.label8.Location = new System.Drawing.Point(357, 338);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
 			this.label8.TabIndex = 19;
@@ -282,16 +286,17 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(408, 202);
+			this.label2.Location = new System.Drawing.Point(85, 241);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(59, 19);
+			this.label2.Size = new System.Drawing.Size(102, 19);
 			this.label2.TabIndex = 13;
-			this.label2.Text = "Doc. Nº";
+			this.label2.Text = "Documento nº";
 			// 
 			// txtDocumentoNumero
 			// 
 			this.txtDocumentoNumero.BackColor = System.Drawing.Color.White;
-			this.txtDocumentoNumero.Location = new System.Drawing.Point(473, 199);
+			this.txtDocumentoNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+			this.txtDocumentoNumero.Location = new System.Drawing.Point(197, 238);
 			this.txtDocumentoNumero.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDocumentoNumero.MaxLength = 100;
 			this.txtDocumentoNumero.Name = "txtDocumentoNumero";
@@ -327,6 +332,7 @@
 			this.btnSetCredor.UseCompatibleTextRendering = true;
 			this.btnSetCredor.UseVisualStyleBackColor = false;
 			this.btnSetCredor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetCredor.Click += new System.EventHandler(this.btnSetCredor_Click);
 			// 
 			// txtCredor
 			// 
@@ -337,6 +343,7 @@
 			this.txtCredor.Size = new System.Drawing.Size(393, 27);
 			this.txtCredor.TabIndex = 5;
 			this.txtCredor.Tag = "Pressione a tecla (+) para procurar";
+			this.txtCredor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// lblContribuinte
 			// 
@@ -369,6 +376,7 @@
 			this.txtDespesaTipo.Size = new System.Drawing.Size(393, 27);
 			this.txtDespesaTipo.TabIndex = 8;
 			this.txtDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
+			this.txtDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetDespesaTipo
 			// 
@@ -387,6 +395,7 @@
 			this.btnSetDespesaTipo.UseCompatibleTextRendering = true;
 			this.btnSetDespesaTipo.UseVisualStyleBackColor = false;
 			this.btnSetDespesaTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetDespesaTipo.Click += new System.EventHandler(this.btnSetDespesaTipo_Click);
 			// 
 			// btnSetSetor
 			// 
@@ -405,6 +414,7 @@
 			this.btnSetSetor.UseCompatibleTextRendering = true;
 			this.btnSetSetor.UseVisualStyleBackColor = false;
 			this.btnSetSetor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetSetor.Click += new System.EventHandler(this.btnSetSetor_Click);
 			// 
 			// txtSetor
 			// 
@@ -414,6 +424,7 @@
 			this.txtSetor.Name = "txtSetor";
 			this.txtSetor.Size = new System.Drawing.Size(228, 27);
 			this.txtSetor.TabIndex = 2;
+			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label5
 			// 
@@ -435,6 +446,7 @@
 			this.chkParcelado.TabIndex = 0;
 			this.chkParcelado.Text = "Parcelado?";
 			this.chkParcelado.UseVisualStyleBackColor = true;
+			this.chkParcelado.CheckedChanged += new System.EventHandler(this.chkParcelado_CheckedChanged);
 			// 
 			// pnlParcelas
 			// 
@@ -443,11 +455,47 @@
 			this.pnlParcelas.Controls.Add(this.lblParcelas);
 			this.pnlParcelas.Controls.Add(this.chkParcelado);
 			this.pnlParcelas.Controls.Add(this.btnParcelasGerar);
-			this.pnlParcelas.Location = new System.Drawing.Point(45, 362);
+			this.pnlParcelas.Location = new System.Drawing.Point(45, 401);
 			this.pnlParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnlParcelas.Name = "pnlParcelas";
 			this.pnlParcelas.Size = new System.Drawing.Size(610, 45);
 			this.pnlParcelas.TabIndex = 21;
+			// 
+			// numParcelas
+			// 
+			this.numParcelas.Enabled = false;
+			this.numParcelas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numParcelas.Location = new System.Drawing.Point(284, 8);
+			this.numParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.numParcelas.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.numParcelas.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numParcelas.Name = "numParcelas";
+			this.numParcelas.Size = new System.Drawing.Size(65, 31);
+			this.numParcelas.TabIndex = 25;
+			this.numParcelas.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// lblParcelas
+			// 
+			this.lblParcelas.AutoSize = true;
+			this.lblParcelas.BackColor = System.Drawing.Color.Transparent;
+			this.lblParcelas.ForeColor = System.Drawing.Color.WhiteSmoke;
+			this.lblParcelas.Location = new System.Drawing.Point(214, 13);
+			this.lblParcelas.Name = "lblParcelas";
+			this.lblParcelas.Size = new System.Drawing.Size(64, 19);
+			this.lblParcelas.TabIndex = 24;
+			this.lblParcelas.Text = "Parcelas";
 			// 
 			// btnParcelasGerar
 			// 
@@ -473,9 +521,11 @@
 			this.txtDocumentoTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDocumentoTipo.MaxLength = 30;
 			this.txtDocumentoTipo.Name = "txtDocumentoTipo";
-			this.txtDocumentoTipo.Size = new System.Drawing.Size(156, 27);
+			this.txtDocumentoTipo.Size = new System.Drawing.Size(228, 27);
 			this.txtDocumentoTipo.TabIndex = 11;
-			this.txtDocumentoTipo.Tag = "Pressione a tecla (+) para procurar";
+			this.txtDocumentoTipo.Tag = "Pressione a tecla (+) para procurar ou use atalho numérico";
+			this.txtDocumentoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtDocumentoTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// btnSetDocumentoTipo
 			// 
@@ -483,7 +533,7 @@
 			this.btnSetDocumentoTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetDocumentoTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetDocumentoTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetDocumentoTipo.Location = new System.Drawing.Point(359, 199);
+			this.btnSetDocumentoTipo.Location = new System.Drawing.Point(431, 199);
 			this.btnSetDocumentoTipo.Name = "btnSetDocumentoTipo";
 			this.btnSetDocumentoTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDocumentoTipo.RoundedCornersRadius = 0;
@@ -494,11 +544,15 @@
 			this.btnSetDocumentoTipo.UseCompatibleTextRendering = true;
 			this.btnSetDocumentoTipo.UseVisualStyleBackColor = false;
 			this.btnSetDocumentoTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetDocumentoTipo.Click += new System.EventHandler(this.btnSetDocumentoTipo_Click);
 			// 
 			// dgvAPagar
 			// 
 			this.dgvAPagar.AllowUserToAddRows = false;
 			this.dgvAPagar.AllowUserToDeleteRows = false;
+			this.dgvAPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvAPagar.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(215)))), ((int)(((byte)(233)))));
 			this.dgvAPagar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.dgvAPagar.ColumnHeadersHeight = 30;
@@ -511,14 +565,14 @@
             this.clnValor});
 			this.dgvAPagar.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
 			this.dgvAPagar.EnableHeadersVisualStyles = false;
-			this.dgvAPagar.Location = new System.Drawing.Point(45, 431);
+			this.dgvAPagar.Location = new System.Drawing.Point(45, 498);
 			this.dgvAPagar.MultiSelect = false;
 			this.dgvAPagar.Name = "dgvAPagar";
 			this.dgvAPagar.ReadOnly = true;
 			this.dgvAPagar.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
 			this.dgvAPagar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvAPagar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvAPagar.Size = new System.Drawing.Size(610, 204);
+			this.dgvAPagar.Size = new System.Drawing.Size(610, 174);
 			this.dgvAPagar.TabIndex = 22;
 			// 
 			// clnID
@@ -543,9 +597,9 @@
 			// 
 			// clnVencimento
 			// 
-			dataGridViewCellStyle2.Format = "C2";
-			dataGridViewCellStyle2.NullValue = "0";
-			this.clnVencimento.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle16.Format = "C2";
+			dataGridViewCellStyle16.NullValue = "0";
+			this.clnVencimento.DefaultCellStyle = dataGridViewCellStyle16;
 			this.clnVencimento.HeaderText = "Vencimento";
 			this.clnVencimento.Name = "clnVencimento";
 			this.clnVencimento.ReadOnly = true;
@@ -557,37 +611,50 @@
 			this.clnValor.Name = "clnValor";
 			this.clnValor.ReadOnly = true;
 			// 
-			// numParcelas
+			// line1
 			// 
-			this.numParcelas.Enabled = false;
-			this.numParcelas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numParcelas.Location = new System.Drawing.Point(284, 8);
-			this.numParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.numParcelas.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.numParcelas.Name = "numParcelas";
-			this.numParcelas.Size = new System.Drawing.Size(65, 31);
-			this.numParcelas.TabIndex = 25;
+			this.line1.EndPoint = new System.Drawing.Point(645, 5);
+			this.line1.LineColor = System.Drawing.Color.LightSlateGray;
+			this.line1.LineWidth = 3F;
+			this.line1.Location = new System.Drawing.Point(24, 312);
+			this.line1.Name = "line1";
+			this.line1.Opacity = 0.5F;
+			this.line1.Size = new System.Drawing.Size(650, 10);
+			this.line1.StartPoint = new System.Drawing.Point(5, 5);
+			this.line1.TabIndex = 24;
+			this.line1.TabStop = false;
 			// 
-			// lblParcelas
+			// line2
 			// 
-			this.lblParcelas.AutoSize = true;
-			this.lblParcelas.BackColor = System.Drawing.Color.Transparent;
-			this.lblParcelas.ForeColor = System.Drawing.Color.WhiteSmoke;
-			this.lblParcelas.Location = new System.Drawing.Point(214, 13);
-			this.lblParcelas.Name = "lblParcelas";
-			this.lblParcelas.Size = new System.Drawing.Size(64, 19);
-			this.lblParcelas.TabIndex = 24;
-			this.lblParcelas.Text = "Parcelas";
+			this.line2.EndPoint = new System.Drawing.Point(645, 5);
+			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
+			this.line2.LineWidth = 3F;
+			this.line2.Location = new System.Drawing.Point(25, 373);
+			this.line2.Name = "line2";
+			this.line2.Opacity = 0.5F;
+			this.line2.Size = new System.Drawing.Size(650, 10);
+			this.line2.StartPoint = new System.Drawing.Point(5, 5);
+			this.line2.TabIndex = 25;
+			this.line2.TabStop = false;
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.BackColor = System.Drawing.Color.Transparent;
+			this.label6.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.ForeColor = System.Drawing.Color.Black;
+			this.label6.Location = new System.Drawing.Point(42, 468);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(130, 26);
+			this.label6.TabIndex = 19;
+			this.label6.Text = "Parcelamento";
 			// 
 			// frmDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(708, 702);
-			this.Controls.Add(this.dgvAPagar);
+			this.ClientSize = new System.Drawing.Size(708, 740);
+			this.Controls.Add(this.line2);
+			this.Controls.Add(this.line1);
 			this.Controls.Add(this.pnlParcelas);
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.txtSetor);
@@ -601,6 +668,7 @@
 			this.Controls.Add(this.txtCredor);
 			this.Controls.Add(this.lblContribuinte);
 			this.Controls.Add(this.txtDespesaValor);
+			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.dtpDespesaData);
 			this.Controls.Add(this.txtDocumentoNumero);
@@ -610,7 +678,13 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblCongregacao);
 			this.Controls.Add(this.tspMenu);
+			this.Controls.Add(this.dgvAPagar);
+			this.KeyPreview = true;
 			this.Name = "frmDespesa";
+			this.Shown += new System.EventHandler(this.frmDespesa_Shown);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
+			this.Controls.SetChildIndex(this.dgvAPagar, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
@@ -621,6 +695,7 @@
 			this.Controls.SetChildIndex(this.txtDocumentoNumero, 0);
 			this.Controls.SetChildIndex(this.dtpDespesaData, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
+			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.txtDespesaValor, 0);
 			this.Controls.SetChildIndex(this.lblContribuinte, 0);
 			this.Controls.SetChildIndex(this.txtCredor, 0);
@@ -634,15 +709,16 @@
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
 			this.Controls.SetChildIndex(this.pnlParcelas, 0);
-			this.Controls.SetChildIndex(this.dgvAPagar, 0);
+			this.Controls.SetChildIndex(this.line1, 0);
+			this.Controls.SetChildIndex(this.line2, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
 			this.pnlParcelas.ResumeLayout(false);
 			this.pnlParcelas.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvAPagar)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvAPagar)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -690,5 +766,8 @@
 		internal System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		private System.Windows.Forms.NumericUpDown numParcelas;
 		internal System.Windows.Forms.Label lblParcelas;
+		private AwesomeShapeControl.Line line1;
+		private AwesomeShapeControl.Line line2;
+		internal System.Windows.Forms.Label label6;
 	}
 }

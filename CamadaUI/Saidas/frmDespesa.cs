@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
+using static CamadaUI.FuncoesGlobais;
+using CamadaUI.Setores;
+using CamadaUI.Registres;
 
 namespace CamadaUI.Saidas
 {
@@ -20,7 +23,6 @@ namespace CamadaUI.Saidas
 		private EnumFlagEstado _Sit;
 
 		private List<objDespesaDocumentoTipo> listDocTipos;
-		private objConta contaSelected;
 		private objSetor setorSelected;
 
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
@@ -43,6 +45,8 @@ namespace CamadaUI.Saidas
 			bind.Add(_despesa);
 			BindingCreator();
 
+			propParcelado = _despesa.Parcelas > 1;
+
 			if (_despesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
@@ -57,7 +61,10 @@ namespace CamadaUI.Saidas
 			// handlers
 			_despesa.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+		}
 
+		private void frmDespesa_Shown(object sender, EventArgs e)
+		{
 			txtSetor.Enter += text_Enter;
 			txtCredor.Enter += text_Enter;
 			txtDespesaTipo.Enter += text_Enter;
@@ -107,7 +114,7 @@ namespace CamadaUI.Saidas
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de Tipos e Formas..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de Tipos de Documento..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -116,9 +123,6 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.Default;
 			}
 		}
-
-
-
 
 		#endregion // SUB NEW | CONSTRUCTOR --- END
 
@@ -129,7 +133,7 @@ namespace CamadaUI.Saidas
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDContribuicao", true);
+			lblID.DataBindings.Add("Text", bind, "IDDespesa", true);
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -182,17 +186,167 @@ namespace CamadaUI.Saidas
 
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
+			if (Sit == EnumFlagEstado.Alterado || Sit == EnumFlagEstado.NovoRegistro)
+			{
+				AbrirDialog("Esse registro ainda não foi salvo... \n" +
+					"Favor SALVAR ou CANCELAR a edição do registro atual antes de fechar.",
+					"Registro Novo ou Alterado", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			Close();
+			MostraMenuPrincipal();
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
 		{
+			if (Sit == EnumFlagEstado.NovoRegistro)
+			{
+				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
+							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (response == DialogResult.Yes)
+				{
+					Close();
+					MostraMenuPrincipal();
+				}
+			}
+			else if (Sit == EnumFlagEstado.Alterado)
+			{
+				bind.CancelEdit();
+				Sit = EnumFlagEstado.RegistroSalvo;
+			}
+			else
+			{
+				Sit = EnumFlagEstado.RegistroSalvo;
+			}
 
 		}
 
 		#endregion // BUTTONS --- END
 
 		#region BUTTONS PROCURA
+
+		private void btnSetSetor_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmSetorProcura frm = new frmSetorProcura(this, _despesa.IDSetor);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDSetor != frm.propEscolha.IDSetor)
+						Sit = EnumFlagEstado.Alterado;
+
+					_despesa.IDSetor = (int)frm.propEscolha.IDSetor;
+					txtSetor.Text = frm.propEscolha.Setor;
+				}
+
+				//--- select
+				txtSetor.Focus();
+				txtSetor.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnSetCredor_Click(object sender, EventArgs e)
+		{
+			frmCredorListagem frm = new frmCredorListagem(true, this);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
+			{
+				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frm.propEscolha.IDCredor)
+					Sit = EnumFlagEstado.Alterado;
+
+				_despesa.IDCredor = (int)frm.propEscolha.IDCredor;
+				txtCredor.Text = frm.propEscolha.Credor;
+			}
+			else if (frm.DialogResult == DialogResult.Yes) // ADD NEW CONTRIBUINTE
+			{
+				frmCredor frmNovo = new frmCredor(new objCredor(null), this);
+				frmNovo.ShowDialog();
+
+				if (frmNovo.DialogResult == DialogResult.OK)
+				{
+					if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frmNovo.propEscolha.IDCredor)
+						Sit = EnumFlagEstado.Alterado;
+
+					_despesa.IDCredor = (int)frmNovo.propEscolha.IDCredor;
+					txtCredor.Text = frmNovo.propEscolha.Credor;
+				}
+			}
+
+			//--- select
+			txtCredor.Focus();
+			txtCredor.SelectAll();
+		}
+
+		private void btnSetDespesaTipo_Click(object sender, EventArgs e)
+		{
+			frmDespesaTipoProcura frm = new frmDespesaTipoProcura(this, _despesa.IDDespesaTipo == 0 ? null : (int?)_despesa.IDDespesaTipo);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
+			{
+				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frm.propEscolha.IDDespesaTipo)
+					Sit = EnumFlagEstado.Alterado;
+
+				_despesa.IDDespesaTipo = (int)frm.propEscolha.IDDespesaTipo;
+				txtDespesaTipo.Text = frm.propEscolha.DespesaTipo;
+			}
+
+			//--- select
+			txtDespesaTipo.Focus();
+			txtDespesaTipo.SelectAll();
+		}
+
+		private void btnSetDocumentoTipo_Click(object sender, EventArgs e)
+		{
+			if (listDocTipos.Count == 0)
+			{
+				AbrirDialog("Não há Tipos de Documento inseridos...", "Tipos de Documento",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			// seleciona o TextBox
+			TextBox textBox = txtDocumentoTipo;
+
+			var dic = listDocTipos.ToDictionary(x => (int)x.IDDocumentoTipo, x => x.DocumentoTipo);
+
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _despesa.IDDocumentoTipo);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				_despesa.IDDocumentoTipo = (byte)frm.propEscolha.Key;
+				textBox.Text = frm.propEscolha.Value;
+			}
+
+			//--- select
+			textBox.Focus();
+			textBox.SelectAll();
+		}
 
 		#endregion // BUTTONS PROCURA --- END
 
@@ -210,12 +364,9 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtEntradaForma,
-					txtCampanha,
-					txtConta,
-					txtContribuinte,
-					txtContribuicaoTipo,
-					txtReuniao,
+					txtCredor,
+					txtDespesaTipo,
+					txtDocumentoTipo,
 					txtSetor,
 					txtDespesaDescricao
 				};
@@ -226,12 +377,104 @@ namespace CamadaUI.Saidas
 
 		// CLOSE WHEN PRESS ESC
 		//------------------------------------------------------------------------------------------------------------
-		private void frmEntrada_KeyDown(object sender, KeyEventArgs e)
+		private void frm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+			//---------------------------------------------------
+
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCredor":
+						btnSetCredor_Click(sender, new EventArgs());
+						break;
+					case "txtDespesaTipo":
+						btnSetDespesaTipo_Click(sender, new EventArgs());
+						break;
+					case "txtSetor":
+						btnSetSetor_Click(sender, new EventArgs());
+						break;
+					case "txtDocumentoTipo":
+						btnSetDocumentoTipo_Click(sender, new EventArgs());
+						break;
+					case "txtDespesaDescricao":
+						defineDescricao();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCredor":
+						break;
+					default:
+						break;
+				}
+			}
+			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serao liberados ao KEYPRESS
+				Control[] controlesBloqueados = {
+					txtDocumentoTipo,
+				};
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+			else if (e.Alt) // permite O 'ALT'
+			{
+				e.Handled = false;
+			}
+			else // finaly block all inserts changes
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtSetor,
+					txtCredor,
+					txtDespesaTipo,
+					txtDocumentoTipo,
+				 };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
 			}
 		}
 
@@ -246,48 +489,26 @@ namespace CamadaUI.Saidas
 
 				switch (ctr.Name)
 				{
-					case "txtEntradaForma":
+					case "txtDocumentoTipo":
 
-						if (listFormas.Count > 0)
+						if (listDocTipos.Count > 0)
 						{
-							var forma = listFormas.FirstOrDefault(x => x.IDEntradaForma == int.Parse(e.KeyChar.ToString()));
-
-							if (forma == null) return;
-
-							if (forma.IDEntradaForma != _contribuicao.IDEntradaForma)
-							{
-								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
-
-								_contribuicao.IDEntradaForma = (byte)forma.IDEntradaForma;
-								txtEntradaForma.Text = forma.EntradaForma;
-							}
-
-						}
-						break;
-
-					case "txtContribuicaoTipo":
-
-						if (listTipos.Count > 0)
-						{
-							var tipo = listTipos.FirstOrDefault(x => x.IDContribuicaoTipo == int.Parse(e.KeyChar.ToString()));
+							var tipo = listDocTipos.FirstOrDefault(x => x.IDDocumentoTipo == int.Parse(e.KeyChar.ToString()));
 
 							if (tipo == null) return;
 
-							if (tipo.IDContribuicaoTipo != _contribuicao.IDContribuicaoTipo)
+							if (tipo.IDDocumentoTipo != _despesa.IDDocumentoTipo)
 							{
 								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
-								_contribuicao.IDContribuicaoTipo = (byte)tipo.IDContribuicaoTipo;
-								propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
-								txtContribuicaoTipo.Text = tipo.ContribuicaoTipo;
+								_despesa.IDDocumentoTipo = (byte)tipo.IDDocumentoTipo;
+								txtDocumentoTipo.Text = tipo.DocumentoTipo;
 							}
 						}
 						break;
-
 					default:
 						break;
 				}
-
 			}
 		}
 
@@ -303,42 +524,44 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void defineDescricao()
 		{
-			if (!string.IsNullOrEmpty(_contribuicao.OrigemDescricao)) return;
+			// Oferta: TIPO de DESPESA + CREDOR
 
-			// Oferta:   TIPO + REUNIAO + DATA
-			// dizimo:   TIPO + CONTRIBUINTE
-			// CAMPANHA: TIPO + CAMPANHA
-
-			string descricao = _contribuicao.ContribuicaoTipo + " - ";
-
-			if (!string.IsNullOrEmpty(_contribuicao.Contribuinte))
+			if (string.IsNullOrEmpty(_despesa.DespesaTipo))
 			{
-				descricao += _contribuicao.Contribuinte;
-
-				if (!string.IsNullOrEmpty(_contribuicao.Campanha))
-					descricao += " - " + _contribuicao.Campanha;
+				AbrirDialog("Favor definir o Tipo de Despesa...", "Tipo de Despesa");
+				txtDespesaTipo.Focus();
+				return;
 			}
-			else if (!string.IsNullOrEmpty(_contribuicao.Campanha))
-				descricao += _contribuicao.Campanha;
-			else
-				descricao += _contribuicao.Reuniao + " - " + _contribuicao.ContribuicaoData.ToShortDateString();
 
-			txtDespesaDescricao.Text = descricao;
+			string descricao = _despesa.DespesaTipo;
+
+			if (!string.IsNullOrEmpty(_despesa.Credor))
+			{
+				descricao += " - " + _despesa.Credor;
+
+				// define text
+				txtDespesaDescricao.Text = descricao;
+			}
+			else
+			{
+				AbrirDialog("Favor definir o Credor / Fornecedor...", "Credor / Fornecedor Despesa");
+				txtCredor.Focus();
+				return;
+			}
 		}
 
 		// PREVINE CHANGES IN SIT => REGISTRO SALVO
-		private void cmbEntradaMes_SelectionChangeCommitted(object sender, EventArgs e)
-		{
-			if (Sit == EnumFlagEstado.RegistroSalvo)
-			{
-				cmbEntradaMes.SelectedValue = _contribuicao.EntradaMes;
-			}
-		}
-
-		// PREVINE BLOCK CHANGES IN SIT => REGISTRO SALVO
 		private void txt_KeyDown_Block(object sender, KeyEventArgs e)
 		{
-
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+			//---------------------------------------------------
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END
@@ -370,8 +593,43 @@ namespace CamadaUI.Saidas
 
 
 
+
+
 		#endregion
 
+		private void chkParcelado_CheckedChanged(object sender, EventArgs e)
+		{
+			propParcelado = chkParcelado.Checked;
+		}
+
+		public bool propParcelado
+		{
+			get
+			{
+				return _despesa.Parcelas > 1;
+			}
+			set
+			{
+				bool _parcelado = _despesa.Parcelas > 1;
+
+				if (value != _parcelado)
+				{
+					numParcelas.Enabled = value;
+					lblParcelas.ForeColor = value == true ? Color.Black : Color.WhiteSmoke;
+					btnParcelasGerar.Enabled = value;
+
+					if (value == true)
+					{
+						_despesa.Parcelas = 2;
+					}
+					else
+					{
+						_despesa.Parcelas = 1;
+					}
+				}
+
+			}
+		}
 
 	}
 }

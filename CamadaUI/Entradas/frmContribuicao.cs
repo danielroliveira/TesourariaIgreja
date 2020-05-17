@@ -643,7 +643,7 @@ namespace CamadaUI.Entradas
 			}
 			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
 			{
-				//--- cria um array de controles que serão bloqueados de alteracao
+				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
 					txtEntradaForma,
 					txtContribuicaoTipo };
@@ -782,7 +782,7 @@ namespace CamadaUI.Entradas
 			}
 		}
 
-		// PREVINE BLOCK CHANGES IN SIT => REGISTRO SALVO
+		// PREVINE CHANGES IN SIT => REGISTRO SALVO
 		private void txt_KeyDown_Block(object sender, KeyEventArgs e)
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
