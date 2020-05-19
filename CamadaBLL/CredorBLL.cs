@@ -93,7 +93,6 @@ namespace CamadaBLL
 			{
 				Credor = (string)row["Credor"],
 				CredorTipo = row["CredorTipo"] == DBNull.Value ? (byte)0 : (byte)row["CredorTipo"],
-				CredorTipoDescricao = row["CredorTipoDescricao"] == DBNull.Value ? "" : (string)row["CredorTipoDescricao"],
 				CNP = row["CNP"] == DBNull.Value ? "" : (string)row["CNP"],
 				EnderecoLogradouro = row["EnderecoLogradouro"] == DBNull.Value ? "" : (string)row["EnderecoLogradouro"],
 				EnderecoComplemento = row["EnderecoComplemento"] == DBNull.Value ? "" : (string)row["EnderecoComplemento"],

@@ -65,6 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APagar\frmAPagarDetalhe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarDetalhe.Designer.cs">
+      <DependentUpon>frmAPagarDetalhe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmBancoProcura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,6 +417,9 @@
     <Compile Include="Setores\frmSetorProcura.designer.cs">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="APagar\frmAPagarDetalhe.resx">
+      <DependentUpon>frmAPagarDetalhe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancoProcura.resx">
       <DependentUpon>frmBancoProcura.cs</DependentUpon>
     </EmbeddedResource>

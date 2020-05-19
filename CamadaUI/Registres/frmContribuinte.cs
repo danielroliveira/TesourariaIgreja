@@ -53,6 +53,7 @@ namespace CamadaUI.Registres
 			txtIDMembro.GotFocus += TxtIDMembro_GotFocus;
 			txtCongregacao.Enter += text_Enter;
 
+			txtContribuinte.Validating += (a, b) => PrimeiraLetraMaiuscula(txtContribuinte);
 		}
 
 		// PROPERTY SITUACAO
@@ -190,7 +191,7 @@ namespace CamadaUI.Registres
 				if (response != DialogResult.Yes) return;
 
 				//--- check origem
-				if (_formOrigem.GetType() == typeof(frmPrincipal)) // return to frmPrincipal
+				if (_formOrigem == null || _formOrigem.GetType() == typeof(frmPrincipal)) // return to frmPrincipal
 				{
 					AutoValidate = AutoValidate.Disable;
 					Close();

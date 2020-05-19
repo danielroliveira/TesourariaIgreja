@@ -43,6 +43,7 @@ namespace CamadaUI.Entradas
 
 			AtivoButtonImage();
 			HandlerKeyDownControl(this);
+			txtCampanha.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCampanha);
 		}
 
 		// PROPERTY SITUACAO

@@ -211,41 +211,52 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertDespesa(objDespesa desp)
+		public int InsertDespesa(objDespesa desp, ref List<objAPagar> listAPagar)
 		{
+			AcessoDados dbTran = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
 
 				//--- clear Params
-				db.LimparParametros();
+				dbTran.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
-				db.AdicionarParametros("@DespesaValor", desp.DespesaValor);
-				db.AdicionarParametros("@DocumentoNumero", desp.DocumentoNumero);
-				db.AdicionarParametros("@DespesaData", desp.DespesaData);
-				db.AdicionarParametros("@IDCredor", desp.IDCredor);
-				db.AdicionarParametros("@IDSetor", desp.IDSetor);
-				db.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
-				db.AdicionarParametros("@IDDocumentoTipo", desp.IDDocumentoTipo);
-				db.AdicionarParametros("@IDSituacao", desp.IDSituacao);
-				db.AdicionarParametros("@Parcelas", desp.Parcelas);
-				db.AdicionarParametros("@Prioridade", desp.Prioridade);
+				dbTran.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
+				dbTran.AdicionarParametros("@DespesaValor", desp.DespesaValor);
+				dbTran.AdicionarParametros("@DocumentoNumero", desp.DocumentoNumero);
+				dbTran.AdicionarParametros("@DespesaData", desp.DespesaData);
+				dbTran.AdicionarParametros("@IDCredor", desp.IDCredor);
+				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
+				dbTran.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
+				dbTran.AdicionarParametros("@IDDocumentoTipo", desp.IDDocumentoTipo);
+				dbTran.AdicionarParametros("@IDSituacao", desp.IDSituacao);
+				dbTran.AdicionarParametros("@Parcelas", desp.Parcelas);
+				dbTran.AdicionarParametros("@Prioridade", desp.Prioridade);
 
 				//--- convert null parameters
-				db.ConvertNullParams();
+				dbTran.ConvertNullParams();
 
-				string query = db.CreateInsertSQL("tblDespesa");
+				string query = dbTran.CreateInsertSQL("tblDespesa");
 
 				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+				int newID = dbTran.ExecutarInsertAndGetID(query);
 
+				//--- insert IDDespesa in APagar List items
+				listAPagar.ForEach(x => x.IDDespesa = newID);
+
+				//--- save APagar items
+				new APagarBLL().InsertAPagarList(listAPagar, dbTran);
+
+				dbTran.CommitTransaction();
 				return newID;
 
 			}
 			catch (Exception ex)
 			{
+				dbTran.RollBackTransaction();
 				throw ex;
 			}
 		}

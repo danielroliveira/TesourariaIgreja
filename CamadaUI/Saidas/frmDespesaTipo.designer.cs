@@ -201,7 +201,7 @@
 			// 
 			this.txtDespesaTipo.Location = new System.Drawing.Point(173, 78);
 			this.txtDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDespesaTipo.MaxLength = 30;
+			this.txtDespesaTipo.MaxLength = 100;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
 			this.txtDespesaTipo.Size = new System.Drawing.Size(333, 27);
 			this.txtDespesaTipo.TabIndex = 2;

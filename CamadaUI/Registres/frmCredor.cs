@@ -9,6 +9,7 @@ using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using System.Linq;
 
 namespace CamadaUI.Registres
 {
@@ -18,6 +19,7 @@ namespace CamadaUI.Registres
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
+		private Dictionary<int, string> dicTipo = new Dictionary<int, string>();
 		public objCredor propEscolha { get; set; }
 
 		#region SUB NEW | PROPERTIES
@@ -33,6 +35,7 @@ namespace CamadaUI.Registres
 			bind.DataSource = _credor;
 			BindingCreator();
 			CheckCredorTipo();
+			PreencheDictionary();
 
 			_credor.PropertyChanged += RegistroAlterado;
 
@@ -46,11 +49,18 @@ namespace CamadaUI.Registres
 			}
 
 			AtivoButtonImage();
+
+			// ADD HANDLERS
 			HandlerKeyDownControl(this);
 			chkWhatsapp.GotFocus += chkWathsapp_ControleFocus;
 			chkWhatsapp.LostFocus += chkWathsapp_ControleFocus;
 			txtEnderecoNumero.KeyPress += txtSoNumeros_KeyPress;
 			txtCNP.KeyPress += txtSoNumeros_KeyPress;
+
+			txtCredor.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCredor);
+			txtEnderecoLogradouro.Validating += (a, b) => PrimeiraLetraMaiuscula(txtEnderecoLogradouro);
+			txtBairro.Validating += (a, b) => PrimeiraLetraMaiuscula(txtBairro);
+			txtCidade.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCidade);
 		}
 
 		// PROPERTY SITUACAO
@@ -93,6 +103,17 @@ namespace CamadaUI.Registres
 			}
 		}
 
+		// FILL DICTIONARY
+		//------------------------------------------------------------------------------------------------------------
+		private void PreencheDictionary()
+		{
+			// 1:Pessoa Física | 2:Pessoa Jurídica | 3:Órgão Público | 4:Credor Simples
+			dicTipo.Add(1, "Pessoa Física");
+			dicTipo.Add(2, "Pessoa Jurídica");
+			dicTipo.Add(3, "Órgão Público");
+			dicTipo.Add(4, "Credor Simples");
+		}
+
 		#endregion
 
 		#region DATABINDING
@@ -104,6 +125,7 @@ namespace CamadaUI.Registres
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDCredor", true);
 			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCredorTipo.DataBindings.Add("Text", bind, "CredorTipoDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCNP.DataBindings.Add("Text", bind, "CNP", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoLogradouro.DataBindings.Add("Text", bind, "EnderecoLogradouro", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoNumero.DataBindings.Add("Text", bind, "EnderecoNumero", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -116,9 +138,6 @@ namespace CamadaUI.Registres
 			txtTelefoneCelular.DataBindings.Add("Text", bind, "TelefoneCelular", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEmail.DataBindings.Add("Text", bind, "Email", true, DataSourceUpdateMode.OnPropertyChanged);
 			chkWhatsapp.DataBindings.Add("Checked", bind, "Whatsapp", true, DataSourceUpdateMode.OnPropertyChanged);
-
-			// CARREGA COMBO
-			CarregaCmbCredorTipo();
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -141,26 +160,6 @@ namespace CamadaUI.Registres
 		private void BindRegistroChanged(object sender, EventArgs e)
 		{
 			MessageBox.Show("alterado");
-		}
-
-		// CARREGA COMBO
-		//------------------------------------------------------------------------------------------------------------
-		private void CarregaCmbCredorTipo()
-		{
-			//--- Create DataTable
-			DataTable dtAtivo = new DataTable();
-			dtAtivo.Columns.Add("ID");
-			dtAtivo.Columns.Add("Tipo");
-			dtAtivo.Rows.Add(new object[] { 1, "Pessoa Física" });
-			dtAtivo.Rows.Add(new object[] { 2, "Pessoa Jurídica" });
-			dtAtivo.Rows.Add(new object[] { 3, "Órgão Público" });
-			dtAtivo.Rows.Add(new object[] { 4, "Credor Simples" });
-
-			//--- Set DataTable
-			cmbCredorTipo.DataSource = dtAtivo;
-			cmbCredorTipo.ValueMember = "ID";
-			cmbCredorTipo.DisplayMember = "Tipo";
-			cmbCredorTipo.DataBindings.Add("SelectedValue", bind, "CredorTipo", true, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
 		#endregion
@@ -208,7 +207,7 @@ namespace CamadaUI.Registres
 				if (response != DialogResult.Yes) return;
 
 				//--- check origem
-				if (_formOrigem.GetType() == typeof(frmPrincipal)) // return to frmPrincipal
+				if (_formOrigem == null || _formOrigem.GetType() == typeof(frmPrincipal)) // return to frmPrincipal
 				{
 					AutoValidate = AutoValidate.Disable;
 					Close();
@@ -330,7 +329,7 @@ namespace CamadaUI.Registres
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
 
 				//--- Return value
-				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
 				{
 					propEscolha = _credor;
 					DialogResult = DialogResult.OK;
@@ -355,7 +354,7 @@ namespace CamadaUI.Registres
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtCredor, "Credor", _credor)) return false;
-			if (!VerificaDadosClasse(cmbCredorTipo, "CredorTipo", _credor)) return false;
+			if (!VerificaDadosClasse(txtCredorTipo, "CredorTipo", _credor)) return false;
 
 			if (_credor.CredorTipo == 1 || _credor.CredorTipo == 2) // check CNP if Credor PJ or PF
 			{
@@ -379,6 +378,138 @@ namespace CamadaUI.Registres
 
 		#region CONTROLS
 
+		// BLOCK KEY (+) FOR SOME CONTROLS
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtCredorTipo
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
+		// CLOSE WHEN PRESS ESC
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.Handled = true;
+				btnFechar_Click(sender, new EventArgs());
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCredorTipo":
+						btnSetCredor_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCredorTipo":
+						break;
+					default:
+						break;
+				}
+			}
+			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtCredorTipo
+				};
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtCredorTipo,
+				};
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
+
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (char.IsDigit(e.KeyChar))
+			{
+				Control ctr = (Control)sender;
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCredorTipo":
+
+						if (dicTipo.Count > 0)
+						{
+							if (dicTipo.ContainsKey(byte.Parse(e.KeyChar.ToString())))
+							{
+								var tipo = dicTipo.FirstOrDefault(x => x.Key == byte.Parse(e.KeyChar.ToString()));
+
+								if (tipo.Key != _credor.CredorTipo)
+								{
+									if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+									_credor.CredorTipo = (byte)tipo.Key;
+									txtCredorTipo.Text = tipo.Value;
+									CheckCredorTipo();
+								}
+							}
+						}
+						break;
+					default:
+						break;
+				}
+
+			}
+		}
+
+		// CONTROL CHKBOX TO SIMULATE FOCUS
+		//------------------------------------------------------------------------------------------------------------
 		private void chkWathsapp_ControleFocus(object sender, EventArgs e)
 		{
 			if (chkWhatsapp.Focused)
@@ -389,14 +520,6 @@ namespace CamadaUI.Registres
 		private void picWathsapp_Click(object sender, EventArgs e)
 		{
 			chkWhatsapp.Focus();
-		}
-
-		// CONTROL CHANGES COMBOBOX CREDOR TIPO
-		//------------------------------------------------------------------------------------------------------------
-		private void cmbCredorTipo_SelectionChangeCommitted(object sender, EventArgs e)
-		{
-			cmbCredorTipo.DataBindings["SelectedValue"].WriteValue();
-			CheckCredorTipo();
 		}
 
 		// CHECK CREDOR TIPO TO ENABLE OR DISABLE CONTROLS
@@ -511,6 +634,35 @@ namespace CamadaUI.Registres
 		}
 
 		#endregion // CONTROLS --- END
+
+		#region BUTTONS PROCURA
+
+		// OPEN LIST
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetCredor_Click(object sender, EventArgs e)
+		{
+			// seleciona o TextBox
+			TextBox textBox = txtCredorTipo;
+
+			Main.frmComboLista frm = new Main.frmComboLista(dicTipo, textBox, _credor.CredorTipo);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				_credor.CredorTipo = (byte)frm.propEscolha.Key;
+				textBox.Text = frm.propEscolha.Value;
+				CheckCredorTipo();
+			}
+
+			//--- select
+			textBox.Focus();
+			textBox.SelectAll();
+		}
+
+		#endregion // BUTTONS PROCURA --- END
 
 		#region FORM DESIGN
 

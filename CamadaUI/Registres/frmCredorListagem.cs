@@ -514,62 +514,6 @@ namespace CamadaUI.Registres
 					e.Handled = false;
 					break;
 			}
-
-
-			if (e.KeyCode == Keys.Escape)
-			{
-				e.Handled = true;
-				btnFechar_Click(sender, new EventArgs());
-			}
-			else if (e.KeyCode == Keys.Add)
-			{
-				e.Handled = true;
-				btnAdicionar_Click(sender, new EventArgs());
-			}
-			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
-			{
-				e.Handled = true;
-
-				if (dgvListagem.Rows.Count > 0)
-				{
-					if (dgvListagem.SelectedRows.Count > 0)
-					{
-						int i = dgvListagem.SelectedRows[0].Index;
-						dgvListagem.Rows[i].Selected = false;
-						if (i == 0) i = dgvListagem.Rows.Count;
-						dgvListagem.Rows[i - 1].Selected = true;
-					}
-					else
-					{
-						dgvListagem.Rows[0].Selected = true;
-					}
-
-					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
-					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
-				}
-			}
-			else if (e.KeyCode == Keys.Down && ActiveControl.GetType().BaseType.Name != "ComboBox")
-			{
-				e.Handled = true;
-
-				if (dgvListagem.Rows.Count > 0)
-				{
-					if (dgvListagem.SelectedRows.Count > 0)
-					{
-						int i = dgvListagem.SelectedRows[0].Index;
-						dgvListagem.Rows[i].Selected = false;
-						if (i == dgvListagem.Rows.Count - 1) i = -1;
-						dgvListagem.Rows[i + 1].Selected = true;
-					}
-					else
-					{
-						dgvListagem.Rows[0].Selected = true;
-					}
-
-					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
-					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
-				}
-			}
 		}
 
 

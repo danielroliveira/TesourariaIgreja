@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace CamadaUI
 {
+	//=================================================================================================
+	// UTILITIES
+	//=================================================================================================
 	public static class Utilidades
 	{
 		// MESSAGE DIALOG BOX
@@ -93,6 +96,9 @@ namespace CamadaUI
 		//=================================================================================================
 		public static string CNPConvert(string CNP)
 		{
+			// remove '/' and '.' and '-'
+			CNP = CNP.Replace("/", "").Replace("-", "").Replace(".", "");
+
 			if (CNP.Length == 11)
 			{
 				// txtCNPJ.Mask = "000,000,000-00"
@@ -143,16 +149,22 @@ namespace CamadaUI
 
 		// PRIMEIRA LETRA MAIUSCULA
 		//=================================================================================================
-		public static string PrimeiraLetraMaiuscula(string texto)
+		public static string PrimeiraLetraMaiuscula(TextBox textBox)
 		{
+			string texto = textBox.Text;
+
 			//--- Get chars quantity
 			if (texto.Length == 0) return "";
 
 			//--- CONVERT TO LOWER FIRST
 			texto = texto.Trim().ToLower();
 
-			string[] palavrasExcluidas = {
+			string[] palavrasLowerCase = {
 				"de", "da", "do", "e", "das", "dos"
+			};
+
+			string[] palavrasUpperCase = {
+				"LTDA", "ltda", "SA", "sa", "S.A.", "s.a.", "me", "ME"
 			};
 
 			string resposta = "";
@@ -162,7 +174,15 @@ namespace CamadaUI
 			{
 				string newPalavra = palavra;
 
-				if (!palavrasExcluidas.Contains(palavra))
+				if (palavrasLowerCase.Contains(palavra))
+				{
+					newPalavra = palavra.ToLower();
+				}
+				else if (palavrasUpperCase.Contains(palavra))
+				{
+					newPalavra = palavra.ToUpper();
+				}
+				else
 				{
 					char[] caracteres = palavra.ToArray();
 					caracteres[0] = caracteres[0].ToString().ToUpper()[0];
@@ -186,6 +206,9 @@ namespace CamadaUI
 		}
 	}
 
+	//=================================================================================================
+	// VALIDA CNPJ | CPF
+	//=================================================================================================
 	public static class ValidacaoCNP
 	{
 		public static bool ValidaCNP(string CNP)

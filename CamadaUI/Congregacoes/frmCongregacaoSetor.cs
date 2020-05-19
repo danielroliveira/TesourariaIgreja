@@ -43,7 +43,11 @@ namespace CamadaUI.Congregacoes
 			}
 
 			AtivoButtonImage();
+
+			// HANDLERS
 			HandlerKeyDownControl(this);
+			txtCongregacaoSetor.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCongregacaoSetor);
+			txtCoordenadorNome.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCoordenadorNome);
 		}
 
 		// PROPERTY SITUACAO

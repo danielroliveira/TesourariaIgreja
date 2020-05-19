@@ -16,6 +16,7 @@ namespace CamadaDTO
 			internal int? _IDCredor;
 			internal string _Credor;
 			internal byte _CredorTipo;
+			internal string _CredorTipoDescricao;
 			internal string _CNP;
 			internal string _EnderecoLogradouro;
 			internal string _EnderecoNumero;
@@ -136,7 +137,27 @@ namespace CamadaDTO
 			}
 		}
 
-		public string CredorTipoDescricao { get; set; }
+		// Property CredorTipoDescricao
+		//---------------------------------------------------------------
+		public string CredorTipoDescricao
+		{
+			get
+			{
+				switch (CredorTipo)
+				{
+					case 1:
+						return "Pessoa Física";
+					case 2:
+						return "Pessoa Jurídica";
+					case 3:
+						return "Órgão Público";
+					case 4:
+						return "Credor Simples";
+					default:
+						return "";
+				}
+			}
+		}
 
 		// Property CNP
 		//---------------------------------------------------------------

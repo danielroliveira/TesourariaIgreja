@@ -43,7 +43,17 @@ namespace CamadaUI.Congregacoes
 			}
 
 			AtivoButtonImage();
+
+			// ADD HANDLERS
 			HandlerKeyDownControl(this);
+
+			// ADD HANDLER UPPER CASE
+			txtCongregacao.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCongregacao);
+			txtDirigente.Validating += (a, b) => PrimeiraLetraMaiuscula(txtDirigente);
+			txtTesoureiro.Validating += (a, b) => PrimeiraLetraMaiuscula(txtTesoureiro);
+			txtEnderecoLogradouro.Validating += (a, b) => PrimeiraLetraMaiuscula(txtEnderecoLogradouro);
+			txtBairro.Validating += (a, b) => PrimeiraLetraMaiuscula(txtBairro);
+			txtCidade.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCidade);
 		}
 
 		// PROPERTY SITUACAO
@@ -400,13 +410,14 @@ namespace CamadaUI.Congregacoes
 			}
 		}
 
-
-		#endregion // FORM CONTROLS FUCTIONS --- END
-
+		// ACCEPTS ONLY NUMBERS AND BACKSPACE (keychar = 8)
 		private void txtEnderecoNumero_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
 				e.Handled = true;
 		}
+
+		#endregion // FORM CONTROLS FUCTIONS --- END
+
 	}
 }

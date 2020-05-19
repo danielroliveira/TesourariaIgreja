@@ -46,6 +46,7 @@ namespace CamadaUI.Saidas
 
 			// add handler
 			bind.CurrentChanged += (a, b) => ChangeCurrent();
+			txtCobrancaForma.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCobrancaForma);
 			ChangeCurrent();
 		}
 

@@ -64,12 +64,13 @@
 			this.txtBairro = new System.Windows.Forms.TextBox();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.line2 = new AwesomeShapeControl.Line();
-			this.cmbCredorTipo = new CamadaUC.ucComboLimitedValues();
-			this.label4 = new System.Windows.Forms.Label();
 			this.pnlChk = new System.Windows.Forms.Panel();
 			this.picWathsapp = new System.Windows.Forms.PictureBox();
 			this.chkWhatsapp = new System.Windows.Forms.CheckBox();
 			this.txtCNP = new System.Windows.Forms.TextBox();
+			this.btnSetCredor = new VIBlend.WinForms.Controls.vButton();
+			this.txtCredorTipo = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlChk.SuspendLayout();
@@ -80,7 +81,7 @@
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(298, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(222, 50);
-			this.lblTitulo.TabIndex = 2;
+			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Cadastro de Credor";
 			// 
 			// btnClose
@@ -89,7 +90,7 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(520, 0);
-			this.btnClose.TabIndex = 3;
+			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -110,7 +111,7 @@
 			this.txtCidade.MaxLength = 50;
 			this.txtCidade.Name = "txtCidade";
 			this.txtCidade.Size = new System.Drawing.Size(268, 27);
-			this.txtCidade.TabIndex = 16;
+			this.txtCidade.TabIndex = 19;
 			// 
 			// txtUF
 			// 
@@ -121,7 +122,7 @@
 			this.txtUF.MaxLength = 2;
 			this.txtUF.Name = "txtUF";
 			this.txtUF.Size = new System.Drawing.Size(46, 27);
-			this.txtUF.TabIndex = 18;
+			this.txtUF.TabIndex = 21;
 			// 
 			// txtEnderecoLogradouro
 			// 
@@ -130,7 +131,7 @@
 			this.txtEnderecoLogradouro.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtEnderecoLogradouro.Name = "txtEnderecoLogradouro";
 			this.txtEnderecoLogradouro.Size = new System.Drawing.Size(268, 27);
-			this.txtEnderecoLogradouro.TabIndex = 8;
+			this.txtEnderecoLogradouro.TabIndex = 11;
 			// 
 			// Label16
 			// 
@@ -140,7 +141,7 @@
 			this.Label16.Location = new System.Drawing.Point(90, 419);
 			this.Label16.Name = "Label16";
 			this.Label16.Size = new System.Drawing.Size(51, 19);
-			this.Label16.TabIndex = 26;
+			this.Label16.TabIndex = 29;
 			this.Label16.Text = "e-Mail";
 			// 
 			// txtEmail
@@ -151,7 +152,7 @@
 			this.txtEmail.MaxLength = 200;
 			this.txtEmail.Name = "txtEmail";
 			this.txtEmail.Size = new System.Drawing.Size(371, 27);
-			this.txtEmail.TabIndex = 27;
+			this.txtEmail.TabIndex = 30;
 			// 
 			// Label5
 			// 
@@ -161,7 +162,7 @@
 			this.Label5.Location = new System.Drawing.Point(72, 224);
 			this.Label5.Name = "Label5";
 			this.Label5.Size = new System.Drawing.Size(69, 19);
-			this.Label5.TabIndex = 7;
+			this.Label5.TabIndex = 10;
 			this.Label5.Text = "Endereço";
 			// 
 			// txtCEP
@@ -172,7 +173,7 @@
 			this.txtCEP.Mask = "00000-000";
 			this.txtCEP.Name = "txtCEP";
 			this.txtCEP.Size = new System.Drawing.Size(94, 27);
-			this.txtCEP.TabIndex = 20;
+			this.txtCEP.TabIndex = 23;
 			this.txtCEP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// Label9
@@ -183,7 +184,7 @@
 			this.Label9.Location = new System.Drawing.Point(76, 380);
 			this.Label9.Name = "Label9";
 			this.Label9.Size = new System.Drawing.Size(65, 19);
-			this.Label9.TabIndex = 21;
+			this.Label9.TabIndex = 24;
 			this.Label9.Text = "Telefone";
 			// 
 			// Label15
@@ -194,7 +195,7 @@
 			this.Label15.Location = new System.Drawing.Point(107, 342);
 			this.Label15.Name = "Label15";
 			this.Label15.Size = new System.Drawing.Size(34, 19);
-			this.Label15.TabIndex = 19;
+			this.Label15.TabIndex = 22;
 			this.Label15.Text = "CEP";
 			// 
 			// Label10
@@ -205,7 +206,7 @@
 			this.Label10.Location = new System.Drawing.Point(280, 380);
 			this.Label10.Name = "Label10";
 			this.Label10.Size = new System.Drawing.Size(55, 19);
-			this.Label10.TabIndex = 23;
+			this.Label10.TabIndex = 26;
 			this.Label10.Text = "Celular";
 			// 
 			// Label8
@@ -216,7 +217,7 @@
 			this.Label8.Location = new System.Drawing.Point(439, 305);
 			this.Label8.Name = "Label8";
 			this.Label8.Size = new System.Drawing.Size(26, 19);
-			this.Label8.TabIndex = 17;
+			this.Label8.TabIndex = 20;
 			this.Label8.Text = "UF";
 			// 
 			// Label7
@@ -227,7 +228,7 @@
 			this.Label7.Location = new System.Drawing.Point(87, 302);
 			this.Label7.Name = "Label7";
 			this.Label7.Size = new System.Drawing.Size(54, 19);
-			this.Label7.TabIndex = 15;
+			this.Label7.TabIndex = 18;
 			this.Label7.Text = "Cidade";
 			// 
 			// txtTelefoneFixo
@@ -238,7 +239,7 @@
 			this.txtTelefoneFixo.Mask = "(99) 99000-0000";
 			this.txtTelefoneFixo.Name = "txtTelefoneFixo";
 			this.txtTelefoneFixo.Size = new System.Drawing.Size(125, 27);
-			this.txtTelefoneFixo.TabIndex = 22;
+			this.txtTelefoneFixo.TabIndex = 25;
 			// 
 			// txtTelefoneCelular
 			// 
@@ -248,7 +249,7 @@
 			this.txtTelefoneCelular.Mask = "(99) 99000-0000";
 			this.txtTelefoneCelular.Name = "txtTelefoneCelular";
 			this.txtTelefoneCelular.Size = new System.Drawing.Size(125, 27);
-			this.txtTelefoneCelular.TabIndex = 24;
+			this.txtTelefoneCelular.TabIndex = 27;
 			// 
 			// label1
 			// 
@@ -258,7 +259,7 @@
 			this.label1.Location = new System.Drawing.Point(427, 224);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(24, 19);
-			this.label1.TabIndex = 9;
+			this.label1.TabIndex = 12;
 			this.label1.Text = "nº";
 			// 
 			// txtEnderecoNumero
@@ -270,7 +271,7 @@
 			this.txtEnderecoNumero.MaxLength = 8;
 			this.txtEnderecoNumero.Name = "txtEnderecoNumero";
 			this.txtEnderecoNumero.Size = new System.Drawing.Size(62, 27);
-			this.txtEnderecoNumero.TabIndex = 10;
+			this.txtEnderecoNumero.TabIndex = 13;
 			this.txtEnderecoNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSoNumeros_KeyPress);
 			// 
 			// label2
@@ -281,7 +282,7 @@
 			this.label2.Location = new System.Drawing.Point(42, 263);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(99, 19);
-			this.label2.TabIndex = 11;
+			this.label2.TabIndex = 14;
 			this.label2.Text = "Complemento";
 			// 
 			// txtEnderecoComplemento
@@ -292,7 +293,7 @@
 			this.txtEnderecoComplemento.MaxLength = 20;
 			this.txtEnderecoComplemento.Name = "txtEnderecoComplemento";
 			this.txtEnderecoComplemento.Size = new System.Drawing.Size(104, 27);
-			this.txtEnderecoComplemento.TabIndex = 12;
+			this.txtEnderecoComplemento.TabIndex = 15;
 			// 
 			// lblCongregacao
 			// 
@@ -324,7 +325,7 @@
 			this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblID.Name = "lblID";
 			this.lblID.Size = new System.Drawing.Size(94, 30);
-			this.lblID.TabIndex = 0;
+			this.lblID.TabIndex = 2;
 			this.lblID.Text = "0001";
 			this.lblID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -338,7 +339,7 @@
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
 			this.lbl_IdTexto.Size = new System.Drawing.Size(35, 13);
-			this.lbl_IdTexto.TabIndex = 1;
+			this.lbl_IdTexto.TabIndex = 3;
 			this.lbl_IdTexto.Text = "Reg.";
 			this.lbl_IdTexto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -350,7 +351,7 @@
 			this.lblCNP.Location = new System.Drawing.Point(105, 168);
 			this.lblCNP.Name = "lblCNP";
 			this.lblCNP.Size = new System.Drawing.Size(36, 19);
-			this.lblCNP.TabIndex = 5;
+			this.lblCNP.TabIndex = 7;
 			this.lblCNP.Text = "CNP";
 			// 
 			// tspMenu
@@ -369,10 +370,10 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 464);
+			this.tspMenu.Location = new System.Drawing.Point(2, 472);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
-			this.tspMenu.TabIndex = 28;
+			this.tspMenu.TabIndex = 31;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -457,7 +458,7 @@
 			this.label11.Location = new System.Drawing.Point(258, 263);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(48, 19);
-			this.label11.TabIndex = 13;
+			this.label11.TabIndex = 16;
 			this.label11.Text = "Bairro";
 			// 
 			// txtBairro
@@ -468,7 +469,7 @@
 			this.txtBairro.MaxLength = 30;
 			this.txtBairro.Name = "txtBairro";
 			this.txtBairro.Size = new System.Drawing.Size(207, 27);
-			this.txtBairro.TabIndex = 14;
+			this.txtBairro.TabIndex = 17;
 			// 
 			// line1
 			// 
@@ -479,7 +480,7 @@
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(513, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 29;
+			this.line1.TabIndex = 3;
 			this.line1.TabStop = false;
 			// 
 			// line2
@@ -491,31 +492,8 @@
 			this.line2.Name = "line2";
 			this.line2.Size = new System.Drawing.Size(510, 10);
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
-			this.line2.TabIndex = 30;
+			this.line2.TabIndex = 9;
 			this.line2.TabStop = false;
-			// 
-			// cmbCredorTipo
-			// 
-			this.cmbCredorTipo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cmbCredorTipo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.cmbCredorTipo.FormattingEnabled = true;
-			this.cmbCredorTipo.Location = new System.Drawing.Point(148, 126);
-			this.cmbCredorTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.cmbCredorTipo.Name = "cmbCredorTipo";
-			this.cmbCredorTipo.Size = new System.Drawing.Size(177, 27);
-			this.cmbCredorTipo.TabIndex = 4;
-			this.cmbCredorTipo.SelectionChangeCommitted += new System.EventHandler(this.cmbCredorTipo_SelectionChangeCommitted);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.BackColor = System.Drawing.Color.Transparent;
-			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(37, 129);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(104, 19);
-			this.label4.TabIndex = 3;
-			this.label4.Text = "Tipo de Credor";
 			// 
 			// pnlChk
 			// 
@@ -526,7 +504,7 @@
 			this.pnlChk.Location = new System.Drawing.Point(472, 374);
 			this.pnlChk.Name = "pnlChk";
 			this.pnlChk.Size = new System.Drawing.Size(55, 32);
-			this.pnlChk.TabIndex = 25;
+			this.pnlChk.TabIndex = 28;
 			this.pnlChk.TabStop = true;
 			// 
 			// picWathsapp
@@ -557,16 +535,60 @@
 			this.txtCNP.MaxLength = 14;
 			this.txtCNP.Name = "txtCNP";
 			this.txtCNP.Size = new System.Drawing.Size(177, 27);
-			this.txtCNP.TabIndex = 6;
+			this.txtCNP.TabIndex = 8;
 			this.txtCNP.Leave += new System.EventHandler(this.txtCNP_Leave);
+			// 
+			// btnSetCredor
+			// 
+			this.btnSetCredor.AllowAnimations = true;
+			this.btnSetCredor.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetCredor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetCredor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetCredor.Location = new System.Drawing.Point(331, 126);
+			this.btnSetCredor.Name = "btnSetCredor";
+			this.btnSetCredor.RoundedCornersMask = ((byte)(15));
+			this.btnSetCredor.RoundedCornersRadius = 0;
+			this.btnSetCredor.Size = new System.Drawing.Size(34, 27);
+			this.btnSetCredor.TabIndex = 6;
+			this.btnSetCredor.TabStop = false;
+			this.btnSetCredor.Text = "n";
+			this.btnSetCredor.UseCompatibleTextRendering = true;
+			this.btnSetCredor.UseVisualStyleBackColor = false;
+			this.btnSetCredor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetCredor.Click += new System.EventHandler(this.btnSetCredor_Click);
+			// 
+			// txtCredorTipo
+			// 
+			this.txtCredorTipo.Location = new System.Drawing.Point(148, 126);
+			this.txtCredorTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtCredorTipo.MaxLength = 30;
+			this.txtCredorTipo.Name = "txtCredorTipo";
+			this.txtCredorTipo.Size = new System.Drawing.Size(177, 27);
+			this.txtCredorTipo.TabIndex = 5;
+			this.txtCredorTipo.Tag = "Pressione a tecla (+) para procurar ou use atalho numérico";
+			this.txtCredorTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtCredorTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.ForeColor = System.Drawing.Color.Black;
+			this.label3.Location = new System.Drawing.Point(38, 129);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(104, 19);
+			this.label3.TabIndex = 4;
+			this.label3.Text = "Tipo de Credor";
 			// 
 			// frmCredor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 510);
+			this.ClientSize = new System.Drawing.Size(560, 518);
+			this.Controls.Add(this.btnSetCredor);
+			this.Controls.Add(this.txtCredorTipo);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.txtCNP);
 			this.Controls.Add(this.pnlChk);
-			this.Controls.Add(this.cmbCredorTipo);
 			this.Controls.Add(this.line2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.tspMenu);
@@ -589,7 +611,6 @@
 			this.Controls.Add(this.Label15);
 			this.Controls.Add(this.txtEmail);
 			this.Controls.Add(this.lblCongregacao);
-			this.Controls.Add(this.label4);
 			this.Controls.Add(this.lblCNP);
 			this.Controls.Add(this.Label9);
 			this.Controls.Add(this.Label5);
@@ -598,11 +619,12 @@
 			this.Name = "frmCredor";
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.txtCEP, 0);
 			this.Controls.SetChildIndex(this.Label5, 0);
 			this.Controls.SetChildIndex(this.Label9, 0);
 			this.Controls.SetChildIndex(this.lblCNP, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
 			this.Controls.SetChildIndex(this.txtEmail, 0);
 			this.Controls.SetChildIndex(this.Label15, 0);
@@ -626,9 +648,11 @@
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.line2, 0);
-			this.Controls.SetChildIndex(this.cmbCredorTipo, 0);
 			this.Controls.SetChildIndex(this.pnlChk, 0);
 			this.Controls.SetChildIndex(this.txtCNP, 0);
+			this.Controls.SetChildIndex(this.label3, 0);
+			this.Controls.SetChildIndex(this.txtCredorTipo, 0);
+			this.Controls.SetChildIndex(this.btnSetCredor, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -677,11 +701,12 @@
 		internal System.Windows.Forms.TextBox txtBairro;
 		private AwesomeShapeControl.Line line1;
 		private AwesomeShapeControl.Line line2;
-		private CamadaUC.ucComboLimitedValues cmbCredorTipo;
-		internal System.Windows.Forms.Label label4;
 		internal System.Windows.Forms.Panel pnlChk;
 		internal System.Windows.Forms.PictureBox picWathsapp;
 		internal System.Windows.Forms.CheckBox chkWhatsapp;
 		private System.Windows.Forms.TextBox txtCNP;
+		internal VIBlend.WinForms.Controls.vButton btnSetCredor;
+		internal System.Windows.Forms.TextBox txtCredorTipo;
+		internal System.Windows.Forms.Label label3;
 	}
 }

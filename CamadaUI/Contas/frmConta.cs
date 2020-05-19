@@ -51,6 +51,7 @@ namespace CamadaUI.Contas
 
 			AtivoButtonImage();
 			HandlerKeyDownControl(this);
+			txtConta.Validating += (a, b) => PrimeiraLetraMaiuscula(txtConta);
 
 			// controle do focus dos checkboxes
 			chkBancaria.GotFocus += chkBox_ControleFocus;

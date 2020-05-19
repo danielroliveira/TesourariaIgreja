@@ -47,6 +47,7 @@ namespace CamadaUI.Setores
 
 			AtivoButtonImage();
 			HandlerKeyDownControl(this);
+			txtSetor.Validating += (a, b) => PrimeiraLetraMaiuscula(txtSetor);
 		}
 
 		// PROPERTY SITUACAO

@@ -32,6 +32,8 @@ namespace CamadaDTO
 			internal int? _ReferenciaMes;
 			internal int? _ReferenciaAno;
 			internal bool _Imagem;
+			internal int? _IDCredor;
+			internal string _Credor;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -354,6 +356,23 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property IDCredor
+		//---------------------------------------------------------------
+		public int? IDCredor
+		{
+			get => EditData._IDCredor;
+			set => EditData._IDCredor = value;
+		}
+
+		// Property Credor
+		//---------------------------------------------------------------
+		public string Credor
+		{
+			get => EditData._Credor;
+			set => EditData._Credor = value;
+		}
+
 	}
 
 	//=================================================================================================

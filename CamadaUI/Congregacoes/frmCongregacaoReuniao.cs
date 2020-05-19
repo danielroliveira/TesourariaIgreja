@@ -47,7 +47,10 @@ namespace CamadaUI.Congregacoes
 			propRecorrenciaTipo = _reuniao.RecorrenciaTipo;
 
 			AtivoButtonImage();
+
+			// HANDLERS
 			HandlerKeyDownControl(this);
+			txtReuniao.Validating += (a, b) => PrimeiraLetraMaiuscula(txtReuniao);
 		}
 
 		// PROPERTY SITUACAO
@@ -548,8 +551,16 @@ namespace CamadaUI.Congregacoes
 
 		}
 
+		// CONTROLLING LABEL FONT SIZE
+		//------------------------------------------------------------------------------------------------------------
+		private void lblRecorrenciaTexto_TextChanged(object sender, EventArgs e)
+		{
+			ResizeFontLabel(lblRecorrenciaTexto);
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
+		#region RECORRENCIA CONTROL
 
 		// CHANGE COMBO SELECTION
 		//------------------------------------------------------------------------------------------------------------
@@ -642,9 +653,6 @@ namespace CamadaUI.Congregacoes
 			}
 		}
 
-		private void lblRecorrenciaTexto_TextChanged(object sender, EventArgs e)
-		{
-			ResizeFontLabel(lblRecorrenciaTexto);
-		}
+		#endregion // RECORRENCIA CONTROL --- END
 	}
 }

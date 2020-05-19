@@ -96,8 +96,9 @@
 			// 
 			this.txtCampanha.BackColor = System.Drawing.Color.White;
 			this.txtCampanha.Location = new System.Drawing.Point(186, 91);
+			this.txtCampanha.MaxLength = 100;
 			this.txtCampanha.Name = "txtCampanha";
-			this.txtCampanha.Size = new System.Drawing.Size(319, 27);
+			this.txtCampanha.Size = new System.Drawing.Size(375, 27);
 			this.txtCampanha.TabIndex = 2;
 			// 
 			// lblID

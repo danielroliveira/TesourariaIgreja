@@ -106,6 +106,7 @@
 			this.txtReuniao.BackColor = System.Drawing.Color.White;
 			this.txtReuniao.Location = new System.Drawing.Point(186, 91);
 			this.txtReuniao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtReuniao.MaxLength = 50;
 			this.txtReuniao.Name = "txtReuniao";
 			this.txtReuniao.Size = new System.Drawing.Size(319, 27);
 			this.txtReuniao.TabIndex = 2;

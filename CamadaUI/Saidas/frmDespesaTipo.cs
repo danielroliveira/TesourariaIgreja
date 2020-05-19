@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using VIBlend.WinForms.Controls;
 
 namespace CamadaUI.Saidas
 {
@@ -56,6 +57,7 @@ namespace CamadaUI.Saidas
 			// handlers
 			_tipo.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+			txtDespesaTipo.Validating += (a, b) => PrimeiraLetraMaiuscula(txtDespesaTipo);
 		}
 
 		// ON SHOW FORM

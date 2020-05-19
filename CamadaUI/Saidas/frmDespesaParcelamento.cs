@@ -1,70 +1,58 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Caixa;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Saidas
 {
 	public partial class frmDespesaParcelamento : CamadaUI.Modals.frmModFinBorder
 	{
-		private objContribuicaoCheque _cheque;
-		private BindingSource bind = new BindingSource();
-		private EnumFlagEstado _Sit;
-
-		private List<objBanco> listBancos;
-
+		private List<objCobrancaForma> listFormas;
 		private Form _formOrigem;
-
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
+
+		public int? IDBanco { get; set; }
+		public string BancoNome { get; set; }
+		public int? IDCobrancaForma { get; set; }
+		public string CobrancaForma { get; set; }
+		public int? VencimentoDia { get; set; }
 
 		#region SUB NEW | PROPERTIES
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesaParcelamento(ref objContribuicaoCheque obj, Form formOrigem)
+		public frmDespesaParcelamento(int Parcelas, Form formOrigem)
 		{
 			InitializeComponent();
 
-			_cheque = obj;
 			_formOrigem = formOrigem;
-			GetBancosList();
+			GetFormasList();
 
-			// binding
-			bind.DataSource = typeof(objContribuicaoCheque);
-			bind.Add(_cheque);
-			BindingCreator();
-
-			if (_cheque.IDContribuicao == null)
-				Sit = EnumFlagEstado.NovoRegistro;
-			else
-				Sit = EnumFlagEstado.RegistroSalvo;
+			lblParcelas.Text = Parcelas.ToString("D2") + " Parcelas";
 
 			// handlers
-			_cheque.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
 		}
 
-		// GET LIST OF BANCOS
+		// GET LIST OF FORMAS DE COBRANCA
 		//------------------------------------------------------------------------------------------------------------
-		private void GetBancosList()
+		private void GetFormasList()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				var bancoBLL = new BancoBLL();
-				listBancos = bancoBLL.GetListBanco();
+				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de bancos..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de Formas de Cobrança..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -72,77 +60,6 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-		}
-
-
-		// PROPERTY SITUACAO
-		//------------------------------------------------------------------------------------------------------------
-		public EnumFlagEstado Sit
-		{
-			get { return _Sit; }
-			set
-			{
-				_Sit = value;
-				switch (value)
-				{
-					case EnumFlagEstado.RegistroSalvo:
-						btnOK.Enabled = false;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Fechar";
-						break;
-					case EnumFlagEstado.Alterado:
-						btnOK.Enabled = true;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Cancelar";
-						break;
-					case EnumFlagEstado.NovoRegistro:
-						btnOK.Enabled = true;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Cancelar";
-						break;
-					case EnumFlagEstado.RegistroBloqueado:
-						btnOK.Enabled = false;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Fechar";
-						break;
-					default:
-						break;
-				}
-			}
-		}
-
-		#endregion
-
-		#region DATABINDING
-
-		// ADD DATA BINDIGNS
-		//------------------------------------------------------------------------------------------------------------
-		private void BindingCreator()
-		{
-			// CREATE BINDINGS
-			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtIdentificador.DataBindings.Add("Text", bind, "ChequeNumero", true, DataSourceUpdateMode.OnPropertyChanged);
-			dtpDepositoData.DataBindings.Add("Text", bind, "DepositoData", true, DataSourceUpdateMode.OnPropertyChanged);
-
-			txtIdentificador.DataBindings["Text"].Format += FormatD6;
-		}
-
-		private void FormatD6(object sender, ConvertEventArgs e)
-		{
-			if (e.Value != null)
-			{
-				(int.Parse(e.Value.ToString())).ToString("D6");
-			}
-		}
-
-		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
-		{
-			if (Sit != EnumFlagEstado.Alterado && Sit != EnumFlagEstado.NovoRegistro)
-			{
-				Sit = EnumFlagEstado.Alterado;
-			}
-
-			EP.Clear();
 		}
 
 		#endregion
@@ -154,19 +71,19 @@ namespace CamadaUI.Saidas
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			//--- check data
-			if (!CheckSaveData()) return;
+			if (IDCobrancaForma == null)
+			{
+				AbrirDialog("Favor preencher a informação da Forma de Cobrança",
+					"Forma de Corbança", DialogType.OK, DialogIcon.Exclamation);
+				txtCobrancaForma.Focus();
+				return;
+			}
+
+			VencimentoDia = (int)numVencimentoDia.Value;
+			CobrancaForma = txtCobrancaForma.Text;
+			BancoNome = txtBanco.Text;
 
 			DialogResult = DialogResult.OK;
-		}
-
-		// CHECK INSERTED DATA
-		//------------------------------------------------------------------------------------------------------------
-		private bool CheckSaveData()
-		{
-			if (!VerificaDadosClasse(txtBanco, "Banco do Cheque", _cheque, EP)) return false;
-			if (!VerificaDadosClasse(txtIdentificador, "Número do Cheque", _cheque, EP)) return false;
-
-			return true;
 		}
 
 		// FECHAR FORM
@@ -188,7 +105,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtBanco
+					txtBanco, txtCobrancaForma
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -221,6 +138,9 @@ namespace CamadaUI.Saidas
 					case "txtBanco":
 						btnSetBanco_Click(sender, new EventArgs());
 						break;
+					case "txtCobrancaForma":
+						btnSetForma_Click(sender, new EventArgs());
+						break;
 					default:
 						break;
 				}
@@ -232,6 +152,8 @@ namespace CamadaUI.Saidas
 				switch (ctr.Name)
 				{
 					case "txtBanco":
+						IDBanco = null;
+						txtBanco.Clear();
 						break;
 					default:
 						break;
@@ -245,7 +167,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
-					txtBanco,
+					txtBanco, txtCobrancaForma
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -256,6 +178,16 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// KEY DOWN ENTER OF NUMERIC UPDOWN
+		private void num_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			};
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region BUTTONS PROCURA
@@ -264,16 +196,49 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSetBanco_Click(object sender, EventArgs e)
 		{
-			if (listBancos.Count == 0)
+			try
 			{
-				AbrirDialog("Não há Bancos cadastrados...", "Bancos",
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmBancoProcura frm = new frmBancoProcura(this, IDBanco == 0 ? null : IDBanco);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
+				{
+					IDBanco = (int)frm.propEscolha.IDBanco;
+					txtBanco.Text = frm.propEscolha.BancoNome;
+				}
+
+				//--- select
+				txtBanco.Focus();
+				txtBanco.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnSetForma_Click(object sender, EventArgs e)
+		{
+			if (listFormas.Count == 0)
+			{
+				AbrirDialog("Não há Formas de Cobrança cadastradas ou ativas...", "Formas de Cobrança",
 					DialogType.OK, DialogIcon.Exclamation);
 				return;
 			}
 
-			var dic = listBancos.ToDictionary(x => (int)x.IDBanco, x => x.BancoNome);
-			var textBox = txtBanco;
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cheque.IDBanco);
+			var dic = listFormas.ToDictionary(x => (int)x.IDCobrancaForma, x => x.CobrancaForma);
+			var textBox = txtCobrancaForma;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, IDCobrancaForma);
 
 			// show form
 			frm.ShowDialog();
@@ -281,7 +246,7 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_cheque.IDBanco = (byte)frm.propEscolha.Key;
+				IDCobrancaForma = (int)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 
@@ -313,5 +278,7 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
+
 	}
 }

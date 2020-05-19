@@ -35,12 +35,49 @@ namespace CamadaBLL
 
 		}
 
-		// INSERT
+		// INSERT LIST
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertAPagar()
+		public List<objAPagar> InsertAPagarList(List<objAPagar> list, AcessoDados dbTran)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				foreach (var pag in list)
+				{
+					//--- clear Params
+					dbTran.LimparParametros();
 
+					//--- define Params
+					dbTran.AdicionarParametros("@APagarValor", pag.APagarValor);
+					dbTran.AdicionarParametros("@IDBanco", pag.IDBanco);
+					dbTran.AdicionarParametros("@IDCobrancaForma", pag.IDCobrancaForma);
+					dbTran.AdicionarParametros("@IDDespesa", pag.IDDespesa);
+					dbTran.AdicionarParametros("@Identificador", pag.Identificador);
+					dbTran.AdicionarParametros("@IDSituacao", pag.IDSituacao);
+					dbTran.AdicionarParametros("@Imagem", pag.Imagem);
+					dbTran.AdicionarParametros("@Parcela", pag.Parcela);
+					dbTran.AdicionarParametros("@Prioridade", pag.Prioridade);
+					dbTran.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);
+					dbTran.AdicionarParametros("@ReferenciaMes", pag.ReferenciaMes);
+					dbTran.AdicionarParametros("@ValorPago", pag.ValorPago);
+					dbTran.AdicionarParametros("@Vencimento", pag.Vencimento);
+
+					//--- convert null parameters
+					dbTran.ConvertNullParams();
+
+					string query = dbTran.CreateInsertSQL("tblAPagar");
+
+					//--- insert and Get new ID
+					int newID = dbTran.ExecutarInsertAndGetID(query);
+					pag.IDAPagar = newID;
+				}
+
+				return list;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		// UPDATE

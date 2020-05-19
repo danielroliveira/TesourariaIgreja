@@ -52,6 +52,7 @@ namespace CamadaUI.Main
 
 			// ADD HANDLERS
 			HandlerKeyDownControl(this);
+			txtUsuarioNovo.Validating += (a, b) => PrimeiraLetraMaiuscula(txtUsuarioNovo);
 		}
 
 		// LOAD
@@ -506,7 +507,6 @@ namespace CamadaUI.Main
 		private void txtUsuarioNovo_Validated(object sender, EventArgs e)
 		{
 			txtUsuarioNovo.Text = RemoveAcentos(txtUsuarioNovo.Text);
-			txtUsuarioNovo.Text = PrimeiraLetraMaiuscula(txtUsuarioNovo.Text);
 		}
 
 		// VALIDA EMAIL

@@ -28,7 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
@@ -63,20 +64,19 @@
 			this.btnParcelasGerar = new VIBlend.WinForms.Controls.vButton();
 			this.txtDocumentoTipo = new System.Windows.Forms.TextBox();
 			this.btnSetDocumentoTipo = new VIBlend.WinForms.Controls.vButton();
-			this.dgvAPagar = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.line1 = new AwesomeShapeControl.Line();
+			this.line2 = new AwesomeShapeControl.Line();
+			this.label6 = new System.Windows.Forms.Label();
+			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.line1 = new AwesomeShapeControl.Line();
-			this.line2 = new AwesomeShapeControl.Line();
-			this.label6 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlParcelas.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dgvAPagar)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -134,19 +134,19 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.btnFechar,
-            this.toolStripSeparator2});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.btnFechar,
+			this.toolStripSeparator2});
 			this.tspMenu.Location = new System.Drawing.Point(2, 693);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(704, 44);
@@ -183,6 +183,7 @@
 			this.btnSalvar.Size = new System.Drawing.Size(92, 41);
 			this.btnSalvar.Text = "&Salvar";
 			this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
 			// 
 			// btnCancelar
 			// 
@@ -298,7 +299,7 @@
 			this.txtDocumentoNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
 			this.txtDocumentoNumero.Location = new System.Drawing.Point(197, 238);
 			this.txtDocumentoNumero.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDocumentoNumero.MaxLength = 100;
+			this.txtDocumentoNumero.MaxLength = 30;
 			this.txtDocumentoNumero.Name = "txtDocumentoNumero";
 			this.txtDocumentoNumero.Size = new System.Drawing.Size(157, 27);
 			this.txtDocumentoNumero.TabIndex = 14;
@@ -468,23 +469,23 @@
 			this.numParcelas.Location = new System.Drawing.Point(284, 8);
 			this.numParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numParcelas.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+			255,
+			0,
+			0,
+			0});
 			this.numParcelas.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numParcelas.Name = "numParcelas";
 			this.numParcelas.Size = new System.Drawing.Size(65, 31);
 			this.numParcelas.TabIndex = 2;
 			this.numParcelas.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numParcelas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numParcelas_KeyDown);
 			// 
 			// lblParcelas
@@ -502,6 +503,7 @@
 			// 
 			this.btnParcelasGerar.AllowAnimations = true;
 			this.btnParcelasGerar.BackColor = System.Drawing.Color.Transparent;
+			this.btnParcelasGerar.Enabled = false;
 			this.btnParcelasGerar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnParcelasGerar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnParcelasGerar.Location = new System.Drawing.Point(440, 9);
@@ -546,71 +548,6 @@
 			this.btnSetDocumentoTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetDocumentoTipo.Click += new System.EventHandler(this.btnSetDocumentoTipo_Click);
 			// 
-			// dgvAPagar
-			// 
-			this.dgvAPagar.AllowUserToAddRows = false;
-			this.dgvAPagar.AllowUserToDeleteRows = false;
-			this.dgvAPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.dgvAPagar.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(215)))), ((int)(((byte)(233)))));
-			this.dgvAPagar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.dgvAPagar.ColumnHeadersHeight = 30;
-			this.dgvAPagar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-			this.dgvAPagar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnForma,
-            this.clnIdentificador,
-            this.clnVencimento,
-            this.clnValor});
-			this.dgvAPagar.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-			this.dgvAPagar.EnableHeadersVisualStyles = false;
-			this.dgvAPagar.Location = new System.Drawing.Point(45, 498);
-			this.dgvAPagar.MultiSelect = false;
-			this.dgvAPagar.Name = "dgvAPagar";
-			this.dgvAPagar.ReadOnly = true;
-			this.dgvAPagar.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-			this.dgvAPagar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.dgvAPagar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvAPagar.Size = new System.Drawing.Size(610, 174);
-			this.dgvAPagar.TabIndex = 25;
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "IDAPagar";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Visible = false;
-			// 
-			// clnForma
-			// 
-			this.clnForma.HeaderText = "Forma";
-			this.clnForma.Name = "clnForma";
-			this.clnForma.ReadOnly = true;
-			this.clnForma.Width = 160;
-			// 
-			// clnIdentificador
-			// 
-			this.clnIdentificador.HeaderText = "No. Reg.:";
-			this.clnIdentificador.Name = "clnIdentificador";
-			this.clnIdentificador.ReadOnly = true;
-			// 
-			// clnVencimento
-			// 
-			dataGridViewCellStyle19.Format = "C2";
-			dataGridViewCellStyle19.NullValue = "0";
-			this.clnVencimento.DefaultCellStyle = dataGridViewCellStyle19;
-			this.clnVencimento.HeaderText = "Vencimento";
-			this.clnVencimento.Name = "clnVencimento";
-			this.clnVencimento.ReadOnly = true;
-			this.clnVencimento.Width = 110;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			// 
 			// line1
 			// 
 			this.line1.EndPoint = new System.Drawing.Point(645, 5);
@@ -641,18 +578,92 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.Transparent;
-			this.label6.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.ForeColor = System.Drawing.Color.Black;
-			this.label6.Location = new System.Drawing.Point(42, 468);
+			this.label6.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.ForeColor = System.Drawing.Color.LightSlateGray;
+			this.label6.Location = new System.Drawing.Point(42, 455);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(130, 26);
+			this.label6.Size = new System.Drawing.Size(120, 23);
 			this.label6.TabIndex = 24;
 			this.label6.Text = "Parcelamento";
+			// 
+			// dgvListagem
+			// 
+			this.dgvListagem.AllowUserToAddRows = false;
+			this.dgvListagem.AllowUserToDeleteRows = false;
+			this.dgvListagem.AllowUserToResizeColumns = false;
+			this.dgvListagem.AllowUserToResizeRows = false;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			this.dgvListagem.ColumnHeadersHeight = 33;
+			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+			this.clnForma,
+			this.clnIdentificador,
+			this.clnVencimento,
+			this.clnValor});
+			this.dgvListagem.EnableHeadersVisualStyles = false;
+			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
+			this.dgvListagem.Location = new System.Drawing.Point(45, 484);
+			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+			this.dgvListagem.MultiSelect = false;
+			this.dgvListagem.Name = "dgvListagem";
+			this.dgvListagem.ReadOnly = true;
+			this.dgvListagem.RowHeadersVisible = false;
+			this.dgvListagem.RowHeadersWidth = 45;
+			this.dgvListagem.RowTemplate.Height = 30;
+			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.dgvListagem.Size = new System.Drawing.Size(610, 190);
+			this.dgvListagem.TabIndex = 25;
+			// 
+			// clnForma
+			// 
+			this.clnForma.HeaderText = "Forma";
+			this.clnForma.Name = "clnForma";
+			this.clnForma.ReadOnly = true;
+			this.clnForma.Width = 250;
+			// 
+			// clnIdentificador
+			// 
+			this.clnIdentificador.HeaderText = "No. Reg.:";
+			this.clnIdentificador.Name = "clnIdentificador";
+			this.clnIdentificador.ReadOnly = true;
+			this.clnIdentificador.Width = 115;
+			// 
+			// clnVencimento
+			// 
+			this.clnVencimento.HeaderText = "Vencimento";
+			this.clnVencimento.Name = "clnVencimento";
+			this.clnVencimento.ReadOnly = true;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
 			// frmDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(708, 740);
+			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.line2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.pnlParcelas);
@@ -678,13 +689,11 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblCongregacao);
 			this.Controls.Add(this.tspMenu);
-			this.Controls.Add(this.dgvAPagar);
 			this.KeyPreview = true;
 			this.Name = "frmDespesa";
 			this.Shown += new System.EventHandler(this.frmDespesa_Shown);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
-			this.Controls.SetChildIndex(this.dgvAPagar, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
@@ -711,6 +720,7 @@
 			this.Controls.SetChildIndex(this.pnlParcelas, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.line2, 0);
+			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -718,7 +728,7 @@
 			this.pnlParcelas.ResumeLayout(false);
 			this.pnlParcelas.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dgvAPagar)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -758,16 +768,15 @@
 		internal System.Windows.Forms.TextBox txtDocumentoTipo;
 		internal VIBlend.WinForms.Controls.vButton btnSetDocumentoTipo;
 		internal VIBlend.WinForms.Controls.vButton btnParcelasGerar;
-		internal System.Windows.Forms.DataGridView dgvAPagar;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnID;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		private System.Windows.Forms.NumericUpDown numParcelas;
 		internal System.Windows.Forms.Label lblParcelas;
 		private AwesomeShapeControl.Line line1;
 		private AwesomeShapeControl.Line line2;
 		internal System.Windows.Forms.Label label6;
+		internal System.Windows.Forms.DataGridView dgvListagem;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 	}
 }
