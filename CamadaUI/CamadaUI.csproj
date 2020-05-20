@@ -369,6 +369,18 @@
     <Compile Include="Saidas\frmDespesa.Designer.cs">
       <DependentUpon>frmDespesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaListagem.designer.cs">
+      <DependentUpon>frmDespesaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaListagemFiltro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaListagemFiltro.designer.cs">
+      <DependentUpon>frmDespesaListagemFiltro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmDespesaParcelamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -569,6 +581,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesa.resx">
       <DependentUpon>frmDespesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaListagem.resx">
+      <DependentUpon>frmDespesaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaListagemFiltro.resx">
+      <DependentUpon>frmDespesaListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaParcelamento.resx">
       <DependentUpon>frmDespesaParcelamento.cs</DependentUpon>

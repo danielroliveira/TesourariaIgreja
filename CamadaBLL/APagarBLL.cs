@@ -27,11 +27,73 @@ namespace CamadaBLL
 
 		}
 
+		// GET LIST OF
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAPagar> GetListAPagarByDespesa(long IDDespesa)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryAPagar WHERE IDDespesa = @IDDespesa";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDDespesa", IDDespesa);
+
+				query += " ORDER BY IDAPagar";
+
+				List<objAPagar> listagem = new List<objAPagar>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				return listagem;
+			}
+			catch (Exception ex)
+			{
+
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		private objAPagar ConvertRowInClass(DataRow row)
 		{
-			throw new NotImplementedException();
+			objAPagar despesa = new objAPagar((long)row["IDAPagar"])
+			{
+				IDDespesa = (long)row["IDDespesa"],
+				DespesaDescricao = (string)row["DespesaDescricao"],
+				Identificador = (string)row["Identificador"],
+				Parcela = row["Parcela"] == DBNull.Value ? null : (byte?)row["Parcela"],
+				IDCobrancaForma = (int)row["IDCobrancaForma"],
+				CobrancaForma = (string)row["CobrancaForma"],
+				APagarValor = (decimal)row["APagarValor"],
+				IDSituacao = (byte)row["IDSituacao"],
+				Situacao = (string)row["Situacao"],
+				IDBanco = row["IDBanco"] == DBNull.Value ? null : (int?)row["IDBanco"],
+				Banco = row["BancoNome"] == DBNull.Value ? string.Empty : (string)row["BancoNome"],
+				Vencimento = (DateTime)row["Vencimento"],
+				PagamentoData = row["PagamentoData"] == DBNull.Value ? null : (DateTime?)row["PagamentoData"],
+				Prioridade = (byte)row["Prioridade"],
+				IDCredor = row["IDCredor"] == DBNull.Value ? null : (int?)row["IDCredor"],
+				Credor = row["Credor"] == DBNull.Value ? string.Empty : (string)row["Credor"],
+				ValorPago = (decimal)row["ValorPago"],
+				ReferenciaMes = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaMes"],
+				ReferenciaAno = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaAno"],
+				Imagem = (bool)row["Imagem"],
+			};
+
+			return despesa;
 
 		}
 

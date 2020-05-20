@@ -51,7 +51,7 @@ namespace CamadaUI.Entradas
 			bind.Add(_contribuicao);
 			BindingCreator();
 
-			propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+			defContribuicaoTipo(_contribuicao.IDContribuicaoTipo);
 
 			if (_contribuicao.IDContribuicao == null)
 			{
@@ -142,67 +142,64 @@ namespace CamadaUI.Entradas
 
 		// PROPERTY CONTRIBUICAO TIPO
 		//------------------------------------------------------------------------------------------------------------
-		private byte propContribuicaoTipo
+		private void defContribuicaoTipo(byte IDTipo)
 		{
-			get => _contribuicao.IDContribuicaoTipo;
-			set
+			_contribuicao.IDContribuicaoTipo = IDTipo;
+
+			if (listTipos.Count > 0)
 			{
-				_contribuicao.IDContribuicaoTipo = value;
+				objContribuicaoTipo tipo = listTipos.Find(x => x.IDContribuicaoTipo == IDTipo);
 
-				if (listTipos.Count > 0)
+				if (tipo.ComAtividade)
 				{
-					objContribuicaoTipo tipo = listTipos.Find(x => x.IDContribuicaoTipo == value);
-
-					if (tipo.ComAtividade)
-					{
-						txtReuniao.Enabled = true;
-						btnSetReuniao.Enabled = true;
-					}
-					else
-					{
-						txtReuniao.Enabled = false;
-						btnSetReuniao.Enabled = false;
-						txtReuniao.Clear();
-						_contribuicao.IDReuniao = null;
-					}
-
-					if (tipo.ComCampanha)
-					{
-						txtCampanha.Enabled = true;
-						btnSetCampanha.Enabled = true;
-					}
-					else
-					{
-						txtCampanha.Enabled = false;
-						btnSetCampanha.Enabled = false;
-						txtCampanha.Clear();
-						_contribuicao.IDCampanha = null;
-					}
-
-					if (tipo.ComOrigem)
-					{
-						txtContribuinte.Enabled = true;
-						btnSetContribuinte.Enabled = true;
-					}
-					else
-					{
-						txtContribuinte.Enabled = false;
-						btnSetContribuinte.Enabled = false;
-						txtContribuinte.Clear();
-						_contribuicao.IDContribuinte = null;
-					}
+					txtReuniao.Enabled = true;
+					btnSetReuniao.Enabled = true;
+				}
+				else
+				{
+					txtReuniao.Enabled = false;
+					btnSetReuniao.Enabled = false;
+					txtReuniao.Clear();
+					_contribuicao.IDReuniao = null;
 				}
 
-				// change labels color
-				Action<Control, Label> ChangeLblColor = (ctrl, lbl) =>
+				if (tipo.ComCampanha)
 				{
-					lbl.ForeColor = ctrl.Enabled ? Color.Black : Color.Silver;
-				};
+					txtCampanha.Enabled = true;
+					btnSetCampanha.Enabled = true;
+				}
+				else
+				{
+					txtCampanha.Enabled = false;
+					btnSetCampanha.Enabled = false;
+					txtCampanha.Clear();
+					_contribuicao.IDCampanha = null;
+				}
 
-				ChangeLblColor(txtReuniao, lblReuniao);
-				ChangeLblColor(txtCampanha, lblCampanha);
-				ChangeLblColor(txtContribuinte, lblContribuinte);
+				if (tipo.ComOrigem)
+				{
+					txtContribuinte.Enabled = true;
+					btnSetContribuinte.Enabled = true;
+				}
+				else
+				{
+					txtContribuinte.Enabled = false;
+					btnSetContribuinte.Enabled = false;
+					txtContribuinte.Clear();
+					_contribuicao.IDContribuinte = null;
+				}
 			}
+
+			// change labels color
+			Action<Control, Label> ChangeLblColor = (ctrl, lbl) =>
+			{
+				lbl.ForeColor = ctrl.Enabled ? Color.Black : Color.Silver;
+			};
+
+			ChangeLblColor(txtReuniao, lblReuniao);
+			ChangeLblColor(txtCampanha, lblCampanha);
+			ChangeLblColor(txtContribuinte, lblContribuinte);
+
 		}
 
 		#endregion
@@ -333,7 +330,7 @@ namespace CamadaUI.Entradas
 							"O formulário será fechado, e não será salvo.",
 							"Registro Alterado", DialogType.OK, DialogIcon.Exclamation);
 				bind.CancelEdit();
-				propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+				defContribuicaoTipo(_contribuicao.IDContribuicaoTipo);
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
@@ -361,7 +358,7 @@ namespace CamadaUI.Entradas
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
 				bind.CancelEdit();
-				propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+				defContribuicaoTipo(_contribuicao.IDContribuicaoTipo);
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 			else
@@ -725,7 +722,7 @@ namespace CamadaUI.Entradas
 								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
 								_contribuicao.IDContribuicaoTipo = (byte)tipo.IDContribuicaoTipo;
-								propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+								defContribuicaoTipo(_contribuicao.IDContribuicaoTipo);
 								txtContribuicaoTipo.Text = tipo.ContribuicaoTipo;
 							}
 						}
@@ -783,7 +780,7 @@ namespace CamadaUI.Entradas
 		}
 
 		// PREVINE CHANGES IN SIT => REGISTRO SALVO
-		private void txt_KeyDown_Block(object sender, KeyEventArgs e)
+		private void control_KeyDown_Block(object sender, KeyEventArgs e)
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
@@ -888,7 +885,7 @@ namespace CamadaUI.Entradas
 			{
 				_contribuicao.IDContribuicaoTipo = (byte)frm.propEscolha.Key;
 				txtContribuicaoTipo.Text = frm.propEscolha.Value;
-				propContribuicaoTipo = _contribuicao.IDContribuicaoTipo;
+				defContribuicaoTipo(_contribuicao.IDContribuicaoTipo);
 				txtOrigemDescricao.Clear();
 			}
 

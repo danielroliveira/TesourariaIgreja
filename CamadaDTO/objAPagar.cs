@@ -13,8 +13,8 @@ namespace CamadaDTO
 		//-------------------------------------------------------------------------------------------------
 		struct StructAPagar
 		{
-			internal int? _IDAPagar;
-			internal int _IDDespesa;
+			internal long? _IDAPagar;
+			internal long _IDDespesa;
 			internal string _DespesaDescricao;
 			internal string _Identificador;
 			internal byte? _Parcela;
@@ -42,7 +42,7 @@ namespace CamadaDTO
 		private StructAPagar BackupData;
 		private bool inTxn = false;
 
-		public objAPagar(int? IDAPagar) : base()
+		public objAPagar(long? IDAPagar) : base()
 		{
 			EditData = new StructAPagar()
 			{
@@ -109,7 +109,7 @@ namespace CamadaDTO
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public int? IDAPagar
+		public long? IDAPagar
 		{
 			get => EditData._IDAPagar;
 			set => EditData._IDAPagar = value;
@@ -117,7 +117,7 @@ namespace CamadaDTO
 
 		// Property IDDespesa
 		//---------------------------------------------------------------
-		public int IDDespesa
+		public long IDDespesa
 		{
 			get => EditData._IDDespesa;
 			set

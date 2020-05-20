@@ -52,12 +52,9 @@ namespace CamadaBLL
 		// GET LIST OF WITH DETAILS
 		//------------------------------------------------------------------------------------------------------------
 		public List<objDespesa> GetListDespesa(
-			int? IDConta = null,
 			int? IDSetor = null,
-			byte? IDEntradaForma = null,
-			byte? IDDespesaTipo = null,
-			int? IDContribuinte = null,
-			int? IDCampanha = null,
+			int? IDDespesaTipo = null,
+			int? IDCredor = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
 		{
@@ -71,27 +68,11 @@ namespace CamadaBLL
 				// add params
 				db.LimparParametros();
 
-				// add IDConta
-				if (IDConta != null)
-				{
-					db.AdicionarParametros("@IDConta", IDConta);
-					query += myWhere ? " AND IDConta = @IDConta" : " WHERE IDConta = @IDConta";
-					myWhere = true;
-				}
-
 				// add IDSetor
 				if (IDSetor != null)
 				{
 					db.AdicionarParametros("@IDSetor", IDSetor);
 					query += myWhere ? " AND IDSetor = @IDSetor" : " WHERE IDSetor = @IDSetor";
-					myWhere = true;
-				}
-
-				// add IDEntradaForma
-				if (IDEntradaForma != null)
-				{
-					db.AdicionarParametros("@IDEntradaForma", IDEntradaForma);
-					query += myWhere ? " AND IDEntradaForma = @IDEntradaForma" : " WHERE IDEntradaForma = @IDEntradaForma";
 					myWhere = true;
 				}
 
@@ -119,19 +100,11 @@ namespace CamadaBLL
 					myWhere = true;
 				}
 
-				// add IDContribuinte
-				if (IDContribuinte != null)
+				// add IDCredor
+				if (IDCredor != null)
 				{
-					db.AdicionarParametros("@IDContribuinte", IDContribuinte);
-					query += myWhere ? " AND IDContribuinte = @IDContribuinte" : " WHERE IDContribuinte = @IDContribuinte";
-					myWhere = true;
-				}
-
-				// add IDCampanha
-				if (IDCampanha != null)
-				{
-					db.AdicionarParametros("@IDCampanha", IDCampanha);
-					query += myWhere ? " AND IDCampanha = @IDCampanha" : " WHERE IDCampanha = @IDCampanha";
+					db.AdicionarParametros("@IDCredor", IDCredor);
+					query += myWhere ? " AND IDCredor = @IDCredor" : " WHERE IDCredor = @IDCredor";
 					myWhere = true;
 				}
 
@@ -188,7 +161,7 @@ namespace CamadaBLL
 		{
 			objDespesa despesa = new objDespesa((long)row["IDDespesa"])
 			{
-				DespesaDescricao = (string)row["DespesaDesricao"],
+				DespesaDescricao = (string)row["DespesaDescricao"],
 				IDCredor = (int)row["IDCredor"],
 				Credor = (string)row["Credor"],
 				DespesaData = (DateTime)row["DespesaData"],

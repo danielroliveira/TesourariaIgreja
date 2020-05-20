@@ -56,14 +56,14 @@ namespace CamadaUI.Saidas
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+				chkParcelado.Checked = _despesa.Parcelas > 1;
+				GetAPagar();
 			}
 
 			// format Datagridview
 			FormataListagem();
 			bindParcelas.DataSource = listAPagar;
-
-			// define MaxDate of Data da Despesa
-			dtpDespesaData.MaxDate = DateTime.Today;
+			dgvListagem.DataSource = bindParcelas;
 
 			// handlers
 			_despesa.PropertyChanged += RegistroAlterado;
@@ -77,6 +77,11 @@ namespace CamadaUI.Saidas
 			txtCredor.Enter += text_Enter;
 			txtDespesaTipo.Enter += text_Enter;
 			txtDocumentoTipo.Enter += text_Enter;
+
+			// block keyDown then Sit = Alterado
+			txtDocumentoNumero.KeyDown += control_KeyDown_Block;
+			txtDespesaValor.KeyDown += control_KeyDown_Block;
+			dtpDespesaData.KeyDown += control_KeyDown_Block;
 		}
 
 		// PROPERTY SITUACAO
@@ -93,12 +98,18 @@ namespace CamadaUI.Saidas
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
+					// define MaxDate of Data da Despesa
+					dtpDespesaData.MaxDate = DateTime.Today;
+					dtpDespesaData.MinDate = DateTime.Today.AddMonths(-12);
 				}
 				else
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
+					// define MaxDate of Data da Despesa
+					dtpDespesaData.MaxDate = _despesa.DespesaData;
+					dtpDespesaData.MinDate = _despesa.DespesaData;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -106,6 +117,29 @@ namespace CamadaUI.Saidas
 				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetDocumentoTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetCredor.Enabled = value == EnumFlagEstado.NovoRegistro;
+			}
+		}
+		// GET PARCELAMENTO | APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void GetAPagar()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				listAPagar = new APagarBLL().GetListAPagarByDespesa((long)_despesa.IDDespesa);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de Parcelamento..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
@@ -560,7 +594,7 @@ namespace CamadaUI.Saidas
 		}
 
 		// PREVINE CHANGES IN SIT => REGISTRO SALVO
-		private void txt_KeyDown_Block(object sender, KeyEventArgs e)
+		private void control_KeyDown_Block(object sender, KeyEventArgs e)
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
@@ -577,6 +611,15 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void chkParcelado_CheckedChanged(object sender, EventArgs e)
 		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				chkParcelado.Checked = _despesa.Parcelas > 1;
+				return;
+			}
+			//---------------------------------------------------
+
 			if (!chkParcelado.Checked && listAPagar.Count > 0)
 			{
 				var resp = AbrirDialog("Essa operação fará a exclusão de todas as parcelas da listagem...\n" +
@@ -1035,8 +1078,8 @@ namespace CamadaUI.Saidas
 			return true;
 		}
 
-		#endregion // SALVAR REGISTRO --- END
 
+		#endregion // SALVAR REGISTRO --- END
 
 	}
 }

@@ -295,7 +295,7 @@
 			this.txtValorBruto.Size = new System.Drawing.Size(120, 31);
 			this.txtValorBruto.TabIndex = 14;
 			this.txtValorBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.txtValorBruto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
+			this.txtValorBruto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// label2
 			// 
@@ -576,7 +576,7 @@
 			this.cmbEntradaMes.Size = new System.Drawing.Size(150, 31);
 			this.cmbEntradaMes.TabIndex = 10;
 			this.cmbEntradaMes.SelectionChangeCommitted += new System.EventHandler(this.cmbEntradaMes_SelectionChangeCommitted);
-			this.cmbEntradaMes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
+			this.cmbEntradaMes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// txtEntradaAno
 			// 
@@ -588,7 +588,7 @@
 			this.txtEntradaAno.Size = new System.Drawing.Size(63, 31);
 			this.txtEntradaAno.TabIndex = 11;
 			this.txtEntradaAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.txtEntradaAno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
+			this.txtEntradaAno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// txtEntradaDia
 			// 
@@ -600,7 +600,7 @@
 			this.txtEntradaDia.Size = new System.Drawing.Size(52, 31);
 			this.txtEntradaDia.TabIndex = 9;
 			this.txtEntradaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.txtEntradaDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown_Block);
+			this.txtEntradaDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// line2
 			// 

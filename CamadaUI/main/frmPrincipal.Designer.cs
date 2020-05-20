@@ -49,6 +49,7 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuDespesaTipo = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCobrancaForma = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuFechamento = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -73,7 +74,6 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuCobrancaForma = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -294,6 +294,15 @@
 			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
 			this.mnuDespesaGrupo.Size = new System.Drawing.Size(217, 30);
 			this.mnuDespesaGrupo.Text = "Grupos de Despesa";
+			// 
+			// mnuCobrancaForma
+			// 
+			this.mnuCobrancaForma.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCobrancaForma.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuCobrancaForma.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
+			this.mnuCobrancaForma.Size = new System.Drawing.Size(217, 30);
+			this.mnuCobrancaForma.Text = "Formas de Cobrança";
 			// 
 			// btnMovimentação
 			// 
@@ -632,15 +641,6 @@
 			this.lblHora.TabIndex = 6;
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// mnuCobrancaForma
-			// 
-			this.mnuCobrancaForma.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuCobrancaForma.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuCobrancaForma.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
-			this.mnuCobrancaForma.Size = new System.Drawing.Size(217, 30);
-			this.mnuCobrancaForma.Text = "Formas de Cobrança";
 			// 
 			// frmPrincipal
 			// 

@@ -768,6 +768,7 @@ namespace CamadaUI
 			mnuDespesaTipo.Click += (a, b) => MenuClickOpenForm(new frmDespesaTipoListagem());
 			mnuDespesaGrupo.Click += (a, b) => MenuClickOpenForm(new frmDespesaTipoGrupoControle());
 			mnuCobrancaForma.Click += (a, b) => MenuClickOpenForm(new frmCobrancaForma());
+			mnuDespesaProcurar.Click += (a, b) => MenuClickOpenForm(new frmDespesaListagem());
 
 			// MENU MOVIMENTACAO
 			mnuContas.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());

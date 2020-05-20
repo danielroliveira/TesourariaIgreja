@@ -287,7 +287,7 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(85, 241);
+			this.label2.Location = new System.Drawing.Point(89, 241);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(102, 19);
 			this.label2.TabIndex = 13;

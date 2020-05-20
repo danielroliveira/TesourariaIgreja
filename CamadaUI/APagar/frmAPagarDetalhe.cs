@@ -24,12 +24,46 @@ namespace CamadaUI.APagar
 		public frmAPagarDetalhe(objAPagar pag, Form formOrigem)
 		{
 			InitializeComponent();
+			Size = new Size(530, 536);
 			_formOrigem = formOrigem;
 			_apagar = pag;
-			GetFormasList();
 
-			bind.DataSource = _apagar;
-			BindingCreator();
+			CheckEditing();
+		}
+
+		// VERIFY IF IS EDITING FORM OR NOT EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void CheckEditing()
+		{
+			if (_apagar.IDAPagar == null)
+			{
+				pnlEditar.Visible = true;
+				pnlVisualizar.Visible = false;
+				GetFormasList();
+
+				bind.DataSource = _apagar;
+				BindingCreatorEditing();
+			}
+			else
+			{
+				pnlEditar.Visible = false;
+				pnlVisualizar.Visible = true;
+				pnlVisualizar.Location = new Point(12, 132);
+
+				bind.DataSource = _apagar;
+				BindingCreatorNotEditing();
+
+				if (_apagar.ReferenciaMes != null && _apagar.ReferenciaAno != null)
+				{
+					DateTime dt = new DateTime((int)_apagar.ReferenciaAno, (int)_apagar.ReferenciaMes, 1);
+					lblReferencia.Text = dt.ToString("MMMM/yyyy");
+
+				}
+				else
+				{
+					lblReferencia.Text = "Sem Referência...";
+				}
+			}
 		}
 
 		// GET LIST OF FORMAS DE COBRANCA
@@ -61,7 +95,7 @@ namespace CamadaUI.APagar
 
 		// ADD DATA BINDIGNS
 		//------------------------------------------------------------------------------------------------------------
-		private void BindingCreator()
+		private void BindingCreatorEditing()
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDAPagar", true);
@@ -78,10 +112,37 @@ namespace CamadaUI.APagar
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtAPagarValor.DataBindings["Text"].Format += FormatCurrency;
+			lblParcela.DataBindings["Text"].Format += FormatD2;
 
 			// CARREGA COMBO
 			CarregaComboMes();
 			cmbReferenciaMes.DataBindings.Add("SelectedValue", bind, "ReferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
+		}
+
+		// ADD DATA BINDIGNS
+		//------------------------------------------------------------------------------------------------------------
+		private void BindingCreatorNotEditing()
+		{
+			// CREATE BINDINGS
+			lblID.DataBindings.Add("Text", bind, "IDAPagar", true);
+			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true);
+			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
+			lblIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblParcela.DataBindings.Add("Text", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblVencimento.DataBindings.Add("Text", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			//lblReferencia.DataBindings.Add("Text", bind, "ReferenciaAno", true, DataSourceUpdateMode.OnPropertyChanged);
+
+			// FORMAT HANDLERS
+			lblID.DataBindings["Text"].Format += FormatID;
+			lblAPagarValor.DataBindings["Text"].Format += FormatCurrency;
+			lblParcela.DataBindings["Text"].Format += FormatD2;
+
+			// CARREGA COMBO
+			//CarregaComboMes();
+			//cmbReferenciaMes.DataBindings.Add("SelectedValue", bind, "ReferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -94,6 +155,11 @@ namespace CamadaUI.APagar
 			{
 				e.Value = $"{e.Value: 0000}";
 			}
+		}
+
+		private void FormatD2(object sender, ConvertEventArgs e)
+		{
+			e.Value = $"{e.Value: 00}";
 		}
 
 		private void FormatCurrency(object sender, ConvertEventArgs e)
@@ -127,8 +193,6 @@ namespace CamadaUI.APagar
 			cmbReferenciaMes.ValueMember = "ID";
 			cmbReferenciaMes.DisplayMember = "Mes";
 		}
-
-
 
 		#endregion // DATABINDINGS --- END
 
