@@ -65,11 +65,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APagar\frmAPagarAlterar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarAlterar.designer.cs">
+      <DependentUpon>frmAPagarAlterar.cs</DependentUpon>
+    </Compile>
     <Compile Include="APagar\frmAPagarDetalhe.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="APagar\frmAPagarDetalhe.Designer.cs">
       <DependentUpon>frmAPagarDetalhe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="APagar\frmAPagarListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarListagem.designer.cs">
+      <DependentUpon>frmAPagarListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="APagar\frmAPagarListagemFiltro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarListagemFiltro.designer.cs">
+      <DependentUpon>frmAPagarListagemFiltro.cs</DependentUpon>
     </Compile>
     <Compile Include="Caixa\frmBancoProcura.cs">
       <SubType>Form</SubType>
@@ -429,8 +447,17 @@
     <Compile Include="Setores\frmSetorProcura.designer.cs">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="APagar\frmAPagarAlterar.resx">
+      <DependentUpon>frmAPagarAlterar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="APagar\frmAPagarDetalhe.resx">
       <DependentUpon>frmAPagarDetalhe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="APagar\frmAPagarListagem.resx">
+      <DependentUpon>frmAPagarListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="APagar\frmAPagarListagemFiltro.resx">
+      <DependentUpon>frmAPagarListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancoProcura.resx">
       <DependentUpon>frmBancoProcura.cs</DependentUpon>
@@ -780,6 +807,11 @@
   <ItemGroup>
     <None Include="Resources\imprimir_24.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\search_page_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dollar_24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

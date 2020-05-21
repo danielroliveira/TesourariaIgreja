@@ -74,6 +74,8 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuAPagarProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -239,6 +241,8 @@
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuDespesaInserir,
             this.mnuDespesaProcurar,
+            this.toolStripSeparator5,
+            this.mnuAPagarProcurar,
             this.toolStripSeparator4,
             this.mnuDespesaTipo,
             this.mnuDespesaGrupo,
@@ -642,6 +646,20 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuAPagarProcurar
+			// 
+			this.mnuAPagarProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuAPagarProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuAPagarProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuAPagarProcurar.Name = "mnuAPagarProcurar";
+			this.mnuAPagarProcurar.Size = new System.Drawing.Size(217, 30);
+			this.mnuAPagarProcurar.Text = "Procurar a Pagar";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -720,6 +738,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaTipo;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaGrupo;
 		private System.Windows.Forms.ToolStripMenuItem mnuCobrancaForma;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripMenuItem mnuAPagarProcurar;
 	}
 }
 

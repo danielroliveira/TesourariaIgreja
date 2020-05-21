@@ -21,10 +21,84 @@ namespace CamadaBLL
 
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objAPagar> GetListAPagar()
+		public List<objAPagar> GetListAPagar(int? IDSituacao,
+			int? IDCobrancaForma = null,
+			int? IDCredor = null,
+			DateTime? dataInicial = null,
+			DateTime? dataFinal = null)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				AcessoDados db = new AcessoDados();
 
+				string query = "SELECT * FROM qryAPagar";
+				bool myWhere = false;
+
+				// add params
+				db.LimparParametros();
+
+				// add IDSituacao
+				if (IDSituacao != null)
+				{
+					db.AdicionarParametros("@IDSituacao", IDSituacao);
+					query += myWhere ? " AND IDSituacao = @IDSituacao" : " WHERE IDSituacao = @IDSituacao";
+					myWhere = true;
+				}
+
+				// add IDDespesaTipo
+				if (IDCobrancaForma != null)
+				{
+					db.AdicionarParametros("@IDCobrancaForma", IDCobrancaForma);
+					query += myWhere ? " AND IDCobrancaForma = @IDCobrancaForma" : " WHERE IDCobrancaForma = @IDCobrancaForma";
+					myWhere = true;
+				}
+
+				// add DataInicial
+				if (dataInicial != null)
+				{
+					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
+					query += myWhere ? " AND Vencimento >= @DataInicial" : " WHERE Vencimento >= @DataInicial";
+					myWhere = true;
+				}
+
+				// add DataFinal
+				if (dataFinal != null)
+				{
+					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
+					query += myWhere ? " AND Vencimento <= @DataFinal" : " WHERE Vencimento <= @DataFinal";
+					myWhere = true;
+				}
+
+				// add IDCredor
+				if (IDCredor != null)
+				{
+					db.AdicionarParametros("@IDCredor", IDCredor);
+					query += myWhere ? " AND IDCredor = @IDCredor" : " WHERE IDCredor = @IDCredor";
+					myWhere = true;
+				}
+
+				query += " ORDER BY Vencimento";
+
+				List<objAPagar> listagem = new List<objAPagar>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		// GET LIST OF
@@ -88,6 +162,8 @@ namespace CamadaBLL
 				IDCredor = row["IDCredor"] == DBNull.Value ? null : (int?)row["IDCredor"],
 				Credor = row["Credor"] == DBNull.Value ? string.Empty : (string)row["Credor"],
 				ValorPago = (decimal)row["ValorPago"],
+				ValorAcrescimo = (decimal)row["ValorAcrescimo"],
+				ValorDesconto = (decimal)row["ValorDesconto"],
 				ReferenciaMes = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaMes"],
 				ReferenciaAno = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaAno"],
 				Imagem = (bool)row["Imagem"],
@@ -121,6 +197,8 @@ namespace CamadaBLL
 					dbTran.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);
 					dbTran.AdicionarParametros("@ReferenciaMes", pag.ReferenciaMes);
 					dbTran.AdicionarParametros("@ValorPago", pag.ValorPago);
+					dbTran.AdicionarParametros("@ValorAcrescimo", pag.ValorAcrescimo);
+					dbTran.AdicionarParametros("@ValorDesconto", pag.ValorDesconto);
 					dbTran.AdicionarParametros("@Vencimento", pag.Vencimento);
 
 					//--- convert null parameters
@@ -144,10 +222,48 @@ namespace CamadaBLL
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateAPagar()
+		public bool UpdateAPagar(objAPagar pag, object dbTran = null)
 		{
-			throw new NotImplementedException();
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
+			try
+			{
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDAPagar", pag.IDAPagar);
+				db.AdicionarParametros("@APagarValor", pag.APagarValor);
+				db.AdicionarParametros("@IDBanco", pag.IDBanco);
+				db.AdicionarParametros("@IDCobrancaForma", pag.IDCobrancaForma);
+				db.AdicionarParametros("@IDDespesa", pag.IDDespesa);
+				db.AdicionarParametros("@Identificador", pag.Identificador);
+				db.AdicionarParametros("@IDSituacao", pag.IDSituacao);
+				db.AdicionarParametros("@Imagem", pag.Imagem);
+				db.AdicionarParametros("@Parcela", pag.Parcela);
+				db.AdicionarParametros("@Prioridade", pag.Prioridade);
+				db.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);
+				db.AdicionarParametros("@ReferenciaMes", pag.ReferenciaMes);
+				db.AdicionarParametros("@ValorPago", pag.ValorPago);
+				db.AdicionarParametros("@ValorAcrescimo", pag.ValorAcrescimo);
+				db.AdicionarParametros("@ValorDesconto", pag.ValorDesconto);
+				db.AdicionarParametros("@Vencimento", pag.Vencimento);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateUpdateSQL("tblAPagar", "IDAPagar");
+
+				//--- insert and Get new ID
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 	}
 

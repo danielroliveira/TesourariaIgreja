@@ -1,6 +1,6 @@
 ﻿namespace CamadaUI.APagar
 {
-	partial class frmAPagarDetalhe
+	partial class frmAPagarAlterar
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -33,15 +33,13 @@
 			this.lblDespesaDescricao = new System.Windows.Forms.Label();
 			this.txtIdentificador = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.numParcela = new System.Windows.Forms.NumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
 			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
 			this.txtBanco = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtAPagarValor = new CamadaUC.ucOnlyNumbers();
+			this.txtValorDesconto = new CamadaUC.ucOnlyNumbers();
 			this.label8 = new System.Windows.Forms.Label();
 			this.dtpVencimento = new System.Windows.Forms.DateTimePicker();
 			this.label5 = new System.Windows.Forms.Label();
@@ -54,47 +52,32 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.lblCredor = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
-			this.label13 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
-			this.label15 = new System.Windows.Forms.Label();
-			this.label16 = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
-			this.label18 = new System.Windows.Forms.Label();
-			this.lblIdentificador = new System.Windows.Forms.Label();
-			this.lblParcela = new System.Windows.Forms.Label();
-			this.lblCobrancaForma = new System.Windows.Forms.Label();
-			this.lblBanco = new System.Windows.Forms.Label();
-			this.lblVencimento = new System.Windows.Forms.Label();
-			this.lblAPagarValor = new System.Windows.Forms.Label();
-			this.lblReferencia = new System.Windows.Forms.Label();
-			this.pnlVisualizar = new System.Windows.Forms.Panel();
 			this.pnlEditar = new System.Windows.Forms.Panel();
+			this.lblAPagarValor = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
-			this.btnOK = new System.Windows.Forms.ToolStripButton();
+			this.btnAlterar = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numParcela)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numReferenciaAno)).BeginInit();
 			this.panel2.SuspendLayout();
-			this.pnlVisualizar.SuspendLayout();
 			this.pnlEditar.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(757, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(266, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(246, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(244, 50);
 			this.lblTitulo.TabIndex = 2;
-			this.lblTitulo.Text = "A Pagar - Detalhamento";
+			this.lblTitulo.Text = "A Pagar - Alteração";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1023, 0);
+			this.btnClose.Location = new System.Drawing.Point(490, 0);
 			this.btnClose.TabIndex = 3;
 			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
@@ -102,7 +85,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblID);
 			this.panel1.Controls.Add(this.lbl_IdTexto);
-			this.panel1.Size = new System.Drawing.Size(1063, 50);
+			this.panel1.Size = new System.Drawing.Size(530, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lbl_IdTexto, 0);
@@ -158,7 +141,7 @@
 			this.txtIdentificador.MaxLength = 100;
 			this.txtIdentificador.Name = "txtIdentificador";
 			this.txtIdentificador.Size = new System.Drawing.Size(157, 27);
-			this.txtIdentificador.TabIndex = 3;
+			this.txtIdentificador.TabIndex = 1;
 			this.txtIdentificador.Tag = "";
 			// 
 			// label2
@@ -169,43 +152,8 @@
 			this.label2.Location = new System.Drawing.Point(94, 18);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(64, 19);
-			this.label2.TabIndex = 2;
+			this.label2.TabIndex = 0;
 			this.label2.Text = "No. Reg.";
-			// 
-			// numParcela
-			// 
-			this.numParcela.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numParcela.Location = new System.Drawing.Point(164, 54);
-			this.numParcela.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.numParcela.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-			this.numParcela.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numParcela.Name = "numParcela";
-			this.numParcela.Size = new System.Drawing.Size(65, 31);
-			this.numParcela.TabIndex = 5;
-			this.numParcela.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.BackColor = System.Drawing.Color.Transparent;
-			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(94, 59);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(57, 19);
-			this.label1.TabIndex = 4;
-			this.label1.Text = "Parcela";
 			// 
 			// btnSetForma
 			// 
@@ -213,12 +161,12 @@
 			this.btnSetForma.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetForma.Location = new System.Drawing.Point(437, 97);
+			this.btnSetForma.Location = new System.Drawing.Point(437, 54);
 			this.btnSetForma.Name = "btnSetForma";
 			this.btnSetForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetForma.RoundedCornersRadius = 0;
 			this.btnSetForma.Size = new System.Drawing.Size(34, 27);
-			this.btnSetForma.TabIndex = 8;
+			this.btnSetForma.TabIndex = 4;
 			this.btnSetForma.TabStop = false;
 			this.btnSetForma.Text = "...";
 			this.btnSetForma.UseCompatibleTextRendering = true;
@@ -228,22 +176,22 @@
 			// 
 			// txtCobrancaForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(164, 97);
+			this.txtCobrancaForma.Location = new System.Drawing.Point(164, 54);
 			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCobrancaForma.MaxLength = 30;
 			this.txtCobrancaForma.Name = "txtCobrancaForma";
 			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 7;
+			this.txtCobrancaForma.TabIndex = 3;
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(24, 100);
+			this.label3.Location = new System.Drawing.Point(24, 57);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(134, 19);
-			this.label3.TabIndex = 6;
+			this.label3.TabIndex = 2;
 			this.label3.Text = "Forma de Cobrança";
 			// 
 			// btnSetBanco
@@ -252,12 +200,12 @@
 			this.btnSetBanco.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetBanco.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetBanco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetBanco.Location = new System.Drawing.Point(437, 136);
+			this.btnSetBanco.Location = new System.Drawing.Point(437, 93);
 			this.btnSetBanco.Name = "btnSetBanco";
 			this.btnSetBanco.RoundedCornersMask = ((byte)(15));
 			this.btnSetBanco.RoundedCornersRadius = 0;
 			this.btnSetBanco.Size = new System.Drawing.Size(34, 27);
-			this.btnSetBanco.TabIndex = 11;
+			this.btnSetBanco.TabIndex = 7;
 			this.btnSetBanco.TabStop = false;
 			this.btnSetBanco.Text = "...";
 			this.btnSetBanco.UseCompatibleTextRendering = true;
@@ -267,66 +215,66 @@
 			// 
 			// txtBanco
 			// 
-			this.txtBanco.Location = new System.Drawing.Point(164, 136);
+			this.txtBanco.Location = new System.Drawing.Point(164, 93);
 			this.txtBanco.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtBanco.MaxLength = 30;
 			this.txtBanco.Name = "txtBanco";
 			this.txtBanco.Size = new System.Drawing.Size(267, 27);
-			this.txtBanco.TabIndex = 10;
+			this.txtBanco.TabIndex = 6;
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(109, 139);
+			this.label4.Location = new System.Drawing.Point(109, 96);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(49, 19);
-			this.label4.TabIndex = 9;
+			this.label4.TabIndex = 5;
 			this.label4.Text = "Banco";
 			// 
-			// txtAPagarValor
+			// txtValorDesconto
 			// 
-			this.txtAPagarValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAPagarValor.Inteiro = false;
-			this.txtAPagarValor.Location = new System.Drawing.Point(164, 218);
-			this.txtAPagarValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtAPagarValor.Name = "txtAPagarValor";
-			this.txtAPagarValor.Positivo = true;
-			this.txtAPagarValor.Size = new System.Drawing.Size(145, 31);
-			this.txtAPagarValor.TabIndex = 15;
-			this.txtAPagarValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtValorDesconto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValorDesconto.Inteiro = false;
+			this.txtValorDesconto.Location = new System.Drawing.Point(164, 218);
+			this.txtValorDesconto.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtValorDesconto.Name = "txtValorDesconto";
+			this.txtValorDesconto.Positivo = true;
+			this.txtValorDesconto.Size = new System.Drawing.Size(145, 31);
+			this.txtValorDesconto.TabIndex = 13;
+			this.txtValorDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(116, 224);
+			this.label8.Location = new System.Drawing.Point(88, 224);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(42, 19);
-			this.label8.TabIndex = 14;
-			this.label8.Text = "Valor";
+			this.label8.Size = new System.Drawing.Size(70, 19);
+			this.label8.TabIndex = 12;
+			this.label8.Text = "Desconto";
 			// 
 			// dtpVencimento
 			// 
 			this.dtpVencimento.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpVencimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpVencimento.Location = new System.Drawing.Point(164, 175);
+			this.dtpVencimento.Location = new System.Drawing.Point(164, 132);
 			this.dtpVencimento.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpVencimento.Name = "dtpVencimento";
 			this.dtpVencimento.Size = new System.Drawing.Size(145, 31);
-			this.dtpVencimento.TabIndex = 13;
+			this.dtpVencimento.TabIndex = 9;
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(73, 181);
+			this.label5.Location = new System.Drawing.Point(73, 138);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(85, 19);
-			this.label5.TabIndex = 12;
+			this.label5.TabIndex = 8;
 			this.label5.Text = "Vencimento";
 			// 
 			// label6
@@ -337,7 +285,7 @@
 			this.label6.Location = new System.Drawing.Point(327, 265);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(34, 19);
-			this.label6.TabIndex = 17;
+			this.label6.TabIndex = 15;
 			this.label6.Text = "Ano";
 			// 
 			// label7
@@ -348,7 +296,7 @@
 			this.label7.Location = new System.Drawing.Point(160, 266);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(37, 19);
-			this.label7.TabIndex = 16;
+			this.label7.TabIndex = 14;
 			this.label7.Text = "Mês";
 			// 
 			// cmbReferenciaMes
@@ -360,7 +308,7 @@
 			this.cmbReferenciaMes.Location = new System.Drawing.Point(164, 288);
 			this.cmbReferenciaMes.Name = "cmbReferenciaMes";
 			this.cmbReferenciaMes.Size = new System.Drawing.Size(150, 27);
-			this.cmbReferenciaMes.TabIndex = 19;
+			this.cmbReferenciaMes.TabIndex = 17;
 			// 
 			// label9
 			// 
@@ -370,7 +318,7 @@
 			this.label9.Location = new System.Drawing.Point(79, 291);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(79, 19);
-			this.label9.TabIndex = 18;
+			this.label9.TabIndex = 16;
 			this.label9.Text = "Referência";
 			// 
 			// numReferenciaAno
@@ -390,7 +338,7 @@
             0});
 			this.numReferenciaAno.Name = "numReferenciaAno";
 			this.numReferenciaAno.Size = new System.Drawing.Size(86, 27);
-			this.numReferenciaAno.TabIndex = 20;
+			this.numReferenciaAno.TabIndex = 18;
 			this.numReferenciaAno.Value = new decimal(new int[] {
             1,
             0,
@@ -407,7 +355,7 @@
 			this.panel2.Location = new System.Drawing.Point(12, 60);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(505, 64);
-			this.panel2.TabIndex = 21;
+			this.panel2.TabIndex = 1;
 			// 
 			// label11
 			// 
@@ -417,7 +365,7 @@
 			this.label11.Location = new System.Drawing.Point(9, 9);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(77, 19);
-			this.label11.TabIndex = 2;
+			this.label11.TabIndex = 0;
 			this.label11.Text = "Descrição:";
 			// 
 			// lblCredor
@@ -430,7 +378,7 @@
 			this.lblCredor.Location = new System.Drawing.Point(91, 33);
 			this.lblCredor.Name = "lblCredor";
 			this.lblCredor.Size = new System.Drawing.Size(406, 27);
-			this.lblCredor.TabIndex = 1;
+			this.lblCredor.TabIndex = 3;
 			this.lblCredor.Text = "Credor";
 			this.lblCredor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -445,197 +393,21 @@
 			this.label10.TabIndex = 2;
 			this.label10.Text = "Credor:";
 			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
-			this.label12.BackColor = System.Drawing.Color.Transparent;
-			this.label12.ForeColor = System.Drawing.Color.Black;
-			this.label12.Location = new System.Drawing.Point(91, 19);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(68, 19);
-			this.label12.TabIndex = 2;
-			this.label12.Text = "No. Reg.:";
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.BackColor = System.Drawing.Color.Transparent;
-			this.label13.ForeColor = System.Drawing.Color.Black;
-			this.label13.Location = new System.Drawing.Point(358, 181);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(61, 19);
-			this.label13.TabIndex = 4;
-			this.label13.Text = "Parcela:";
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.BackColor = System.Drawing.Color.Transparent;
-			this.label14.ForeColor = System.Drawing.Color.Black;
-			this.label14.Location = new System.Drawing.Point(21, 73);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(138, 19);
-			this.label14.TabIndex = 6;
-			this.label14.Text = "Forma de Cobrança:";
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.BackColor = System.Drawing.Color.Transparent;
-			this.label15.ForeColor = System.Drawing.Color.Black;
-			this.label15.Location = new System.Drawing.Point(106, 128);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(53, 19);
-			this.label15.TabIndex = 9;
-			this.label15.Text = "Banco:";
-			// 
-			// label16
-			// 
-			this.label16.AutoSize = true;
-			this.label16.BackColor = System.Drawing.Color.Transparent;
-			this.label16.ForeColor = System.Drawing.Color.Black;
-			this.label16.Location = new System.Drawing.Point(70, 181);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(89, 19);
-			this.label16.TabIndex = 12;
-			this.label16.Text = "Vencimento:";
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.BackColor = System.Drawing.Color.Transparent;
-			this.label17.ForeColor = System.Drawing.Color.Black;
-			this.label17.Location = new System.Drawing.Point(76, 289);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(83, 19);
-			this.label17.TabIndex = 18;
-			this.label17.Text = "Referência:";
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.BackColor = System.Drawing.Color.Transparent;
-			this.label18.ForeColor = System.Drawing.Color.Black;
-			this.label18.Location = new System.Drawing.Point(113, 236);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(46, 19);
-			this.label18.TabIndex = 14;
-			this.label18.Text = "Valor:";
-			// 
-			// lblIdentificador
-			// 
-			this.lblIdentificador.BackColor = System.Drawing.Color.White;
-			this.lblIdentificador.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblIdentificador.Location = new System.Drawing.Point(161, 16);
-			this.lblIdentificador.Name = "lblIdentificador";
-			this.lblIdentificador.Size = new System.Drawing.Size(325, 27);
-			this.lblIdentificador.TabIndex = 1;
-			this.lblIdentificador.Text = "Identificador";
-			this.lblIdentificador.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblParcela
-			// 
-			this.lblParcela.BackColor = System.Drawing.Color.White;
-			this.lblParcela.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblParcela.Location = new System.Drawing.Point(425, 178);
-			this.lblParcela.Name = "lblParcela";
-			this.lblParcela.Size = new System.Drawing.Size(61, 27);
-			this.lblParcela.TabIndex = 1;
-			this.lblParcela.Text = "00";
-			this.lblParcela.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblCobrancaForma
-			// 
-			this.lblCobrancaForma.BackColor = System.Drawing.Color.White;
-			this.lblCobrancaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCobrancaForma.Location = new System.Drawing.Point(161, 70);
-			this.lblCobrancaForma.Name = "lblCobrancaForma";
-			this.lblCobrancaForma.Size = new System.Drawing.Size(325, 27);
-			this.lblCobrancaForma.TabIndex = 1;
-			this.lblCobrancaForma.Text = "Forma de Cobrança";
-			this.lblCobrancaForma.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblBanco
-			// 
-			this.lblBanco.BackColor = System.Drawing.Color.White;
-			this.lblBanco.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblBanco.Location = new System.Drawing.Point(161, 124);
-			this.lblBanco.Name = "lblBanco";
-			this.lblBanco.Size = new System.Drawing.Size(325, 27);
-			this.lblBanco.TabIndex = 1;
-			this.lblBanco.Text = "Banco de Cobrança";
-			this.lblBanco.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblVencimento
-			// 
-			this.lblVencimento.BackColor = System.Drawing.Color.White;
-			this.lblVencimento.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblVencimento.Location = new System.Drawing.Point(161, 178);
-			this.lblVencimento.Name = "lblVencimento";
-			this.lblVencimento.Size = new System.Drawing.Size(182, 27);
-			this.lblVencimento.TabIndex = 1;
-			this.lblVencimento.Text = "Vencimento";
-			this.lblVencimento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblAPagarValor
-			// 
-			this.lblAPagarValor.BackColor = System.Drawing.Color.White;
-			this.lblAPagarValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAPagarValor.Location = new System.Drawing.Point(161, 232);
-			this.lblAPagarValor.Name = "lblAPagarValor";
-			this.lblAPagarValor.Size = new System.Drawing.Size(182, 27);
-			this.lblAPagarValor.TabIndex = 1;
-			this.lblAPagarValor.Text = "R$ 0,00";
-			this.lblAPagarValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblReferencia
-			// 
-			this.lblReferencia.BackColor = System.Drawing.Color.White;
-			this.lblReferencia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblReferencia.Location = new System.Drawing.Point(161, 286);
-			this.lblReferencia.Name = "lblReferencia";
-			this.lblReferencia.Size = new System.Drawing.Size(325, 27);
-			this.lblReferencia.TabIndex = 1;
-			this.lblReferencia.Text = "Mes/Ano";
-			this.lblReferencia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// pnlVisualizar
-			// 
-			this.pnlVisualizar.BackColor = System.Drawing.Color.Transparent;
-			this.pnlVisualizar.Controls.Add(this.lblIdentificador);
-			this.pnlVisualizar.Controls.Add(this.label12);
-			this.pnlVisualizar.Controls.Add(this.label13);
-			this.pnlVisualizar.Controls.Add(this.label14);
-			this.pnlVisualizar.Controls.Add(this.lblReferencia);
-			this.pnlVisualizar.Controls.Add(this.label15);
-			this.pnlVisualizar.Controls.Add(this.lblAPagarValor);
-			this.pnlVisualizar.Controls.Add(this.label16);
-			this.pnlVisualizar.Controls.Add(this.lblVencimento);
-			this.pnlVisualizar.Controls.Add(this.label17);
-			this.pnlVisualizar.Controls.Add(this.lblBanco);
-			this.pnlVisualizar.Controls.Add(this.label18);
-			this.pnlVisualizar.Controls.Add(this.lblCobrancaForma);
-			this.pnlVisualizar.Controls.Add(this.lblParcela);
-			this.pnlVisualizar.Location = new System.Drawing.Point(544, 132);
-			this.pnlVisualizar.Name = "pnlVisualizar";
-			this.pnlVisualizar.Size = new System.Drawing.Size(505, 330);
-			this.pnlVisualizar.TabIndex = 21;
-			// 
 			// pnlEditar
 			// 
 			this.pnlEditar.BackColor = System.Drawing.Color.Transparent;
 			this.pnlEditar.Controls.Add(this.txtIdentificador);
 			this.pnlEditar.Controls.Add(this.label2);
-			this.pnlEditar.Controls.Add(this.label1);
-			this.pnlEditar.Controls.Add(this.numParcela);
 			this.pnlEditar.Controls.Add(this.numReferenciaAno);
 			this.pnlEditar.Controls.Add(this.cmbReferenciaMes);
 			this.pnlEditar.Controls.Add(this.label3);
-			this.pnlEditar.Controls.Add(this.txtAPagarValor);
+			this.pnlEditar.Controls.Add(this.txtValorDesconto);
+			this.pnlEditar.Controls.Add(this.lblAPagarValor);
 			this.pnlEditar.Controls.Add(this.txtCobrancaForma);
 			this.pnlEditar.Controls.Add(this.label8);
 			this.pnlEditar.Controls.Add(this.btnSetForma);
 			this.pnlEditar.Controls.Add(this.dtpVencimento);
+			this.pnlEditar.Controls.Add(this.label18);
 			this.pnlEditar.Controls.Add(this.label4);
 			this.pnlEditar.Controls.Add(this.label9);
 			this.pnlEditar.Controls.Add(this.txtBanco);
@@ -647,7 +419,29 @@
 			this.pnlEditar.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
 			this.pnlEditar.Name = "pnlEditar";
 			this.pnlEditar.Size = new System.Drawing.Size(505, 330);
-			this.pnlEditar.TabIndex = 21;
+			this.pnlEditar.TabIndex = 2;
+			// 
+			// lblAPagarValor
+			// 
+			this.lblAPagarValor.BackColor = System.Drawing.Color.Transparent;
+			this.lblAPagarValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAPagarValor.Location = new System.Drawing.Point(162, 177);
+			this.lblAPagarValor.Name = "lblAPagarValor";
+			this.lblAPagarValor.Size = new System.Drawing.Size(147, 27);
+			this.lblAPagarValor.TabIndex = 11;
+			this.lblAPagarValor.Text = "R$ 0,00";
+			this.lblAPagarValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.BackColor = System.Drawing.Color.Transparent;
+			this.label18.ForeColor = System.Drawing.Color.Black;
+			this.label18.Location = new System.Drawing.Point(60, 181);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(98, 19);
+			this.label18.TabIndex = 10;
+			this.label18.Text = "Valor Original";
 			// 
 			// tspMenu
 			// 
@@ -657,27 +451,28 @@
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOK,
+            this.btnAlterar,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(4, 489);
+			this.tspMenu.Location = new System.Drawing.Point(4, 474);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(524, 44);
-			this.tspMenu.TabIndex = 22;
+			this.tspMenu.TabIndex = 3;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
-			// btnOK
+			// btnAlterar
 			// 
-			this.btnOK.AutoSize = false;
-			this.btnOK.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnOK.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnOK.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnOK.Name = "btnOK";
-			this.btnOK.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnOK.Size = new System.Drawing.Size(110, 41);
-			this.btnOK.Text = "&OK";
-			this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnOK.Click += new System.EventHandler(this.btnClose_Click);
+			this.btnAlterar.AutoSize = false;
+			this.btnAlterar.Enabled = false;
+			this.btnAlterar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnAlterar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnAlterar.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnAlterar.Name = "btnAlterar";
+			this.btnAlterar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnAlterar.Size = new System.Drawing.Size(110, 41);
+			this.btnAlterar.Text = "&Alterar";
+			this.btnAlterar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
 			// 
 			// btnFechar
 			// 
@@ -693,30 +488,25 @@
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.Click += new System.EventHandler(this.btnClose_Click);
 			// 
-			// frmAPagarDetalhe
+			// frmAPagarAlterar
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1063, 536);
+			this.ClientSize = new System.Drawing.Size(530, 521);
 			this.Controls.Add(this.tspMenu);
-			this.Controls.Add(this.pnlVisualizar);
 			this.Controls.Add(this.pnlEditar);
 			this.Controls.Add(this.panel2);
-			this.Name = "frmAPagarDetalhe";
+			this.Name = "frmAPagarAlterar";
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
 			this.Controls.SetChildIndex(this.panel2, 0);
 			this.Controls.SetChildIndex(this.pnlEditar, 0);
-			this.Controls.SetChildIndex(this.pnlVisualizar, 0);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numParcela)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numReferenciaAno)).EndInit();
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
-			this.pnlVisualizar.ResumeLayout(false);
-			this.pnlVisualizar.PerformLayout();
 			this.pnlEditar.ResumeLayout(false);
 			this.pnlEditar.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -732,15 +522,13 @@
 		private System.Windows.Forms.Label lblDespesaDescricao;
 		internal System.Windows.Forms.TextBox txtIdentificador;
 		internal System.Windows.Forms.Label label2;
-		private System.Windows.Forms.NumericUpDown numParcela;
-		internal System.Windows.Forms.Label label1;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
 		internal System.Windows.Forms.TextBox txtCobrancaForma;
 		internal System.Windows.Forms.Label label3;
 		internal VIBlend.WinForms.Controls.vButton btnSetBanco;
 		internal System.Windows.Forms.TextBox txtBanco;
 		internal System.Windows.Forms.Label label4;
-		private CamadaUC.ucOnlyNumbers txtAPagarValor;
+		private CamadaUC.ucOnlyNumbers txtValorDesconto;
 		internal System.Windows.Forms.Label label8;
 		private System.Windows.Forms.DateTimePicker dtpVencimento;
 		internal System.Windows.Forms.Label label5;
@@ -753,24 +541,11 @@
 		private System.Windows.Forms.Label lblCredor;
 		internal System.Windows.Forms.Label label11;
 		internal System.Windows.Forms.Label label10;
-		internal System.Windows.Forms.Label label12;
-		internal System.Windows.Forms.Label label13;
-		internal System.Windows.Forms.Label label14;
-		internal System.Windows.Forms.Label label15;
-		internal System.Windows.Forms.Label label16;
-		internal System.Windows.Forms.Label label17;
-		internal System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Label lblIdentificador;
-		private System.Windows.Forms.Label lblParcela;
-		private System.Windows.Forms.Label lblCobrancaForma;
-		private System.Windows.Forms.Label lblBanco;
-		private System.Windows.Forms.Label lblVencimento;
-		private System.Windows.Forms.Label lblAPagarValor;
-		private System.Windows.Forms.Label lblReferencia;
-		private System.Windows.Forms.Panel pnlVisualizar;
 		private System.Windows.Forms.Panel pnlEditar;
 		private System.Windows.Forms.ToolStrip tspMenu;
-		private System.Windows.Forms.ToolStripButton btnOK;
+		private System.Windows.Forms.ToolStripButton btnAlterar;
 		private System.Windows.Forms.ToolStripButton btnFechar;
+		private System.Windows.Forms.Label lblAPagarValor;
+		internal System.Windows.Forms.Label label18;
 	}
 }

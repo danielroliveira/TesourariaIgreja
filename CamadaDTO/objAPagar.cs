@@ -21,7 +21,7 @@ namespace CamadaDTO
 			internal int _IDCobrancaForma;
 			internal string _CobrancaForma;
 			internal decimal _APagarValor;
-			internal byte _IDSituacao;
+			internal byte _IDSituacao; // 1: Em Aberto | 2: Quitadas | 3: Canceladas | 4:Negociadas | 5:Negativadas
 			internal string _Situacao;
 			internal int? _IDBanco;
 			internal string _Banco;
@@ -29,6 +29,8 @@ namespace CamadaDTO
 			internal DateTime? _PagamentoData;
 			internal byte _Prioridade;
 			internal decimal _ValorPago;
+			internal decimal _ValorAcrescimo;
+			internal decimal _ValorDesconto;
 			internal int? _ReferenciaMes;
 			internal int? _ReferenciaAno;
 			internal bool _Imagem;
@@ -54,6 +56,8 @@ namespace CamadaDTO
 				_IDBanco = null,
 				_Prioridade = 1,
 				_ValorPago = 0,
+				_ValorAcrescimo = 0,
+				_ValorDesconto = 0,
 				_Imagem = false,
 			};
 		}
@@ -225,7 +229,18 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Situacao
 		{
-			get => EditData._Situacao;
+			get
+			{
+				if (IDSituacao == 1 && Vencimento < DateTime.Today)
+				{
+					return "Vencida";
+				}
+				else
+				{
+					return EditData._Situacao;
+				}
+			}
+
 			set => EditData._Situacao = value;
 		}
 
@@ -312,6 +327,36 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property ValorAcrescimo
+		//---------------------------------------------------------------
+		public decimal ValorAcrescimo
+		{
+			get => EditData._ValorAcrescimo;
+			set
+			{
+				if (value != EditData._ValorAcrescimo)
+				{
+					EditData._ValorAcrescimo = value;
+					NotifyPropertyChanged("ValorAcrescimo");
+				}
+			}
+		}
+
+		// Property ValorDesconto
+		//---------------------------------------------------------------
+		public decimal ValorDesconto
+		{
+			get => EditData._ValorDesconto;
+			set
+			{
+				if (value != EditData._ValorDesconto)
+				{
+					EditData._ValorDesconto = value;
+					NotifyPropertyChanged("ValorDesconto");
+				}
+			}
+		}
+
 		// Property ReferenciaMes
 		//---------------------------------------------------------------
 		public int? ReferenciaMes
@@ -338,6 +383,25 @@ namespace CamadaDTO
 				{
 					EditData._ReferenciaAno = value;
 					NotifyPropertyChanged("ReferenciaAno");
+				}
+			}
+		}
+
+		// Property Referencia
+		//---------------------------------------------------------------
+		public string Referencia
+		{
+			get
+			{
+				if (ReferenciaMes != null && ReferenciaAno != null)
+				{
+					DateTime dt = new DateTime((int)ReferenciaAno, (int)ReferenciaMes, 1);
+					return dt.ToString("MMMM/yyyy");
+
+				}
+				else
+				{
+					return "Sem Referência...";
 				}
 			}
 		}
