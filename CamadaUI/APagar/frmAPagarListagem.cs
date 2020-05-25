@@ -54,8 +54,6 @@ namespace CamadaUI.APagar
 			FormataListagem();
 
 			//--- get dados
-			dgvListagem.CellDoubleClick += btnVisualizar_Click;
-
 			DefineLabelFiltro();
 
 			//--- Handlers
@@ -64,7 +62,6 @@ namespace CamadaUI.APagar
 			rbtPorPeriodo.CheckedChanged += rbt_CheckedChanged;
 			rbtTodas.CheckedChanged += rbt_CheckedChanged;
 			AddHandlersRadioButSituacao();
-
 		}
 
 		// CONTROLA O MES
@@ -88,7 +85,7 @@ namespace CamadaUI.APagar
 				lblDtFinal.Text = _dtFinal.ToString("dd/MM");
 
 				// habilita, desabilita btnPeriodoPosterior caso mes futuro
-				btnPeriodoPosterior.Enabled = !(_myMes.Year >= DateTime.Today.Year && _myMes.Month >= DateTime.Today.Month);
+				//btnPeriodoPosterior.Enabled = !(_myMes.Year >= DateTime.Today.Year && _myMes.Month >= DateTime.Today.Month);
 			}
 		}
 
@@ -278,6 +275,26 @@ namespace CamadaUI.APagar
 			dgvListagem.Columns.AddRange(colList.ToArray());
 		}
 
+		// ON DOUBLE CLICK SELECT ITEM
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			frmAPagarDetalhe frm = new frmAPagarDetalhe(item, this);
+			frm.ShowDialog();
+		}
+
+
 		// ON ENTER SELECT ITEM
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_KeyDown(object sender, KeyEventArgs e)
@@ -286,7 +303,7 @@ namespace CamadaUI.APagar
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-				btnVisualizar_Click(sender, new EventArgs());
+				dgvListagem_CellDoubleClick(sender, null);
 			}
 		}
 
@@ -341,54 +358,10 @@ namespace CamadaUI.APagar
 			MostraMenuPrincipal();
 		}
 
-		// VISUALIZAR ESCOLHIDO
-		//------------------------------------------------------------------------------------------------------------
-		private void btnVisualizar_Click(object sender, EventArgs e)
-		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Visualizar...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
 
-			//--- get Selected item
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			frmAPagarDetalhe frm = new frmAPagarDetalhe(item, this);
-			frm.ShowDialog();
-		}
-
-		// VISUALIZAR ESCOLHIDO
-		//------------------------------------------------------------------------------------------------------------
 		private void btnAlterar_Click(object sender, EventArgs e)
 		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Alterar...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
 
-			//--- get Selected item
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			frmAPagarAlterar frm = new frmAPagarAlterar(item, this);
-			frm.ShowDialog();
-
-			if (frm.DialogResult != DialogResult.OK)
-			{
-				bindPag.CancelEdit();
-			}
-			else
-			{
-				bindPag.EndEdit();
-
-				// save aPagar
-				SalvarRegistro(item);
-			}
 
 		}
 
@@ -585,6 +558,20 @@ namespace CamadaUI.APagar
 			ObterDados();
 		}
 
+		// OPEN MONTH YEAR FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void lblPeriodo_DoubleClick(object sender, EventArgs e)
+		{
+			Main.frmDateMesAnoGet frm = new Main.frmDateMesAnoGet(
+				"Mês e Ano da procura.", EnumDataTipo.PassadoOuFuturo, _myMes, this
+			);
+
+			frm.ShowDialog();
+			if (frm.DialogResult != DialogResult.OK) return;
+
+			propMes = (DateTime)frm.propDataInfo;
+		}
+
 		#endregion // DATE MONTH CONTROLER --- END
 
 		#region CONTROL SITUACAO
@@ -640,7 +627,415 @@ namespace CamadaUI.APagar
 			}
 		}
 
+
 		#endregion // SAVE --- END
 
+		#region MENU SUSPENSO
+
+
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
+		{
+			// check button
+			if (e.Button != MouseButtons.Right) return;
+
+			Control c = (Control)sender;
+			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+			dgvListagem.ClearSelection();
+
+			if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+			// seleciona o ROW
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
+			dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+			// mostra o MENU ativar e desativar
+			objAPagar pagItem = (objAPagar)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+			// mnuVerPagamentos
+			mnuItemVerPagamentos.Enabled = pagItem.ValorPago > 0;
+
+			switch (pagItem.IDSituacao)
+			{
+				case 1: // EM ABERTO
+					mnuItemAlterar.Enabled = true;
+					mnuItemCancelar.Enabled = true;
+					mnuItemNegativar.Enabled = true;
+					mnuItemNegociar.Enabled = true;
+					mnuItemNormalizar.Enabled = false;
+					mnuItemQuitar.Enabled = true;
+					break;
+				case 2: // QUITADAS
+					mnuItemAlterar.Enabled = false;
+					mnuItemCancelar.Enabled = false;
+					mnuItemNegativar.Enabled = false;
+					mnuItemNegociar.Enabled = false;
+					mnuItemNormalizar.Enabled = false;
+					mnuItemQuitar.Enabled = false;
+					break;
+				case 3: // CANCELADAS
+				case 4: // NEGOCIADAS
+				case 5: // NEGATIVADAS
+					mnuItemAlterar.Enabled = false;
+					mnuItemCancelar.Enabled = false;
+					mnuItemNegativar.Enabled = false;
+					mnuItemNegociar.Enabled = false;
+					mnuItemNormalizar.Enabled = true;
+					mnuItemQuitar.Enabled = false;
+					break;
+				default:
+					break;
+			}
+
+			// revela menu
+			mnuOperacoes.Show(c.PointToScreen(e.Location));
+
+		}
+
+		//--- MENU QUITAR
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemQuitar_Click(object sender, EventArgs e)
+		{
+			btnQuitar_Click(sender, e);
+		}
+
+		//--- MENU CANCELAR
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemCancelar_Click(object sender, EventArgs e)
+		{
+			// check and ask to user
+			objAPagar item = CheckAlteraSituacao("Cancelar");
+			if (item == null) return;
+
+			//--- EXECUTE
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				item.IDSituacao = 3;
+				item.Situacao = "Cancelada";
+
+				// save aPagar
+				SalvarRegistro(item);
+
+				// Confirm AND CalcTotais
+				//--- update list
+				bindPag.RemoveCurrent();
+				CalculaTotais();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Cancelar o A Pagar..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		//--- MENU NEGOCIAR
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemNegociar_Click(object sender, EventArgs e)
+		{
+			// check and ask to user
+			objAPagar item = CheckAlteraSituacao("Negociar");
+			if (item == null) return;
+
+			//--- EXECUTE
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				item.IDSituacao = 4;
+				item.Situacao = "Negociada";
+
+				// save aPagar
+				SalvarRegistro(item);
+
+				// Confirm AND CalcTotais
+				//--- update list
+				bindPag.RemoveCurrent();
+				CalculaTotais();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Negociar o 'A Pagar'..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		//--- MENU NEGATIVAR
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemNegativar_Click(object sender, EventArgs e)
+		{
+			// check and ask to user
+			objAPagar item = CheckAlteraSituacao("Negativar");
+			if (item == null) return;
+
+			//--- EXECUTE
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				item.IDSituacao = 5;
+				item.Situacao = "Negativada";
+
+				// save aPagar
+				SalvarRegistro(item);
+
+				// Confirm AND CalcTotais
+				//--- update list
+				bindPag.RemoveCurrent();
+				CalculaTotais();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Negativar o 'a Pagar'..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		//--- MENU NORMALIZAR
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemNormalizar_Click(object sender, EventArgs e)
+		{
+			// check and ask to user
+			objAPagar item = CheckAlteraSituacao("Normalizar");
+			if (item == null) return;
+
+			//--- EXECUTE
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				item.IDSituacao = 1;
+				item.Situacao = "Em Aberto";
+
+				// save aPagar
+				SalvarRegistro(item);
+
+				// Confirm AND CalcTotais
+				//--- update list
+				bindPag.RemoveCurrent();
+				CalculaTotais();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Normalizar o a Pagar..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// VERIFICA DADOS E EMITE MENSAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private objAPagar CheckAlteraSituacao(string acao)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return null;
+
+			//--- verifica USER PERMIT
+			if (!CheckAuthorization(EnumAcessoTipo.Usuario_Senior, $"{acao} a Pagar", this)) return null;
+
+			//--- Pergunta ao USER
+			var resp = AbrirDialog($"Você deseja realmente {acao.ToUpper()} este registro de A Pagar selecionado?",
+				$"{acao} A Pagar",
+				DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp == DialogResult.No) return null;
+
+			//--- Get A Pagar on list
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//--- check if ORIGEM is Periodica
+			if (item.DespesaOrigem != 1)
+			{
+				AbrirDialog($"Esse A Pagar é uma DEPESA PERIÓDICA.\n" +
+					$"Não é possível {acao} uma Despesa Periódica.",
+					"Despesa Periódica", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+
+			return item;
+		}
+
+
+		//--- MENU VER ORIGEM
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemVerOrigem_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return;
+
+			//--- Get A Pagar on list
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- check if ORIGEM is Comum or Periodica
+				if (item.DespesaOrigem == 1)
+				{
+					Saidas.frmDespesa frm = new Saidas.frmDespesa(item.IDDespesa);
+					Visible = false;
+					frm.ShowDialog();
+					DesativaMenuPrincipal();
+					Visible = true;
+				}
+				else
+				{
+					AbrirDialog("Não implementado", "Implementando");
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir a Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		//--- MENU ALTERAR ITEM
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuItemAlterar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Alterar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//--- check if not is locked
+			if (item.ValorPago > 0)
+			{
+				AbrirDialog($"O registro de a pagar selecionado: {item.IDAPagar:D4} já possui pagamentos realizados\n" +
+					$"Não é possível fazer alterações num registro de a pagar que já foi quitado.",
+					"A Pagar com Pagamentos", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			frmAPagarAlterar frm = new frmAPagarAlterar(item, this);
+			frm.ShowDialog();
+
+			if (frm.DialogResult != DialogResult.OK)
+			{
+				bindPag.CancelEdit();
+			}
+			else
+			{
+				bindPag.EndEdit();
+
+				// save aPagar
+				SalvarRegistro(item);
+			}
+		}
+
+		#endregion // MENU SUSPENSO --- END
+
+		#region TOOLTIP
+		private void lblPeriodo_MouseHover(object sender, EventArgs e)
+		{
+			ShowToolTip((Control)sender, ((Control)sender).Width - 100);
+			lblPeriodo.MouseHover -= lblPeriodo_MouseHover;
+		}
+
+		private void ShowToolTip(Control controle, int? xPosition = null)
+		{
+			//Cria a ToolTip e associa com o Form container.
+			ToolTip toolTip1 = new ToolTip()
+			{
+				AutoPopDelay = 2000, // Define o delay para a ToolTip
+				InitialDelay = 2000,
+				ReshowDelay = 500,
+				IsBalloon = true,
+				UseAnimation = true,
+				UseFading = true
+			};
+
+			// define xPosition of ToolTip
+			if (xPosition == null)
+			{
+				xPosition = controle.Width - 30;
+			}
+
+			if (controle.Tag == null)
+			{
+				toolTip1.Show("Clique aqui...", controle, (int)xPosition, -40, 2000);
+			}
+			else
+			{
+				toolTip1.Show(controle.Tag.ToString(), controle, (int)xPosition, -40, 2000);
+			}
+		}
+
+		#endregion
+
+
+		//--- QUITAR A PAGAR
+		//-------------------------------------------------------------------------------------------------------
+		private void btnQuitar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Quitar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objAPagar pagItem = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+				frmAPagarSaidas frm = new frmAPagarSaidas(pagItem, this);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Pagamentos..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
 	}
 }

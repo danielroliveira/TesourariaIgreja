@@ -1,17 +1,19 @@
-﻿using CamadaBLL;
-using CamadaDTO;
-using CamadaUI.Caixa;
+﻿using CamadaDTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
+using CamadaBLL;
+using CamadaUI.Caixa;
 
 namespace CamadaUI.APagar
 {
-	public partial class frmAPagarAlterar : CamadaUI.Modals.frmModFinBorder
+	public partial class frmAPagarQuitar : CamadaUI.Modals.frmModFinBorder
 	{
 		objAPagar _apagar;
 		BindingSource bind = new BindingSource();
@@ -19,22 +21,38 @@ namespace CamadaUI.APagar
 		Form _formOrigem;
 
 		#region SUB NEW | CONSTRUCTOR
-		public frmAPagarAlterar(objAPagar pag, Form formOrigem)
+		public frmAPagarQuitar(objAPagar pag, Form formOrigem)
 		{
 			InitializeComponent();
 			Size = new Size(530, 536);
 			_formOrigem = formOrigem;
 			_apagar = pag;
 
-			pnlEditar.Visible = true;
-			GetFormasList();
+			CheckEditing();
+		}
 
-			bind.DataSource = _apagar;
-			BindingCreator();
+		// VERIFY IF IS EDITING FORM OR NOT EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void CheckEditing()
+		{
+			if (_apagar.IDAPagar == null)
+			{
+				pnlEditar.Visible = true;
+				pnlVisualizar.Visible = false;
+				GetFormasList();
 
-			HandlerKeyDownControl(this);
-			_apagar.PropertyChanged += (a, b) => btnAlterar.Enabled = true;
+				bind.DataSource = _apagar;
+				BindingCreatorEditing();
+			}
+			else
+			{
+				pnlEditar.Visible = false;
+				pnlVisualizar.Visible = true;
+				pnlVisualizar.Location = new Point(12, 132);
 
+				bind.DataSource = _apagar;
+				BindingCreatorNotEditing();
+			}
 		}
 
 		// GET LIST OF FORMAS DE COBRANCA
@@ -66,28 +84,54 @@ namespace CamadaUI.APagar
 
 		// ADD DATA BINDIGNS
 		//------------------------------------------------------------------------------------------------------------
-		private void BindingCreator()
+		private void BindingCreatorEditing()
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDAPagar", true);
 			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true);
 			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
 			txtIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
+			numParcela.DataBindings.Add("Value", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpVencimento.DataBindings.Add("Value", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtValorDesconto.DataBindings.Add("Text", bind, "ValorDesconto", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			numReferenciaAno.DataBindings.Add("Value", bind, "ReferenciaAno", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
-			txtValorDesconto.DataBindings["Text"].Format += FormatCurrency;
-			lblAPagarValor.DataBindings["Text"].Format += FormatCurrency;
+			txtAPagarValor.DataBindings["Text"].Format += FormatCurrency;
+			numParcela.DataBindings["Value"].Format += FormatD2;
 
 			// CARREGA COMBO
 			CarregaComboMes();
 			cmbReferenciaMes.DataBindings.Add("SelectedValue", bind, "ReferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
+		}
+
+		// ADD DATA BINDIGNS
+		//------------------------------------------------------------------------------------------------------------
+		private void BindingCreatorNotEditing()
+		{
+			// CREATE BINDINGS
+			lblID.DataBindings.Add("Text", bind, "IDAPagar", true);
+			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true);
+			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
+			lblIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblParcela.DataBindings.Add("Text", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblVencimento.DataBindings.Add("Text", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblReferencia.DataBindings.Add("Text", bind, "Referencia", true, DataSourceUpdateMode.OnPropertyChanged);
+
+			// FORMAT HANDLERS
+			lblID.DataBindings["Text"].Format += FormatID;
+			lblAPagarValor.DataBindings["Text"].Format += FormatCurrency;
+			lblParcela.DataBindings["Text"].Format += FormatD2;
+
+			// CARREGA COMBO
+			//CarregaComboMes();
+			//cmbReferenciaMes.DataBindings.Add("SelectedValue", bind, "ReferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -143,18 +187,9 @@ namespace CamadaUI.APagar
 
 		#region BUTTONS FUNCTION
 
-		// CLOSE | CANCELAR
-		//------------------------------------------------------------------------------------------------------------
 		private void btnClose_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.Cancel;
-		}
-
-		// ALTERAR | OK
-		//------------------------------------------------------------------------------------------------------------
-		private void btnAlterar_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
+			Close();
 		}
 
 		private void btnSetForma_Click(object sender, EventArgs e)
@@ -274,23 +309,5 @@ namespace CamadaUI.APagar
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
 
-		#region VALIDA DESCONTO
-
-		private void txtValorDesconto_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			decimal newDesconto = decimal.Parse(txtValorDesconto.Text, System.Globalization.NumberStyles.Currency);
-
-			//--- verifica se o novo valor do desconto é menor que o valor do APagar
-			if (newDesconto >= _apagar.APagarValor - _apagar.ValorPago)
-			{
-				AbrirDialog("Não é possível conceder um valor de DESCONTO MAIOR ou IGUAL ao valor EM ABERTO desse A PAGAR...",
-							"Conceder Desconto",
-							DialogType.OK,
-							DialogIcon.Exclamation);
-				e.Cancel = true;
-			}
-		}
-
-		#endregion // VALIDA DESCONTO --- END
 	}
 }

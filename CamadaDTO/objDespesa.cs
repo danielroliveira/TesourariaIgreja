@@ -15,6 +15,7 @@ namespace CamadaDTO
 		{
 			internal long? _IDDespesa;
 			internal string _DespesaDescricao;
+			internal byte _DespesaOrigem; // 1:DespesaComum
 			internal DateTime _DespesaData;
 			internal decimal _DespesaValor;
 			internal string _DocumentoNumero;
@@ -46,6 +47,7 @@ namespace CamadaDTO
 			{
 				_IDDespesa = IDDespesa,
 				_DespesaDescricao = "",
+				_DespesaOrigem = 1,
 				_DespesaData = DateTime.Today,
 				_DespesaValor = 0,
 				_IDSituacao = 1,
@@ -125,6 +127,14 @@ namespace CamadaDTO
 					NotifyPropertyChanged("DespesaDescricao");
 				}
 			}
+		}
+
+		// Property DespesaOrigem
+		//---------------------------------------------------------------
+		public byte DespesaOrigem
+		{
+			get => EditData._DespesaOrigem;
+			set => EditData._DespesaOrigem = value;
 		}
 
 		// Property DespesaData

@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.APagar;
 using CamadaUI.Registres;
 using CamadaUI.Setores;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -16,7 +18,7 @@ namespace CamadaUI.Saidas
 	public partial class frmDespesa : CamadaUI.Modals.frmModFinBorder
 	{
 		private objDespesa _despesa;
-		private DespesaBLL despDLL = new DespesaBLL();
+		private DespesaBLL despBLL = new DespesaBLL();
 		private BindingSource bind = new BindingSource();
 		private BindingSource bindParcelas = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -29,11 +31,32 @@ namespace CamadaUI.Saidas
 
 		#region SUB NEW | CONSTRUCTOR | PROPERTIES
 
+		// CONSTRUCTOR WITH DESPESA
+		//------------------------------------------------------------------------------------------------------------
 		public frmDespesa(objDespesa despesa)
 		{
 			InitializeComponent();
+			ConstructorContinue(despesa);
+		}
 
+		// CONSTRUCTOR WITH ID
+		//------------------------------------------------------------------------------------------------------------
+		public frmDespesa(long IDDespesa)
+		{
+			InitializeComponent();
+			var desp = GetDespesaByID(IDDespesa);
+
+			if (desp == null) return;
+
+			ConstructorContinue(GetDespesaByID(IDDespesa));
+		}
+
+		// CONSTRUCTOR CONTINUE AFTER GET DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		private void ConstructorContinue(objDespesa despesa)
+		{
 			_despesa = despesa;
+
 			GetDocTipos();
 
 			// Define Conta and Setor padrao
@@ -71,8 +94,16 @@ namespace CamadaUI.Saidas
 			btnParcelasGerar.Click += (a, b) => ParcelasGerar();
 		}
 
+		// SHOW
+		//------------------------------------------------------------------------------------------------------------
 		private void frmDespesa_Shown(object sender, EventArgs e)
 		{
+			if (_despesa == null)
+			{
+				Close();
+				return;
+			}
+
 			txtSetor.Enter += text_Enter;
 			txtCredor.Enter += text_Enter;
 			txtDespesaTipo.Enter += text_Enter;
@@ -119,6 +150,30 @@ namespace CamadaUI.Saidas
 				btnSetCredor.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
+
+		// GET DESPESA BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private objDespesa GetDespesaByID(long ID)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				return despBLL.GetDespesa(ID);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		// GET PARCELAMENTO | APAGAR
 		//------------------------------------------------------------------------------------------------------------
 		private void GetAPagar()
@@ -152,7 +207,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listDocTipos = despDLL.GetDespesaDocumentoTipos();
+				listDocTipos = despBLL.GetDespesaDocumentoTipos();
 			}
 			catch (Exception ex)
 			{
@@ -224,7 +279,19 @@ namespace CamadaUI.Saidas
 
 		private void btnNovo_Click(object sender, EventArgs e)
 		{
+			// if frmAPagarListagem is ENABLED then exit
+			if (Modal)
+			{
+				btnNovo.Enabled = false;
+				return;
+			}
 
+			if (Sit != EnumFlagEstado.RegistroSalvo) return;
+
+			_despesa = new objDespesa(null);
+			Sit = EnumFlagEstado.NovoRegistro;
+			bind.Add(_despesa);
+			txtSetor.Focus();
 		}
 
 		private void btnFechar_Click(object sender, EventArgs e)
@@ -486,7 +553,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
-					txtDocumentoTipo,
+					txtDocumentoTipo, txtDespesaDescricao,
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -706,10 +773,6 @@ namespace CamadaUI.Saidas
 				toolTip1.Show(controle.Tag.ToString(), controle, controle.Width - 30, -40, 2000);
 			}
 		}
-
-
-
-
 
 		#endregion
 
@@ -975,7 +1038,7 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- INSERT Desepesa
-				int newID = despDLL.InsertDespesa(_despesa, ref listAPagar);
+				int newID = despBLL.InsertDespesa(_despesa, ref listAPagar);
 				_despesa.IDDespesa = newID;
 				bind.EndEdit();
 				bind.ResetBindings(false);

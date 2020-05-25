@@ -413,5 +413,68 @@ namespace CamadaUI
 
 		#endregion // CONTROLA SALDO CONTA E SETOR --- END
 
+		#region USER AUTORIZATION GUARD
+
+		public static bool CheckAuthorization(EnumAcessoTipo AuthLevel,
+			string AuthDescription,
+			Form formOrigem = null)
+		{
+			if (Program.usuarioAtual.UsuarioAcesso <= (byte)AuthLevel)
+			{
+				return true;
+			}
+			else
+			{
+				return GetAuthorization(AuthLevel, AuthDescription, formOrigem);
+			}
+		}
+
+		private static bool GetAuthorization(EnumAcessoTipo AuthLevel,
+			string AuthDescription,
+			Form formOrigem = null)
+		{
+			var frmA = new Main.frmUserAuthorization(AuthDescription, formOrigem);
+			frmA.ShowDialog();
+
+			if (frmA.DialogResult != DialogResult.OK) return false;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- GET User Data
+				var db = new AcessoControlBLL();
+				object obj = db.GetAuthorization(frmA.propUser, frmA.propSenha, AuthLevel, AuthDescription);
+
+				if (obj.GetType() == typeof(objUsuario))
+				{
+					return true;
+				}
+				else
+				{
+					AbrirDialog("Uma falha ocorreu na autorização:\n" + obj.ToString(),
+								"Autorização Negada",
+								DialogType.OK,
+								DialogIcon.Warning);
+					return false;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a autorização..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // USER AUTORIZATION GUARD --- END
+
 	}
 }

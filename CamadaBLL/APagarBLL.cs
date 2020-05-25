@@ -147,6 +147,7 @@ namespace CamadaBLL
 			{
 				IDDespesa = (long)row["IDDespesa"],
 				DespesaDescricao = (string)row["DespesaDescricao"],
+				DespesaOrigem = (byte)row["DespesaOrigem"],
 				Identificador = (string)row["Identificador"],
 				Parcela = row["Parcela"] == DBNull.Value ? null : (byte?)row["Parcela"],
 				IDCobrancaForma = (int)row["IDCobrancaForma"],

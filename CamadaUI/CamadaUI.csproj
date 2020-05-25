@@ -89,6 +89,18 @@
     <Compile Include="APagar\frmAPagarListagemFiltro.designer.cs">
       <DependentUpon>frmAPagarListagemFiltro.cs</DependentUpon>
     </Compile>
+    <Compile Include="APagar\frmAPagarQuitar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarQuitar.designer.cs">
+      <DependentUpon>frmAPagarQuitar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="APagar\frmAPagarSaidas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarSaidas.designer.cs">
+      <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmBancoProcura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -293,6 +305,12 @@
     <Compile Include="Main\frmDateGet.Designer.cs">
       <DependentUpon>frmDateGet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\frmDateMesAnoGet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmDateMesAnoGet.designer.cs">
+      <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,6 +328,12 @@
     </Compile>
     <Compile Include="Main\frmPrincipal.designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmUserAuthorization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmUserAuthorization.Designer.cs">
+      <DependentUpon>frmUserAuthorization.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmUsuario.cs">
       <SubType>Form</SubType>
@@ -459,6 +483,12 @@
     <EmbeddedResource Include="APagar\frmAPagarListagemFiltro.resx">
       <DependentUpon>frmAPagarListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="APagar\frmAPagarQuitar.resx">
+      <DependentUpon>frmAPagarQuitar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="APagar\frmAPagarSaidas.resx">
+      <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancoProcura.resx">
       <DependentUpon>frmBancoProcura.cs</DependentUpon>
     </EmbeddedResource>
@@ -562,6 +592,9 @@
     <EmbeddedResource Include="Main\frmDateGet.resx">
       <DependentUpon>frmDateGet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmDateMesAnoGet.resx">
+      <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -570,6 +603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmUserAuthorization.resx">
+      <DependentUpon>frmUserAuthorization.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmUsuario.resx">
       <DependentUpon>frmUsuario.cs</DependentUpon>
@@ -811,7 +847,19 @@
     <None Include="Resources\search_page_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\dollar_24.png" />
+    <None Include="Resources\money_red_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\like_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_page_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money_red_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money_green_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

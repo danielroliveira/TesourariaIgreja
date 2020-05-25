@@ -50,6 +50,7 @@
     <Compile Include="DespesaBLL.cs" />
     <Compile Include="EntradaBLL.cs" />
     <Compile Include="ContribuicaoBLL.cs" />
+    <Compile Include="ObservacaoBLL.cs" />
     <Compile Include="ReuniaoBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
     <Compile Include="SetorBLL.cs" />

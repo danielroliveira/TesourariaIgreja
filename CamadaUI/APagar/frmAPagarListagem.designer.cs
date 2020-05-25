@@ -28,10 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
-			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,14 +69,25 @@
 			this.rbtCanceladas = new System.Windows.Forms.RadioButton();
 			this.rbtQuitadas = new System.Windows.Forms.RadioButton();
 			this.rbtEmAberto = new System.Windows.Forms.RadioButton();
-			this.btnAlterar = new System.Windows.Forms.Button();
 			this.btnQuitar = new System.Windows.Forms.Button();
+			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.mnuItemQuitar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemVerPagamentos = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuItemCancelar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemNegociar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemNegativar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemNormalizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
 			this.pnlPorPeriodo.SuspendLayout();
 			this.Panel2.SuspendLayout();
 			this.pnlSituacao.SuspendLayout();
+			this.mnuOperacoes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -103,7 +114,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(1043, 677);
+			this.btnFechar.Location = new System.Drawing.Point(1043, 678);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 7;
@@ -112,20 +123,6 @@
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnFechar.UseVisualStyleBackColor = true;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
-			// 
-			// btnVisualizar
-			// 
-			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.btnVisualizar.Location = new System.Drawing.Point(22, 677);
-			this.btnVisualizar.Name = "btnVisualizar";
-			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
-			this.btnVisualizar.TabIndex = 4;
-			this.btnVisualizar.Text = "&Visualizar";
-			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnVisualizar.UseVisualStyleBackColor = true;
-			this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
 			// 
 			// dgvListagem
 			// 
@@ -176,8 +173,10 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1156, 478);
 			this.dgvListagem.TabIndex = 2;
+			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
+			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
 			// clnID
 			// 
@@ -266,7 +265,7 @@
 			this.btnFiltrar.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.btnFiltrar.ImageAbsolutePosition = new System.Drawing.Point(20, 3);
 			this.btnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnFiltrar.Location = new System.Drawing.Point(746, 628);
+			this.btnFiltrar.Location = new System.Drawing.Point(22, 678);
 			this.btnFiltrar.Name = "btnFiltrar";
 			this.btnFiltrar.PressedTextColor = System.Drawing.Color.LemonChiffon;
 			this.btnFiltrar.RoundedCornersMask = ((byte)(15));
@@ -288,7 +287,7 @@
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(418, 677);
+			this.btnImprimir.Location = new System.Drawing.Point(911, 678);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 6;
@@ -308,6 +307,7 @@
 			this.pnlPorMes.Name = "pnlPorMes";
 			this.pnlPorMes.Size = new System.Drawing.Size(321, 38);
 			this.pnlPorMes.TabIndex = 3;
+			this.pnlPorMes.Tag = "";
 			// 
 			// btnPeriodoPosterior
 			// 
@@ -365,8 +365,11 @@
 			this.lblPeriodo.Name = "lblPeriodo";
 			this.lblPeriodo.Size = new System.Drawing.Size(238, 30);
 			this.lblPeriodo.TabIndex = 2;
+			this.lblPeriodo.Tag = "Clique aqui duas vezes para escolher o Ano e o Mês";
 			this.lblPeriodo.Text = "Novembro | 2017";
 			this.lblPeriodo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lblPeriodo.DoubleClick += new System.EventHandler(this.lblPeriodo_DoubleClick);
+			this.lblPeriodo.MouseHover += new System.EventHandler(this.lblPeriodo_MouseHover);
 			// 
 			// rbtPorMes
 			// 
@@ -620,25 +623,11 @@
 			this.rbtEmAberto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtEmAberto.UseVisualStyleBackColor = true;
 			// 
-			// btnAlterar
-			// 
-			this.btnAlterar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnAlterar.Image = global::CamadaUI.Properties.Resources.editar_24;
-			this.btnAlterar.Location = new System.Drawing.Point(154, 677);
-			this.btnAlterar.Name = "btnAlterar";
-			this.btnAlterar.Size = new System.Drawing.Size(126, 42);
-			this.btnAlterar.TabIndex = 4;
-			this.btnAlterar.Text = "&Alterar";
-			this.btnAlterar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnAlterar.UseVisualStyleBackColor = true;
-			this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
-			// 
 			// btnQuitar
 			// 
 			this.btnQuitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnQuitar.Image = global::CamadaUI.Properties.Resources.dollar_24;
-			this.btnQuitar.Location = new System.Drawing.Point(286, 677);
+			this.btnQuitar.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.btnQuitar.Location = new System.Drawing.Point(166, 678);
 			this.btnQuitar.Name = "btnQuitar";
 			this.btnQuitar.Size = new System.Drawing.Size(126, 42);
 			this.btnQuitar.TabIndex = 4;
@@ -646,7 +635,97 @@
 			this.btnQuitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnQuitar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnQuitar.UseVisualStyleBackColor = true;
-			this.btnQuitar.Click += new System.EventHandler(this.btnVisualizar_Click);
+			this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
+			// 
+			// mnuOperacoes
+			// 
+			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuItemQuitar,
+            this.mnuItemVerPagamentos,
+            this.toolStripSeparator2,
+            this.mnuItemCancelar,
+            this.mnuItemNegociar,
+            this.mnuItemNegativar,
+            this.mnuItemNormalizar,
+            this.toolStripSeparator1,
+            this.mnuItemVerOrigem,
+            this.mnuItemAlterar});
+			this.mnuOperacoes.Name = "mnuOperacoes";
+			this.mnuOperacoes.Size = new System.Drawing.Size(263, 224);
+			// 
+			// mnuItemQuitar
+			// 
+			this.mnuItemQuitar.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.mnuItemQuitar.Name = "mnuItemQuitar";
+			this.mnuItemQuitar.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemQuitar.Text = "Quitar";
+			this.mnuItemQuitar.Click += new System.EventHandler(this.mnuItemQuitar_Click);
+			// 
+			// mnuItemVerPagamentos
+			// 
+			this.mnuItemVerPagamentos.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuItemVerPagamentos.Name = "mnuItemVerPagamentos";
+			this.mnuItemVerPagamentos.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemVerPagamentos.Text = "Ver Pagamentos | Estornar";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(259, 6);
+			// 
+			// mnuItemCancelar
+			// 
+			this.mnuItemCancelar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.mnuItemCancelar.Name = "mnuItemCancelar";
+			this.mnuItemCancelar.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemCancelar.Text = "Cancelar";
+			this.mnuItemCancelar.Click += new System.EventHandler(this.mnuItemCancelar_Click);
+			// 
+			// mnuItemNegociar
+			// 
+			this.mnuItemNegociar.Image = global::CamadaUI.Properties.Resources.like_24;
+			this.mnuItemNegociar.Name = "mnuItemNegociar";
+			this.mnuItemNegociar.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemNegociar.Text = "Negociar";
+			this.mnuItemNegociar.Click += new System.EventHandler(this.mnuItemNegociar_Click);
+			// 
+			// mnuItemNegativar
+			// 
+			this.mnuItemNegativar.Image = global::CamadaUI.Properties.Resources.block_24;
+			this.mnuItemNegativar.Name = "mnuItemNegativar";
+			this.mnuItemNegativar.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemNegativar.Text = "Negativar";
+			this.mnuItemNegativar.Click += new System.EventHandler(this.mnuItemNegativar_Click);
+			// 
+			// mnuItemNormalizar
+			// 
+			this.mnuItemNormalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.mnuItemNormalizar.Name = "mnuItemNormalizar";
+			this.mnuItemNormalizar.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemNormalizar.Text = "Normalizar";
+			this.mnuItemNormalizar.Click += new System.EventHandler(this.mnuItemNormalizar_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
+			// 
+			// mnuItemVerOrigem
+			// 
+			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
+			this.mnuItemVerOrigem.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemVerOrigem.Text = "Ver Origem";
+			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
+			// 
+			// mnuItemAlterar
+			// 
+			this.mnuItemAlterar.Image = global::CamadaUI.Properties.Resources.refresh_24;
+			this.mnuItemAlterar.Name = "mnuItemAlterar";
+			this.mnuItemAlterar.Size = new System.Drawing.Size(262, 26);
+			this.mnuItemAlterar.Text = "Alterar";
+			this.mnuItemAlterar.Click += new System.EventHandler(this.mnuItemAlterar_Click);
 			// 
 			// frmAPagarListagem
 			// 
@@ -664,13 +743,9 @@
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnImprimir);
 			this.Controls.Add(this.btnQuitar);
-			this.Controls.Add(this.btnAlterar);
-			this.Controls.Add(this.btnVisualizar);
 			this.KeyPreview = true;
 			this.Name = "frmAPagarListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
-			this.Controls.SetChildIndex(this.btnVisualizar, 0);
-			this.Controls.SetChildIndex(this.btnAlterar, 0);
 			this.Controls.SetChildIndex(this.btnQuitar, 0);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
@@ -690,6 +765,7 @@
 			this.pnlPorPeriodo.ResumeLayout(false);
 			this.Panel2.ResumeLayout(false);
 			this.pnlSituacao.ResumeLayout(false);
+			this.mnuOperacoes.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -698,7 +774,6 @@
 		#endregion
 
 		internal System.Windows.Forms.Button btnFechar;
-		internal System.Windows.Forms.Button btnVisualizar;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label lblValorPago;
@@ -736,7 +811,17 @@
 		private System.Windows.Forms.RadioButton rbtNegativadas;
 		private System.Windows.Forms.RadioButton rbtNegociadas;
 		private System.Windows.Forms.RadioButton rbtSitTodas;
-		internal System.Windows.Forms.Button btnAlterar;
 		internal System.Windows.Forms.Button btnQuitar;
+		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemQuitar;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemCancelar;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemNegociar;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemNegativar;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemNormalizar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemVerOrigem;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemVerPagamentos;
 	}
 }

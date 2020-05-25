@@ -20,7 +20,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM qryDespesa";
+				string query = "SELECT * FROM qryDespesaComum";
 
 				// add params
 				db.LimparParametros();
@@ -62,7 +62,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM qryDespesa";
+				string query = "SELECT * FROM qryDespesaComum";
 				bool myWhere = false;
 
 				// add params
@@ -134,20 +134,19 @@ namespace CamadaBLL
 
 		// GET DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public objDespesa GetDespesa(int IDDespesa)
+		public objDespesa GetDespesa(long IDDespesa)
 		{
 			try
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM qryDespesa WHERE IDDespesa = @IDDespesa";
+				string query = "SELECT * FROM qryDespesaComum WHERE IDDespesa = @IDDespesa";
 				db.LimparParametros();
 				db.AdicionarParametros("@IDDespesa", IDDespesa);
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				return ConvertRowInClass(dt.Rows[0]);
-
 			}
 			catch (Exception ex)
 			{
@@ -198,16 +197,12 @@ namespace CamadaBLL
 
 				//--- define Params
 				dbTran.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
+				dbTran.AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
 				dbTran.AdicionarParametros("@DespesaValor", desp.DespesaValor);
-				dbTran.AdicionarParametros("@DocumentoNumero", desp.DocumentoNumero);
 				dbTran.AdicionarParametros("@DespesaData", desp.DespesaData);
 				dbTran.AdicionarParametros("@IDCredor", desp.IDCredor);
 				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
 				dbTran.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
-				dbTran.AdicionarParametros("@IDDocumentoTipo", desp.IDDocumentoTipo);
-				dbTran.AdicionarParametros("@IDSituacao", desp.IDSituacao);
-				dbTran.AdicionarParametros("@Parcelas", desp.Parcelas);
-				dbTran.AdicionarParametros("@Prioridade", desp.Prioridade);
 
 				//--- convert null parameters
 				dbTran.ConvertNullParams();
@@ -216,6 +211,10 @@ namespace CamadaBLL
 
 				//--- insert and Get new ID
 				int newID = dbTran.ExecutarInsertAndGetID(query);
+
+				//--- insert Despesa Comum
+				desp.IDDespesa = newID;
+				InsertDespesaComum(desp, dbTran);
 
 				//--- insert IDDespesa in APagar List items
 				listAPagar.ForEach(x => x.IDDespesa = newID);
@@ -234,40 +233,47 @@ namespace CamadaBLL
 			}
 		}
 
+		// INSERT DESPESA COMUM
+		//------------------------------------------------------------------------------------------------------------
+		private void InsertDespesaComum(objDespesa desp, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
+				dbTran.AdicionarParametros("@DocumentoNumero", desp.DocumentoNumero);
+				dbTran.AdicionarParametros("@IDDocumentoTipo", desp.IDDocumentoTipo);
+				dbTran.AdicionarParametros("@IDSituacao", desp.IDSituacao);
+				dbTran.AdicionarParametros("@Parcelas", desp.Parcelas);
+				dbTran.AdicionarParametros("@Prioridade", desp.Prioridade);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblDespesaComum");
+
+				//--- insert
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
 		public bool UpdateDespesa(objDespesa desp)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
 
-				//--- clear Params
-				db.LimparParametros();
-
-				//--- define Params
-				db.AdicionarParametros("@IDDespesa", desp.IDDespesa);
-				db.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
-				db.AdicionarParametros("@DespesaValor", desp.DespesaValor);
-				db.AdicionarParametros("@DocumentoNumero", desp.DocumentoNumero);
-				db.AdicionarParametros("@DespesaData", desp.DespesaData);
-				db.AdicionarParametros("@IDCredor", desp.IDCredor);
-				db.AdicionarParametros("@IDSetor", desp.IDSetor);
-				db.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
-				db.AdicionarParametros("@IDDocumentoTipo", desp.IDDocumentoTipo);
-				db.AdicionarParametros("@IDSituacao", desp.IDSituacao);
-				db.AdicionarParametros("@Parcelas", desp.Parcelas);
-				db.AdicionarParametros("@Prioridade", desp.Prioridade);
-
-				//--- convert null parameters
-				db.ConvertNullParams();
-
-				//--- create query
-				string query = db.CreateUpdateSQL("tblDespesa", "@IDDespesa");
-
-				//--- update
-				db.ExecutarManipulacao(CommandType.Text, query);
-				return true;
+				throw new NotImplementedException("Ainda não foi implementada essa função");
 
 			}
 			catch (Exception ex)

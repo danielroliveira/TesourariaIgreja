@@ -244,6 +244,7 @@
 			this.txtValorDesconto.Size = new System.Drawing.Size(145, 31);
 			this.txtValorDesconto.TabIndex = 13;
 			this.txtValorDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtValorDesconto.Validating += new System.ComponentModel.CancelEventHandler(this.txtValorDesconto_Validating);
 			// 
 			// label8
 			// 

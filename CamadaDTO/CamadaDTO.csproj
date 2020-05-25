@@ -51,6 +51,7 @@
     <Compile Include="objBanco.cs" />
     <Compile Include="objCartao.cs" />
     <Compile Include="objAPagar.cs" />
+    <Compile Include="objSaida.cs" />
     <Compile Include="objEntrada.cs" />
     <Compile Include="objContribuicao.cs" />
     <Compile Include="objReuniao.cs" />

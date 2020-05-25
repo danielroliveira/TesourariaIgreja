@@ -15,6 +15,7 @@ namespace CamadaDTO
 		{
 			internal long? _IDAPagar;
 			internal long _IDDespesa;
+			internal byte _DespesaOrigem; //-- 1:Despesa Comum | 2:DespesaPeriodica
 			internal string _DespesaDescricao;
 			internal string _Identificador;
 			internal byte? _Parcela;
@@ -132,6 +133,14 @@ namespace CamadaDTO
 					NotifyPropertyChanged("IDDespesa");
 				}
 			}
+		}
+
+		// Property Origem
+		//---------------------------------------------------------------
+		public byte DespesaOrigem
+		{
+			get => EditData._DespesaOrigem;
+			set => EditData._DespesaOrigem = value;
 		}
 
 		// Property DespesaDescricao

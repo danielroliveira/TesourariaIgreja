@@ -101,7 +101,7 @@ namespace CamadaUI.APagar
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtAPagarValor.DataBindings["Text"].Format += FormatCurrency;
-			numParcela.DataBindings["Text"].Format += FormatD2;
+			numParcela.DataBindings["Value"].Format += FormatD2;
 
 			// CARREGA COMBO
 			CarregaComboMes();

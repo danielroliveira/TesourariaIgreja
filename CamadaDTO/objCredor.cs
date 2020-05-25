@@ -46,7 +46,8 @@ namespace CamadaDTO
 				_Credor = "",
 				_Ativo = true,
 				_EnderecoLogradouro = "",
-				_CredorTipo = 4
+				_CredorTipo = 4,
+				_CredorTipoDescricao = ""
 			};
 		}
 
