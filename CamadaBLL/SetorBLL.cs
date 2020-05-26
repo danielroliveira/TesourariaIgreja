@@ -128,7 +128,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblSetor");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 
 			}
 			catch (Exception ex)
@@ -210,7 +210,7 @@ namespace CamadaBLL
 
 		// SALDO ALTERAR
 		//------------------------------------------------------------------------------------------------------------
-		public decimal SetorSaldoChange(int IDSetor, decimal valor, AcessoDados dbTran)
+		public decimal SetorSaldoChange(int IDSetor, decimal valor, AcessoDados dbTran, Action<int, decimal> SetorSldUpdate)
 		{
 			try
 			{
@@ -225,6 +225,10 @@ namespace CamadaBLL
 
 				decimal SaldoAtual = SetorSaldoGet(IDSetor, dbTran);
 
+				// DELEGATE altera o saldo do setor local
+				SetorSldUpdate(IDSetor, valor);
+
+				// return
 				return SaldoAtual;
 			}
 			catch (Exception ex)

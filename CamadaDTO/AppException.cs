@@ -5,6 +5,7 @@ namespace CamadaDTO
 	//==========================================================================================
 	// APP EXCEPTION
 	//==========================================================================================
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2237:Mark ISerializable types with serializable", Justification = "<Pending>")]
 	public class AppException : Exception
 	{
 		public AppException(string message)
@@ -15,15 +16,21 @@ namespace CamadaDTO
 			: base(message, inner)
 		{ }
 
+		public AppException(string message, int excNumber)
+			: base(message)
+		{ HResult = excNumber; }
+
 		public AppException()
 		{
 		}
 
 	}
 
+
 	//==========================================================================================
 	// ATTRIBUTE EXCEPTION
 	//==========================================================================================
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2237:Mark ISerializable types with serializable", Justification = "<Pending>")]
 	public class AttributeException : Exception
 	{
 		public AttributeException(string message)

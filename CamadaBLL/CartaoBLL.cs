@@ -167,7 +167,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblCartaoTaxas");
 
 				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+				int newID = (int)db.ExecutarInsertAndGetID(query);
 				return newID;
 
 			}

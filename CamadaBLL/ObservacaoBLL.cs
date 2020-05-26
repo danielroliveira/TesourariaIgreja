@@ -17,7 +17,7 @@ namespace CamadaBLL
 		//===============================================================================
 
 		public bool SaveObservacao(byte Origem,
-								   int IDOrigem,
+								   long IDOrigem,
 								   string Observacao,
 								   object dbTran = null)
 		{
@@ -39,7 +39,7 @@ namespace CamadaBLL
 				DeleteObservacao(Origem, IDOrigem);
 
 				//--- Verifica se existe observacao, se nao return TRUE
-				if (Observacao.Trim().Length == 0)
+				if (Observacao == null || Observacao.Trim().Length == 0)
 				{
 					//--- COMMIT
 					if (tranInterna) db.CommitTransaction();
@@ -76,7 +76,7 @@ namespace CamadaBLL
 		// DELETE OBSERVACAO
 		//==========================================================================================
 		public bool DeleteObservacao(byte Origem,
-									 int IDOrigem,
+									 long IDOrigem,
 									 object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;

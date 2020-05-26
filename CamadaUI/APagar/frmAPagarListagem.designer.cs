@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -130,23 +130,23 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -414,7 +414,7 @@
 			this.rbtTodas.Name = "rbtTodas";
 			this.rbtTodas.Size = new System.Drawing.Size(102, 38);
 			this.rbtTodas.TabIndex = 2;
-			this.rbtTodas.Text = "Todas";
+			this.rbtTodas.Text = "Todos";
 			this.rbtTodas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtTodas.UseVisualStyleBackColor = false;
 			// 
@@ -552,7 +552,7 @@
 			this.rbtSitTodas.Size = new System.Drawing.Size(111, 34);
 			this.rbtSitTodas.TabIndex = 0;
 			this.rbtSitTodas.Tag = "6";
-			this.rbtSitTodas.Text = "Todas";
+			this.rbtSitTodas.Text = "Todos";
 			this.rbtSitTodas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtSitTodas.UseVisualStyleBackColor = true;
 			// 
@@ -565,7 +565,7 @@
 			this.rbtNegociadas.Size = new System.Drawing.Size(111, 34);
 			this.rbtNegociadas.TabIndex = 0;
 			this.rbtNegociadas.Tag = "5";
-			this.rbtNegociadas.Text = "Negativadas";
+			this.rbtNegociadas.Text = "Negativados";
 			this.rbtNegociadas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtNegociadas.UseVisualStyleBackColor = true;
 			// 
@@ -578,7 +578,7 @@
 			this.rbtNegativadas.Size = new System.Drawing.Size(111, 34);
 			this.rbtNegativadas.TabIndex = 0;
 			this.rbtNegativadas.Tag = "4";
-			this.rbtNegativadas.Text = "Negociadas";
+			this.rbtNegativadas.Text = "Negociados";
 			this.rbtNegativadas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtNegativadas.UseVisualStyleBackColor = true;
 			// 
@@ -591,7 +591,7 @@
 			this.rbtCanceladas.Size = new System.Drawing.Size(111, 34);
 			this.rbtCanceladas.TabIndex = 0;
 			this.rbtCanceladas.Tag = "3";
-			this.rbtCanceladas.Text = "Canceladas";
+			this.rbtCanceladas.Text = "Cancelados";
 			this.rbtCanceladas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtCanceladas.UseVisualStyleBackColor = true;
 			// 
@@ -604,7 +604,7 @@
 			this.rbtQuitadas.Size = new System.Drawing.Size(111, 34);
 			this.rbtQuitadas.TabIndex = 0;
 			this.rbtQuitadas.Tag = "2";
-			this.rbtQuitadas.Text = "Quitadas";
+			this.rbtQuitadas.Text = "Quitados";
 			this.rbtQuitadas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtQuitadas.UseVisualStyleBackColor = true;
 			// 
@@ -668,6 +668,7 @@
 			this.mnuItemVerPagamentos.Name = "mnuItemVerPagamentos";
 			this.mnuItemVerPagamentos.Size = new System.Drawing.Size(262, 26);
 			this.mnuItemVerPagamentos.Text = "Ver Pagamentos | Estornar";
+			this.mnuItemVerPagamentos.Click += new System.EventHandler(this.mnuItemVerPagamentos_Click);
 			// 
 			// toolStripSeparator2
 			// 

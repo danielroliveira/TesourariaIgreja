@@ -19,6 +19,7 @@ namespace CamadaDTO
 			internal int _Origem;
 			internal DateTime _SaidaData;
 			internal decimal _SaidaValor;
+			internal decimal? _AcrescimoValor;
 			internal int _IDSetor;
 			internal string _Setor;
 			internal int _IDConta;
@@ -230,6 +231,21 @@ namespace CamadaDTO
 				{
 					EditData._SaidaValor = value;
 					NotifyPropertyChanged("SaidaValor");
+				}
+			}
+		}
+
+		// Property AcrescimoValor
+		//---------------------------------------------------------------
+		public decimal? AcrescimoValor
+		{
+			get => EditData._AcrescimoValor;
+			set
+			{
+				if (value != EditData._AcrescimoValor)
+				{
+					EditData._AcrescimoValor = value;
+					NotifyPropertyChanged("AcrescimoValor");
 				}
 			}
 		}

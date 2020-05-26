@@ -1,159 +1,104 @@
 ﻿using CamadaDTO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
-using CamadaBLL;
-using CamadaUI.Caixa;
 
 namespace CamadaUI.APagar
 {
 	public partial class frmAPagarQuitar : CamadaUI.Modals.frmModFinBorder
 	{
-		objAPagar _apagar;
-		BindingSource bind = new BindingSource();
-		List<objCobrancaForma> listFormas = new List<objCobrancaForma>();
-		Form _formOrigem;
+		private objAPagar _apagar;
+		private Form _formOrigem;
+		private objConta ContaPadrao;
+		private objSetor SetorPadrao;
+		private decimal maxValue;
+		private decimal doValor;
+		public objSaida propSaida { get; set; }
 
 		#region SUB NEW | CONSTRUCTOR
 		public frmAPagarQuitar(objAPagar pag, Form formOrigem)
 		{
 			InitializeComponent();
-			Size = new Size(530, 536);
 			_formOrigem = formOrigem;
 			_apagar = pag;
+			propSaida = new objSaida(null);
 
-			CheckEditing();
-		}
-
-		// VERIFY IF IS EDITING FORM OR NOT EDIT
-		//------------------------------------------------------------------------------------------------------------
-		private void CheckEditing()
-		{
-			if (_apagar.IDAPagar == null)
-			{
-				pnlEditar.Visible = true;
-				pnlVisualizar.Visible = false;
-				GetFormasList();
-
-				bind.DataSource = _apagar;
-				BindingCreatorEditing();
-			}
-			else
-			{
-				pnlEditar.Visible = false;
-				pnlVisualizar.Visible = true;
-				pnlVisualizar.Location = new Point(12, 132);
-
-				bind.DataSource = _apagar;
-				BindingCreatorNotEditing();
-			}
-		}
-
-		// GET LIST OF FORMAS DE COBRANCA
-		//------------------------------------------------------------------------------------------------------------
-		private void GetFormasList()
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de Formas de Cobrança..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		#endregion // SUB NEW | CONSTRUCTOR --- END
-
-		#region DATABINDINGS
-
-		// ADD DATA BINDIGNS
-		//------------------------------------------------------------------------------------------------------------
-		private void BindingCreatorEditing()
-		{
-			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDAPagar", true);
-			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true);
-			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
-			txtIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
-			numParcela.DataBindings.Add("Value", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
-			dtpVencimento.DataBindings.Add("Value", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
-			numReferenciaAno.DataBindings.Add("Value", bind, "ReferenciaAno", true, DataSourceUpdateMode.OnPropertyChanged);
-
-			// FORMAT HANDLERS
-			lblID.DataBindings["Text"].Format += FormatID;
-			txtAPagarValor.DataBindings["Text"].Format += FormatCurrency;
-			numParcela.DataBindings["Value"].Format += FormatD2;
-
-			// CARREGA COMBO
 			CarregaComboMes();
-			cmbReferenciaMes.DataBindings.Add("SelectedValue", bind, "ReferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
+			HandlerKeyDownControl(this);
+			numSaidaAno.KeyDown += control_KeyDown;
+			numSaidaAno.Enter += Control_Enter;
+
+			// get default Conta and Setor
+			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
+			SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
+
+			if (ContaPadrao == null | SetorPadrao == null) return;
+
+			DefineValoresIniciais();
 		}
 
-		// ADD DATA BINDIGNS
+		// ON SHOW CHECK CONTA AND SETOR
 		//------------------------------------------------------------------------------------------------------------
-		private void BindingCreatorNotEditing()
+		private void frmAPagarQuitar_Shown(object sender, EventArgs e)
 		{
-			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDAPagar", true);
-			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true);
-			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
-			lblIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblParcela.DataBindings.Add("Text", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblVencimento.DataBindings.Add("Text", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblReferencia.DataBindings.Add("Text", bind, "Referencia", true, DataSourceUpdateMode.OnPropertyChanged);
-
-			// FORMAT HANDLERS
-			lblID.DataBindings["Text"].Format += FormatID;
-			lblAPagarValor.DataBindings["Text"].Format += FormatCurrency;
-			lblParcela.DataBindings["Text"].Format += FormatD2;
-
-			// CARREGA COMBO
-			//CarregaComboMes();
-			//cmbReferenciaMes.DataBindings.Add("SelectedValue", bind, "ReferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
-		}
-
-		private void FormatID(object sender, ConvertEventArgs e)
-		{
-			if (e.Value == DBNull.Value || e.Value == null)
+			if (ContaPadrao == null | SetorPadrao == null)
 			{
-				e.Value = "NOVO";
-			}
-			else
-			{
-				e.Value = $"{e.Value: 0000}";
+				AbrirDialog("Conta padrão ou Setor padrão precisam ser definidos...", "Conta | Setor",
+					DialogType.OK, DialogIcon.Exclamation);
+
+				DialogResult = DialogResult.Cancel;
 			}
 		}
 
-		private void FormatD2(object sender, ConvertEventArgs e)
+		// DEFINE OS VALORES INICIAIS
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineValoresIniciais()
 		{
-			e.Value = $"{e.Value: 00}";
+			// define a pagar values
+			lblCredor.Text = _apagar.Credor;
+			lblDespesaDescricao.Text = _apagar.DespesaDescricao;
+			propSaida.IDConta = (int)ContaPadrao.IDConta;
+			propSaida.Conta = ContaPadrao.Conta;
+			txtConta.Text = ContaPadrao.Conta;
+			propSaida.IDSetor = (int)SetorPadrao.IDSetor;
+			propSaida.Setor = SetorPadrao.Setor;
+			txtSetor.Text = SetorPadrao.Setor;
+			lblContaDetalhe.Text = $"Saldo da Conta: {ContaPadrao.ContaSaldo.ToString("c")} \n" +
+				$"Data de Bloqueio até: {ContaPadrao.BloqueioData?.ToString() ?? ""}";
+
+			// define data padrao
+			propSaida.SaidaData = ((frmPrincipal)Application.OpenForms[0]).propDataPadrao;
+			txtSaidaDia.Text = propSaida.SaidaData.Day.ToString("D2");
+			cmbSaidaMes.SelectedValue = propSaida.SaidaData.Month;
+			numSaidaAno.Value = propSaida.SaidaData.Year;
+
+			// define max values
+			int actualYear = DateTime.Today.Year;
+			if (numSaidaAno.Value > actualYear) numSaidaAno.Value = actualYear;
+			numSaidaAno.Maximum = DateTime.Today.Year;
+			if (numSaidaAno.Value < 2000) numSaidaAno.Value = 2000;
+			numSaidaAno.Minimum = 2000;
+
+			// define maxvalue and acrescimo
+			txtAcrescimo.Text = 0.ToString("c");
+			maxValue = _apagar.APagarValor - _apagar.ValorDesconto - _apagar.ValorPago;
+			doValor = maxValue;
+			txtDoValor.Text = maxValue.ToString("c");
+			lblSaidaValor.Text = maxValue.ToString("c");
+			propSaida.SaidaValor = maxValue;
+
+			txtDoValor.Validated += (a, b) => DefineSaidaValor();
+			txtAcrescimo.Validated += (a, b) => DefineSaidaValor();
 		}
 
-		private void FormatCurrency(object sender, ConvertEventArgs e)
+		private void DefineSaidaValor()
 		{
-			e.Value = string.Format("{0:c}", e.Value);
+			propSaida.SaidaValor = doValor + (propSaida.AcrescimoValor == null ? 0 : (decimal)propSaida.AcrescimoValor);
+			lblSaidaValor.Text = propSaida.SaidaValor.ToString("c");
 		}
 
 		// CARREGA COMBO
@@ -166,7 +111,7 @@ namespace CamadaUI.APagar
 			dtMeses.Columns.Add("Mes");
 
 			// get values of EnumAgendaRecorrencia
-			string[] EnumValues = new System.Globalization.CultureInfo("pt-BR").DateTimeFormat.MonthNames;
+			string[] EnumValues = new CultureInfo("pt-BR").DateTimeFormat.MonthNames;
 			int i = 1;
 
 			// insert all item of EnumAgendaRecorrencia in datatable
@@ -178,72 +123,101 @@ namespace CamadaUI.APagar
 			}
 
 			//--- Set DataTable
-			cmbReferenciaMes.DataSource = dtMeses;
-			cmbReferenciaMes.ValueMember = "ID";
-			cmbReferenciaMes.DisplayMember = "Mes";
+			cmbSaidaMes.DataSource = dtMeses;
+			cmbSaidaMes.ValueMember = "ID";
+			cmbSaidaMes.DisplayMember = "Mes";
 		}
 
-		#endregion // DATABINDINGS --- END
+		#endregion // SUB NEW | CONSTRUCTOR --- END
 
 		#region BUTTONS FUNCTION
 
-		private void btnClose_Click(object sender, EventArgs e)
+		private void btnQuitar_Click(object sender, EventArgs e)
 		{
-			Close();
+			//propSaida.AcrescimoValor = 
+			//propSaida.IDConta = 
+			//propSaida.IDSetor =
+			//propSaida.SaidaData =
+			//propSaida.SaidaValor = 
+
+			propSaida.Conta = txtConta.Text;
+			propSaida.Setor = txtSetor.Text;
+			propSaida.Origem = 1; // ORIGEM DESPESA
+			propSaida.IDOrigem = (long)_apagar.IDAPagar;
+			propSaida.Imagem = false;
+			propSaida.Observacao = txtObservacao.Text.Length == 0 ? null : txtObservacao.Text;
+
+			DialogResult = DialogResult.OK;
 		}
 
-		private void btnSetForma_Click(object sender, EventArgs e)
+		private void btnCancelar_Click(object sender, EventArgs e)
 		{
-			if (listFormas.Count == 0)
-			{
-				AbrirDialog("Não há Formas de Cobrança cadastradas ou ativas...", "Formas de Cobrança",
-					DialogType.OK, DialogIcon.Exclamation);
-				return;
-			}
-
-			var dic = listFormas.ToDictionary(x => (int)x.IDCobrancaForma, x => x.CobrancaForma);
-			var textBox = txtCobrancaForma;
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _apagar.IDCobrancaForma);
-
-			// show form
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				_apagar.IDCobrancaForma = (int)frm.propEscolha.Key;
-				textBox.Text = frm.propEscolha.Value;
-			}
-
-			//--- select
-			textBox.Focus();
-			textBox.SelectAll();
+			DialogResult = DialogResult.Cancel;
 		}
 
-		private void btnSetBanco_Click(object sender, EventArgs e)
+		// OPEN PROCURA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetConta_Click(object sender, EventArgs e)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmBancoProcura frm = new frmBancoProcura(this, _apagar.IDBanco);
+				Contas.frmContaProcura frm = new Contas.frmContaProcura(this, propSaida.IDConta);
 				frm.ShowDialog();
 
 				//--- check return
-				if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
+				if (frm.DialogResult == DialogResult.OK)
 				{
-					_apagar.IDBanco = (int)frm.propEscolha.IDBanco;
-					txtBanco.Text = frm.propEscolha.BancoNome;
+					propSaida.IDConta = (int)frm.propEscolha.IDConta;
+					propSaida.Conta = frm.propEscolha.Conta;
+					txtConta.Text = frm.propEscolha.Conta;
+					lblContaDetalhe.Text = $"Saldo da Conta: {frm.propEscolha.ContaSaldo.ToString("c")} \n" +
+						$"Data de Bloqueio até: {frm.propEscolha.BloqueioData?.ToString() ?? ""}";
 				}
 
 				//--- select
-				txtBanco.Focus();
-				txtBanco.SelectAll();
+				txtConta.Focus();
+				txtConta.SelectAll();
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao abrir formulário de procura..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnSetSetor_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, propSaida.IDSetor);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					propSaida.IDSetor = (int)frm.propEscolha.IDSetor;
+					propSaida.Setor = frm.propEscolha.Setor;
+					txtSetor.Text = frm.propEscolha.Setor;
+				}
+
+				//--- select
+				txtSetor.Focus();
+				txtSetor.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -254,6 +228,119 @@ namespace CamadaUI.APagar
 		}
 
 		#endregion // BUTTONS FUNCTION --- END
+
+		#region CONTROLS
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtSetor":
+						btnSetSetor_Click(sender, new EventArgs());
+						break;
+					case "txtConta":
+						btnSetConta_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtConta,
+					txtSetor };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
+
+		private void control_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			};
+		}
+
+		private void Control_Enter(object sender, EventArgs e)
+		{
+			numSaidaAno.Select(0, 4);
+		}
+
+		// CHECK MAX VALUE OF A APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void txtDoValor_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			decimal newValor = decimal.Parse(txtDoValor.Text, System.Globalization.NumberStyles.Currency);
+
+			if (newValor > maxValue)
+			{
+				AbrirDialog($"O valor do pagamento não pode ser maior que o valor EM ABERTO da despesa: {maxValue.ToString("c")}",
+					"Valor incorreto...", DialogType.OK, DialogIcon.Exclamation);
+				e.Cancel = true;
+			}
+			else if (newValor != doValor)
+			{
+				doValor = newValor;
+				txtDoValor.Text = doValor.ToString("c");
+			}
+		}
+
+		// CHECK ACRESCIMO AND FORMAT UPDATED VALUE
+		//------------------------------------------------------------------------------------------------------------
+		private void txtAcrescimo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			decimal newValor = decimal.Parse(txtAcrescimo.Text, System.Globalization.NumberStyles.Currency);
+
+			if (newValor != propSaida.AcrescimoValor)
+			{
+				propSaida.AcrescimoValor = newValor;
+				txtAcrescimo.Text = newValor.ToString("c");
+			}
+		}
+
+		// DATE VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtData_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			// format new Date
+			string testDate = $"{txtSaidaDia.Text}/{cmbSaidaMes.SelectedValue}/{numSaidaAno.Value}";
+
+			// check new date
+			if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+			{
+				propSaida.SaidaData = newDate;
+			}
+			else
+			{
+				AbrirDialog($"Data inválida:\n" +
+					$"{ testDate }\n" +
+					$"Favor verificar o dia, mês e ano e inserir uma data válida.",
+					"Data Inválida", DialogType.OK, DialogIcon.Exclamation);
+				e.Cancel = true;
+			}
+		}
+
+		#endregion // CONTROLS --- END
 
 		#region DESIGN FORM FUNCTIONS
 
@@ -307,7 +394,12 @@ namespace CamadaUI.APagar
 				ShowToolTip(control);
 		}
 
+
+
+
+
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
 
 	}
 }

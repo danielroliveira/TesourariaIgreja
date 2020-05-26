@@ -632,7 +632,6 @@ namespace CamadaUI.APagar
 
 		#region MENU SUSPENSO
 
-
 		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
 		{
 			// check button
@@ -664,6 +663,7 @@ namespace CamadaUI.APagar
 					mnuItemNegociar.Enabled = true;
 					mnuItemNormalizar.Enabled = false;
 					mnuItemQuitar.Enabled = true;
+					mnuItemVerPagamentos.Enabled = true;
 					break;
 				case 2: // QUITADAS
 					mnuItemAlterar.Enabled = false;
@@ -672,6 +672,7 @@ namespace CamadaUI.APagar
 					mnuItemNegociar.Enabled = false;
 					mnuItemNormalizar.Enabled = false;
 					mnuItemQuitar.Enabled = false;
+					mnuItemVerPagamentos.Enabled = true;
 					break;
 				case 3: // CANCELADAS
 				case 4: // NEGOCIADAS
@@ -682,6 +683,7 @@ namespace CamadaUI.APagar
 					mnuItemNegociar.Enabled = false;
 					mnuItemNormalizar.Enabled = true;
 					mnuItemQuitar.Enabled = false;
+					mnuItemVerPagamentos.Enabled = true;
 					break;
 				default:
 					break;
@@ -879,6 +881,39 @@ namespace CamadaUI.APagar
 			return item;
 		}
 
+		//--- MENU VER PAGAMENTOS ESTORNAR
+		//-------------------------------------------------------------------------------------------------------
+		private void mnuItemVerPagamentos_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Ver Pagamentos ou Estornar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objAPagar pagItem = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+				frmAPagarSaidas frm = new frmAPagarSaidas(pagItem, this);
+				frm.ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Pagamentos..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 
 		//--- MENU VER ORIGEM
 		//-------------------------------------------------------------------------------------------------------

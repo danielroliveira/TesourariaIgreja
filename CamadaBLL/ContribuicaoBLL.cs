@@ -208,14 +208,24 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertContribuicao(objContribuicao cont, object forma = null)
+		public long InsertContribuicao(
+			objContribuicao cont,
+			Action<int, decimal> ContaSldLocalUpdate,
+			Action<int, decimal> SetorSldLocalUpdate,
+			object forma = null)
 		{
 			AcessoDados db = new AcessoDados();
-			int newID = 0;
+			long newID = 0;
 
 			try
 			{
 				db.BeginTransaction();
+
+				//--- Check Conta Bloqueio
+				if (!new ContaBLL().ContaBloqueioPermit(cont.IDConta, cont.ContribuicaoData, db))
+				{
+					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Crédito proposta...", 2);
+				}
 
 				switch (cont.IDEntradaForma)
 				{
@@ -236,7 +246,7 @@ namespace CamadaBLL
 						};
 
 						//--- Insert Entrada
-						new EntradaBLL().InsertEntrada(entrada, db);
+						new EntradaBLL().InsertEntrada(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 
 						break;
 
@@ -268,21 +278,28 @@ namespace CamadaBLL
 						};
 
 						//--- Insert AReceber Parcela
-						new AReceberBLL().InsertAReceber(areceber, db);
+						new AReceberBLL().InsertAReceber(areceber, ContaSldLocalUpdate, db);
 
 						break;
+
 					case 3: // CARTAO
 
 						if (forma == null || forma.GetType() != typeof(objContribuicaoCartao))
 							throw new Exception("Não há registro de informação do cartão...");
+
+						//--- Check Conta Bloqueio
+						objContribuicaoCartao cartao = (objContribuicaoCartao)forma;
+
+						if (!new ContaBLL().ContaBloqueioPermit(cartao.IDContaProvisoria, cont.ContribuicaoData, db))
+						{
+							throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Crédito proposta...", 2);
+						}
 
 						//--- Insert Contribuicao
 						newID = AddContribuicao(cont, db);
 						cont.IDContribuicao = newID;
 
 						//--- Insert ContribuicaoCartao
-						objContribuicaoCartao cartao = (objContribuicaoCartao)forma;
-
 						cartao.IDContribuicao = newID;
 						AddContribuicaoCartao(cartao, db);
 
@@ -313,7 +330,7 @@ namespace CamadaBLL
 						//--- Insert ListOf AReceber Parcelas
 						foreach (var parcela in listAReceber)
 						{
-							rBLL.InsertAReceber(parcela, db);
+							rBLL.InsertAReceber(parcela, ContaSldLocalUpdate, db);
 						}
 
 						break;
@@ -340,7 +357,7 @@ namespace CamadaBLL
 
 		// INSERT CONTRIBUICAO SIMPLES
 		//------------------------------------------------------------------------------------------------------------
-		private int AddContribuicao(objContribuicao cont, AcessoDados dbTran)
+		private long AddContribuicao(objContribuicao cont, AcessoDados dbTran)
 		{
 			try
 			{
@@ -365,7 +382,7 @@ namespace CamadaBLL
 				string query = dbTran.CreateInsertSQL("tblContribuicao");
 
 				//--- insert and Get new ID
-				int newID = dbTran.ExecutarInsertAndGetID(query);
+				long newID = dbTran.ExecutarInsertAndGetID(query);
 
 				return newID;
 

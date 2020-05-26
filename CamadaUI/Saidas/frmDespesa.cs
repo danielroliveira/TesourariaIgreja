@@ -1038,7 +1038,7 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- INSERT Desepesa
-				int newID = despBLL.InsertDespesa(_despesa, ref listAPagar);
+				long newID = despBLL.InsertDespesa(_despesa, ref listAPagar);
 				_despesa.IDDespesa = newID;
 				bind.EndEdit();
 				bind.ResetBindings(false);

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-
 using CamadaDTO;
 using CamadaBLL;
 using static CamadaUI.Utilidades;
+using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.APagar
 {
-	public partial class frmAPagarSaidas : CamadaUI.Modals.frmModFinBorder
+	public partial class frmAPagarSaidas : Modals.frmModFinBorder
 	{
 		objAPagar _apagar;
+		APagarBLL pBLL = new APagarBLL();
 		BindingSource bind = new BindingSource();
 		BindingSource bindSaida = new BindingSource();
 		List<objSaida> listSaidas = new List<objSaida>();
@@ -28,6 +29,16 @@ namespace CamadaUI.APagar
 			bind.DataSource = _apagar;
 			BindingCreator();
 
+			GetSaidaList();
+			dgvListagem.DataSource = bindSaida;
+			FormataListagem();
+
+			if (_apagar.IDSituacao != 1) // NOT NORMAL
+			{
+				btnQuitar.Enabled = false;
+				btnConcederDesconto.Enabled = false;
+			}
+
 			DefineValueLabels();
 		}
 
@@ -40,7 +51,8 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
+				listSaidas = new SaidaBLL().GetSaidaList(1, (long)_apagar.IDAPagar);
+				bindSaida.DataSource = listSaidas;
 			}
 			catch (Exception ex)
 			{
@@ -98,11 +110,190 @@ namespace CamadaUI.APagar
 
 		#endregion // DATABINDINGS --- END
 
+		#region DATAGRID LIST FUNCTIONS
+
+		// FORMATA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void FormataListagem()
+		{
+			dgvListagem.Columns.Clear();
+			dgvListagem.AutoGenerateColumns = false;
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.MultiSelect = false;
+			dgvListagem.ColumnHeadersVisible = true;
+			dgvListagem.AllowUserToResizeRows = false;
+			dgvListagem.AllowUserToResizeColumns = false;
+			dgvListagem.RowHeadersWidth = 36;
+			dgvListagem.RowTemplate.Height = 30;
+			dgvListagem.StandardTab = true;
+			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+
+			// DEFINE COLUMN FONT
+			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
+			//--- (1) COLUNA DATA
+			clnData.DataPropertyName = "SaidaData";
+			clnData.Visible = true;
+			clnData.ReadOnly = true;
+			clnData.Resizable = DataGridViewTriState.False;
+			clnData.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnData.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnData);
+
+			//--- (2) COLUNA VALOR
+			clnValor.DataPropertyName = "SaidaValor";
+			clnValor.Visible = true;
+			clnValor.ReadOnly = true;
+			clnValor.Resizable = DataGridViewTriState.False;
+			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnValor);
+
+			//--- (3) COLUNA CONTA
+			clnConta.DataPropertyName = "Conta";
+			clnConta.Visible = true;
+			clnConta.ReadOnly = true;
+			clnConta.Resizable = DataGridViewTriState.False;
+			clnConta.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnConta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnConta.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnConta.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnConta);
+
+			//--- (4) COLUNA OBSERVACAO
+			clnObservacao.DataPropertyName = "Observacao";
+			clnObservacao.Visible = true;
+			clnObservacao.ReadOnly = true;
+			clnObservacao.Resizable = DataGridViewTriState.False;
+			clnObservacao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnObservacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnObservacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnObservacao.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnObservacao);
+
+			//--- Add Columns
+			dgvListagem.Columns.AddRange(colList.ToArray());
+		}
+
+		#endregion
+
 		#region BUTTONS FUNCTION
 
+		// CLOSE | CANCELAR
 		private void btnClose_Click(object sender, EventArgs e)
 		{
 			Close();
+		}
+
+		// QUITAR
+		private void btnQuitar_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmAPagarQuitar frm = new frmAPagarQuitar(_apagar, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				// EXECUTE
+				objSaida newSaida = frm.propSaida;
+				newSaida.IDSaida = pBLL.QuitarAPagar(_apagar, frm.propSaida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+
+				// binding
+				bindSaida.Add(newSaida);
+				DefineValueLabels();
+
+				// check pagamento total
+				if (_apagar.IDSituacao == 2)
+				{
+					AbrirDialog("A Pagar totalmente quitado...", "Pagamento Total");
+					btnQuitar.Enabled = false;
+					btnConcederDesconto.Enabled = false;
+				}
+			}
+			catch (AppException ex)
+			{
+				if (ex.HResult == 1)
+					AbrirDialog("Pagamento não realizado...\n" + ex.Message, "Saldo da Conta", DialogType.OK, DialogIcon.Information);
+				else
+					AbrirDialog("Pagamento não realizado...\n" + ex.Message, "Conta Data Bloqueada", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Quitar o A Pagar..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// ESTORNAR
+		private void btnEstornar_Click(object sender, EventArgs e)
+		{
+			//--- check selecteded item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro de Pagamento para Estornar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- verifica USER PERMIT
+				if (!CheckAuthorization(EnumAcessoTipo.Usuario_Senior, $"Estornar a Saída de APagar", this)) return;
+
+				//--- Pergunta ao USER
+				objSaida saida = (objSaida)dgvListagem.SelectedRows[0].DataBoundItem;
+
+				var resp = AbrirDialog($"Você deseja realmente ESTORNAR este registro de PAGAMENTO selecionado?\n" +
+					$"DATA: {saida.SaidaData.ToShortDateString()}\nVALOR: {saida.SaidaValor}\n{saida.Conta}", "Estornar Pagamento",
+					DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp == DialogResult.No) return;
+
+				// EXECUTE
+				pBLL.EstornarAPagar(_apagar, saida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+
+				// binding
+				bindSaida.RemoveCurrent();
+				DefineValueLabels();
+
+				// MESSAGE
+				AbrirDialog("Pagamento Estornado com sucesso...", "Estorno");
+				btnQuitar.Enabled = true;
+				btnConcederDesconto.Enabled = true;
+			}
+			catch (AppException ex)
+			{
+				AbrirDialog("Estorno não pôde ser realizado...\n" + ex.Message, "Conta Data Bloqueada", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Estornar Pagamento..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion // BUTTONS FUNCTION --- END
@@ -210,7 +401,7 @@ namespace CamadaUI.APagar
 				{
 					// --- Ampulheta ON
 					Cursor.Current = Cursors.WaitCursor;
-					new APagarBLL().UpdateAPagar(_apagar);
+					pBLL.UpdateAPagar(_apagar);
 
 					//--- recalcula o valor em aberto
 					DefineValueLabels();
@@ -245,6 +436,7 @@ namespace CamadaUI.APagar
 				e.Handled = true;
 			}
 		}
+
 
 		#endregion // EDIT DESCONTO --- END
 	}

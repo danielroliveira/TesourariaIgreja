@@ -358,22 +358,26 @@ namespace CamadaUI
 
 		#region CONTROLA SALDO CONTA E SETOR
 
-		// GET O SALDO DA CONTA
+		// UPDATE SALDO DA CONTA LOCAL
 		//------------------------------------------------------------------------------------------------------------
-		public static decimal GetContaSaldo(int IDConta, decimal Valor)
+		public static void ContaSaldoLocalUpdate(int IDConta, decimal Valor)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				// return
-				return new ContaBLL().ContaSaldoGet(IDConta, Valor); ;
+				// execute
+				objConta conta = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
 
+				if (conta.IDConta == IDConta)
+				{
+					conta.ContaSaldo += Valor;
+				}
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao OBTER o saldo da CONTA..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao ALTERAR o saldo da CONTA local..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				throw ex;
 			}
@@ -385,21 +389,26 @@ namespace CamadaUI
 
 		}
 
-		// GET O SALDO DO SETOR
+		// UPDATE SALDO DO SETOR LOCAL
 		//------------------------------------------------------------------------------------------------------------
-		public static decimal GetSetorSaldo(int IDSetor, decimal Valor)
+		public static void SetorSaldoLocalUpdate(int IDSetor, decimal Valor)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				// return
-				return new SetorBLL().SetorSaldoGet(IDSetor, Valor); ;
+				// execute
+				objSetor setor = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
+
+				if (setor.IDSetor == IDSetor)
+				{
+					setor.SetorSaldo += Valor;
+				}
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao OBTER o saldo do SETOR..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao ALTERAR o saldo do SETOR local..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				throw ex;
 			}

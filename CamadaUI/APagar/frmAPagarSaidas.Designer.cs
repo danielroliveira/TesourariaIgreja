@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.lblDespesaDescricao = new System.Windows.Forms.Label();
@@ -52,15 +52,15 @@
 			this.lblReferencia = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
 			this.btnQuitar = new System.Windows.Forms.ToolStripButton();
-			this.btnConcederDesconto = new System.Windows.Forms.ToolStripButton();
 			this.btnEstornar = new System.Windows.Forms.ToolStripButton();
+			this.btnConcederDesconto = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.label1 = new System.Windows.Forms.Label();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnEntradaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnEntradaValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnObservacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label2 = new System.Windows.Forms.Label();
 			this.panel4 = new System.Windows.Forms.Panel();
@@ -344,8 +344,8 @@
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnQuitar,
-            this.btnConcederDesconto,
             this.btnEstornar,
+            this.btnConcederDesconto,
             this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 593);
 			this.tspMenu.Name = "tspMenu";
@@ -365,6 +365,20 @@
 			this.btnQuitar.Size = new System.Drawing.Size(145, 41);
 			this.btnQuitar.Text = "&Quitar";
 			this.btnQuitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
+			// 
+			// btnEstornar
+			// 
+			this.btnEstornar.AutoSize = false;
+			this.btnEstornar.Image = global::CamadaUI.Properties.Resources.refresh_32;
+			this.btnEstornar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnEstornar.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnEstornar.Name = "btnEstornar";
+			this.btnEstornar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnEstornar.Size = new System.Drawing.Size(140, 41);
+			this.btnEstornar.Text = "E&stornar";
+			this.btnEstornar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnEstornar.Click += new System.EventHandler(this.btnEstornar_Click);
 			// 
 			// btnConcederDesconto
 			// 
@@ -378,19 +392,6 @@
 			this.btnConcederDesconto.Text = "&Editar Desconto";
 			this.btnConcederDesconto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnConcederDesconto.Click += new System.EventHandler(this.btnConcederDesconto_Click);
-			// 
-			// btnEstornar
-			// 
-			this.btnEstornar.AutoSize = false;
-			this.btnEstornar.Image = global::CamadaUI.Properties.Resources.refresh_32;
-			this.btnEstornar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnEstornar.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnEstornar.Name = "btnEstornar";
-			this.btnEstornar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnEstornar.Size = new System.Drawing.Size(140, 41);
-			this.btnEstornar.Text = "E&stornar";
-			this.btnEstornar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnEstornar.Click += new System.EventHandler(this.btnClose_Click);
 			// 
 			// btnFechar
 			// 
@@ -432,25 +433,25 @@
 			// 
 			this.dgvListagem.AllowUserToAddRows = false;
 			this.dgvListagem.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.Azure;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Azure;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.BackgroundColor = System.Drawing.Color.AliceBlue;
 			this.dgvListagem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 25;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnEntradaData,
-            this.clnEntradaValor,
-            this.clnIDConta,
+            this.clnData,
+            this.clnValor,
+            this.clnConta,
             this.clnObservacao});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
@@ -463,24 +464,24 @@
 			this.dgvListagem.Size = new System.Drawing.Size(651, 214);
 			this.dgvListagem.TabIndex = 26;
 			// 
-			// clnEntradaData
+			// clnData
 			// 
-			this.clnEntradaData.HeaderText = "Data";
-			this.clnEntradaData.Name = "clnEntradaData";
-			this.clnEntradaData.ReadOnly = true;
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
 			// 
-			// clnEntradaValor
+			// clnValor
 			// 
-			this.clnEntradaValor.HeaderText = "Valor";
-			this.clnEntradaValor.Name = "clnEntradaValor";
-			this.clnEntradaValor.ReadOnly = true;
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
-			// clnIDConta
+			// clnConta
 			// 
-			this.clnIDConta.HeaderText = "Conta";
-			this.clnIDConta.Name = "clnIDConta";
-			this.clnIDConta.ReadOnly = true;
-			this.clnIDConta.Width = 150;
+			this.clnConta.HeaderText = "Conta";
+			this.clnConta.Name = "clnConta";
+			this.clnConta.ReadOnly = true;
+			this.clnConta.Width = 150;
 			// 
 			// clnObservacao
 			// 
@@ -718,10 +719,6 @@
 		private System.Windows.Forms.Panel panel3;
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnEntradaData;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnEntradaValor;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnIDConta;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn clnObservacao;
 		internal System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.Label lblValorPago;
@@ -736,5 +733,9 @@
 		private CamadaUC.ucTextBoxUnclicked txtValorDesconto;
 		private System.Windows.Forms.ToolStripButton btnQuitar;
 		private System.Windows.Forms.ToolStripButton btnConcederDesconto;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnObservacao;
 	}
 }

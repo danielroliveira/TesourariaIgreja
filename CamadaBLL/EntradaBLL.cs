@@ -48,7 +48,8 @@ namespace CamadaBLL
 				IDSetor = (int)row["IDSetor"],
 				Setor = (string)row["Setor"],
 				IDConta = (int)row["IDConta"],
-				Conta = (string)row["Conta"]
+				Conta = (string)row["Conta"],
+				Observacao = row["Observacao"] == DBNull.Value ? string.Empty : (string)row["Observacao"],
 			};
 
 			return entrada;
@@ -56,7 +57,10 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertEntrada(objEntrada entrada, object dbTran = null)
+		public long InsertEntrada(objEntrada entrada,
+			Action<int, decimal> ContaSdlUpdate,
+			Action<int, decimal> SetorSdlUpdate,
+			object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
@@ -81,74 +85,19 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblEntradas");
 
 				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+				long newID = db.ExecutarInsertAndGetID(query);
+
+				//--- insert OBSERVACAO
+				new ObservacaoBLL().SaveObservacao(1, newID, entrada.Observacao, db);
 
 				//--- altera o saldo da CONTA
-				new ContaBLL().ContaSaldoChange(entrada.IDConta, entrada.EntradaValor, db);
+				new ContaBLL().ContaSaldoChange(entrada.IDConta, entrada.EntradaValor, db, ContaSdlUpdate);
 
 				//--- altera o saldo do SETOR
-				new SetorBLL().SetorSaldoChange(entrada.IDSetor, entrada.EntradaValor, db);
+				new SetorBLL().SetorSaldoChange(entrada.IDSetor, entrada.EntradaValor, db, SetorSdlUpdate);
 
 				if (!db.isTran) db.CommitTransaction();
 				return newID;
-
-			}
-			catch (Exception ex)
-			{
-				if (!db.isTran) db.RollBackTransaction();
-				throw ex;
-			}
-		}
-
-		// UPDATE
-		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateEntrada(objEntrada entrada, object dbTran = null)
-		{
-			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
-
-			try
-			{
-				// check and begin transaction
-				if (!db.isTran) db.BeginTransaction();
-
-				// get old Entrada IDSetor, IDConta, and Value
-				var oldEntrada = GetEntrada((int)entrada.IDEntrada, db);
-
-				// return old Values SALDO CONTA AND SETOR
-				ContaBLL cBLL = new ContaBLL();
-				SetorBLL sBLL = new SetorBLL();
-
-				cBLL.ContaSaldoChange(oldEntrada.IDConta, oldEntrada.EntradaValor * (-1), db);
-				sBLL.SetorSaldoChange(oldEntrada.IDSetor, oldEntrada.EntradaValor * (-1), db);
-
-				//--- clear Params
-				db.LimparParametros();
-
-				//--- define Params
-				db.AdicionarParametros("@IDEntrada", entrada.IDEntrada);
-				db.AdicionarParametros("@EntradaData", entrada.EntradaData);
-				db.AdicionarParametros("@EntradaValor", entrada.EntradaValor);
-				db.AdicionarParametros("@IDOrigem", entrada.IDOrigem);
-				db.AdicionarParametros("@Origem", entrada.Origem);
-				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
-				db.AdicionarParametros("@IDConta", entrada.IDConta);
-
-				//--- convert null parameters
-				db.ConvertNullParams();
-
-				//--- create query
-				string query = db.CreateUpdateSQL("tblEntradas", "@IDEntrada");
-
-				//--- update
-				db.ExecutarManipulacao(CommandType.Text, query);
-
-				//--- altera o saldo da CONTA e SETOR
-				cBLL.ContaSaldoChange(entrada.IDConta, entrada.EntradaValor, db);
-				sBLL.SetorSaldoChange(entrada.IDSetor, entrada.EntradaValor, db);
-
-				//--- commit and return
-				if (!db.isTran) db.CommitTransaction();
-				return true;
 
 			}
 			catch (Exception ex)

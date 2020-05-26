@@ -121,7 +121,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblBancos");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 			}
 			catch (Exception ex)
 			{

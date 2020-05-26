@@ -127,7 +127,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblUsuario");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 			}
 			catch (Exception ex)
 			{
@@ -290,7 +290,7 @@ namespace CamadaBLL
 							   "@IDConta, " +
 							   "@LiberacaoData)";
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 			}
 			catch (Exception ex)
 			{

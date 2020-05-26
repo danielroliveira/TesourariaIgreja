@@ -1,6 +1,7 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
 using CamadaUI.APagar;
+using CamadaUI.Main;
 using CamadaUI.Saidas;
 using System;
 using System.IO;
@@ -743,6 +744,25 @@ namespace CamadaUI
 				}
 
 				propSetorPadrao = frm.propEscolha;
+			}
+		}
+
+		// CLICK LABEL TO DEFINE DATA PADRAO
+		//------------------------------------------------------------------------------------------------------------
+		private void lblDataSis_Click(object sender, EventArgs e)
+		{
+			// check if exists open forms
+			if (Application.OpenForms.Count > 1)
+				return;
+
+			frmDateGet frm = new frmDateGet("Data padrão do sistema", EnumDataTipo.PassadoPresente, _DataPadrao, null);
+
+			// show
+			frm.ShowDialog();
+
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				propDataPadrao = (DateTime)frm.propDataInfo;
 			}
 		}
 

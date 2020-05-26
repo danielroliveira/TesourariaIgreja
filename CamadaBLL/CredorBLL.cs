@@ -147,7 +147,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblCredor");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 
 			}
 			catch (Exception ex)

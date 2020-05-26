@@ -53,7 +53,7 @@ namespace CamadaUI.Saidas
 			FormataListagem();
 
 			//--- get dados
-			dgvListagem.CellDoubleClick += btnEditar_Click;
+			dgvListagem.CellDoubleClick += btnVisualizar_Click;
 
 			DefineLabelFiltro();
 
@@ -282,7 +282,7 @@ namespace CamadaUI.Saidas
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-				btnEditar_Click(sender, new EventArgs());
+				btnVisualizar_Click(sender, new EventArgs());
 			}
 		}
 
@@ -311,7 +311,7 @@ namespace CamadaUI.Saidas
 
 		// EDITAR DESPESA ESCOLHIDA
 		//------------------------------------------------------------------------------------------------------------
-		private void btnEditar_Click(object sender, EventArgs e)
+		private void btnVisualizar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)

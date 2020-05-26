@@ -23,6 +23,7 @@ namespace CamadaDTO
 			internal string _Setor;
 			internal int _IDConta;
 			internal string _Conta;
+			internal string _Observacao;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -277,6 +278,20 @@ namespace CamadaDTO
 			set => EditData._Conta = value;
 		}
 
+		// Property Observacao
+		//---------------------------------------------------------------
+		public string Observacao
+		{
+			get => EditData._Observacao;
+			set
+			{
+				if (value != EditData._Observacao)
+				{
+					EditData._Observacao = value;
+					NotifyPropertyChanged("Observacao");
+				}
+			}
+		}
 	}
 
 	//=================================================================================================

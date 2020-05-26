@@ -142,7 +142,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblConta");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 
 			}
 			catch (Exception ex)
@@ -227,7 +227,7 @@ namespace CamadaBLL
 
 		// CONTA SALDO ALTERAR
 		//------------------------------------------------------------------------------------------------------------
-		public decimal ContaSaldoChange(int IDConta, decimal valor, AcessoDados dbTran)
+		public decimal ContaSaldoChange(int IDConta, decimal valor, AcessoDados dbTran, Action<int, decimal> ContaSldUpdate)
 		{
 			try
 			{
@@ -242,7 +242,48 @@ namespace CamadaBLL
 
 				decimal SaldoAtual = ContaSaldoGet(IDConta, dbTran);
 
+				// DELEGATE altera o saldo da conta local
+				ContaSldUpdate(IDConta, valor);
+
 				return SaldoAtual;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// CONTA BLOQUEIO DATA PERMIT
+		//------------------------------------------------------------------------------------------------------------
+		public bool ContaBloqueioPermit(int IDConta, DateTime DataMovimento, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT BloqueioData FROM tblConta WHERE IDConta = @IDConta";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDConta", IDConta);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("ID da CONTA não foi identificado...");
+				}
+
+				DateTime? bloqueioData = dt.Rows[0][0] == DBNull.Value ? null : (DateTime?)dt.Rows[0][0];
+
+				if (bloqueioData != null)
+				{
+					return DataMovimento > bloqueioData;
+				}
+				else
+				{
+					return true;
+				}
 			}
 			catch (Exception ex)
 			{

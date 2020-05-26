@@ -247,7 +247,7 @@ namespace CamadaDAL
 
 		// EXECUTAR INSERT AND RETURN NEW ID
 		//------------------------------------------------------------------------------------------------------------
-		public int ExecutarInsertAndGetID(string query)
+		public long ExecutarInsertAndGetID(string query)
 		{
 			try
 			{
@@ -276,7 +276,7 @@ namespace CamadaDAL
 					cmd.ExecuteScalar();
 
 					//--- GET NEW ID
-					int? obj = GetNewID();
+					long? obj = GetNewID();
 
 					//--- CLOSE DB CONNECTION
 					CloseConn();
@@ -287,7 +287,7 @@ namespace CamadaDAL
 					}
 
 					//--- RETURN
-					return (int)obj;
+					return (long)obj;
 				}
 				else
 				{
@@ -298,7 +298,7 @@ namespace CamadaDAL
 					cmd.ExecuteScalar();
 
 					//--- GET NEW ID
-					int? obj = GetNewID();
+					long? obj = GetNewID();
 
 					if (obj == null)
 					{
@@ -306,7 +306,7 @@ namespace CamadaDAL
 					}
 
 					//--- RETURN
-					return (int)obj;
+					return (long)obj;
 				}
 			}
 			catch (Exception ex)
@@ -317,7 +317,7 @@ namespace CamadaDAL
 
 		// GET NEW ID OF INSERT
 		//------------------------------------------------------------------------------------------------------------
-		private int? GetNewID()
+		private long? GetNewID()
 		{
 			//--- obter NewID
 			LimparParametros();
@@ -331,7 +331,7 @@ namespace CamadaDAL
 
 			object newID = dt.Rows[0][0];
 
-			if (int.TryParse(newID.ToString(), out int j))
+			if (long.TryParse(newID.ToString(), out long j))
 			{
 				return j;
 			}

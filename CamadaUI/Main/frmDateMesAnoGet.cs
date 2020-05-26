@@ -3,7 +3,6 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Main
 {

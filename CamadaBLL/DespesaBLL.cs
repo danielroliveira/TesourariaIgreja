@@ -183,7 +183,7 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertDespesa(objDespesa desp, ref List<objAPagar> listAPagar)
+		public long InsertDespesa(objDespesa desp, ref List<objAPagar> listAPagar)
 		{
 			AcessoDados dbTran = null;
 
@@ -210,7 +210,7 @@ namespace CamadaBLL
 				string query = dbTran.CreateInsertSQL("tblDespesa");
 
 				//--- insert and Get new ID
-				int newID = dbTran.ExecutarInsertAndGetID(query);
+				long newID = dbTran.ExecutarInsertAndGetID(query);
 
 				//--- insert Despesa Comum
 				desp.IDDespesa = newID;
@@ -370,7 +370,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblDespesaTipo");
 
 				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+				int newID = (int)db.ExecutarInsertAndGetID(query);
 
 				return newID;
 
@@ -493,7 +493,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblDespesaTipoGrupo");
 
 				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+				int newID = (int)db.ExecutarInsertAndGetID(query);
 
 				return newID;
 

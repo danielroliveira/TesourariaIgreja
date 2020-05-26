@@ -51,7 +51,7 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertAReceber(objAReceber entrada, object dbTran = null)
+		public long InsertAReceber(objAReceber entrada, Action<int, decimal> ContaSldUpdate, object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
@@ -77,10 +77,10 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblAReceber");
 
 				//--- insert and Get new ID
-				int newID = db.ExecutarInsertAndGetID(query);
+				long newID = db.ExecutarInsertAndGetID(query);
 
 				//--- altera o saldo da CONTA PROVISORIA
-				new ContaBLL().ContaSaldoChange(entrada.IDContaProvisoria, entrada.ValorBruto, db);
+				new ContaBLL().ContaSaldoChange(entrada.IDContaProvisoria, entrada.ValorBruto, db, ContaSldUpdate);
 
 				if (!db.isTran) db.CommitTransaction();
 				return newID;
@@ -95,7 +95,7 @@ namespace CamadaBLL
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateAReceber(objAReceber receber, object dbTran = null)
+		public bool UpdateAReceber(objAReceber receber, Action<int, decimal> ContaSldUpdate, object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
@@ -109,7 +109,7 @@ namespace CamadaBLL
 
 				// return old Values SALDO CONTA PROVISORIA
 				ContaBLL cBLL = new ContaBLL();
-				cBLL.ContaSaldoChange(oldAReceber.IDContaProvisoria, oldAReceber.ValorBruto * (-1), db);
+				cBLL.ContaSaldoChange(oldAReceber.IDContaProvisoria, oldAReceber.ValorBruto * (-1), db, ContaSldUpdate);
 
 				//--- clear Params
 				db.LimparParametros();
@@ -134,7 +134,7 @@ namespace CamadaBLL
 				db.ExecutarManipulacao(CommandType.Text, query);
 
 				//--- altera o saldo da CONTA provisoria
-				cBLL.ContaSaldoChange(receber.IDContaProvisoria, receber.ValorBruto, db);
+				cBLL.ContaSaldoChange(receber.IDContaProvisoria, receber.ValorBruto, db, ContaSldUpdate);
 
 				//--- commit and return
 				if (!db.isTran) db.CommitTransaction();

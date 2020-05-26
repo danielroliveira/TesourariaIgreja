@@ -137,7 +137,7 @@ namespace CamadaBLL
 							   "@Contribuinte, @NascimentoData, @IDMembro, @Dizimista, " +
 							   "@CNP, @IDCongregacao, @TelefoneCelular, @Ativo)";
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 
 			}
 			catch (Exception ex)

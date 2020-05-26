@@ -32,8 +32,16 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
-			this.btnEditar = new System.Windows.Forms.Button();
+			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDocumentoTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
@@ -53,14 +61,6 @@
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
 			this.lblFiltro = new System.Windows.Forms.Label();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDocumentoTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -116,19 +116,19 @@
 			this.btnAdicionar.UseVisualStyleBackColor = true;
 			this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
 			// 
-			// btnEditar
+			// btnVisualizar
 			// 
-			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(180, 625);
-			this.btnEditar.Name = "btnEditar";
-			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 4;
-			this.btnEditar.Text = "&Editar";
-			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnEditar.UseVisualStyleBackColor = true;
-			this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnVisualizar.Location = new System.Drawing.Point(180, 625);
+			this.btnVisualizar.Name = "btnVisualizar";
+			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
+			this.btnVisualizar.TabIndex = 4;
+			this.btnVisualizar.Text = "&Visualizar";
+			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnVisualizar.UseVisualStyleBackColor = true;
+			this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
 			// 
 			// dgvListagem
 			// 
@@ -141,9 +141,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -157,14 +157,14 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnData,
-            this.clnSetor,
-            this.clnTipo,
-            this.clnCredor,
-            this.clnDocumentoTipo,
-            this.clnSituacao,
-            this.clnValor});
+			this.clnID,
+			this.clnData,
+			this.clnSetor,
+			this.clnTipo,
+			this.clnCredor,
+			this.clnDocumentoTipo,
+			this.clnSituacao,
+			this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -181,6 +181,59 @@
 			this.dgvListagem.Size = new System.Drawing.Size(1156, 473);
 			this.dgvListagem.TabIndex = 2;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 60;
+			// 
+			// clnData
+			// 
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
+			this.clnData.Width = 85;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor de Recursos";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 200;
+			// 
+			// clnTipo
+			// 
+			this.clnTipo.HeaderText = "Tipo de Despesa";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.ReadOnly = true;
+			this.clnTipo.Width = 170;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 200;
+			// 
+			// clnDocumentoTipo
+			// 
+			this.clnDocumentoTipo.HeaderText = "Doc. Tipo";
+			this.clnDocumentoTipo.Name = "clnDocumentoTipo";
+			this.clnDocumentoTipo.ReadOnly = true;
+			// 
+			// clnSituacao
+			// 
+			this.clnSituacao.HeaderText = "Situação";
+			this.clnSituacao.Name = "clnSituacao";
+			this.clnSituacao.ReadOnly = true;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
 			// label1
 			// 
@@ -451,59 +504,6 @@
 			this.lblFiltro.TabIndex = 10;
 			this.lblFiltro.Text = "Filtro";
 			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 60;
-			// 
-			// clnData
-			// 
-			this.clnData.HeaderText = "Data";
-			this.clnData.Name = "clnData";
-			this.clnData.ReadOnly = true;
-			this.clnData.Width = 85;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor de Recursos";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 200;
-			// 
-			// clnTipo
-			// 
-			this.clnTipo.HeaderText = "Tipo de Despesa";
-			this.clnTipo.Name = "clnTipo";
-			this.clnTipo.ReadOnly = true;
-			this.clnTipo.Width = 170;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Credor";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 200;
-			// 
-			// clnDocumentoTipo
-			// 
-			this.clnDocumentoTipo.HeaderText = "Doc. Tipo";
-			this.clnDocumentoTipo.Name = "clnDocumentoTipo";
-			this.clnDocumentoTipo.ReadOnly = true;
-			// 
-			// clnSituacao
-			// 
-			this.clnSituacao.HeaderText = "Situação";
-			this.clnSituacao.Name = "clnSituacao";
-			this.clnSituacao.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			// 
 			// frmDespesaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -517,11 +517,11 @@
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.btnAdicionar);
-			this.Controls.Add(this.btnEditar);
+			this.Controls.Add(this.btnVisualizar);
 			this.KeyPreview = true;
 			this.Name = "frmDespesaListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
-			this.Controls.SetChildIndex(this.btnEditar, 0);
+			this.Controls.SetChildIndex(this.btnVisualizar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.button1, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
@@ -546,7 +546,7 @@
 
 		internal System.Windows.Forms.Button btnFechar;
 		internal System.Windows.Forms.Button btnAdicionar;
-		internal System.Windows.Forms.Button btnEditar;
+		internal System.Windows.Forms.Button btnVisualizar;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label lblValorTotal;

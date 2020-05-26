@@ -46,6 +46,8 @@
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuDespesaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuAPagarProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuDespesaTipo = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,8 +76,6 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuAPagarProcurar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -275,6 +275,20 @@
 			this.mnuDespesaProcurar.Name = "mnuDespesaProcurar";
 			this.mnuDespesaProcurar.Size = new System.Drawing.Size(217, 30);
 			this.mnuDespesaProcurar.Text = "Procurar Despesa";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
+			// 
+			// mnuAPagarProcurar
+			// 
+			this.mnuAPagarProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuAPagarProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuAPagarProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuAPagarProcurar.Name = "mnuAPagarProcurar";
+			this.mnuAPagarProcurar.Size = new System.Drawing.Size(217, 30);
+			this.mnuAPagarProcurar.Text = "Procurar a Pagar";
 			// 
 			// toolStripSeparator4
 			// 
@@ -606,6 +620,7 @@
 			// lblDataSis
 			// 
 			this.lblDataSis.AutoSize = true;
+			this.lblDataSis.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.lblDataSis.Dock = System.Windows.Forms.DockStyle.Left;
 			this.lblDataSis.ForeColor = System.Drawing.Color.Transparent;
 			this.lblDataSis.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -616,6 +631,7 @@
 			this.lblDataSis.TabIndex = 1;
 			this.lblDataSis.Text = "...";
 			this.lblDataSis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblDataSis.Click += new System.EventHandler(this.lblDataSis_Click);
 			// 
 			// Label2
 			// 
@@ -645,20 +661,6 @@
 			this.lblHora.TabIndex = 6;
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// mnuAPagarProcurar
-			// 
-			this.mnuAPagarProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuAPagarProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuAPagarProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuAPagarProcurar.Name = "mnuAPagarProcurar";
-			this.mnuAPagarProcurar.Size = new System.Drawing.Size(217, 30);
-			this.mnuAPagarProcurar.Text = "Procurar a Pagar";
-			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
 			// 
 			// frmPrincipal
 			// 

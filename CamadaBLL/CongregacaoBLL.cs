@@ -135,7 +135,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblCongregacao");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 
 			}
 			catch (Exception ex)
@@ -268,7 +268,7 @@ namespace CamadaBLL
 							   ") VALUES (" +
 							   "@CongregacaoSetor, @CoordenadorNome, @CoordenadorTelefone, @Ativo)";
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 			}
 			catch (Exception ex)
 			{

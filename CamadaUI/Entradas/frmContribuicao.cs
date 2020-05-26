@@ -426,7 +426,7 @@ namespace CamadaUI.Entradas
 				//--- SAVE: INSERT OR UPDATE
 				if (_contribuicao.IDContribuicao == null) //--- save | Insert
 				{
-					int ID = sBLL.InsertContribuicao(_contribuicao, forma);
+					long ID = sBLL.InsertContribuicao(_contribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate, forma);
 
 					//--- define newID
 					_contribuicao.IDContribuicao = ID;
@@ -797,7 +797,7 @@ namespace CamadaUI.Entradas
 
 		#region BUTTONS PROCURA
 
-		// OPEN CONGREGACAO PROCURA FORM
+		// OPEN PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSetConta_Click(object sender, EventArgs e)
 		{

@@ -16,7 +16,6 @@ namespace CamadaBLL
 		public objAPagar GetAPagar()
 		{
 			throw new NotImplementedException();
-
 		}
 
 		// GET LIST OF
@@ -208,7 +207,7 @@ namespace CamadaBLL
 					string query = dbTran.CreateInsertSQL("tblAPagar");
 
 					//--- insert and Get new ID
-					int newID = dbTran.ExecutarInsertAndGetID(query);
+					long newID = dbTran.ExecutarInsertAndGetID(query);
 					pag.IDAPagar = newID;
 				}
 
@@ -249,6 +248,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@ValorAcrescimo", pag.ValorAcrescimo);
 				db.AdicionarParametros("@ValorDesconto", pag.ValorDesconto);
 				db.AdicionarParametros("@Vencimento", pag.Vencimento);
+				db.AdicionarParametros("@PagamentoData", pag.PagamentoData);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -265,6 +265,118 @@ namespace CamadaBLL
 			{
 				throw ex;
 			}
+		}
+
+		// QUITAR A PAGAR AND INSERT NEW SAIDA
+		//------------------------------------------------------------------------------------------------------------
+		public long QuitarAPagar(
+			objAPagar apagar,
+			objSaida saida,
+			Action<int, decimal> ContaSldLocalUpdate,
+			Action<int, decimal> SetorSldLocalUpdate)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// Verifica CONTA SALDO
+				ContaBLL cBLL = new ContaBLL();
+
+				decimal saldoAtual = cBLL.ContaSaldoGet(saida.IDConta, dbTran);
+
+				if (saida.SaidaValor > saldoAtual)
+				{
+					throw new AppException("Não existe SALDO SUFICIENTE na conta para realizar esse débito...", 1);
+				}
+
+				// Verifica CONTA BLOQUEIO
+				if (!cBLL.ContaBloqueioPermit(saida.IDConta, saida.SaidaData, dbTran))
+				{
+					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Débito proposto...", 2);
+				}
+
+				// Inserir SAIDA
+				long newID = new SaidaBLL().InsertSaida(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+				saida.IDSaida = newID;
+
+				// Change APAGAR
+				decimal DoValor = saida.SaidaValor - saida.AcrescimoValor ?? 0;
+
+				apagar.ValorAcrescimo += saida.AcrescimoValor ?? 0;
+				apagar.ValorPago += DoValor;
+				if (apagar.ValorPago >= apagar.APagarValor)
+				{
+					apagar.PagamentoData = saida.SaidaData;
+					apagar.IDSituacao = 2;
+					apagar.Situacao = "Quitada";
+				}
+
+				// Update APAGAR
+				UpdateAPagar(apagar, dbTran);
+
+				dbTran.CommitTransaction();
+
+				return newID;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+
+		}
+
+		// ESTORNAR A PAGAR AND DELETE SAIDA
+		//------------------------------------------------------------------------------------------------------------
+		public bool EstornarAPagar(
+			objAPagar apagar,
+			objSaida saida,
+			Action<int, decimal> ContaSldLocalUpdate,
+			Action<int, decimal> SetorSldLocalUpdate)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// Verifica CONTA BLOQUEIO
+				ContaBLL cBLL = new ContaBLL();
+
+				if (!cBLL.ContaBloqueioPermit(saida.IDConta, saida.SaidaData, dbTran))
+				{
+					throw new AppException("A Data da Conta está BLOQUEADA nesta Data proposta...", 2);
+				}
+
+				// DELETE REMOVE SAIDA
+				new SaidaBLL().RemoveSaida(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+
+				// Change APAGAR
+				decimal DoValor = saida.SaidaValor - saida.AcrescimoValor ?? 0;
+
+				apagar.ValorAcrescimo -= saida.AcrescimoValor ?? 0;
+				apagar.ValorPago -= DoValor;
+				apagar.PagamentoData = null;
+				apagar.IDSituacao = 1;
+				apagar.Situacao = "Em Aberto";
+
+				// Update APAGAR
+				UpdateAPagar(apagar, dbTran);
+
+				dbTran.CommitTransaction();
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+
 		}
 	}
 
@@ -357,7 +469,7 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblCobrancaForma");
 
 				//--- insert
-				return db.ExecutarInsertAndGetID(query);
+				return (int)db.ExecutarInsertAndGetID(query);
 			}
 			catch (Exception ex)
 			{

@@ -32,7 +32,7 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
-			this.btnEditar = new System.Windows.Forms.Button();
+			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -116,19 +116,19 @@
 			this.btnAdicionar.UseVisualStyleBackColor = true;
 			this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
 			// 
-			// btnEditar
+			// btnVisualizar
 			// 
-			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(180, 625);
-			this.btnEditar.Name = "btnEditar";
-			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 4;
-			this.btnEditar.Text = "&Editar";
-			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnEditar.UseVisualStyleBackColor = true;
-			this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnVisualizar.Location = new System.Drawing.Point(180, 625);
+			this.btnVisualizar.Name = "btnVisualizar";
+			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
+			this.btnVisualizar.TabIndex = 4;
+			this.btnVisualizar.Text = "&Visualizar";
+			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnVisualizar.UseVisualStyleBackColor = true;
+			this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
 			// 
 			// dgvListagem
 			// 
@@ -141,9 +141,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -157,14 +157,14 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnData,
-            this.clnConta,
-            this.clnSetor,
-            this.clnTipo,
-            this.clnContribuinte,
-            this.clnForma,
-            this.clnValor});
+			this.clnID,
+			this.clnData,
+			this.clnConta,
+			this.clnSetor,
+			this.clnTipo,
+			this.clnContribuinte,
+			this.clnForma,
+			this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -518,11 +518,11 @@
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.btnAdicionar);
-			this.Controls.Add(this.btnEditar);
+			this.Controls.Add(this.btnVisualizar);
 			this.KeyPreview = true;
 			this.Name = "frmContribuicaoListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
-			this.Controls.SetChildIndex(this.btnEditar, 0);
+			this.Controls.SetChildIndex(this.btnVisualizar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.button1, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
@@ -547,7 +547,7 @@
 
 		internal System.Windows.Forms.Button btnFechar;
 		internal System.Windows.Forms.Button btnAdicionar;
-		internal System.Windows.Forms.Button btnEditar;
+		internal System.Windows.Forms.Button btnVisualizar;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label lblValorTotal;
