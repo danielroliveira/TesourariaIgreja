@@ -362,14 +362,14 @@ namespace CamadaUI.Congregacoes
 			{
 				var response = AbrirDialog("Você deseja realmente DESATIVAR o Reuniao:\n" +
 							   txtReuniao.Text.ToUpper(),
-							   "Desativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+							   "Desativar Reuniao", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 			else //--- INATIVO
 			{
 				var response = AbrirDialog("Você deseja realmente ATIVAR o Reuniao:\n" +
 							   txtReuniao.Text.ToUpper(),
-							   "Ativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+							   "Ativar Reuniao", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 
@@ -457,8 +457,6 @@ namespace CamadaUI.Congregacoes
 			if (!VerificaDadosClasse(txtReuniao, "Reuniao", _reuniao)) return false;
 			if (_reuniao.RecorrenciaMes == 0) _reuniao.RecorrenciaMes = null;
 			if (_reuniao.RecorrenciaSemana == 0) _reuniao.RecorrenciaSemana = null;
-
-
 
 			return true;
 		}

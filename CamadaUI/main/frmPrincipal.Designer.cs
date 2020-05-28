@@ -76,6 +76,9 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuSubDespesaPeriodica = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaPeriodicaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaPeriodicaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -241,6 +244,7 @@
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuDespesaInserir,
             this.mnuDespesaProcurar,
+            this.mnuSubDespesaPeriodica,
             this.toolStripSeparator5,
             this.mnuAPagarProcurar,
             this.toolStripSeparator4,
@@ -298,7 +302,7 @@
 			// mnuDespesaTipo
 			// 
 			this.mnuDespesaTipo.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuDespesaTipo.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaTipo.Image = global::CamadaUI.Properties.Resources.editar_24;
 			this.mnuDespesaTipo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaTipo.Name = "mnuDespesaTipo";
 			this.mnuDespesaTipo.Size = new System.Drawing.Size(217, 30);
@@ -307,7 +311,7 @@
 			// mnuDespesaGrupo
 			// 
 			this.mnuDespesaGrupo.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuDespesaGrupo.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaGrupo.Image = global::CamadaUI.Properties.Resources.editar_24;
 			this.mnuDespesaGrupo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
 			this.mnuDespesaGrupo.Size = new System.Drawing.Size(217, 30);
@@ -316,7 +320,7 @@
 			// mnuCobrancaForma
 			// 
 			this.mnuCobrancaForma.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuCobrancaForma.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuCobrancaForma.Image = global::CamadaUI.Properties.Resources.editar_24;
 			this.mnuCobrancaForma.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
 			this.mnuCobrancaForma.Size = new System.Drawing.Size(217, 30);
@@ -662,6 +666,36 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuSubDespesaPeriodica
+			// 
+			this.mnuSubDespesaPeriodica.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDespesaPeriodicaInserir,
+            this.mnuDespesaPeriodicaProcurar});
+			this.mnuSubDespesaPeriodica.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSubDespesaPeriodica.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSubDespesaPeriodica.Name = "mnuSubDespesaPeriodica";
+			this.mnuSubDespesaPeriodica.Size = new System.Drawing.Size(217, 30);
+			this.mnuSubDespesaPeriodica.Text = "Despesa Periódica";
+			// 
+			// mnuDespesaPeriodicaInserir
+			// 
+			this.mnuDespesaPeriodicaInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaPeriodicaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuDespesaPeriodicaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaPeriodicaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuDespesaPeriodicaInserir.Name = "mnuDespesaPeriodicaInserir";
+			this.mnuDespesaPeriodicaInserir.Size = new System.Drawing.Size(264, 30);
+			this.mnuDespesaPeriodicaInserir.Text = "Inserir Despesa Periódica";
+			// 
+			// mnuDespesaPeriodicaProcurar
+			// 
+			this.mnuDespesaPeriodicaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaPeriodicaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaPeriodicaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaPeriodicaProcurar.Name = "mnuDespesaPeriodicaProcurar";
+			this.mnuDespesaPeriodicaProcurar.Size = new System.Drawing.Size(264, 30);
+			this.mnuDespesaPeriodicaProcurar.Text = "Procurar Despesa Periódica";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -742,6 +776,9 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuCobrancaForma;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStripMenuItem mnuAPagarProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuSubDespesaPeriodica;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaPeriodicaInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaPeriodicaProcurar;
 	}
 }
 

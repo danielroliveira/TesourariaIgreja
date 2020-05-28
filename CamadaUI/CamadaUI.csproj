@@ -429,6 +429,12 @@
     <Compile Include="Saidas\frmDespesaParcelamento.designer.cs">
       <DependentUpon>frmDespesaParcelamento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesaPeriodica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaPeriodica.designer.cs">
+      <DependentUpon>frmDespesaPeriodica.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmDespesaTipo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -653,6 +659,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaParcelamento.resx">
       <DependentUpon>frmDespesaParcelamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaPeriodica.resx">
+      <DependentUpon>frmDespesaPeriodica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaTipo.resx">
       <DependentUpon>frmDespesaTipo.cs</DependentUpon>

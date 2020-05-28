@@ -1,11 +1,11 @@
-﻿using CamadaBLL;
-using CamadaDTO;
-using CamadaUI.Caixa;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using CamadaBLL;
+using CamadaDTO;
+using CamadaUI.Caixa;
 using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Saidas
@@ -277,8 +277,8 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		#endregion // DESIGN FORM FUNCTIONS --- END
 
+		#endregion // DESIGN FORM FUNCTIONS --- END
 
 	}
 }

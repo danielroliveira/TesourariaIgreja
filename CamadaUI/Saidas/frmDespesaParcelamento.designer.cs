@@ -35,11 +35,11 @@
 			this.txtBanco = new System.Windows.Forms.TextBox();
 			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
 			this.label1 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
-			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
 			this.numVencimentoDia = new System.Windows.Forms.NumericUpDown();
 			this.lblParcelas = new System.Windows.Forms.Label();
+			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
+			this.label3 = new System.Windows.Forms.Label();
+			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numVencimentoDia)).BeginInit();
@@ -67,15 +67,15 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOK,
-            this.btnCancelar});
+			this.btnOK,
+			this.btnCancelar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 222);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(507, 44);
@@ -160,26 +160,40 @@
 			this.label1.TabIndex = 7;
 			this.label1.Text = "Dia do Vencimento";
 			// 
-			// label3
+			// numVencimentoDia
 			// 
-			this.label3.AutoSize = true;
-			this.label3.BackColor = System.Drawing.Color.Transparent;
-			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(29, 88);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(134, 19);
-			this.label3.TabIndex = 1;
-			this.label3.Text = "Forma de Cobrança";
+			this.numVencimentoDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numVencimentoDia.Location = new System.Drawing.Point(169, 163);
+			this.numVencimentoDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.numVencimentoDia.Maximum = new decimal(new int[] {
+			31,
+			0,
+			0,
+			0});
+			this.numVencimentoDia.Minimum = new decimal(new int[] {
+			1,
+			0,
+			0,
+			0});
+			this.numVencimentoDia.Name = "numVencimentoDia";
+			this.numVencimentoDia.Size = new System.Drawing.Size(65, 31);
+			this.numVencimentoDia.TabIndex = 8;
+			this.numVencimentoDia.Value = new decimal(new int[] {
+			1,
+			0,
+			0,
+			0});
+			this.numVencimentoDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.num_KeyDown);
 			// 
-			// txtCobrancaForma
+			// lblParcelas
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(169, 85);
-			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCobrancaForma.MaxLength = 30;
-			this.txtCobrancaForma.Name = "txtCobrancaForma";
-			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 2;
-			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.lblParcelas.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblParcelas.Location = new System.Drawing.Point(351, 168);
+			this.lblParcelas.Name = "lblParcelas";
+			this.lblParcelas.Size = new System.Drawing.Size(125, 26);
+			this.lblParcelas.TabIndex = 10;
+			this.lblParcelas.Text = "Parcelas";
+			this.lblParcelas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// btnSetForma
 			// 
@@ -200,40 +214,26 @@
 			this.btnSetForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetForma.Click += new System.EventHandler(this.btnSetForma_Click);
 			// 
-			// numVencimentoDia
+			// label3
 			// 
-			this.numVencimentoDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numVencimentoDia.Location = new System.Drawing.Point(169, 163);
-			this.numVencimentoDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.numVencimentoDia.Maximum = new decimal(new int[] {
-            31,
-            0,
-            0,
-            0});
-			this.numVencimentoDia.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numVencimentoDia.Name = "numVencimentoDia";
-			this.numVencimentoDia.Size = new System.Drawing.Size(65, 31);
-			this.numVencimentoDia.TabIndex = 8;
-			this.numVencimentoDia.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numVencimentoDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.num_KeyDown);
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.ForeColor = System.Drawing.Color.Black;
+			this.label3.Location = new System.Drawing.Point(29, 88);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(134, 19);
+			this.label3.TabIndex = 1;
+			this.label3.Text = "Forma de Cobrança";
 			// 
-			// lblParcelas
+			// txtCobrancaForma
 			// 
-			this.lblParcelas.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblParcelas.Location = new System.Drawing.Point(351, 168);
-			this.lblParcelas.Name = "lblParcelas";
-			this.lblParcelas.Size = new System.Drawing.Size(125, 26);
-			this.lblParcelas.TabIndex = 10;
-			this.lblParcelas.Text = "Parcelas";
-			this.lblParcelas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.txtCobrancaForma.Location = new System.Drawing.Point(169, 85);
+			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtCobrancaForma.MaxLength = 30;
+			this.txtCobrancaForma.Name = "txtCobrancaForma";
+			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
+			this.txtCobrancaForma.TabIndex = 2;
+			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// frmDespesaParcelamento
 			// 
@@ -264,8 +264,8 @@
 			this.Controls.SetChildIndex(this.btnSetBanco, 0);
 			this.Controls.SetChildIndex(this.btnSetForma, 0);
 			this.Controls.SetChildIndex(this.numVencimentoDia, 0);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.lblParcelas, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
@@ -283,10 +283,10 @@
 		internal System.Windows.Forms.TextBox txtBanco;
 		internal VIBlend.WinForms.Controls.vButton btnSetBanco;
 		internal System.Windows.Forms.Label label1;
-		internal System.Windows.Forms.Label label3;
-		internal System.Windows.Forms.TextBox txtCobrancaForma;
-		internal VIBlend.WinForms.Controls.vButton btnSetForma;
 		private System.Windows.Forms.NumericUpDown numVencimentoDia;
 		private System.Windows.Forms.Label lblParcelas;
+		internal VIBlend.WinForms.Controls.vButton btnSetForma;
+		internal System.Windows.Forms.Label label3;
+		internal System.Windows.Forms.TextBox txtCobrancaForma;
 	}
 }
