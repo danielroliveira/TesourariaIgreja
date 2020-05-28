@@ -38,10 +38,9 @@
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnAtivo = new System.Windows.Forms.ToolStripButton();
 			this.txtDespesaDescricao = new System.Windows.Forms.TextBox();
 			this.lblCongregacao = new System.Windows.Forms.Label();
-			this.dtpDespesaData = new System.Windows.Forms.DateTimePicker();
-			this.label1 = new System.Windows.Forms.Label();
 			this.txtDespesaValor = new CamadaUC.ucOnlyNumbers();
 			this.label8 = new System.Windows.Forms.Label();
 			this.btnSetCredor = new VIBlend.WinForms.Controls.vButton();
@@ -77,7 +76,8 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.btnAtivo = new System.Windows.Forms.ToolStripButton();
+			this.lblDespesaData = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -101,6 +101,8 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.label2);
+			this.panel1.Controls.Add(this.lblDespesaData);
 			this.panel1.Controls.Add(this.lblID);
 			this.panel1.Controls.Add(this.lbl_IdTexto);
 			this.panel1.Size = new System.Drawing.Size(708, 50);
@@ -108,6 +110,8 @@
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lbl_IdTexto, 0);
 			this.panel1.Controls.SetChildIndex(this.lblID, 0);
+			this.panel1.Controls.SetChildIndex(this.lblDespesaData, 0);
+			this.panel1.Controls.SetChildIndex(this.label2, 0);
 			// 
 			// lblID
 			// 
@@ -152,7 +156,7 @@
             this.btnFechar,
             this.toolStripSeparator2,
             this.btnAtivo});
-			this.tspMenu.Location = new System.Drawing.Point(2, 674);
+			this.tspMenu.Location = new System.Drawing.Point(2, 648);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(704, 44);
 			this.tspMenu.TabIndex = 27;
@@ -220,10 +224,23 @@
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
 			// 
+			// btnAtivo
+			// 
+			this.btnAtivo.Image = ((System.Drawing.Image)(resources.GetObject("btnAtivo.Image")));
+			this.btnAtivo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnAtivo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnAtivo.Name = "btnAtivo";
+			this.btnAtivo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnAtivo.Size = new System.Drawing.Size(96, 41);
+			this.btnAtivo.Text = "&Ativa";
+			this.btnAtivo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAtivo.ToolTipText = "Ativa";
+			this.btnAtivo.Click += new System.EventHandler(this.btnAtivo_Click);
+			// 
 			// txtDespesaDescricao
 			// 
 			this.txtDespesaDescricao.BackColor = System.Drawing.Color.White;
-			this.txtDespesaDescricao.Location = new System.Drawing.Point(197, 303);
+			this.txtDespesaDescricao.Location = new System.Drawing.Point(197, 279);
 			this.txtDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaDescricao.MaxLength = 100;
 			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
@@ -237,40 +254,17 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(118, 306);
+			this.lblCongregacao.Location = new System.Drawing.Point(118, 282);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 18;
 			this.lblCongregacao.Text = "Descrição";
 			// 
-			// dtpDespesaData
-			// 
-			this.dtpDespesaData.CalendarFont = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dtpDespesaData.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dtpDespesaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpDespesaData.Location = new System.Drawing.Point(197, 69);
-			this.dtpDespesaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.dtpDespesaData.Name = "dtpDespesaData";
-			this.dtpDespesaData.Size = new System.Drawing.Size(132, 27);
-			this.dtpDespesaData.TabIndex = 2;
-			this.dtpDespesaData.TabStop = false;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.BackColor = System.Drawing.Color.Transparent;
-			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(71, 73);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(120, 19);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Data do Contrato";
-			// 
 			// txtDespesaValor
 			// 
 			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDespesaValor.Inteiro = false;
-			this.txtDespesaValor.Location = new System.Drawing.Point(485, 365);
+			this.txtDespesaValor.Location = new System.Drawing.Point(485, 341);
 			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
@@ -283,7 +277,7 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(357, 371);
+			this.label8.Location = new System.Drawing.Point(357, 347);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
 			this.label8.TabIndex = 23;
@@ -295,7 +289,7 @@
 			this.btnSetCredor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetCredor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetCredor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetCredor.Location = new System.Drawing.Point(596, 147);
+			this.btnSetCredor.Location = new System.Drawing.Point(596, 123);
 			this.btnSetCredor.Name = "btnSetCredor";
 			this.btnSetCredor.RoundedCornersMask = ((byte)(15));
 			this.btnSetCredor.RoundedCornersRadius = 0;
@@ -310,7 +304,7 @@
 			// 
 			// txtCredor
 			// 
-			this.txtCredor.Location = new System.Drawing.Point(197, 147);
+			this.txtCredor.Location = new System.Drawing.Point(197, 123);
 			this.txtCredor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCredor.MaxLength = 30;
 			this.txtCredor.Name = "txtCredor";
@@ -324,7 +318,7 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(53, 150);
+			this.lblContribuinte.Location = new System.Drawing.Point(53, 126);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(138, 19);
 			this.lblContribuinte.TabIndex = 6;
@@ -335,7 +329,7 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(74, 189);
+			this.label4.Location = new System.Drawing.Point(74, 165);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 19);
 			this.label4.TabIndex = 9;
@@ -343,7 +337,7 @@
 			// 
 			// txtDespesaTipo
 			// 
-			this.txtDespesaTipo.Location = new System.Drawing.Point(197, 186);
+			this.txtDespesaTipo.Location = new System.Drawing.Point(197, 162);
 			this.txtDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaTipo.MaxLength = 30;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
@@ -358,7 +352,7 @@
 			this.btnSetDespesaTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetDespesaTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetDespesaTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetDespesaTipo.Location = new System.Drawing.Point(596, 186);
+			this.btnSetDespesaTipo.Location = new System.Drawing.Point(596, 162);
 			this.btnSetDespesaTipo.Name = "btnSetDespesaTipo";
 			this.btnSetDespesaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDespesaTipo.RoundedCornersRadius = 0;
@@ -377,7 +371,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(431, 108);
+			this.btnSetSetor.Location = new System.Drawing.Point(431, 84);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -392,7 +386,7 @@
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(197, 108);
+			this.txtSetor.Location = new System.Drawing.Point(197, 84);
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
@@ -405,7 +399,7 @@
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(86, 111);
+			this.label5.Location = new System.Drawing.Point(86, 87);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
 			this.label5.TabIndex = 3;
@@ -416,7 +410,7 @@
 			this.line1.EndPoint = new System.Drawing.Point(645, 5);
 			this.line1.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 345);
+			this.line1.Location = new System.Drawing.Point(25, 321);
 			this.line1.Name = "line1";
 			this.line1.Opacity = 0.5F;
 			this.line1.Size = new System.Drawing.Size(650, 10);
@@ -429,7 +423,7 @@
 			this.line2.EndPoint = new System.Drawing.Point(645, 5);
 			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(25, 406);
+			this.line2.Location = new System.Drawing.Point(25, 382);
 			this.line2.Name = "line2";
 			this.line2.Opacity = 0.5F;
 			this.line2.Size = new System.Drawing.Size(650, 10);
@@ -442,7 +436,7 @@
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.ForeColor = System.Drawing.Color.Black;
-			this.label6.Location = new System.Drawing.Point(58, 371);
+			this.label6.Location = new System.Drawing.Point(58, 347);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(99, 19);
 			this.label6.TabIndex = 21;
@@ -452,7 +446,7 @@
 			// 
 			this.dtpIniciarData.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpIniciarData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpIniciarData.Location = new System.Drawing.Point(163, 365);
+			this.dtpIniciarData.Location = new System.Drawing.Point(163, 341);
 			this.dtpIniciarData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpIniciarData.Name = "dtpIniciarData";
 			this.dtpIniciarData.Size = new System.Drawing.Size(145, 31);
@@ -464,7 +458,7 @@
 			this.btnSetForma.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetForma.Location = new System.Drawing.Point(470, 225);
+			this.btnSetForma.Location = new System.Drawing.Point(470, 201);
 			this.btnSetForma.Name = "btnSetForma";
 			this.btnSetForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetForma.RoundedCornersRadius = 0;
@@ -478,7 +472,7 @@
 			// 
 			// txtCobrancaForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(197, 225);
+			this.txtCobrancaForma.Location = new System.Drawing.Point(197, 201);
 			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCobrancaForma.MaxLength = 30;
 			this.txtCobrancaForma.Name = "txtCobrancaForma";
@@ -491,7 +485,7 @@
 			this.label7.AutoSize = true;
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.ForeColor = System.Drawing.Color.Black;
-			this.label7.Location = new System.Drawing.Point(57, 228);
+			this.label7.Location = new System.Drawing.Point(57, 204);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(134, 19);
 			this.label7.TabIndex = 12;
@@ -503,7 +497,7 @@
 			this.btnSetBanco.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetBanco.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetBanco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetBanco.Location = new System.Drawing.Point(470, 264);
+			this.btnSetBanco.Location = new System.Drawing.Point(470, 240);
 			this.btnSetBanco.Name = "btnSetBanco";
 			this.btnSetBanco.RoundedCornersMask = ((byte)(15));
 			this.btnSetBanco.RoundedCornersRadius = 0;
@@ -517,7 +511,7 @@
 			// 
 			// txtBanco
 			// 
-			this.txtBanco.Location = new System.Drawing.Point(197, 264);
+			this.txtBanco.Location = new System.Drawing.Point(197, 240);
 			this.txtBanco.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtBanco.MaxLength = 30;
 			this.txtBanco.Name = "txtBanco";
@@ -530,7 +524,7 @@
 			this.label9.AutoSize = true;
 			this.label9.BackColor = System.Drawing.Color.Transparent;
 			this.label9.ForeColor = System.Drawing.Color.Black;
-			this.label9.Location = new System.Drawing.Point(142, 267);
+			this.label9.Location = new System.Drawing.Point(142, 243);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(49, 19);
 			this.label9.TabIndex = 15;
@@ -702,34 +696,47 @@
 			this.panel2.Controls.Add(this.lblDia);
 			this.panel2.Controls.Add(this.lblMes);
 			this.panel2.Controls.Add(this.lblSemana);
-			this.panel2.Location = new System.Drawing.Point(19, 435);
+			this.panel2.Location = new System.Drawing.Point(19, 411);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(671, 222);
 			this.panel2.TabIndex = 26;
 			// 
-			// btnAtivo
+			// lblDespesaData
 			// 
-			this.btnAtivo.Image = ((System.Drawing.Image)(resources.GetObject("btnAtivo.Image")));
-			this.btnAtivo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnAtivo.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnAtivo.Name = "btnAtivo";
-			this.btnAtivo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnAtivo.Size = new System.Drawing.Size(96, 41);
-			this.btnAtivo.Text = "&Ativa";
-			this.btnAtivo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnAtivo.ToolTipText = "Ativa";
-			this.btnAtivo.Click += new System.EventHandler(this.btnAtivo_Click);
+			this.lblDespesaData.BackColor = System.Drawing.Color.Transparent;
+			this.lblDespesaData.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDespesaData.ForeColor = System.Drawing.Color.AliceBlue;
+			this.lblDespesaData.Location = new System.Drawing.Point(168, 16);
+			this.lblDespesaData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.lblDespesaData.Name = "lblDespesaData";
+			this.lblDespesaData.Size = new System.Drawing.Size(174, 30);
+			this.lblDespesaData.TabIndex = 0;
+			this.lblDespesaData.Text = "01/01/2000";
+			this.lblDespesaData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lblDespesaData.Click += new System.EventHandler(this.lblDespesaData_Click);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.BackColor = System.Drawing.Color.Transparent;
+			this.label2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.ForeColor = System.Drawing.Color.LightGray;
+			this.label2.Location = new System.Drawing.Point(233, 5);
+			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(37, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Data";
+			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// frmDespesaPeriodica
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(708, 721);
+			this.ClientSize = new System.Drawing.Size(708, 695);
 			this.Controls.Add(this.btnSetBanco);
 			this.Controls.Add(this.txtBanco);
 			this.Controls.Add(this.label9);
 			this.Controls.Add(this.btnSetForma);
-			this.Controls.Add(this.dtpDespesaData);
-			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtCobrancaForma);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.line2);
@@ -778,8 +785,6 @@
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.txtCobrancaForma, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.dtpDespesaData, 0);
 			this.Controls.SetChildIndex(this.btnSetForma, 0);
 			this.Controls.SetChildIndex(this.label9, 0);
 			this.Controls.SetChildIndex(this.txtBanco, 0);
@@ -808,8 +813,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		internal System.Windows.Forms.TextBox txtDespesaDescricao;
 		internal System.Windows.Forms.Label lblCongregacao;
-		private System.Windows.Forms.DateTimePicker dtpDespesaData;
-		internal System.Windows.Forms.Label label1;
 		private CamadaUC.ucOnlyNumbers txtDespesaValor;
 		internal System.Windows.Forms.Label label8;
 		internal VIBlend.WinForms.Controls.vButton btnSetCredor;
@@ -846,5 +849,7 @@
 		internal System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.ToolStripButton btnAtivo;
+		internal System.Windows.Forms.Label lblDespesaData;
+		internal System.Windows.Forms.Label label2;
 	}
 }

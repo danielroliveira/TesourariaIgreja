@@ -102,7 +102,6 @@ namespace CamadaUI.Saidas
 
 			// block keyDown then Sit = Alterado
 			txtDespesaValor.KeyDown += control_KeyDown_Block;
-			dtpDespesaData.KeyDown += control_KeyDown_Block;
 			dtpIniciarData.KeyDown += control_KeyDown_Block;
 		}
 
@@ -120,18 +119,12 @@ namespace CamadaUI.Saidas
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
-					// define MaxDate of Data da Despesa
-					dtpDespesaData.MaxDate = DateTime.Today;
-					dtpDespesaData.MinDate = DateTime.Today.AddMonths(-12);
 				}
 				else
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
-					// define MaxDate of Data da Despesa
-					dtpDespesaData.MaxDate = _despesa.DespesaData;
-					dtpDespesaData.MinDate = _despesa.DespesaData;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -199,7 +192,7 @@ namespace CamadaUI.Saidas
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDDespesa", true);
-			dtpDespesaData.DataBindings.Add("Value", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaData.DataBindings.Add("Text", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -215,6 +208,7 @@ namespace CamadaUI.Saidas
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
 			txtRecorrenciaRepeticao.DataBindings["Text"].Format += FormatD2;
+			lblDespesaData.DataBindings["Text"].Format += (a, e) => { e.Value = (DateTime)e.Value; };
 
 			// PREENCHE COMBOS
 			CarregaComboRecorrenciaTipo();
@@ -1038,7 +1032,7 @@ namespace CamadaUI.Saidas
 		#endregion // SALVAR REGISTRO --- END
 
 		#region ATIVO BUTTON CONTROL
-		
+
 		private void btnAtivo_Click(object sender, EventArgs e)
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
@@ -1092,5 +1086,10 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // ATIVO BUTTON CONTROL --- END
+
+		private void lblDespesaData_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
