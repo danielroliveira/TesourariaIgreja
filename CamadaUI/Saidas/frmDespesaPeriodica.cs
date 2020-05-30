@@ -12,6 +12,7 @@ using static CamadaUI.Utilidades;
 using CamadaUI.Caixa;
 using CamadaUI.Registres;
 using CamadaUI.Setores;
+using CamadaUI.Main;
 
 namespace CamadaUI.Saidas
 {
@@ -82,6 +83,9 @@ namespace CamadaUI.Saidas
 			// handlers
 			_despesa.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+
+			txtRecorrenciaRepeticao.TextAlign = HorizontalAlignment.Left;
+
 		}
 
 		// SHOW
@@ -208,7 +212,7 @@ namespace CamadaUI.Saidas
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
 			txtRecorrenciaRepeticao.DataBindings["Text"].Format += FormatD2;
-			lblDespesaData.DataBindings["Text"].Format += (a, e) => { e.Value = (DateTime)e.Value; };
+			lblDespesaData.DataBindings["Text"].Format += (a, e) => { e.Value = DateTime.Parse(e.Value.ToString()).ToString("dd/MMMM/yyyy"); };
 
 			// PREENCHE COMBOS
 			CarregaComboRecorrenciaTipo();
@@ -285,7 +289,7 @@ namespace CamadaUI.Saidas
 			// insert all days of mes 1 TO 31
 			for (int i = 0; i < 31; i++)
 			{
-				dtDiaMes.Rows.Add(new object[] { i + 1, i + 1 });
+				dtDiaMes.Rows.Add(new object[] { i + 1, (i + 1).ToString("D2") });
 			}
 
 			//--- Set DataTable
@@ -928,6 +932,20 @@ namespace CamadaUI.Saidas
 			//---------------------------------------------------
 		}
 
+		// ON CLICK OPEN DATE FORM TO GET DESPESA DATA
+		//------------------------------------------------------------------------------------------------------------
+		private void lblDespesaData_Click(object sender, EventArgs e)
+		{
+			frmDateGet frm = new frmDateGet("Informe a Data da abertura da despesa...",
+				EnumDataTipo.PassadoPresente, _despesa.DespesaData, this);
+
+			frm.ShowDialog();
+
+			if (frm.DialogResult != DialogResult.OK) return;
+
+			_despesa.DespesaData = (DateTime)frm.propDataInfo;
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region TOOLTIP
@@ -1087,9 +1105,5 @@ namespace CamadaUI.Saidas
 
 		#endregion // ATIVO BUTTON CONTROL --- END
 
-		private void lblDespesaData_Click(object sender, EventArgs e)
-		{
-
-		}
 	}
 }

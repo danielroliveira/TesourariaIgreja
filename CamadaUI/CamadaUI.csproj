@@ -435,6 +435,18 @@
     <Compile Include="Saidas\frmDespesaPeriodica.designer.cs">
       <DependentUpon>frmDespesaPeriodica.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesaPeriodicaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaPeriodicaListagem.designer.cs">
+      <DependentUpon>frmDespesaPeriodicaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaPeriodicaListagemFiltro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaPeriodicaListagemFiltro.designer.cs">
+      <DependentUpon>frmDespesaPeriodicaListagemFiltro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmDespesaTipo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -662,6 +674,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaPeriodica.resx">
       <DependentUpon>frmDespesaPeriodica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaPeriodicaListagem.resx">
+      <DependentUpon>frmDespesaPeriodicaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaPeriodicaListagemFiltro.resx">
+      <DependentUpon>frmDespesaPeriodicaListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaTipo.resx">
       <DependentUpon>frmDespesaTipo.cs</DependentUpon>

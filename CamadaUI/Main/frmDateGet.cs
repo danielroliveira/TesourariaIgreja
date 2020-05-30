@@ -68,8 +68,6 @@ namespace CamadaUI.Main
 			}
 		}
 
-
-
 		#endregion // SUB NEW | CONSTRUCTOR --- END
 
 		#region BUTTONS FUNCTION

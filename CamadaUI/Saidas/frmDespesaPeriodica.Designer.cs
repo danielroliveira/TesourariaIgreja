@@ -131,7 +131,7 @@
 			this.lbl_IdTexto.AutoSize = true;
 			this.lbl_IdTexto.BackColor = System.Drawing.Color.Transparent;
 			this.lbl_IdTexto.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lbl_IdTexto.ForeColor = System.Drawing.Color.LightGray;
+			this.lbl_IdTexto.ForeColor = System.Drawing.Color.Silver;
 			this.lbl_IdTexto.Location = new System.Drawing.Point(33, 4);
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
@@ -469,6 +469,7 @@
 			this.btnSetForma.UseCompatibleTextRendering = true;
 			this.btnSetForma.UseVisualStyleBackColor = false;
 			this.btnSetForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetForma.Click += new System.EventHandler(this.btnSetForma_Click);
 			// 
 			// txtCobrancaForma
 			// 
@@ -479,6 +480,7 @@
 			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
 			this.txtCobrancaForma.TabIndex = 13;
 			this.txtCobrancaForma.Tag = "Pressione a tecla (+) para procurar";
+			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label7
 			// 
@@ -508,6 +510,7 @@
 			this.btnSetBanco.UseCompatibleTextRendering = true;
 			this.btnSetBanco.UseVisualStyleBackColor = false;
 			this.btnSetBanco.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetBanco.Click += new System.EventHandler(this.btnSetBanco_Click);
 			// 
 			// txtBanco
 			// 
@@ -518,6 +521,7 @@
 			this.txtBanco.Size = new System.Drawing.Size(267, 27);
 			this.txtBanco.TabIndex = 16;
 			this.txtBanco.Tag = "Pressione a tecla (+) para procurar";
+			this.txtBanco.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label9
 			// 
@@ -572,7 +576,7 @@
 			this.cmbRecorrenciaDia.Location = new System.Drawing.Point(176, 101);
 			this.cmbRecorrenciaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaDia.Name = "cmbRecorrenciaDia";
-			this.cmbRecorrenciaDia.Size = new System.Drawing.Size(88, 27);
+			this.cmbRecorrenciaDia.Size = new System.Drawing.Size(57, 27);
 			this.cmbRecorrenciaDia.TabIndex = 8;
 			// 
 			// cmbRecorrenciaTipo
@@ -720,7 +724,7 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.ForeColor = System.Drawing.Color.LightGray;
+			this.label2.ForeColor = System.Drawing.Color.Silver;
 			this.label2.Location = new System.Drawing.Point(233, 5);
 			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label2.Name = "label2";

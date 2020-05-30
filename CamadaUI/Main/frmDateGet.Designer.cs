@@ -48,6 +48,7 @@
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(365, 0);
 			this.btnClose.Size = new System.Drawing.Size(40, 40);
+			this.btnClose.Click += new System.EventHandler(this.btnCancelar_Click);
 			// 
 			// panel1
 			// 
