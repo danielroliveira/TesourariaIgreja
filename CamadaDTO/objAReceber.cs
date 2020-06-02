@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -21,7 +22,10 @@ namespace CamadaDTO
 			internal decimal _ValorRecebido;
 			internal int _IDContaProvisoria;
 			internal string _Conta;
-			internal byte _Situacao; // 1: EmAberto | 2: Recebido
+			internal byte _IDSituacao; // 1: EmAberto | 2: Recebido
+			internal string _Situacao; // 1: EmAberto | 2: Recebido | 3: Cancelada
+			internal byte _IDEntradaForma;
+			internal string _EntradaForma;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -39,7 +43,8 @@ namespace CamadaDTO
 				_ValorBruto = 0,
 				_ValorLiquido = 0,
 				_ValorRecebido = 0,
-				_Situacao = 1,
+				_IDSituacao = 1,
+				_Situacao = "Em Aberto",
 			};
 		}
 
@@ -200,17 +205,52 @@ namespace CamadaDTO
 
 		// Property Situacao
 		//---------------------------------------------------------------
-		public byte Situacao
+		public byte IDSituacao
 		{
-			get => EditData._Situacao;
+			get => EditData._IDSituacao;
 			set
 			{
-				if (value != EditData._Situacao)
+				if (value != EditData._IDSituacao)
 				{
-					EditData._Situacao = value;
+					EditData._IDSituacao = value;
 					NotifyPropertyChanged("Situacao");
 				}
 			}
+		}
+
+		// Property Situacao
+		//---------------------------------------------------------------
+		public string Situacao
+		{
+			get
+			{
+				if (IDSituacao == 1 && CompensacaoData < DateTime.Today)
+				{
+					return "Vencida";
+				}
+				else
+				{
+					return EditData._Situacao;
+				}
+			}
+
+			set => EditData._Situacao = value;
+		}
+
+		// Property IDEntradaForma
+		//---------------------------------------------------------------
+		public byte IDEntradaForma
+		{
+			get => EditData._IDEntradaForma;
+			set => EditData._IDEntradaForma = value;
+		}
+
+		// Property EntradaForma
+		//---------------------------------------------------------------
+		public string EntradaForma
+		{
+			get => EditData._EntradaForma;
+			set => EditData._EntradaForma = value;
 		}
 	}
 

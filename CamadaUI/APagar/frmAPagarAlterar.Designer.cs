@@ -53,8 +53,9 @@
 			this.lblCredor = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.pnlEditar = new System.Windows.Forms.Panel();
-			this.lblAPagarValor = new System.Windows.Forms.Label();
+			this.txtAPagarValor = new CamadaUC.ucTextBoxUnclicked();
 			this.label18 = new System.Windows.Forms.Label();
+			this.btnAlterarValor = new VIBlend.WinForms.Controls.vButton();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
 			this.btnAlterar = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
@@ -120,9 +121,9 @@
 			// 
 			// lblDespesaDescricao
 			// 
-			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
 			this.lblDespesaDescricao.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaDescricao.Location = new System.Drawing.Point(92, 6);
@@ -328,23 +329,23 @@
 			this.numReferenciaAno.Location = new System.Drawing.Point(331, 288);
 			this.numReferenciaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numReferenciaAno.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
+			5000,
+			0,
+			0,
+			0});
 			this.numReferenciaAno.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numReferenciaAno.Name = "numReferenciaAno";
 			this.numReferenciaAno.Size = new System.Drawing.Size(86, 27);
 			this.numReferenciaAno.TabIndex = 18;
 			this.numReferenciaAno.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			// 
 			// panel2
 			// 
@@ -371,9 +372,9 @@
 			// 
 			// lblCredor
 			// 
-			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
 			this.lblCredor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCredor.Location = new System.Drawing.Point(91, 33);
@@ -397,13 +398,13 @@
 			// pnlEditar
 			// 
 			this.pnlEditar.BackColor = System.Drawing.Color.Transparent;
+			this.pnlEditar.Controls.Add(this.txtAPagarValor);
 			this.pnlEditar.Controls.Add(this.txtIdentificador);
 			this.pnlEditar.Controls.Add(this.label2);
 			this.pnlEditar.Controls.Add(this.numReferenciaAno);
 			this.pnlEditar.Controls.Add(this.cmbReferenciaMes);
 			this.pnlEditar.Controls.Add(this.label3);
 			this.pnlEditar.Controls.Add(this.txtValorDesconto);
-			this.pnlEditar.Controls.Add(this.lblAPagarValor);
 			this.pnlEditar.Controls.Add(this.txtCobrancaForma);
 			this.pnlEditar.Controls.Add(this.label8);
 			this.pnlEditar.Controls.Add(this.btnSetForma);
@@ -413,6 +414,7 @@
 			this.pnlEditar.Controls.Add(this.label9);
 			this.pnlEditar.Controls.Add(this.txtBanco);
 			this.pnlEditar.Controls.Add(this.label7);
+			this.pnlEditar.Controls.Add(this.btnAlterarValor);
 			this.pnlEditar.Controls.Add(this.btnSetBanco);
 			this.pnlEditar.Controls.Add(this.label6);
 			this.pnlEditar.Controls.Add(this.label5);
@@ -422,16 +424,23 @@
 			this.pnlEditar.Size = new System.Drawing.Size(505, 330);
 			this.pnlEditar.TabIndex = 2;
 			// 
-			// lblAPagarValor
+			// txtAPagarValor
 			// 
-			this.lblAPagarValor.BackColor = System.Drawing.Color.Transparent;
-			this.lblAPagarValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAPagarValor.Location = new System.Drawing.Point(162, 177);
-			this.lblAPagarValor.Name = "lblAPagarValor";
-			this.lblAPagarValor.Size = new System.Drawing.Size(147, 27);
-			this.lblAPagarValor.TabIndex = 11;
-			this.lblAPagarValor.Text = "R$ 0,00";
-			this.lblAPagarValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.txtAPagarValor.BackColor = System.Drawing.SystemColors.Control;
+			this.txtAPagarValor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.txtAPagarValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAPagarValor.Location = new System.Drawing.Point(164, 178);
+			this.txtAPagarValor.Name = "txtAPagarValor";
+			this.txtAPagarValor.ReadOnly = true;
+			this.txtAPagarValor.SelectionHighlightEnabled = false;
+			this.txtAPagarValor.Size = new System.Drawing.Size(145, 24);
+			this.txtAPagarValor.TabIndex = 30;
+			this.txtAPagarValor.TabStop = false;
+			this.txtAPagarValor.Text = "R$ 0,00";
+			this.txtAPagarValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.txtAPagarValor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAPagarValor_KeyDown);
+			this.txtAPagarValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAPagarValor_OnlyNumbers_KeyPress);
+			this.txtAPagarValor.Leave += new System.EventHandler(this.txtAPagarValor_Leave);
 			// 
 			// label18
 			// 
@@ -444,6 +453,27 @@
 			this.label18.TabIndex = 10;
 			this.label18.Text = "Valor Original";
 			// 
+			// btnAlterarValor
+			// 
+			this.btnAlterarValor.AllowAnimations = true;
+			this.btnAlterarValor.BackColor = System.Drawing.Color.Transparent;
+			this.btnAlterarValor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnAlterarValor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnAlterarValor.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnAlterarValor.Location = new System.Drawing.Point(315, 177);
+			this.btnAlterarValor.Name = "btnAlterarValor";
+			this.btnAlterarValor.RoundedCornersMask = ((byte)(15));
+			this.btnAlterarValor.RoundedCornersRadius = 0;
+			this.btnAlterarValor.Size = new System.Drawing.Size(156, 27);
+			this.btnAlterarValor.TabIndex = 7;
+			this.btnAlterarValor.TabStop = false;
+			this.btnAlterarValor.Text = "Alterar Valor da Despesa";
+			this.btnAlterarValor.UseCompatibleTextRendering = true;
+			this.btnAlterarValor.UseVisualStyleBackColor = false;
+			this.btnAlterarValor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnAlterarValor.Visible = false;
+			this.btnAlterarValor.Click += new System.EventHandler(this.btnAlterarValor_Click);
+			// 
 			// tspMenu
 			// 
 			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -452,8 +482,8 @@
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAlterar,
-            this.btnFechar});
+			this.btnAlterar,
+			this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(4, 474);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(524, 44);
@@ -546,7 +576,8 @@
 		private System.Windows.Forms.ToolStrip tspMenu;
 		private System.Windows.Forms.ToolStripButton btnAlterar;
 		private System.Windows.Forms.ToolStripButton btnFechar;
-		private System.Windows.Forms.Label lblAPagarValor;
 		internal System.Windows.Forms.Label label18;
+		internal VIBlend.WinForms.Controls.vButton btnAlterarValor;
+		private CamadaUC.ucTextBoxUnclicked txtAPagarValor;
 	}
 }

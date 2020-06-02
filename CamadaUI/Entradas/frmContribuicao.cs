@@ -16,8 +16,9 @@ using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Entradas
 {
-	public partial class frmContribuicao : CamadaUI.Modals.frmModFinBorder
+	public partial class frmContribuicao : Modals.frmModFinBorder
 	{
+		ContribuicaoBLL contBLL = new ContribuicaoBLL();
 		private objContribuicao _contribuicao;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -34,11 +35,27 @@ namespace CamadaUI.Entradas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuicao(objContribuicao obj)
+		public frmContribuicao(objContribuicao contribuicao)
 		{
 			InitializeComponent();
+			ConstructorContinue(contribuicao);
+		}
 
-			_contribuicao = obj;
+		public frmContribuicao(long IDContribuicao)
+		{
+			InitializeComponent();
+			var cont = GetContribuicaoByID(IDContribuicao);
+
+			if (cont == null) return;
+
+			ConstructorContinue(cont);
+		}
+
+		// CONTRUCTOR CONTINUE
+		//------------------------------------------------------------------------------------------------------------
+		private void ConstructorContinue(objContribuicao contribuicao)
+		{
+			_contribuicao = contribuicao;
 			GetTiposAndFormas();
 
 			// Define Conta and Setor padrao
@@ -78,6 +95,48 @@ namespace CamadaUI.Entradas
 			txtEntradaForma.Enter += text_Enter;
 		}
 
+		// SHOW FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void frmContribuicao_Shown(object sender, EventArgs e)
+		{
+			if (_contribuicao == null)
+			{
+				Close();
+				return;
+			}
+
+			// if frmListagem is ENABLED then exit
+			if (Modal)
+			{
+				btnNovo.Enabled = false;
+				return;
+			}
+
+		}
+
+		// GET CONTRIBUICAO BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private objContribuicao GetContribuicaoByID(long ID)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				return contBLL.GetContribuicao(ID);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a Contribuicao..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		// GET LIST OF ENTRADA FORMAS AND TIPOS
 		//------------------------------------------------------------------------------------------------------------
 		private void GetTiposAndFormas()
@@ -88,10 +147,8 @@ namespace CamadaUI.Entradas
 				Cursor.Current = Cursors.WaitCursor;
 
 				EntradaBLL entradaBLL = new EntradaBLL();
-				ContribuicaoBLL contribuicaoBLL = new ContribuicaoBLL();
 				listFormas = entradaBLL.GetEntradaFormasList();
-				listTipos = contribuicaoBLL.GetContribuicaoTiposList();
-
+				listTipos = contBLL.GetContribuicaoTiposList();
 			}
 			catch (Exception ex)
 			{
@@ -372,6 +429,13 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnNovo_Click(object sender, EventArgs e)
 		{
+			// if frmAPagarListagem is ENABLED then exit
+			if (Modal)
+			{
+				btnNovo.Enabled = false;
+				return;
+			}
+
 			if (Sit != EnumFlagEstado.RegistroSalvo) return;
 
 			_contribuicao = new objContribuicao(null);
@@ -1084,6 +1148,5 @@ namespace CamadaUI.Entradas
 		}
 
 		#endregion
-
 	}
 }

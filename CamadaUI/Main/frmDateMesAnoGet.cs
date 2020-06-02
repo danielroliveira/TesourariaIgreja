@@ -9,6 +9,7 @@ namespace CamadaUI.Main
 	public partial class frmDateMesAnoGet : CamadaUI.Modals.frmModFinBorder
 	{
 		private Form _formOrigem;
+
 		private EnumDataTipo _DataTipo;
 		public DateTime? propDataInfo { get; set; }
 

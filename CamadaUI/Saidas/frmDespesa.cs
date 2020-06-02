@@ -48,7 +48,7 @@ namespace CamadaUI.Saidas
 
 			if (desp == null) return;
 
-			ConstructorContinue(GetDespesaByID(IDDespesa));
+			ConstructorContinue(desp);
 		}
 
 		// CONSTRUCTOR CONTINUE AFTER GET DESPESA
@@ -113,6 +113,13 @@ namespace CamadaUI.Saidas
 			txtDocumentoNumero.KeyDown += control_KeyDown_Block;
 			txtDespesaValor.KeyDown += control_KeyDown_Block;
 			dtpDespesaData.KeyDown += control_KeyDown_Block;
+
+			// if frmListagem is ENABLED
+			if (Modal)
+			{
+				btnNovo.Enabled = false;
+				return;
+			}
 		}
 
 		// PROPERTY SITUACAO

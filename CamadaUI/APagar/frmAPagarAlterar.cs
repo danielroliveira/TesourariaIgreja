@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
@@ -17,6 +18,7 @@ namespace CamadaUI.APagar
 		BindingSource bind = new BindingSource();
 		List<objCobrancaForma> listFormas = new List<objCobrancaForma>();
 		Form _formOrigem;
+		decimal ValorAnterior;
 
 		#region SUB NEW | CONSTRUCTOR
 		public frmAPagarAlterar(objAPagar pag, Form formOrigem)
@@ -31,6 +33,9 @@ namespace CamadaUI.APagar
 
 			bind.DataSource = _apagar;
 			BindingCreator();
+
+			// If Origem = Periodica enable change valor
+			if (_apagar.DespesaOrigem == 2) btnAlterarValor.Visible = true;
 
 			HandlerKeyDownControl(this);
 			_apagar.PropertyChanged += (a, b) => btnAlterar.Enabled = true;
@@ -76,14 +81,14 @@ namespace CamadaUI.APagar
 			txtCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpVencimento.DataBindings.Add("Value", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtValorDesconto.DataBindings.Add("Text", bind, "ValorDesconto", true, DataSourceUpdateMode.OnPropertyChanged);
 			numReferenciaAno.DataBindings.Add("Value", bind, "ReferenciaAno", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtValorDesconto.DataBindings["Text"].Format += FormatCurrency;
-			lblAPagarValor.DataBindings["Text"].Format += FormatCurrency;
+			txtAPagarValor.DataBindings["Text"].Format += FormatCurrency;
 
 			// CARREGA COMBO
 			CarregaComboMes();
@@ -122,7 +127,7 @@ namespace CamadaUI.APagar
 			dtMeses.Columns.Add("Mes");
 
 			// get values of EnumAgendaRecorrencia
-			string[] EnumValues = new System.Globalization.CultureInfo("pt-BR").DateTimeFormat.MonthNames;
+			string[] EnumValues = new CultureInfo("pt-BR").DateTimeFormat.MonthNames;
 			int i = 1;
 
 			// insert all item of EnumAgendaRecorrencia in datatable
@@ -292,5 +297,95 @@ namespace CamadaUI.APagar
 		}
 
 		#endregion // VALIDA DESCONTO --- END
+
+		#region EDIT VALOR
+
+		private void btnAlterarValor_Click(object sender, EventArgs e)
+		{
+			ValorAnterior = decimal.Parse(txtAPagarValor.Text, NumberStyles.Currency);
+			txtAPagarValor.BackColor = SystemColors.Highlight;
+			txtAPagarValor.ForeColor = Color.White;
+			txtAPagarValor.ReadOnly = false;
+			txtAPagarValor.Focus();
+			txtAPagarValor.SelectAll();
+		}
+
+		private void txtAPagarValor_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			}
+		}
+
+		private void txtAPagarValor_Leave(object sender, EventArgs e)
+		{
+			txtAPagarValor.ReadOnly = true;
+			txtAPagarValor.BackColor = SystemColors.Control;
+			txtAPagarValor.ForeColor = Color.Black;
+
+			//--- verifica se o valor foi alterado
+			decimal newValor = decimal.Parse(txtAPagarValor.Text, NumberStyles.Currency);
+
+			if (ValorAnterior != newValor)
+			{
+				var resp = AbrirDialog($"O valor da Despesa Periódica Original será alterada para {newValor:c}\n" +
+					"Você deseja continuar?",
+					"Despesa Periódica - Alterar Valor",
+					DialogType.SIM_NAO,
+					DialogIcon.Question,
+					DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes)
+				{
+					_apagar.CancelEdit();
+					txtAPagarValor.DataBindings["text"].ReadValue();
+					btnAlterar.Enabled = false;
+					txtValorDesconto.Focus();
+					return;
+				}
+
+				try
+				{
+					// --- Ampulheta ON
+					Cursor.Current = Cursors.WaitCursor;
+					new DespesaPeriodicaBLL().UpdateDespesaValor(_apagar.IDDespesa, newValor);
+					_apagar.EndEdit();
+					txtAPagarValor.DataBindings["text"].ReadValue();
+				}
+				catch (Exception ex)
+				{
+					AbrirDialog("Uma exceção ocorreu ao Alterar o Valor da Despesa..." + "\n" +
+								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				}
+				finally
+				{
+					// --- Ampulheta OFF
+					Cursor.Current = Cursors.Default;
+				}
+			}
+		}
+
+		private void txtAPagarValor_OnlyNumbers_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == ',')
+			{
+				e.Handled = false;
+			}
+			else if (e.KeyChar == '.')
+			{
+				txtValorDesconto.SelectedText = ",";
+				e.Handled = true;
+			}
+			else if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+			{
+				e.Handled = true;
+			}
+		}
+
+
+		#endregion // EDIT DESCONTO --- END
+
 	}
 }

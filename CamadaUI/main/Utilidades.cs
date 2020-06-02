@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -156,8 +157,6 @@ namespace CamadaUI
 			//--- Get chars quantity
 			if (texto.Length == 0) return "";
 
-			//--- CONVERT TO LOWER FIRST
-			texto = texto.Trim().ToLower();
 
 			string[] palavrasLowerCase = {
 				"de", "da", "do", "e", "das", "dos"
@@ -167,12 +166,15 @@ namespace CamadaUI
 				"LTDA", "ltda", "SA", "sa", "S.A.", "s.a.", "me", "ME"
 			};
 
-			string resposta = "";
 			string[] palavras = texto.Split(' ');  //texto.Split(" ");
+			string resposta = "";
 
 			foreach (string palavra in palavras)
 			{
-				string newPalavra = palavra;
+				// continue if palavra is EMPTY
+				if (string.IsNullOrEmpty(palavra)) continue;
+
+				string newPalavra = palavra.Trim();
 
 				if (palavrasLowerCase.Contains(palavra))
 				{
@@ -182,16 +184,22 @@ namespace CamadaUI
 				{
 					newPalavra = palavra.ToUpper();
 				}
+				else if (palavra == palavra.ToUpper()) //if palavra is UPPER CASE (SIGLA)
+				{
+					newPalavra = palavra;
+				}
 				else
 				{
-					char[] caracteres = palavra.ToArray();
+					newPalavra = palavra.ToLower(); // convert all to lower case
+					char[] caracteres = newPalavra.ToArray();
 					caracteres[0] = caracteres[0].ToString().ToUpper()[0];
 					newPalavra = string.Join("", caracteres);
 				}
 
-				resposta = resposta + " " + newPalavra;
+				resposta = resposta.Length > 0 ? resposta + " " + newPalavra : newPalavra;
 			}
 
+			textBox.Text = resposta;
 			return resposta.Trim();
 		}
 

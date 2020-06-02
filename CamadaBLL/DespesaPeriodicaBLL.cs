@@ -3,6 +3,8 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace CamadaBLL
 {
@@ -52,11 +54,12 @@ namespace CamadaBLL
 		// GET LIST OF WITH DETAILS
 		//------------------------------------------------------------------------------------------------------------
 		public List<objDespesaPeriodica> GetListDespesaPeriodica(
+			bool Ativa,
 			int? IDSetor = null,
 			int? IDDespesaTipo = null,
 			int? IDCredor = null,
-			DateTime? dataInicial = null,
-			DateTime? dataFinal = null)
+			int? IDCobrancaForma = null,
+			DateTime? IniciarData = null)
 		{
 			try
 			{
@@ -67,6 +70,11 @@ namespace CamadaBLL
 
 				// add params
 				db.LimparParametros();
+
+				// add Ativa
+				db.AdicionarParametros("@Ativa", Ativa);
+				query += " WHERE Ativa = @Ativa";
+				myWhere = true;
 
 				// add IDSetor
 				if (IDSetor != null)
@@ -84,27 +92,35 @@ namespace CamadaBLL
 					myWhere = true;
 				}
 
-				// add DataInicial
-				if (dataInicial != null)
+				// add IniciarData
+				if (IniciarData != null)
 				{
-					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
-					query += myWhere ? " AND DespesaData >= @DataInicial" : " WHERE DespesaData >= @DataInicial";
+					db.AdicionarParametros("@IniciarData", (DateTime)IniciarData);
+					query += myWhere ? " AND IniciarData <= @IniciarData" : " WHERE IniciarData <= @IniciarData";
 					myWhere = true;
 				}
 
-				// add DataFinal
+				/*// add DataFinal
 				if (dataFinal != null)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
 					query += myWhere ? " AND DespesaData <= @DataFinal" : " WHERE DespesaData <= @DataFinal";
 					myWhere = true;
-				}
+				}*/
 
 				// add IDCredor
 				if (IDCredor != null)
 				{
 					db.AdicionarParametros("@IDCredor", IDCredor);
 					query += myWhere ? " AND IDCredor = @IDCredor" : " WHERE IDCredor = @IDCredor";
+					myWhere = true;
+				}
+
+				// add IDCobrancaForma
+				if (IDCobrancaForma != null)
+				{
+					db.AdicionarParametros("@IDCobrancaForma", IDCobrancaForma);
+					query += myWhere ? " AND IDCobrancaForma = @IDCobrancaForma" : " WHERE IDCobrancaForma = @IDCobrancaForma";
 					myWhere = true;
 				}
 
@@ -132,7 +148,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET DESPESA
+		// GET DESPESA PERIODICA
 		//------------------------------------------------------------------------------------------------------------
 		public objDespesaPeriodica GetDespesaPeriodica(long IDDespesa)
 		{
@@ -170,10 +186,11 @@ namespace CamadaBLL
 				DespesaTipo = (string)row["DespesaTipo"],
 				IDSetor = (int)row["IDSetor"],
 				Setor = (string)row["Setor"],
-				IDCobrancaForma = (byte)row["IDCobrancaForma"],
+				IDCobrancaForma = (int)row["IDCobrancaForma"],
 				CobrancaForma = (string)row["CobrancaForma"],
 				IniciarData = (DateTime)row["IniciarData"],
 				RecorrenciaTipo = (byte)row["RecorrenciaTipo"],
+				RecorrenciaTipoDescricao = (string)row["RecorrenciaTipoDescricao"],
 				RecorrenciaDia = row["RecorrenciaDia"] == DBNull.Value ? null : (byte?)row["RecorrenciaDia"],
 				RecorrenciaMes = row["RecorrenciaMes"] == DBNull.Value ? null : (byte?)row["RecorrenciaMes"],
 				RecorrenciaRepeticao = row["RecorrenciaRepeticao"] == DBNull.Value ? null : (short?)row["RecorrenciaRepeticao"],
@@ -215,7 +232,7 @@ namespace CamadaBLL
 				//--- insert and Get new ID
 				long newID = dbTran.ExecutarInsertAndGetID(query);
 
-				//--- insert Despesa Comum
+				//--- insert Despesa Periodica
 				desp.IDDespesa = newID;
 				InsertDespesaPeriodica(desp, dbTran);
 
@@ -267,12 +284,144 @@ namespace CamadaBLL
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateDespesaPeriodica(objDespesaPeriodica desp)
+		public bool UpdateDespesa(objDespesaPeriodica desp, object dbTran = null)
+		{
+			bool isLocal = dbTran == null;
+
+			try
+			{
+				if (isLocal)
+				{
+					dbTran = new AcessoDados();
+					((AcessoDados)dbTran).BeginTransaction();
+				}
+
+				//--- clear Params
+				((AcessoDados)dbTran).LimparParametros();
+
+				//--- define Params
+				((AcessoDados)dbTran).AdicionarParametros("@IDDespesa", desp.IDDespesa);
+				((AcessoDados)dbTran).AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
+				((AcessoDados)dbTran).AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
+				((AcessoDados)dbTran).AdicionarParametros("@DespesaValor", desp.DespesaValor);
+				((AcessoDados)dbTran).AdicionarParametros("@DespesaData", desp.DespesaData);
+				((AcessoDados)dbTran).AdicionarParametros("@IDCredor", desp.IDCredor);
+				((AcessoDados)dbTran).AdicionarParametros("@IDSetor", desp.IDSetor);
+				((AcessoDados)dbTran).AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
+
+				//--- convert null parameters
+				((AcessoDados)dbTran).ConvertNullParams();
+
+				string query = ((AcessoDados)dbTran).CreateUpdateSQL("tblDespesa", "@IDDespesa");
+
+				//--- UPDATE
+				((AcessoDados)dbTran).ExecutarManipulacao(CommandType.Text, query);
+
+				//--- UPDATE Despesa Periodica
+				UpdateDespesaPeriodica(desp, (AcessoDados)dbTran);
+
+				if (isLocal) ((AcessoDados)dbTran).CommitTransaction();
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				if (isLocal) ((AcessoDados)dbTran).RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// UPDATE DESPESA PERIODICA
+		//------------------------------------------------------------------------------------------------------------
+		private void UpdateDespesaPeriodica(objDespesaPeriodica desp, AcessoDados dbTran)
 		{
 			try
 			{
+				//--- clear Params
+				dbTran.LimparParametros();
 
-				throw new NotImplementedException("Ainda não foi implementada essa função");
+				//--- define Params
+				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
+				dbTran.AdicionarParametros("@IDCobrancaForma", desp.IDCobrancaForma);
+				dbTran.AdicionarParametros("@IniciarData", desp.IniciarData);
+				dbTran.AdicionarParametros("@RecorrenciaTipo", desp.RecorrenciaTipo);
+				dbTran.AdicionarParametros("@RecorrenciaDia", desp.RecorrenciaDia);
+				dbTran.AdicionarParametros("@RecorrenciaMes", desp.RecorrenciaMes);
+				dbTran.AdicionarParametros("@RecorrenciaRepeticao", desp.RecorrenciaRepeticao);
+				dbTran.AdicionarParametros("@RecorrenciaSemana", desp.RecorrenciaSemana);
+				dbTran.AdicionarParametros("@Ativa", desp.Ativa);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateUpdateSQL("tblDespesaPeriodica", "@IDDespesa");
+
+				//--- update
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE VALOR DA DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateDespesaValor(long IDDespesa, decimal newValor)
+		{
+			try
+			{
+				var db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDDespesa", IDDespesa);
+				db.AdicionarParametros("@DespesaValor", newValor);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateUpdateSQL("tblDespesa", "@IDDespesa");
+
+				//--- UPDATE
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE DESPESA ATIVO
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateDespesaPeriodicaAtiva(long IDDespesa, bool ativo)
+		{
+			try
+			{
+				var db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDDespesa", IDDespesa);
+				db.AdicionarParametros("@Ativa", ativo);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateUpdateSQL("tblDespesaPeriodica", "@IDDespesa");
+
+				//--- UPDATE
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
 
 			}
 			catch (Exception ex)

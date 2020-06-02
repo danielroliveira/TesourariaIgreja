@@ -83,6 +83,7 @@ namespace CamadaUI.Saidas
 			// handlers
 			_despesa.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+			txtDespesaDescricao.Validating += (a, b) => PrimeiraLetraMaiuscula(txtDespesaDescricao);
 
 			txtRecorrenciaRepeticao.TextAlign = HorizontalAlignment.Left;
 
@@ -124,7 +125,13 @@ namespace CamadaUI.Saidas
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
 				}
-				else
+				else if (value == EnumFlagEstado.Alterado)
+				{
+					btnNovo.Enabled = false;
+					btnSalvar.Enabled = true;
+					btnCancelar.Enabled = true;
+				}
+				else if (value == EnumFlagEstado.RegistroSalvo)
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
@@ -132,11 +139,11 @@ namespace CamadaUI.Saidas
 				}
 
 				// btnSET ENABLE | DISABLE
-				btnSetDespesaTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetForma.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetBanco.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetCredor.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetDespesaTipo.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+				btnSetSetor.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+				btnSetForma.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+				btnSetBanco.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+				btnSetCredor.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 			}
 		}
 
@@ -425,7 +432,7 @@ namespace CamadaUI.Saidas
 
 				case 2: // SEMANAL
 					cmbRecorrenciaDia.Enabled = true;
-					lblDia.Text = "Dia da Semana";
+					lblDia.Text = "Vencimento - Dia da Semana";
 					cmbRecorrenciaMes.Enabled = false;
 					cmbRecorrenciaSemana.Enabled = false;
 
@@ -434,7 +441,7 @@ namespace CamadaUI.Saidas
 
 				case 3: // MENSAL POR DIA
 					cmbRecorrenciaDia.Enabled = true;
-					lblDia.Text = "Dia do Mês";
+					lblDia.Text = "Vencimento - Dia do Mês";
 					cmbRecorrenciaMes.Enabled = false;
 					cmbRecorrenciaSemana.Enabled = false;
 
@@ -443,7 +450,7 @@ namespace CamadaUI.Saidas
 
 				case 4: // MENSAL POR SEMANA
 					cmbRecorrenciaDia.Enabled = true;
-					lblDia.Text = "Dia da Semana";
+					lblDia.Text = "Vencimento - Dia da Semana";
 					cmbRecorrenciaMes.Enabled = false;
 					cmbRecorrenciaSemana.Enabled = true;
 
@@ -453,7 +460,7 @@ namespace CamadaUI.Saidas
 
 				case 5: // ANUAL POR MES E DIA
 					cmbRecorrenciaDia.Enabled = true;
-					lblDia.Text = "Dia do Mês";
+					lblDia.Text = "Vencimento - Dia do Mês";
 					cmbRecorrenciaMes.Enabled = true;
 					cmbRecorrenciaSemana.Enabled = false;
 
@@ -463,7 +470,7 @@ namespace CamadaUI.Saidas
 
 				case 6: // ANUAL POR MES E SEMANA
 					cmbRecorrenciaDia.Enabled = true;
-					lblDia.Text = "Dia da Semana";
+					lblDia.Text = "Vencimento - Dia da Semana";
 					cmbRecorrenciaMes.Enabled = true;
 					cmbRecorrenciaSemana.Enabled = true;
 
@@ -648,7 +655,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmBancoProcura frm = new frmBancoProcura(this, (int)_despesa.IDBanco);
+				frmBancoProcura frm = new frmBancoProcura(this, _despesa.IDBanco);
 				frm.ShowDialog();
 
 				//--- check return
@@ -835,7 +842,6 @@ namespace CamadaUI.Saidas
 					txtDespesaTipo,
 					txtCobrancaForma,
 					txtBanco,
-					txtDespesaDescricao
 				 };
 
 				if (controlesBloqueados.Contains(ctr))
@@ -918,12 +924,12 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		// PREVINE CHANGES IN SIT => REGISTRO SALVO
+		// PREVINE CHANGES IN SIT => REGISTRO BLOQUEADO
 		private void control_KeyDown_Block(object sender, KeyEventArgs e)
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
-			if (Sit == EnumFlagEstado.RegistroSalvo)
+			if (Sit == EnumFlagEstado.RegistroBloqueado)
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
@@ -979,12 +985,6 @@ namespace CamadaUI.Saidas
 
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
-			if (Sit == EnumFlagEstado.Alterado)
-			{
-				AbrirDialog("Não é possível alterar um registro de Despesa...", "Alterar Despesa");
-				return;
-			}
-
 			if (!VerificaRegistro()) return;
 
 			try
@@ -992,9 +992,18 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- INSERT Desepesa
-				long newID = despBLL.InsertDespesa(_despesa);
-				_despesa.IDDespesa = newID;
+				if (Sit == EnumFlagEstado.NovoRegistro)
+				{
+					//--- INSERT Desepesa
+					long newID = despBLL.InsertDespesa(_despesa);
+					_despesa.IDDespesa = newID;
+				}
+				else if (Sit == EnumFlagEstado.Alterado)
+				{
+					//--- UPDATE Desepesa
+					despBLL.UpdateDespesa(_despesa);
+				}
+
 				bind.EndEdit();
 				bind.ResetBindings(false);
 

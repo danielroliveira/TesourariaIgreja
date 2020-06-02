@@ -537,7 +537,7 @@
 			// txtRecorrenciaRepeticao
 			// 
 			this.txtRecorrenciaRepeticao.Inteiro = true;
-			this.txtRecorrenciaRepeticao.Location = new System.Drawing.Point(176, 62);
+			this.txtRecorrenciaRepeticao.Location = new System.Drawing.Point(231, 62);
 			this.txtRecorrenciaRepeticao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtRecorrenciaRepeticao.MaxLength = 2;
 			this.txtRecorrenciaRepeticao.Name = "txtRecorrenciaRepeticao";
@@ -551,7 +551,7 @@
 			this.cmbRecorrenciaMes.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaMes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaMes.FormattingEnabled = true;
-			this.cmbRecorrenciaMes.Location = new System.Drawing.Point(176, 179);
+			this.cmbRecorrenciaMes.Location = new System.Drawing.Point(231, 179);
 			this.cmbRecorrenciaMes.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaMes.Name = "cmbRecorrenciaMes";
 			this.cmbRecorrenciaMes.Size = new System.Drawing.Size(234, 27);
@@ -562,7 +562,7 @@
 			this.cmbRecorrenciaSemana.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaSemana.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaSemana.FormattingEnabled = true;
-			this.cmbRecorrenciaSemana.Location = new System.Drawing.Point(176, 140);
+			this.cmbRecorrenciaSemana.Location = new System.Drawing.Point(231, 140);
 			this.cmbRecorrenciaSemana.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaSemana.Name = "cmbRecorrenciaSemana";
 			this.cmbRecorrenciaSemana.Size = new System.Drawing.Size(234, 27);
@@ -573,7 +573,7 @@
 			this.cmbRecorrenciaDia.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaDia.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaDia.FormattingEnabled = true;
-			this.cmbRecorrenciaDia.Location = new System.Drawing.Point(176, 101);
+			this.cmbRecorrenciaDia.Location = new System.Drawing.Point(231, 101);
 			this.cmbRecorrenciaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaDia.Name = "cmbRecorrenciaDia";
 			this.cmbRecorrenciaDia.Size = new System.Drawing.Size(57, 27);
@@ -584,7 +584,7 @@
 			this.cmbRecorrenciaTipo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaTipo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaTipo.FormattingEnabled = true;
-			this.cmbRecorrenciaTipo.Location = new System.Drawing.Point(283, 62);
+			this.cmbRecorrenciaTipo.Location = new System.Drawing.Point(338, 62);
 			this.cmbRecorrenciaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaTipo.Name = "cmbRecorrenciaTipo";
 			this.cmbRecorrenciaTipo.Size = new System.Drawing.Size(234, 27);
@@ -608,7 +608,7 @@
 			this.lblMes.AutoSize = true;
 			this.lblMes.BackColor = System.Drawing.Color.Transparent;
 			this.lblMes.ForeColor = System.Drawing.Color.Black;
-			this.lblMes.Location = new System.Drawing.Point(132, 182);
+			this.lblMes.Location = new System.Drawing.Point(187, 182);
 			this.lblMes.Name = "lblMes";
 			this.lblMes.Size = new System.Drawing.Size(37, 19);
 			this.lblMes.TabIndex = 11;
@@ -619,7 +619,7 @@
 			this.lblSemana.AutoSize = true;
 			this.lblSemana.BackColor = System.Drawing.Color.Transparent;
 			this.lblSemana.ForeColor = System.Drawing.Color.Black;
-			this.lblSemana.Location = new System.Drawing.Point(109, 143);
+			this.lblSemana.Location = new System.Drawing.Point(164, 143);
 			this.lblSemana.Name = "lblSemana";
 			this.lblSemana.Size = new System.Drawing.Size(60, 19);
 			this.lblSemana.TabIndex = 9;
@@ -630,9 +630,9 @@
 			this.lblDia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblDia.BackColor = System.Drawing.Color.Transparent;
 			this.lblDia.ForeColor = System.Drawing.Color.Black;
-			this.lblDia.Location = new System.Drawing.Point(34, 104);
+			this.lblDia.Location = new System.Drawing.Point(17, 104);
 			this.lblDia.Name = "lblDia";
-			this.lblDia.Size = new System.Drawing.Size(135, 19);
+			this.lblDia.Size = new System.Drawing.Size(207, 19);
 			this.lblDia.TabIndex = 7;
 			this.lblDia.Text = "Dia";
 			this.lblDia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -642,7 +642,7 @@
 			this.label10.AutoSize = true;
 			this.label10.BackColor = System.Drawing.Color.Transparent;
 			this.label10.ForeColor = System.Drawing.Color.Black;
-			this.label10.Location = new System.Drawing.Point(239, 65);
+			this.label10.Location = new System.Drawing.Point(294, 65);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(37, 19);
 			this.label10.TabIndex = 5;
@@ -678,7 +678,7 @@
 			this.label12.AutoSize = true;
 			this.label12.BackColor = System.Drawing.Color.Transparent;
 			this.label12.ForeColor = System.Drawing.Color.Black;
-			this.label12.Location = new System.Drawing.Point(65, 65);
+			this.label12.Location = new System.Drawing.Point(120, 65);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(105, 19);
 			this.label12.TabIndex = 3;

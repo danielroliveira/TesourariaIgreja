@@ -13,24 +13,18 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmDespesaPeriodicaListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objDespesa> listCont = new List<objDespesa>();
+		private DespesaPeriodicaBLL dBLL = new DespesaPeriodicaBLL();
+		private List<objDespesaPeriodica> listCont = new List<objDespesaPeriodica>();
 		private Form _formOrigem;
-		private DateTime _myMes;
-		private DateTime _dtInicial;
-		private DateTime _dtFinal;
-		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
+		private Image ImgInativo = Properties.Resources.block_24;
+		private Image ImgAtivo = Properties.Resources.accept_24;
+		private Image ImgAccept = Properties.Resources.accept_16;
 
-		public struct StructPesquisa
-		{
-			public int? IDSetor;
-			public string Setor;
-			public int? IDCredor;
-			public string Credor;
-			public int? IDTipo;
-			public string Tipo;
-		}
-
-		public StructPesquisa Dados;
+		private bool _Alterado = false;
+		private int? IDSetor;
+		private int? IDCredor;
+		private int? IDTipo;
+		private bool Ativa = true;
 
 		#region NEW | OPEN FUNCTIONS | PROPERTIES
 
@@ -40,13 +34,8 @@ namespace CamadaUI.Saidas
 		{
 			InitializeComponent();
 
-			Dados = new StructPesquisa();
-
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
-
-			// define a data inicial
-			propMes = DateTime.Parse(ObterDefault("DataPadrao"));
 
 			// obter dados e preenche a listagem
 			ObterDados();
@@ -55,40 +44,11 @@ namespace CamadaUI.Saidas
 			//--- get dados
 			dgvListagem.CellDoubleClick += btnVisualizar_Click;
 
-			DefineLabelFiltro();
-
 			//--- Handlers
 			HandlerKeyDownControl(this);
-			rbtPorMes.CheckedChanged += rbt_CheckedChanged;
-			rbtPorPeriodo.CheckedChanged += rbt_CheckedChanged;
-			rbtTodas.CheckedChanged += rbt_CheckedChanged;
-
+			AddHandlersRadioButSituacao();
 		}
 
-		// CONTROLA O MES
-		//------------------------------------------------------------------------------------------------------------
-		public DateTime propMes
-		{
-			get
-			{
-				return _myMes;
-			}
-			set
-			{
-				_myMes = value;
-
-				// define data inicial e data final
-				_dtInicial = new DateTime(_myMes.Year, _myMes.Month, 1);
-				_dtFinal = new DateTime(_myMes.Year, _myMes.Month, DateTime.DaysInMonth(_myMes.Year, _myMes.Month));
-
-				lblPeriodo.Text = _myMes.ToString("MMMM | yyyy");
-				lblDtInicial.Text = _dtInicial.ToString("dd/MM");
-				lblDtFinal.Text = _dtFinal.ToString("dd/MM");
-
-				// habilita, desabilita btnPeriodoPosterior caso mes futuro
-				btnPeriodoPosterior.Enabled = !(_myMes.Year >= DateTime.Today.Year && _myMes.Month >= DateTime.Today.Month);
-			}
-		}
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
@@ -99,15 +59,12 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				DespesaBLL dBLL = new DespesaBLL();
-
 				// define list
-				listCont = dBLL.GetListDespesa(
-					Dados.IDSetor,
-					Dados.IDTipo,
-					Dados.IDCredor,
-					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
-					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				listCont = dBLL.GetListDespesaPeriodica(
+					Ativa,
+					IDSetor,
+					IDTipo,
+					IDCredor);
 
 				dgvListagem.DataSource = listCont;
 				CalculaTotais();
@@ -125,37 +82,30 @@ namespace CamadaUI.Saidas
 
 		}
 
+		public bool propAlterado
+		{
+			get => _Alterado;
+			set
+			{
+				if (value != _Alterado && value == true)
+				{
+					ShowToolTip(btnProcurar);
+				}
+
+				_Alterado = value;
+				btnProcurar.Enabled = value;
+			}
+		}
+
 		//--- CALCULA OS TOTAIS E ALTERA AS LABELS
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
 			decimal vlTotal = listCont.Sum(x => x.DespesaValor);
 			lblValorTotal.Text = vlTotal.ToString("C");
-		}
 
-		// DEFINE O LABEL FILTRO
-		//------------------------------------------------------------------------------------------------------------
-		private void DefineLabelFiltro()
-		{
-			StringBuilder builder = new StringBuilder();
-
-			if (Dados.IDSetor != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "SETOR: " + Dados.Setor);
-			}
-
-			if (Dados.IDTipo != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "TIPO: " + Dados.Tipo);
-			}
-
-			if (Dados.IDCredor != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "Credor: " + Dados.Credor);
-			}
-
-			lblFiltro.Text = builder.ToString();
-
+			decimal vlMensal = listCont.Sum(x => x.DespesaValorMensal);
+			lblValorMensal.Text = vlMensal.ToString("C");
 		}
 
 		#endregion
@@ -181,6 +131,9 @@ namespace CamadaUI.Saidas
 			// DEFINE COLUMN FONT
 			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
 			clnID.DataPropertyName = "IDDespesa";
@@ -191,6 +144,7 @@ namespace CamadaUI.Saidas
 			clnID.DefaultCellStyle.Padding = newPadding;
 			clnID.DefaultCellStyle.Format = "0000";
 			clnID.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnID);
 
 			//--- (2) COLUNA DATA
 			clnData.DataPropertyName = "DespesaData";
@@ -201,6 +155,7 @@ namespace CamadaUI.Saidas
 			clnData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnData.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnData);
 
 			//--- (3) COLUNA SETOR
 			clnSetor.DataPropertyName = "Setor";
@@ -211,6 +166,7 @@ namespace CamadaUI.Saidas
 			clnSetor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnSetor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnSetor.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnSetor);
 
 			//--- (4) COLUNA TIPO
 			clnTipo.DataPropertyName = "DespesaTipo";
@@ -221,6 +177,7 @@ namespace CamadaUI.Saidas
 			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnTipo.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnTipo);
 
 			//--- (5) COLUNA CREDOR
 			clnCredor.DataPropertyName = "Credor";
@@ -231,28 +188,20 @@ namespace CamadaUI.Saidas
 			clnCredor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCredor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCredor.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnCredor);
 
 			//--- (6) COLUNA DOCUMENTO TIPO
-			clnDocumentoTipo.DataPropertyName = "DocumentoTipo";
-			clnDocumentoTipo.Visible = true;
-			clnDocumentoTipo.ReadOnly = true;
-			clnDocumentoTipo.Resizable = DataGridViewTriState.False;
-			clnDocumentoTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnDocumentoTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnDocumentoTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnDocumentoTipo.DefaultCellStyle.Font = clnFont;
+			clnRecorrencia.DataPropertyName = "RecorrenciaTipoDescricao";
+			clnRecorrencia.Visible = true;
+			clnRecorrencia.ReadOnly = true;
+			clnRecorrencia.Resizable = DataGridViewTriState.False;
+			clnRecorrencia.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnRecorrencia.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnRecorrencia.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnRecorrencia.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnRecorrencia);
 
-			//--- (7) COLUNA SITUACAO
-			clnSituacao.DataPropertyName = "Situacao";
-			clnSituacao.Visible = true;
-			clnSituacao.ReadOnly = true;
-			clnSituacao.Resizable = DataGridViewTriState.False;
-			clnSituacao.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSituacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnSituacao.DefaultCellStyle.Font = clnFont;
-
-			//--- (8) COLUNA VALOR
+			//--- (7) COLUNA VALOR
 			clnValor.DataPropertyName = "DespesaValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -261,17 +210,43 @@ namespace CamadaUI.Saidas
 			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnValor);
+
+			//--- (7) COLUNA VALOR MENSAL
+			clnValorMensal.DataPropertyName = "DespesaValorMensal";
+			clnValorMensal.Visible = true;
+			clnValorMensal.ReadOnly = true;
+			clnValorMensal.Resizable = DataGridViewTriState.False;
+			clnValorMensal.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorMensal.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorMensal.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorMensal.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnValorMensal);
+
+			//--- (9) COLUNA ATIVO IMAGE
+			clnAtivo.ReadOnly = true;
+			clnAtivo.Resizable = DataGridViewTriState.False;
+			clnAtivo.HeaderText = "Ativa";
+			clnAtivo.Resizable = DataGridViewTriState.False;
+			clnAtivo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnAtivo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			colList.Add(clnAtivo);
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(
-				clnID,
-				clnData,
-				clnSetor,
-				clnTipo,
-				clnCredor,
-				clnDocumentoTipo,
-				clnSituacao,
-				clnValor);
+			dgvListagem.Columns.AddRange(colList.ToArray());
+		}
+
+		// CONTROL IMAGES OF LIST DATAGRID
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.ColumnIndex == clnAtivo.Index)
+			{
+				objDespesaPeriodica item = (objDespesaPeriodica)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+
+				if (item.Ativa) e.Value = ImgAtivo;
+				else e.Value = ImgInativo;
+			}
 		}
 
 		// ON ENTER SELECT ITEM
@@ -302,7 +277,7 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmDespesa frm = new frmDespesa(new objDespesa(null));
+			frmDespesaPeriodica frm = new frmDespesaPeriodica(new objDespesaPeriodica(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -322,9 +297,9 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaPeriodica item = (objDespesaPeriodica)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			frmDespesa frm = new frmDespesa(item);
+			frmDespesaPeriodica frm = new frmDespesaPeriodica(item);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -335,13 +310,23 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnProcurar_Click(object sender, EventArgs e)
 		{
-			var frm = new frmDespesaPeriodicaListagemFiltro(this);
-			frm.ShowDialog();
+			ObterDados();
+			propAlterado = false;
+		}
 
-			if (frm.DialogResult == DialogResult.Yes)
+		// LIMPAR
+		//------------------------------------------------------------------------------------------------------------
+		private void btnLimpar_Click(object sender, EventArgs e)
+		{
+			if (IDSetor != null || IDCredor != null || IDTipo != null)
 			{
+				txtSetor.Clear();
+				IDSetor = null;
+				txtCredor.Clear();
+				IDCredor = null;
+				txtDespesaTipo.Clear();
+				IDTipo = null;
 				ObterDados();
-				DefineLabelFiltro();
 			}
 		}
 
@@ -404,127 +389,354 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// BLOCK KEY (+) FOR SOME CONTROLS
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtDespesaTipo,
+					txtSetor,
+					txtCredor
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtDespesaTipo":
+						btnSetTipo_Click(sender, new EventArgs());
+						break;
+					case "txtSetor":
+						btnSetSetor_Click(sender, new EventArgs());
+						break;
+					case "txtCredor":
+						btnSetCredor_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtDespesaTipo":
+						if (IDTipo != null) propAlterado = true;
+						txtDespesaTipo.Clear();
+						IDTipo = null;
+						break;
+					case "txtSetor":
+						if (IDSetor != null) propAlterado = true;
+						txtSetor.Clear();
+						IDSetor = null;
+						break;
+					case "txtCredor":
+						if (IDCredor != null) propAlterado = true;
+						txtCredor.Clear();
+						IDCredor = null;
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = {
+					txtDespesaTipo,
+					txtSetor,
+					txtCredor };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
 		#endregion // CONTROL FUNCTIONS --- END
 
-		#region DATE MONTH CONTROLER
+		#region CONTROL SITUACAO
 
-		private void btnPeriodoAnterior_Click(object sender, EventArgs e)
+		private void AddHandlersRadioButSituacao()
 		{
-			if (propMes.Month == 1)
+			rbtAtivas.CheckedChanged += rbtSit_CheckedChanged;
+			rbtInativas.CheckedChanged += rbtSit_CheckedChanged;
+		}
+
+		private void rbtSit_CheckedChanged(object sender, EventArgs e)
+		{
+			bool newSit = bool.Parse(((Control)sender).Tag.ToString());
+
+			if (Ativa != newSit)
 			{
-				propMes = new DateTime(propMes.Year - 1, 12, propMes.Day); // subtract one year
+				Ativa = newSit;
+				ObterDados();
+
+				if (Ativa)
+				{
+					rbtAtivas.Image = ImgAccept;
+					rbtInativas.Image = null;
+				}
+				else
+				{
+					rbtAtivas.Image = null;
+					rbtInativas.Image = ImgAccept;
+				}
+
+			}
+		}
+
+		#endregion // CONTROL SITUACAO --- END
+
+		#region BUTTONS PROCURA
+
+		// OPEN CONGREGACAO PROCURA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetTipo_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmDespesaTipoProcura frm = new frmDespesaTipoProcura(this, IDTipo);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					if (IDTipo != (int)frm.propEscolha.IDDespesaTipo) propAlterado = true;
+
+					IDTipo = (int)frm.propEscolha.IDDespesaTipo;
+					txtDespesaTipo.Text = frm.propEscolha.DespesaTipo;
+				}
+
+				//--- select
+				txtDespesaTipo.Focus();
+				txtDespesaTipo.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnSetSetor_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, IDSetor);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					if (IDSetor != (int)frm.propEscolha.IDSetor) propAlterado = true;
+
+					IDSetor = (int)frm.propEscolha.IDSetor;
+					txtSetor.Text = frm.propEscolha.Setor;
+				}
+
+				//--- select
+				txtSetor.Focus();
+				txtSetor.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnSetCredor_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Registres.frmCredorListagem frm = new Registres.frmCredorListagem(true, this);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK) // SEARCH CONTRIBUINTE
+				{
+					if (IDCredor != (int)frm.propEscolha.IDCredor) propAlterado = true;
+
+					IDCredor = (int)frm.propEscolha.IDCredor;
+					txtCredor.Text = frm.propEscolha.Credor;
+				}
+
+				//--- select
+				txtCredor.Focus();
+				txtCredor.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // BUTTONS PROCURA --- END
+
+		#region ATIVAR DESATIVAR MENU
+
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				Control c = (Control)sender;
+				DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+				dgvListagem.ClearSelection();
+
+				//---VERIFICAÇÕES NECESSARIAS
+				if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+				// seleciona o ROW
+				dgvListagem.Rows[hit.RowIndex].Cells[0].Selected = true;
+				dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+				// mostra o MENU ativar e desativar
+				if (dgvListagem.Columns[hit.ColumnIndex].Name == "clnAtivo")
+				{
+					objDespesaPeriodica desp = (objDespesaPeriodica)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+					if (desp.Ativa == true)
+					{
+						AtivarToolStripMenuItem.Enabled = false;
+						DesativarToolStripMenuItem.Enabled = true;
+					}
+					else
+					{
+						AtivarToolStripMenuItem.Enabled = true;
+						DesativarToolStripMenuItem.Enabled = false;
+					}
+
+					// revela menu
+					MenuListagem.Show(c.PointToScreen(e.Location));
+				}
+			}
+		}
+
+		private void AtivarDesativar_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return;
+
+			//--- Verifica o item
+			objDespesaPeriodica desp = (objDespesaPeriodica)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//---pergunta ao usuário
+			var reponse = AbrirDialog($"Deseja realmente {(desp.Ativa ? "DESATIVAR " : "ATIVAR")} essa Despesa Periódica?\n" +
+									  desp.DespesaTipo.ToUpper(), (desp.Ativa ? "DESATIVAR " : "ATIVAR"),
+									  DialogType.SIM_NAO, DialogIcon.Question);
+			if (reponse == DialogResult.No) return;
+
+			//--- altera o valor
+			desp.Ativa = !desp.Ativa;
+
+			//--- Salvar o Registro
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				dBLL.UpdateDespesaPeriodicaAtiva((long)desp.IDDespesa, desp.Ativa);
+
+				//--- altera a imagem
+				ObterDados();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Alterar a Despesa Periódica..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // ATIVAR DESATIVAR MENU --- END
+
+		#region TOOLTIP
+
+		// EMITE TOOLTIP ON ENTER E DESABILITA
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_Enter(object sender, EventArgs e)
+		{
+			ShowToolTip(sender as Control);
+			((TextBox)sender).Enter -= Control_Enter;
+		}
+
+		private void ShowToolTip(Control controle)
+		{
+			//Cria a ToolTip e associa com o Form container.
+			ToolTip toolTip1 = new ToolTip()
+			{
+				AutoPopDelay = 2000, // Define o delay para a ToolTip
+				InitialDelay = 2000,
+				ReshowDelay = 500,
+				IsBalloon = true,
+				UseAnimation = true,
+				UseFading = true
+			};
+
+			if (controle.Tag == null)
+			{
+				toolTip1.Show("Clique aqui...", controle, controle.Width - 30, -40, 2000);
 			}
 			else
 			{
-				propMes = propMes.AddMonths(-1);
-			}
-
-			ObterDados();
-		}
-
-		private void btnPeriodoPosterior_Click(object sender, EventArgs e)
-		{
-			if (propMes.Month == 12)
-			{
-				propMes = new DateTime(propMes.Year + 1, 1, propMes.Day); // subtract one year
-			}
-			else
-			{
-				propMes = propMes.AddMonths(1);
-			}
-
-			ObterDados();
-		}
-
-		private void btnMesAtual_Click(object sender, EventArgs e)
-		{
-			propMes = DateTime.Today;
-			ObterDados();
-		}
-
-		private void rbt_CheckedChanged(object sender, EventArgs e)
-		{
-			if (rbtTodas.Checked == true) // TODAS
-			{
-				pnlPorMes.Visible = false;
-				pnlPorPeriodo.Visible = false;
-				Panel2.Width = 350;
-
-				if (_ProcuraTipo != 3)
-				{
-					_ProcuraTipo = 3;
-					ObterDados();
-				}
-
-			}
-			else if (rbtPorMes.Checked == true) // POR MES
-			{
-				pnlPorMes.Visible = true;
-				pnlPorPeriodo.Visible = false;
-				_myMes = _dtInicial;
-				Panel2.Width = 674;
-
-				if (_ProcuraTipo != 1)
-				{
-					_ProcuraTipo = 1;
-					ObterDados();
-				}
-			}
-			else if (rbtPorPeriodo.Checked == true) // POR PERIODO
-			{
-				pnlPorMes.Visible = false;
-				pnlPorPeriodo.Visible = true;
-				Panel2.Width = 674;
-
-				if (_ProcuraTipo != 2)
-				{
-					_ProcuraTipo = 2;
-					ObterDados();
-				}
+				toolTip1.Show(controle.Tag.ToString(), controle, controle.Width - 30, -40, 2000);
 			}
 		}
 
-		private void btnDt_Click(object sender, EventArgs e)
-		{
-			bool IsDtInicial = ((Control)sender).Name == "btnDtInicial" ? true : false;
 
-			var frm = new Main.frmDateGet(IsDtInicial ? "Escolha a Data Inicial" : "Escolha a Data Final",
-										EnumDataTipo.PassadoOuFuturo,
-										IsDtInicial ? _dtInicial : _dtFinal, this);
-
-			frm.ShowDialog();
-			if (frm.DialogResult != DialogResult.OK) return;
-
-			//--- define a data selecionada
-			if (IsDtInicial)
-			{
-				_dtInicial = (DateTime)frm.propDataInfo;
-				lblDtInicial.Text = _dtInicial.ToString("dd/MM");
-
-				//--- verifica se a data final é menor que a data inicial
-				if (_dtFinal < _dtInicial)
-				{
-					_dtFinal = _dtInicial;
-					lblDtFinal.Text = _dtFinal.ToString("dd/MM");
-				}
-			}
-			else
-			{
-				_dtFinal = (DateTime)frm.propDataInfo;
-				lblDtFinal.Text = _dtFinal.ToString("dd/MM");
-
-				//--- verifica se a data final é menor que a data inicial
-				if (_dtInicial > _dtFinal)
-				{
-					_dtInicial = _dtFinal;
-					lblDtInicial.Text = _dtInicial.ToString("dd/MM");
-				}
-			}
-
-			ObterDados();
-		}
-
-		#endregion // DATE MONTH CONTROLER --- END
+		#endregion
 
 	}
 }

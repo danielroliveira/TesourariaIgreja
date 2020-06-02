@@ -3,6 +3,8 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace CamadaBLL
 {
@@ -81,17 +83,21 @@ namespace CamadaBLL
 				List<objAPagar> listagem = new List<objAPagar>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
-				if (dt.Rows.Count == 0)
-				{
-					return listagem;
-				}
-
 				foreach (DataRow row in dt.Rows)
 				{
 					listagem.Add(ConvertRowInClass(row));
 				}
 
-				return listagem;
+				// add APAGAR DESPESA PERIODICA
+				//-------------------------------------------------------------------------------------------------
+				if (IDSituacao == 1) // EM ABERTO
+				{
+					var periodica = GetListAPagarPeriodica(IDCobrancaForma, IDCredor, dataInicial, dataFinal);
+					listagem.AddRange(periodica);
+				}
+
+				// RETURN
+				return listagem.OrderBy(p => p.Vencimento).ToList();
 
 			}
 			catch (Exception ex)
@@ -138,6 +144,264 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET LIST OF DESPESA PERIODICA
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAPagar> GetListAPagarPeriodica(
+			int? IDCobrancaForma = null,
+			int? IDCredor = null,
+			DateTime? dataInicial = null,
+			DateTime? dataFinal = null)
+		{
+			// get Despesa Periodica List
+			List<objDespesaPeriodica> listPer = new DespesaPeriodicaBLL()
+				.GetListDespesaPeriodica(true, null, null, IDCredor, IDCobrancaForma, dataInicial);
+
+			List<objAPagar> APagarList = new List<objAPagar>();
+
+			foreach (objDespesaPeriodica desp in listPer)
+			{
+				APagarList.AddRange(CreateListAPagarPeriodica(desp, dataInicial, dataFinal));
+			}
+
+			return APagarList;
+		}
+
+		// CREATE LIST OF DESPESA PERIODICA
+		//------------------------------------------------------------------------------------------------------------
+		private List<objAPagar> CreateListAPagarPeriodica(
+			objDespesaPeriodica desp,
+			DateTime? dataInicial,
+			DateTime? dataFinal = null)
+		{
+			// Check dfInicial
+			if (dataInicial == null) dataInicial = desp.IniciarData;
+
+			// Create dtAtual => 'DataInicial' OR 'IniciarData' o que for MAIOR
+			DateTime dtAtual = (DateTime)dataInicial >= desp.IniciarData ? (DateTime)dataInicial : desp.IniciarData;
+
+			// Check dfFinal
+			if (dataFinal == null) dataFinal = dtAtual.AddYears(1);
+
+			// create list APagar
+			List<objAPagar> list = new List<objAPagar>();
+
+			switch (desp.RecorrenciaTipo)
+			{
+				case 1: // DIARIO
+
+					//--- discover the first date
+					while (dtAtual <= dataFinal)
+					{
+						list.Add(CreateAPagarByDespesa(desp, dtAtual));
+						dtAtual = dtAtual.AddDays((int)desp.RecorrenciaRepeticao);
+					}
+					break;
+				case 2: // SEMANAL
+
+					//--- discover the first date
+					while ((int)dtAtual.DayOfWeek != desp.RecorrenciaDia)
+					{
+						dtAtual = dtAtual.AddDays(1);
+					}
+
+					//--- creating Vencimentos
+					while (dtAtual <= dataFinal)
+					{
+						list.Add(CreateAPagarByDespesa(desp, dtAtual));
+						dtAtual = dtAtual.AddDays(7 * (int)desp.RecorrenciaRepeticao);
+					}
+					break;
+				case 3: // MENSAL POR DIA
+
+					//--- discover the first date
+					if (dtAtual.Day != desp.RecorrenciaDia)
+					{
+						if (dtAtual.Day > desp.RecorrenciaDia)
+						{
+							dtAtual = dtAtual.AddMonths(1);
+						}
+
+						// create string of date
+						string strDate = $"{(int)desp.RecorrenciaDia}/{dtAtual.Month}/{dtAtual.Year}";
+
+						// try to convert in date
+						if (!DateTime.TryParse(strDate, out dtAtual))
+						{
+							int maxDays = DateTime.DaysInMonth(dtAtual.Month, dtAtual.Year);
+							dtAtual = new DateTime(dtAtual.Year, dtAtual.Month, maxDays);
+						}
+					}
+
+					//--- creating Vencimentos
+					while (dtAtual <= dataFinal)
+					{
+						list.Add(CreateAPagarByDespesa(desp, dtAtual));
+						dtAtual = dtAtual.AddMonths((int)desp.RecorrenciaRepeticao);
+					}
+					break;
+				case 4: // MENSAL POR SEMANA
+
+					//--- discover the first date
+					while ((int)dtAtual.DayOfWeek != desp.RecorrenciaDia)
+					{
+						dtAtual = dtAtual.AddDays(1);
+					}
+
+					// check week number
+					int semana = (int)Math.Ceiling((decimal)dtAtual.Day / 7);
+
+					while (semana != desp.RecorrenciaSemana)
+					{
+						dtAtual = dtAtual.AddDays(7);
+						semana = (int)Math.Ceiling((decimal)dtAtual.Day / 7);
+					}
+
+					//--- creating Vencimentos
+					while (dtAtual <= dataFinal)
+					{
+						list.Add(CreateAPagarByDespesa(desp, dtAtual));
+						dtAtual = dtAtual.AddMonths((int)desp.RecorrenciaRepeticao);
+					}
+					break;
+				case 5: // ANUAL POR MES E DIA
+
+					//--- discover the first date
+					if (dtAtual.Month != desp.RecorrenciaMes)
+					{
+						if (dtAtual.Month > desp.RecorrenciaMes)
+						{
+							dtAtual = dtAtual.AddYears(1);
+						}
+
+						if (dtAtual.Day > desp.RecorrenciaDia)
+						{
+							dtAtual = dtAtual.AddMonths(1);
+						}
+					}
+					else
+					{
+						if (dtAtual.Day > desp.RecorrenciaDia)
+						{
+							dtAtual = dtAtual.AddMonths(1);
+						}
+					}
+
+					// create string of date
+					string strDate2 = $"{(int)desp.RecorrenciaDia}/{(int)desp.RecorrenciaMes}/{dtAtual.Year}";
+
+					// try to convert in date
+					if (!DateTime.TryParse(strDate2, out dtAtual))
+					{
+						int maxDays = DateTime.DaysInMonth((int)desp.RecorrenciaMes, dtAtual.Year);
+						dtAtual = new DateTime(dtAtual.Year, (int)desp.RecorrenciaMes, maxDays);
+					}
+
+					//--- creating Vencimentos
+					while (dtAtual <= dataFinal)
+					{
+						list.Add(CreateAPagarByDespesa(desp, dtAtual));
+						dtAtual = dtAtual.AddYears((int)desp.RecorrenciaRepeticao);
+					}
+					break;
+
+				case 6: // ANUAL POR MES E SEMANA
+
+					//--- discover the first date
+					while ((int)dtAtual.Month != desp.RecorrenciaMes)
+					{
+						dtAtual = dtAtual.AddMonths(1);
+					}
+
+					while ((int)dtAtual.DayOfWeek != desp.RecorrenciaDia)
+					{
+						dtAtual = dtAtual.AddDays(1);
+					}
+
+					// check week number
+					int semana2 = (int)Math.Ceiling((decimal)dtAtual.Day / 7);
+
+					while (semana2 != desp.RecorrenciaSemana)
+					{
+						dtAtual = dtAtual.AddDays(7);
+						semana2 = (int)Math.Ceiling((decimal)dtAtual.Day / 7);
+					}
+
+					//--- creating Vencimentos
+					while (dtAtual <= dataFinal)
+					{
+						list.Add(CreateAPagarByDespesa(desp, dtAtual));
+						dtAtual = dtAtual.AddYears((int)desp.RecorrenciaRepeticao);
+					}
+					break;
+
+				default:
+					break;
+			}
+
+			return list;
+
+		}
+
+		// CREATE NEW APAGAR BY DESPESA PERIODICA
+		//------------------------------------------------------------------------------------------------------------
+		private objAPagar CreateAPagarByDespesa(objDespesaPeriodica desp, DateTime dtAtual)
+		{
+			return new objAPagar(null)
+			{
+				APagarValor = desp.DespesaValor,
+				Banco = desp.BancoNome,
+				CobrancaForma = desp.CobrancaForma,
+				Credor = desp.Credor,
+				DespesaDescricao = desp.DespesaDescricao,
+				DespesaOrigem = 2,
+				IDBanco = desp.IDBanco,
+				IDCobrancaForma = desp.IDCobrancaForma,
+				IDCredor = desp.IDCredor,
+				IDDespesa = (long)desp.IDDespesa,
+				IDSituacao = 1,
+				Imagem = false,
+				PagamentoData = null,
+				Identificador = $"PER{desp.IDDespesa:D4} | {dtAtual.Year}{dtAtual.Month:D2}{dtAtual.Day:D2}",
+				Parcela = null,
+				Situacao = "Em Aberto",
+				Vencimento = dtAtual,
+				ReferenciaAno = dtAtual.Year,
+				ReferenciaMes = dtAtual.Month,
+			};
+		}
+
+		// CONVERT APAGAR PERIODICO IN REAL
+		//------------------------------------------------------------------------------------------------------------
+		public objAPagar ConvertPeriodicoInReal(objDespesaPeriodica desp, DateTime Vencimento)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				// init transaction
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// 1. update Despesa Periodica (IniciarData, DespesaValor)
+				desp.IniciarData = Vencimento.AddDays(1);
+				new DespesaPeriodicaBLL().UpdateDespesa(desp, dbTran);
+
+				// 2. create and save APagar
+				objAPagar newPag = CreateAPagarByDespesa(desp, Vencimento);
+				InsertAPagar(newPag, dbTran);
+
+				// 3. return new APagar
+				dbTran.CommitTransaction();
+				return newPag;
+
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		private objAPagar ConvertRowInClass(DataRow row)
@@ -167,10 +431,55 @@ namespace CamadaBLL
 				ReferenciaMes = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaMes"],
 				ReferenciaAno = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaAno"],
 				Imagem = (bool)row["Imagem"],
+				IDSetor = (int)row["IDSetor"],
+				Setor = (string)row["Setor"],
 			};
 
 			return despesa;
 
+		}
+
+		// INSERT APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private objAPagar InsertAPagar(objAPagar pag, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@APagarValor", pag.APagarValor);
+				dbTran.AdicionarParametros("@IDBanco", pag.IDBanco);
+				dbTran.AdicionarParametros("@IDCobrancaForma", pag.IDCobrancaForma);
+				dbTran.AdicionarParametros("@IDDespesa", pag.IDDespesa);
+				dbTran.AdicionarParametros("@Identificador", pag.Identificador);
+				dbTran.AdicionarParametros("@IDSituacao", pag.IDSituacao);
+				dbTran.AdicionarParametros("@Imagem", pag.Imagem);
+				dbTran.AdicionarParametros("@Parcela", pag.Parcela);
+				dbTran.AdicionarParametros("@Prioridade", pag.Prioridade);
+				dbTran.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);
+				dbTran.AdicionarParametros("@ReferenciaMes", pag.ReferenciaMes);
+				dbTran.AdicionarParametros("@ValorPago", pag.ValorPago);
+				dbTran.AdicionarParametros("@ValorAcrescimo", pag.ValorAcrescimo);
+				dbTran.AdicionarParametros("@ValorDesconto", pag.ValorDesconto);
+				dbTran.AdicionarParametros("@Vencimento", pag.Vencimento);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblAPagar");
+
+				//--- insert and Get new ID
+				long newID = dbTran.ExecutarInsertAndGetID(query);
+				pag.IDAPagar = newID;
+
+				return pag;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		// INSERT LIST
@@ -179,40 +488,14 @@ namespace CamadaBLL
 		{
 			try
 			{
+				var insertedList = new List<objAPagar>();
+
 				foreach (var pag in list)
 				{
-					//--- clear Params
-					dbTran.LimparParametros();
-
-					//--- define Params
-					dbTran.AdicionarParametros("@APagarValor", pag.APagarValor);
-					dbTran.AdicionarParametros("@IDBanco", pag.IDBanco);
-					dbTran.AdicionarParametros("@IDCobrancaForma", pag.IDCobrancaForma);
-					dbTran.AdicionarParametros("@IDDespesa", pag.IDDespesa);
-					dbTran.AdicionarParametros("@Identificador", pag.Identificador);
-					dbTran.AdicionarParametros("@IDSituacao", pag.IDSituacao);
-					dbTran.AdicionarParametros("@Imagem", pag.Imagem);
-					dbTran.AdicionarParametros("@Parcela", pag.Parcela);
-					dbTran.AdicionarParametros("@Prioridade", pag.Prioridade);
-					dbTran.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);
-					dbTran.AdicionarParametros("@ReferenciaMes", pag.ReferenciaMes);
-					dbTran.AdicionarParametros("@ValorPago", pag.ValorPago);
-					dbTran.AdicionarParametros("@ValorAcrescimo", pag.ValorAcrescimo);
-					dbTran.AdicionarParametros("@ValorDesconto", pag.ValorDesconto);
-					dbTran.AdicionarParametros("@Vencimento", pag.Vencimento);
-
-					//--- convert null parameters
-					dbTran.ConvertNullParams();
-
-					string query = dbTran.CreateInsertSQL("tblAPagar");
-
-					//--- insert and Get new ID
-					long newID = dbTran.ExecutarInsertAndGetID(query);
-					pag.IDAPagar = newID;
+					insertedList.Add(InsertAPagar(pag, dbTran));
 				}
 
-				return list;
-
+				return insertedList;
 			}
 			catch (Exception ex)
 			{

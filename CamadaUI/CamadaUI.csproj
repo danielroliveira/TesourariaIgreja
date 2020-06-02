@@ -101,6 +101,12 @@
     <Compile Include="APagar\frmAPagarSaidas.designer.cs">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </Compile>
+    <Compile Include="AReceber\frmAReceberListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AReceber\frmAReceberListagem.designer.cs">
+      <DependentUpon>frmAReceberListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmBancoProcura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -441,12 +447,6 @@
     <Compile Include="Saidas\frmDespesaPeriodicaListagem.designer.cs">
       <DependentUpon>frmDespesaPeriodicaListagem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Saidas\frmDespesaPeriodicaListagemFiltro.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Saidas\frmDespesaPeriodicaListagemFiltro.designer.cs">
-      <DependentUpon>frmDespesaPeriodicaListagemFiltro.cs</DependentUpon>
-    </Compile>
     <Compile Include="Saidas\frmDespesaTipo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -506,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="APagar\frmAPagarSaidas.resx">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AReceber\frmAReceberListagem.resx">
+      <DependentUpon>frmAReceberListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancoProcura.resx">
       <DependentUpon>frmBancoProcura.cs</DependentUpon>
@@ -677,9 +680,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaPeriodicaListagem.resx">
       <DependentUpon>frmDespesaPeriodicaListagem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Saidas\frmDespesaPeriodicaListagemFiltro.resx">
-      <DependentUpon>frmDespesaPeriodicaListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaTipo.resx">
       <DependentUpon>frmDespesaTipo.cs</DependentUpon>

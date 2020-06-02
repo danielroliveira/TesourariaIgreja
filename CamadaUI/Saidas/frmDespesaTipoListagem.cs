@@ -257,9 +257,9 @@ namespace CamadaUI.Saidas
 				// mostra o MENU ativar e desativar
 				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objDespesaTipo Setor = (objDespesaTipo)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objDespesaTipo Tipo = (objDespesaTipo)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (Setor.Ativo == true)
+					if (Tipo.Ativo == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -276,7 +276,7 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		private void AtivarDesativar_Setor_Click(object sender, EventArgs e)
+		private void AtivarDesativar_Click(object sender, EventArgs e)
 		{
 			//--- verifica se existe alguma cell 
 			if (dgvListagem.SelectedRows.Count == 0) return;

@@ -1,4 +1,5 @@
-﻿using CamadaDTO;
+﻿using CamadaBLL;
+using CamadaDTO;
 using System;
 using System.Data;
 using System.Drawing;
@@ -34,7 +35,16 @@ namespace CamadaUI.APagar
 
 			// get default Conta and Setor
 			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
-			SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
+
+			// get SETOR
+			if (((frmPrincipal)Application.OpenForms[0]).propSetorPadrao.IDSetor == pag.IDSetor)
+			{
+				SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
+			}
+			else
+			{
+				SetorPadrao = GetSetor(pag.IDSetor);
+			}
 
 			if (ContaPadrao == null | SetorPadrao == null) return;
 
@@ -54,6 +64,30 @@ namespace CamadaUI.APagar
 			}
 		}
 
+		// GET SETOR BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private objSetor GetSetor(int IDSetor)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				return new SetorBLL().GetSetor(IDSetor);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter o Setor pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		// DEFINE OS VALORES INICIAIS
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineValoresIniciais()
@@ -66,7 +100,7 @@ namespace CamadaUI.APagar
 			txtConta.Text = ContaPadrao.Conta;
 			propSaida.IDSetor = (int)SetorPadrao.IDSetor;
 			propSaida.Setor = SetorPadrao.Setor;
-			txtSetor.Text = SetorPadrao.Setor;
+			lblSetor.Text = SetorPadrao.Setor;
 			lblContaDetalhe.Text = $"Saldo da Conta: {ContaPadrao.ContaSaldo.ToString("c")} \n" +
 				$"Data de Bloqueio até: {ContaPadrao.BloqueioData?.ToString() ?? ""}";
 
@@ -76,7 +110,7 @@ namespace CamadaUI.APagar
 			cmbSaidaMes.SelectedValue = propSaida.SaidaData.Month;
 			numSaidaAno.Value = propSaida.SaidaData.Year;
 
-			// define max values
+			// define year dates
 			int actualYear = DateTime.Today.Year;
 			if (numSaidaAno.Value > actualYear) numSaidaAno.Value = actualYear;
 			numSaidaAno.Maximum = DateTime.Today.Year;
@@ -93,6 +127,11 @@ namespace CamadaUI.APagar
 
 			txtDoValor.Validated += (a, b) => DefineSaidaValor();
 			txtAcrescimo.Validated += (a, b) => DefineSaidaValor();
+
+			lblAPagarValor.Text = _apagar.APagarValor.ToString("c");
+			lblValorDesconto.Text = _apagar.ValorDesconto.ToString("c");
+			lblValorPago.Text = _apagar.ValorPago.ToString("c");
+			lblValorEmAberto.Text = maxValue.ToString("c");
 		}
 
 		private void DefineSaidaValor()
@@ -141,7 +180,7 @@ namespace CamadaUI.APagar
 			//propSaida.SaidaValor = 
 
 			propSaida.Conta = txtConta.Text;
-			propSaida.Setor = txtSetor.Text;
+			propSaida.Setor = lblSetor.Text;
 			propSaida.Origem = 1; // ORIGEM DESPESA
 			propSaida.IDOrigem = (long)_apagar.IDAPagar;
 			propSaida.Imagem = false;
@@ -193,43 +232,24 @@ namespace CamadaUI.APagar
 			}
 		}
 
-		private void btnSetSetor_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, propSaida.IDSetor);
-				frm.ShowDialog();
-
-				//--- check return
-				if (frm.DialogResult == DialogResult.OK)
-				{
-					propSaida.IDSetor = (int)frm.propEscolha.IDSetor;
-					propSaida.Setor = frm.propEscolha.Setor;
-					txtSetor.Text = frm.propEscolha.Setor;
-				}
-
-				//--- select
-				txtSetor.Focus();
-				txtSetor.SelectAll();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
 		#endregion // BUTTONS FUNCTION --- END
 
 		#region CONTROLS
+
+		// BLOCK KEY (+) FOR SOME CONTROLS
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtConta,
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
 
 		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
 		//------------------------------------------------------------------------------------------------------------
@@ -243,9 +263,6 @@ namespace CamadaUI.APagar
 
 				switch (ctr.Name)
 				{
-					case "txtSetor":
-						btnSetSetor_Click(sender, new EventArgs());
-						break;
 					case "txtConta":
 						btnSetConta_Click(sender, new EventArgs());
 						break;
@@ -260,9 +277,7 @@ namespace CamadaUI.APagar
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = {
-					txtConta,
-					txtSetor };
+				Control[] controlesBloqueados = { txtConta, };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -290,13 +305,17 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void txtDoValor_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			decimal newValor = decimal.Parse(txtDoValor.Text, System.Globalization.NumberStyles.Currency);
+			decimal newValor = decimal.Parse(txtDoValor.Text, NumberStyles.Currency);
 
 			if (newValor > maxValue)
 			{
-				AbrirDialog($"O valor do pagamento não pode ser maior que o valor EM ABERTO da despesa: {maxValue.ToString("c")}",
-					"Valor incorreto...", DialogType.OK, DialogIcon.Exclamation);
+				AbrirDialog($"O valor do pagamento não pode ser maior que o valor EM ABERTO da despesa: {maxValue.ToString("c")}\n" +
+					$"O valor excedente será inserido automativamente nos acrescimos cobrados.",
+					"Valor Maior...", DialogType.OK, DialogIcon.Exclamation);
 				e.Cancel = true;
+				txtDoValor.Text = maxValue.ToString("c");
+				txtAcrescimo.Text = (newValor - maxValue).ToString("c");
+				txtAcrescimo.Focus();
 			}
 			else if (newValor != doValor)
 			{
@@ -309,13 +328,9 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void txtAcrescimo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			decimal newValor = decimal.Parse(txtAcrescimo.Text, System.Globalization.NumberStyles.Currency);
-
-			if (newValor != propSaida.AcrescimoValor)
-			{
-				propSaida.AcrescimoValor = newValor;
-				txtAcrescimo.Text = newValor.ToString("c");
-			}
+			decimal newValor = decimal.Parse(txtAcrescimo.Text, NumberStyles.Currency);
+			propSaida.AcrescimoValor = newValor;
+			txtAcrescimo.Text = newValor.ToString("c");
 		}
 
 		// DATE VALIDATING
@@ -393,6 +408,7 @@ namespace CamadaUI.APagar
 			if (control.Enabled == true)
 				ShowToolTip(control);
 		}
+
 
 
 

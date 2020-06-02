@@ -16,14 +16,16 @@ namespace CamadaUI.Contas
 		private List<objConta> listConta = new List<objConta>();
 		private Form _formOrigem;
 		public objConta propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
+		private bool _semOperadoras = true;
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmContaProcura(Form formOrigem, int? DefaultID = null)
+		public frmContaProcura(Form formOrigem, int? DefaultID = null, bool semOperadoras = true)
 		{
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
+			_semOperadoras = semOperadoras;
 
 			//--- Add any initialization after the InitializeComponent() call.
 			ObterDados(this, new EventArgs());
@@ -44,7 +46,7 @@ namespace CamadaUI.Contas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				ContaBLL cBLL = new ContaBLL();
-				listConta = cBLL.GetListConta("", true);
+				listConta = cBLL.GetListConta("", true, _semOperadoras);
 				PreencheListagem();
 			}
 			catch (Exception ex)

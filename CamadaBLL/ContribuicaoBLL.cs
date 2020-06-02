@@ -157,7 +157,7 @@ namespace CamadaBLL
 
 		// GET CONTRIBUICAO
 		//------------------------------------------------------------------------------------------------------------
-		public objContribuicao GetContribuicao(int IDContribuicao)
+		public objContribuicao GetContribuicao(long IDContribuicao)
 		{
 			try
 			{
@@ -271,7 +271,8 @@ namespace CamadaBLL
 							CompensacaoData = cheque.DepositoData,
 							IDContaProvisoria = cont.IDConta,
 							IDContribuicao = (long)cont.IDContribuicao,
-							Situacao = 1,
+							IDSituacao = 1,
+							Situacao = "Em Aberto",
 							ValorBruto = cont.ValorBruto,
 							ValorLiquido = cont.ValorBruto,
 							ValorRecebido = 0
@@ -316,7 +317,8 @@ namespace CamadaBLL
 								CompensacaoData = cont.ContribuicaoData.AddDays(cartao.Prazo * (i + 1)),
 								IDContaProvisoria = cartao.IDContaProvisoria,
 								IDContribuicao = (long)cont.IDContribuicao,
-								Situacao = 1,
+								IDSituacao = 1,
+								Situacao = "Em Aberto",
 								ValorBruto = cont.ValorBruto / parcelas,
 								ValorLiquido = (cont.ValorBruto / parcelas) * (100 - cartao.TaxaAplicada) / 100,
 								ValorRecebido = 0

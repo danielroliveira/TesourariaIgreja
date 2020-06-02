@@ -37,6 +37,8 @@ namespace CamadaDTO
 			internal bool _Imagem;
 			internal int? _IDCredor;
 			internal string _Credor;
+			internal int _IDSetor;
+			internal string _Setor;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -444,6 +446,22 @@ namespace CamadaDTO
 		{
 			get => EditData._Credor;
 			set => EditData._Credor = value;
+		}
+
+		// Property IDSetor
+		//---------------------------------------------------------------
+		public int IDSetor
+		{
+			get => EditData._IDSetor;
+			set => EditData._IDSetor = value;
+		}
+
+		// Property Setor
+		//---------------------------------------------------------------
+		public string Setor
+		{
+			get => EditData._Setor;
+			set => EditData._Setor = value;
 		}
 
 	}

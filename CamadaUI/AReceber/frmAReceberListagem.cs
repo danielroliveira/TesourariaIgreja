@@ -4,45 +4,33 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.APagar
+namespace CamadaUI.AReceber
 {
-	public partial class frmAPagarListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmAReceberListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objAPagar> listPag = new List<objAPagar>();
-		private BindingSource bindPag = new BindingSource();
-		private APagarBLL pBLL = new APagarBLL();
+		private List<objAReceber> listRec = new List<objAReceber>();
+		private BindingSource bindRec = new BindingSource();
+		private AReceberBLL rBLL = new AReceberBLL();
 		private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
-		private int? _Situacao = 1; // 1: Em Aberto | 2: Quitadas | 3: Canceladas | 4:Negociadas | 5:Negativadas | null :Todas
-
-		public struct StructPesquisa
-		{
-			public int? IDForma;
-			public string Forma;
-			public int? IDCredor;
-			public string Credor;
-		}
-
-		public StructPesquisa Dados;
+		private byte? _Situacao = 1; // 1: Em Aberto | 2: Recebidas | 3: Canceladas
+		private int? _IDContaProvisoria = null;
 
 		#region NEW | OPEN FUNCTIONS | PROPERTIES
 
 		// SUN NEW | CONSTRUCTOR
 		//------------------------------------------------------------------------------------------------------------
-		public frmAPagarListagem(Form formOrigem = null)
+		public frmAReceberListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
-
-			Dados = new StructPesquisa();
 
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
@@ -53,9 +41,6 @@ namespace CamadaUI.APagar
 			// obter dados e preenche a listagem
 			ObterDados();
 			FormataListagem();
-
-			//--- get dados
-			DefineLabelFiltro();
 
 			//--- Handlers
 			HandlerKeyDownControl(this);
@@ -100,15 +85,14 @@ namespace CamadaUI.APagar
 				Cursor.Current = Cursors.WaitCursor;
 
 				// define list
-				listPag = pBLL.GetListAPagar(
+				listRec = rBLL.GetListAReceber(
 					_Situacao,
-					Dados.IDForma,
-					Dados.IDCredor,
+					_IDContaProvisoria,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
 
-				bindPag.DataSource = listPag;
-				dgvListagem.DataSource = bindPag;
+				bindRec.DataSource = listRec;
+				dgvListagem.DataSource = bindRec;
 				CalculaTotais();
 			}
 			catch (Exception ex)
@@ -128,31 +112,11 @@ namespace CamadaUI.APagar
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			decimal vlAPagar = listPag.Sum(x => x.APagarValor);
-			lblValor.Text = vlAPagar.ToString("C");
+			decimal vlAPagar = listRec.Sum(x => x.ValorBruto);
+			lblValorBruto.Text = vlAPagar.ToString("C");
 
-			decimal vlPago = listPag.Sum(x => x.ValorPago);
-			lblValorPago.Text = vlPago.ToString("C");
-		}
-
-		// DEFINE O LABEL FILTRO
-		//------------------------------------------------------------------------------------------------------------
-		private void DefineLabelFiltro()
-		{
-			StringBuilder builder = new StringBuilder();
-
-			if (Dados.IDForma != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "SETOR: " + Dados.Forma);
-			}
-
-			if (Dados.IDCredor != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "Credor: " + Dados.Credor);
-			}
-
-			lblFiltro.Text = builder.ToString();
-
+			decimal vlPago = listRec.Sum(x => x.ValorRecebido);
+			lblValorRecebido.Text = vlPago.ToString("C");
 		}
 
 		#endregion
@@ -183,7 +147,7 @@ namespace CamadaUI.APagar
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDAPagar";
+			clnID.DataPropertyName = "IDAReceber";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -194,37 +158,37 @@ namespace CamadaUI.APagar
 			colList.Add(clnID);
 
 			//--- (2) COLUNA DATA
-			clnVencimento.DataPropertyName = "Vencimento";
-			clnVencimento.Visible = true;
-			clnVencimento.ReadOnly = true;
-			clnVencimento.Resizable = DataGridViewTriState.False;
-			clnVencimento.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnVencimento.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnVencimento.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnVencimento.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnVencimento);
+			clnCompensacaoData.DataPropertyName = "CompensacaoData";
+			clnCompensacaoData.Visible = true;
+			clnCompensacaoData.ReadOnly = true;
+			clnCompensacaoData.Resizable = DataGridViewTriState.False;
+			clnCompensacaoData.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCompensacaoData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCompensacaoData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCompensacaoData.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnCompensacaoData);
 
-			//--- (3) COLUNA SETOR
-			clnForma.DataPropertyName = "CobrancaForma";
-			clnForma.Visible = true;
-			clnForma.ReadOnly = true;
-			clnForma.Resizable = DataGridViewTriState.False;
-			clnForma.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnForma.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnForma);
+			//--- (3) COLUNA FORMA DE ENTRADA
+			clnEntradaForma.DataPropertyName = "EntradaForma";
+			clnEntradaForma.Visible = true;
+			clnEntradaForma.ReadOnly = true;
+			clnEntradaForma.Resizable = DataGridViewTriState.False;
+			clnEntradaForma.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnEntradaForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnEntradaForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnEntradaForma.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnEntradaForma);
 
-			//--- (4) COLUNA CREDOR
-			clnCredor.DataPropertyName = "Credor";
-			clnCredor.Visible = true;
-			clnCredor.ReadOnly = true;
-			clnCredor.Resizable = DataGridViewTriState.False;
-			clnCredor.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnCredor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnCredor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnCredor.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnCredor);
+			//--- (4) COLUNA CONTA
+			clnConta.DataPropertyName = "Conta";
+			clnConta.Visible = true;
+			clnConta.ReadOnly = true;
+			clnConta.Resizable = DataGridViewTriState.False;
+			clnConta.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnConta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnConta.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnConta.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnConta);
 
 			//--- (5) COLUNA SITUACAO
 			clnSituacao.DataPropertyName = "Situacao";
@@ -237,40 +201,41 @@ namespace CamadaUI.APagar
 			clnSituacao.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnSituacao);
 
-			//--- (6) COLUNA REFERENCIA
-			clnReferencia.DataPropertyName = "Referencia";
-			clnReferencia.Visible = true;
-			clnReferencia.ReadOnly = true;
-			clnReferencia.Resizable = DataGridViewTriState.False;
-			clnReferencia.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnReferencia.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnReferencia.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnReferencia.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnReferencia);
+			//--- (6) COLUNA VALOR
+			clnValorBruto.DataPropertyName = "ValorBruto";
+			clnValorBruto.Visible = true;
+			clnValorBruto.ReadOnly = true;
+			clnValorBruto.Resizable = DataGridViewTriState.False;
+			clnValorBruto.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorBruto.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorBruto.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorBruto.DefaultCellStyle.Font = clnFont;
+			clnValorBruto.DefaultCellStyle.Format = "#,##0.00";
+			colList.Add(clnValorBruto);
 
-			//--- (7) COLUNA VALOR
-			clnValor.DataPropertyName = "APagarValor";
-			clnValor.Visible = true;
-			clnValor.ReadOnly = true;
-			clnValor.Resizable = DataGridViewTriState.False;
-			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValor.DefaultCellStyle.Font = clnFont;
-			clnValor.DefaultCellStyle.Format = "#,##0.00";
-			colList.Add(clnValor);
+			//--- (7) COLUNA VALOR LIQUIDO
+			clnValorLiquido.DataPropertyName = "ValorLiquido";
+			clnValorLiquido.Visible = true;
+			clnValorLiquido.ReadOnly = true;
+			clnValorLiquido.Resizable = DataGridViewTriState.False;
+			clnValorLiquido.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorLiquido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorLiquido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorLiquido.DefaultCellStyle.Font = clnFont;
+			clnValorLiquido.DefaultCellStyle.Format = "#,##0.00";
+			colList.Add(clnValorLiquido);
 
 			//--- (8) COLUNA VALOR PAGO
-			clnValorPago.DataPropertyName = "ValorPago";
-			clnValorPago.Visible = true;
-			clnValorPago.ReadOnly = true;
-			clnValorPago.Resizable = DataGridViewTriState.False;
-			clnValorPago.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValorPago.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorPago.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorPago.DefaultCellStyle.Font = clnFont;
-			clnValorPago.DefaultCellStyle.Format = "#,##0.00";
-			colList.Add(clnValorPago);
+			clnValorRecebido.DataPropertyName = "ValorRecebido";
+			clnValorRecebido.Visible = true;
+			clnValorRecebido.ReadOnly = true;
+			clnValorRecebido.Resizable = DataGridViewTriState.False;
+			clnValorRecebido.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorRecebido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.DefaultCellStyle.Font = clnFont;
+			clnValorRecebido.DefaultCellStyle.Format = "#,##0.00";
+			colList.Add(clnValorRecebido);
 
 			//--- Add Columns
 			dgvListagem.Columns.AddRange(colList.ToArray());
@@ -307,7 +272,7 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			objAPagar pagar = (objAPagar)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+			objAReceber pagar = (objAReceber)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
 			if (e.ColumnIndex == clnSituacao.Index)
 			{
@@ -332,7 +297,7 @@ namespace CamadaUI.APagar
 					}
 				}
 			}
-			else if (e.ColumnIndex == clnVencimento.Index)
+			else if (e.ColumnIndex == clnCompensacaoData.Index)
 			{
 				if (pagar.Situacao == "Vencida")
 				{
@@ -340,16 +305,7 @@ namespace CamadaUI.APagar
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 				}
 			}
-			else if (e.ColumnIndex == 0) // COLOR TO A PAGAR PERIODICO
-			{
-				if (pagar.IDAPagar == null)
-				{
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.DarkBlue;
-					e.Value = "PER";
-				}
-			}
 		}
-
 
 		#endregion
 
@@ -363,20 +319,6 @@ namespace CamadaUI.APagar
 			MostraMenuPrincipal();
 		}
 
-		// FILTRAR
-		//------------------------------------------------------------------------------------------------------------
-		private void btnFiltrar_Click(object sender, EventArgs e)
-		{
-			var frm = new frmAPagarListagemFiltro(this);
-			frm.ShowDialog();
-
-			if (frm.DialogResult == DialogResult.Yes)
-			{
-				ObterDados();
-				DefineLabelFiltro();
-			}
-		}
-
 		//--- QUITAR A PAGAR
 		//-------------------------------------------------------------------------------------------------------
 		private void btnQuitar_Click(object sender, EventArgs e)
@@ -384,7 +326,7 @@ namespace CamadaUI.APagar
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
-				AbrirDialog("Favor selecionar um registro para Quitar...",
+				AbrirDialog("Favor selecionar um registro para efetuar a entrada...",
 					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
 				return;
 			}
@@ -394,26 +336,15 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				objAPagar pagItem = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+				objAReceber recItem = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
-				//--- check selected item
-				if (pagItem.IDAPagar == null)
-				{
-					AbrirDialog("Este APAGAR selecionado é PERIÓDICO, para quitar é necessário " +
-						"transformá-lo em REAL...",
-						"APagar Periódico",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					return;
-				}
-
-				frmAPagarSaidas frm = new frmAPagarSaidas(pagItem, this);
-				frm.ShowDialog();
+				//frmAPagarSaidas frm = new frmAPagarSaidas(recItem, this);
+				//frm.ShowDialog();
 
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Pagamentos..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Recebimentos..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -422,6 +353,42 @@ namespace CamadaUI.APagar
 				Cursor.Current = Cursors.Default;
 			}
 
+		}
+
+		// OPEN PROCURA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetConta_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Contas.frmContaProcura frm = new Contas.frmContaProcura(this, _IDContaProvisoria, false);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					_IDContaProvisoria = (int)frm.propEscolha.IDConta;
+					txtConta.Text = frm.propEscolha.Conta;
+					ObterDados();
+				}
+
+				//--- select
+				txtConta.Focus();
+				txtConta.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion
@@ -479,6 +446,66 @@ namespace CamadaUI.APagar
 
 					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
 					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
+				}
+			}
+		}
+
+		// BLOCK KEY (+) FOR SOME CONTROLS
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtConta,
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtConta":
+						btnSetConta_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				if (_IDContaProvisoria != null)
+				{
+					_IDContaProvisoria = null;
+					txtConta.Clear();
+					ObterDados();
+				}
+			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = { txtConta, };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
 				}
 			}
 		}
@@ -625,16 +652,14 @@ namespace CamadaUI.APagar
 		private void AddHandlersRadioButSituacao()
 		{
 			rbtEmAberto.CheckedChanged += rbtSit_CheckedChanged;
-			rbtQuitadas.CheckedChanged += rbtSit_CheckedChanged;
+			rbtRecebidos.CheckedChanged += rbtSit_CheckedChanged;
 			rbtCanceladas.CheckedChanged += rbtSit_CheckedChanged;
-			rbtNegociadas.CheckedChanged += rbtSit_CheckedChanged;
-			rbtNegativadas.CheckedChanged += rbtSit_CheckedChanged;
 			rbtSitTodas.CheckedChanged += rbtSit_CheckedChanged;
 		}
 
 		private void DefSituacao(int Situacao)
 		{
-			_Situacao = Situacao != 6 ? (int?)Situacao : null;
+			_Situacao = Situacao != 6 ? (byte?)Situacao : null;
 			ObterDados();
 		}
 
@@ -652,14 +677,16 @@ namespace CamadaUI.APagar
 
 		#region SAVE
 
-		private void SalvarRegistro(objAPagar pag)
+		// PERSISTIR ALTERAR SITUACAO NO BD
+		//------------------------------------------------------------------------------------------------------------
+		private void SalvarRegistro(objAReceber rec)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				pBLL.UpdateAPagar(pag);
+				rBLL.UpdateAReceberSituacao((long)rec.IDAReceber, rec.IDSituacao);
 			}
 			catch (Exception ex)
 			{
@@ -672,7 +699,6 @@ namespace CamadaUI.APagar
 				Cursor.Current = Cursors.Default;
 			}
 		}
-
 
 		#endregion // SAVE --- END
 
@@ -695,57 +721,33 @@ namespace CamadaUI.APagar
 			dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 			// mostra o MENU ativar e desativar
-			objAPagar pagItem = (objAPagar)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+			objAReceber recItem = (objAReceber)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 			// mnuVerPagamentos
-			mnuItemVerPagamentos.Enabled = pagItem.ValorPago > 0;
+			mnuItemVerPagamentos.Enabled = recItem.ValorRecebido > 0;
 
-			switch (pagItem.IDSituacao)
+			switch (recItem.IDSituacao)
 			{
 				case 1: // EM ABERTO
-						//--- check if ORIGEM is Comum or Periodica
 					mnuItemAlterar.Enabled = true;
-
-					if (pagItem.IDAPagar != null)
-					{
-						mnuItemAlterar.Text = "Alterar";
-						mnuItemCancelar.Enabled = true;
-						mnuItemNegativar.Enabled = true;
-						mnuItemNegociar.Enabled = true;
-						mnuItemNormalizar.Enabled = false;
-						mnuItemQuitar.Enabled = true;
-						mnuItemVerPagamentos.Enabled = true;
-					}
-					else
-					{
-						mnuItemAlterar.Text = "Transformar em Real";
-						mnuItemCancelar.Enabled = false;
-						mnuItemNegativar.Enabled = false;
-						mnuItemNegociar.Enabled = false;
-						mnuItemNormalizar.Enabled = false;
-						mnuItemQuitar.Enabled = true;
-						mnuItemVerPagamentos.Enabled = false;
-					}
-
+					mnuItemAlterar.Text = "Alterar";
+					mnuItemCancelar.Enabled = true;
+					mnuItemNormalizar.Enabled = false;
+					mnuItemReceber.Enabled = true;
+					mnuItemVerPagamentos.Enabled = true;
 					break;
-				case 2: // QUITADAS
+				case 2: // RECEBIDAS
 					mnuItemAlterar.Enabled = false;
 					mnuItemCancelar.Enabled = false;
-					mnuItemNegativar.Enabled = false;
-					mnuItemNegociar.Enabled = false;
 					mnuItemNormalizar.Enabled = false;
-					mnuItemQuitar.Enabled = false;
+					mnuItemReceber.Enabled = false;
 					mnuItemVerPagamentos.Enabled = true;
 					break;
 				case 3: // CANCELADAS
-				case 4: // NEGOCIADAS
-				case 5: // NEGATIVADAS
 					mnuItemAlterar.Enabled = false;
 					mnuItemCancelar.Enabled = false;
-					mnuItemNegativar.Enabled = false;
-					mnuItemNegociar.Enabled = false;
 					mnuItemNormalizar.Enabled = true;
-					mnuItemQuitar.Enabled = false;
+					mnuItemReceber.Enabled = false;
 					mnuItemVerPagamentos.Enabled = true;
 					break;
 				default:
@@ -769,7 +771,7 @@ namespace CamadaUI.APagar
 		private void mnuItemCancelar_Click(object sender, EventArgs e)
 		{
 			// check and ask to user
-			objAPagar item = CheckAlteraSituacao("Cancelar");
+			objAReceber item = CheckAlteraSituacao("Cancelar");
 			if (item == null) return;
 
 			//--- EXECUTE
@@ -786,7 +788,7 @@ namespace CamadaUI.APagar
 
 				// Confirm AND CalcTotais
 				//--- update list
-				bindPag.RemoveCurrent();
+				bindRec.RemoveCurrent();
 				CalculaTotais();
 			}
 			catch (Exception ex)
@@ -801,86 +803,12 @@ namespace CamadaUI.APagar
 			}
 		}
 
-		//--- MENU NEGOCIAR
-		//-------------------------------------------------------------------------------------------------------
-		private void mnuItemNegociar_Click(object sender, EventArgs e)
-		{
-			// check and ask to user
-			objAPagar item = CheckAlteraSituacao("Negociar");
-			if (item == null) return;
-
-			//--- EXECUTE
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				item.IDSituacao = 4;
-				item.Situacao = "Negociada";
-
-				// save aPagar
-				SalvarRegistro(item);
-
-				// Confirm AND CalcTotais
-				//--- update list
-				bindPag.RemoveCurrent();
-				CalculaTotais();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Negociar o 'A Pagar'..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		//--- MENU NEGATIVAR
-		//-------------------------------------------------------------------------------------------------------
-		private void mnuItemNegativar_Click(object sender, EventArgs e)
-		{
-			// check and ask to user
-			objAPagar item = CheckAlteraSituacao("Negativar");
-			if (item == null) return;
-
-			//--- EXECUTE
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				item.IDSituacao = 5;
-				item.Situacao = "Negativada";
-
-				// save aPagar
-				SalvarRegistro(item);
-
-				// Confirm AND CalcTotais
-				//--- update list
-				bindPag.RemoveCurrent();
-				CalculaTotais();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Negativar o 'a Pagar'..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
 		//--- MENU NORMALIZAR
 		//-------------------------------------------------------------------------------------------------------
 		private void mnuItemNormalizar_Click(object sender, EventArgs e)
 		{
 			// check and ask to user
-			objAPagar item = CheckAlteraSituacao("Normalizar");
+			objAReceber item = CheckAlteraSituacao("Normalizar");
 			if (item == null) return;
 
 			//--- EXECUTE
@@ -897,7 +825,7 @@ namespace CamadaUI.APagar
 
 				// Confirm AND CalcTotais
 				//--- update list
-				bindPag.RemoveCurrent();
+				bindRec.RemoveCurrent();
 				CalculaTotais();
 			}
 			catch (Exception ex)
@@ -914,32 +842,23 @@ namespace CamadaUI.APagar
 
 		// VERIFICA DADOS E EMITE MENSAGEM
 		//------------------------------------------------------------------------------------------------------------
-		private objAPagar CheckAlteraSituacao(string acao)
+		private objAReceber CheckAlteraSituacao(string acao)
 		{
 			//--- verifica se existe alguma cell 
 			if (dgvListagem.SelectedRows.Count == 0) return null;
 
 			//--- verifica USER PERMIT
-			if (!CheckAuthorization(EnumAcessoTipo.Usuario_Senior, $"{acao} a Pagar", this)) return null;
+			if (!CheckAuthorization(EnumAcessoTipo.Usuario_Senior, $"{acao} a Receber", this)) return null;
 
 			//--- Pergunta ao USER
-			var resp = AbrirDialog($"Você deseja realmente {acao.ToUpper()} este registro de A Pagar selecionado?",
-				$"{acao} A Pagar",
+			var resp = AbrirDialog($"Você deseja realmente {acao.ToUpper()} este registro de AReceber selecionado?",
+				$"{acao} AReceber",
 				DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 
 			if (resp == DialogResult.No) return null;
 
 			//--- Get A Pagar on list
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			//--- check if ORIGEM is Periodica
-			if (item.DespesaOrigem != 1)
-			{
-				AbrirDialog($"Esse A Pagar é uma DEPESA PERIÓDICA.\n" +
-					$"Não é possível {acao} uma Despesa Periódica.",
-					"Despesa Periódica", DialogType.OK, DialogIcon.Exclamation);
-				return null;
-			}
+			objAReceber item = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			return item;
 		}
@@ -951,7 +870,7 @@ namespace CamadaUI.APagar
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
-				AbrirDialog("Favor selecionar um registro para Ver Pagamentos ou Estornar...",
+				AbrirDialog("Favor selecionar um registro para Ver Recebimentos ou Estornar...",
 					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
 				return;
 			}
@@ -961,14 +880,14 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				objAPagar pagItem = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+				objAReceber recItem = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
-				frmAPagarSaidas frm = new frmAPagarSaidas(pagItem, this);
-				frm.ShowDialog();
+				//frmAPagarSaidas frm = new frmAPagarSaidas(recItem, this);
+				//frm.ShowDialog();
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Pagamentos..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Recebimentos..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -986,43 +905,22 @@ namespace CamadaUI.APagar
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Get A Pagar on list
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+			objAReceber item = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- check if ORIGEM is Comum or Periodica
-				if (item.DespesaOrigem == 1)
-				{
-					Saidas.frmDespesa frm = new Saidas.frmDespesa(item.IDDespesa);
-					Visible = false;
-					frm.ShowDialog();
-					DesativaMenuPrincipal();
-					Visible = true;
-				}
-				else
-				{
-					if (item.IDAPagar != null)
-					{
-						AbrirDialog("A origem deste APagar é uma despesa periódica que foi transformado em REAL...\n" +
-							"Mesmo que se faça alterações na ORIGEM essas alterações não serão refletidas " +
-							"no APagar.", "Despesa Periódica");
-					}
-
-					Saidas.frmDespesaPeriodica frm = new Saidas.frmDespesaPeriodica(item.IDDespesa);
-					Visible = false;
-					frm.ShowDialog();
-					DesativaMenuPrincipal();
-					Visible = true;
-					// get data
-					ObterDados();
-				}
+				Entradas.frmContribuicao frm = new Entradas.frmContribuicao(item.IDContribuicao);
+				Visible = false;
+				frm.ShowDialog();
+				DesativaMenuPrincipal();
+				Visible = true;
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir a Despesa..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Abrir a Contribuição..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -1045,8 +943,9 @@ namespace CamadaUI.APagar
 			}
 
 			//--- get Selected item
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+			objAReceber item = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
+			/*
 			//--- check if ORIGEM is Comum or Periodica
 			if (item.DespesaOrigem == 1 || item.IDAPagar != null)
 			{
@@ -1064,11 +963,11 @@ namespace CamadaUI.APagar
 
 				if (frm.DialogResult != DialogResult.OK)
 				{
-					bindPag.CancelEdit();
+					bindRec.CancelEdit();
 				}
 				else
 				{
-					bindPag.EndEdit();
+					bindRec.EndEdit();
 
 					// save aPagar
 					SalvarRegistro(item);
@@ -1091,7 +990,7 @@ namespace CamadaUI.APagar
 					Cursor.Current = Cursors.WaitCursor;
 
 					var desp = new DespesaPeriodicaBLL().GetDespesaPeriodica(item.IDDespesa);
-					pBLL.ConvertPeriodicoInReal(desp, item.Vencimento);
+					rBLL.ConvertPeriodicoInReal(desp, item.Vencimento);
 
 					ObterDados();
 
@@ -1107,40 +1006,7 @@ namespace CamadaUI.APagar
 					Cursor.Current = Cursors.Default;
 				}
 			}
-		}
-
-		// TRANSFORMAR APAGAR PERIODICO EM REAL
-		//------------------------------------------------------------------------------------------------------------
-		private objAPagar TornarReal(objDespesaPeriodica desp)
-		{
-			var resp = AbrirDialog("Você deseja transformar este APagar PERIÓDICO em REAL?" +
-				desp.DespesaDescricao.ToLower(),
-				"Transformar em Real",
-				DialogType.SIM_NAO,
-				DialogIcon.Question,
-				DialogDefaultButton.Second);
-
-			if (resp == DialogResult.No) return null;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Tornar o Periódico em Real..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
-			return null;
+			*/
 		}
 
 		#endregion // MENU SUSPENSO --- END

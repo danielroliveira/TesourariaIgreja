@@ -161,9 +161,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -177,10 +177,10 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnCadastro,
-            this.clnGrupo,
-            this.clnImage});
+			this.clnID,
+			this.clnCadastro,
+			this.clnGrupo,
+			this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 111);
@@ -230,8 +230,8 @@
 			// MenuListagem
 			// 
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem});
+			this.AtivarToolStripMenuItem,
+			this.DesativarToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
 			this.MenuListagem.Size = new System.Drawing.Size(211, 70);
 			// 
@@ -241,7 +241,7 @@
 			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
 			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.AtivarToolStripMenuItem.Text = "Ativar Tipo de Despesa";
-			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
 			// DesativarToolStripMenuItem
 			// 
@@ -249,7 +249,7 @@
 			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
 			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.DesativarToolStripMenuItem.Text = "Desativar Tipo de Despesa";
-			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
 			// frmDespesaTipoListagem
 			// 

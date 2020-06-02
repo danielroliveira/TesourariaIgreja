@@ -1,7 +1,9 @@
 ﻿using CamadaDAL;
 using CamadaDTO;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CamadaBLL
 {
@@ -30,6 +32,76 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET LIST OF
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAReceber> GetListAReceber(
+			byte? IDSituacao,
+			int? IDContaProvisoria = null,
+			DateTime? dataInicial = null,
+			DateTime? dataFinal = null)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryAReceber";
+				bool myWhere = false;
+
+				// add params
+				db.LimparParametros();
+
+				// add IDSituacao
+				if (IDSituacao != null)
+				{
+					db.AdicionarParametros("@IDSituacao", IDSituacao);
+					query += myWhere ? " AND IDSituacao = @IDSituacao" : " WHERE IDSituacao = @IDSituacao";
+					myWhere = true;
+				}
+
+				// add IDContaProvisoria
+				if (IDContaProvisoria != null)
+				{
+					db.AdicionarParametros("@IDContaProvisoria", IDContaProvisoria);
+					query += myWhere ? " AND IDContaProvisoria = @IDContaProvisoria" : " WHERE IDContaProvisoria = @IDContaProvisoria";
+					myWhere = true;
+				}
+
+				// add DataInicial
+				if (dataInicial != null)
+				{
+					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
+					query += myWhere ? " AND CompensacaoData >= @DataInicial" : " WHERE CompensacaoData >= @DataInicial";
+					myWhere = true;
+				}
+
+				// add DataFinal
+				if (dataFinal != null)
+				{
+					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
+					query += myWhere ? " AND CompensacaoData <= @DataFinal" : " WHERE CompensacaoData <= @DataFinal";
+					myWhere = true;
+				}
+
+				query += " ORDER BY CompensacaoData";
+
+				List<objAReceber> listagem = new List<objAReceber>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				// RETURN
+				return listagem.OrderBy(p => p.CompensacaoData).ToList();
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		public objAReceber ConvertRowInClass(DataRow row)
@@ -43,7 +115,10 @@ namespace CamadaBLL
 				ValorRecebido = (decimal)row["ValorRecebido"],
 				IDContaProvisoria = (int)row["IDContaProvisoria"],
 				Conta = (string)row["Conta"],
-				Situacao = (byte)row["Situacao"]
+				IDSituacao = (byte)row["IDSituacao"],
+				Situacao = (string)row["Situacao"],
+				IDEntradaForma = (byte)row["IDEntradaForma"],
+				EntradaForma = (string)row["EntradaForma"],
 			};
 
 			return entrada;
@@ -69,7 +144,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@ValorLiquido", entrada.ValorLiquido);
 				db.AdicionarParametros("@ValorRecebido", 0);
 				db.AdicionarParametros("@IDContaProvisoria", entrada.IDContaProvisoria);
-				db.AdicionarParametros("@Situacao", 1);
+				db.AdicionarParametros("@IDSituacao", 1);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -122,7 +197,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@ValorLiquido", receber.ValorLiquido);
 				db.AdicionarParametros("@ValorRecebido", receber.ValorRecebido);
 				db.AdicionarParametros("@IDContaProvisoria", receber.IDContaProvisoria);
-				db.AdicionarParametros("@Situacao", receber.Situacao);
+				db.AdicionarParametros("@IDSituacao", receber.Situacao);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -144,6 +219,38 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				if (!db.isTran) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// UPDATE ARECEBER SITUACAO
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateAReceberSituacao(long IDAReceber, byte newSituacao)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDAReceber", IDAReceber);
+				db.AdicionarParametros("@IDSituacao", newSituacao);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblAReceber", "@IDAReceber");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}

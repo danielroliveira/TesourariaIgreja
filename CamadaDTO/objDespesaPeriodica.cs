@@ -454,12 +454,37 @@ namespace CamadaDTO
 			}
 		}
 
-		// Property IniciarDataDiaDaSemana
-		// Cria um texto com o Dia da Semana da Data do IniciarData
+		// Property DespesaFatorDiario
 		//---------------------------------------------------------------
-		public string IniciarDataDiaDaSemana
+		public decimal DespesaFatorDiario
 		{
-			get => IniciarData.ToString("dddd");
+			get
+			{
+				decimal repeticao = RecorrenciaRepeticao ?? 1;
+
+				switch (RecorrenciaTipo)
+				{
+					case 1: // DIARIO
+						return Math.Round(30m / repeticao, 4);
+					case 2: // SEMANAL
+						return Math.Round(4m / repeticao, 4);
+					case 3: // MENSAL POR DIA
+					case 4: // MENSAL POR SEMANA
+						return Math.Round(1m / repeticao, 4);
+					case 5: // ANUAL POR MES E DIA
+					case 6: // ANUAL POR MES E SEMANA
+						return Math.Round(1m / 12m / repeticao, 4);
+					default:
+						return 1;
+				}
+			}
+		}
+
+		// Property DespesaValorMensal
+		//---------------------------------------------------------------
+		public decimal DespesaValorMensal
+		{
+			get => Math.Round(DespesaValor * DespesaFatorDiario, 2);
 		}
 
 	}
