@@ -23,6 +23,10 @@ namespace CamadaUI.AReceber
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
 		private byte? _Situacao = 1; // 1: Em Aberto | 2: Recebidas | 3: Canceladas
 		private int? _IDContaProvisoria = null;
+		private decimal _vlBrutoSelected = 0;
+		private decimal _vlRecebidoSelected = 0;
+		private decimal _vlLiquidoSelected = 0;
+		private int nItemsSelected = 0;
 
 		#region NEW | OPEN FUNCTIONS | PROPERTIES
 
@@ -84,6 +88,9 @@ namespace CamadaUI.AReceber
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				// disable handler
+				dgvListagem.CellValueChanged -= dgvListagem_CellValueChanged;
+
 				// define list
 				listRec = rBLL.GetListAReceber(
 					_Situacao,
@@ -93,7 +100,14 @@ namespace CamadaUI.AReceber
 
 				bindRec.DataSource = listRec;
 				dgvListagem.DataSource = bindRec;
+
+				// recalc totais labels
 				CalculaTotais();
+				unCheckListagem();
+
+				// enable handler
+				dgvListagem.CellValueChanged += dgvListagem_CellValueChanged;
+
 			}
 			catch (Exception ex)
 			{
@@ -115,8 +129,20 @@ namespace CamadaUI.AReceber
 			decimal vlAPagar = listRec.Sum(x => x.ValorBruto);
 			lblValorBruto.Text = vlAPagar.ToString("C");
 
-			decimal vlPago = listRec.Sum(x => x.ValorRecebido);
-			lblValorRecebido.Text = vlPago.ToString("C");
+			decimal vlLiquido = listRec.Sum(x => x.ValorLiquido);
+			lblValorLiquido.Text = vlLiquido.ToString("C");
+
+			decimal vlRecebido = listRec.Sum(x => x.ValorRecebido);
+			lblValorRecebido.Text = vlRecebido.ToString("C");
+		}
+
+		//--- CALCULA OS TOTAIS DOS SELECIONADOS
+		//----------------------------------------------------------------------------------
+		private void CalculaTotaisSelected()
+		{
+			lblBrutoSelected.Text = _vlBrutoSelected.ToString("c");
+			lblPrevisto.Text = (_vlLiquidoSelected - _vlRecebidoSelected).ToString("c");
+			btnReceberLote.Visible = nItemsSelected > 1;
 		}
 
 		#endregion
@@ -144,6 +170,14 @@ namespace CamadaUI.AReceber
 
 			// CREATE ARRAY OF COLUMNS
 			var colList = new List<DataGridViewColumn>();
+
+			//--- (0) COLUNA CHECK
+			clnCheck.DataPropertyName = "";
+			clnCheck.Visible = true;
+			clnCheck.ReadOnly = false;
+			clnCheck.Resizable = DataGridViewTriState.False;
+			clnCheck.SortMode = DataGridViewColumnSortMode.NotSortable;
+			colList.Add(clnCheck);
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
@@ -272,10 +306,10 @@ namespace CamadaUI.AReceber
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			objAReceber pagar = (objAReceber)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-
 			if (e.ColumnIndex == clnSituacao.Index)
 			{
+				objAReceber pagar = (objAReceber)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+
 				if (pagar.Situacao == "Vencida")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
@@ -299,12 +333,69 @@ namespace CamadaUI.AReceber
 			}
 			else if (e.ColumnIndex == clnCompensacaoData.Index)
 			{
+				objAReceber pagar = (objAReceber)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+
 				if (pagar.Situacao == "Vencida")
 				{
 					e.CellStyle.ForeColor = Color.Red;
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 				}
 			}
+		}
+
+		// COMMIT UPDATED VALUE
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0)
+			{
+				dgvListagem.CommitEdit(DataGridViewDataErrorContexts.Commit);
+			}
+		}
+
+		// CALC CHECKED VALUES LABELS
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+			{
+				var row = dgvListagem.Rows[e.RowIndex];
+				objAReceber pag = (objAReceber)row.DataBoundItem;
+
+				if ((bool)row.Cells[0].Value == true)
+				{
+					nItemsSelected += 1;
+					_vlBrutoSelected += pag.ValorBruto;
+					_vlRecebidoSelected += pag.ValorRecebido;
+					_vlLiquidoSelected += pag.ValorLiquido;
+				}
+				else
+				{
+					nItemsSelected -= 1;
+					_vlBrutoSelected -= pag.ValorBruto;
+					_vlRecebidoSelected -= pag.ValorRecebido;
+					_vlLiquidoSelected -= pag.ValorLiquido;
+				}
+
+				CalculaTotaisSelected();
+			}
+		}
+
+		// UNCHECK ALL ITEMS IN LIST
+		//------------------------------------------------------------------------------------------------------------
+		private void unCheckListagem()
+		{
+			//--- uncheck all
+			foreach (DataGridViewRow row in dgvListagem.Rows)
+			{
+				row.Cells[0].Value = false;
+			}
+
+			nItemsSelected = 0;
+			_vlBrutoSelected = 0;
+			_vlLiquidoSelected = 0;
+			_vlRecebidoSelected = 0;
+			CalculaTotaisSelected();
 		}
 
 		#endregion
@@ -319,9 +410,9 @@ namespace CamadaUI.AReceber
 			MostraMenuPrincipal();
 		}
 
-		//--- QUITAR A PAGAR
+		//--- RECEBER PAGAMENTO
 		//-------------------------------------------------------------------------------------------------------
-		private void btnQuitar_Click(object sender, EventArgs e)
+		private void btnReceber_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
@@ -352,7 +443,66 @@ namespace CamadaUI.AReceber
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
 
+		// RECEBER LOTE
+		//------------------------------------------------------------------------------------------------------------
+		private void btnReceberLote_Click(object sender, EventArgs e)
+		{
+			//--- verify checked itens
+			if (nItemsSelected == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para efetuar a entrada...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				List<objAReceber> recItems = new List<objAReceber>();
+
+				foreach (DataGridViewRow item in dgvListagem.Rows)
+				{
+					if ((bool)item.Cells[0].Value == true)
+					{
+						recItems.Add((objAReceber)item.DataBoundItem);
+					}
+				}
+
+				//--- verify is the same FORMA
+				if (recItems.GroupBy(rec => rec.IDEntradaForma).Count() > 1)
+				{
+					AbrirDialog("Os itens selecionados devem ser da mesma FORMA de Entrada...",
+						"Forma de Entrada", DialogType.OK, DialogIcon.Information);
+					return;
+				}
+
+				//--- verify is the same CONTA PROVISORIA
+				if (recItems.GroupBy(rec => rec.IDContaProvisoria).Count() > 1)
+				{
+					AbrirDialog("Os itens selecionados devem ser da mesma CONTA PROVISÓRIA...",
+						"Conta Provisória", DialogType.OK, DialogIcon.Information);
+					return;
+				}
+
+				var frm = new frmAReceberQuitar(recItems, this);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Recebimentos..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		// OPEN PROCURA FORM
@@ -686,7 +836,7 @@ namespace CamadaUI.AReceber
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				rBLL.UpdateAReceberSituacao((long)rec.IDAReceber, rec.IDSituacao);
+				rBLL.UpdateAReceber(rec);
 			}
 			catch (Exception ex)
 			{
@@ -763,7 +913,7 @@ namespace CamadaUI.AReceber
 		//-------------------------------------------------------------------------------------------------------
 		private void mnuItemQuitar_Click(object sender, EventArgs e)
 		{
-			btnQuitar_Click(sender, e);
+			btnReceber_Click(sender, e);
 		}
 
 		//--- MENU CANCELAR
@@ -942,71 +1092,25 @@ namespace CamadaUI.AReceber
 				return;
 			}
 
+			unCheckListagem();
+
 			//--- get Selected item
 			objAReceber item = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			/*
-			//--- check if ORIGEM is Comum or Periodica
-			if (item.DespesaOrigem == 1 || item.IDAPagar != null)
+			frmAReceberAlterar frm = new frmAReceberAlterar(item, this);
+			frm.ShowDialog();
+
+			if (frm.DialogResult != DialogResult.OK)
 			{
-				//--- check if not is locked
-				if (item.ValorPago > 0)
-				{
-					AbrirDialog($"O registro de a pagar selecionado: {item.IDAPagar:D4} já possui pagamentos realizados\n" +
-						$"Não é possível fazer alterações num registro de a pagar que já foi quitado.",
-						"A Pagar com Pagamentos", DialogType.OK, DialogIcon.Information);
-					return;
-				}
-
-				frmAPagarAlterar frm = new frmAPagarAlterar(item, this);
-				frm.ShowDialog();
-
-				if (frm.DialogResult != DialogResult.OK)
-				{
-					bindRec.CancelEdit();
-				}
-				else
-				{
-					bindRec.EndEdit();
-
-					// save aPagar
-					SalvarRegistro(item);
-				}
+				bindRec.CancelEdit();
 			}
-			else if (item.DespesaOrigem == 2) // DESPESA PERIODICA ==> TORNAR REAL
+			else
 			{
-				var resp = AbrirDialog("Deseja transformar este APagar em REAL? \n" +
-					$"{item.DespesaDescricao}",
-					"Transformar em REAL",
-					DialogType.SIM_NAO,
-					DialogIcon.Question,
-					DialogDefaultButton.Second);
-
-				if (resp != DialogResult.Yes) return;
-
-				try
-				{
-					// --- Ampulheta ON
-					Cursor.Current = Cursors.WaitCursor;
-
-					var desp = new DespesaPeriodicaBLL().GetDespesaPeriodica(item.IDDespesa);
-					rBLL.ConvertPeriodicoInReal(desp, item.Vencimento);
-
-					ObterDados();
-
-				}
-				catch (Exception ex)
-				{
-					AbrirDialog("Uma exceção ocorreu ao Tornar Despesa Real..." + "\n" +
-								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				}
-				finally
-				{
-					// --- Ampulheta OFF
-					Cursor.Current = Cursors.Default;
-				}
+				bindRec.EndEdit();
+				// save persist DB
+				SalvarRegistro(item);
+				CalculaTotais();
 			}
-			*/
 		}
 
 		#endregion // MENU SUSPENSO --- END

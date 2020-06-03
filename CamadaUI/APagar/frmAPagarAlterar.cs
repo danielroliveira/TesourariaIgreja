@@ -24,11 +24,9 @@ namespace CamadaUI.APagar
 		public frmAPagarAlterar(objAPagar pag, Form formOrigem)
 		{
 			InitializeComponent();
-			Size = new Size(530, 536);
 			_formOrigem = formOrigem;
 			_apagar = pag;
 
-			pnlEditar.Visible = true;
 			GetFormasList();
 
 			bind.DataSource = _apagar;

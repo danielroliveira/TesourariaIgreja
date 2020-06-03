@@ -119,6 +119,7 @@ namespace CamadaBLL
 				Situacao = (string)row["Situacao"],
 				IDEntradaForma = (byte)row["IDEntradaForma"],
 				EntradaForma = (string)row["EntradaForma"],
+				IDSetor = (int)row["IDSetor"],
 			};
 
 			return entrada;
@@ -225,7 +226,7 @@ namespace CamadaBLL
 
 		// UPDATE ARECEBER SITUACAO
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateAReceberSituacao(long IDAReceber, byte newSituacao)
+		public bool UpdateAReceber(objAReceber rec)
 		{
 			try
 			{
@@ -235,8 +236,10 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDAReceber", IDAReceber);
-				db.AdicionarParametros("@IDSituacao", newSituacao);
+				db.AdicionarParametros("@IDAReceber", rec.IDAReceber);
+				db.AdicionarParametros("@IDSituacao", rec.IDSituacao);
+				db.AdicionarParametros("@ValorLiquido", rec.ValorLiquido);
+				db.AdicionarParametros("@CompensacaoData", rec.CompensacaoData);
 
 				//--- convert null parameters
 				db.ConvertNullParams();

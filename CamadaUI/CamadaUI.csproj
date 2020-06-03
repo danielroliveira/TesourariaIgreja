@@ -101,11 +101,23 @@
     <Compile Include="APagar\frmAPagarSaidas.designer.cs">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </Compile>
+    <Compile Include="AReceber\frmAReceberAlterar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AReceber\frmAReceberAlterar.designer.cs">
+      <DependentUpon>frmAReceberAlterar.cs</DependentUpon>
+    </Compile>
     <Compile Include="AReceber\frmAReceberListagem.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AReceber\frmAReceberListagem.designer.cs">
       <DependentUpon>frmAReceberListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AReceber\frmAReceberQuitar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AReceber\frmAReceberQuitar.designer.cs">
+      <DependentUpon>frmAReceberQuitar.cs</DependentUpon>
     </Compile>
     <Compile Include="Caixa\frmBancoProcura.cs">
       <SubType>Form</SubType>
@@ -507,8 +519,14 @@
     <EmbeddedResource Include="APagar\frmAPagarSaidas.resx">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AReceber\frmAReceberAlterar.resx">
+      <DependentUpon>frmAReceberAlterar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AReceber\frmAReceberListagem.resx">
       <DependentUpon>frmAReceberListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AReceber\frmAReceberQuitar.resx">
+      <DependentUpon>frmAReceberQuitar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancoProcura.resx">
       <DependentUpon>frmBancoProcura.cs</DependentUpon>

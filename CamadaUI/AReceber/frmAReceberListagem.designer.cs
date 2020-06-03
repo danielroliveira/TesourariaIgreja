@@ -33,6 +33,7 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCompensacaoData = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnEntradaForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,11 +76,16 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
-			this.ValorLiquido = new System.Windows.Forms.Label();
+			this.lblValorLiquido = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
+			this.lblBrutoSelected = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.lblPrevisto = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.btnReceberLote = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -91,29 +97,29 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(807, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(236, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(762, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(326, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Procurar AReceber";
+			this.lblTitulo.Text = "Procurar | Quitar - A Receber";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1043, 0);
+			this.btnClose.Location = new System.Drawing.Point(1088, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1083, 50);
+			this.panel1.Size = new System.Drawing.Size(1128, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(926, 678);
+			this.btnFechar.Location = new System.Drawing.Point(971, 678);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 10;
@@ -134,8 +140,8 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -149,85 +155,86 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnCompensacaoData,
-            this.clnEntradaForma,
-            this.clnConta,
-            this.clnSituacao,
-            this.clnValorBruto,
-            this.clnValorLiquido,
-            this.clnValorRecebido});
+			this.clnCheck,
+			this.clnID,
+			this.clnCompensacaoData,
+			this.clnEntradaForma,
+			this.clnConta,
+			this.clnSituacao,
+			this.clnValorBruto,
+			this.clnValorLiquido,
+			this.clnValorRecebido});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
-			this.dgvListagem.ReadOnly = true;
 			this.dgvListagem.RowHeadersVisible = false;
 			this.dgvListagem.RowHeadersWidth = 45;
 			this.dgvListagem.RowTemplate.Height = 30;
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1039, 478);
+			this.dgvListagem.Size = new System.Drawing.Size(1084, 478);
 			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentClick);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
+			// clnCheck
+			// 
+			this.clnCheck.HeaderText = "";
+			this.clnCheck.Name = "clnCheck";
+			this.clnCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.clnCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.clnCheck.Width = 40;
+			// 
 			// clnID
 			// 
 			this.clnID.HeaderText = "Reg.";
 			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
 			this.clnID.Width = 60;
 			// 
 			// clnCompensacaoData
 			// 
 			this.clnCompensacaoData.HeaderText = "Comp. Dt.";
 			this.clnCompensacaoData.Name = "clnCompensacaoData";
-			this.clnCompensacaoData.ReadOnly = true;
 			this.clnCompensacaoData.Width = 85;
 			// 
 			// clnEntradaForma
 			// 
 			this.clnEntradaForma.HeaderText = "Forma de Entrada";
 			this.clnEntradaForma.Name = "clnEntradaForma";
-			this.clnEntradaForma.ReadOnly = true;
 			this.clnEntradaForma.Width = 150;
 			// 
 			// clnConta
 			// 
 			this.clnConta.HeaderText = "Conta Provisória";
 			this.clnConta.Name = "clnConta";
-			this.clnConta.ReadOnly = true;
 			this.clnConta.Width = 300;
 			// 
 			// clnSituacao
 			// 
 			this.clnSituacao.HeaderText = "Situação";
 			this.clnSituacao.Name = "clnSituacao";
-			this.clnSituacao.ReadOnly = true;
 			// 
 			// clnValorBruto
 			// 
 			this.clnValorBruto.HeaderText = "Valor";
 			this.clnValorBruto.Name = "clnValorBruto";
-			this.clnValorBruto.ReadOnly = true;
 			// 
 			// clnValorLiquido
 			// 
 			this.clnValorLiquido.HeaderText = "Vl.Liquido";
 			this.clnValorLiquido.Name = "clnValorLiquido";
-			this.clnValorLiquido.ReadOnly = true;
 			// 
 			// clnValorRecebido
 			// 
 			this.clnValorRecebido.HeaderText = "Vl.Recebido";
 			this.clnValorRecebido.Name = "clnValorRecebido";
-			this.clnValorRecebido.ReadOnly = true;
 			// 
 			// label1
 			// 
@@ -235,7 +242,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(969, 621);
+			this.label1.Location = new System.Drawing.Point(1014, 621);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(92, 15);
 			this.label1.TabIndex = 8;
@@ -246,7 +253,7 @@
 			this.lblValorRecebido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorRecebido.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorRecebido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorRecebido.Location = new System.Drawing.Point(924, 638);
+			this.lblValorRecebido.Location = new System.Drawing.Point(969, 638);
 			this.lblValorRecebido.Name = "lblValorRecebido";
 			this.lblValorRecebido.Size = new System.Drawing.Size(137, 32);
 			this.lblValorRecebido.TabIndex = 9;
@@ -257,7 +264,7 @@
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(794, 678);
+			this.btnImprimir.Location = new System.Drawing.Point(839, 678);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 9;
@@ -471,7 +478,7 @@
 			this.lblValorBruto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorBruto.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorBruto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorBruto.Location = new System.Drawing.Point(638, 638);
+			this.lblValorBruto.Location = new System.Drawing.Point(683, 638);
 			this.lblValorBruto.Name = "lblValorBruto";
 			this.lblValorBruto.Size = new System.Drawing.Size(137, 32);
 			this.lblValorBruto.TabIndex = 9;
@@ -484,11 +491,11 @@
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(706, 621);
+			this.label3.Location = new System.Drawing.Point(707, 621);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(72, 15);
+			this.label3.Size = new System.Drawing.Size(113, 15);
 			this.label3.TabIndex = 8;
-			this.label3.Text = "Valor Bruto:";
+			this.label3.Text = "Vl. Bruto a Receber:";
 			// 
 			// pnlSituacao
 			// 
@@ -497,7 +504,7 @@
 			this.pnlSituacao.Controls.Add(this.rbtCanceladas);
 			this.pnlSituacao.Controls.Add(this.rbtRecebidos);
 			this.pnlSituacao.Controls.Add(this.rbtEmAberto);
-			this.pnlSituacao.Location = new System.Drawing.Point(22, 629);
+			this.pnlSituacao.Location = new System.Drawing.Point(22, 679);
 			this.pnlSituacao.Name = "pnlSituacao";
 			this.pnlSituacao.Size = new System.Drawing.Size(488, 41);
 			this.pnlSituacao.TabIndex = 6;
@@ -558,30 +565,30 @@
 			// 
 			// btnReceber
 			// 
-			this.btnReceber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnReceber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReceber.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.btnReceber.Location = new System.Drawing.Point(662, 678);
+			this.btnReceber.Location = new System.Drawing.Point(681, 678);
 			this.btnReceber.Name = "btnReceber";
-			this.btnReceber.Size = new System.Drawing.Size(126, 42);
+			this.btnReceber.Size = new System.Drawing.Size(152, 42);
 			this.btnReceber.TabIndex = 8;
 			this.btnReceber.Text = "&Receber";
 			this.btnReceber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnReceber.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnReceber.UseVisualStyleBackColor = true;
-			this.btnReceber.Click += new System.EventHandler(this.btnQuitar_Click);
+			this.btnReceber.Click += new System.EventHandler(this.btnReceber_Click);
 			// 
 			// mnuOperacoes
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemReceber,
-            this.mnuItemVerPagamentos,
-            this.toolStripSeparator2,
-            this.mnuItemCancelar,
-            this.mnuItemNormalizar,
-            this.toolStripSeparator1,
-            this.mnuItemVerOrigem,
-            this.mnuItemAlterar});
+			this.mnuItemReceber,
+			this.mnuItemVerPagamentos,
+			this.toolStripSeparator2,
+			this.mnuItemCancelar,
+			this.mnuItemNormalizar,
+			this.toolStripSeparator1,
+			this.mnuItemVerOrigem,
+			this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(269, 172);
 			// 
@@ -643,17 +650,17 @@
 			this.mnuItemAlterar.Text = "Alterar";
 			this.mnuItemAlterar.Click += new System.EventHandler(this.mnuItemAlterar_Click);
 			// 
-			// ValorLiquido
+			// lblValorLiquido
 			// 
-			this.ValorLiquido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ValorLiquido.BackColor = System.Drawing.Color.LightGray;
-			this.ValorLiquido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ValorLiquido.Location = new System.Drawing.Point(781, 638);
-			this.ValorLiquido.Name = "ValorLiquido";
-			this.ValorLiquido.Size = new System.Drawing.Size(137, 32);
-			this.ValorLiquido.TabIndex = 9;
-			this.ValorLiquido.Text = "R$ 0,00";
-			this.ValorLiquido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblValorLiquido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorLiquido.BackColor = System.Drawing.Color.LightGray;
+			this.lblValorLiquido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValorLiquido.Location = new System.Drawing.Point(826, 638);
+			this.lblValorLiquido.Name = "lblValorLiquido";
+			this.lblValorLiquido.Size = new System.Drawing.Size(137, 32);
+			this.lblValorLiquido.TabIndex = 9;
+			this.lblValorLiquido.Text = "R$ 0,00";
+			this.lblValorLiquido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label4
 			// 
@@ -661,11 +668,11 @@
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.DimGray;
-			this.label4.Location = new System.Drawing.Point(838, 621);
+			this.label4.Location = new System.Drawing.Point(840, 621);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(82, 15);
+			this.label4.Size = new System.Drawing.Size(123, 15);
 			this.label4.TabIndex = 8;
-			this.label4.Text = "Valor Líquido:";
+			this.label4.Text = "Vl. Líquido a Receber:";
 			// 
 			// btnSetConta
 			// 
@@ -703,43 +710,117 @@
 			this.label19.ForeColor = System.Drawing.Color.Black;
 			this.label19.Location = new System.Drawing.Point(18, 63);
 			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(115, 19);
+			this.label19.Size = new System.Drawing.Size(152, 19);
 			this.label19.TabIndex = 1;
-			this.label19.Text = "Conta Provisória";
+			this.label19.Text = "Filtar Conta Provisória";
+			// 
+			// lblBrutoSelected
+			// 
+			this.lblBrutoSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblBrutoSelected.BackColor = System.Drawing.Color.LightGray;
+			this.lblBrutoSelected.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblBrutoSelected.Location = new System.Drawing.Point(30, 638);
+			this.lblBrutoSelected.Name = "lblBrutoSelected";
+			this.lblBrutoSelected.Size = new System.Drawing.Size(137, 32);
+			this.lblBrutoSelected.TabIndex = 9;
+			this.lblBrutoSelected.Text = "R$ 0,00";
+			this.lblBrutoSelected.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.Color.DimGray;
+			this.label5.Location = new System.Drawing.Point(40, 621);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(127, 15);
+			this.label5.TabIndex = 8;
+			this.label5.Text = "Vl. Bruto Selecionado:";
+			// 
+			// lblPrevisto
+			// 
+			this.lblPrevisto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblPrevisto.BackColor = System.Drawing.Color.LightGray;
+			this.lblPrevisto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblPrevisto.Location = new System.Drawing.Point(173, 638);
+			this.lblPrevisto.Name = "lblPrevisto";
+			this.lblPrevisto.Size = new System.Drawing.Size(137, 32);
+			this.lblPrevisto.TabIndex = 9;
+			this.lblPrevisto.Text = "R$ 0,00";
+			this.lblPrevisto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label7
+			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.ForeColor = System.Drawing.Color.DimGray;
+			this.label7.Location = new System.Drawing.Point(223, 621);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(87, 15);
+			this.label7.TabIndex = 8;
+			this.label7.Text = "Valor Previsto:";
+			// 
+			// btnReceberLote
+			// 
+			this.btnReceberLote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnReceberLote.ForeColor = System.Drawing.Color.Maroon;
+			this.btnReceberLote.Image = global::CamadaUI.Properties.Resources.money_green_24;
+			this.btnReceberLote.Location = new System.Drawing.Point(326, 628);
+			this.btnReceberLote.Name = "btnReceberLote";
+			this.btnReceberLote.Size = new System.Drawing.Size(168, 42);
+			this.btnReceberLote.TabIndex = 8;
+			this.btnReceberLote.Text = "&Receber Lote";
+			this.btnReceberLote.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnReceberLote.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnReceberLote.UseVisualStyleBackColor = true;
+			this.btnReceberLote.Visible = false;
+			this.btnReceberLote.Click += new System.EventHandler(this.btnReceberLote_Click);
 			// 
 			// frmAReceberListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1083, 728);
+			this.ClientSize = new System.Drawing.Size(1128, 728);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
 			this.Controls.Add(this.label19);
 			this.Controls.Add(this.pnlSituacao);
 			this.Controls.Add(this.label4);
+			this.Controls.Add(this.label7);
+			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.ValorLiquido);
+			this.Controls.Add(this.lblValorLiquido);
+			this.Controls.Add(this.lblPrevisto);
+			this.Controls.Add(this.lblBrutoSelected);
 			this.Controls.Add(this.lblValorBruto);
 			this.Controls.Add(this.lblValorRecebido);
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnImprimir);
+			this.Controls.Add(this.btnReceberLote);
 			this.Controls.Add(this.btnReceber);
 			this.KeyPreview = true;
 			this.Name = "frmAReceberListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.btnReceber, 0);
+			this.Controls.SetChildIndex(this.btnReceberLote, 0);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
 			this.Controls.SetChildIndex(this.lblValorRecebido, 0);
 			this.Controls.SetChildIndex(this.lblValorBruto, 0);
-			this.Controls.SetChildIndex(this.ValorLiquido, 0);
+			this.Controls.SetChildIndex(this.lblBrutoSelected, 0);
+			this.Controls.SetChildIndex(this.lblPrevisto, 0);
+			this.Controls.SetChildIndex(this.lblValorLiquido, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
+			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.pnlSituacao, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
@@ -796,8 +877,12 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemVerPagamentos;
-		internal System.Windows.Forms.Label ValorLiquido;
+		internal System.Windows.Forms.Label lblValorLiquido;
 		internal System.Windows.Forms.Label label4;
+		internal VIBlend.WinForms.Controls.vButton btnSetConta;
+		internal System.Windows.Forms.TextBox txtConta;
+		internal System.Windows.Forms.Label label19;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn clnCheck;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCompensacaoData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnEntradaForma;
@@ -806,8 +891,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorBruto;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorLiquido;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorRecebido;
-		internal VIBlend.WinForms.Controls.vButton btnSetConta;
-		internal System.Windows.Forms.TextBox txtConta;
-		internal System.Windows.Forms.Label label19;
+		internal System.Windows.Forms.Label lblBrutoSelected;
+		internal System.Windows.Forms.Label label5;
+		internal System.Windows.Forms.Label lblPrevisto;
+		internal System.Windows.Forms.Label label7;
+		internal System.Windows.Forms.Button btnReceberLote;
 	}
 }

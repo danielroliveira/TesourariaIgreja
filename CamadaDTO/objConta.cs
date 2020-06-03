@@ -90,6 +90,24 @@ namespace CamadaDTO
 			get => inTxn;
 		}
 
+		// GET COPY OF CONTA OBJECT
+		//------------------------------------------------------------------------------------------------------------
+		public objConta GetCopyOf()
+		{
+			return new objConta(IDConta)
+			{
+				Ativa = EditData._Ativa,
+				Bancaria = EditData._Bancaria,
+				BloqueioData = EditData._BloqueioData,
+				Congregacao = EditData._Congregacao,
+				Conta = EditData._Conta,
+				ContaSaldo = EditData._ContaSaldo,
+				IDCongregacao = EditData._IDCongregacao,
+				IDConta = EditData._IDConta,
+				OperadoraCartao = EditData._OperadoraCartao
+			};
+		}
+
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================

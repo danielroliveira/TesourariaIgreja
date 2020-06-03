@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -22,7 +21,8 @@ namespace CamadaDTO
 			internal decimal _ValorRecebido;
 			internal int _IDContaProvisoria;
 			internal string _Conta;
-			internal byte _IDSituacao; // 1: EmAberto | 2: Recebido
+			internal int _IDSetor;
+			internal byte _IDSituacao; // 1: EmAberto | 2: Recebido | 3: Cancelada
 			internal string _Situacao; // 1: EmAberto | 2: Recebido | 3: Cancelada
 			internal byte _IDEntradaForma;
 			internal string _EntradaForma;
@@ -201,6 +201,14 @@ namespace CamadaDTO
 		{
 			get => EditData._Conta;
 			set => EditData._Conta = value;
+		}
+
+		// Property IDSetor
+		//---------------------------------------------------------------
+		public int IDSetor
+		{
+			get => EditData._IDSetor;
+			set => EditData._IDSetor = value;
 		}
 
 		// Property Situacao
