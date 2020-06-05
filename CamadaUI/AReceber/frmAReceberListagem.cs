@@ -422,30 +422,19 @@ namespace CamadaUI.AReceber
 				return;
 			}
 
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
+			// --- Create List
+			List<objAReceber> recItems = new List<objAReceber>();
 
-				objAReceber recItem = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
-
-				//frmAPagarSaidas frm = new frmAPagarSaidas(recItem, this);
-				//frm.ShowDialog();
-
-			}
-			catch (Exception ex)
+			foreach (DataGridViewRow item in dgvListagem.SelectedRows)
 			{
-				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Recebimentos..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				recItems.Add((objAReceber)item.DataBoundItem);
 			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
+
+			// open form Quitar
+			AReceberPagamento(recItems);
 		}
 
-		// RECEBER LOTE
+		// RECEBER PAGAMENTO EM LOTE
 		//------------------------------------------------------------------------------------------------------------
 		private void btnReceberLote_Click(object sender, EventArgs e)
 		{
@@ -457,40 +446,58 @@ namespace CamadaUI.AReceber
 				return;
 			}
 
+			//--- create list
+			List<objAReceber> recItems = new List<objAReceber>();
 
+			foreach (DataGridViewRow item in dgvListagem.Rows)
+			{
+				if ((bool)item.Cells[0].Value == true)
+				{
+					recItems.Add((objAReceber)item.DataBoundItem);
+				}
+			}
+
+			//--- verify is the same FORMA
+			if (recItems.GroupBy(rec => rec.IDEntradaForma).Count() > 1)
+			{
+				AbrirDialog("Os itens selecionados devem ser da mesma FORMA de Entrada...",
+					"Forma de Entrada", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- verify is the same CONTA PROVISORIA
+			if (recItems.GroupBy(rec => rec.IDContaProvisoria).Count() > 1)
+			{
+				AbrirDialog("Os itens selecionados devem ser da mesma CONTA PROVISÓRIA...",
+					"Conta Provisória", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			// open form Quitar
+			AReceberPagamento(recItems);
+
+		}
+
+		// OPEN FORM AND GET VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void AReceberPagamento(List<objAReceber> recItems)
+		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				List<objAReceber> recItems = new List<objAReceber>();
-
-				foreach (DataGridViewRow item in dgvListagem.Rows)
-				{
-					if ((bool)item.Cells[0].Value == true)
-					{
-						recItems.Add((objAReceber)item.DataBoundItem);
-					}
-				}
-
-				//--- verify is the same FORMA
-				if (recItems.GroupBy(rec => rec.IDEntradaForma).Count() > 1)
-				{
-					AbrirDialog("Os itens selecionados devem ser da mesma FORMA de Entrada...",
-						"Forma de Entrada", DialogType.OK, DialogIcon.Information);
-					return;
-				}
-
-				//--- verify is the same CONTA PROVISORIA
-				if (recItems.GroupBy(rec => rec.IDContaProvisoria).Count() > 1)
-				{
-					AbrirDialog("Os itens selecionados devem ser da mesma CONTA PROVISÓRIA...",
-						"Conta Provisória", DialogType.OK, DialogIcon.Information);
-					return;
-				}
-
 				var frm = new frmAReceberQuitar(recItems, this);
 				frm.ShowDialog();
+
+				foreach (objEntrada item in frm.entradasList)
+				{
+					MessageBox.Show(item.EntradaValor.ToString("c"));
+
+				}
+
+
+
 
 			}
 			catch (Exception ex)

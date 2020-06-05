@@ -215,7 +215,9 @@ namespace CamadaBLL
 			object forma = null)
 		{
 			AcessoDados db = new AcessoDados();
-			long newID = 0;
+			long? newID = null;
+			long? otherID = null;
+			objEntrada entrada = null;
 
 			try
 			{
@@ -235,11 +237,11 @@ namespace CamadaBLL
 						newID = AddContribuicao(cont, db);
 
 						//--- Create NEW Entrada
-						var entrada = new objEntrada(null)
+						entrada = new objEntrada(null)
 						{
 							IDConta = cont.IDConta,
 							IDSetor = cont.IDSetor,
-							IDOrigem = newID,
+							IDOrigem = (long)newID,
 							Origem = 1,
 							EntradaData = cont.ContribuicaoData,
 							EntradaValor = cont.ValorBruto,
@@ -279,7 +281,21 @@ namespace CamadaBLL
 						};
 
 						//--- Insert AReceber Parcela
-						new AReceberBLL().InsertAReceber(areceber, ContaSldLocalUpdate, db);
+						otherID = new AReceberBLL().InsertAReceber(areceber, db);
+
+						//--- Create NEW Entrada
+						entrada = new objEntrada(null)
+						{
+							IDConta = cont.IDConta,
+							IDSetor = cont.IDSetor,
+							IDOrigem = (long)otherID,
+							Origem = 2,
+							EntradaData = cont.ContribuicaoData,
+							EntradaValor = cont.ValorBruto,
+						};
+
+						//--- Insert Entrada
+						new EntradaBLL().InsertEntrada(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 
 						break;
 
@@ -332,7 +348,21 @@ namespace CamadaBLL
 						//--- Insert ListOf AReceber Parcelas
 						foreach (var parcela in listAReceber)
 						{
-							rBLL.InsertAReceber(parcela, ContaSldLocalUpdate, db);
+							otherID = rBLL.InsertAReceber(parcela, db);
+
+							//--- Create NEW Entrada
+							entrada = new objEntrada(null)
+							{
+								IDConta = parcela.IDContaProvisoria,
+								IDSetor = cont.IDSetor,
+								IDOrigem = (long)otherID,
+								Origem = 2,
+								EntradaData = cont.ContribuicaoData,
+								EntradaValor = parcela.ValorBruto,
+							};
+
+							//--- Insert Entrada
+							new EntradaBLL().InsertEntrada(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 						}
 
 						break;
@@ -346,7 +376,7 @@ namespace CamadaBLL
 				}
 
 				db.CommitTransaction();
-				return newID;
+				return (long)newID;
 
 			}
 			catch (Exception ex)
@@ -354,7 +384,6 @@ namespace CamadaBLL
 				db.RollBackTransaction();
 				throw ex;
 			}
-
 		}
 
 		// INSERT CONTRIBUICAO SIMPLES

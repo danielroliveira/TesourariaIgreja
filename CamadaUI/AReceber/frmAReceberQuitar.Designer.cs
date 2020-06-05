@@ -38,7 +38,7 @@
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
 			this.label26 = new System.Windows.Forms.Label();
-			this.btnQuitar = new System.Windows.Forms.Button();
+			this.btnReceber = new System.Windows.Forms.Button();
 			this.btnCancelar = new System.Windows.Forms.Button();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.numEntradaAno = new System.Windows.Forms.NumericUpDown();
@@ -109,9 +109,9 @@
 			// 
 			// lblEntradaForma
 			// 
-			this.lblEntradaForma.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblEntradaForma.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblEntradaForma.BackColor = System.Drawing.Color.Transparent;
 			this.lblEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblEntradaForma.Location = new System.Drawing.Point(151, 4);
@@ -123,9 +123,9 @@
 			// 
 			// lblContaProvisoria
 			// 
-			this.lblContaProvisoria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblContaProvisoria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblContaProvisoria.BackColor = System.Drawing.Color.Transparent;
 			this.lblContaProvisoria.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblContaProvisoria.Location = new System.Drawing.Point(151, 33);
@@ -206,19 +206,19 @@
 			this.label26.TabIndex = 6;
 			this.label26.Text = "Data da Entrada";
 			// 
-			// btnQuitar
+			// btnReceber
 			// 
-			this.btnQuitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnQuitar.Image = global::CamadaUI.Properties.Resources.money_green_32;
-			this.btnQuitar.Location = new System.Drawing.Point(97, 450);
-			this.btnQuitar.Name = "btnQuitar";
-			this.btnQuitar.Size = new System.Drawing.Size(176, 49);
-			this.btnQuitar.TabIndex = 15;
-			this.btnQuitar.Text = "&Receber Parcial";
-			this.btnQuitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnQuitar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnQuitar.UseVisualStyleBackColor = true;
-			this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
+			this.btnReceber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnReceber.Image = global::CamadaUI.Properties.Resources.money_green_32;
+			this.btnReceber.Location = new System.Drawing.Point(97, 450);
+			this.btnReceber.Name = "btnReceber";
+			this.btnReceber.Size = new System.Drawing.Size(176, 49);
+			this.btnReceber.TabIndex = 15;
+			this.btnReceber.Text = "&Receber";
+			this.btnReceber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnReceber.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnReceber.UseVisualStyleBackColor = true;
+			this.btnReceber.Click += new System.EventHandler(this.btnReceber_Click);
 			// 
 			// btnCancelar
 			// 
@@ -253,23 +253,23 @@
 			this.numEntradaAno.Location = new System.Drawing.Point(328, 231);
 			this.numEntradaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numEntradaAno.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
+			5000,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Name = "numEntradaAno";
 			this.numEntradaAno.Size = new System.Drawing.Size(86, 31);
 			this.numEntradaAno.TabIndex = 9;
 			this.numEntradaAno.Value = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
+			2000,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// lblContaDetalhe
@@ -446,7 +446,7 @@
 			this.Controls.Add(this.numEntradaAno);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.txtDoValor);
-			this.Controls.Add(this.btnQuitar);
+			this.Controls.Add(this.btnReceber);
 			this.Controls.Add(this.btnCancelar);
 			this.Controls.Add(this.txtEntradaDia);
 			this.Controls.Add(this.cmbEntradaMes);
@@ -474,7 +474,7 @@
 			this.Controls.SetChildIndex(this.cmbEntradaMes, 0);
 			this.Controls.SetChildIndex(this.txtEntradaDia, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
-			this.Controls.SetChildIndex(this.btnQuitar, 0);
+			this.Controls.SetChildIndex(this.btnReceber, 0);
 			this.Controls.SetChildIndex(this.txtDoValor, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.numEntradaAno, 0);
@@ -501,7 +501,7 @@
 		internal System.Windows.Forms.TextBox txtConta;
 		internal System.Windows.Forms.Label label19;
 		internal System.Windows.Forms.Label label26;
-		internal System.Windows.Forms.Button btnQuitar;
+		internal System.Windows.Forms.Button btnReceber;
 		internal System.Windows.Forms.Button btnCancelar;
 		private CamadaUC.ucOnlyNumbers txtDoValor;
 		private AwesomeShapeControl.Line line1;

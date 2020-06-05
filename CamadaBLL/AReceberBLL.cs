@@ -127,7 +127,7 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public long InsertAReceber(objAReceber entrada, Action<int, decimal> ContaSldUpdate, object dbTran = null)
+		public long InsertAReceber(objAReceber entrada, object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
@@ -156,7 +156,7 @@ namespace CamadaBLL
 				long newID = db.ExecutarInsertAndGetID(query);
 
 				//--- altera o saldo da CONTA PROVISORIA
-				new ContaBLL().ContaSaldoChange(entrada.IDContaProvisoria, entrada.ValorBruto, db, ContaSldUpdate);
+				//new ContaBLL().ContaSaldoChange(entrada.IDContaProvisoria, entrada.ValorBruto, db, ContaSldUpdate);
 
 				if (!db.isTran) db.CommitTransaction();
 				return newID;
@@ -169,62 +169,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// UPDATE
-		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateAReceber(objAReceber receber, Action<int, decimal> ContaSldUpdate, object dbTran = null)
-		{
-			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
-
-			try
-			{
-				// check and begin transaction
-				if (!db.isTran) db.BeginTransaction();
-
-				// get old AReceber IDConta, and Value
-				var oldAReceber = GetAReceber((int)receber.IDAReceber, db);
-
-				// return old Values SALDO CONTA PROVISORIA
-				ContaBLL cBLL = new ContaBLL();
-				cBLL.ContaSaldoChange(oldAReceber.IDContaProvisoria, oldAReceber.ValorBruto * (-1), db, ContaSldUpdate);
-
-				//--- clear Params
-				db.LimparParametros();
-
-				//--- define Params
-				db.AdicionarParametros("@IDAReceber", receber.IDAReceber);
-				db.AdicionarParametros("@CompensacaoData", receber.CompensacaoData);
-				db.AdicionarParametros("@IDContribuicao", receber.IDContribuicao);
-				db.AdicionarParametros("@ValorBruto", receber.ValorBruto);
-				db.AdicionarParametros("@ValorLiquido", receber.ValorLiquido);
-				db.AdicionarParametros("@ValorRecebido", receber.ValorRecebido);
-				db.AdicionarParametros("@IDContaProvisoria", receber.IDContaProvisoria);
-				db.AdicionarParametros("@IDSituacao", receber.Situacao);
-
-				//--- convert null parameters
-				db.ConvertNullParams();
-
-				//--- create query
-				string query = db.CreateUpdateSQL("tblAReceber", "@IDAReceber");
-
-				//--- update
-				db.ExecutarManipulacao(CommandType.Text, query);
-
-				//--- altera o saldo da CONTA provisoria
-				cBLL.ContaSaldoChange(receber.IDContaProvisoria, receber.ValorBruto, db, ContaSldUpdate);
-
-				//--- commit and return
-				if (!db.isTran) db.CommitTransaction();
-				return true;
-
-			}
-			catch (Exception ex)
-			{
-				if (!db.isTran) db.RollBackTransaction();
-				throw ex;
-			}
-		}
-
-		// UPDATE ARECEBER SITUACAO
+		// UPDATE ARECEBER SITUACAO || VALOR LIQUIDO || COMPENSACAO DATA
 		//------------------------------------------------------------------------------------------------------------
 		public bool UpdateAReceber(objAReceber rec)
 		{
@@ -257,5 +202,9 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// QUITAR A RECEBER LIST
+		//------------------------------------------------------------------------------------------------------------
+
 	}
 }

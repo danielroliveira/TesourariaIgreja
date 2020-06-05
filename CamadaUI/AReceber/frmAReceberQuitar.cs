@@ -25,6 +25,7 @@ namespace CamadaUI.AReceber
 		private decimal vlEmAberto;
 		private decimal maxValue;
 		private DateTime _entradaData;
+		private ErrorProvider eP = new ErrorProvider();
 
 		// property to response
 		public List<objEntrada> entradasList = new List<objEntrada>();
@@ -67,30 +68,6 @@ namespace CamadaUI.AReceber
 			}
 		}
 
-		// GET SETOR BY ID
-		//------------------------------------------------------------------------------------------------------------
-		private objSetor GetSetor(int IDSetor)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				return new SetorBLL().GetSetor(IDSetor);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Obter o Setor pelo ID..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				return null;
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
 		// DEFINE ENTRADAS ITENS
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineEntradasList()
@@ -105,7 +82,7 @@ namespace CamadaUI.AReceber
 					IDOrigem = (int)rec.IDAReceber,
 					Origem = 2,
 					EntradaData = _entradaData,
-					EntradaValor = 0,
+					EntradaValor = rec.ValorLiquido - rec.ValorRecebido,
 				});
 			}
 		}
@@ -114,6 +91,9 @@ namespace CamadaUI.AReceber
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineValoresIniciais()
 		{
+			//
+			txtDoValor.Text = 0.ToString("c");
+
 			// define a pagar values
 			lblEntradaForma.Text = _recList.First().EntradaForma;
 			lblContaProvisoria.Text = _recList.First().Conta;
@@ -177,9 +157,42 @@ namespace CamadaUI.AReceber
 
 		#region BUTTONS FUNCTION
 
-		private void btnQuitar_Click(object sender, EventArgs e)
+		private void btnReceber_Click(object sender, EventArgs e)
 		{
+			//check AReceber Value
+			if (doValor <= 0)
+			{
+				AbrirDialog("O Valor total a Receber não pode ficar vazio ou ser igual a Zero...\n" +
+					"Favor preencher esse campo...", "Valor a Receber Vazio",
+					DialogType.OK, DialogIcon.Exclamation);
+				txtDoValor.Focus();
+				eP.SetError(txtDoValor, "Valor precisa ser maior que Zero...");
+				return;
+			}
+			else if (doValor > maxValue)
+			{
+				AbrirDialog("O Valor total a Receber não pode ser maior que o Valor Bruto subtraído do Valor Recebido...\n" +
+						"Favor preencher esse campo...", "Valor a Receber Inválido",
+						DialogType.OK, DialogIcon.Exclamation);
+				txtDoValor.Focus();
+				eP.SetError(txtDoValor, "Valor não pode ser maior que o Valor Bruto...");
+				return;
+			}
 
+			// calc percent of value
+			decimal perc = (doValor - vlLiquido) / vlLiquido;
+
+			// define value of each objEntrada
+			foreach (objEntrada entrada in entradasList)
+			{
+				entrada.EntradaValor += entrada.EntradaValor * perc;
+
+				// change AReceber List
+				var rec = _recList.First(r => r.IDAReceber == entrada.IDOrigem);
+				rec.ValorRecebido = entrada.EntradaValor;
+				rec.IDSituacao = 2;
+				rec.Situacao = "Recebido";
+			}
 
 			DialogResult = DialogResult.OK;
 		}
@@ -300,11 +313,12 @@ namespace CamadaUI.AReceber
 		//------------------------------------------------------------------------------------------------------------
 		private void txtDoValor_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			decimal newValor = decimal.Parse(txtDoValor.Text, NumberStyles.Currency);
+			string strDoValor = txtDoValor.Text == string.Empty ? 0.ToString("c") : txtDoValor.Text;
+			decimal newValor = decimal.Parse(strDoValor, NumberStyles.Currency);
 
 			if (newValor > maxValue)
 			{
-				AbrirDialog($"O valor do recebimento não pode ser maior que o valor EM ABERTO do AReceber: {maxValue.ToString("c")}\n",
+				AbrirDialog($"O valor do recebimento não pode ser maior que o valor BRUTO subtraído do valor RECEBIDO: {maxValue.ToString("c")}\n",
 					"Valor Maior...", DialogType.OK, DialogIcon.Exclamation);
 				e.Cancel = true;
 				txtDoValor.Text = maxValue.ToString("c");
