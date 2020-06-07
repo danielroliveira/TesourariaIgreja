@@ -52,6 +52,7 @@
     <Compile Include="objCartao.cs" />
     <Compile Include="objAPagar.cs" />
     <Compile Include="objDespesaPeriodica.cs" />
+    <Compile Include="objTransferencia.cs" />
     <Compile Include="objSaida.cs" />
     <Compile Include="objEntrada.cs" />
     <Compile Include="objContribuicao.cs" />

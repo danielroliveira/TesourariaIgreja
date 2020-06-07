@@ -91,9 +91,6 @@ namespace CamadaUI.AReceber
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineValoresIniciais()
 		{
-			//
-			txtDoValor.Text = 0.ToString("c");
-
 			// define a pagar values
 			lblEntradaForma.Text = _recList.First().EntradaForma;
 			lblContaProvisoria.Text = _recList.First().Conta;
@@ -124,6 +121,10 @@ namespace CamadaUI.AReceber
 			vlEmAberto = vlLiquido - vlRecebido;
 			lblValorEmAberto.Text = vlEmAberto.ToString("c");
 			maxValue = vlBruto - vlRecebido;
+
+			// define default value to pay
+			doValor = vlLiquido - vlRecebido;
+			txtDoValor.Text = doValor.ToString("c");
 		}
 
 		// CARREGA COMBO
@@ -171,13 +172,27 @@ namespace CamadaUI.AReceber
 			}
 			else if (doValor > maxValue)
 			{
-				AbrirDialog("O Valor total a Receber não pode ser maior que o Valor Bruto subtraído do Valor Recebido...\n" +
-						"Favor preencher esse campo...", "Valor a Receber Inválido",
-						DialogType.OK, DialogIcon.Exclamation);
+				AbrirDialog($"O Valor total a Receber não pode ser maior que o Valor Bruto " +
+					$"subtraído do Valor Recebido: {maxValue:c}\n" +
+					"Favor preencher esse campo...", "Valor a Receber Inválido",
+					DialogType.OK, DialogIcon.Exclamation);
 				txtDoValor.Focus();
 				eP.SetError(txtDoValor, "Valor não pode ser maior que o Valor Bruto...");
 				return;
 			}
+			else if (doValor < vlEmAberto)
+			{
+				AbrirDialog($"O Valor total a Receber não pode ser menor que o " +
+					$"Valor Em aberto: {vlEmAberto:c}\n" +
+					"Favor preencher esse campo...", "Valor a Receber Inválido",
+					DialogType.OK, DialogIcon.Exclamation);
+				txtDoValor.Focus();
+				eP.SetError(txtDoValor, "Valor não pode ser menor que o Valor Em Aberto...");
+				return;
+			}
+
+			// valida Data
+			ValidaData();
 
 			// calc percent of value
 			decimal perc = (doValor - vlLiquido) / vlLiquido;
@@ -186,10 +201,11 @@ namespace CamadaUI.AReceber
 			foreach (objEntrada entrada in entradasList)
 			{
 				entrada.EntradaValor += entrada.EntradaValor * perc;
+				entrada.EntradaData = _entradaData;
 
 				// change AReceber List
 				var rec = _recList.First(r => r.IDAReceber == entrada.IDOrigem);
-				rec.ValorRecebido = entrada.EntradaValor;
+				rec.ValorRecebido += entrada.EntradaValor;
 				rec.IDSituacao = 2;
 				rec.Situacao = "Recebido";
 			}
@@ -334,6 +350,11 @@ namespace CamadaUI.AReceber
 		//------------------------------------------------------------------------------------------------------------
 		private void txtData_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			e.Cancel = !ValidaData();
+		}
+
+		private bool ValidaData()
+		{
 			// format new Date
 			string testDate = $"{txtEntradaDia.Text}/{cmbEntradaMes.SelectedValue}/{numEntradaAno.Value}";
 
@@ -341,6 +362,7 @@ namespace CamadaUI.AReceber
 			if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
 			{
 				_entradaData = newDate;
+				return true;
 			}
 			else
 			{
@@ -348,7 +370,7 @@ namespace CamadaUI.AReceber
 					$"{ testDate }\n" +
 					$"Favor verificar o dia, mês e ano e inserir uma data válida.",
 					"Data Inválida", DialogType.OK, DialogIcon.Exclamation);
-				e.Cancel = true;
+				return false;
 			}
 		}
 

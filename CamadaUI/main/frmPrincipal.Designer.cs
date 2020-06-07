@@ -41,6 +41,8 @@
 			this.btnEntradas = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuContribuicaoInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuContribuicaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuAReceberProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCampanhas = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
@@ -79,8 +81,6 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuAReceberProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -228,6 +228,21 @@
 			this.mnuContribuicaoProcurar.Name = "mnuContribuicaoProcurar";
 			this.mnuContribuicaoProcurar.Size = new System.Drawing.Size(240, 30);
 			this.mnuContribuicaoProcurar.Text = "Procurar Contribuição";
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(237, 6);
+			// 
+			// mnuAReceberProcurar
+			// 
+			this.mnuAReceberProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuAReceberProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuAReceberProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuAReceberProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuAReceberProcurar.Name = "mnuAReceberProcurar";
+			this.mnuAReceberProcurar.Size = new System.Drawing.Size(240, 30);
+			this.mnuAReceberProcurar.Text = "Procurar AReceber";
 			// 
 			// toolStripSeparator3
 			// 
@@ -699,21 +714,6 @@
 			this.lblHora.TabIndex = 6;
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// toolStripSeparator6
-			// 
-			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(237, 6);
-			// 
-			// mnuAReceberProcurar
-			// 
-			this.mnuAReceberProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuAReceberProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuAReceberProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuAReceberProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuAReceberProcurar.Name = "mnuAReceberProcurar";
-			this.mnuAReceberProcurar.Size = new System.Drawing.Size(240, 30);
-			this.mnuAReceberProcurar.Text = "Procurar AReceber";
 			// 
 			// frmPrincipal
 			// 

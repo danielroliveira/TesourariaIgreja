@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CamadaBLL
 {
@@ -49,6 +50,7 @@ namespace CamadaBLL
 				Setor = (string)row["Setor"],
 				IDConta = (int)row["IDConta"],
 				Conta = (string)row["Conta"],
+				Consolidado = (bool)row["Consolidado"],
 				Observacao = row["Observacao"] == DBNull.Value ? string.Empty : (string)row["Observacao"],
 			};
 
@@ -78,6 +80,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Origem", entrada.Origem);
 				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
 				db.AdicionarParametros("@IDConta", entrada.IDConta);
+				db.AdicionarParametros("@Consolidado", entrada.Consolidado);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -107,8 +110,27 @@ namespace CamadaBLL
 			}
 		}
 
-		//=============================================================================
-		//=============================================================================
+		// UPDATE CONSOLIDADO FOR IDARECEBER
+		//------------------------------------------------------------------------------------------------------------
+		public void UpdateEntradaConsolidado(long IDAReceber, AcessoDados dbTran)
+		{
+			try
+			{
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDAReceber", IDAReceber);
+
+				string query = "UPDATE tblEntrada SET Consolidado = 'True' WHERE IDOrigem = @IDAReceber AND Origem = 2";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		//==================================================================================================================
+		//==================================================================================================================
 
 		// GET ENTRADA FORMAS
 		//------------------------------------------------------------------------------------------------------------

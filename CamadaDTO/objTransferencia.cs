@@ -6,48 +6,46 @@ using System.Runtime.CompilerServices;
 namespace CamadaDTO
 {
 	//=================================================================================================
-	// SAIDA
+	// ENTRADA
 	//=================================================================================================
-	public class objSaida : IEditableObject, INotifyPropertyChanged
+	public class objTransferencia : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
-		struct StructSaida
+		struct StructTransferencia
 		{
-			internal long? _IDSaida;
+			internal long? _IDTransferencia;
 			internal long _IDOrigem;
 			internal int _Origem;
-			internal DateTime _SaidaData;
-			internal decimal _SaidaValor;
-			internal decimal? _AcrescimoValor;
+			internal DateTime _TransferenciaData;
+			internal decimal _TransferenciaValor;
 			internal int _IDSetor;
 			internal string _Setor;
 			internal int _IDConta;
 			internal string _Conta;
-			internal bool _Imagem;
+			internal bool _Consolidado;
 			internal string _Observacao;
 		}
 
-		/* --- ORIGEM
-		//-------------------------------------------------------------------------------------------------
-			1: tblAPagar   | IDAPagar
-			2: tblAReceber | IDAReceber : comissao do cartao gera saida
+		/* ORIGEM
+		*	1: tblTransfConta | IDTransfConta
+		*	2: tblTransfSetor | IDTransfSetor
+		*	3: tblAReceber    | IDAReceber 
 		*/
 
 		// VARIABLES | CONSTRUCTOR
 		//-------------------------------------------------------------------------------------------------
-		private StructSaida EditData;
-		private StructSaida BackupData;
+		private StructTransferencia EditData;
+		private StructTransferencia BackupData;
 		private bool inTxn = false;
 
-		public objSaida(long? IDSaida) : base()
+		public objTransferencia(long? IDTransferencia) : base()
 		{
-			EditData = new StructSaida()
+			EditData = new StructTransferencia()
 			{
-				_IDSaida = IDSaida,
-				_SaidaData = DateTime.Today,
-				_SaidaValor = 0,
-				_Imagem = false,
+				_IDTransferencia = IDTransferencia,
+				_TransferenciaData = DateTime.Today,
+				_TransferenciaValor = 0,
 			};
 		}
 
@@ -75,7 +73,7 @@ namespace CamadaDTO
 		{
 			if (inTxn)
 			{
-				BackupData = new StructSaida();
+				BackupData = new StructTransferencia();
 				inTxn = false;
 			}
 		}
@@ -91,7 +89,7 @@ namespace CamadaDTO
 
 		public override string ToString()
 		{
-			return EditData._IDSaida?.ToString("D4");
+			return EditData._IDTransferencia?.ToString("D4");
 		}
 
 		public bool RegistroAlterado
@@ -102,10 +100,10 @@ namespace CamadaDTO
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public long? IDSaida
+		public long? IDTransferencia
 		{
-			get => EditData._IDSaida;
-			set => EditData._IDSaida = value;
+			get => EditData._IDTransferencia;
+			set => EditData._IDTransferencia = value;
 		}
 
 		// Property IDOrigem
@@ -138,40 +136,40 @@ namespace CamadaDTO
 			}
 		}
 
-		// Property SaidaData
+		// Property TransferenciaData
 		//---------------------------------------------------------------
-		public DateTime SaidaData
+		public DateTime TransferenciaData
 		{
-			get => EditData._SaidaData;
+			get => EditData._TransferenciaData;
 			set
 			{
-				if (value != EditData._SaidaData)
+				if (value != EditData._TransferenciaData)
 				{
-					EditData._SaidaData = value;
-					NotifyPropertyChanged("SaidaData");
+					EditData._TransferenciaData = value;
+					NotifyPropertyChanged("TransferenciaData");
 				}
 			}
 		}
 
-		public int SaidaDia
+		public int TransferenciaDia
 		{
-			get => SaidaData.Day;
+			get => TransferenciaData.Day;
 			set
 			{
 				try
 				{
 					// format new Date
-					string testDate = $"{value}/{SaidaData.Month}/{SaidaData.Year}";
+					string testDate = $"{value}/{TransferenciaData.Month}/{TransferenciaData.Year}";
 
 					// check new date
 					if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
 					{
-						SaidaData = newDate;
+						TransferenciaData = newDate;
 					}
 					else
 					{
 						throw new AttributeException($"Data inválida:\n" +
-							$"{value.ToString("D2") } / { SaidaData.Month.ToString("D2") } / {SaidaData.Year.ToString("D4")}\n" +
+							$"{value.ToString("D2") } / { TransferenciaData.Month.ToString("D2") } / {TransferenciaData.Year.ToString("D4")}\n" +
 							$"Favor verificar o dia, mês e ano e inserir uma data válida.");
 					}
 				}
@@ -183,75 +181,60 @@ namespace CamadaDTO
 			}
 		}
 
-		public int SaidaMes
+		public int TransferenciaMes
 		{
-			get => SaidaData.Month;
+			get => TransferenciaData.Month;
 			set
 			{
 				// format new Date
-				string testDate = $"{SaidaData.Day}/{value}/{SaidaData.Year}";
+				string testDate = $"{TransferenciaData.Day}/{value}/{TransferenciaData.Year}";
 
 				// check new date
 				if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
 				{
-					SaidaData = newDate;
+					TransferenciaData = newDate;
 				}
 				else
 				{
 					throw new AttributeException($"Data inválida:\n" +
-						$"{SaidaData.Day.ToString("D2") } / { value.ToString("D2") } / {SaidaData.Year.ToString("D4")}\n" +
+						$"{TransferenciaData.Day.ToString("D2") } / { value.ToString("D2") } / {TransferenciaData.Year.ToString("D4")}\n" +
 						$"Favor verificar o dia, mês e ano e inserir uma data válida.");
 				}
 			}
 		}
-		public int SaidaAno
+		public int TransferenciaAno
 		{
-			get => SaidaData.Year;
+			get => TransferenciaData.Year;
 			set
 			{
 				// format new Date
-				string testDate = $"{SaidaData.Day}/{SaidaData.Month}/{value}";
+				string testDate = $"{TransferenciaData.Day}/{TransferenciaData.Month}/{value}";
 
 				// check new date
 				if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
 				{
-					SaidaData = newDate;
+					TransferenciaData = newDate;
 				}
 				else
 				{
 					throw new AttributeException($"Data inválida:\n" +
-						$"{ SaidaData.Day.ToString("D2") } / { SaidaData.Month.ToString("D2") } / { value.ToString("D4") }\n" +
+						$"{ TransferenciaData.Day.ToString("D2") } / { TransferenciaData.Month.ToString("D2") } / { value.ToString("D4") }\n" +
 						$"Favor verificar o dia, mês e ano e inserir uma data válida.");
 				}
 			}
 		}
 
-		// Property SaidaValor
+		// Property TransferenciaValor
 		//---------------------------------------------------------------
-		public decimal SaidaValor
+		public decimal TransferenciaValor
 		{
-			get => EditData._SaidaValor;
+			get => EditData._TransferenciaValor;
 			set
 			{
-				if (value != EditData._SaidaValor)
+				if (value != EditData._TransferenciaValor)
 				{
-					EditData._SaidaValor = value;
-					NotifyPropertyChanged("SaidaValor");
-				}
-			}
-		}
-
-		// Property AcrescimoValor
-		//---------------------------------------------------------------
-		public decimal? AcrescimoValor
-		{
-			get => EditData._AcrescimoValor;
-			set
-			{
-				if (value != EditData._AcrescimoValor)
-				{
-					EditData._AcrescimoValor = value;
-					NotifyPropertyChanged("AcrescimoValor");
+					EditData._TransferenciaValor = value;
+					NotifyPropertyChanged("TransferenciaValor");
 				}
 			}
 		}
@@ -301,36 +284,5 @@ namespace CamadaDTO
 			get => EditData._Conta;
 			set => EditData._Conta = value;
 		}
-
-		// Property Imagem
-		//---------------------------------------------------------------
-		public bool Imagem
-		{
-			get => EditData._Imagem;
-			set
-			{
-				if (value != EditData._Imagem)
-				{
-					EditData._Imagem = value;
-					NotifyPropertyChanged("Imagem");
-				}
-			}
-		}
-
-		// Property Observacao
-		//---------------------------------------------------------------
-		public string Observacao
-		{
-			get => EditData._Observacao;
-			set
-			{
-				if (value != EditData._Observacao)
-				{
-					EditData._Observacao = value;
-					NotifyPropertyChanged("Observacao");
-				}
-			}
-		}
 	}
-
 }

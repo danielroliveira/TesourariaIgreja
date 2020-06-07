@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 
 namespace CamadaBLL
 {
@@ -171,11 +172,11 @@ namespace CamadaBLL
 
 		// UPDATE ARECEBER SITUACAO || VALOR LIQUIDO || COMPENSACAO DATA
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateAReceber(objAReceber rec)
+		public bool UpdateAReceber(objAReceber rec, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				//--- clear Params
 				db.LimparParametros();
@@ -184,6 +185,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDAReceber", rec.IDAReceber);
 				db.AdicionarParametros("@IDSituacao", rec.IDSituacao);
 				db.AdicionarParametros("@ValorLiquido", rec.ValorLiquido);
+				db.AdicionarParametros("@ValorRecebido", rec.ValorRecebido);
 				db.AdicionarParametros("@CompensacaoData", rec.CompensacaoData);
 
 				//--- convert null parameters
@@ -205,6 +207,170 @@ namespace CamadaBLL
 
 		// QUITAR A RECEBER LIST
 		//------------------------------------------------------------------------------------------------------------
+		public List<objAReceber> AReceberConsolidacaoList(
+			List<objAReceber> listRec,
+			List<objEntrada> entradas,
+			Action<int, decimal> contaSaldoUpdate,
+			Action<int, decimal> setorSaldoUpdate)
+		{
+			List<objAReceber> retorno = new List<objAReceber>();
+			AcessoDados db = null;
 
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				foreach (objEntrada entrada in entradas)
+				{
+					objAReceber receber = listRec.First(r => r.IDAReceber == entrada.IDOrigem);
+
+					if (receber.IDContaProvisoria != entrada.IDConta)
+					{
+						objAReceber newRec = insertAReceberCartao(receber, entrada, contaSaldoUpdate, setorSaldoUpdate, db);
+						retorno.Add(newRec);
+					}
+					else
+					{
+						objAReceber newRec = insertAReceberCheque(receber, entrada, contaSaldoUpdate, setorSaldoUpdate, db);
+						retorno.Add(newRec);
+					}
+				}
+
+				db.CommitTransaction();
+				return retorno;
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// INSERT ENTRADA | ARECEBER CARTAO
+		//------------------------------------------------------------------------------------------------------------
+		private objAReceber insertAReceberCartao(
+			objAReceber receber,
+			objEntrada entrada,
+			Action<int, decimal> contaSaldoUpdate,
+			Action<int, decimal> setorSaldoUpdate,
+			AcessoDados dbTran)
+		{
+			// create TRANSFER SAIDA
+			objTransferencia transfSaida = new objTransferencia(null)
+			{
+				Origem = 3, // tblAReceber
+				IDOrigem = (long)receber.IDAReceber,
+				IDConta = receber.IDContaProvisoria,
+				IDSetor = receber.IDSetor,
+				TransferenciaData = entrada.EntradaData,
+				TransferenciaValor = entrada.EntradaValor * (-1)
+			};
+
+			// create TRANSFER ENTRADA
+			objTransferencia transfEntrada = new objTransferencia(null)
+			{
+				Origem = 3, // tblAReceber
+				IDOrigem = (long)receber.IDAReceber,
+				IDConta = entrada.IDConta,
+				IDSetor = receber.IDSetor,
+				TransferenciaData = entrada.EntradaData,
+				TransferenciaValor = entrada.EntradaValor
+			};
+
+			// create SAIDA COMISSAO
+			objSaida saidaComissao = new objSaida(null)
+			{
+				Origem = 2, // tblAReceber 
+				IDOrigem = (long)receber.IDAReceber,
+				IDConta = receber.IDContaProvisoria,
+				IDSetor = receber.IDSetor,
+				SaidaData = entrada.EntradaData,
+				SaidaValor = receber.ValorBruto - entrada.EntradaValor
+			};
+
+			try
+			{
+				// Insert transf saida
+				TransferenciaBLL tBLL = new TransferenciaBLL();
+				tBLL.InsertTransferencia(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				// Insert transf entrada
+				tBLL.InsertTransferencia(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				// Insert saida comissao
+				new SaidaBLL().InsertSaida(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				// update AReceber
+				UpdateAReceber(receber, dbTran);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			return receber;
+		}
+
+		// INSERT ENTRADA | ARECEBER CHEQUE
+		//------------------------------------------------------------------------------------------------------------
+		private objAReceber insertAReceberCheque(
+			objAReceber receber,
+			objEntrada entrada,
+			Action<int, decimal> contaSaldoUpdate,
+			Action<int, decimal> setorSaldoUpdate,
+			AcessoDados dbTran)
+		{
+			// create TRANSFER SAIDA
+			objTransferencia transfSaida = new objTransferencia(null)
+			{
+				Origem = 3, // tblAReceber
+				IDOrigem = (long)receber.IDAReceber,
+				IDConta = receber.IDContaProvisoria,
+				IDSetor = receber.IDSetor,
+				TransferenciaData = entrada.EntradaData,
+				TransferenciaValor = entrada.EntradaValor * (-1)
+			};
+
+			// create TRANSFER ENTRADA
+			objTransferencia transfEntrada = new objTransferencia(null)
+			{
+				Origem = 3, // tblAReceber
+				IDOrigem = (long)receber.IDAReceber,
+				IDConta = entrada.IDConta,
+				IDSetor = receber.IDSetor,
+				TransferenciaData = entrada.EntradaData,
+				TransferenciaValor = entrada.EntradaValor
+			};
+
+			// create SAIDA COMISSAO
+			objSaida saidaComissao = new objSaida(null)
+			{
+				Origem = 2, // tblAReceber 
+				IDOrigem = (long)receber.IDAReceber,
+				IDConta = entrada.IDConta,
+				IDSetor = receber.IDSetor,
+				SaidaData = entrada.EntradaData,
+				SaidaValor = receber.ValorBruto - entrada.EntradaValor
+			};
+
+			try
+			{
+				// Update FIRST Entrada: CONSOLIDADO = TRUE
+				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, dbTran);
+				// Insert transf saida
+				TransferenciaBLL tBLL = new TransferenciaBLL();
+				tBLL.InsertTransferencia(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				// Insert transf entrada
+				tBLL.InsertTransferencia(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				// Insert saida comissao
+				new SaidaBLL().InsertSaida(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				// update AReceber
+				UpdateAReceber(receber, dbTran);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			return receber;
+		}
 	}
 }

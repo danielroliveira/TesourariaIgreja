@@ -245,6 +245,7 @@ namespace CamadaBLL
 							Origem = 1,
 							EntradaData = cont.ContribuicaoData,
 							EntradaValor = cont.ValorBruto,
+							Consolidado = true,
 						};
 
 						//--- Insert Entrada
@@ -277,7 +278,7 @@ namespace CamadaBLL
 							Situacao = "Em Aberto",
 							ValorBruto = cont.ValorBruto,
 							ValorLiquido = cont.ValorBruto,
-							ValorRecebido = 0
+							ValorRecebido = 0,
 						};
 
 						//--- Insert AReceber Parcela
@@ -292,6 +293,7 @@ namespace CamadaBLL
 							Origem = 2,
 							EntradaData = cont.ContribuicaoData,
 							EntradaValor = cont.ValorBruto,
+							Consolidado = false,
 						};
 
 						//--- Insert Entrada
@@ -359,6 +361,7 @@ namespace CamadaBLL
 								Origem = 2,
 								EntradaData = cont.ContribuicaoData,
 								EntradaValor = parcela.ValorBruto,
+								Consolidado = false,
 							};
 
 							//--- Insert Entrada

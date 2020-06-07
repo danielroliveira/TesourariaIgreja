@@ -391,7 +391,9 @@ namespace CamadaUI.Entradas
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
-			new frmContribuicaoListagem().Show();
+			if (Application.OpenForms.Count == 1)
+				new frmContribuicaoListagem().Show();
+
 			Close();
 		}
 
@@ -506,8 +508,20 @@ namespace CamadaUI.Entradas
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
 				//--- emit massage
-				AbrirDialog("Registro Salvo com sucesso!",
-					"Registro Salvo", DialogType.OK, DialogIcon.Information);
+				var resp = AbrirDialog("Registro Salvo com sucesso!" +
+										"\nDeseja inserir uma NOVA contribuição?",
+										"Registro Salvo",
+										DialogType.SIM_NAO,
+										DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					btnNovo_Click(sender, e);
+				}
+				else
+				{
+					btnFechar_Click(sender, e);
+				}
 			}
 			catch (Exception ex)
 			{

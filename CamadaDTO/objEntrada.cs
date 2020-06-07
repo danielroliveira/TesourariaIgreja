@@ -23,8 +23,15 @@ namespace CamadaDTO
 			internal string _Setor;
 			internal int _IDConta;
 			internal string _Conta;
+			internal bool _Consolidado;
 			internal string _Observacao;
 		}
+
+		/* --- ORIGEM
+		//-------------------------------------------------------------------------------------------------
+			1: tblContribuicao | IDContribuicao
+			2: tblAReceber     | IDAReceber
+		*/
 
 		// VARIABLES | CONSTRUCTOR
 		//-------------------------------------------------------------------------------------------------
@@ -276,6 +283,21 @@ namespace CamadaDTO
 		{
 			get => EditData._Conta;
 			set => EditData._Conta = value;
+		}
+
+		// Property Consolidado
+		//---------------------------------------------------------------
+		public bool Consolidado
+		{
+			get => EditData._Consolidado;
+			set
+			{
+				if (value != EditData._Consolidado)
+				{
+					EditData._Consolidado = value;
+					NotifyPropertyChanged("Consolidado");
+				}
+			}
 		}
 
 		// Property Observacao

@@ -427,11 +427,21 @@ namespace CamadaUI.AReceber
 
 			foreach (DataGridViewRow item in dgvListagem.SelectedRows)
 			{
-				recItems.Add((objAReceber)item.DataBoundItem);
+				var rec = (objAReceber)item.DataBoundItem;
+
+				if (rec.IDSituacao != 1)
+				{
+					AbrirDialog($"Não é possível realizar o recebimento " +
+						$"porque a Situacao do a receber selecionado está: {rec.Situacao.ToUpper()}",
+						"Situação");
+					return;
+				}
+
+				recItems.Add(rec);
 			}
 
 			// open form Quitar
-			AReceberPagamento(recItems);
+			AReceberFormConsolidacao(recItems);
 		}
 
 		// RECEBER PAGAMENTO EM LOTE
@@ -453,7 +463,15 @@ namespace CamadaUI.AReceber
 			{
 				if ((bool)item.Cells[0].Value == true)
 				{
-					recItems.Add((objAReceber)item.DataBoundItem);
+					var rec = (objAReceber)item.DataBoundItem;
+					if (rec.IDSituacao != 1)
+					{
+						AbrirDialog($"Não é possível realizar o recebimento " +
+							$"porque a Situacao do a receber selecionado está: {rec.Situacao.ToUpper()}",
+							"Situação");
+						return;
+					}
+					recItems.Add(rec);
 				}
 			}
 
@@ -474,13 +492,13 @@ namespace CamadaUI.AReceber
 			}
 
 			// open form Quitar
-			AReceberPagamento(recItems);
+			AReceberFormConsolidacao(recItems);
 
 		}
 
 		// OPEN FORM AND GET VALUES
 		//------------------------------------------------------------------------------------------------------------
-		private void AReceberPagamento(List<objAReceber> recItems)
+		private void AReceberFormConsolidacao(List<objAReceber> recItems)
 		{
 			try
 			{
@@ -490,19 +508,36 @@ namespace CamadaUI.AReceber
 				var frm = new frmAReceberQuitar(recItems, this);
 				frm.ShowDialog();
 
-				foreach (objEntrada item in frm.entradasList)
-				{
-					MessageBox.Show(item.EntradaValor.ToString("c"));
+				if (frm.DialogResult != DialogResult.OK) return;
 
-				}
-
-
-
-
+				AReceberExecuteConsolidacao(recItems, frm.entradasList);
 			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Recebimentos..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// A RECEBER EXECUTE CONSOLIDACAO ENTRADAS AND TRANSFERENCIAS
+		//------------------------------------------------------------------------------------------------------------
+		private void AReceberExecuteConsolidacao(List<objAReceber> listRec, List<objEntrada> entradas)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				// --- Execute
+				rBLL.AReceberConsolidacaoList(listRec, entradas, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao executar o recebimento do(s) AReceber..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally

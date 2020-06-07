@@ -140,8 +140,8 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -155,15 +155,15 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnCheck,
-			this.clnID,
-			this.clnCompensacaoData,
-			this.clnEntradaForma,
-			this.clnConta,
-			this.clnSituacao,
-			this.clnValorBruto,
-			this.clnValorLiquido,
-			this.clnValorRecebido});
+            this.clnCheck,
+            this.clnID,
+            this.clnCompensacaoData,
+            this.clnEntradaForma,
+            this.clnConta,
+            this.clnSituacao,
+            this.clnValorBruto,
+            this.clnValorLiquido,
+            this.clnValorRecebido});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -581,16 +581,16 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuItemReceber,
-			this.mnuItemVerPagamentos,
-			this.toolStripSeparator2,
-			this.mnuItemCancelar,
-			this.mnuItemNormalizar,
-			this.toolStripSeparator1,
-			this.mnuItemVerOrigem,
-			this.mnuItemAlterar});
+            this.mnuItemReceber,
+            this.mnuItemVerPagamentos,
+            this.toolStripSeparator2,
+            this.mnuItemCancelar,
+            this.mnuItemNormalizar,
+            this.toolStripSeparator1,
+            this.mnuItemVerOrigem,
+            this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(269, 172);
+			this.mnuOperacoes.Size = new System.Drawing.Size(269, 194);
 			// 
 			// mnuItemReceber
 			// 
@@ -767,7 +767,7 @@
 			this.btnReceberLote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReceberLote.ForeColor = System.Drawing.Color.Maroon;
 			this.btnReceberLote.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.btnReceberLote.Location = new System.Drawing.Point(326, 628);
+			this.btnReceberLote.Location = new System.Drawing.Point(326, 629);
 			this.btnReceberLote.Name = "btnReceberLote";
 			this.btnReceberLote.Size = new System.Drawing.Size(168, 42);
 			this.btnReceberLote.TabIndex = 8;

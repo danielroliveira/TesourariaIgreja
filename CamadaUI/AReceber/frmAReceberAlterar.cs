@@ -26,6 +26,11 @@ namespace CamadaUI.AReceber
 			HandlerKeyDownControl(this);
 			_areceber.PropertyChanged += (a, b) => btnAlterar.Enabled = true;
 
+			if (_areceber.IDEntradaForma != 3)
+			{
+				txtValorLiquido.KeyPress += (a, e) => e.Handled = true;
+			}
+
 		}
 
 		#endregion // SUB NEW | CONSTRUCTOR --- END
