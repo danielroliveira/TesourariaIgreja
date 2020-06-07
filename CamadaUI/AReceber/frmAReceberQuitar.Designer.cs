@@ -54,13 +54,14 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.txtDoValor = new CamadaUC.ucOnlyNumbers();
-			this.txtEntradaDia = new CamadaUC.ucOnlyNumbers();
+			this.numEntradaDia = new System.Windows.Forms.NumericUpDown();
 			this.cmbEntradaMes = new CamadaUC.ucComboLimitedValues();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numEntradaAno)).BeginInit();
 			this.panel6.SuspendLayout();
 			this.panel5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numEntradaDia)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -109,9 +110,9 @@
 			// 
 			// lblEntradaForma
 			// 
-			this.lblEntradaForma.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblEntradaForma.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblEntradaForma.BackColor = System.Drawing.Color.Transparent;
 			this.lblEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblEntradaForma.Location = new System.Drawing.Point(151, 4);
@@ -123,9 +124,9 @@
 			// 
 			// lblContaProvisoria
 			// 
-			this.lblContaProvisoria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblContaProvisoria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblContaProvisoria.BackColor = System.Drawing.Color.Transparent;
 			this.lblContaProvisoria.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblContaProvisoria.Location = new System.Drawing.Point(151, 33);
@@ -253,23 +254,23 @@
 			this.numEntradaAno.Location = new System.Drawing.Point(328, 231);
 			this.numEntradaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numEntradaAno.Maximum = new decimal(new int[] {
-			5000,
-			0,
-			0,
-			0});
+            5000,
+            0,
+            0,
+            0});
 			this.numEntradaAno.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numEntradaAno.Name = "numEntradaAno";
 			this.numEntradaAno.Size = new System.Drawing.Size(86, 31);
 			this.numEntradaAno.TabIndex = 9;
 			this.numEntradaAno.Value = new decimal(new int[] {
-			2000,
-			0,
-			0,
-			0});
+            2000,
+            0,
+            0,
+            0});
 			this.numEntradaAno.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// lblContaDetalhe
@@ -411,18 +412,30 @@
 			this.txtDoValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtDoValor.Validating += new System.ComponentModel.CancelEventHandler(this.txtDoValor_Validating);
 			// 
-			// txtEntradaDia
+			// numEntradaDia
 			// 
-			this.txtEntradaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtEntradaDia.Inteiro = true;
-			this.txtEntradaDia.Location = new System.Drawing.Point(114, 231);
-			this.txtEntradaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtEntradaDia.Name = "txtEntradaDia";
-			this.txtEntradaDia.Positivo = true;
-			this.txtEntradaDia.Size = new System.Drawing.Size(52, 31);
-			this.txtEntradaDia.TabIndex = 7;
-			this.txtEntradaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.txtEntradaDia.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
+			this.numEntradaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numEntradaDia.Location = new System.Drawing.Point(106, 231);
+			this.numEntradaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.numEntradaDia.Maximum = new decimal(new int[] {
+            31,
+            0,
+            0,
+            0});
+			this.numEntradaDia.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numEntradaDia.Name = "numEntradaDia";
+			this.numEntradaDia.Size = new System.Drawing.Size(60, 31);
+			this.numEntradaDia.TabIndex = 7;
+			this.numEntradaDia.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numEntradaDia.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// cmbEntradaMes
 			// 
@@ -448,7 +461,7 @@
 			this.Controls.Add(this.txtDoValor);
 			this.Controls.Add(this.btnReceber);
 			this.Controls.Add(this.btnCancelar);
-			this.Controls.Add(this.txtEntradaDia);
+			this.Controls.Add(this.numEntradaDia);
 			this.Controls.Add(this.cmbEntradaMes);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
@@ -472,7 +485,7 @@
 			this.Controls.SetChildIndex(this.txtConta, 0);
 			this.Controls.SetChildIndex(this.btnSetConta, 0);
 			this.Controls.SetChildIndex(this.cmbEntradaMes, 0);
-			this.Controls.SetChildIndex(this.txtEntradaDia, 0);
+			this.Controls.SetChildIndex(this.numEntradaDia, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
 			this.Controls.SetChildIndex(this.btnReceber, 0);
 			this.Controls.SetChildIndex(this.txtDoValor, 0);
@@ -487,6 +500,7 @@
 			this.panel6.ResumeLayout(false);
 			this.panel5.ResumeLayout(false);
 			this.panel5.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numEntradaDia)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -495,7 +509,7 @@
 		#endregion
 		private System.Windows.Forms.Panel panel2;
 		internal System.Windows.Forms.Label label23;
-		private CamadaUC.ucOnlyNumbers txtEntradaDia;
+		private System.Windows.Forms.NumericUpDown numEntradaDia;
 		private CamadaUC.ucComboLimitedValues cmbEntradaMes;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;
 		internal System.Windows.Forms.TextBox txtConta;

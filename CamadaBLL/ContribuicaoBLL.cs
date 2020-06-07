@@ -224,7 +224,7 @@ namespace CamadaBLL
 				db.BeginTransaction();
 
 				//--- Check Conta Bloqueio
-				if (!new ContaBLL().ContaBloqueioPermit(cont.IDConta, cont.ContribuicaoData, db))
+				if (!new ContaBLL().ContaDateBlockPermit(cont.IDConta, cont.ContribuicaoData, db))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Crédito proposta...", 2);
 				}
@@ -309,7 +309,7 @@ namespace CamadaBLL
 						//--- Check Conta Bloqueio
 						objContribuicaoCartao cartao = (objContribuicaoCartao)forma;
 
-						if (!new ContaBLL().ContaBloqueioPermit(cartao.IDContaProvisoria, cont.ContribuicaoData, db))
+						if (!new ContaBLL().ContaDateBlockPermit(cartao.IDContaProvisoria, cont.ContribuicaoData, db))
 						{
 							throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Crédito proposta...", 2);
 						}

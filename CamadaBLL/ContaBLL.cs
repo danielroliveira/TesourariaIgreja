@@ -255,7 +255,7 @@ namespace CamadaBLL
 
 		// CONTA BLOQUEIO DATA PERMIT
 		//------------------------------------------------------------------------------------------------------------
-		public bool ContaBloqueioPermit(int IDConta, DateTime DataMovimento, object dbTran = null)
+		public bool ContaDateBlockPermit(int IDConta, DateTime DataMovimento, object dbTran = null)
 		{
 			try
 			{
@@ -278,7 +278,7 @@ namespace CamadaBLL
 
 				if (bloqueioData != null)
 				{
-					return DataMovimento > bloqueioData;
+					return DataMovimento >= bloqueioData;
 				}
 				else
 				{

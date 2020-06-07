@@ -25,6 +25,7 @@ namespace CamadaDTO
 			internal string _Conta;
 			internal bool _Consolidado;
 			internal string _Observacao;
+			internal long? _IDCaixa;
 		}
 
 		/* ORIGEM
@@ -46,6 +47,7 @@ namespace CamadaDTO
 				_IDTransferencia = IDTransferencia,
 				_TransferenciaData = DateTime.Today,
 				_TransferenciaValor = 0,
+				_IDCaixa = null,
 			};
 		}
 
@@ -283,6 +285,21 @@ namespace CamadaDTO
 		{
 			get => EditData._Conta;
 			set => EditData._Conta = value;
+		}
+
+		// Property IDCaixa
+		//---------------------------------------------------------------
+		public long? IDCaixa
+		{
+			get => EditData._IDCaixa;
+			set
+			{
+				if (value != EditData._IDCaixa)
+				{
+					EditData._IDCaixa = value;
+					NotifyPropertyChanged("IDCaixa");
+				}
+			}
 		}
 	}
 }

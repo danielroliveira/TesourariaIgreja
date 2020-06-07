@@ -26,8 +26,8 @@ namespace CamadaUI.Entradas
 		private List<objContribuicaoTipo> listTipos;
 		private List<objEntradaForma> listFormas;
 
-		private objConta contaSelected;
-		private objSetor setorSelected;
+		private objConta contaSelected; // is a COPY of default
+		private objSetor setorSelected; // is a COPY of default
 
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
@@ -60,8 +60,8 @@ namespace CamadaUI.Entradas
 
 			// Define Conta and Setor padrao
 			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			contaSelected = principal.propContaPadrao;
-			setorSelected = principal.propSetorPadrao;
+			contaSelected = principal.propContaPadrao.ShallowCopy();
+			setorSelected = principal.propSetorPadrao.ShallowCopy();
 
 			// binding
 			bind.DataSource = typeof(objContribuicao);
@@ -73,15 +73,14 @@ namespace CamadaUI.Entradas
 			if (_contribuicao.IDContribuicao == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
-				_contribuicao.IDConta = (int)contaSelected.IDConta;
-				_contribuicao.Conta = contaSelected.Conta;
-				_contribuicao.IDSetor = (int)setorSelected.IDSetor;
-				_contribuicao.Setor = setorSelected.Setor;
 			}
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
+
+			// define DEFAULT DATE
+			_contribuicao.ContribuicaoData = contaSelected.BloqueioData ?? DateTime.Today;
 
 			// handlers
 			_contribuicao.PropertyChanged += RegistroAlterado;
@@ -177,6 +176,12 @@ namespace CamadaUI.Entradas
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
 					lblSitBlock.Visible = false;
+
+					_contribuicao.IDConta = (int)contaSelected.IDConta;
+					_contribuicao.Conta = contaSelected.Conta;
+					_contribuicao.IDSetor = (int)setorSelected.IDSetor;
+					_contribuicao.Setor = setorSelected.Setor;
+
 				}
 				else
 				{
@@ -391,7 +396,7 @@ namespace CamadaUI.Entradas
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
-			if (Application.OpenForms.Count == 1)
+			if (!Modal)
 				new frmContribuicaoListagem().Show();
 
 			Close();
@@ -441,9 +446,13 @@ namespace CamadaUI.Entradas
 			if (Sit != EnumFlagEstado.RegistroSalvo) return;
 
 			_contribuicao = new objContribuicao(null);
+
+			// define DEFAULT DATE
+			_contribuicao.ContribuicaoData = contaSelected.BloqueioData ?? DateTime.Today;
+
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _contribuicao;
-			txtOrigemDescricao.Focus();
+			txtConta.Focus();
 		}
 
 		#endregion
@@ -561,6 +570,9 @@ namespace CamadaUI.Entradas
 				// return
 				return false;
 			}
+
+			// CHECK CONTA BLOCK DATE
+
 
 			// check CAMPANHA
 			bool ComCampanha = listTipos.First(x => x.IDContribuicaoTipo == _contribuicao.IDContribuicaoTipo).ComCampanha;
@@ -896,6 +908,7 @@ namespace CamadaUI.Entradas
 					_contribuicao.IDConta = (int)frm.propEscolha.IDConta;
 					txtConta.Text = frm.propEscolha.Conta;
 					contaSelected = frm.propEscolha;
+					_contribuicao.ContribuicaoData = contaSelected.BloqueioData ?? DateTime.Today;
 				}
 
 				//--- select

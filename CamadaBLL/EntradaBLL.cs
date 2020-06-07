@@ -68,7 +68,7 @@ namespace CamadaBLL
 
 			try
 			{
-				if (!db.isTran) db.BeginTransaction();
+				if (dbTran == null) db.BeginTransaction();
 
 				//--- clear Params
 				db.LimparParametros();
@@ -99,27 +99,28 @@ namespace CamadaBLL
 				//--- altera o saldo do SETOR
 				new SetorBLL().SetorSaldoChange(entrada.IDSetor, entrada.EntradaValor, db, SetorSdlUpdate);
 
-				if (!db.isTran) db.CommitTransaction();
+				if (dbTran == null) db.CommitTransaction();
 				return newID;
 
 			}
 			catch (Exception ex)
 			{
-				if (!db.isTran) db.RollBackTransaction();
+				if (dbTran == null) db.RollBackTransaction();
 				throw ex;
 			}
 		}
 
 		// UPDATE CONSOLIDADO FOR IDARECEBER
 		//------------------------------------------------------------------------------------------------------------
-		public void UpdateEntradaConsolidado(long IDAReceber, AcessoDados dbTran)
+		public void UpdateEntradaConsolidado(long IDAReceber, bool Consolidado, AcessoDados dbTran)
 		{
 			try
 			{
 				dbTran.LimparParametros();
 				dbTran.AdicionarParametros("@IDAReceber", IDAReceber);
+				dbTran.AdicionarParametros("@Consolidado", Consolidado);
 
-				string query = "UPDATE tblEntrada SET Consolidado = 'True' WHERE IDOrigem = @IDAReceber AND Origem = 2";
+				string query = "UPDATE tblEntradas SET Consolidado = @Consolidado WHERE IDOrigem = @IDAReceber AND Origem = 2";
 
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
 			}

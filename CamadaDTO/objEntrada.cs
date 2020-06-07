@@ -25,6 +25,7 @@ namespace CamadaDTO
 			internal string _Conta;
 			internal bool _Consolidado;
 			internal string _Observacao;
+			internal long? _IDCaixa;
 		}
 
 		/* --- ORIGEM
@@ -46,6 +47,7 @@ namespace CamadaDTO
 				_IDEntrada = IDEntrada,
 				_EntradaData = DateTime.Today,
 				_EntradaValor = 0,
+				_IDCaixa = null
 			};
 		}
 
@@ -311,6 +313,21 @@ namespace CamadaDTO
 				{
 					EditData._Observacao = value;
 					NotifyPropertyChanged("Observacao");
+				}
+			}
+		}
+
+		// Property IDCaixa
+		//---------------------------------------------------------------
+		public long? IDCaixa
+		{
+			get => EditData._IDCaixa;
+			set
+			{
+				if (value != EditData._IDCaixa)
+				{
+					EditData._IDCaixa = value;
+					NotifyPropertyChanged("IDCaixa");
 				}
 			}
 		}

@@ -576,7 +576,7 @@ namespace CamadaBLL
 				}
 
 				// Verifica CONTA BLOQUEIO
-				if (!cBLL.ContaBloqueioPermit(saida.IDConta, saida.SaidaData, dbTran))
+				if (!cBLL.ContaDateBlockPermit(saida.IDConta, saida.SaidaData, dbTran))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Débito proposto...", 2);
 				}
@@ -630,7 +630,7 @@ namespace CamadaBLL
 				// Verifica CONTA BLOQUEIO
 				ContaBLL cBLL = new ContaBLL();
 
-				if (!cBLL.ContaBloqueioPermit(saida.IDConta, saida.SaidaData, dbTran))
+				if (!cBLL.ContaDateBlockPermit(saida.IDConta, saida.SaidaData, dbTran))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data proposta...", 2);
 				}

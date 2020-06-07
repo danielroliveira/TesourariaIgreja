@@ -134,7 +134,7 @@ namespace CamadaBLL
 
 			try
 			{
-				if (!db.isTran) db.BeginTransaction();
+				if (dbTran == null) db.BeginTransaction();
 
 				//--- clear Params
 				db.LimparParametros();
@@ -159,13 +159,13 @@ namespace CamadaBLL
 				//--- altera o saldo da CONTA PROVISORIA
 				//new ContaBLL().ContaSaldoChange(entrada.IDContaProvisoria, entrada.ValorBruto, db, ContaSldUpdate);
 
-				if (!db.isTran) db.CommitTransaction();
+				if (dbTran == null) db.CommitTransaction();
 				return newID;
 
 			}
 			catch (Exception ex)
 			{
-				if (!db.isTran) db.RollBackTransaction();
+				if (dbTran == null) db.RollBackTransaction();
 				throw ex;
 			}
 		}
@@ -291,6 +291,8 @@ namespace CamadaBLL
 
 			try
 			{
+				// Update FIRST Entrada: CONSOLIDADO = TRUE
+				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, true, dbTran);
 				// Insert transf saida
 				TransferenciaBLL tBLL = new TransferenciaBLL();
 				tBLL.InsertTransferencia(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
@@ -354,7 +356,7 @@ namespace CamadaBLL
 			try
 			{
 				// Update FIRST Entrada: CONSOLIDADO = TRUE
-				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, dbTran);
+				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, true, dbTran);
 				// Insert transf saida
 				TransferenciaBLL tBLL = new TransferenciaBLL();
 				tBLL.InsertTransferencia(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
@@ -367,6 +369,52 @@ namespace CamadaBLL
 			}
 			catch (Exception ex)
 			{
+				throw ex;
+			}
+
+			return receber;
+		}
+
+		// ESTORNA ARECEBER
+		//------------------------------------------------------------------------------------------------------------
+		public objAReceber estornaAReceber(objAReceber receber,
+			Action<int, decimal> contaSaldoUpdate,
+			Action<int, decimal> setorSaldoUpdate)
+		{
+			AcessoDados db = null;
+
+			// UPDATE CONSOLIDADO ENTRADA = FALSE
+			// DELETE TRANSFER ENTRADA / SAIDA
+			// DELETE COMISSAO SAIDA
+			// UPDATE A RECEBER
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				// Update FIRST Entrada: CONSOLIDADO = FALSE
+				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, false, db);
+
+				// REMOVE transf saida entrada
+				TransferenciaBLL tBLL = new TransferenciaBLL();
+				tBLL.RemoveTransferenciaByOrigem(3, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);
+
+				// REMOVE saida comissao
+				new SaidaBLL().RemoveSaidasByOrigem(2, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);
+
+				// UPDATE AReceber
+				receber.ValorRecebido = 0;
+				receber.IDSituacao = 1;
+				receber.Situacao = "Em Aberto";
+				UpdateAReceber(receber, db);
+
+				// COMMIT
+				db.CommitTransaction();
+
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
 				throw ex;
 			}
 

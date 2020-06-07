@@ -69,7 +69,7 @@
 			this.btnReceber = new System.Windows.Forms.Button();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuItemReceber = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemVerPagamentos = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemEstornar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemCancelar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemNormalizar = new System.Windows.Forms.ToolStripMenuItem();
@@ -582,7 +582,7 @@
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuItemReceber,
-            this.mnuItemVerPagamentos,
+            this.mnuItemEstornar,
             this.toolStripSeparator2,
             this.mnuItemCancelar,
             this.mnuItemNormalizar,
@@ -590,34 +590,34 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(269, 194);
+			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
 			// 
 			// mnuItemReceber
 			// 
 			this.mnuItemReceber.Image = global::CamadaUI.Properties.Resources.money_green_24;
 			this.mnuItemReceber.Name = "mnuItemReceber";
-			this.mnuItemReceber.Size = new System.Drawing.Size(268, 26);
+			this.mnuItemReceber.Size = new System.Drawing.Size(233, 26);
 			this.mnuItemReceber.Text = "Receber";
 			this.mnuItemReceber.Click += new System.EventHandler(this.mnuItemQuitar_Click);
 			// 
-			// mnuItemVerPagamentos
+			// mnuItemEstornar
 			// 
-			this.mnuItemVerPagamentos.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.mnuItemVerPagamentos.Name = "mnuItemVerPagamentos";
-			this.mnuItemVerPagamentos.Size = new System.Drawing.Size(268, 26);
-			this.mnuItemVerPagamentos.Text = "Ver Recebimento | Estornar";
-			this.mnuItemVerPagamentos.Click += new System.EventHandler(this.mnuItemVerPagamentos_Click);
+			this.mnuItemEstornar.Image = global::CamadaUI.Properties.Resources.refresh_16;
+			this.mnuItemEstornar.Name = "mnuItemEstornar";
+			this.mnuItemEstornar.Size = new System.Drawing.Size(233, 26);
+			this.mnuItemEstornar.Text = "Estornar Recebimento";
+			this.mnuItemEstornar.Click += new System.EventHandler(this.mnuItemEstornar_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(265, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(230, 6);
 			// 
 			// mnuItemCancelar
 			// 
 			this.mnuItemCancelar.Image = global::CamadaUI.Properties.Resources.delete_16;
 			this.mnuItemCancelar.Name = "mnuItemCancelar";
-			this.mnuItemCancelar.Size = new System.Drawing.Size(268, 26);
+			this.mnuItemCancelar.Size = new System.Drawing.Size(233, 26);
 			this.mnuItemCancelar.Text = "Cancelar";
 			this.mnuItemCancelar.Click += new System.EventHandler(this.mnuItemCancelar_Click);
 			// 
@@ -625,20 +625,20 @@
 			// 
 			this.mnuItemNormalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
 			this.mnuItemNormalizar.Name = "mnuItemNormalizar";
-			this.mnuItemNormalizar.Size = new System.Drawing.Size(268, 26);
+			this.mnuItemNormalizar.Size = new System.Drawing.Size(233, 26);
 			this.mnuItemNormalizar.Text = "Normalizar";
 			this.mnuItemNormalizar.Click += new System.EventHandler(this.mnuItemNormalizar_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(265, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(230, 6);
 			// 
 			// mnuItemVerOrigem
 			// 
 			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
-			this.mnuItemVerOrigem.Size = new System.Drawing.Size(268, 26);
+			this.mnuItemVerOrigem.Size = new System.Drawing.Size(233, 26);
 			this.mnuItemVerOrigem.Text = "Ver Origem";
 			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
 			// 
@@ -646,7 +646,7 @@
 			// 
 			this.mnuItemAlterar.Image = global::CamadaUI.Properties.Resources.refresh_24;
 			this.mnuItemAlterar.Name = "mnuItemAlterar";
-			this.mnuItemAlterar.Size = new System.Drawing.Size(268, 26);
+			this.mnuItemAlterar.Size = new System.Drawing.Size(233, 26);
 			this.mnuItemAlterar.Text = "Alterar";
 			this.mnuItemAlterar.Click += new System.EventHandler(this.mnuItemAlterar_Click);
 			// 
@@ -876,7 +876,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemVerOrigem;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemVerPagamentos;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemEstornar;
 		internal System.Windows.Forms.Label lblValorLiquido;
 		internal System.Windows.Forms.Label label4;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;

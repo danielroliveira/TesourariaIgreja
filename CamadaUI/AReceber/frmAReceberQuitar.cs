@@ -41,6 +41,8 @@ namespace CamadaUI.AReceber
 			CarregaComboMes();
 			numEntradaAno.KeyDown += control_KeyDown;
 			numEntradaAno.Enter += Control_Enter;
+			numEntradaDia.KeyDown += control_KeyDown;
+			numEntradaDia.Enter += Control_Enter;
 
 			// get default Conta and Setor
 			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
@@ -100,7 +102,7 @@ namespace CamadaUI.AReceber
 
 			// define data padrao
 			DateTime datePadrao = ((frmPrincipal)Application.OpenForms[0]).propDataPadrao;
-			txtEntradaDia.Text = datePadrao.Day.ToString("D2");
+			numEntradaDia.Text = datePadrao.Day.ToString("D2");
 			cmbEntradaMes.SelectedValue = datePadrao.Month;
 			numEntradaAno.Value = datePadrao.Year;
 
@@ -160,39 +162,11 @@ namespace CamadaUI.AReceber
 
 		private void btnReceber_Click(object sender, EventArgs e)
 		{
-			//check AReceber Value
-			if (doValor <= 0)
-			{
-				AbrirDialog("O Valor total a Receber não pode ficar vazio ou ser igual a Zero...\n" +
-					"Favor preencher esse campo...", "Valor a Receber Vazio",
-					DialogType.OK, DialogIcon.Exclamation);
-				txtDoValor.Focus();
-				eP.SetError(txtDoValor, "Valor precisa ser maior que Zero...");
-				return;
-			}
-			else if (doValor > maxValue)
-			{
-				AbrirDialog($"O Valor total a Receber não pode ser maior que o Valor Bruto " +
-					$"subtraído do Valor Recebido: {maxValue:c}\n" +
-					"Favor preencher esse campo...", "Valor a Receber Inválido",
-					DialogType.OK, DialogIcon.Exclamation);
-				txtDoValor.Focus();
-				eP.SetError(txtDoValor, "Valor não pode ser maior que o Valor Bruto...");
-				return;
-			}
-			else if (doValor < vlEmAberto)
-			{
-				AbrirDialog($"O Valor total a Receber não pode ser menor que o " +
-					$"Valor Em aberto: {vlEmAberto:c}\n" +
-					"Favor preencher esse campo...", "Valor a Receber Inválido",
-					DialogType.OK, DialogIcon.Exclamation);
-				txtDoValor.Focus();
-				eP.SetError(txtDoValor, "Valor não pode ser menor que o Valor Em Aberto...");
-				return;
-			}
-
 			// valida Data
 			ValidaData();
+
+			// Valida Campos
+			if (!ValidaCampos()) return;
 
 			// calc percent of value
 			decimal perc = (doValor - vlLiquido) / vlLiquido;
@@ -211,6 +185,53 @@ namespace CamadaUI.AReceber
 			}
 
 			DialogResult = DialogResult.OK;
+		}
+
+		private bool ValidaCampos()
+		{
+			//check AReceber Value
+			if (doValor <= 0)
+			{
+				AbrirDialog("O Valor total a Receber não pode ficar vazio ou ser igual a Zero...\n" +
+					"Favor preencher esse campo...", "Valor a Receber Vazio",
+					DialogType.OK, DialogIcon.Exclamation);
+				txtDoValor.Focus();
+				eP.SetError(txtDoValor, "Valor precisa ser maior que Zero...");
+				return false;
+			}
+			else if (doValor > maxValue)
+			{
+				AbrirDialog($"O Valor total a Receber não pode ser maior que o Valor Bruto " +
+					$"subtraído do Valor Recebido: {maxValue:c}\n" +
+					"Favor preencher esse campo...", "Valor a Receber Inválido",
+					DialogType.OK, DialogIcon.Exclamation);
+				txtDoValor.Focus();
+				eP.SetError(txtDoValor, "Valor não pode ser maior que o Valor Bruto...");
+				return false;
+			}
+			else if (doValor < vlEmAberto)
+			{
+				AbrirDialog($"O Valor total a Receber não pode ser menor que o " +
+					$"Valor Em aberto: {vlEmAberto:c}\n" +
+					"Favor preencher esse campo...", "Valor a Receber Inválido",
+					DialogType.OK, DialogIcon.Exclamation);
+				txtDoValor.Focus();
+				eP.SetError(txtDoValor, "Valor não pode ser menor que o Valor Em Aberto...");
+				return false;
+			}
+
+			// CHECK DATE IS FUTURE
+			if (_entradaData > DateTime.Today)
+			{
+				AbrirDialog($"A data do Recebimento não pode ser futura...\n" +
+							"Favor preencher uma data válida...", "Data Inválida",
+							DialogType.OK, DialogIcon.Exclamation);
+				numEntradaDia.Focus();
+				eP.SetError(numEntradaDia, "Data não pode ser futura");
+				return false;
+			}
+
+			return true;
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
@@ -322,7 +343,7 @@ namespace CamadaUI.AReceber
 
 		private void Control_Enter(object sender, EventArgs e)
 		{
-			numEntradaAno.Select(0, 4);
+			((NumericUpDown)sender).Select(0, 4);
 		}
 
 		// CHECK MAX VALUE OF A APAGAR
@@ -356,7 +377,7 @@ namespace CamadaUI.AReceber
 		private bool ValidaData()
 		{
 			// format new Date
-			string testDate = $"{txtEntradaDia.Text}/{cmbEntradaMes.SelectedValue}/{numEntradaAno.Value}";
+			string testDate = $"{numEntradaDia.Value}/{cmbEntradaMes.SelectedValue}/{numEntradaAno.Value}";
 
 			// check new date
 			if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))

@@ -153,14 +153,29 @@ namespace CamadaBLL
 			objSaida saida,
 			Action<int, decimal> ContaSdlUpdate,
 			Action<int, decimal> SetorSdlUpdate,
-			object dbTran = null
-			)
+			object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 			try
 			{
 				if (dbTran == null) db.BeginTransaction();
+
+				//--- get Saida by ID
+				saida = GetSaida((long)saida.IDSaida, db);
+
+				//--- check saida
+				//--- Check is Caixa
+				if (saida.IDCaixa != null)
+				{
+					throw new AppException("A SAÍDA não pode ser removida porque está anexada a um caixa...");
+				}
+
+				//--- Check is ContaDateBlock
+				if (!new ContaBLL().ContaDateBlockPermit(saida.IDConta, saida.SaidaData))
+				{
+					throw new AppException("A SAÍDA não pode ser removida porque a Data está bloqueada na Conta...");
+				}
 
 				//--- clear Params
 				db.LimparParametros();
@@ -194,5 +209,107 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// REMOVE DELETE SAIDA BY ORIGEM AND IDORIGEM
+		//------------------------------------------------------------------------------------------------------------
+		public void RemoveSaidasByOrigem(
+			int Origem,
+			long IDOrigem,
+			Action<int, decimal> ContaSdlUpdate,
+			Action<int, decimal> SetorSdlUpdate,
+			object dbTran = null)
+		{
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+			List<objSaida> ListSaida = new List<objSaida>();
+			string query = "";
+
+			try
+			{
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDOrigem", IDOrigem);
+				db.AdicionarParametros("@Origem", Origem);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create SELECT query
+				query = "SELECT * FROM qrySaida WHERE Origem = @Origem AND IDOrigem = @IDOrigem";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+				if (dt.Rows.Count == 0)
+				{
+					throw new AppException("Não foi encontrada nenhuma SAIDA com a Origem informada...");
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					var saida = ConvertRowInClass(row);
+
+					//--- Check is Caixa
+					if (saida.IDCaixa != null)
+					{
+						throw new AppException("A SAIDA não pode ser removida porque está anexada a um caixa...");
+					}
+
+					//--- Check is ContaDateBlock
+					if (!new ContaBLL().ContaDateBlockPermit(saida.IDConta, saida.SaidaData, db))
+					{
+						throw new AppException("A Transferência não pode ser removida porque a Data está bloqueada na Conta...");
+					}
+
+					ListSaida.Add(saida);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			try
+			{
+				if (dbTran == null) db.BeginTransaction();
+
+				//--- Get OLD Values
+				foreach (objSaida saida in ListSaida)
+				{
+					//--- clear Params
+					db.LimparParametros();
+
+					//--- define Params
+					db.AdicionarParametros("@IDOrigem", IDOrigem);
+					db.AdicionarParametros("@Origem", Origem);
+					db.AdicionarParametros("@IDConta", saida.IDConta);
+
+					//--- convert null parameters
+					db.ConvertNullParams();
+
+					//--- Delete Saida
+					query = "DELETE tblSaidas WHERE Origem = @Origem AND IDOrigem = @IDOrigem AND IDConta = @IDConta";
+					db.ExecutarManipulacao(CommandType.Text, query);
+
+					//--- DELETE OBSERVACAO
+					new ObservacaoBLL().DeleteObservacao(2, (long)saida.IDSaida, db);
+
+					//--- altera o saldo da CONTA
+					new ContaBLL().ContaSaldoChange(saida.IDConta, saida.SaidaValor * (-1), db, ContaSdlUpdate);
+
+					//--- altera o saldo do SETOR
+					new SetorBLL().SetorSaldoChange(saida.IDSetor, saida.SaidaValor * (-1), db, SetorSdlUpdate);
+				}
+
+				if (dbTran == null) db.CommitTransaction();
+
+			}
+			catch (Exception ex)
+			{
+				if (dbTran == null) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
 	}
 }

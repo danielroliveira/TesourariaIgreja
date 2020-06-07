@@ -25,7 +25,7 @@ namespace CamadaBLL
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 			bool tranInterna = false;
 
-			if (!db.isTran)
+			if (dbTran == null)
 			{
 				db.BeginTransaction();
 				tranInterna = true;

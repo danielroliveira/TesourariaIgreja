@@ -916,7 +916,7 @@ namespace CamadaUI.AReceber
 			objAReceber recItem = (objAReceber)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 			// mnuVerPagamentos
-			mnuItemVerPagamentos.Enabled = recItem.ValorRecebido > 0;
+			mnuItemEstornar.Enabled = recItem.ValorRecebido > 0;
 
 			switch (recItem.IDSituacao)
 			{
@@ -926,21 +926,21 @@ namespace CamadaUI.AReceber
 					mnuItemCancelar.Enabled = true;
 					mnuItemNormalizar.Enabled = false;
 					mnuItemReceber.Enabled = true;
-					mnuItemVerPagamentos.Enabled = true;
+					mnuItemEstornar.Enabled = false;
 					break;
 				case 2: // RECEBIDAS
 					mnuItemAlterar.Enabled = false;
 					mnuItemCancelar.Enabled = false;
 					mnuItemNormalizar.Enabled = false;
 					mnuItemReceber.Enabled = false;
-					mnuItemVerPagamentos.Enabled = true;
+					mnuItemEstornar.Enabled = true;
 					break;
 				case 3: // CANCELADAS
 					mnuItemAlterar.Enabled = false;
 					mnuItemCancelar.Enabled = false;
 					mnuItemNormalizar.Enabled = true;
 					mnuItemReceber.Enabled = false;
-					mnuItemVerPagamentos.Enabled = true;
+					mnuItemEstornar.Enabled = false;
 					break;
 				default:
 					break;
@@ -1055,14 +1055,14 @@ namespace CamadaUI.AReceber
 			return item;
 		}
 
-		//--- MENU VER PAGAMENTOS ESTORNAR
+		//--- MENU ESTORNAR PAGAMENTOS
 		//-------------------------------------------------------------------------------------------------------
-		private void mnuItemVerPagamentos_Click(object sender, EventArgs e)
+		private void mnuItemEstornar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
-				AbrirDialog("Favor selecionar um registro para Ver Recebimentos ou Estornar...",
+				AbrirDialog("Favor selecionar um registro para Estornar...",
 					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
 				return;
 			}
@@ -1074,12 +1074,25 @@ namespace CamadaUI.AReceber
 
 				objAReceber recItem = (objAReceber)dgvListagem.SelectedRows[0].DataBoundItem;
 
-				//frmAPagarSaidas frm = new frmAPagarSaidas(recItem, this);
-				//frm.ShowDialog();
+				var resp = AbrirDialog("Você deseja realmente ESTORNAR o recebimento do AReceber selecionado?",
+					"Estornar Recebimento",
+					DialogType.SIM_NAO,
+					DialogIcon.Question,
+					DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes) return;
+
+				//--- execute
+				rBLL.estornaAReceber(recItem, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+				//--- get Dados
+				ObterDados();
+				//--- message
+				AbrirDialog("Recebimento estornado com sucesso!", "Estorno");
+
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao abrir formulário de Recebimentos..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao ESTORNAR o Recebimento..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
