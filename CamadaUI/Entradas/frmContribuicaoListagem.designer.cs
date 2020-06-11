@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -61,6 +61,7 @@
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
 			this.lblFiltro = new System.Windows.Forms.Label();
+			this.btnExcluir = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -92,7 +93,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(576, 625);
+			this.btnFechar.Location = new System.Drawing.Point(708, 625);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 7;
@@ -136,35 +137,35 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnData,
-			this.clnConta,
-			this.clnSetor,
-			this.clnTipo,
-			this.clnContribuinte,
-			this.clnForma,
-			this.clnValor});
+            this.clnID,
+            this.clnData,
+            this.clnConta,
+            this.clnSetor,
+            this.clnTipo,
+            this.clnContribuinte,
+            this.clnForma,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -505,6 +506,20 @@
 			this.lblFiltro.TabIndex = 10;
 			this.lblFiltro.Text = "Filtro";
 			// 
+			// btnExcluir
+			// 
+			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExcluir.Location = new System.Drawing.Point(576, 625);
+			this.btnExcluir.Name = "btnExcluir";
+			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
+			this.btnExcluir.TabIndex = 6;
+			this.btnExcluir.Text = "&Excluir";
+			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnExcluir.UseVisualStyleBackColor = true;
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+			// 
 			// frmContribuicaoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -516,6 +531,7 @@
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnVisualizar);
@@ -525,6 +541,7 @@
 			this.Controls.SetChildIndex(this.btnVisualizar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.button1, 0);
+			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
@@ -576,5 +593,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		private System.Windows.Forms.Label lblFiltro;
+		internal System.Windows.Forms.Button btnExcluir;
 	}
 }

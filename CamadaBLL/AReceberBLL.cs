@@ -103,6 +103,42 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET LIST OF BY IDCONTRIBUICAO
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAReceber> GetListAReceberByIDContribuicao(long IDContribuicao, AcessoDados dbTran)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : dbTran;
+
+				string query = "SELECT * FROM qryAReceber";
+
+				// add params
+				db.LimparParametros();
+
+				db.AdicionarParametros("@IDContribuicao", IDContribuicao);
+				query += " WHERE IDContribuicao = @IDContribuicao";
+
+				query += " ORDER BY CompensacaoData";
+
+				List<objAReceber> listagem = new List<objAReceber>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				// RETURN
+				return listagem.OrderBy(p => p.CompensacaoData).ToList();
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		public objAReceber ConvertRowInClass(DataRow row)
@@ -166,6 +202,37 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				if (dbTran == null) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// DELETE ARECEBER
+		//------------------------------------------------------------------------------------------------------------
+		public bool DeleteAReceber(long IDAReceber, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDAReceber", IDAReceber);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblAReceber WHERE IDAReceber = @IDAReceber";
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}

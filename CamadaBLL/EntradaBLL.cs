@@ -36,6 +36,38 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET LIST ENTRADAS OR ORIGEM AND IDORIGEM
+		//------------------------------------------------------------------------------------------------------------
+		public List<objEntrada> GetEntradaListByOrigem(int Origem, long IDOrigem, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT * FROM qryEntrada WHERE Origem = @Origem AND IDOrigem = @IDOrigem";
+				db.LimparParametros();
+				db.AdicionarParametros("@IDOrigem", IDOrigem);
+				db.AdicionarParametros("@Origem", Origem);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				List<objEntrada> list = new List<objEntrada>();
+
+				if (dt.Rows.Count > 0)
+				{
+					foreach (DataRow row in dt.Rows)
+					{
+						list.Add(ConvertRowInClass(row));
+					}
+				}
+				return list;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		public objEntrada ConvertRowInClass(DataRow row)
@@ -52,6 +84,7 @@ namespace CamadaBLL
 				Conta = (string)row["Conta"],
 				Consolidado = (bool)row["Consolidado"],
 				Observacao = row["Observacao"] == DBNull.Value ? string.Empty : (string)row["Observacao"],
+				IDCaixa = row["IDCaixa"] == DBNull.Value ? null : (long?)row["IDCaixa"],
 			};
 
 			return entrada;
@@ -123,6 +156,37 @@ namespace CamadaBLL
 				string query = "UPDATE tblEntradas SET Consolidado = @Consolidado WHERE IDOrigem = @IDAReceber AND Origem = 2";
 
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// DELETE ENTRADA
+		//------------------------------------------------------------------------------------------------------------
+		public bool DeleteEntrada(long IDEntrada, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDEntrada", IDEntrada);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblEntradas WHERE IDEntrada = @IDEntrada";
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
 			}
 			catch (Exception ex)
 			{

@@ -44,6 +44,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtCartaoTipo = new System.Windows.Forms.TextBox();
 			this.btnSetCartaoTipo = new VIBlend.WinForms.Controls.vButton();
+			this.lblSitBlock = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).BeginInit();
@@ -306,10 +307,23 @@
 			this.btnSetCartaoTipo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetCartaoTipo.Click += new System.EventHandler(this.btnSetCartaoTipo_Click);
 			// 
+			// lblSitBlock
+			// 
+			this.lblSitBlock.AutoSize = true;
+			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
+			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
+			this.lblSitBlock.Location = new System.Drawing.Point(161, 257);
+			this.lblSitBlock.Name = "lblSitBlock";
+			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
+			this.lblSitBlock.TabIndex = 34;
+			this.lblSitBlock.Text = "- Apenas Visualização -";
+			// 
 			// frmContribuicaoCartao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(481, 293);
+			this.Controls.Add(this.lblSitBlock);
 			this.Controls.Add(this.numParcelas);
 			this.Controls.Add(this.btnSetBandeira);
 			this.Controls.Add(this.btnSetCartaoTipo);
@@ -341,6 +355,7 @@
 			this.Controls.SetChildIndex(this.btnSetBandeira, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.numParcelas, 0);
+			this.Controls.SetChildIndex(this.lblSitBlock, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -368,5 +383,6 @@
 		internal System.Windows.Forms.Label label2;
 		internal System.Windows.Forms.TextBox txtCartaoTipo;
 		internal VIBlend.WinForms.Controls.vButton btnSetCartaoTipo;
+		private System.Windows.Forms.Label lblSitBlock;
 	}
 }

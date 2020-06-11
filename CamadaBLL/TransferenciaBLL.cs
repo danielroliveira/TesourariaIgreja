@@ -49,6 +49,7 @@ namespace CamadaBLL
 				Setor = (string)row["Setor"],
 				IDConta = (int)row["IDConta"],
 				Conta = (string)row["Conta"],
+				IDCaixa = row["IDCaixa"] == DBNull.Value ? null : (long?)row["IDCaixa"],
 			};
 
 			return entrada;

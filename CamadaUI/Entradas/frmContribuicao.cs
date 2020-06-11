@@ -182,6 +182,8 @@ namespace CamadaUI.Entradas
 					_contribuicao.IDSetor = (int)setorSelected.IDSetor;
 					_contribuicao.Setor = setorSelected.Setor;
 
+					btnSetEntradaForma.Image = null;
+					btnSetEntradaForma.Text = "n";
 				}
 				else
 				{
@@ -189,12 +191,23 @@ namespace CamadaUI.Entradas
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
 					lblSitBlock.Visible = true;
+
+					if (_contribuicao.IDEntradaForma != 1)
+					{
+						btnSetEntradaForma.Image = Properties.Resources.search_16;
+						btnSetEntradaForma.ImageAbsolutePosition = new Point(7, 4);
+						btnSetEntradaForma.ImageAlign = ContentAlignment.TopCenter;
+						btnSetEntradaForma.Text = "";
+					}
+					else
+					{
+						btnSetEntradaForma.Enabled = false;
+					}
 				}
 
 				// btnSET
 				btnSetConta.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetEntradaForma.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetContribuinte.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetCampanha.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetReuniao.Enabled = value == EnumFlagEstado.NovoRegistro;
@@ -821,7 +834,6 @@ namespace CamadaUI.Entradas
 					default:
 						break;
 				}
-
 			}
 		}
 
@@ -929,30 +941,52 @@ namespace CamadaUI.Entradas
 
 		private void btnSetEntradaForma_Click(object sender, EventArgs e)
 		{
-			if (listFormas.Count == 0)
+			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
-				AbrirDialog("Não há Formas de Entradas cadastradas...", "Formas de Entrada",
-					DialogType.OK, DialogIcon.Exclamation);
-				return;
+				if (listFormas.Count == 0)
+				{
+					AbrirDialog("Não há Formas de Entradas cadastradas...", "Formas de Entrada",
+						DialogType.OK, DialogIcon.Exclamation);
+					return;
+				}
+
+				var dic = listFormas.ToDictionary(x => (int)x.IDEntradaForma, x => x.EntradaForma);
+
+				Main.frmComboLista frm = new Main.frmComboLista(dic, txtEntradaForma, _contribuicao.IDEntradaForma);
+
+				// show form
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					_contribuicao.IDEntradaForma = (byte)frm.propEscolha.Key;
+					txtEntradaForma.Text = frm.propEscolha.Value;
+				}
+
+				//--- select
+				txtEntradaForma.Focus();
+				txtEntradaForma.SelectAll();
+			}
+			else
+			{
+				//--- check Cartao | Cheque
+				if (_contribuicao.IDEntradaForma == 3) // cartao
+				{
+					var cartao = new objContribuicaoCartao(_contribuicao.IDContribuicao);
+					var frm = new frmContribuicaoCartao(ref cartao, this);
+
+					frm.ShowDialog();
+				}
+				else if (_contribuicao.IDEntradaForma == 2) // cheque 
+				{
+					var cheque = new objContribuicaoCheque(_contribuicao.IDContribuicao);
+					var frm = new frmContribuicaoCheque(ref cheque, this);
+
+					frm.ShowDialog();
+				}
 			}
 
-			var dic = listFormas.ToDictionary(x => (int)x.IDEntradaForma, x => x.EntradaForma);
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, txtEntradaForma, _contribuicao.IDEntradaForma);
-
-			// show form
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				_contribuicao.IDEntradaForma = (byte)frm.propEscolha.Key;
-				txtEntradaForma.Text = frm.propEscolha.Value;
-			}
-
-			//--- select
-			txtEntradaForma.Focus();
-			txtEntradaForma.SelectAll();
 		}
 
 		private void btnSetContribuicaoTipo_Click(object sender, EventArgs e)

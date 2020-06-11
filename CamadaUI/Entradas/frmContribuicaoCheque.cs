@@ -28,11 +28,19 @@ namespace CamadaUI.Entradas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuicaoCheque(ref objContribuicaoCheque obj, Form formOrigem)
+		public frmContribuicaoCheque(ref objContribuicaoCheque cheque, Form formOrigem)
 		{
 			InitializeComponent();
 
-			_cheque = obj;
+			if (cheque.IDContribuicao != null)
+			{
+				_cheque = GetCheque((long)cheque.IDContribuicao);
+			}
+			else
+			{
+				_cheque = cheque;
+			}
+
 			_formOrigem = formOrigem;
 			GetBancosList();
 
@@ -49,6 +57,30 @@ namespace CamadaUI.Entradas
 			// handlers
 			_cheque.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+		}
+
+		// GET CONTRIBUICAO CHEQUE
+		//------------------------------------------------------------------------------------------------------------
+		private objContribuicaoCheque GetCheque(long IDContribuicao)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				return new ContribuicaoBLL().GetContribuicaoCheque(IDContribuicao);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter os dados do Cheque..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		// GET LIST OF BANCOS
@@ -84,31 +116,26 @@ namespace CamadaUI.Entradas
 			set
 			{
 				_Sit = value;
-				switch (value)
+
+				if (value == EnumFlagEstado.NovoRegistro)
 				{
-					case EnumFlagEstado.RegistroSalvo:
-						btnOK.Enabled = false;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Fechar";
-						break;
-					case EnumFlagEstado.Alterado:
-						btnOK.Enabled = true;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Cancelar";
-						break;
-					case EnumFlagEstado.NovoRegistro:
-						btnOK.Enabled = true;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Cancelar";
-						break;
-					case EnumFlagEstado.RegistroBloqueado:
-						btnOK.Enabled = false;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Fechar";
-						break;
-					default:
-						break;
+					btnOK.Enabled = true;
+					btnCancelar.Enabled = true;
+					btnCancelar.Text = "Cancelar";
+					lblSitBlock.Visible = false;
 				}
+				else
+				{
+					btnOK.Enabled = false;
+					btnCancelar.Enabled = true;
+					btnCancelar.Text = "Fechar";
+					dtpDepositoData.MaxDate = _cheque.DepositoData;
+					dtpDepositoData.MinDate = _cheque.DepositoData;
+					lblSitBlock.Visible = true;
+				}
+
+				// btnSET
+				btnSetBanco.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
@@ -211,6 +238,15 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
 		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+
 			Control ctr = (Control)sender;
 
 			if (e.KeyCode == Keys.Add)
@@ -255,6 +291,20 @@ namespace CamadaUI.Entradas
 					e.SuppressKeyPress = true;
 				}
 			}
+		}
+
+		// PREVINE CHANGES IN SIT => REGISTRO SALVO
+		private void control_KeyDown_Block(object sender, KeyEventArgs e)
+		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+			//---------------------------------------------------
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END

@@ -30,11 +30,19 @@ namespace CamadaUI.Entradas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuicaoCartao(ref objContribuicaoCartao obj, Form formOrigem)
+		public frmContribuicaoCartao(ref objContribuicaoCartao cartao, Form formOrigem)
 		{
 			InitializeComponent();
 
-			_cartao = obj;
+			if (cartao.IDContribuicao != null)
+			{
+				_cartao = GetCartao((long)cartao.IDContribuicao);
+			}
+			else
+			{
+				_cartao = cartao;
+			}
+
 			_formOrigem = formOrigem;
 			GetOperadorasList();
 			GetBandeirasList();
@@ -57,6 +65,30 @@ namespace CamadaUI.Entradas
 			// handlers
 			_cartao.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
+		}
+
+		// GET CONTRIBUICAO CARTAO
+		//------------------------------------------------------------------------------------------------------------
+		private objContribuicaoCartao GetCartao(long IDContribuicao)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				return new ContribuicaoBLL().GetContribuicaoCartao(IDContribuicao);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter os dados do Cartão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		// GET LIST OF OPERADORA E BANDEIRA
@@ -118,31 +150,26 @@ namespace CamadaUI.Entradas
 			set
 			{
 				_Sit = value;
-				switch (value)
+
+				if (value == EnumFlagEstado.NovoRegistro)
 				{
-					case EnumFlagEstado.RegistroSalvo:
-						btnOK.Enabled = false;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Fechar";
-						break;
-					case EnumFlagEstado.Alterado:
-						btnOK.Enabled = true;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Cancelar";
-						break;
-					case EnumFlagEstado.NovoRegistro:
-						btnOK.Enabled = true;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Cancelar";
-						break;
-					case EnumFlagEstado.RegistroBloqueado:
-						btnOK.Enabled = false;
-						btnCancelar.Enabled = true;
-						btnCancelar.Text = "Fechar";
-						break;
-					default:
-						break;
+					btnOK.Enabled = true;
+					btnCancelar.Enabled = true;
+					btnCancelar.Text = "Cancelar";
+					lblSitBlock.Visible = false;
 				}
+				else
+				{
+					btnOK.Enabled = false;
+					btnCancelar.Enabled = true;
+					btnCancelar.Text = "Fechar";
+					lblSitBlock.Visible = true;
+				}
+
+				// btnSET
+				btnSetCartaoTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetBandeira.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetOperadora.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
@@ -392,6 +419,15 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
 		{
+			// previne to accepts changes if SIT = RegistroSalvo
+			//---------------------------------------------------
+			if (Sit == EnumFlagEstado.RegistroSalvo)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
+
 			Control ctr = (Control)sender;
 
 			if (e.KeyCode == Keys.Add)

@@ -470,15 +470,217 @@ namespace CamadaBLL
 
 		// DELETE
 		//------------------------------------------------------------------------------------------------------------
-		public bool DeleteContribuicao(int IDContribuicao)
+		public bool DeleteContribuicao(long IDContribuicao)
 		{
-			throw new NotImplementedException("Em implementação");
+			AcessoDados dbTran = null;
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// 1 - CHECK AReceber and Entradas
+				//------------------------------------------------------------------------------------------------------------
+				List<objAReceber> listAReceber = new List<objAReceber>();
+				List<objEntrada> listEntradas = new List<objEntrada>();
+
+				if (!VerifyBeforeDelete(IDContribuicao, ref listAReceber, ref listEntradas, dbTran)) return false;
+
+				// 2 - delete ALL ARECEBER 
+				//------------------------------------------------------------------------------------------------------------
+				if (listAReceber.Count > 0)
+				{
+					AReceberBLL rBLL = new AReceberBLL();
+
+					foreach (objAReceber receber in listAReceber)
+					{
+						rBLL.DeleteAReceber((long)receber.IDAReceber);
+					}
+				}
+
+				// 3 - delete ALL ENTRADA 
+				//------------------------------------------------------------------------------------------------------------
+				if (listEntradas.Count > 0)
+				{
+					EntradaBLL eBLL = new EntradaBLL();
+
+					foreach (objEntrada entrada in listEntradas)
+					{
+						eBLL.DeleteEntrada((long)entrada.IDEntrada);
+					}
+				}
+
+				// 4 - delete CONTRIBUICAO
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@IDContribuicao", IDContribuicao);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblContribuicao WHERE IDContribuicao = @IDContribuicao";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- COMMIT AND RETURN
+				dbTran.CommitTransaction();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		private bool VerifyBeforeDelete(long IDContribuicao,
+			ref List<objAReceber> listAReceber,
+			ref List<objEntrada> listEntradas,
+			AcessoDados dbTran)
+		{
+			try
+			{
+				// GET ARECEBER
+				listAReceber = new AReceberBLL().GetListAReceberByIDContribuicao(IDContribuicao, dbTran);
+
+				// VERIFY ARECEBER
+				bool err = false;
+				string errMessage = "Os ARECEBER abaixo possuem recebimentos...\n";
+
+				foreach (objAReceber receber in listAReceber)
+				{
+					if (receber.IDSituacao == 2)
+					{
+						errMessage += $"Reg.: {receber.IDAReceber:D4}    {receber.CompensacaoData.ToShortDateString()}\n";
+						err = true;
+					}
+				}
+
+				if (err == true)
+				{
+					errMessage += "Favor estornar antes os recebimentos se deseja EXCLUIR a contribuição.";
+					throw new AppException(errMessage);
+				}
+
+				// VERIFY ENTRADAS
+				listEntradas = new EntradaBLL().GetEntradaListByOrigem(1, IDContribuicao, dbTran);
+
+				// VERIFY RECEBIMENTOS WITH CAIXA OR BLOCKED
+				errMessage = "Essa Contribuição possui entradas que foram inseridas no caixa...\n";
+
+				foreach (objEntrada entrada in listEntradas)
+				{
+					if (entrada.IDCaixa != null)
+					{
+						errMessage += $"Reg.: {entrada.IDEntrada:D4} | {entrada.EntradaData.ToShortDateString()} | Caixa: {entrada.IDCaixa:D4}\n";
+						err = true;
+					}
+				}
+
+				if (err == true)
+				{
+					errMessage += "Favor remover o(s) caixa(s) se desejar EXCLUIR a(s) contribuição.";
+					throw new AppException(errMessage);
+				}
+
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		//=================================================================================================
 		// CONTRIBUICAO CARTAO / CHEQUE
 		//=================================================================================================
 
+		// GET CONTRIBUICAO CARTAO
+		//------------------------------------------------------------------------------------------------------------
+		public objContribuicaoCartao GetContribuicaoCartao(long IDContribuicao)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryContribuicaoCartao WHERE IDContribuicao = @IDContribuicao";
+				db.LimparParametros();
+				db.AdicionarParametros("@IDContribuicao", IDContribuicao);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("Não foi encontrado nenhum registro de Contribuição de Cartão com o ID informado...");
+				}
+
+				DataRow row = dt.Rows[0];
+
+				return new objContribuicaoCartao(IDContribuicao)
+				{
+					CartaoBandeira = (string)row["CartaoBandeira"],
+					CartaoOperadora = (string)row["CartaoOperadora"],
+					CartaoTipo = (byte)row["CartaoTipo"],
+					CartaoTipoDescricao = (string)row["CartaoTipoDescricao"],
+					ContaProvisoria = (string)row["ContaProvisoria"],
+					IDCartaoBandeira = (int)row["IDCartaoBandeira"],
+					IDCartaoOperadora = (int)row["IDCartaoOperadora"],
+					IDContaProvisoria = (int)row["IDContaProvisoria"],
+					IDContribuicao = (long)row["IDContribuicao"],
+					Parcelas = (byte)row["Parcelas"],
+					Prazo = (byte)row["Prazo"],
+					TaxaAplicada = (decimal)row["TaxaAplicada"]
+				};
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET CONTRIBUICAO CHEQUE
+		//------------------------------------------------------------------------------------------------------------
+		public objContribuicaoCheque GetContribuicaoCheque(long IDContribuicao)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryContribuicaoCheque WHERE IDContribuicao = @IDContribuicao";
+				db.LimparParametros();
+				db.AdicionarParametros("@IDContribuicao", IDContribuicao);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("Não foi encontrado nenhum registro de Contribuição de Cheque com o ID informado...");
+				}
+
+				DataRow row = dt.Rows[0];
+
+				return new objContribuicaoCheque(IDContribuicao)
+				{
+					Banco = (string)row["BancoNome"],
+					ChequeNumero = (string)row["ChequeNumero"],
+					DepositoData = (DateTime)row["DepositoData"],
+					IDBanco = (int)row["IDBanco"]
+				};
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 		// INSERT CONTRIBUICAO CARTAO
 		//------------------------------------------------------------------------------------------------------------
 		private void AddContribuicaoCartao(objContribuicaoCartao cartao, AcessoDados dbTran)

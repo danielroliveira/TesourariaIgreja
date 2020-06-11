@@ -34,10 +34,11 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtBanco = new System.Windows.Forms.TextBox();
-			this.vButton1 = new VIBlend.WinForms.Controls.vButton();
+			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
 			this.txtChequeNumero = new CamadaUC.ucOnlyNumbers();
 			this.dtpDepositoData = new System.Windows.Forms.DateTimePicker();
 			this.label1 = new System.Windows.Forms.Label();
+			this.lblSitBlock = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -138,24 +139,24 @@
 			this.txtBanco.TabIndex = 2;
 			this.txtBanco.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
-			// vButton1
+			// btnSetBanco
 			// 
-			this.vButton1.AllowAnimations = true;
-			this.vButton1.BackColor = System.Drawing.Color.Transparent;
-			this.vButton1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.vButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.vButton1.Location = new System.Drawing.Point(389, 81);
-			this.vButton1.Name = "vButton1";
-			this.vButton1.RoundedCornersMask = ((byte)(15));
-			this.vButton1.RoundedCornersRadius = 0;
-			this.vButton1.Size = new System.Drawing.Size(34, 27);
-			this.vButton1.TabIndex = 3;
-			this.vButton1.TabStop = false;
-			this.vButton1.Text = "...";
-			this.vButton1.UseCompatibleTextRendering = true;
-			this.vButton1.UseVisualStyleBackColor = false;
-			this.vButton1.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.vButton1.Click += new System.EventHandler(this.btnSetBanco_Click);
+			this.btnSetBanco.AllowAnimations = true;
+			this.btnSetBanco.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetBanco.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetBanco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetBanco.Location = new System.Drawing.Point(389, 81);
+			this.btnSetBanco.Name = "btnSetBanco";
+			this.btnSetBanco.RoundedCornersMask = ((byte)(15));
+			this.btnSetBanco.RoundedCornersRadius = 0;
+			this.btnSetBanco.Size = new System.Drawing.Size(34, 27);
+			this.btnSetBanco.TabIndex = 3;
+			this.btnSetBanco.TabStop = false;
+			this.btnSetBanco.Text = "...";
+			this.btnSetBanco.UseCompatibleTextRendering = true;
+			this.btnSetBanco.UseVisualStyleBackColor = false;
+			this.btnSetBanco.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetBanco.Click += new System.EventHandler(this.btnSetBanco_Click);
 			// 
 			// txtChequeNumero
 			// 
@@ -167,6 +168,7 @@
 			this.txtChequeNumero.Size = new System.Drawing.Size(100, 27);
 			this.txtChequeNumero.TabIndex = 5;
 			this.txtChequeNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtChequeNumero.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// dtpDepositoData
 			// 
@@ -188,13 +190,26 @@
 			this.label1.TabIndex = 6;
 			this.label1.Text = "Data do Depósito";
 			// 
+			// lblSitBlock
+			// 
+			this.lblSitBlock.AutoSize = true;
+			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
+			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
+			this.lblSitBlock.Location = new System.Drawing.Point(155, 231);
+			this.lblSitBlock.Name = "lblSitBlock";
+			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
+			this.lblSitBlock.TabIndex = 35;
+			this.lblSitBlock.Text = "- Apenas Visualização -";
+			// 
 			// frmContribuicaoCheque
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(481, 268);
+			this.Controls.Add(this.lblSitBlock);
 			this.Controls.Add(this.dtpDepositoData);
 			this.Controls.Add(this.txtChequeNumero);
-			this.Controls.Add(this.vButton1);
+			this.Controls.Add(this.btnSetBanco);
 			this.Controls.Add(this.txtBanco);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -211,10 +226,11 @@
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.txtBanco, 0);
-			this.Controls.SetChildIndex(this.vButton1, 0);
+			this.Controls.SetChildIndex(this.btnSetBanco, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.txtChequeNumero, 0);
 			this.Controls.SetChildIndex(this.dtpDepositoData, 0);
+			this.Controls.SetChildIndex(this.lblSitBlock, 0);
 			this.panel1.ResumeLayout(false);
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
@@ -230,9 +246,10 @@
 		internal System.Windows.Forms.Label label4;
 		internal System.Windows.Forms.Label label2;
 		internal System.Windows.Forms.TextBox txtBanco;
-		internal VIBlend.WinForms.Controls.vButton vButton1;
+		internal VIBlend.WinForms.Controls.vButton btnSetBanco;
 		private CamadaUC.ucOnlyNumbers txtChequeNumero;
 		private System.Windows.Forms.DateTimePicker dtpDepositoData;
 		internal System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblSitBlock;
 	}
 }

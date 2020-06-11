@@ -85,7 +85,8 @@ namespace CamadaBLL
 				Conta = (string)row["Conta"],
 				AcrescimoValor = row["AcrescimoValor"] == DBNull.Value ? null : (decimal?)row["AcrescimoValor"],
 				Imagem = (bool)row["Imagem"],
-				Observacao = row["Observacao"] == DBNull.Value ? string.Empty : (string)row["Observacao"]
+				Observacao = row["Observacao"] == DBNull.Value ? string.Empty : (string)row["Observacao"],
+				IDCaixa = row["IDCaixa"] == DBNull.Value ? null : (long?)row["IDCaixa"],
 			};
 
 			return saida;

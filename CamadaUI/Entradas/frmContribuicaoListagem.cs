@@ -16,6 +16,7 @@ namespace CamadaUI.Entradas
 {
 	public partial class frmContribuicaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
+		ContribuicaoBLL cBLL = new ContribuicaoBLL();
 		private List<objContribuicao> listCont = new List<objContribuicao>();
 		private Form _formOrigem;
 		private DateTime _myMes;
@@ -108,7 +109,6 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				ContribuicaoBLL cBLL = new ContribuicaoBLL();
 				listCont = cBLL.GetListContribuicao(
 					Dados.IDConta,
 					Dados.IDSetor,
@@ -369,6 +369,58 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+		// EXCLUIR CONTRIBUICAO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExcluir_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Excluir...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// --- ask USER
+				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Contribuição abaixo?\n" +
+					$"\nREG: {item.IDContribuicao:D4}\nDATA: {item.ContribuicaoData.ToShortDateString()}\nVALOR: {item.ValorBruto:c}",
+					"Excluir Contribuição", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes) return;
+
+				//--- EXECUTE DELETE
+				cBLL.DeleteContribuicao((long)item.IDContribuicao);
+
+				//--- REQUERY LIST
+				ObterDados();
+
+			}
+			catch (AppException ex)
+			{
+				AbrirDialog("A contribuição está protegida de exclusão porque:\n" +
+							ex.Message, "Bloqueio de Exclusão", DialogType.OK, DialogIcon.Exclamation);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir Contribuição..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
 		#endregion
 
 		#region CONTROL FUNCTIONS
@@ -548,7 +600,7 @@ namespace CamadaUI.Entradas
 			ObterDados();
 		}
 
-		#endregion // DATE MONTH CONTROLER --- END
 
+		#endregion // DATE MONTH CONTROLER --- END
 	}
 }

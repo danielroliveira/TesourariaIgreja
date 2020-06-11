@@ -152,19 +152,19 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.btnFechar,
-            this.toolStripSeparator2});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.btnFechar,
+			this.toolStripSeparator2});
 			this.tspMenu.Location = new System.Drawing.Point(2, 585);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(600, 44);
@@ -552,6 +552,8 @@
 			this.btnSetEntradaForma.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEntradaForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetEntradaForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetEntradaForma.ImageAbsolutePosition = new System.Drawing.Point(7, 4);
+			this.btnSetEntradaForma.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
 			this.btnSetEntradaForma.Location = new System.Drawing.Point(436, 269);
 			this.btnSetEntradaForma.Name = "btnSetEntradaForma";
 			this.btnSetEntradaForma.RoundedCornersMask = ((byte)(15));
@@ -560,6 +562,7 @@
 			this.btnSetEntradaForma.TabIndex = 16;
 			this.btnSetEntradaForma.TabStop = false;
 			this.btnSetEntradaForma.Text = "n";
+			this.btnSetEntradaForma.UseAbsoluteImagePositioning = true;
 			this.btnSetEntradaForma.UseCompatibleTextRendering = true;
 			this.btnSetEntradaForma.UseVisualStyleBackColor = false;
 			this.btnSetEntradaForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
