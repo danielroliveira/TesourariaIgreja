@@ -108,11 +108,11 @@ namespace CamadaBLL
 
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objAPagar> GetListAPagarByDespesa(long IDDespesa)
+		public List<objAPagar> GetListAPagarByDespesa(long IDDespesa, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM qryAPagar WHERE IDDespesa = @IDDespesa";
 
@@ -139,7 +139,6 @@ namespace CamadaBLL
 			}
 			catch (Exception ex)
 			{
-
 				throw ex;
 			}
 		}
@@ -464,6 +463,7 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@ValorAcrescimo", pag.ValorAcrescimo);
 				dbTran.AdicionarParametros("@ValorDesconto", pag.ValorDesconto);
 				dbTran.AdicionarParametros("@Vencimento", pag.Vencimento);
+				dbTran.AdicionarParametros("@PagamentoData", pag.PagamentoData);
 
 				//--- convert null parameters
 				dbTran.ConvertNullParams();
@@ -670,11 +670,11 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objCobrancaForma> GetListCobrancaForma(bool? Ativo = null)
+		public List<objCobrancaForma> GetListCobrancaForma(bool? Ativo = null, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM qryCobrancaForma";
 				bool haveWhere = false;

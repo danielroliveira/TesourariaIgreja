@@ -34,12 +34,12 @@ namespace CamadaUI.APagar
 			numSaidaAno.Enter += Control_Enter;
 
 			// get default Conta and Setor
-			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
+			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao.ShallowCopy();
 
 			// get SETOR
 			if (((frmPrincipal)Application.OpenForms[0]).propSetorPadrao.IDSetor == pag.IDSetor)
 			{
-				SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
+				SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao.ShallowCopy();
 			}
 			else
 			{

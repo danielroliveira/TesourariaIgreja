@@ -74,11 +74,11 @@ namespace CamadaBLL
 
 		// GET CONTA
 		//------------------------------------------------------------------------------------------------------------
-		public objConta GetConta(int IDConta)
+		public objConta GetConta(int IDConta, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM qryConta WHERE IDConta = @IDConta";
 				db.LimparParametros();

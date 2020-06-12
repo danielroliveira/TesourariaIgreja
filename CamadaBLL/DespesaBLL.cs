@@ -134,11 +134,11 @@ namespace CamadaBLL
 
 		// GET DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public objDespesa GetDespesa(long IDDespesa)
+		public objDespesa GetDespesa(long IDDespesa, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM qryDespesaComum WHERE IDDespesa = @IDDespesa";
 				db.LimparParametros();
@@ -183,52 +183,52 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public long InsertDespesa(objDespesa desp, ref List<objAPagar> listAPagar)
+		public long InsertDespesa(objDespesa desp, ref List<objAPagar> listAPagar, object dbTran = null)
 		{
-			AcessoDados dbTran = null;
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 			try
 			{
-				dbTran = new AcessoDados();
-				dbTran.BeginTransaction();
+				db = new AcessoDados();
+				if (dbTran == null) db.BeginTransaction();
 
 				//--- clear Params
-				dbTran.LimparParametros();
+				db.LimparParametros();
 
 				//--- define Params
-				dbTran.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
-				dbTran.AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
-				dbTran.AdicionarParametros("@DespesaValor", desp.DespesaValor);
-				dbTran.AdicionarParametros("@DespesaData", desp.DespesaData);
-				dbTran.AdicionarParametros("@IDCredor", desp.IDCredor);
-				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
-				dbTran.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
+				db.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
+				db.AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
+				db.AdicionarParametros("@DespesaValor", desp.DespesaValor);
+				db.AdicionarParametros("@DespesaData", desp.DespesaData);
+				db.AdicionarParametros("@IDCredor", desp.IDCredor);
+				db.AdicionarParametros("@IDSetor", desp.IDSetor);
+				db.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
 
 				//--- convert null parameters
-				dbTran.ConvertNullParams();
+				db.ConvertNullParams();
 
-				string query = dbTran.CreateInsertSQL("tblDespesa");
+				string query = db.CreateInsertSQL("tblDespesa");
 
 				//--- insert and Get new ID
-				long newID = dbTran.ExecutarInsertAndGetID(query);
+				long newID = db.ExecutarInsertAndGetID(query);
 
 				//--- insert Despesa Comum
 				desp.IDDespesa = newID;
-				InsertDespesaComum(desp, dbTran);
+				InsertDespesaComum(desp, db);
 
 				//--- insert IDDespesa in APagar List items
 				listAPagar.ForEach(x => x.IDDespesa = newID);
 
 				//--- save APagar items
-				new APagarBLL().InsertAPagarList(listAPagar, dbTran);
+				new APagarBLL().InsertAPagarList(listAPagar, db);
 
-				dbTran.CommitTransaction();
+				if (dbTran == null) db.CommitTransaction();
 				return newID;
 
 			}
 			catch (Exception ex)
 			{
-				dbTran.RollBackTransaction();
+				if (dbTran == null) db.RollBackTransaction();
 				throw ex;
 			}
 		}
@@ -265,6 +265,62 @@ namespace CamadaBLL
 			}
 		}
 
+		// INSERT DESPESA REALIZADA | GASTO | DESPESA QUITADA
+		//------------------------------------------------------------------------------------------------------------
+		public long InsertDespesaRealizada(
+			objDespesa despesa,
+			objAPagar pagar,
+			objSaida saida,
+			Action<int, decimal> ContaSldLocalUpdate,
+			Action<int, decimal> SetorSldLocalUpdate)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				// create transaction
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// Verifica CONTA SALDO
+				ContaBLL cBLL = new ContaBLL();
+
+				decimal saldoAtual = cBLL.ContaSaldoGet(saida.IDConta, dbTran);
+
+				if (saida.SaidaValor > saldoAtual)
+				{
+					throw new AppException("Não existe SALDO SUFICIENTE na conta para realizar esse débito...", 1);
+				}
+
+				// Verifica CONTA BLOQUEIO
+				if (!cBLL.ContaDateBlockPermit(saida.IDConta, saida.SaidaData, dbTran))
+				{
+					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Débito proposto...", 2);
+				}
+
+				// create APaga list
+				List<objAPagar> listPag = new List<objAPagar>();
+				listPag.Add(pagar);
+
+				// insert Despesa AND APagar
+				long newID = InsertDespesa(despesa, ref listPag, dbTran);
+
+				// insert Saida
+				saida.Origem = 1;
+				saida.IDOrigem = (long)listPag[0].IDAPagar;
+				new SaidaBLL().InsertSaida(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+
+				// commit and return
+				dbTran.CommitTransaction();
+				return newID;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+
+		}
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
@@ -543,11 +599,11 @@ namespace CamadaBLL
 
 		// GET DESPESA DOCUMENTO TIPOS
 		//------------------------------------------------------------------------------------------------------------
-		public List<objDespesaDocumentoTipo> GetDespesaDocumentoTipos(bool? Ativo = null)
+		public List<objDespesaDocumentoTipo> GetDespesaDocumentoTipos(bool? Ativo = null, object dbTran = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM tblDespesaDocumentoTipo";
 

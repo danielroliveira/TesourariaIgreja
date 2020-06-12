@@ -24,11 +24,11 @@ namespace CamadaDTO
 		private StructConta BackupData;
 		private bool inTxn = false;
 
-		public objSetor(int? IDConta) : base()
+		public objSetor(int? IDSetor) : base()
 		{
 			EditData = new StructConta()
 			{
-				_IDSetor = IDConta,
+				_IDSetor = IDSetor,
 				_Setor = "",
 				_IDCongregacao = null,
 				_SetorSaldo = 0,

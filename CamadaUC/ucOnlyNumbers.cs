@@ -12,6 +12,7 @@ namespace CamadaUC
 			TextAlign = HorizontalAlignment.Right;
 			Inteiro = false;
 			Positivo = true;
+			Moeda = false;
 
 			GotFocus += UcOnlyNumbers_GotFocus;
 			LostFocus += UcOnlyNumbers_LostFocus;
@@ -25,6 +26,10 @@ namespace CamadaUC
 
 		[EditorBrowsable]
 		public bool Positivo { get; set; }
+
+		[EditorBrowsable]
+		public bool Moeda { get; set; }
+
 
 		private void UcOnlyNumbers_KeyPress(object sender, KeyPressEventArgs e)
 		{
@@ -83,10 +88,14 @@ namespace CamadaUC
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
 					e.Cancel = true;
+					return;
 				}
-				else
+
+				// check IS MOEDA format
+				if (Moeda == true)
 				{
-					e.Cancel = false;
+					decimal newValor = decimal.Parse(Text, NumberStyles.Currency);
+					Text = newValor.ToString("c");
 				}
 			}
 			else

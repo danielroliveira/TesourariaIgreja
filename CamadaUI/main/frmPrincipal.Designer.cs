@@ -47,7 +47,9 @@
 			this.mnuCampanhas = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuDespesaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaRealizada = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuSubDespesaPeriodica = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaPeriodicaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaPeriodicaProcurar = new System.Windows.Forms.ToolStripMenuItem();
@@ -262,7 +264,9 @@
 			// 
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuDespesaInserir,
+            this.mnuDespesaRealizada,
             this.mnuDespesaProcurar,
+            this.toolStripSeparator7,
             this.mnuSubDespesaPeriodica,
             this.toolStripSeparator5,
             this.mnuAPagarProcurar,
@@ -287,8 +291,18 @@
 			this.mnuDespesaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.mnuDespesaInserir.Name = "mnuDespesaInserir";
-			this.mnuDespesaInserir.Size = new System.Drawing.Size(217, 30);
-			this.mnuDespesaInserir.Text = "Inserir Despesa";
+			this.mnuDespesaInserir.Size = new System.Drawing.Size(253, 30);
+			this.mnuDespesaInserir.Text = "Inserir Despesa Futura";
+			// 
+			// mnuDespesaRealizada
+			// 
+			this.mnuDespesaRealizada.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaRealizada.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuDespesaRealizada.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaRealizada.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuDespesaRealizada.Name = "mnuDespesaRealizada";
+			this.mnuDespesaRealizada.Size = new System.Drawing.Size(253, 30);
+			this.mnuDespesaRealizada.Text = "Inserir Despesa Realizada";
 			// 
 			// mnuDespesaProcurar
 			// 
@@ -296,8 +310,13 @@
 			this.mnuDespesaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuDespesaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaProcurar.Name = "mnuDespesaProcurar";
-			this.mnuDespesaProcurar.Size = new System.Drawing.Size(217, 30);
+			this.mnuDespesaProcurar.Size = new System.Drawing.Size(253, 30);
 			this.mnuDespesaProcurar.Text = "Procurar Despesa";
+			// 
+			// toolStripSeparator7
+			// 
+			this.toolStripSeparator7.Name = "toolStripSeparator7";
+			this.toolStripSeparator7.Size = new System.Drawing.Size(250, 6);
 			// 
 			// mnuSubDespesaPeriodica
 			// 
@@ -307,7 +326,7 @@
 			this.mnuSubDespesaPeriodica.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuSubDespesaPeriodica.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSubDespesaPeriodica.Name = "mnuSubDespesaPeriodica";
-			this.mnuSubDespesaPeriodica.Size = new System.Drawing.Size(217, 30);
+			this.mnuSubDespesaPeriodica.Size = new System.Drawing.Size(253, 30);
 			this.mnuSubDespesaPeriodica.Text = "Despesa Periódica";
 			// 
 			// mnuDespesaPeriodicaInserir
@@ -332,7 +351,7 @@
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
+			this.toolStripSeparator5.Size = new System.Drawing.Size(250, 6);
 			// 
 			// mnuAPagarProcurar
 			// 
@@ -340,13 +359,13 @@
 			this.mnuAPagarProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuAPagarProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuAPagarProcurar.Name = "mnuAPagarProcurar";
-			this.mnuAPagarProcurar.Size = new System.Drawing.Size(217, 30);
+			this.mnuAPagarProcurar.Size = new System.Drawing.Size(253, 30);
 			this.mnuAPagarProcurar.Text = "Procurar a Pagar";
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(250, 6);
 			// 
 			// mnuDespesaTipo
 			// 
@@ -354,7 +373,7 @@
 			this.mnuDespesaTipo.Image = global::CamadaUI.Properties.Resources.editar_24;
 			this.mnuDespesaTipo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaTipo.Name = "mnuDespesaTipo";
-			this.mnuDespesaTipo.Size = new System.Drawing.Size(217, 30);
+			this.mnuDespesaTipo.Size = new System.Drawing.Size(253, 30);
 			this.mnuDespesaTipo.Text = "Tipos de Despesa";
 			// 
 			// mnuDespesaGrupo
@@ -363,7 +382,7 @@
 			this.mnuDespesaGrupo.Image = global::CamadaUI.Properties.Resources.editar_24;
 			this.mnuDespesaGrupo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
-			this.mnuDespesaGrupo.Size = new System.Drawing.Size(217, 30);
+			this.mnuDespesaGrupo.Size = new System.Drawing.Size(253, 30);
 			this.mnuDespesaGrupo.Text = "Grupos de Despesa";
 			// 
 			// mnuCobrancaForma
@@ -372,7 +391,7 @@
 			this.mnuCobrancaForma.Image = global::CamadaUI.Properties.Resources.editar_24;
 			this.mnuCobrancaForma.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
-			this.mnuCobrancaForma.Size = new System.Drawing.Size(217, 30);
+			this.mnuCobrancaForma.Size = new System.Drawing.Size(253, 30);
 			this.mnuCobrancaForma.Text = "Formas de Cobrança";
 			// 
 			// btnMovimentação
@@ -800,6 +819,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaPeriodicaProcurar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 		private System.Windows.Forms.ToolStripMenuItem mnuAReceberProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaRealizada;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
 	}
 }
 

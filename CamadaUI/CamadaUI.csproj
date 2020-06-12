@@ -483,6 +483,12 @@
     <Compile Include="Saidas\frmDespesaTipoProcura.designer.cs">
       <DependentUpon>frmDespesaTipoProcura.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmGasto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmGasto.designer.cs">
+      <DependentUpon>frmGasto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setores\frmSetor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -710,6 +716,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaTipoProcura.resx">
       <DependentUpon>frmDespesaTipoProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmGasto.resx">
+      <DependentUpon>frmGasto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setores\frmSetor.resx">
       <DependentUpon>frmSetor.cs</DependentUpon>
