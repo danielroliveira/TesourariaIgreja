@@ -110,9 +110,9 @@
 			// 
 			// lblEntradaForma
 			// 
-			this.lblEntradaForma.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblEntradaForma.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblEntradaForma.BackColor = System.Drawing.Color.Transparent;
 			this.lblEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblEntradaForma.Location = new System.Drawing.Point(151, 4);
@@ -124,9 +124,9 @@
 			// 
 			// lblContaProvisoria
 			// 
-			this.lblContaProvisoria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblContaProvisoria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblContaProvisoria.BackColor = System.Drawing.Color.Transparent;
 			this.lblContaProvisoria.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblContaProvisoria.Location = new System.Drawing.Point(151, 33);
@@ -254,23 +254,23 @@
 			this.numEntradaAno.Location = new System.Drawing.Point(328, 231);
 			this.numEntradaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numEntradaAno.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
+			5000,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Name = "numEntradaAno";
 			this.numEntradaAno.Size = new System.Drawing.Size(86, 31);
 			this.numEntradaAno.TabIndex = 9;
 			this.numEntradaAno.Value = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
+			2000,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// lblContaDetalhe
@@ -418,23 +418,23 @@
 			this.numEntradaDia.Location = new System.Drawing.Point(106, 231);
 			this.numEntradaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numEntradaDia.Maximum = new decimal(new int[] {
-            31,
-            0,
-            0,
-            0});
+			31,
+			0,
+			0,
+			0});
 			this.numEntradaDia.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaDia.Name = "numEntradaDia";
 			this.numEntradaDia.Size = new System.Drawing.Size(60, 31);
 			this.numEntradaDia.TabIndex = 7;
 			this.numEntradaDia.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaDia.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// cmbEntradaMes

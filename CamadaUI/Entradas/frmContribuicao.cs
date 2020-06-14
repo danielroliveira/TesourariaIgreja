@@ -59,9 +59,8 @@ namespace CamadaUI.Entradas
 			GetTiposAndFormas();
 
 			// Define Conta and Setor padrao
-			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			contaSelected = principal.propContaPadrao.ShallowCopy();
-			setorSelected = principal.propSetorPadrao.ShallowCopy();
+			contaSelected = ContaPadrao();
+			setorSelected = SetorPadrao();
 
 			// binding
 			bind.DataSource = typeof(objContribuicao);
@@ -80,7 +79,7 @@ namespace CamadaUI.Entradas
 			}
 
 			// define DEFAULT DATE
-			_contribuicao.ContribuicaoData = contaSelected.BloqueioData ?? DateTime.Today;
+			_contribuicao.ContribuicaoData = DataPadrao();
 
 			// handlers
 			_contribuicao.PropertyChanged += RegistroAlterado;
@@ -92,6 +91,12 @@ namespace CamadaUI.Entradas
 			txtCampanha.Enter += text_Enter;
 			txtOrigemDescricao.Enter += text_Enter;
 			txtEntradaForma.Enter += text_Enter;
+
+			numEntradaAno.KeyDown += Numeric_KeyDown;
+			numEntradaAno.Enter += Numeric_Enter;
+			numEntradaDia.KeyDown += Numeric_KeyDown;
+			numEntradaDia.Enter += Numeric_Enter;
+
 		}
 
 		// SHOW FORM
@@ -307,26 +312,26 @@ namespace CamadaUI.Entradas
 			// ADD NAMED BINDINGS TO CONTROL ERROS
 			//------------------------------------------------------------------------------------------------------------
 			Binding bndEntradaMes = cmbEntradaMes.DataBindings.Add("SelectedValue", bind, "EntradaMes", true, DataSourceUpdateMode.OnPropertyChanged);
-			Binding bndEntradaDia = txtEntradaDia.DataBindings.Add("Text", bind, "EntradaDia", true, DataSourceUpdateMode.OnPropertyChanged);
-			Binding bndEntradaAno = txtEntradaAno.DataBindings.Add("Text", bind, "EntradaAno", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaDia = numEntradaDia.DataBindings.Add("Text", bind, "EntradaDia", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaAno = numEntradaAno.DataBindings.Add("Text", bind, "EntradaAno", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			Action<object, BindingCompleteEventArgs, Control> bindComplete = (o, e, c) =>
 			{
 				if (e.BindingCompleteState != BindingCompleteState.Success)
 				{
 					AbrirDialog(e.Exception.Message, "Data Inválida", DialogType.OK, DialogIcon.Exclamation);
-					txtEntradaDia.DataBindings["Text"].ReadValue();
+					numEntradaDia.DataBindings["Text"].ReadValue();
 					cmbEntradaMes.DataBindings["SelectedValue"].ReadValue();
-					txtEntradaAno.DataBindings["Text"].ReadValue();
+					numEntradaAno.DataBindings["Text"].ReadValue();
 
 					if (c.GetType() == typeof(CamadaUC.ucOnlyNumbers)) ((TextBox)c).SelectAll();
 				}
 			};
 
 			// HANDLERS TO CONTROL ERROS
-			bndEntradaDia.BindingComplete += (a, b) => bindComplete(a, b, txtEntradaDia);
+			bndEntradaDia.BindingComplete += (a, b) => bindComplete(a, b, numEntradaDia);
 			bndEntradaMes.BindingComplete += (a, b) => bindComplete(a, b, cmbEntradaMes);
-			bndEntradaAno.BindingComplete += (a, b) => bindComplete(a, b, txtEntradaAno);
+			bndEntradaAno.BindingComplete += (a, b) => bindComplete(a, b, numEntradaAno);
 		}
 
 
@@ -549,6 +554,7 @@ namespace CamadaUI.Entradas
 			{
 				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Contribuicao..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				txtConta.Focus();
 			}
 			finally
 			{
@@ -893,6 +899,22 @@ namespace CamadaUI.Entradas
 				return;
 			}
 			//---------------------------------------------------
+		}
+
+		// CONTROLING NUMERIC UP/DOWN
+		//------------------------------------------------------------------------------------------------------------
+		private void Numeric_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			};
+		}
+
+		private void Numeric_Enter(object sender, EventArgs e)
+		{
+			((NumericUpDown)sender).Select(0, 4);
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END

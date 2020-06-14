@@ -103,6 +103,12 @@ namespace CamadaUI.Contas
 			dgvListagem.StandardTab = true;
 			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
 
+			// DEFINE COLUMN FONT
+			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
 			clnID.DataPropertyName = "IDConta";
@@ -112,6 +118,7 @@ namespace CamadaUI.Contas
 			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnID.DefaultCellStyle.Padding = newPadding;
 			clnID.DefaultCellStyle.Format = "0000";
+			colList.Add(clnID);
 
 			//--- (2) COLUNA CADASTRO
 			clnCadastro.DataPropertyName = "Conta";
@@ -121,22 +128,56 @@ namespace CamadaUI.Contas
 			clnCadastro.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			colList.Add(clnCadastro);
 
-			//--- (3) Coluna da imagem
+			//--- (3) COLUNA TIPO
+			clnTipo.DataPropertyName = "ContaTipo";
+			clnTipo.Visible = true;
+			clnTipo.ReadOnly = true;
+			clnTipo.Resizable = DataGridViewTriState.False;
+			clnTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnTipo.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnTipo);
+
+			//--- (4) COLUNA DATA BLOQUEIO
+			clnBloqueioData.DataPropertyName = "BloqueioData";
+			clnBloqueioData.Visible = true;
+			clnBloqueioData.ReadOnly = true;
+			clnBloqueioData.Resizable = DataGridViewTriState.False;
+			clnBloqueioData.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnBloqueioData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnBloqueioData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			colList.Add(clnBloqueioData);
+
+			//--- (5) COLUNA SALDO
+			clnSaldo.DataPropertyName = "ContaSaldo";
+			clnSaldo.Visible = true;
+			clnSaldo.ReadOnly = true;
+			clnSaldo.Resizable = DataGridViewTriState.False;
+			clnSaldo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnSaldo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnSaldo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnSaldo.DefaultCellStyle.Format = "c";
+			colList.Add(clnSaldo);
+
+			//--- (6) Coluna da imagem
 			clnImage.Name = "Ativa";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			colList.Add(clnImage);
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(colList.ToArray());
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == 2)
+			if (e.ColumnIndex == clnImage.Index)
 			{
 				objConta item = (objConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 				if (item.Ativa) e.Value = ImgAtivo;

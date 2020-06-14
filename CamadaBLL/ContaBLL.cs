@@ -117,23 +117,29 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertConta(objConta congregacao)
+		public int InsertConta(objConta conta,
+			objCaixaAjuste ajuste = null,
+			Action<int, decimal> ContaSldUpdate = null,
+			Action<int, decimal> SetorSldUpdate = null)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = new AcessoDados();
+				db.BeginTransaction();
 
 				//--- clear Params
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@Conta", congregacao.Conta);
-				db.AdicionarParametros("@ContaSaldo", congregacao.ContaSaldo);
-				db.AdicionarParametros("@BloqueioData", congregacao.BloqueioData);
-				db.AdicionarParametros("@Bancaria", congregacao.Bancaria);
-				db.AdicionarParametros("@OperadoraCartao", congregacao.OperadoraCartao);
-				db.AdicionarParametros("@IDCongregacao", congregacao.IDCongregacao);
-				db.AdicionarParametros("@Ativa", congregacao.Ativa);
+				db.AdicionarParametros("@Conta", conta.Conta);
+				db.AdicionarParametros("@ContaSaldo", 0.0m);
+				db.AdicionarParametros("@BloqueioData", conta.BloqueioData);
+				db.AdicionarParametros("@Bancaria", conta.Bancaria);
+				db.AdicionarParametros("@OperadoraCartao", conta.OperadoraCartao);
+				db.AdicionarParametros("@IDCongregacao", conta.IDCongregacao);
+				db.AdicionarParametros("@Ativa", conta.Ativa);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -142,18 +148,28 @@ namespace CamadaBLL
 				string query = db.CreateInsertSQL("tblConta");
 
 				//--- insert
-				return (int)db.ExecutarInsertAndGetID(query);
+				var newID = (int)db.ExecutarInsertAndGetID(query);
 
+				//--- check Saldo INICIAL and insert
+				if (ajuste != null)
+				{
+					ajuste.IDConta = newID;
+					InsertSaldoInicialConta(ajuste, ContaSldUpdate, SetorSldUpdate, db);
+				}
+
+				db.CommitTransaction();
+				return newID;
 			}
 			catch (Exception ex)
 			{
+				db.RollBackTransaction();
 				throw ex;
 			}
 		}
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateConta(objConta congregacao)
+		public bool UpdateConta(objConta conta)
 		{
 			try
 			{
@@ -163,14 +179,14 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDConta", congregacao.IDConta);
-				db.AdicionarParametros("@Conta", congregacao.Conta);
-				db.AdicionarParametros("@ContaSaldo", congregacao.ContaSaldo);
-				db.AdicionarParametros("@BloqueioData", congregacao.BloqueioData);
-				db.AdicionarParametros("@Bancaria", congregacao.Bancaria);
-				db.AdicionarParametros("@OperadoraCartao", congregacao.OperadoraCartao);
-				db.AdicionarParametros("@IDCongregacao", congregacao.IDCongregacao);
-				db.AdicionarParametros("@Ativa", congregacao.Ativa);
+				db.AdicionarParametros("@IDConta", conta.IDConta);
+				db.AdicionarParametros("@Conta", conta.Conta);
+				db.AdicionarParametros("@ContaSaldo", conta.ContaSaldo);
+				db.AdicionarParametros("@BloqueioData", conta.BloqueioData);
+				db.AdicionarParametros("@Bancaria", conta.Bancaria);
+				db.AdicionarParametros("@OperadoraCartao", conta.OperadoraCartao);
+				db.AdicionarParametros("@IDCongregacao", conta.IDCongregacao);
+				db.AdicionarParametros("@Ativa", conta.Ativa);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -287,6 +303,70 @@ namespace CamadaBLL
 			}
 			catch (Exception ex)
 			{
+				throw ex;
+			}
+		}
+
+		// CAIXA AJUSTE INSERT SALDO INICIAL
+		//------------------------------------------------------------------------------------------------------------
+		public bool InsertSaldoInicialConta(objCaixaAjuste ajuste,
+			Action<int, decimal> ContaSldUpdate,
+			Action<int, decimal> SetorSldUpdate,
+			AcessoDados dbTran = null)
+		{
+			AcessoDados db = dbTran == null ? new AcessoDados() : dbTran;
+
+			try
+			{
+				if (dbTran == null) db.BeginTransaction();
+
+				// 1. INSERT AJUSTE
+				//------------------------------------------------------
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@AjusteDescricao", ajuste.AjusteDescricao);
+				db.AdicionarParametros("@IDAjusteTipo", ajuste.IDAjusteTipo);
+				db.AdicionarParametros("@IDUserAuth", ajuste.IDUserAuth);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateInsertSQL("tblCaixaAjuste");
+
+				//--- insert AJUSTE
+				var newID = (int)db.ExecutarInsertAndGetID(query);
+				ajuste.IDAjuste = newID;
+
+				// 2. INSERT ENTRADA
+				//------------------------------------------------------
+				//--- create ENTRADA
+				var entrada = new objEntrada(null)
+				{
+					Consolidado = true,
+					IDConta = ajuste.IDConta,
+					IDSetor = ajuste.IDSetor,
+					EntradaData = ajuste.MovData,
+					EntradaValor = ajuste.MovValor,
+					IDOrigem = (long)ajuste.IDAjuste,
+					Origem = 3, // origem ajuste
+					Observacao = ajuste.AjusteDescricao,
+				};
+
+				//--- insert ENTRADA
+				new EntradaBLL().InsertEntrada(entrada, ContaSldUpdate, SetorSldUpdate, dbTran);
+
+				// 3. COMMIT AND RETURN
+				//------------------------------------------------------
+				if (dbTran == null) db.CommitTransaction();
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				if (dbTran == null) db.RollBackTransaction();
 				throw ex;
 			}
 		}

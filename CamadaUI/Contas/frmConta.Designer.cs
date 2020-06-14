@@ -47,12 +47,16 @@
 			this.btnCongEscolher = new VIBlend.WinForms.Controls.vButton();
 			this.txtCongregacao = new System.Windows.Forms.TextBox();
 			this.Label6 = new System.Windows.Forms.Label();
-			this.Label34 = new System.Windows.Forms.Label();
+			this.lblBloqueioDataLabel = new System.Windows.Forms.Label();
 			this.pnlChk2 = new System.Windows.Forms.Panel();
 			this.chkOperadoraCartao = new System.Windows.Forms.CheckBox();
 			this.lblContaSaldo = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
+			this.lblContaSaldoLabel = new System.Windows.Forms.Label();
 			this.lblBloqueioData = new System.Windows.Forms.Label();
+			this.txtSaldoInicial = new CamadaUC.ucOnlyNumbers();
+			this.lblSaldoInicialLabel = new System.Windows.Forms.Label();
+			this.dtpDataInicial = new System.Windows.Forms.DateTimePicker();
+			this.lblDataInicialLabel = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlChk1.SuspendLayout();
@@ -147,10 +151,10 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 313);
+			this.tspMenu.Location = new System.Drawing.Point(2, 374);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
-			this.tspMenu.TabIndex = 13;
+			this.tspMenu.TabIndex = 17;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -244,7 +248,7 @@
 			this.pnlChk1.BackColor = System.Drawing.Color.Transparent;
 			this.pnlChk1.CausesValidation = false;
 			this.pnlChk1.Controls.Add(this.chkBancaria);
-			this.pnlChk1.Location = new System.Drawing.Point(76, 181);
+			this.pnlChk1.Location = new System.Drawing.Point(90, 181);
 			this.pnlChk1.Name = "pnlChk1";
 			this.pnlChk1.Size = new System.Drawing.Size(161, 32);
 			this.pnlChk1.TabIndex = 6;
@@ -299,24 +303,24 @@
 			this.Label6.TabIndex = 3;
 			this.Label6.Text = "Congregação";
 			// 
-			// Label34
+			// lblBloqueioDataLabel
 			// 
-			this.Label34.AutoSize = true;
-			this.Label34.BackColor = System.Drawing.Color.Transparent;
-			this.Label34.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Label34.Location = new System.Drawing.Point(266, 268);
-			this.Label34.Name = "Label34";
-			this.Label34.Size = new System.Drawing.Size(125, 19);
-			this.Label34.TabIndex = 11;
-			this.Label34.Text = "Data do Bloqueio:";
-			this.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblBloqueioDataLabel.AutoSize = true;
+			this.lblBloqueioDataLabel.BackColor = System.Drawing.Color.Transparent;
+			this.lblBloqueioDataLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblBloqueioDataLabel.Location = new System.Drawing.Point(266, 324);
+			this.lblBloqueioDataLabel.Name = "lblBloqueioDataLabel";
+			this.lblBloqueioDataLabel.Size = new System.Drawing.Size(125, 19);
+			this.lblBloqueioDataLabel.TabIndex = 15;
+			this.lblBloqueioDataLabel.Text = "Data do Bloqueio:";
+			this.lblBloqueioDataLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// pnlChk2
 			// 
 			this.pnlChk2.BackColor = System.Drawing.Color.Transparent;
 			this.pnlChk2.CausesValidation = false;
 			this.pnlChk2.Controls.Add(this.chkOperadoraCartao);
-			this.pnlChk2.Location = new System.Drawing.Point(256, 181);
+			this.pnlChk2.Location = new System.Drawing.Point(270, 181);
 			this.pnlChk2.Name = "pnlChk2";
 			this.pnlChk2.Size = new System.Drawing.Size(197, 32);
 			this.pnlChk2.TabIndex = 7;
@@ -336,48 +340,95 @@
 			// 
 			this.lblContaSaldo.AutoSize = true;
 			this.lblContaSaldo.BackColor = System.Drawing.Color.Transparent;
-			this.lblContaSaldo.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblContaSaldo.Location = new System.Drawing.Point(144, 263);
+			this.lblContaSaldo.Font = new System.Drawing.Font("Pathway Gothic One", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblContaSaldo.Location = new System.Drawing.Point(144, 319);
 			this.lblContaSaldo.Name = "lblContaSaldo";
-			this.lblContaSaldo.Size = new System.Drawing.Size(85, 29);
-			this.lblContaSaldo.TabIndex = 10;
+			this.lblContaSaldo.Size = new System.Drawing.Size(67, 28);
+			this.lblContaSaldo.TabIndex = 14;
 			this.lblContaSaldo.Text = "R$ 0,00";
 			this.lblContaSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// label1
+			// lblContaSaldoLabel
 			// 
-			this.label1.AutoSize = true;
-			this.label1.BackColor = System.Drawing.Color.Transparent;
-			this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(28, 268);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(110, 19);
-			this.label1.TabIndex = 9;
-			this.label1.Text = "Saldo da Conta:";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblContaSaldoLabel.AutoSize = true;
+			this.lblContaSaldoLabel.BackColor = System.Drawing.Color.Transparent;
+			this.lblContaSaldoLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblContaSaldoLabel.Location = new System.Drawing.Point(28, 324);
+			this.lblContaSaldoLabel.Name = "lblContaSaldoLabel";
+			this.lblContaSaldoLabel.Size = new System.Drawing.Size(110, 19);
+			this.lblContaSaldoLabel.TabIndex = 13;
+			this.lblContaSaldoLabel.Text = "Saldo da Conta:";
+			this.lblContaSaldoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// lblBloqueioData
 			// 
 			this.lblBloqueioData.AutoSize = true;
 			this.lblBloqueioData.BackColor = System.Drawing.Color.Transparent;
-			this.lblBloqueioData.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblBloqueioData.Location = new System.Drawing.Point(397, 263);
+			this.lblBloqueioData.Font = new System.Drawing.Font("Pathway Gothic One", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblBloqueioData.Location = new System.Drawing.Point(397, 319);
 			this.lblBloqueioData.Name = "lblBloqueioData";
-			this.lblBloqueioData.Size = new System.Drawing.Size(127, 29);
-			this.lblBloqueioData.TabIndex = 12;
+			this.lblBloqueioData.Size = new System.Drawing.Size(106, 28);
+			this.lblBloqueioData.TabIndex = 16;
 			this.lblBloqueioData.Text = "00/00/0000";
 			this.lblBloqueioData.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// txtSaldoInicial
+			// 
+			this.txtSaldoInicial.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtSaldoInicial.Inteiro = false;
+			this.txtSaldoInicial.Location = new System.Drawing.Point(137, 262);
+			this.txtSaldoInicial.Moeda = true;
+			this.txtSaldoInicial.Name = "txtSaldoInicial";
+			this.txtSaldoInicial.Positivo = true;
+			this.txtSaldoInicial.Size = new System.Drawing.Size(126, 31);
+			this.txtSaldoInicial.TabIndex = 10;
+			this.txtSaldoInicial.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// lblSaldoInicialLabel
+			// 
+			this.lblSaldoInicialLabel.AutoSize = true;
+			this.lblSaldoInicialLabel.BackColor = System.Drawing.Color.Transparent;
+			this.lblSaldoInicialLabel.ForeColor = System.Drawing.Color.Black;
+			this.lblSaldoInicialLabel.Location = new System.Drawing.Point(44, 268);
+			this.lblSaldoInicialLabel.Name = "lblSaldoInicialLabel";
+			this.lblSaldoInicialLabel.Size = new System.Drawing.Size(87, 19);
+			this.lblSaldoInicialLabel.TabIndex = 9;
+			this.lblSaldoInicialLabel.Text = "Saldo Inicial";
+			// 
+			// dtpDataInicial
+			// 
+			this.dtpDataInicial.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dtpDataInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpDataInicial.Location = new System.Drawing.Point(374, 262);
+			this.dtpDataInicial.Name = "dtpDataInicial";
+			this.dtpDataInicial.Size = new System.Drawing.Size(131, 31);
+			this.dtpDataInicial.TabIndex = 12;
+			// 
+			// lblDataInicialLabel
+			// 
+			this.lblDataInicialLabel.AutoSize = true;
+			this.lblDataInicialLabel.BackColor = System.Drawing.Color.Transparent;
+			this.lblDataInicialLabel.ForeColor = System.Drawing.Color.Black;
+			this.lblDataInicialLabel.Location = new System.Drawing.Point(285, 268);
+			this.lblDataInicialLabel.Name = "lblDataInicialLabel";
+			this.lblDataInicialLabel.Size = new System.Drawing.Size(83, 19);
+			this.lblDataInicialLabel.TabIndex = 11;
+			this.lblDataInicialLabel.Text = "Data Inicial";
 			// 
 			// frmConta
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 359);
+			this.ClientSize = new System.Drawing.Size(560, 420);
+			this.Controls.Add(this.dtpDataInicial);
+			this.Controls.Add(this.txtSaldoInicial);
 			this.Controls.Add(this.lblBloqueioData);
 			this.Controls.Add(this.lblContaSaldo);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.Label34);
+			this.Controls.Add(this.lblContaSaldoLabel);
+			this.Controls.Add(this.lblBloqueioDataLabel);
 			this.Controls.Add(this.btnCongEscolher);
 			this.Controls.Add(this.txtCongregacao);
+			this.Controls.Add(this.lblDataInicialLabel);
+			this.Controls.Add(this.lblSaldoInicialLabel);
 			this.Controls.Add(this.Label6);
 			this.Controls.Add(this.pnlChk2);
 			this.Controls.Add(this.pnlChk1);
@@ -397,13 +448,17 @@
 			this.Controls.SetChildIndex(this.pnlChk1, 0);
 			this.Controls.SetChildIndex(this.pnlChk2, 0);
 			this.Controls.SetChildIndex(this.Label6, 0);
+			this.Controls.SetChildIndex(this.lblSaldoInicialLabel, 0);
+			this.Controls.SetChildIndex(this.lblDataInicialLabel, 0);
 			this.Controls.SetChildIndex(this.txtCongregacao, 0);
 			this.Controls.SetChildIndex(this.btnCongEscolher, 0);
-			this.Controls.SetChildIndex(this.Label34, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.lblBloqueioDataLabel, 0);
+			this.Controls.SetChildIndex(this.lblContaSaldoLabel, 0);
 			this.Controls.SetChildIndex(this.lblContaSaldo, 0);
 			this.Controls.SetChildIndex(this.lblBloqueioData, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
+			this.Controls.SetChildIndex(this.txtSaldoInicial, 0);
+			this.Controls.SetChildIndex(this.dtpDataInicial, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -436,11 +491,15 @@
 		internal VIBlend.WinForms.Controls.vButton btnCongEscolher;
 		internal System.Windows.Forms.TextBox txtCongregacao;
 		internal System.Windows.Forms.Label Label6;
-		internal System.Windows.Forms.Label Label34;
+		internal System.Windows.Forms.Label lblBloqueioDataLabel;
 		internal System.Windows.Forms.Panel pnlChk2;
 		internal System.Windows.Forms.CheckBox chkOperadoraCartao;
 		internal System.Windows.Forms.Label lblContaSaldo;
-		internal System.Windows.Forms.Label label1;
+		internal System.Windows.Forms.Label lblContaSaldoLabel;
 		internal System.Windows.Forms.Label lblBloqueioData;
+		private CamadaUC.ucOnlyNumbers txtSaldoInicial;
+		internal System.Windows.Forms.Label lblSaldoInicialLabel;
+		private System.Windows.Forms.DateTimePicker dtpDataInicial;
+		internal System.Windows.Forms.Label lblDataInicialLabel;
 	}
 }

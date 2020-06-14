@@ -78,7 +78,6 @@ namespace CamadaUI.Main
 
 				objUsuario obj = db.GetAuthorization(txtApelido.Text, txtSenha.Text);
 
-				frmPrincipal frmP = (frmPrincipal)Application.OpenForms[0];
 				Program.usuarioAtual = obj;
 				Logado = true;
 

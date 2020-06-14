@@ -44,6 +44,7 @@
     <Compile Include="AcessoControlBLL.cs" />
     <Compile Include="APagarBLL.cs" />
     <Compile Include="BancoBLL.cs" />
+    <Compile Include="CaixaBLL.cs" />
     <Compile Include="CampanhaBLL.cs" />
     <Compile Include="AReceberBLL.cs" />
     <Compile Include="CartaoBLL.cs" />

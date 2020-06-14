@@ -1,5 +1,4 @@
-﻿using CamadaBLL;
-using CamadaDTO;
+﻿using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
+using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.AReceber
 {
@@ -15,9 +15,8 @@ namespace CamadaUI.AReceber
 	{
 		private List<objAReceber> _recList;
 		private Form _formOrigem;
-		private objConta ContaPadrao;
-		private objConta ContaDefinida;
-		private objSetor SetorPadrao;
+		private objConta ContaSelected;
+		private objSetor SetorSelected;
 		private decimal doValor;
 		private decimal vlBruto;
 		private decimal vlLiquido;
@@ -39,18 +38,24 @@ namespace CamadaUI.AReceber
 			if (_recList.Count > 1) lblTitulo.Text = "Gerar Entradas - A Receber (em LOTE)";
 
 			CarregaComboMes();
+
+			// get default Conta and Setor
+			ContaSelected = ContaPadrao();
+			SetorSelected = SetorPadrao();
+
+			if (ContaSelected == null | SetorSelected == null) return;
+
+			// define DEFAULT DATE
+			numEntradaDia.Value = DataPadrao().Day;
+			cmbEntradaMes.SelectedValue = DataPadrao().Month;
+			numEntradaAno.Value = DataPadrao().Year;
+			_entradaData = DataPadrao();
+
+			// ADD HANDLERS
 			numEntradaAno.KeyDown += control_KeyDown;
 			numEntradaAno.Enter += Control_Enter;
 			numEntradaDia.KeyDown += control_KeyDown;
 			numEntradaDia.Enter += Control_Enter;
-
-			// get default Conta and Setor
-			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
-			SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
-
-			if (ContaPadrao == null | SetorPadrao == null) return;
-
-			ContaDefinida = ContaPadrao.GetCopyOf();
 
 			HandlerKeyDownControl(this);
 			DefineValoresIniciais();
@@ -61,7 +66,7 @@ namespace CamadaUI.AReceber
 		//------------------------------------------------------------------------------------------------------------
 		private void frmAReceberQuitar_Shown(object sender, EventArgs e)
 		{
-			if (ContaPadrao == null | SetorPadrao == null)
+			if (ContaSelected == null | SetorSelected == null)
 			{
 				AbrirDialog("Conta padrão ou Setor padrão precisam ser definidos...", "Conta | Setor",
 					DialogType.OK, DialogIcon.Exclamation);
@@ -78,8 +83,8 @@ namespace CamadaUI.AReceber
 			{
 				entradasList.Add(new objEntrada(null)
 				{
-					Conta = ContaPadrao.Conta,
-					IDConta = (int)ContaPadrao.IDConta,
+					Conta = ContaSelected.Conta,
+					IDConta = (int)ContaSelected.IDConta,
 					IDSetor = rec.IDSetor,
 					IDOrigem = (int)rec.IDAReceber,
 					Origem = 2,
@@ -96,12 +101,12 @@ namespace CamadaUI.AReceber
 			// define a pagar values
 			lblEntradaForma.Text = _recList.First().EntradaForma;
 			lblContaProvisoria.Text = _recList.First().Conta;
-			txtConta.Text = ContaPadrao.Conta;
-			lblContaDetalhe.Text = $"Saldo da Conta: {ContaPadrao.ContaSaldo.ToString("c")} \n" +
-				$"Data de Bloqueio até: {ContaPadrao.BloqueioData?.ToString() ?? ""}";
+			txtConta.Text = ContaSelected.Conta;
+			lblContaDetalhe.Text = $"Saldo da Conta: {ContaSelected.ContaSaldo.ToString("c")} \n" +
+				$"Data de Bloqueio até: {ContaSelected.BloqueioData?.ToString() ?? ""}";
 
 			// define data padrao
-			DateTime datePadrao = ((frmPrincipal)Application.OpenForms[0]).propDataPadrao;
+			DateTime datePadrao = DataPadrao();
 			numEntradaDia.Text = datePadrao.Day.ToString("D2");
 			cmbEntradaMes.SelectedValue = datePadrao.Month;
 			numEntradaAno.Value = datePadrao.Year;
@@ -248,14 +253,14 @@ namespace CamadaUI.AReceber
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				Contas.frmContaProcura frm = new Contas.frmContaProcura(this, ContaDefinida.IDConta);
+				Contas.frmContaProcura frm = new Contas.frmContaProcura(this, ContaSelected.IDConta);
 				frm.ShowDialog();
 
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
 					entradasList.ForEach(ent => ent.IDConta = (int)frm.propEscolha.IDConta);
-					ContaDefinida = frm.propEscolha;
+					ContaSelected = frm.propEscolha;
 					txtConta.Text = frm.propEscolha.Conta;
 					lblContaDetalhe.Text = $"Saldo da Conta: {frm.propEscolha.ContaSaldo.ToString("c")} \n" +
 						$"Data de Bloqueio até: {frm.propEscolha.BloqueioData?.ToString() ?? ""}";

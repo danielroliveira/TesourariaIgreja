@@ -1,16 +1,13 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Congregacoes;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Contas
 {
@@ -19,7 +16,6 @@ namespace CamadaUI.Contas
 		private objConta _conta;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
-		private int? _IDCongregacao;
 		private List<objCongregacao> congregacaoList;// = CongBLL.GetListCongregacao();
 
 		#region SUB NEW | PROPERTIES
@@ -33,7 +29,6 @@ namespace CamadaUI.Contas
 			_conta = obj;
 			bind.DataSource = _conta;
 			BindingCreator();
-			_IDCongregacao = _conta.IDCongregacao;
 
 			_conta.PropertyChanged += RegistroAlterado;
 
@@ -101,6 +96,7 @@ namespace CamadaUI.Contas
 						btnSalvar.Enabled = true;
 						btnCancelar.Enabled = true;
 						btnAtivo.Enabled = false;
+						lblSaldoInicialLabel.Visible = true;
 						break;
 					case EnumFlagEstado.RegistroBloqueado:
 						btnNovo.Enabled = true;
@@ -111,7 +107,36 @@ namespace CamadaUI.Contas
 					default:
 						break;
 				}
+
+				DefineShowSaldoInicial(Sit == EnumFlagEstado.NovoRegistro);
 			}
+		}
+
+		private void DefineShowSaldoInicial(bool isVisible)
+		{
+			lblSaldoInicialLabel.Visible = isVisible;
+			txtSaldoInicial.Visible = isVisible;
+			lblDataInicialLabel.Visible = isVisible;
+			dtpDataInicial.Visible = isVisible;
+			dtpDataInicial.MaxDate = DateTime.Today;
+
+			if (isVisible)
+			{
+				Height = 420;
+				lblContaSaldo.Location = new Point(144, 319);
+				lblContaSaldoLabel.Location = new Point(28, 324);
+				lblBloqueioDataLabel.Location = new Point(266, 324);
+				lblBloqueioData.Location = new Point(397, 319);
+			}
+			else
+			{
+				Height = 364;
+				lblContaSaldo.Location = new Point(144, 263);
+				lblContaSaldoLabel.Location = new Point(28, 268);
+				lblBloqueioDataLabel.Location = new Point(266, 268);
+				lblBloqueioData.Location = new Point(397, 263);
+			}
+
 		}
 
 		private void GetCongregacaoList()
@@ -152,10 +177,13 @@ namespace CamadaUI.Contas
 			lblBloqueioData.DataBindings.Add("Text", bind, "BloqueioData", true, DataSourceUpdateMode.OnPropertyChanged);
 			chkOperadoraCartao.DataBindings.Add("Checked", bind, "OperadoraCartao", true, DataSourceUpdateMode.OnPropertyChanged);
 			chkBancaria.DataBindings.Add("Checked", bind, "Bancaria", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtSaldoInicial.DataBindings.Add("Text", bind, "ContaSaldo", true, DataSourceUpdateMode.OnPropertyChanged);
+			dtpDataInicial.DataBindings.Add("Value", bind, "BloqueioData", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			lblContaSaldo.DataBindings["Text"].Format += FormatCurrency;
+			txtSaldoInicial.DataBindings["Text"].Format += FormatCurrency;
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -312,7 +340,18 @@ namespace CamadaUI.Contas
 				//--- SAVE: INSERT OR UPDATE
 				if (_conta.IDConta == null) //--- save | Insert
 				{
-					int ID = cBLL.InsertConta(_conta);
+					// create ajuste
+					objCaixaAjuste ajuste = null;
+
+					if (_conta.ContaSaldo > 0)
+					{
+						ajuste = CreateAjuste();
+						if (ajuste == null) return;
+					}
+
+					//--- execute INSERT
+					int ID = cBLL.InsertConta(_conta, ajuste, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+
 					//--- define newID
 					_conta.IDConta = ID;
 				}
@@ -342,8 +381,81 @@ namespace CamadaUI.Contas
 
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtConta, "Congregação Setor", _conta)) return false;
+			if (!VerificaDadosClasse(txtConta, "Descrição da Conta", _conta)) return false;
+			if (!VerificaDadosClasse(txtCongregacao, "Congregação", _conta)) return false;
+
+			if (_conta.Bancaria && _conta.OperadoraCartao)
+			{
+				AbrirDialog("Uma conta não pode ser Bancária e Operadora de Cartão simultaneamente..." + "\n" +
+							"Favor selecionar uma das opções.",
+							"Bancária ou Operadora?",
+							DialogType.OK,
+							DialogIcon.Exclamation);
+				chkBancaria.Focus();
+				return false;
+			}
+
+			if (Sit == EnumFlagEstado.NovoRegistro && _conta.ContaSaldo == 0)
+			{
+				var resp = AbrirDialog("O valor do saldo incial da conta não foi informado ou é igual a zero..." + "\n" +
+							"Deseja informar o valor do SALDO INICIAL da nova CONTA?",
+							"Saldo Inicial",
+							DialogType.SIM_NAO,
+							DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					txtSaldoInicial.Focus();
+					txtSaldoInicial.SelectAll();
+					return false;
+				}
+			}
+
 			return true;
+		}
+
+		private objCaixaAjuste CreateAjuste()
+		{
+			// get Setor de Entrada
+			objSetor setor = null;
+
+			Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				setor = frm.propEscolha;
+
+				if (_conta.IDCongregacao != setor.IDCongregacao)
+				{
+					var resp = AbrirDialog("A Congregação Padrão do Setor de Recursos escolhido é " +
+						"diferente da congragação padrão da Nova Conta...\n" +
+						"Deseja continuar assim mesmo?", "Congregação Divergente",
+						DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+					if (resp == DialogResult.No) return null;
+				}
+
+			}
+			else
+			{
+				return null;
+			}
+
+			objCaixaAjuste ajuste = new objCaixaAjuste(null)
+			{
+				AjusteDescricao = "Ajuste de Saldo Inicial Conta",
+				IDAjusteTipo = 1,
+				IDSetor = (int)setor.IDSetor,
+				Setor = setor.Setor,
+				IDUserAuth = (int)Program.usuarioAtual.IDUsuario,
+				MovData = dtpDataInicial.Value,
+				MovValor = _conta.ContaSaldo,
+				MovValorReal = _conta.ContaSaldo
+			};
+
+			return ajuste;
 		}
 
 		#endregion

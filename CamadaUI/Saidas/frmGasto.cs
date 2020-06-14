@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -65,8 +64,7 @@ namespace CamadaUI.Saidas
 			// Define CONTA
 			if (_saida.IDSaida == null)
 			{
-				objConta contaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao.ShallowCopy();
-				DefineConta(contaPadrao);
+				DefineConta(ContaPadrao());
 			}
 			else
 			{
@@ -110,8 +108,7 @@ namespace CamadaUI.Saidas
 			// Define CONTA
 			if (_saida.IDSaida == null)
 			{
-				objConta contaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao.ShallowCopy();
-				DefineConta(contaPadrao);
+				DefineConta(ContaPadrao());
 			}
 			else
 			{
@@ -132,8 +129,7 @@ namespace CamadaUI.Saidas
 			// Define Setor
 			if (_saida.IDSaida == null)
 			{
-				objSetor setorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao.ShallowCopy();
-				DefineSetor(setorPadrao);
+				DefineSetor(SetorPadrao());
 			}
 			else
 			{
@@ -152,6 +148,7 @@ namespace CamadaUI.Saidas
 			if (_despesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
+				_despesa.DespesaData = DataPadrao();
 			}
 			else
 			{
@@ -1143,7 +1140,6 @@ namespace CamadaUI.Saidas
 			_saida.SaidaData = _despesa.DespesaData;
 			_saida.SaidaValor = _pagar.ValorPago;
 		}
-
 
 		#endregion // SALVAR REGISTRO --- END
 	}

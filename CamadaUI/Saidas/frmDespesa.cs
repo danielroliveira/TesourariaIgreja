@@ -75,6 +75,7 @@ namespace CamadaUI.Saidas
 				Sit = EnumFlagEstado.NovoRegistro;
 				_despesa.IDSetor = (int)setorSelected.IDSetor;
 				_despesa.Setor = setorSelected.Setor;
+				_despesa.DespesaData = DataPadrao();
 			}
 			else
 			{

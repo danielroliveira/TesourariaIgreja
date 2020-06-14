@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
+using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.APagar
 {
@@ -14,8 +15,8 @@ namespace CamadaUI.APagar
 	{
 		private objAPagar _apagar;
 		private Form _formOrigem;
-		private objConta ContaPadrao;
-		private objSetor SetorPadrao;
+		private objConta ContaSelected;
+		private objSetor SetorSelected;
 		private decimal maxValue;
 		private decimal doValor;
 		public objSaida propSaida { get; set; }
@@ -34,19 +35,19 @@ namespace CamadaUI.APagar
 			numSaidaAno.Enter += Control_Enter;
 
 			// get default Conta and Setor
-			ContaPadrao = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao.ShallowCopy();
+			ContaSelected = ContaPadrao();
 
 			// get SETOR
-			if (((frmPrincipal)Application.OpenForms[0]).propSetorPadrao.IDSetor == pag.IDSetor)
+			if (SetorPadrao().IDSetor == pag.IDSetor)
 			{
-				SetorPadrao = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao.ShallowCopy();
+				SetorSelected = SetorPadrao();
 			}
 			else
 			{
-				SetorPadrao = GetSetor(pag.IDSetor);
+				SetorSelected = GetSetor(pag.IDSetor);
 			}
 
-			if (ContaPadrao == null | SetorPadrao == null) return;
+			if (ContaSelected == null | SetorSelected == null) return;
 
 			DefineValoresIniciais();
 		}
@@ -55,7 +56,7 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void frmAPagarQuitar_Shown(object sender, EventArgs e)
 		{
-			if (ContaPadrao == null | SetorPadrao == null)
+			if (ContaSelected == null | SetorSelected == null)
 			{
 				AbrirDialog("Conta padrão ou Setor padrão precisam ser definidos...", "Conta | Setor",
 					DialogType.OK, DialogIcon.Exclamation);
@@ -95,17 +96,17 @@ namespace CamadaUI.APagar
 			// define a pagar values
 			lblCredor.Text = _apagar.Credor;
 			lblDespesaDescricao.Text = _apagar.DespesaDescricao;
-			propSaida.IDConta = (int)ContaPadrao.IDConta;
-			propSaida.Conta = ContaPadrao.Conta;
-			txtConta.Text = ContaPadrao.Conta;
-			propSaida.IDSetor = (int)SetorPadrao.IDSetor;
-			propSaida.Setor = SetorPadrao.Setor;
-			lblSetor.Text = SetorPadrao.Setor;
-			lblContaDetalhe.Text = $"Saldo da Conta: {ContaPadrao.ContaSaldo.ToString("c")} \n" +
-				$"Data de Bloqueio até: {ContaPadrao.BloqueioData?.ToString() ?? ""}";
+			propSaida.IDConta = (int)ContaSelected.IDConta;
+			propSaida.Conta = ContaSelected.Conta;
+			txtConta.Text = ContaSelected.Conta;
+			propSaida.IDSetor = (int)SetorSelected.IDSetor;
+			propSaida.Setor = SetorSelected.Setor;
+			lblSetor.Text = SetorSelected.Setor;
+			lblContaDetalhe.Text = $"Saldo da Conta: {ContaSelected.ContaSaldo.ToString("c")} \n" +
+				$"Data de Bloqueio até: {ContaSelected.BloqueioData?.ToString() ?? ""}";
 
 			// define data padrao
-			propSaida.SaidaData = ((frmPrincipal)Application.OpenForms[0]).propDataPadrao;
+			propSaida.SaidaData = DataPadrao(); ;
 			txtSaidaDia.Text = propSaida.SaidaData.Day.ToString("D2");
 			cmbSaidaMes.SelectedValue = propSaida.SaidaData.Month;
 			numSaidaAno.Value = propSaida.SaidaData.Year;

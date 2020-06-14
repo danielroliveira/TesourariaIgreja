@@ -356,7 +356,7 @@ namespace CamadaUI
 
 		#endregion
 
-		#region CONTROLA SALDO CONTA E SETOR
+		#region CONTROLA SALDO CONTA E SETOR AND DATE
 
 		// UPDATE SALDO DA CONTA LOCAL
 		//------------------------------------------------------------------------------------------------------------
@@ -368,7 +368,7 @@ namespace CamadaUI
 				Cursor.Current = Cursors.WaitCursor;
 
 				// execute
-				objConta conta = ((frmPrincipal)Application.OpenForms[0]).propContaPadrao;
+				objConta conta = ContaPadrao();
 
 				if (conta.IDConta == IDConta)
 				{
@@ -399,7 +399,7 @@ namespace CamadaUI
 				Cursor.Current = Cursors.WaitCursor;
 
 				// execute
-				objSetor setor = ((frmPrincipal)Application.OpenForms[0]).propSetorPadrao;
+				objSetor setor = SetorPadrao();
 
 				if (setor.IDSetor == IDSetor)
 				{
@@ -418,6 +418,30 @@ namespace CamadaUI
 				Cursor.Current = Cursors.Default;
 			}
 
+		}
+
+		// GET CONTA PADRAO
+		//------------------------------------------------------------------------------------------------------------
+		public static objConta ContaPadrao()
+		{
+			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
+			return principal.propContaPadrao.ShallowCopy();
+		}
+
+		// GET SETOR PADRAO
+		//------------------------------------------------------------------------------------------------------------
+		public static objSetor SetorPadrao()
+		{
+			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
+			return principal.propSetorPadrao.ShallowCopy();
+		}
+
+		// GET DATE PADRAO
+		//------------------------------------------------------------------------------------------------------------
+		public static DateTime DataPadrao()
+		{
+			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
+			return principal.propDataPadrao;
 		}
 
 		#endregion // CONTROLA SALDO CONTA E SETOR --- END

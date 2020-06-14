@@ -754,7 +754,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblContribuicaoTipo";
+				string query = "SELECT * FROM tblContribuicaoTipo WHERE IDContribuicaoTipo > 0";
 
 				// add params
 				db.LimparParametros();

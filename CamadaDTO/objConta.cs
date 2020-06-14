@@ -236,5 +236,17 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property ContaTipo
+		//---------------------------------------------------------------
+		public string ContaTipo
+		{
+			get
+			{
+				if (Bancaria) return "Conta Bancária";
+				else if (OperadoraCartao) return "Operadora de Cartão";
+				else return "Conta Local";
+			}
+		}
 	}
 }
