@@ -251,6 +251,12 @@
     <Compile Include="Contas\frmContaListagem.designer.cs">
       <DependentUpon>frmContaListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contas\frmContaMovimentacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contas\frmContaMovimentacao.designer.cs">
+      <DependentUpon>frmContaMovimentacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contas\frmContaProcura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -600,6 +606,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmContaListagem.resx">
       <DependentUpon>frmContaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contas\frmContaMovimentacao.resx">
+      <DependentUpon>frmContaMovimentacao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmContaProcura.resx">
       <DependentUpon>frmContaProcura.cs</DependentUpon>

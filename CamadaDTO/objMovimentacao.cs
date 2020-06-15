@@ -150,6 +150,26 @@ namespace CamadaDTO
 			set => EditData._OrigemTabela = value;
 		}
 
+		// Property OrigemTabelaDescricao
+		//---------------------------------------------------------------
+		public string OrigemTabelaDescricao
+		{
+			get
+			{
+				switch (OrigemTabela)
+				{
+					case "tblContribuicao":
+						return "Contribuição";
+					case "tblCaixaAjuste":
+						return "Ajuste de Caixa";
+					case "tblAPagar":
+						return "Contas a Pagar";
+					default:
+						return "";
+				}
+			}
+		}
+
 		// Property MovTabela
 		//---------------------------------------------------------------
 		public string MovTabela
@@ -263,7 +283,7 @@ namespace CamadaDTO
 
 		// Property MovValorReal
 		//---------------------------------------------------------------
-		public decimal ValorReal
+		public decimal MovValorReal
 		{
 			get => EditData._MovValorReal;
 			set => EditData._MovValorReal = value;

@@ -83,6 +83,8 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuContaMov = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuContaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -427,8 +429,10 @@
 			// 
 			// mnuContas
 			// 
+			this.mnuContas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuContaProcurar,
+            this.mnuContaMov});
 			this.mnuContas.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuContas.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuContas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContas.Name = "mnuContas";
 			this.mnuContas.Size = new System.Drawing.Size(278, 30);
@@ -443,7 +447,7 @@
 			this.mnuSetores.Name = "mnuSetores";
 			this.mnuSetores.Size = new System.Drawing.Size(278, 30);
 			this.mnuSetores.Tag = "1";
-			this.mnuSetores.Text = "Setores de Movimentação";
+			this.mnuSetores.Text = "Setor de Recursos";
 			// 
 			// mnuCartao
 			// 
@@ -734,6 +738,22 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuContaMov
+			// 
+			this.mnuContaMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuContaMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContaMov.Name = "mnuContaMov";
+			this.mnuContaMov.Size = new System.Drawing.Size(269, 30);
+			this.mnuContaMov.Text = "Ver Movimentação de Conta";
+			// 
+			// mnuContaProcurar
+			// 
+			this.mnuContaProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
+			this.mnuContaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContaProcurar.Name = "mnuContaProcurar";
+			this.mnuContaProcurar.Size = new System.Drawing.Size(269, 30);
+			this.mnuContaProcurar.Text = "Editar | Procurar Contas";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -821,6 +841,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuAReceberProcurar;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaRealizada;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripMenuItem mnuContaProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuContaMov;
 	}
 }
 

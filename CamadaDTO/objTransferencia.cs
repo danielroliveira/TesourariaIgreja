@@ -301,5 +301,21 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property Consolidado
+		//---------------------------------------------------------------
+		public bool Consolidado
+		{
+			get => EditData._Consolidado;
+			set => EditData._Consolidado = value;
+		}
+
+		// Property Observacao
+		//---------------------------------------------------------------
+		public string Observacao
+		{
+			get => EditData._Observacao;
+			set => EditData._Observacao = value;
+		}
 	}
 }

@@ -50,6 +50,7 @@
     <Compile Include="CartaoBLL.cs" />
     <Compile Include="DespesaPeriodicaBLL.cs" />
     <Compile Include="DespesaBLL.cs" />
+    <Compile Include="MovimentacaoBLL.cs" />
     <Compile Include="TransferenciaBLL.cs" />
     <Compile Include="SaidaBLL.cs" />
     <Compile Include="EntradaBLL.cs" />
