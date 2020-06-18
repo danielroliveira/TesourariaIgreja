@@ -18,9 +18,9 @@ namespace CamadaDTO
 			internal string _MovOrigem;
 			internal string _MovTabela;
 			internal int _Origem;
-			internal int _IDConta;
+			internal int? _IDConta;
 			internal string _Conta;
-			internal int _IDSetor;
+			internal int? _IDSetor;
 			internal string _Setor;
 			internal DateTime _MovData;
 			internal decimal _MovValor;
@@ -164,6 +164,8 @@ namespace CamadaDTO
 						return "Ajuste de Caixa";
 					case "tblAPagar":
 						return "Contas a Pagar";
+					case "tblTransfConta":
+						return "Transferência";
 					default:
 						return "";
 				}
@@ -291,7 +293,7 @@ namespace CamadaDTO
 
 		// Property IDSetor
 		//---------------------------------------------------------------
-		public int IDSetor
+		public int? IDSetor
 		{
 			get => EditData._IDSetor;
 			set
@@ -314,7 +316,7 @@ namespace CamadaDTO
 
 		// Property IDConta
 		//---------------------------------------------------------------
-		public int IDConta
+		public int? IDConta
 		{
 			get => EditData._IDConta;
 			set

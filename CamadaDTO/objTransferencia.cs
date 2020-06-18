@@ -19,12 +19,10 @@ namespace CamadaDTO
 			internal int _Origem;
 			internal DateTime _TransferenciaData;
 			internal decimal _TransferenciaValor;
-			internal int _IDSetor;
+			internal int? _IDSetor;
 			internal string _Setor;
-			internal int _IDConta;
+			internal int? _IDConta;
 			internal string _Conta;
-			internal bool _Consolidado;
-			internal string _Observacao;
 			internal long? _IDCaixa;
 		}
 
@@ -78,6 +76,13 @@ namespace CamadaDTO
 				BackupData = new StructTransferencia();
 				inTxn = false;
 			}
+		}
+
+		// GET SHALLOW COPY OF OBJECT
+		//------------------------------------------------------------------------------------------------------------
+		public objTransferencia ShallowCopy()
+		{
+			return (objTransferencia)this.MemberwiseClone();
 		}
 
 		// PROPERTY CHANGED
@@ -179,7 +184,6 @@ namespace CamadaDTO
 				{
 					throw ex;
 				}
-
 			}
 		}
 
@@ -243,7 +247,7 @@ namespace CamadaDTO
 
 		// Property IDSetor
 		//---------------------------------------------------------------
-		public int IDSetor
+		public int? IDSetor
 		{
 			get => EditData._IDSetor;
 			set
@@ -266,7 +270,7 @@ namespace CamadaDTO
 
 		// Property IDConta
 		//---------------------------------------------------------------
-		public int IDConta
+		public int? IDConta
 		{
 			get => EditData._IDConta;
 			set
@@ -301,21 +305,327 @@ namespace CamadaDTO
 				}
 			}
 		}
+	}
 
-		// Property Consolidado
-		//---------------------------------------------------------------
-		public bool Consolidado
+	//=================================================================================================
+	// TRANSFERENCIA CONTA
+	//=================================================================================================
+	public class objTransfConta
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructTransferencia
 		{
-			get => EditData._Consolidado;
-			set => EditData._Consolidado = value;
+			internal long? _IDTransfConta;
+			internal int _IDContaEntrada;
+			internal string _ContaEntrada;
+			internal int _IDContaSaida;
+			internal string _ContaSaida;
+			internal string _Descricao;
+			internal objTransferencia _transf;
 		}
 
-		// Property Observacao
-		//---------------------------------------------------------------
-		public string Observacao
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructTransferencia EditData;
+		private StructTransferencia BackupData;
+		private bool inTxn = false;
+
+		public objTransfConta(long? iDTransfConta)
 		{
-			get => EditData._Observacao;
-			set => EditData._Observacao = value;
+			EditData = new StructTransferencia()
+			{
+				_IDTransfConta = iDTransfConta,
+				_ContaEntrada = "",
+				_ContaSaida = "",
+				_Descricao = "",
+				_transf = new objTransferencia(null)
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructTransferencia();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._IDTransfConta?.ToString("D4");
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		// Property IDTransfConta
+		//---------------------------------------------------------------
+		public long? IDTransfConta
+		{
+			get => EditData._IDTransfConta;
+			set => EditData._IDTransfConta = value;
+		}
+
+		// Property IDContaEntrada
+		//---------------------------------------------------------------
+		public int IDContaEntrada
+		{
+			get => EditData._IDContaEntrada;
+			set
+			{
+				if (value != EditData._IDContaEntrada)
+				{
+					EditData._IDContaEntrada = value;
+					NotifyPropertyChanged("IDContaEntrada");
+				}
+			}
+		}
+
+		// Property ContaEntrada
+		//---------------------------------------------------------------
+		public string ContaEntrada
+		{
+			get => EditData._ContaEntrada;
+			set => EditData._ContaEntrada = value;
+		}
+
+		// Property IDContaSaida
+		//---------------------------------------------------------------
+		public int IDContaSaida
+		{
+			get => EditData._IDContaSaida;
+			set
+			{
+				if (value != EditData._IDContaSaida)
+				{
+					EditData._IDContaSaida = value;
+					NotifyPropertyChanged("IDContaSaida");
+				}
+			}
+		}
+
+		// Property ContaSaida
+		//---------------------------------------------------------------
+		public string ContaSaida
+		{
+			get => EditData._ContaSaida;
+			set => EditData._ContaSaida = value;
+		}
+
+		// Property Descricao
+		//---------------------------------------------------------------
+		public string Descricao
+		{
+			get => EditData._Descricao;
+			set
+			{
+				if (value != EditData._Descricao)
+				{
+					EditData._Descricao = value;
+					NotifyPropertyChanged("Descricao");
+				}
+			}
+		}
+
+		// TRANSFERENCIA OBJECT
+		public virtual objTransferencia Transferencia
+		{
+			get => EditData._transf;
+			set => EditData._transf = value;
+		}
+	}
+
+	//=================================================================================================
+	// TRANSFERENCIA SETOR
+	//=================================================================================================
+	public class objTransfSetor
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructTransferencia
+		{
+			internal long? _IDTransfSetor;
+			internal int _IDSetorEntrada;
+			internal string _SetorEntrada;
+			internal int _IDSetorSaida;
+			internal string _SetorSaida;
+			internal string _Descricao;
+			internal objTransferencia _transf;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructTransferencia EditData;
+		private StructTransferencia BackupData;
+		private bool inTxn = false;
+
+		public objTransfSetor(long? iDTransfSetor)
+		{
+			EditData = new StructTransferencia()
+			{
+				_IDTransfSetor = iDTransfSetor,
+				_SetorEntrada = "",
+				_SetorSaida = "",
+				_Descricao = "",
+				_transf = new objTransferencia(null)
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructTransferencia();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._IDTransfSetor?.ToString("D4");
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		// Property IDTransfSetor
+		//---------------------------------------------------------------
+		public long? IDTransfSetor
+		{
+			get => EditData._IDTransfSetor;
+			set => EditData._IDTransfSetor = value;
+		}
+
+		// Property IDSetorEntrada
+		//---------------------------------------------------------------
+		public int IDSetorEntrada
+		{
+			get => EditData._IDSetorEntrada;
+			set
+			{
+				if (value != EditData._IDSetorEntrada)
+				{
+					EditData._IDSetorEntrada = value;
+					NotifyPropertyChanged("IDSetorEntrada");
+				}
+			}
+		}
+
+		// Property SetorEntrada
+		//---------------------------------------------------------------
+		public string SetorEntrada
+		{
+			get => EditData._SetorEntrada;
+			set => EditData._SetorEntrada = value;
+		}
+
+		// Property IDSetorSaida
+		//---------------------------------------------------------------
+		public int IDSetorSaida
+		{
+			get => EditData._IDSetorSaida;
+			set
+			{
+				if (value != EditData._IDSetorSaida)
+				{
+					EditData._IDSetorSaida = value;
+					NotifyPropertyChanged("IDSetorSaida");
+				}
+			}
+		}
+
+		// Property SetorSaida
+		//---------------------------------------------------------------
+		public string SetorSaida
+		{
+			get => EditData._SetorSaida;
+			set => EditData._SetorSaida = value;
+		}
+
+		// Property Descricao
+		//---------------------------------------------------------------
+		public string Descricao
+		{
+			get => EditData._Descricao;
+			set
+			{
+				if (value != EditData._Descricao)
+				{
+					EditData._Descricao = value;
+					NotifyPropertyChanged("Descricao");
+				}
+			}
+		}
+
+		// TRANSFERENCIA OBJECT
+		public virtual objTransferencia Transferencia
+		{
+			get => EditData._transf;
+			set => EditData._transf = value;
 		}
 	}
 }

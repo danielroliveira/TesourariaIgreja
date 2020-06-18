@@ -127,10 +127,10 @@ namespace CamadaBLL
 				Origem = (int)row["Origem"],
 				MovValor = (decimal)row["MovValor"],
 				MovValorReal = (decimal)row["MovValorReal"],
-				IDSetor = (int)row["IDSetor"],
-				Setor = (string)row["Setor"],
-				IDConta = (int)row["IDConta"],
-				Conta = (string)row["Conta"],
+				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
+				Setor = row["Setor"] == DBNull.Value ? null : (string)row["Setor"],
+				IDConta = row["IDConta"] == DBNull.Value ? null : (int?)row["IDConta"],
+				Conta = row["Conta"] == DBNull.Value ? null : (string)row["Conta"],
 				IDCaixa = row["IDCaixa"] == DBNull.Value ? null : (long?)row["IDCaixa"],
 			};
 

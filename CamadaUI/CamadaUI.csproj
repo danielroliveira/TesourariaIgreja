@@ -513,6 +513,30 @@
     <Compile Include="Setores\frmSetorProcura.designer.cs">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </Compile>
+    <Compile Include="Transferencias\frmTransferencia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transferencias\frmTransferencia.designer.cs">
+      <DependentUpon>frmTransferencia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transferencias\frmTransferenciasListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transferencias\frmTransferenciasListagem.designer.cs">
+      <DependentUpon>frmTransferenciasListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transferencias\frmTransfSetor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transferencias\frmTransfSetor.designer.cs">
+      <DependentUpon>frmTransfSetor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transferencias\frmTransfSetorListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transferencias\frmTransfSetorListagem.designer.cs">
+      <DependentUpon>frmTransfSetorListagem.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="APagar\frmAPagarAlterar.resx">
       <DependentUpon>frmAPagarAlterar.cs</DependentUpon>
     </EmbeddedResource>
@@ -738,6 +762,18 @@
     <EmbeddedResource Include="Setores\frmSetorProcura.resx">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Transferencias\frmTransferencia.resx">
+      <DependentUpon>frmTransferencia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transferencias\frmTransferenciasListagem.resx">
+      <DependentUpon>frmTransferenciasListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transferencias\frmTransfSetor.resx">
+      <DependentUpon>frmTransfSetor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transferencias\frmTransfSetorListagem.resx">
+      <DependentUpon>frmTransfSetorListagem.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -929,6 +965,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\lixeira_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DownArrow_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moneybag_24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

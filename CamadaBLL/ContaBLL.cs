@@ -247,6 +247,14 @@ namespace CamadaBLL
 		{
 			try
 			{
+				decimal saldo = ContaSaldoGet(IDConta, dbTran);
+
+				//--- check NEGATIVE SALDO after change
+				if (saldo + valor < 0)
+				{
+					throw new AppException("O Saldo da Conta se tornará negativo após movimentação...");
+				}
+
 				string query = "UPDATE tblConta SET ContaSaldo = ContaSaldo + @valor WHERE IDConta = @IDConta";
 
 				// add params

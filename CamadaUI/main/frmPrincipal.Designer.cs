@@ -62,7 +62,16 @@
 			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuFechamento = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuTransferencia = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuTranferenciaContaEfetuar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuTransfProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuTranferenciaSetorEfetuar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuTransfSetorProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuContas = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuContaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuContaMov = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetores = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCartao = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuBanco = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,8 +92,6 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuContaMov = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuContaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -401,6 +408,8 @@
 			this.btnMovimentação.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFechamento,
             this.toolStripSeparator2,
+            this.mnuTransferencia,
+            this.toolStripSeparator9,
             this.mnuContas,
             this.mnuSetores,
             this.mnuCartao,
@@ -416,7 +425,7 @@
 			// mnuFechamento
 			// 
 			this.mnuFechamento.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuFechamento.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuFechamento.Image = global::CamadaUI.Properties.Resources.moneybag_24;
 			this.mnuFechamento.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuFechamento.Name = "mnuFechamento";
 			this.mnuFechamento.Size = new System.Drawing.Size(278, 30);
@@ -427,6 +436,62 @@
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(275, 6);
 			// 
+			// mnuTransferencia
+			// 
+			this.mnuTransferencia.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTranferenciaContaEfetuar,
+            this.mnuTransfProcurar,
+            this.toolStripSeparator8,
+            this.mnuTranferenciaSetorEfetuar,
+            this.mnuTransfSetorProcurar});
+			this.mnuTransferencia.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuTransferencia.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuTransferencia.Name = "mnuTransferencia";
+			this.mnuTransferencia.Size = new System.Drawing.Size(278, 30);
+			this.mnuTransferencia.Text = "Transferências";
+			// 
+			// mnuTranferenciaContaEfetuar
+			// 
+			this.mnuTranferenciaContaEfetuar.Image = global::CamadaUI.Properties.Resources.refresh_24;
+			this.mnuTranferenciaContaEfetuar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuTranferenciaContaEfetuar.Name = "mnuTranferenciaContaEfetuar";
+			this.mnuTranferenciaContaEfetuar.Size = new System.Drawing.Size(315, 30);
+			this.mnuTranferenciaContaEfetuar.Text = "Efetuar Transferência entre Contas";
+			// 
+			// mnuTransfProcurar
+			// 
+			this.mnuTransfProcurar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuTransfProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuTransfProcurar.Name = "mnuTransfProcurar";
+			this.mnuTransfProcurar.Size = new System.Drawing.Size(315, 30);
+			this.mnuTransfProcurar.Text = "Procurar Transferências de Contas";
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(312, 6);
+			// 
+			// mnuTranferenciaSetorEfetuar
+			// 
+			this.mnuTranferenciaSetorEfetuar.Image = global::CamadaUI.Properties.Resources.refresh_24;
+			this.mnuTranferenciaSetorEfetuar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuTranferenciaSetorEfetuar.Name = "mnuTranferenciaSetorEfetuar";
+			this.mnuTranferenciaSetorEfetuar.Size = new System.Drawing.Size(315, 30);
+			this.mnuTranferenciaSetorEfetuar.Text = "Efetuar Transferência entre Setores";
+			// 
+			// mnuTransfSetorProcurar
+			// 
+			this.mnuTransfSetorProcurar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuTransfSetorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuTransfSetorProcurar.Name = "mnuTransfSetorProcurar";
+			this.mnuTransfSetorProcurar.Size = new System.Drawing.Size(315, 30);
+			this.mnuTransfSetorProcurar.Text = "Procurar Transferências de Setores";
+			// 
+			// toolStripSeparator9
+			// 
+			this.toolStripSeparator9.Name = "toolStripSeparator9";
+			this.toolStripSeparator9.Size = new System.Drawing.Size(275, 6);
+			// 
 			// mnuContas
 			// 
 			this.mnuContas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -434,10 +499,27 @@
             this.mnuContaMov});
 			this.mnuContas.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuContas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContas.ImageTransparentColor = System.Drawing.Color.Fuchsia;
 			this.mnuContas.Name = "mnuContas";
 			this.mnuContas.Size = new System.Drawing.Size(278, 30);
 			this.mnuContas.Tag = "1";
 			this.mnuContas.Text = "Contas de Movimentação";
+			// 
+			// mnuContaProcurar
+			// 
+			this.mnuContaProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
+			this.mnuContaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContaProcurar.Name = "mnuContaProcurar";
+			this.mnuContaProcurar.Size = new System.Drawing.Size(269, 30);
+			this.mnuContaProcurar.Text = "Editar | Procurar Contas";
+			// 
+			// mnuContaMov
+			// 
+			this.mnuContaMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuContaMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContaMov.Name = "mnuContaMov";
+			this.mnuContaMov.Size = new System.Drawing.Size(269, 30);
+			this.mnuContaMov.Text = "Ver Movimentação de Conta";
 			// 
 			// mnuSetores
 			// 
@@ -738,22 +820,6 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// mnuContaMov
-			// 
-			this.mnuContaMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.mnuContaMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuContaMov.Name = "mnuContaMov";
-			this.mnuContaMov.Size = new System.Drawing.Size(269, 30);
-			this.mnuContaMov.Text = "Ver Movimentação de Conta";
-			// 
-			// mnuContaProcurar
-			// 
-			this.mnuContaProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
-			this.mnuContaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuContaProcurar.Name = "mnuContaProcurar";
-			this.mnuContaProcurar.Size = new System.Drawing.Size(269, 30);
-			this.mnuContaProcurar.Text = "Editar | Procurar Contas";
-			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -843,6 +909,13 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
 		private System.Windows.Forms.ToolStripMenuItem mnuContaProcurar;
 		private System.Windows.Forms.ToolStripMenuItem mnuContaMov;
+		private System.Windows.Forms.ToolStripMenuItem mnuTransferencia;
+		private System.Windows.Forms.ToolStripMenuItem mnuTranferenciaContaEfetuar;
+		private System.Windows.Forms.ToolStripMenuItem mnuTransfProcurar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripMenuItem mnuTranferenciaSetorEfetuar;
+		private System.Windows.Forms.ToolStripMenuItem mnuTransfSetorProcurar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
 	}
 }
 

@@ -393,7 +393,7 @@ namespace CamadaBLL
 				Origem = 3, // tblAReceber
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = receber.IDContaProvisoria,
-				IDSetor = receber.IDSetor,
+				IDSetor = null,
 				TransferenciaData = entrada.EntradaData,
 				TransferenciaValor = entrada.EntradaValor * (-1)
 			};
@@ -404,7 +404,7 @@ namespace CamadaBLL
 				Origem = 3, // tblAReceber
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = entrada.IDConta,
-				IDSetor = receber.IDSetor,
+				IDSetor = null,
 				TransferenciaData = entrada.EntradaData,
 				TransferenciaValor = entrada.EntradaValor
 			};

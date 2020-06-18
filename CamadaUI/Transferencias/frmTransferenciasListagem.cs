@@ -8,13 +8,13 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Contas
+namespace CamadaUI.Transferencias
 {
-	public partial class frmContaMovimentacao : CamadaUI.Modals.frmModFinBorder
+	public partial class frmTransferenciasListagem : Modals.frmModFinBorder
 	{
-		private List<objMovimentacao> listMov = new List<objMovimentacao>();
-		private BindingSource bindMov = new BindingSource();
-		private MovimentacaoBLL mBLL = new MovimentacaoBLL();
+		private List<objTransfConta> listTransf = new List<objTransfConta>();
+		private BindingSource bindTransf = new BindingSource();
+		private TransferenciaBLL tBLL = new TransferenciaBLL();
 		private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
@@ -27,7 +27,7 @@ namespace CamadaUI.Contas
 
 		// SUN NEW | CONSTRUCTOR
 		//------------------------------------------------------------------------------------------------------------
-		public frmContaMovimentacao(Form formOrigem = null)
+		public frmTransferenciasListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
 
@@ -49,6 +49,8 @@ namespace CamadaUI.Contas
 			rbtPorMes.CheckedChanged += rbt_CheckedChanged;
 			rbtPorPeriodo.CheckedChanged += rbt_CheckedChanged;
 			rbtTodas.CheckedChanged += rbt_CheckedChanged;
+
+			rbtEntrada.CheckedChanged += (a, b) => ObterDados();
 		}
 
 		// CONTROLA O MES
@@ -70,9 +72,6 @@ namespace CamadaUI.Contas
 				lblPeriodo.Text = _myMes.ToString("MMMM | yyyy");
 				lblDtInicial.Text = _dtInicial.ToString("dd/MM");
 				lblDtFinal.Text = _dtFinal.ToString("dd/MM");
-
-				// habilita, desabilita btnPeriodoPosterior caso mes futuro
-				//btnPeriodoPosterior.Enabled = !(_myMes.Year >= DateTime.Today.Year && _myMes.Month >= DateTime.Today.Month);
 			}
 		}
 
@@ -86,12 +85,12 @@ namespace CamadaUI.Contas
 				Cursor.Current = Cursors.WaitCursor;
 
 				// define list
-				listMov = mBLL.GetMovimentacaoList(ContaSelected.IDConta, null,
+				listTransf = tBLL.GetTransfContaList(rbtEntrada.Checked, ContaSelected.IDConta,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
 
-				bindMov.DataSource = listMov;
-				dgvListagem.DataSource = bindMov;
+				bindTransf.DataSource = listTransf;
+				dgvListagem.DataSource = bindTransf;
 
 				// recalc totais labels
 				CalculaTotais();
@@ -113,14 +112,8 @@ namespace CamadaUI.Contas
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			decimal vlEntrada = listMov.Where(x => x.MovOrigem == "ENTRADA").Sum(x => x.MovValor);
-			lblValorEntradas.Text = vlEntrada.ToString("C");
-
-			decimal vlSaida = listMov.Where(x => x.MovOrigem == "SAIDA").Sum(x => x.MovValor);
-			lblValorSaidas.Text = vlSaida.ToString("C");
-
-			decimal vlTransf = listMov.Where(x => x.MovOrigem == "TRANSFERENCIA").Sum(x => x.MovValor);
-			lblValorTransferido.Text = vlTransf.ToString("C");
+			decimal vlTotal = listTransf.Sum(x => x.Transferencia.TransferenciaValor);
+			lblValorTotal.Text = vlTotal.ToString("C");
 		}
 
 		// DFEFINE CONTA SELECTED
@@ -156,96 +149,74 @@ namespace CamadaUI.Contas
 			// CREATE ARRAY OF COLUMNS
 			var colList = new List<DataGridViewColumn>();
 
-			//--- (0) COLUNA DATA
-			clnMovData.DataPropertyName = "MovData";
-			clnMovData.Visible = true;
-			clnMovData.ReadOnly = true;
-			clnMovData.Resizable = DataGridViewTriState.False;
-			clnMovData.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnMovData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnMovData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			//clnMovData.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnMovData);
-
-			//--- (1) COLUNA ORIGEM DA MOVIMENTACAO
-			clnMovOrigem.DataPropertyName = "MovOrigem";
-			clnMovOrigem.Visible = true;
-			clnMovOrigem.ReadOnly = true;
-			clnMovOrigem.Resizable = DataGridViewTriState.False;
-			clnMovOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnMovOrigem.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnMovOrigem.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnMovOrigem.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnMovOrigem);
-
-			//--- (2) COLUNA ORIGEM TABELA
-			clnOrigemTabela.DataPropertyName = "OrigemTabelaDescricao";
-			clnOrigemTabela.Visible = true;
-			clnOrigemTabela.ReadOnly = true;
-			clnOrigemTabela.Resizable = DataGridViewTriState.False;
-			clnOrigemTabela.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnOrigemTabela.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnOrigemTabela.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			//clnMovOrigem.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnOrigemTabela);
-
-			//--- (3) COLUNA IDORIGEM
+			//--- (0) COLUNA ID
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnIDOrigem.DataPropertyName = "IDOrigem";
-			clnIDOrigem.Visible = true;
-			clnIDOrigem.ReadOnly = true;
-			clnIDOrigem.Resizable = DataGridViewTriState.False;
-			clnIDOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnIDOrigem.DefaultCellStyle.Padding = newPadding;
-			clnIDOrigem.DefaultCellStyle.Format = "0000";
+			clnID.DataPropertyName = "IDTransfConta";
+			clnID.Visible = true;
+			clnID.ReadOnly = true;
+			clnID.Resizable = DataGridViewTriState.False;
+			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnID.DefaultCellStyle.Padding = newPadding;
+			clnID.DefaultCellStyle.Format = "0000";
 			//clnIDOrigem.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnIDOrigem);
+			colList.Add(clnID);
 
-			//--- (4) COLUNA CONTA
-			clnConta.DataPropertyName = "Conta";
-			clnConta.Visible = true;
-			clnConta.ReadOnly = true;
-			clnConta.Resizable = DataGridViewTriState.False;
-			clnConta.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnConta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnConta.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			//clnConta.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnConta);
+			//--- (1) COLUNA DATA
+			//clnTransfData.DataPropertyName = "Transferencia.TransferenciaData";
+			clnTransfData.Visible = true;
+			clnTransfData.ReadOnly = true;
+			clnTransfData.Resizable = DataGridViewTriState.False;
+			clnTransfData.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnTransfData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnTransfData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnTransfData.DefaultCellStyle.Format = "dd/MM/yyyy";
+			//clnMovData.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnTransfData);
 
-			//--- (5) COLUNA SETOR
-			clnSetor.DataPropertyName = "Setor";
-			clnSetor.Visible = true;
-			clnSetor.ReadOnly = true;
-			clnSetor.Resizable = DataGridViewTriState.False;
-			clnSetor.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSetor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnSetor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			//clnSetor.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnSetor);
+			//--- (2) COLUNA TIPO
+			//clnTipo.DataPropertyName = "MovOrigem";
+			clnTipo.Visible = true;
+			clnTipo.ReadOnly = true;
+			clnTipo.Resizable = DataGridViewTriState.False;
+			clnTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnTipo.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnTipo);
 
-			//--- (6) COLUNA CAIXA
-			clnIDCaixa.DataPropertyName = "IDCaixa";
-			clnIDCaixa.Visible = true;
-			clnIDCaixa.ReadOnly = true;
-			clnIDCaixa.Resizable = DataGridViewTriState.False;
-			clnIDCaixa.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnIDCaixa.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnIDCaixa.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnIDCaixa.DefaultCellStyle.Format = "0000";
-			//clnIDCaixa.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnIDCaixa);
+			//--- (3) COLUNA ORIGEM
+			clnOrigem.DataPropertyName = "ContaSaida";
+			clnOrigem.Visible = true;
+			clnOrigem.ReadOnly = true;
+			clnOrigem.Resizable = DataGridViewTriState.False;
+			clnOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnOrigem.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnOrigem.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			//clnMovOrigem.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnOrigem);
 
-			//--- (7) COLUNA VALOR
-			clnValorReal.DataPropertyName = "MovValor";
-			clnValorReal.Visible = true;
-			clnValorReal.ReadOnly = true;
-			clnValorReal.Resizable = DataGridViewTriState.False;
-			clnValorReal.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValorReal.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorReal.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			//clnValorReal.DefaultCellStyle.Font = clnFont;
-			clnValorReal.DefaultCellStyle.Format = "#,##0.00";
-			colList.Add(clnValorReal);
+			//--- (4) COLUNA DESTINO
+			clnDestino.DataPropertyName = "ContaEntrada";
+			clnDestino.Visible = true;
+			clnDestino.ReadOnly = true;
+			clnDestino.Resizable = DataGridViewTriState.False;
+			clnDestino.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDestino.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDestino.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			//clnMovOrigem.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnDestino);
+
+			//--- (5) COLUNA VALOR
+			//clnTransfValor.DataPropertyName = "Transferencia.TransferenciaValor";
+			clnTransfValor.Visible = true;
+			clnTransfValor.ReadOnly = true;
+			clnTransfValor.Resizable = DataGridViewTriState.False;
+			clnTransfValor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnTransfValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnTransfValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			//clnTransfValor.DefaultCellStyle.Font = clnFont;
+			clnTransfValor.DefaultCellStyle.Format = "#,##0.00";
+			colList.Add(clnTransfValor);
 
 			//--- Add Columns
 			dgvListagem.Columns.AddRange(colList.ToArray());
@@ -263,7 +234,9 @@ namespace CamadaUI.Contas
 				return;
 			}
 
-			//mnuItemQuitar_Click(sender, null);
+			objTransfConta transf = (objTransfConta)dgvListagem.SelectedRows[0].DataBoundItem;
+			frmTransferencia frm = new frmTransferencia(transf, this);
+			frm.ShowDialog();
 		}
 
 		// ON ENTER SELECT ITEM
@@ -282,58 +255,28 @@ namespace CamadaUI.Contas
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == clnMovOrigem.Index)
+			if (e.ColumnIndex == clnTransfData.Index)
 			{
-				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-
-				if (mov.MovOrigem == "SAIDA")
-				{
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.Firebrick;
-					e.CellStyle.ForeColor = Color.Red;
-					e.CellStyle.SelectionForeColor = Color.Yellow;
-				}
-				else if (mov.MovOrigem == "ENTRADA")
-				{
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
-				}
-				else if (mov.MovOrigem == "TRANSFERENCIA")
-				{
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Honeydew;
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkSeaGreen;
-					//dgvListagem.Rows[e.RowIndex].DefaultCellStyle.Font = clnFont;
-					e.CellStyle.Font = clnFont;
-					e.CellStyle.ForeColor = Color.DarkGreen;
-					e.CellStyle.SelectionForeColor = Color.Honeydew;
-				}
+				objTransfConta mov = (objTransfConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				e.Value = (mov.Transferencia.TransferenciaData);
 			}
-			else if (e.ColumnIndex == clnValorReal.Index)
+			else if (e.ColumnIndex == clnTipo.Index)
 			{
-				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				objTransfConta mov = (objTransfConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovValorReal >= 0)
+				if (mov.Transferencia.TransferenciaValor > 0)
 				{
-					e.CellStyle.ForeColor = Color.DarkBlue;
-					e.CellStyle.SelectionForeColor = Color.White;
-					e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+					e.Value = "ENTRADA";
 				}
 				else
 				{
-					e.CellStyle.ForeColor = Color.Red;
-					e.CellStyle.SelectionForeColor = Color.Yellow;
-					e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+					e.Value = "SAÍDA";
 				}
 			}
-		}
-
-		// COMMIT UPDATED VALUE
-		//------------------------------------------------------------------------------------------------------------
-		private void dgvListagem_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.ColumnIndex == 0)
+			else if (e.ColumnIndex == clnTransfValor.Index)
 			{
-				dgvListagem.CommitEdit(DataGridViewDataErrorContexts.Commit);
+				objTransfConta mov = (objTransfConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				e.Value = (mov.Transferencia.TransferenciaValor);
 			}
 		}
 
@@ -358,7 +301,7 @@ namespace CamadaUI.Contas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmContaProcura frm = new Contas.frmContaProcura(this, ContaSelected.IDConta, false);
+				Contas.frmContaProcura frm = new Contas.frmContaProcura(this, ContaSelected.IDConta, false);
 				frm.ShowDialog();
 
 				//--- check return
@@ -375,6 +318,77 @@ namespace CamadaUI.Contas
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// NOVA TRANSFERENCIA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnNovaTransferencia_Click(object sender, EventArgs e)
+		{
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var frm = new frmTransferencia(new objTransfConta(null), this);
+				frm.ShowDialog();
+				ObterDados();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de nova transferência..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		// EXTORNAR TRANSF CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExtornarTransferencia_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Extornar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- ask user
+			var resp = AbrirDialog("Deseja realemente estornar a Transferência de Conta selecionada?",
+				"Estornar Transferência",
+				DialogType.SIM_NAO,
+				DialogIcon.Question,
+				DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objTransfConta transf = (objTransfConta)dgvListagem.SelectedRows[0].DataBoundItem;
+
+				tBLL.DeleteTransferenciaConta(transf, ContaSaldoLocalUpdate);
+				ObterDados();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Estornar Transferência..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -653,7 +667,7 @@ namespace CamadaUI.Contas
 			dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 			// mostra o MENU ativar e desativar
-			objMovimentacao recItem = (objMovimentacao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+			objTransfConta recItem = (objTransfConta)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 			// mnuVerPagamentos
 			/*
@@ -698,7 +712,7 @@ namespace CamadaUI.Contas
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Get A Pagar on list
-			objMovimentacao item = (objMovimentacao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objTransfConta item = (objTransfConta)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{

@@ -803,6 +803,10 @@ namespace CamadaUI
 			mnuSetores.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
 			mnuCartao.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCartaoControle());
 			mnuBanco.Click += (a, b) => MenuClickOpenForm(new Caixa.frmBancosControle());
+			mnuTranferenciaContaEfetuar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransferencia(new objTransfConta(null)));
+			mnuTransfProcurar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransferenciasListagem());
+			mnuTranferenciaSetorEfetuar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransfSetor(new objTransfSetor(null)));
+			mnuTransfSetorProcurar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransfSetorListagem());
 		}
 
 		private void MenuClickOpenForm(Form form)

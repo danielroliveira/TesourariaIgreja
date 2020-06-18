@@ -1,6 +1,6 @@
-﻿namespace CamadaUI.Contas
+﻿namespace CamadaUI.Transferencias
 {
-	partial class frmContaMovimentacao
+	partial class frmTransferenciasListagem
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -32,16 +32,14 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnMovOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnOrigemTabela = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDCaixa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorReal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTransfData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTransfValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
-			this.lblValorTransferido = new System.Windows.Forms.Label();
+			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnImprimir = new System.Windows.Forms.Button();
 			this.pnlPorMes = new System.Windows.Forms.Panel();
 			this.btnPeriodoPosterior = new VIBlend.WinForms.Controls.vArrowButton();
@@ -57,9 +55,7 @@
 			this.btnDtFinal = new VIBlend.WinForms.Controls.vButton();
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
-			this.lblValorEntradas = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.btnReceber = new System.Windows.Forms.Button();
+			this.btnNovaTransferencia = new System.Windows.Forms.Button();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuItemReceber = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemEstornar = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,47 +65,50 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
-			this.lblValorSaidas = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.rbtSaida = new System.Windows.Forms.RadioButton();
+			this.rbtEntrada = new System.Windows.Forms.RadioButton();
+			this.btnExtornarTransferencia = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
 			this.pnlPorPeriodo.SuspendLayout();
 			this.Panel2.SuspendLayout();
 			this.mnuOperacoes.SuspendLayout();
+			this.panel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(859, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(288, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(720, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(313, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Movimentação de Contas";
+			this.lblTitulo.Text = "Transferências entre Contas";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1147, 0);
+			this.btnClose.Location = new System.Drawing.Point(1033, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1187, 50);
+			this.panel1.Size = new System.Drawing.Size(1073, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(312, 629);
+			this.btnFechar.Location = new System.Drawing.Point(492, 628);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 10;
+			this.btnFechar.TabIndex = 9;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -138,14 +137,12 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnMovData,
-            this.clnMovOrigem,
-            this.clnOrigemTabela,
-            this.clnIDOrigem,
-            this.clnConta,
-            this.clnSetor,
-            this.clnIDCaixa,
-            this.clnValorReal});
+            this.clnID,
+            this.clnTransfData,
+            this.clnTipo,
+            this.clnOrigem,
+            this.clnDestino,
+            this.clnTransfValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -158,58 +155,48 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1143, 478);
+			this.dgvListagem.Size = new System.Drawing.Size(1029, 478);
 			this.dgvListagem.TabIndex = 5;
-			this.dgvListagem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentClick);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// clnMovData
+			// clnID
 			// 
-			this.clnMovData.HeaderText = "Data";
-			this.clnMovData.Name = "clnMovData";
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.Width = 80;
 			// 
-			// clnMovOrigem
+			// clnTransfData
 			// 
-			this.clnMovOrigem.HeaderText = "Tipo";
-			this.clnMovOrigem.Name = "clnMovOrigem";
-			this.clnMovOrigem.Width = 120;
+			this.clnTransfData.HeaderText = "Data";
+			this.clnTransfData.Name = "clnTransfData";
+			this.clnTransfData.Width = 110;
 			// 
-			// clnOrigemTabela
+			// clnTipo
 			// 
-			this.clnOrigemTabela.HeaderText = "Origem";
-			this.clnOrigemTabela.Name = "clnOrigemTabela";
-			this.clnOrigemTabela.Width = 150;
+			this.clnTipo.HeaderText = "Tipo";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.Width = 120;
 			// 
-			// clnIDOrigem
+			// clnOrigem
 			// 
-			this.clnIDOrigem.HeaderText = "Reg.";
-			this.clnIDOrigem.Name = "clnIDOrigem";
+			this.clnOrigem.HeaderText = "Origem";
+			this.clnOrigem.Name = "clnOrigem";
+			this.clnOrigem.Width = 250;
 			// 
-			// clnConta
+			// clnDestino
 			// 
-			this.clnConta.HeaderText = "Conta";
-			this.clnConta.Name = "clnConta";
-			this.clnConta.Width = 200;
+			this.clnDestino.HeaderText = "Destino";
+			this.clnDestino.Name = "clnDestino";
+			this.clnDestino.Width = 250;
 			// 
-			// clnSetor
+			// clnTransfValor
 			// 
-			this.clnSetor.HeaderText = "Setor";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.Width = 200;
-			// 
-			// clnIDCaixa
-			// 
-			this.clnIDCaixa.HeaderText = "Caixa";
-			this.clnIDCaixa.Name = "clnIDCaixa";
-			// 
-			// clnValorReal
-			// 
-			this.clnValorReal.HeaderText = "Valor";
-			this.clnValorReal.Name = "clnValorReal";
-			this.clnValorReal.Width = 120;
+			this.clnTransfValor.HeaderText = "Valor";
+			this.clnTransfValor.Name = "clnTransfValor";
+			this.clnTransfValor.Width = 150;
 			// 
 			// label1
 			// 
@@ -217,33 +204,33 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1073, 622);
+			this.label1.Location = new System.Drawing.Point(998, 622);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(90, 15);
-			this.label1.TabIndex = 8;
-			this.label1.Text = "Vl. Transferido:";
+			this.label1.Size = new System.Drawing.Size(54, 15);
+			this.label1.TabIndex = 10;
+			this.label1.Text = "Vl. Total:";
 			// 
-			// lblValorTransferido
+			// lblValorTotal
 			// 
-			this.lblValorTransferido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorTransferido.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorTransferido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTransferido.ForeColor = System.Drawing.Color.DarkGreen;
-			this.lblValorTransferido.Location = new System.Drawing.Point(1028, 639);
-			this.lblValorTransferido.Name = "lblValorTransferido";
-			this.lblValorTransferido.Size = new System.Drawing.Size(137, 32);
-			this.lblValorTransferido.TabIndex = 9;
-			this.lblValorTransferido.Text = "R$ 0,00";
-			this.lblValorTransferido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
+			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValorTotal.ForeColor = System.Drawing.Color.Black;
+			this.lblValorTotal.Location = new System.Drawing.Point(914, 639);
+			this.lblValorTotal.Name = "lblValorTotal";
+			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
+			this.lblValorTotal.TabIndex = 11;
+			this.lblValorTotal.Text = "R$ 0,00";
+			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// btnImprimir
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(180, 629);
+			this.btnImprimir.Location = new System.Drawing.Point(360, 628);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
-			this.btnImprimir.TabIndex = 9;
+			this.btnImprimir.TabIndex = 8;
 			this.btnImprimir.Text = "&Imprimir";
 			this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -266,12 +253,13 @@
 			// 
 			this.btnPeriodoPosterior.AllowAnimations = true;
 			this.btnPeriodoPosterior.ArrowDirection = System.Windows.Forms.ArrowDirection.Right;
+			this.btnPeriodoPosterior.Enabled = true;
 			this.btnPeriodoPosterior.Location = new System.Drawing.Point(220, 7);
 			this.btnPeriodoPosterior.Maximum = 100;
 			this.btnPeriodoPosterior.Minimum = 0;
 			this.btnPeriodoPosterior.Name = "btnPeriodoPosterior";
 			this.btnPeriodoPosterior.Size = new System.Drawing.Size(25, 25);
-			this.btnPeriodoPosterior.TabIndex = 4;
+			this.btnPeriodoPosterior.TabIndex = 1;
 			this.btnPeriodoPosterior.TabStop = false;
 			this.btnPeriodoPosterior.Text = "VArrowButton1";
 			this.btnPeriodoPosterior.Value = 0;
@@ -303,7 +291,7 @@
 			this.btnPeriodoAnterior.Minimum = 0;
 			this.btnPeriodoAnterior.Name = "btnPeriodoAnterior";
 			this.btnPeriodoAnterior.Size = new System.Drawing.Size(25, 25);
-			this.btnPeriodoAnterior.TabIndex = 3;
+			this.btnPeriodoAnterior.TabIndex = 0;
 			this.btnPeriodoAnterior.TabStop = false;
 			this.btnPeriodoAnterior.Text = "VArrowButton1";
 			this.btnPeriodoAnterior.Value = 0;
@@ -390,7 +378,7 @@
 			this.lblDtFinal.Location = new System.Drawing.Point(256, 7);
 			this.lblDtFinal.Name = "lblDtFinal";
 			this.lblDtFinal.Size = new System.Drawing.Size(60, 25);
-			this.lblDtFinal.TabIndex = 3;
+			this.lblDtFinal.TabIndex = 0;
 			this.lblDtFinal.Text = "10/10";
 			this.lblDtFinal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -400,7 +388,7 @@
 			this.lblDtInicial.Location = new System.Drawing.Point(99, 7);
 			this.lblDtInicial.Name = "lblDtInicial";
 			this.lblDtInicial.Size = new System.Drawing.Size(60, 25);
-			this.lblDtInicial.TabIndex = 1;
+			this.lblDtInicial.TabIndex = 2;
 			this.lblDtInicial.Text = "10/10";
 			this.lblDtInicial.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -413,7 +401,7 @@
 			this.btnDtFinal.RoundedCornersMask = ((byte)(15));
 			this.btnDtFinal.RoundedCornersRadius = 0;
 			this.btnDtFinal.Size = new System.Drawing.Size(85, 25);
-			this.btnDtFinal.TabIndex = 2;
+			this.btnDtFinal.TabIndex = 3;
 			this.btnDtFinal.TabStop = false;
 			this.btnDtFinal.Text = "Dt. Final";
 			this.btnDtFinal.UseVisualStyleBackColor = false;
@@ -429,7 +417,7 @@
 			this.btnDtInicial.RoundedCornersMask = ((byte)(15));
 			this.btnDtInicial.RoundedCornersRadius = 0;
 			this.btnDtInicial.Size = new System.Drawing.Size(85, 25);
-			this.btnDtInicial.TabIndex = 0;
+			this.btnDtInicial.TabIndex = 1;
 			this.btnDtInicial.TabStop = false;
 			this.btnDtInicial.Text = "Dt. Inicial";
 			this.btnDtInicial.UseVisualStyleBackColor = false;
@@ -447,45 +435,21 @@
 			this.Panel2.Location = new System.Drawing.Point(376, 67);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
-			this.Panel2.TabIndex = 4;
+			this.Panel2.TabIndex = 12;
 			// 
-			// lblValorEntradas
+			// btnNovaTransferencia
 			// 
-			this.lblValorEntradas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorEntradas.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorEntradas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorEntradas.ForeColor = System.Drawing.Color.DarkBlue;
-			this.lblValorEntradas.Location = new System.Drawing.Point(742, 639);
-			this.lblValorEntradas.Name = "lblValorEntradas";
-			this.lblValorEntradas.Size = new System.Drawing.Size(137, 32);
-			this.lblValorEntradas.TabIndex = 9;
-			this.lblValorEntradas.Text = "R$ 0,00";
-			this.lblValorEntradas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label3
-			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(803, 622);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(76, 15);
-			this.label3.TabIndex = 8;
-			this.label3.Text = "Vl. Entradas:";
-			// 
-			// btnReceber
-			// 
-			this.btnReceber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnReceber.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.btnReceber.Location = new System.Drawing.Point(22, 629);
-			this.btnReceber.Name = "btnReceber";
-			this.btnReceber.Size = new System.Drawing.Size(152, 42);
-			this.btnReceber.TabIndex = 8;
-			this.btnReceber.Text = "&Receber";
-			this.btnReceber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnReceber.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnReceber.UseVisualStyleBackColor = true;
+			this.btnNovaTransferencia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnNovaTransferencia.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.btnNovaTransferencia.Location = new System.Drawing.Point(22, 629);
+			this.btnNovaTransferencia.Name = "btnNovaTransferencia";
+			this.btnNovaTransferencia.Size = new System.Drawing.Size(200, 42);
+			this.btnNovaTransferencia.TabIndex = 6;
+			this.btnNovaTransferencia.Text = "&Nova Transferência";
+			this.btnNovaTransferencia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnNovaTransferencia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnNovaTransferencia.UseVisualStyleBackColor = true;
+			this.btnNovaTransferencia.Click += new System.EventHandler(this.btnNovaTransferencia_Click);
 			// 
 			// mnuOperacoes
 			// 
@@ -555,43 +519,18 @@
 			this.mnuItemAlterar.Size = new System.Drawing.Size(233, 26);
 			this.mnuItemAlterar.Text = "Alterar";
 			// 
-			// lblValorSaidas
-			// 
-			this.lblValorSaidas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorSaidas.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorSaidas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorSaidas.ForeColor = System.Drawing.Color.DarkRed;
-			this.lblValorSaidas.Location = new System.Drawing.Point(885, 639);
-			this.lblValorSaidas.Name = "lblValorSaidas";
-			this.lblValorSaidas.Size = new System.Drawing.Size(137, 32);
-			this.lblValorSaidas.TabIndex = 9;
-			this.lblValorSaidas.Text = "R$ 0,00";
-			this.lblValorSaidas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label4
-			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label4.AutoSize = true;
-			this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.ForeColor = System.Drawing.Color.DimGray;
-			this.label4.Location = new System.Drawing.Point(959, 622);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(63, 15);
-			this.label4.TabIndex = 8;
-			this.label4.Text = "Vl. Saídas:";
-			// 
 			// btnSetConta
 			// 
 			this.btnSetConta.AllowAnimations = true;
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(326, 86);
+			this.btnSetConta.Location = new System.Drawing.Point(326, 94);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
 			this.btnSetConta.Size = new System.Drawing.Size(34, 31);
-			this.btnSetConta.TabIndex = 3;
+			this.btnSetConta.TabIndex = 4;
 			this.btnSetConta.TabStop = false;
 			this.btnSetConta.Text = "...";
 			this.btnSetConta.UseCompatibleTextRendering = true;
@@ -603,12 +542,12 @@
 			// 
 			this.txtConta.BackColor = System.Drawing.Color.White;
 			this.txtConta.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConta.Location = new System.Drawing.Point(22, 86);
+			this.txtConta.Location = new System.Drawing.Point(22, 94);
 			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
 			this.txtConta.Size = new System.Drawing.Size(298, 31);
-			this.txtConta.TabIndex = 2;
+			this.txtConta.TabIndex = 3;
 			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label19
@@ -616,45 +555,88 @@
 			this.label19.AutoSize = true;
 			this.label19.BackColor = System.Drawing.Color.Transparent;
 			this.label19.ForeColor = System.Drawing.Color.Black;
-			this.label19.Location = new System.Drawing.Point(18, 62);
+			this.label19.Location = new System.Drawing.Point(18, 71);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(106, 19);
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Escolher Conta";
 			// 
-			// frmContaMovimentacao
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.rbtSaida);
+			this.panel3.Controls.Add(this.rbtEntrada);
+			this.panel3.Location = new System.Drawing.Point(154, 67);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(166, 32);
+			this.panel3.TabIndex = 2;
+			// 
+			// rbtSaida
+			// 
+			this.rbtSaida.AutoSize = true;
+			this.rbtSaida.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.rbtSaida.Location = new System.Drawing.Point(104, 6);
+			this.rbtSaida.Name = "rbtSaida";
+			this.rbtSaida.Size = new System.Drawing.Size(55, 19);
+			this.rbtSaida.TabIndex = 1;
+			this.rbtSaida.Text = "Saída";
+			this.rbtSaida.UseVisualStyleBackColor = true;
+			// 
+			// rbtEntrada
+			// 
+			this.rbtEntrada.AutoSize = true;
+			this.rbtEntrada.Checked = true;
+			this.rbtEntrada.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.rbtEntrada.Location = new System.Drawing.Point(16, 6);
+			this.rbtEntrada.Name = "rbtEntrada";
+			this.rbtEntrada.Size = new System.Drawing.Size(68, 19);
+			this.rbtEntrada.TabIndex = 0;
+			this.rbtEntrada.TabStop = true;
+			this.rbtEntrada.Text = "Entrada";
+			this.rbtEntrada.UseVisualStyleBackColor = true;
+			// 
+			// btnExtornarTransferencia
+			// 
+			this.btnExtornarTransferencia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnExtornarTransferencia.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExtornarTransferencia.Location = new System.Drawing.Point(228, 629);
+			this.btnExtornarTransferencia.Name = "btnExtornarTransferencia";
+			this.btnExtornarTransferencia.Size = new System.Drawing.Size(126, 42);
+			this.btnExtornarTransferencia.TabIndex = 7;
+			this.btnExtornarTransferencia.Text = "&Estornar";
+			this.btnExtornarTransferencia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExtornarTransferencia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnExtornarTransferencia.UseVisualStyleBackColor = true;
+			this.btnExtornarTransferencia.Click += new System.EventHandler(this.btnExtornarTransferencia_Click);
+			// 
+			// frmTransferenciasListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1187, 682);
+			this.ClientSize = new System.Drawing.Size(1073, 682);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
 			this.Controls.Add(this.label19);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.lblValorSaidas);
-			this.Controls.Add(this.lblValorEntradas);
-			this.Controls.Add(this.lblValorTransferido);
+			this.Controls.Add(this.lblValorTotal);
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnExtornarTransferencia);
 			this.Controls.Add(this.btnImprimir);
-			this.Controls.Add(this.btnReceber);
+			this.Controls.Add(this.btnNovaTransferencia);
+			this.Controls.Add(this.panel3);
 			this.KeyPreview = true;
-			this.Name = "frmContaMovimentacao";
+			this.Name = "frmTransferenciasListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
-			this.Controls.SetChildIndex(this.btnReceber, 0);
+			this.Controls.SetChildIndex(this.panel3, 0);
+			this.Controls.SetChildIndex(this.btnNovaTransferencia, 0);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
+			this.Controls.SetChildIndex(this.btnExtornarTransferencia, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
-			this.Controls.SetChildIndex(this.lblValorTransferido, 0);
-			this.Controls.SetChildIndex(this.lblValorEntradas, 0);
-			this.Controls.SetChildIndex(this.lblValorSaidas, 0);
+			this.Controls.SetChildIndex(this.lblValorTotal, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.label19, 0);
 			this.Controls.SetChildIndex(this.txtConta, 0);
@@ -665,6 +647,8 @@
 			this.pnlPorPeriodo.ResumeLayout(false);
 			this.Panel2.ResumeLayout(false);
 			this.mnuOperacoes.ResumeLayout(false);
+			this.panel3.ResumeLayout(false);
+			this.panel3.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -675,7 +659,7 @@
 		internal System.Windows.Forms.Button btnFechar;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.Label label1;
-		internal System.Windows.Forms.Label lblValorTransferido;
+		internal System.Windows.Forms.Label lblValorTotal;
 		internal System.Windows.Forms.Button btnImprimir;
 		internal System.Windows.Forms.Panel pnlPorMes;
 		internal VIBlend.WinForms.Controls.vArrowButton btnPeriodoPosterior;
@@ -691,9 +675,7 @@
 		internal VIBlend.WinForms.Controls.vButton btnDtFinal;
 		internal VIBlend.WinForms.Controls.vButton btnDtInicial;
 		internal System.Windows.Forms.Panel Panel2;
-		internal System.Windows.Forms.Label lblValorEntradas;
-		internal System.Windows.Forms.Label label3;
-		internal System.Windows.Forms.Button btnReceber;
+		internal System.Windows.Forms.Button btnNovaTransferencia;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemReceber;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemCancelar;
@@ -703,18 +685,18 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemEstornar;
-		internal System.Windows.Forms.Label lblValorSaidas;
-		internal System.Windows.Forms.Label label4;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;
 		internal System.Windows.Forms.TextBox txtConta;
 		internal System.Windows.Forms.Label label19;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovData;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovOrigem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigemTabela;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDOrigem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDCaixa;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
+		private System.Windows.Forms.Panel panel3;
+		private System.Windows.Forms.RadioButton rbtSaida;
+		private System.Windows.Forms.RadioButton rbtEntrada;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnTransfData;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigem;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDestino;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnTransfValor;
+		internal System.Windows.Forms.Button btnExtornarTransferencia;
 	}
 }

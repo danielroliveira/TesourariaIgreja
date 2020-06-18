@@ -291,11 +291,11 @@
 			// 
 			this.txtValorBruto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtValorBruto.Inteiro = false;
-			this.txtValorBruto.Location = new System.Drawing.Point(111, 269);
+			this.txtValorBruto.Location = new System.Drawing.Point(99, 269);
 			this.txtValorBruto.Moeda = false;
 			this.txtValorBruto.Name = "txtValorBruto";
 			this.txtValorBruto.Positivo = true;
-			this.txtValorBruto.Size = new System.Drawing.Size(120, 31);
+			this.txtValorBruto.Size = new System.Drawing.Size(148, 31);
 			this.txtValorBruto.TabIndex = 14;
 			this.txtValorBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtValorBruto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
@@ -508,11 +508,11 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(118, 247);
+			this.label8.Location = new System.Drawing.Point(99, 247);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(116, 19);
+			this.label8.Size = new System.Drawing.Size(148, 19);
 			this.label8.TabIndex = 12;
-			this.label8.Text = "Valor da Entrada";
+			this.label8.Text = "Valor da Contribuição";
 			// 
 			// label1
 			// 
@@ -521,16 +521,16 @@
 			this.label1.ForeColor = System.Drawing.Color.Black;
 			this.label1.Location = new System.Drawing.Point(136, 179);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(114, 19);
+			this.label1.Size = new System.Drawing.Size(146, 19);
 			this.label1.TabIndex = 8;
-			this.label1.Text = "Data da Entrada";
+			this.label1.Text = "Data da Contribuição";
 			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
 			this.label9.BackColor = System.Drawing.Color.Transparent;
 			this.label9.ForeColor = System.Drawing.Color.Black;
-			this.label9.Location = new System.Drawing.Point(233, 247);
+			this.label9.Location = new System.Drawing.Point(258, 247);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(116, 19);
 			this.label9.TabIndex = 13;
@@ -540,7 +540,7 @@
 			// 
 			this.txtEntradaForma.BackColor = System.Drawing.Color.White;
 			this.txtEntradaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtEntradaForma.Location = new System.Drawing.Point(237, 269);
+			this.txtEntradaForma.Location = new System.Drawing.Point(262, 269);
 			this.txtEntradaForma.MaxLength = 30;
 			this.txtEntradaForma.Name = "txtEntradaForma";
 			this.txtEntradaForma.Size = new System.Drawing.Size(193, 31);
@@ -557,7 +557,7 @@
 			this.btnSetEntradaForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSetEntradaForma.ImageAbsolutePosition = new System.Drawing.Point(7, 4);
 			this.btnSetEntradaForma.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnSetEntradaForma.Location = new System.Drawing.Point(436, 269);
+			this.btnSetEntradaForma.Location = new System.Drawing.Point(461, 269);
 			this.btnSetEntradaForma.Name = "btnSetEntradaForma";
 			this.btnSetEntradaForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaForma.RoundedCornersRadius = 0;
