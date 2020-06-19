@@ -197,6 +197,14 @@ namespace CamadaUI.Setores
 				return;
 			}
 
+			//--- check saldo existente
+			if (_setor.SetorSaldo > 0)
+			{
+				AbrirDialog("Não é possivel desastivar um setor que possui SALDO...",
+					"Saldo Existente", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			if (_setor.Ativa == true) //--- ATIVA
 			{
 				var response = AbrirDialog("Você deseja realmente DESATIVAR o Setor:\n" +

@@ -105,6 +105,12 @@ namespace CamadaUI.Setores
 			dgvListagem.StandardTab = true;
 			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
 
+			// DEFINE COLUMN FONT
+			//Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
 			clnID.DataPropertyName = "IDSetor";
@@ -114,6 +120,7 @@ namespace CamadaUI.Setores
 			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnID.DefaultCellStyle.Padding = newPadding;
 			clnID.DefaultCellStyle.Format = "0000";
+			colList.Add(clnID);
 
 			//--- (2) COLUNA CADASTRO
 			clnCadastro.DataPropertyName = "Setor";
@@ -123,22 +130,35 @@ namespace CamadaUI.Setores
 			clnCadastro.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			colList.Add(clnCadastro);
+
+			//--- (5) COLUNA SALDO
+			clnSaldo.DataPropertyName = "SetorSaldo";
+			clnSaldo.Visible = true;
+			clnSaldo.ReadOnly = true;
+			clnSaldo.Resizable = DataGridViewTriState.False;
+			clnSaldo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnSaldo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnSaldo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnSaldo.DefaultCellStyle.Format = "c";
+			colList.Add(clnSaldo);
 
 			//--- (3) Coluna da imagem
 			clnImage.Name = "Ativa";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			colList.Add(clnImage);
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(colList.ToArray());
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == 2)
+			if (e.ColumnIndex == clnImage.Index)
 			{
 				objSetor item = (objSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 				if (item.Ativa) e.Value = ImgAtivo;
@@ -273,7 +293,7 @@ namespace CamadaUI.Setores
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
+				if (dgvListagem.Columns[hit.ColumnIndex].Index == clnImage.Index)
 				{
 					objSetor Setor = (objSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
@@ -302,6 +322,14 @@ namespace CamadaUI.Setores
 			//--- Verifica o item
 			objSetor setor = (objSetor)dgvListagem.SelectedRows[0].DataBoundItem;
 
+			//--- check saldo existente
+			if (setor.SetorSaldo > 0)
+			{
+				AbrirDialog("Não é possivel desastivar um setor que possui SALDO...",
+					"Saldo Existente", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			//---pergunta ao usuário
 			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativa ? "DESATIVAR " : "ATIVAR")} esse Setor?\n" +
 									  setor.Setor.ToUpper(), (setor.Ativa ? "DESATIVAR " : "ATIVAR"),
@@ -321,6 +349,7 @@ namespace CamadaUI.Setores
 				cBLL.UpdateSetor(setor);
 
 				//--- altera a imagem
+				ObterDados(null, null);
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)

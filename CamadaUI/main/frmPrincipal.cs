@@ -800,13 +800,14 @@ namespace CamadaUI
 			// MENU MOVIMENTACAO
 			mnuContaProcurar.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());
 			mnuContaMov.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaMovimentacao());
-			mnuSetores.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
 			mnuCartao.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCartaoControle());
 			mnuBanco.Click += (a, b) => MenuClickOpenForm(new Caixa.frmBancosControle());
 			mnuTranferenciaContaEfetuar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransferencia(new objTransfConta(null)));
 			mnuTransfProcurar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransferenciasListagem());
 			mnuTranferenciaSetorEfetuar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransfSetor(new objTransfSetor(null)));
 			mnuTransfSetorProcurar.Click += (a, b) => MenuClickOpenForm(new Transferencias.frmTransfSetorListagem());
+			mnuSetorProcurar.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
+			mnuSetorMov.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorMovimentacao());
 		}
 
 		private void MenuClickOpenForm(Form form)

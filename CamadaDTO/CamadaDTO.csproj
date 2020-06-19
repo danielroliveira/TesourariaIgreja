@@ -49,6 +49,7 @@
     <Compile Include="AppException.cs" />
     <Compile Include="objAReceber.cs" />
     <Compile Include="objBanco.cs" />
+    <Compile Include="objCaixa.cs" />
     <Compile Include="objCartao.cs" />
     <Compile Include="objAPagar.cs" />
     <Compile Include="objCaixaAjuste.cs" />

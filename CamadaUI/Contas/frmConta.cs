@@ -274,6 +274,14 @@ namespace CamadaUI.Contas
 				return;
 			}
 
+			//--- check saldo existente
+			if (_conta.ContaSaldo > 0)
+			{
+				AbrirDialog("Não é possivel desastivar uma CONTA que possui SALDO...",
+					"Saldo Existente", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			if (_conta.Ativa == true) //--- ATIVA
 			{
 				var response = AbrirDialog("Você deseja realmente DESATIVAR a Conta:\n" +

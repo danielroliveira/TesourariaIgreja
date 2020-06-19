@@ -507,6 +507,12 @@
     <Compile Include="Setores\frmSetorListagem.designer.cs">
       <DependentUpon>frmSetorListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setores\frmSetorMovimentacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setores\frmSetorMovimentacao.designer.cs">
+      <DependentUpon>frmSetorMovimentacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setores\frmSetorProcura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -758,6 +764,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setores\frmSetorListagem.resx">
       <DependentUpon>frmSetorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setores\frmSetorMovimentacao.resx">
+      <DependentUpon>frmSetorMovimentacao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setores\frmSetorProcura.resx">
       <DependentUpon>frmSetorProcura.cs</DependentUpon>

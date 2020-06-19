@@ -92,6 +92,8 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuSetorProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSetorMov = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -510,7 +512,7 @@
 			this.mnuContaProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
 			this.mnuContaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContaProcurar.Name = "mnuContaProcurar";
-			this.mnuContaProcurar.Size = new System.Drawing.Size(269, 30);
+			this.mnuContaProcurar.Size = new System.Drawing.Size(294, 30);
 			this.mnuContaProcurar.Text = "Editar | Procurar Contas";
 			// 
 			// mnuContaMov
@@ -518,18 +520,20 @@
 			this.mnuContaMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuContaMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContaMov.Name = "mnuContaMov";
-			this.mnuContaMov.Size = new System.Drawing.Size(269, 30);
-			this.mnuContaMov.Text = "Ver Movimentação de Conta";
+			this.mnuContaMov.Size = new System.Drawing.Size(294, 30);
+			this.mnuContaMov.Text = "Extrato Movimentação de Conta";
 			// 
 			// mnuSetores
 			// 
+			this.mnuSetores.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuSetorProcurar,
+            this.mnuSetorMov});
 			this.mnuSetores.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.mnuSetores.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSetores.Name = "mnuSetores";
 			this.mnuSetores.Size = new System.Drawing.Size(278, 30);
 			this.mnuSetores.Tag = "1";
-			this.mnuSetores.Text = "Setor de Recursos";
+			this.mnuSetores.Text = "Setores de Recursos";
 			// 
 			// mnuCartao
 			// 
@@ -820,6 +824,22 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuSetorProcurar
+			// 
+			this.mnuSetorProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
+			this.mnuSetorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSetorProcurar.Name = "mnuSetorProcurar";
+			this.mnuSetorProcurar.Size = new System.Drawing.Size(304, 30);
+			this.mnuSetorProcurar.Text = "Editar | Procurar Setores";
+			// 
+			// mnuSetorMov
+			// 
+			this.mnuSetorMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuSetorMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSetorMov.Name = "mnuSetorMov";
+			this.mnuSetorMov.Size = new System.Drawing.Size(304, 30);
+			this.mnuSetorMov.Text = "Extrato Movimentação de Setores";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -916,6 +936,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuTranferenciaSetorEfetuar;
 		private System.Windows.Forms.ToolStripMenuItem mnuTransfSetorProcurar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+		private System.Windows.Forms.ToolStripMenuItem mnuSetorProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuSetorMov;
 	}
 }
 

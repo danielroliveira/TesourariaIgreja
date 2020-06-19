@@ -1,6 +1,6 @@
-﻿namespace CamadaUI.Contas
+﻿namespace CamadaUI.Setores
 {
-	partial class frmContaMovimentacao
+	partial class frmSetorMovimentacao
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -32,14 +32,6 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnMovOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnOrigemTabela = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDCaixa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorReal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTransferido = new System.Windows.Forms.Label();
 			this.btnImprimir = new System.Windows.Forms.Button();
@@ -70,9 +62,17 @@
 			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
 			this.lblValorSaidas = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
-			this.txtConta = new System.Windows.Forms.TextBox();
+			this.btnSetSetor = new VIBlend.WinForms.Controls.vButton();
+			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
+			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnMovOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnOrigemTabela = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnIDCaixa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorReal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -83,10 +83,10 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(859, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(288, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(710, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(437, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Movimentação de Contas";
+			this.lblTitulo.Text = "Movimentação de Setores de Recursos";
 			// 
 			// btnClose
 			// 
@@ -129,22 +129,22 @@
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnMovData,
-            this.clnMovOrigem,
-            this.clnOrigemTabela,
-            this.clnIDOrigem,
-            this.clnConta,
-            this.clnSetor,
-            this.clnIDCaixa,
-            this.clnValorReal});
+			this.clnMovData,
+			this.clnMovOrigem,
+			this.clnOrigemTabela,
+			this.clnIDOrigem,
+			this.clnSetor,
+			this.clnConta,
+			this.clnIDCaixa,
+			this.clnValorReal});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -164,51 +164,6 @@
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnMovData
-			// 
-			this.clnMovData.HeaderText = "Data";
-			this.clnMovData.Name = "clnMovData";
-			// 
-			// clnMovOrigem
-			// 
-			this.clnMovOrigem.HeaderText = "Tipo";
-			this.clnMovOrigem.Name = "clnMovOrigem";
-			this.clnMovOrigem.Width = 120;
-			// 
-			// clnOrigemTabela
-			// 
-			this.clnOrigemTabela.HeaderText = "Origem";
-			this.clnOrigemTabela.Name = "clnOrigemTabela";
-			this.clnOrigemTabela.Width = 150;
-			// 
-			// clnIDOrigem
-			// 
-			this.clnIDOrigem.HeaderText = "Reg.";
-			this.clnIDOrigem.Name = "clnIDOrigem";
-			// 
-			// clnConta
-			// 
-			this.clnConta.HeaderText = "Conta";
-			this.clnConta.Name = "clnConta";
-			this.clnConta.Width = 200;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.Width = 200;
-			// 
-			// clnIDCaixa
-			// 
-			this.clnIDCaixa.HeaderText = "Caixa";
-			this.clnIDCaixa.Name = "clnIDCaixa";
-			// 
-			// clnValorReal
-			// 
-			this.clnValorReal.HeaderText = "Valor";
-			this.clnValorReal.Name = "clnValorReal";
-			this.clnValorReal.Width = 120;
 			// 
 			// label1
 			// 
@@ -477,14 +432,14 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemReceber,
-            this.mnuItemEstornar,
-            this.toolStripSeparator2,
-            this.mnuItemCancelar,
-            this.mnuItemNormalizar,
-            this.toolStripSeparator1,
-            this.mnuItemVerOrigem,
-            this.mnuItemAlterar});
+			this.mnuItemReceber,
+			this.mnuItemEstornar,
+			this.toolStripSeparator2,
+			this.mnuItemCancelar,
+			this.mnuItemNormalizar,
+			this.toolStripSeparator1,
+			this.mnuItemVerOrigem,
+			this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
 			// 
@@ -566,36 +521,36 @@
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Vl. Saídas:";
 			// 
-			// btnSetConta
+			// btnSetSetor
 			// 
-			this.btnSetConta.AllowAnimations = true;
-			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
-			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(326, 86);
-			this.btnSetConta.Name = "btnSetConta";
-			this.btnSetConta.RoundedCornersMask = ((byte)(15));
-			this.btnSetConta.RoundedCornersRadius = 0;
-			this.btnSetConta.Size = new System.Drawing.Size(34, 31);
-			this.btnSetConta.TabIndex = 3;
-			this.btnSetConta.TabStop = false;
-			this.btnSetConta.Text = "...";
-			this.btnSetConta.UseCompatibleTextRendering = true;
-			this.btnSetConta.UseVisualStyleBackColor = false;
-			this.btnSetConta.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnSetConta.Click += new System.EventHandler(this.btnSetConta_Click);
+			this.btnSetSetor.AllowAnimations = true;
+			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetSetor.Location = new System.Drawing.Point(326, 86);
+			this.btnSetSetor.Name = "btnSetSetor";
+			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
+			this.btnSetSetor.RoundedCornersRadius = 0;
+			this.btnSetSetor.Size = new System.Drawing.Size(34, 31);
+			this.btnSetSetor.TabIndex = 3;
+			this.btnSetSetor.TabStop = false;
+			this.btnSetSetor.Text = "...";
+			this.btnSetSetor.UseCompatibleTextRendering = true;
+			this.btnSetSetor.UseVisualStyleBackColor = false;
+			this.btnSetSetor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetSetor.Click += new System.EventHandler(this.btnSetSetor_Click);
 			// 
-			// txtConta
+			// txtSetor
 			// 
-			this.txtConta.BackColor = System.Drawing.Color.White;
-			this.txtConta.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConta.Location = new System.Drawing.Point(22, 86);
-			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtConta.MaxLength = 30;
-			this.txtConta.Name = "txtConta";
-			this.txtConta.Size = new System.Drawing.Size(298, 31);
-			this.txtConta.TabIndex = 2;
-			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtSetor.BackColor = System.Drawing.Color.White;
+			this.txtSetor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtSetor.Location = new System.Drawing.Point(22, 86);
+			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtSetor.MaxLength = 30;
+			this.txtSetor.Name = "txtSetor";
+			this.txtSetor.Size = new System.Drawing.Size(298, 31);
+			this.txtSetor.TabIndex = 2;
+			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label19
 			// 
@@ -604,16 +559,61 @@
 			this.label19.ForeColor = System.Drawing.Color.Black;
 			this.label19.Location = new System.Drawing.Point(18, 62);
 			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(106, 19);
+			this.label19.Size = new System.Drawing.Size(101, 19);
 			this.label19.TabIndex = 1;
-			this.label19.Text = "Escolher Conta";
+			this.label19.Text = "Escolher Setor";
 			// 
-			// frmContaMovimentacao
+			// clnMovData
+			// 
+			this.clnMovData.HeaderText = "Data";
+			this.clnMovData.Name = "clnMovData";
+			// 
+			// clnMovOrigem
+			// 
+			this.clnMovOrigem.HeaderText = "Tipo";
+			this.clnMovOrigem.Name = "clnMovOrigem";
+			this.clnMovOrigem.Width = 120;
+			// 
+			// clnOrigemTabela
+			// 
+			this.clnOrigemTabela.HeaderText = "Origem";
+			this.clnOrigemTabela.Name = "clnOrigemTabela";
+			this.clnOrigemTabela.Width = 150;
+			// 
+			// clnIDOrigem
+			// 
+			this.clnIDOrigem.HeaderText = "Reg.";
+			this.clnIDOrigem.Name = "clnIDOrigem";
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.Width = 200;
+			// 
+			// clnConta
+			// 
+			this.clnConta.HeaderText = "Conta";
+			this.clnConta.Name = "clnConta";
+			this.clnConta.Width = 200;
+			// 
+			// clnIDCaixa
+			// 
+			this.clnIDCaixa.HeaderText = "Caixa";
+			this.clnIDCaixa.Name = "clnIDCaixa";
+			// 
+			// clnValorReal
+			// 
+			this.clnValorReal.HeaderText = "Valor";
+			this.clnValorReal.Name = "clnValorReal";
+			this.clnValorReal.Width = 120;
+			// 
+			// frmSetorMovimentacao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1187, 682);
-			this.Controls.Add(this.btnSetConta);
-			this.Controls.Add(this.txtConta);
+			this.Controls.Add(this.btnSetSetor);
+			this.Controls.Add(this.txtSetor);
 			this.Controls.Add(this.label19);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.label3);
@@ -626,7 +626,7 @@
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnImprimir);
 			this.KeyPreview = true;
-			this.Name = "frmContaMovimentacao";
+			this.Name = "frmSetorMovimentacao";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
@@ -641,8 +641,8 @@
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.label19, 0);
-			this.Controls.SetChildIndex(this.txtConta, 0);
-			this.Controls.SetChildIndex(this.btnSetConta, 0);
+			this.Controls.SetChildIndex(this.txtSetor, 0);
+			this.Controls.SetChildIndex(this.btnSetSetor, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlPorMes.ResumeLayout(false);
@@ -688,15 +688,15 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemEstornar;
 		internal System.Windows.Forms.Label lblValorSaidas;
 		internal System.Windows.Forms.Label label4;
-		internal VIBlend.WinForms.Controls.vButton btnSetConta;
-		internal System.Windows.Forms.TextBox txtConta;
+		internal VIBlend.WinForms.Controls.vButton btnSetSetor;
+		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label19;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigemTabela;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDOrigem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDCaixa;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
 	}

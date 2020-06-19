@@ -343,6 +343,14 @@ namespace CamadaUI.Contas
 			//--- Verifica o item
 			objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
 
+			//--- check saldo existente
+			if (conta.ContaSaldo > 0)
+			{
+				AbrirDialog("Não é possivel desastivar uma CONTA que possui SALDO...",
+					"Saldo Existente", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			//---pergunta ao usuário
 			var reponse = AbrirDialog($"Deseja realmente {(conta.Ativa ? "DESATIVAR " : "ATIVAR")} essa Conta?\n" +
 									  conta.Conta.ToUpper(), (conta.Ativa ? "DESATIVAR " : "ATIVAR"),
@@ -362,6 +370,7 @@ namespace CamadaUI.Contas
 				cBLL.UpdateConta(conta);
 
 				//--- altera a imagem
+				ObterDados(null, null);
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
