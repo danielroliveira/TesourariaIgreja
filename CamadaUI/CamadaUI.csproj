@@ -131,6 +131,18 @@
     <Compile Include="Caixa\frmBancosControle.Designer.cs">
       <DependentUpon>frmBancosControle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Caixa\frmCaixa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmCaixa.Designer.cs">
+      <DependentUpon>frmCaixa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Caixa\frmCaixaInserir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmCaixaInserir.Designer.cs">
+      <DependentUpon>frmCaixaInserir.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmCartaoControle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -575,6 +587,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmBancosControle.resx">
       <DependentUpon>frmBancosControle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\frmCaixa.resx">
+      <DependentUpon>frmCaixa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\frmCaixaInserir.resx">
+      <DependentUpon>frmCaixaInserir.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmCartaoControle.resx">
       <DependentUpon>frmCartaoControle.cs</DependentUpon>

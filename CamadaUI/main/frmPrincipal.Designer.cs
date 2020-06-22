@@ -60,7 +60,7 @@
 			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCobrancaForma = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
-			this.mnuFechamento = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCaixaFechamento = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuTransferencia = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuTranferenciaContaEfetuar = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +73,8 @@
 			this.mnuContaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuContaMov = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetores = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSetorProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSetorMov = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCartao = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuBanco = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop = new System.Windows.Forms.Panel();
@@ -92,8 +94,6 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuSetorProcurar = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuSetorMov = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -408,7 +408,7 @@
 			// btnMovimentação
 			// 
 			this.btnMovimentação.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFechamento,
+            this.mnuCaixaFechamento,
             this.toolStripSeparator2,
             this.mnuTransferencia,
             this.toolStripSeparator9,
@@ -424,14 +424,14 @@
 			this.btnMovimentação.Size = new System.Drawing.Size(173, 46);
 			this.btnMovimentação.Text = "Movimentação";
 			// 
-			// mnuFechamento
+			// mnuCaixaFechamento
 			// 
-			this.mnuFechamento.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuFechamento.Image = global::CamadaUI.Properties.Resources.moneybag_24;
-			this.mnuFechamento.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuFechamento.Name = "mnuFechamento";
-			this.mnuFechamento.Size = new System.Drawing.Size(278, 30);
-			this.mnuFechamento.Text = "Caixa Fechamento";
+			this.mnuCaixaFechamento.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCaixaFechamento.Image = global::CamadaUI.Properties.Resources.moneybag_24;
+			this.mnuCaixaFechamento.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCaixaFechamento.Name = "mnuCaixaFechamento";
+			this.mnuCaixaFechamento.Size = new System.Drawing.Size(278, 30);
+			this.mnuCaixaFechamento.Text = "Caixa Fechamento";
 			// 
 			// toolStripSeparator2
 			// 
@@ -534,6 +534,22 @@
 			this.mnuSetores.Size = new System.Drawing.Size(278, 30);
 			this.mnuSetores.Tag = "1";
 			this.mnuSetores.Text = "Setores de Recursos";
+			// 
+			// mnuSetorProcurar
+			// 
+			this.mnuSetorProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
+			this.mnuSetorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSetorProcurar.Name = "mnuSetorProcurar";
+			this.mnuSetorProcurar.Size = new System.Drawing.Size(304, 30);
+			this.mnuSetorProcurar.Text = "Editar | Procurar Setores";
+			// 
+			// mnuSetorMov
+			// 
+			this.mnuSetorMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuSetorMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSetorMov.Name = "mnuSetorMov";
+			this.mnuSetorMov.Size = new System.Drawing.Size(304, 30);
+			this.mnuSetorMov.Text = "Extrato Movimentação de Setores";
 			// 
 			// mnuCartao
 			// 
@@ -824,22 +840,6 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// mnuSetorProcurar
-			// 
-			this.mnuSetorProcurar.Image = global::CamadaUI.Properties.Resources.edit_page_24;
-			this.mnuSetorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuSetorProcurar.Name = "mnuSetorProcurar";
-			this.mnuSetorProcurar.Size = new System.Drawing.Size(304, 30);
-			this.mnuSetorProcurar.Text = "Editar | Procurar Setores";
-			// 
-			// mnuSetorMov
-			// 
-			this.mnuSetorMov.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.mnuSetorMov.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuSetorMov.Name = "mnuSetorMov";
-			this.mnuSetorMov.Size = new System.Drawing.Size(304, 30);
-			this.mnuSetorMov.Text = "Extrato Movimentação de Setores";
-			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -902,7 +902,7 @@
 		public System.Windows.Forms.ToolStrip mnuPrincipal;
 		public System.Windows.Forms.Button btnConfig;
 		private System.Windows.Forms.ToolStripSplitButton btnMovimentação;
-		private System.Windows.Forms.ToolStripMenuItem mnuFechamento;
+		private System.Windows.Forms.ToolStripMenuItem mnuCaixaFechamento;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem mnuContas;
 		private System.Windows.Forms.ToolStripMenuItem mnuSetores;

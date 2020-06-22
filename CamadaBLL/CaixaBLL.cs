@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace CamadaBLL
 {
-	class CaixaBLL
+	public class CaixaBLL
 	{
 		// GET Caixa
 		//------------------------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public objCaixa ConvertRowInClass(DataRow row)
 		{
-			objCaixa Movimentacao = new objCaixa((long)row["IDCaixa"])
+			objCaixa caixa = new objCaixa((long)row["IDCaixa"])
 			{
 				FechamentoData = (DateTime)row["FechamentoData"],
 				IDConta = (int)row["IDConta"],
@@ -119,15 +119,15 @@ namespace CamadaBLL
 				IDUsuario = (int)row["IDUsuario"],
 				UsuarioApelido = (string)row["UsuarioApelido"],
 				CaixaFinalDoDia = (bool)row["CaixaFinalDoDia"],
-				Observacao = (string)row["Observacao"],
+				Observacao = row["Observacao"] == DBNull.Value ? string.Empty : (string)row["Observacao"],
 			};
 
-			return Movimentacao;
+			return caixa;
 		}
 
 		// INSERT CAIXA
 		//------------------------------------------------------------------------------------------------------------
-		public objCaixa InsertCaixa(objCaixa caixa)
+		public long InsertCaixa(objCaixa caixa)
 		{
 			try
 			{
@@ -154,9 +154,9 @@ namespace CamadaBLL
 
 				//--- insert and Get new ID
 				long newID = db.ExecutarInsertAndGetID(query);
-				caixa.IDCaixa = newID;
 
-				return caixa;
+				//--- return
+				return newID;
 			}
 			catch (Exception ex)
 			{
@@ -209,6 +209,118 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// GET LAST CAIXA CONTA
+		//------------------------------------------------------------------------------------------------------------
+		public objCaixa GetLastCaixa(int IDConta)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- get the MAXDATE to verify movimentacao and continue
+				DateTime? MaxDate = GetMaxDateContaMov(IDConta, db);
+
+				if (MaxDate == null)
+				{
+					throw new AppException("Essa Conta não possui nenhuma movimentação pendente de caixa...");
+				}
+
+				//--- get lastCaixa
+				objCaixa LastCaixa = null;
+				string query = "SELECT TOP 1 * FROM qryCaixa WHERE IDConta = @IDConta ORDER BY IDCaixa DESC";
+
+				db.LimparParametros();
+				db.AdicionarParametros("@IDConta", IDConta);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				//--- if LASTCaixa => NULL construct new objCaixa to return
+				if (dt.Rows.Count == 0)
+				{
+					objConta conta = new ContaBLL().GetConta(IDConta, db);
+
+					LastCaixa = new objCaixa(null)
+					{
+						DataFinal = (DateTime)MaxDate,
+						DataInicial = GetMinDateContaMov(IDConta, db),
+						IDConta = IDConta,
+						CaixaFinalDoDia = false,
+						Conta = conta.Conta,
+						ContaBloqueioData = conta.BloqueioData,
+						ContaSaldo = conta.ContaSaldo,
+						FechamentoData = DateTime.Today,
+						IDSituacao = 0,
+						SaldoAnterior = 0,
+						SaldoFinal = 0,
+						Situacao = "Iniciado",
+					};
+
+					return LastCaixa;
+				}
+
+				//--- else convert DataRow in objCaixa
+				LastCaixa = ConvertRowInClass(dt.Rows[0]);
+
+				//--- Redefine control Dates
+				LastCaixa.DataInicial = LastCaixa.DataInicial;
+				LastCaixa.DataFinal = (DateTime)MaxDate;
+
+				return LastCaixa;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET MAX DATE MOVIMENTACAO BY IDCONTA
+		//------------------------------------------------------------------------------------------------------------
+		private DateTime? GetMaxDateContaMov(int IDConta, AcessoDados dbTran)
+		{
+			try
+			{
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDConta", IDConta);
+
+				string query = "SELECT MAX(MovData) AS MaxDate FROM qryMovimentacao WHERE IDConta = @IDConta AND IDCaixa IS NULL";
+
+				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return null;
+				}
+
+				return dt.Rows[0][0] == DBNull.Value ? null : (DateTime?)dt.Rows[0][0];
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET MIN DATE MOVIMENTACAO BY IDCONTA
+		//------------------------------------------------------------------------------------------------------------
+		private DateTime GetMinDateContaMov(int IDConta, AcessoDados dbTran)
+		{
+			try
+			{
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDConta", IDConta);
+
+				string query = "SELECT MIN(MovData) AS MinDate FROM qryMovimentacao WHERE IDConta = @IDConta AND IDCaixa IS NULL";
+
+				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
+
+				return (DateTime)dt.Rows[0][0];
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}

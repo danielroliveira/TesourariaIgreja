@@ -112,6 +112,16 @@ namespace CamadaDTO
 			set => EditData._MovOrigem = value;
 		}
 
+		// Property MovOrigemSigla
+		//---------------------------------------------------------------
+		public string MovOrigemSigla
+		{
+			get
+			{
+				return MovOrigem.Substring(1, 1).ToUpper();
+			}
+		}
+
 		// Property IDOrigem
 		//---------------------------------------------------------------
 		public long IDOrigem
