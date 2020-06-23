@@ -28,10 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnMovOrigemSigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnMovOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnOrigemTabela = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,25 +101,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clnMovOrigemSigla,
             this.clnMovData,
-            this.clnMovOrigem,
             this.clnOrigemTabela,
             this.clnIDOrigem,
             this.clnSetor,
@@ -130,6 +129,7 @@
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
+			this.dgvListagem.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvListagem.RowHeadersVisible = false;
 			this.dgvListagem.RowHeadersWidth = 45;
 			this.dgvListagem.RowTemplate.Height = 30;
@@ -138,17 +138,18 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(842, 394);
 			this.dgvListagem.TabIndex = 6;
+			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
+			// 
+			// clnMovOrigemSigla
+			// 
+			this.clnMovOrigemSigla.HeaderText = "";
+			this.clnMovOrigemSigla.Name = "clnMovOrigemSigla";
+			this.clnMovOrigemSigla.Width = 35;
 			// 
 			// clnMovData
 			// 
 			this.clnMovData.HeaderText = "Data";
 			this.clnMovData.Name = "clnMovData";
-			// 
-			// clnMovOrigem
-			// 
-			this.clnMovOrigem.HeaderText = "Tipo";
-			this.clnMovOrigem.Name = "clnMovOrigem";
-			this.clnMovOrigem.Width = 120;
 			// 
 			// clnOrigemTabela
 			// 
@@ -422,7 +423,10 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.BackColor = System.Drawing.SystemColors.ButtonFace;
-			this.btnFechar.FlatAppearance.BorderSize = 0;
+			this.btnFechar.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+			this.btnFechar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral;
+			this.btnFechar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+			this.btnFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.fechar_24;
 			this.btnFechar.Location = new System.Drawing.Point(870, 629);
 			this.btnFechar.Name = "btnFechar";
@@ -467,12 +471,16 @@
 			// btnSalvarObservacao
 			// 
 			this.btnSalvarObservacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnSalvarObservacao.Location = new System.Drawing.Point(147, 649);
+			this.btnSalvarObservacao.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			this.btnSalvarObservacao.FlatAppearance.BorderSize = 0;
+			this.btnSalvarObservacao.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+			this.btnSalvarObservacao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSalvarObservacao.Location = new System.Drawing.Point(146, 650);
 			this.btnSalvarObservacao.Name = "btnSalvarObservacao";
 			this.btnSalvarObservacao.Size = new System.Drawing.Size(157, 27);
 			this.btnSalvarObservacao.TabIndex = 44;
 			this.btnSalvarObservacao.Text = "Salvar Observação";
-			this.btnSalvarObservacao.UseVisualStyleBackColor = true;
+			this.btnSalvarObservacao.UseVisualStyleBackColor = false;
 			// 
 			// txtObservacao
 			// 
@@ -481,7 +489,7 @@
 			this.txtObservacao.Location = new System.Drawing.Point(12, 547);
 			this.txtObservacao.Multiline = true;
 			this.txtObservacao.Name = "txtObservacao";
-			this.txtObservacao.Size = new System.Drawing.Size(292, 93);
+			this.txtObservacao.Size = new System.Drawing.Size(292, 97);
 			this.txtObservacao.TabIndex = 43;
 			this.txtObservacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
@@ -585,14 +593,14 @@
 		internal System.Windows.Forms.Button btnFechar;
 		internal System.Windows.Forms.Button btnFinalizar;
 		internal System.Windows.Forms.Button btnAlterar;
+		internal System.Windows.Forms.Button btnSalvarObservacao;
+		internal System.Windows.Forms.TextBox txtObservacao;
+		internal System.Windows.Forms.Label Label9;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovOrigemSigla;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovData;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigemTabela;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
-		internal System.Windows.Forms.Button btnSalvarObservacao;
-		internal System.Windows.Forms.TextBox txtObservacao;
-		internal System.Windows.Forms.Label Label9;
 	}
 }

@@ -94,6 +94,7 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuCaixaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -409,6 +410,7 @@
 			// 
 			this.btnMovimentação.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuCaixaFechamento,
+            this.mnuCaixaProcurar,
             this.toolStripSeparator2,
             this.mnuTransferencia,
             this.toolStripSeparator9,
@@ -840,6 +842,15 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuCaixaProcurar
+			// 
+			this.mnuCaixaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCaixaProcurar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuCaixaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCaixaProcurar.Name = "mnuCaixaProcurar";
+			this.mnuCaixaProcurar.Size = new System.Drawing.Size(278, 30);
+			this.mnuCaixaProcurar.Text = "Procurar Caixa";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -938,6 +949,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
 		private System.Windows.Forms.ToolStripMenuItem mnuSetorProcurar;
 		private System.Windows.Forms.ToolStripMenuItem mnuSetorMov;
+		private System.Windows.Forms.ToolStripMenuItem mnuCaixaProcurar;
 	}
 }
 

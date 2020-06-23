@@ -809,6 +809,7 @@ namespace CamadaUI
 			mnuSetorProcurar.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorListagem());
 			mnuSetorMov.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorMovimentacao());
 			mnuCaixaFechamento.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCaixaInserir(this));
+			mnuCaixaProcurar.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCaixaListagem(this));
 		}
 
 		private void MenuClickOpenForm(Form form)

@@ -8,9 +8,9 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Contas
+namespace CamadaUI.Caixa
 {
-	public partial class frmContaMovimentacao : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCaixaListagem : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<objMovimentacao> listMov = new List<objMovimentacao>();
 		private BindingSource bindMov = new BindingSource();
@@ -27,7 +27,7 @@ namespace CamadaUI.Contas
 
 		// SUN NEW | CONSTRUCTOR
 		//------------------------------------------------------------------------------------------------------------
-		public frmContaMovimentacao(Form formOrigem = null)
+		public frmCaixaListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
 
@@ -324,6 +324,16 @@ namespace CamadaUI.Contas
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 					e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 				}
+			}
+		}
+
+		// COMMIT UPDATED VALUE
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0)
+			{
+				dgvListagem.CommitEdit(DataGridViewDataErrorContexts.Commit);
 			}
 		}
 

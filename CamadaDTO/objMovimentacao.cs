@@ -118,7 +118,7 @@ namespace CamadaDTO
 		{
 			get
 			{
-				return MovOrigem.Substring(1, 1).ToUpper();
+				return MovOrigem.Substring(0, 1).ToUpper();
 			}
 		}
 

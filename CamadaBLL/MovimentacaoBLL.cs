@@ -113,6 +113,48 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET Movimentacao LIST BY IDCaixa
+		//------------------------------------------------------------------------------------------------------------
+		public List<objMovimentacao> GetMovimentacaoCaixaList(
+			long IDCaixa,
+			object dbTran = null)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCaixa", IDCaixa);
+
+				string query = "SELECT * FROM qryMovimentacaoOrigem WHERE IDCaixa = @IDCaixa";
+
+				query += " ORDER BY MovData";
+
+				List<objMovimentacao> listagem = new List<objMovimentacao>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		public objMovimentacao ConvertRowInClass(DataRow row)

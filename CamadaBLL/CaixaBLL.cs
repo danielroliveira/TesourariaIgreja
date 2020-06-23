@@ -129,9 +129,12 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public long InsertCaixa(objCaixa caixa)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = new AcessoDados();
+				db.BeginTransaction();
 
 				//--- clear Params
 				db.LimparParametros();
@@ -154,9 +157,72 @@ namespace CamadaBLL
 
 				//--- insert and Get new ID
 				long newID = db.ExecutarInsertAndGetID(query);
+				caixa.IDCaixa = newID;
+
+				//--- insert Caixa Movs
+				InsertCaixaMovs(caixa, db);
 
 				//--- return
+				db.CommitTransaction();
 				return newID;
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// INSERT MOVIMENTACOES
+		//------------------------------------------------------------------------------------------------------------
+		private void InsertCaixaMovs(objCaixa caixa, AcessoDados dbTran)
+		{
+			try
+			{
+				// UPDATE tblEntradas
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
+				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
+				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
+
+				string query = "UPDATE tblEntradas SET IDCaixa = @IDCaixa " +
+					"WHERE EntradaData >= @DataInicial " +
+					"AND EntradaData <= @DataFinal " +
+					"AND IDConta = @IDConta " +
+					"AND IDCaixa IS NULL";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// UPDATE tblSaidas
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
+				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
+				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
+
+				query = "UPDATE tblSaidas SET IDCaixa = @IDCaixa " +
+					"WHERE SaidaData >= @DataInicial " +
+					"AND SaidaData <= @DataFinal " +
+					"AND IDConta = @IDConta " +
+					"AND IDCaixa IS NULL";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// UPDATE tblTransferencias
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
+				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
+				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
+
+				query = "UPDATE tblTransferencias SET IDCaixa = @IDCaixa " +
+					"WHERE TransferenciaData >= @DataInicial " +
+					"AND TransferenciaData <= @DataFinal " +
+					"AND IDConta = @IDConta " +
+					"AND IDCaixa IS NULL";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
 			}
 			catch (Exception ex)
 			{
@@ -287,7 +353,7 @@ namespace CamadaBLL
 				dbTran.LimparParametros();
 				dbTran.AdicionarParametros("@IDConta", IDConta);
 
-				string query = "SELECT MAX(MovData) AS MaxDate FROM qryMovimentacao WHERE IDConta = @IDConta AND IDCaixa IS NULL";
+				string query = "SELECT MAX(MovData) AS MaxDate FROM qryMovimentacao WHERE IDConta = @IDConta";
 
 				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
 

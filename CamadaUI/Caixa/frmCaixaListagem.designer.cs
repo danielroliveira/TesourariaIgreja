@@ -1,6 +1,6 @@
-﻿namespace CamadaUI.Contas
+﻿namespace CamadaUI.Caixa
 {
-	partial class frmContaMovimentacao
+	partial class frmCaixaListagem
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -129,22 +129,22 @@
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnMovData,
-			this.clnMovOrigem,
-			this.clnOrigemTabela,
-			this.clnIDOrigem,
-			this.clnConta,
-			this.clnSetor,
-			this.clnIDCaixa,
-			this.clnValorReal});
+            this.clnMovData,
+            this.clnMovOrigem,
+            this.clnOrigemTabela,
+            this.clnIDOrigem,
+            this.clnConta,
+            this.clnSetor,
+            this.clnIDCaixa,
+            this.clnValorReal});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -159,6 +159,7 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1143, 478);
 			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentClick);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
@@ -476,14 +477,14 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuItemReceber,
-			this.mnuItemEstornar,
-			this.toolStripSeparator2,
-			this.mnuItemCancelar,
-			this.mnuItemNormalizar,
-			this.toolStripSeparator1,
-			this.mnuItemVerOrigem,
-			this.mnuItemAlterar});
+            this.mnuItemReceber,
+            this.mnuItemEstornar,
+            this.toolStripSeparator2,
+            this.mnuItemCancelar,
+            this.mnuItemNormalizar,
+            this.toolStripSeparator1,
+            this.mnuItemVerOrigem,
+            this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
 			// 
@@ -607,7 +608,7 @@
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Escolher Conta";
 			// 
-			// frmContaMovimentacao
+			// frmCaixaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1187, 682);
@@ -625,7 +626,7 @@
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnImprimir);
 			this.KeyPreview = true;
-			this.Name = "frmContaMovimentacao";
+			this.Name = "frmCaixaListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
