@@ -10,40 +10,68 @@ namespace CamadaDTO
 	//=================================================================================================
 	public class objMovimentacao : IEditableObject, INotifyPropertyChanged
 	{
+
+		/* --- ORIGEM
+		//-------------------------------------------------------------------------------------------------
+		1:	tblContribuicao	| IDContribuicao
+		2:	tblAReceber		| IDAReceber
+		3:	tblAPagar		| IDAPagar
+		4:	tblCaixaAjuste	| IDAjuste
+		5:	tblTransfConta	| IDTransfConta
+		6:	tblTransfSetor	| IDTransfSetor
+		*/
+
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
-		struct StructMov
+		protected struct StructMov
 		{
-			internal long _MovID;
-			internal string _MovOrigem;
-			internal string _MovTabela;
-			internal int _Origem;
+			internal long? _IDMovimentacao;
+			internal byte _MovTipo; // 1: ENTRADA | 2: SAIDA | 3: TRANSFERENCIA
+			internal string _MovTipoDescricao;
+			internal byte _Origem;
+			internal long _IDOrigem;
 			internal int? _IDConta;
 			internal string _Conta;
 			internal int? _IDSetor;
 			internal string _Setor;
 			internal DateTime _MovData;
 			internal decimal _MovValor;
-			internal decimal _MovValorReal;
+			internal decimal _MovValorAbsoluto;
 			internal long? _IDCaixa;
-			internal string _OrigemTabela;
-			internal long _IDOrigem;
+			internal string _DescricaoOrigem;
+			internal bool _Consolidado;
+			internal string _Observacao;
+
+			// tblMovAcrescimo
+			internal decimal? _AcrescimoValor;
+			internal byte? _IDAcrescimoMotivo;
+			internal string _AcrescimoMotivo;
+			// tbl MovImagem
+			internal string _ImagemPath;
+			internal string _ImagemFileName;
+
 		}
 
 		// VARIABLES | CONSTRUCTOR
 		//-------------------------------------------------------------------------------------------------
-		private StructMov EditData;
-		private StructMov BackupData;
+		protected StructMov EditData;
+		protected StructMov BackupData;
 		private bool inTxn = false;
 
-		public objMovimentacao(long MovID) : base()
+		public objMovimentacao(long? IDMovimentacao) : base()
 		{
 			EditData = new StructMov()
 			{
-				_MovID = MovID,
+				_IDMovimentacao = IDMovimentacao,
 				_MovData = DateTime.Today,
 				_MovValor = 0,
 				_IDCaixa = null,
+				_Consolidado = true,
+				_AcrescimoValor = null,
+				_IDAcrescimoMotivo = null,
+				_AcrescimoMotivo = "",
+				_ImagemFileName = "",
+				_ImagemPath = "",
 			};
 		}
 
@@ -80,14 +108,14 @@ namespace CamadaDTO
 		//------------------------------------------------------------------------------------------------------------
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public override string ToString()
 		{
-			return EditData._MovID.ToString("D4");
+			return EditData._IDMovimentacao?.ToString("D4");
 		}
 
 		public bool RegistroAlterado
@@ -98,27 +126,35 @@ namespace CamadaDTO
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public long MovID
+		public long? IDMovimentacao
 		{
-			get => EditData._MovID;
-			set => EditData._MovID = value;
+			get => EditData._IDMovimentacao;
+			set => EditData._IDMovimentacao = value;
 		}
 
-		// Property MovOrigem
+		// Property MovTipo
 		//---------------------------------------------------------------
-		public string MovOrigem
+		public byte MovTipo // 1: ENTRADA | 2: SAIDA | 3: TRANSFERENCIA
 		{
-			get => EditData._MovOrigem;
-			set => EditData._MovOrigem = value;
+			get => EditData._MovTipo;
+			set => EditData._MovTipo = value;
 		}
 
-		// Property MovOrigemSigla
+		// Property MovTipoDescricao
 		//---------------------------------------------------------------
-		public string MovOrigemSigla
+		public string MovTipoDescricao
+		{
+			get => EditData._MovTipoDescricao;
+			set => EditData._MovTipoDescricao = value;
+		}
+
+		// Property MovTipoSigla
+		//---------------------------------------------------------------
+		public string MovTipoSigla
 		{
 			get
 			{
-				return MovOrigem.Substring(0, 1).ToUpper();
+				return MovTipoDescricao.Substring(0, 1).ToUpper();
 			}
 		}
 
@@ -139,55 +175,17 @@ namespace CamadaDTO
 
 		// Property Origem
 		//---------------------------------------------------------------
-		public int Origem
+		public EnumMovOrigem Origem
 		{
-			get => EditData._Origem;
+			get => (EnumMovOrigem)EditData._Origem;
 			set
 			{
-				if (value != EditData._Origem)
+				if (value != (EnumMovOrigem)EditData._Origem)
 				{
-					EditData._Origem = value;
+					EditData._Origem = (byte)value;
 					NotifyPropertyChanged("Origem");
 				}
 			}
-		}
-
-		// Property OrigemTabela
-		//---------------------------------------------------------------
-		public string OrigemTabela
-		{
-			get => EditData._OrigemTabela;
-			set => EditData._OrigemTabela = value;
-		}
-
-		// Property OrigemTabelaDescricao
-		//---------------------------------------------------------------
-		public string OrigemTabelaDescricao
-		{
-			get
-			{
-				switch (OrigemTabela)
-				{
-					case "tblContribuicao":
-						return "Contribuição";
-					case "tblCaixaAjuste":
-						return "Ajuste de Caixa";
-					case "tblAPagar":
-						return "Contas a Pagar";
-					case "tblTransfConta":
-						return "Transferência";
-					default:
-						return "";
-				}
-			}
-		}
-
-		// Property MovTabela
-		//---------------------------------------------------------------
-		public string MovTabela
-		{
-			get => EditData._MovTabela;
-			set => EditData._MovTabela = value;
 		}
 
 		// Property MovData
@@ -293,12 +291,12 @@ namespace CamadaDTO
 			}
 		}
 
-		// Property MovValorReal
+		// Property MovValorAbsoluto
 		//---------------------------------------------------------------
-		public decimal MovValorReal
+		public decimal MovValorAbsoluto
 		{
-			get => EditData._MovValorReal;
-			set => EditData._MovValorReal = value;
+			get => EditData._MovValorAbsoluto;
+			set => EditData._MovValorAbsoluto = value;
 		}
 
 		// Property IDSetor
@@ -361,6 +359,129 @@ namespace CamadaDTO
 				}
 			}
 		}
-	}
 
+		// Property DescricaoOrigem
+		//---------------------------------------------------------------
+		public string DescricaoOrigem
+		{
+			get => EditData._DescricaoOrigem;
+			set
+			{
+				if (value != EditData._DescricaoOrigem)
+				{
+					EditData._DescricaoOrigem = value;
+					NotifyPropertyChanged("DescricaoOrigem");
+				}
+			}
+		}
+
+		// Property Consolidado
+		//---------------------------------------------------------------
+		public bool Consolidado
+		{
+			get => EditData._Consolidado;
+			set
+			{
+				if (value != EditData._Consolidado)
+				{
+					EditData._Consolidado = value;
+					NotifyPropertyChanged("Consolidado");
+				}
+			}
+		}
+
+		// Property Observacao
+		//---------------------------------------------------------------
+		public string Observacao
+		{
+			get => EditData._Observacao;
+			set
+			{
+				if (value != EditData._Observacao)
+				{
+					EditData._Observacao = value;
+					NotifyPropertyChanged("Observacao");
+				}
+			}
+		}
+
+		//=================================================================================================
+		// tblMovAcrescimo AND tblMovImagem
+		//=================================================================================================
+		// Property AcrescimoValor
+		//---------------------------------------------------------------
+		public decimal? AcrescimoValor
+		{
+			get => EditData._AcrescimoValor;
+			set
+			{
+				if (value != EditData._AcrescimoValor)
+				{
+					EditData._AcrescimoValor = value;
+					NotifyPropertyChanged("AcrescimoValor");
+				}
+			}
+		}
+
+		// Property IDAcrescimoMotivo
+		//---------------------------------------------------------------
+		public byte? IDAcrescimoMotivo
+		{
+			get => EditData._IDAcrescimoMotivo;
+			set
+			{
+				if (value != EditData._IDAcrescimoMotivo)
+				{
+					EditData._IDAcrescimoMotivo = value;
+					NotifyPropertyChanged("IDAcrescimoMotivo");
+				}
+			}
+		}
+
+		// Property AcrescimoMotivo
+		//---------------------------------------------------------------
+		public string AcrescimoMotivo
+		{
+			get => EditData._AcrescimoMotivo;
+			set
+			{
+				if (value != EditData._AcrescimoMotivo)
+				{
+					EditData._AcrescimoMotivo = value;
+					NotifyPropertyChanged("AcrescimoMotivo");
+				}
+			}
+		}
+
+		// Property ImagemPath
+		//---------------------------------------------------------------
+		public string ImagemPath
+		{
+			get => EditData._ImagemPath;
+			set
+			{
+				if (value != EditData._ImagemPath)
+				{
+					EditData._ImagemPath = value;
+					NotifyPropertyChanged("ImagemPath");
+				}
+			}
+		}
+
+		// Property ImagemFileName
+		//---------------------------------------------------------------
+		public string ImagemFileName
+		{
+			get => EditData._ImagemFileName;
+			set
+			{
+				if (value != EditData._ImagemFileName)
+				{
+					EditData._ImagemFileName = value;
+					NotifyPropertyChanged("ImagemFileName");
+				}
+			}
+		}
+
+	}
 }

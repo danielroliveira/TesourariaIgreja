@@ -6,15 +6,17 @@ using System.Data;
 
 namespace CamadaBLL
 {
-	public class TransferenciaBLL
+	public class TransfContaBLL
 	{
 		//=================================================================================================
 		// TRANSFERENCIA BLL
 		//=================================================================================================
 
+		/*
+
 		// GET TRANSFERENCIA
 		//------------------------------------------------------------------------------------------------------------
-		public objTransferencia GetTransferencia(long IDTransferencia, object dbTran = null)
+		public objTransfConta GetTransfConta(long IDTransferencia, object dbTran = null)
 		{
 			try
 			{
@@ -222,6 +224,7 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+		*/
 
 		//=================================================================================================
 		// TRANSFERENCIA DE CONTAS
@@ -235,13 +238,13 @@ namespace CamadaBLL
 			{
 				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
-				string query = "SELECT * FROM qryTransfConta WHERE IDTransfConta = @IDTransfConta AND TransferenciaValor > 0";
+				string query = "SELECT * FROM qryTransfConta WHERE IDTransfConta = @IDTransfConta";
 				db.LimparParametros();
 				db.AdicionarParametros("@IDTransfConta", IDTransfConta);
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
-				return ConvertRowTC_InClass(dt.Rows[0]);
+				return ConvertRow_InClass(dt.Rows[0]);
 			}
 			catch (Exception ex)
 			{
@@ -252,7 +255,6 @@ namespace CamadaBLL
 		// GET TRANSFERENCIA CONTA LIST
 		//------------------------------------------------------------------------------------------------------------
 		public List<objTransfConta> GetTransfContaList(
-			bool entrada,
 			int? IDConta = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
@@ -261,29 +263,10 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT " +
-					"IDTransfConta, " +
-					"IDContaEntrada, " +
-					"ContaEntrada, " +
-					"IDContaSaida, " +
-					"ContaSaida, " +
-					"TransferenciaData, " +
-					"TransferenciaValor, " +
-					"Descricao, " +
-					"IDTransferencia " +
-					"FROM qryTransfConta ";
+				string query = "SELECT * FROM qryTransfConta ";
 
 				// add params
 				db.LimparParametros();
-
-				if (entrada)
-				{
-					query += " WHERE TransferenciaValor > 0 ";
-				}
-				else // saida
-				{
-					query += " WHERE TransferenciaValor < 0 ";
-				}
 
 				// add IDConta
 				if (IDConta != null)
@@ -296,17 +279,17 @@ namespace CamadaBLL
 				if (dataInicial != null)
 				{
 					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
-					query += " AND TransferenciaData >= @DataInicial";
+					query += " AND TransfData >= @DataInicial";
 				}
 
 				// add DataFinal
 				if (dataFinal != null)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
-					query += " AND TransferenciaData <= @DataFinal";
+					query += " AND TransfData <= @DataFinal";
 				}
 
-				query += " ORDER BY TransferenciaData";
+				query += " ORDER BY TransfData";
 
 				List<objTransfConta> listagem = new List<objTransfConta>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
@@ -318,7 +301,7 @@ namespace CamadaBLL
 
 				foreach (DataRow row in dt.Rows)
 				{
-					listagem.Add(ConvertRowTC_InClass(row));
+					listagem.Add(ConvertRow_InClass(row));
 				}
 
 				return listagem;
@@ -331,14 +314,8 @@ namespace CamadaBLL
 
 		// CONVERT ROW TRANSFERENCIA CONTA IN CLASS
 		//------------------------------------------------------------------------------------------------------------
-		public objTransfConta ConvertRowTC_InClass(DataRow row)
+		public objTransfConta ConvertRow_InClass(DataRow row)
 		{
-			objTransferencia entrada = new objTransferencia((long)row["IDTransferencia"])
-			{
-				TransferenciaData = (DateTime)row["TransferenciaData"],
-				TransferenciaValor = (decimal)row["TransferenciaValor"],
-			};
-
 			objTransfConta tConta = new objTransfConta(null)
 			{
 				IDTransfConta = (long)row["IDTransfConta"],
@@ -347,7 +324,8 @@ namespace CamadaBLL
 				IDContaSaida = (int)row["IDContaSaida"],
 				ContaSaida = (string)row["ContaSaida"],
 				Descricao = (string)row["Descricao"],
-				Transferencia = entrada
+				TransfData = (DateTime)row["TransfData"],
+				TransfValor = (decimal)row["TransfValor"],
 			};
 
 			return tConta;
@@ -355,7 +333,7 @@ namespace CamadaBLL
 
 		// INSERT TRANSFERENCIA CONTA
 		//------------------------------------------------------------------------------------------------------------
-		public long InsertTranferenciaConta(objTransfConta Transf,
+		public long InsertTransferenciaConta(objTransfConta Transf,
 			Action<int, decimal> ContaSdlUpdate)
 		{
 			AcessoDados db = null;
@@ -375,6 +353,8 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDContaEntrada", Transf.IDContaEntrada);
 				db.AdicionarParametros("@IDContaSaida", Transf.IDContaSaida);
 				db.AdicionarParametros("@Descricao", Transf.Descricao);
+				db.AdicionarParametros("@TransfData", Transf.TransfData);
+				db.AdicionarParametros("@TransfValor", Transf.TransfValor);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -388,81 +368,44 @@ namespace CamadaBLL
 				//--- 2. INSERT TRANSF ENTRADA
 				//------------------------------------------------------------------------------------------------------------
 
+				MovimentacaoBLL mBLL = new MovimentacaoBLL();
+
 				//--- create transferencia de entrada
-				objTransferencia entrada = new objTransferencia(null)
+				objMovimentacao entrada = new objMovimentacao(null)
 				{
 					IDConta = Transf.IDContaEntrada,
 					IDCaixa = null,
 					IDSetor = null,
-					Origem = 1,
+					Origem = EnumMovOrigem.TransfConta,
 					IDOrigem = newID,
-					TransferenciaData = Transf.Transferencia.TransferenciaData,
-					TransferenciaValor = Transf.Transferencia.TransferenciaValor,
+					MovData = Transf.TransfData,
+					MovValor = Transf.TransfValor,
 				};
 
-				//--- clear Params
-				db.LimparParametros();
-
-				//--- define Params
-				db.AdicionarParametros("@TransferenciaData", entrada.TransferenciaData);
-				db.AdicionarParametros("@TransferenciaValor", entrada.TransferenciaValor);
-				db.AdicionarParametros("@IDOrigem", entrada.IDOrigem);
-				db.AdicionarParametros("@Origem", entrada.Origem);
-				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
-				db.AdicionarParametros("@IDConta", entrada.IDConta);
-
-				//--- convert null parameters
-				db.ConvertNullParams();
-
-				query = db.CreateInsertSQL("tblTransferencias");
-
-				//--- insert ENTRADA and Get new ID
-				db.ExecutarInsertAndGetID(query);
-
-				//--- altera o saldo da CONTA DE ENTRADA
-				new ContaBLL().ContaSaldoChange((int)entrada.IDConta, entrada.TransferenciaValor, db, ContaSdlUpdate);
+				//--- execute INSERT ENTRADA MOVIMENTACAO
+				mBLL.InsertMovimentacao(entrada, ContaSdlUpdate, null, db);
 
 				//--- 3. INSERT TRANSF SAIDA
 				//------------------------------------------------------------------------------------------------------------
 
 				//--- create transferencia de entrada
-				objTransferencia saida = new objTransferencia(null)
+				objMovimentacao saida = new objMovimentacao(null)
 				{
 					IDConta = Transf.IDContaSaida,
 					IDCaixa = null,
 					IDSetor = null,
-					Origem = 1,
+					Origem = EnumMovOrigem.TransfConta,
 					IDOrigem = newID,
-					TransferenciaData = Transf.Transferencia.TransferenciaData,
-					TransferenciaValor = Transf.Transferencia.TransferenciaValor * (-1),
+					MovData = Transf.TransfData,
+					MovValor = Transf.TransfValor * (-1),
 				};
 
-				//--- clear Params
-				db.LimparParametros();
-
-				//--- define Params
-				db.AdicionarParametros("@TransferenciaData", saida.TransferenciaData);
-				db.AdicionarParametros("@TransferenciaValor", saida.TransferenciaValor);
-				db.AdicionarParametros("@IDOrigem", saida.IDOrigem);
-				db.AdicionarParametros("@Origem", saida.Origem);
-				db.AdicionarParametros("@IDSetor", saida.IDSetor);
-				db.AdicionarParametros("@IDConta", saida.IDConta);
-
-				//--- convert null parameters
-				db.ConvertNullParams();
-
-				query = db.CreateInsertSQL("tblTransferencias");
-
-				//--- insert SAIDA and Get new ID
-				db.ExecutarInsertAndGetID(query);
-
-				//--- altera o saldo da CONTA DE SAIDA
-				new ContaBLL().ContaSaldoChange((int)saida.IDConta, saida.TransferenciaValor, db, ContaSdlUpdate);
+				//--- execute INSERT SAIDA MOVIMENTACAO
+				mBLL.InsertMovimentacao(entrada, ContaSdlUpdate, null, db);
 
 				//--- COMMIT and RETURN
 				db.CommitTransaction();
 				return newID;
-
 			}
 			catch (Exception ex)
 			{
@@ -485,7 +428,7 @@ namespace CamadaBLL
 
 				// 1. TRY REMOVE TRANSFERENCIA (entrada e saida)
 				//------------------------------------------------------------------------------------------------------------
-				RemoveTransferenciaByOrigem(1, (long)Transf.IDTransfConta, ContaSdlUpdate, null, db);
+				new MovimentacaoBLL().DeleteMovsByOrigem(EnumMovOrigem.TransfConta, (long)Transf.IDTransfConta, ContaSdlUpdate, null, db);
 
 				// 2. REMOVE TRANSF CONTA
 				//------------------------------------------------------------------------------------------------------------
@@ -509,9 +452,14 @@ namespace CamadaBLL
 			}
 		}
 
-		//=================================================================================================
-		// TRANSFERENCIA DE SETOR
-		//=================================================================================================
+
+	}
+
+	//=================================================================================================
+	// TRANSFERENCIA DE SETOR
+	//=================================================================================================
+	public class TransfSetorBLL
+	{
 
 		// GET TRANSFERENCIA SETOR
 		//------------------------------------------------------------------------------------------------------------
@@ -527,7 +475,7 @@ namespace CamadaBLL
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
-				return ConvertRowTS_InClass(dt.Rows[0]);
+				return ConvertRow_InClass(dt.Rows[0]);
 			}
 			catch (Exception ex)
 			{
@@ -538,7 +486,6 @@ namespace CamadaBLL
 		// GET TRANSFERENCIA SETOR LIST
 		//------------------------------------------------------------------------------------------------------------
 		public List<objTransfSetor> GetTransfSetorList(
-			bool entrada,
 			int? IDSetor = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
@@ -547,29 +494,10 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT " +
-					"IDTransfSetor, " +
-					"IDSetorEntrada, " +
-					"SetorEntrada, " +
-					"IDSetorSaida, " +
-					"SetorSaida, " +
-					"TransferenciaData, " +
-					"TransferenciaValor, " +
-					"Descricao, " +
-					"IDTransferencia " +
-					"FROM qryTransfSetor ";
+				string query = "SELECT  * FROM qryTransfSetor ";
 
 				// add params
 				db.LimparParametros();
-
-				if (entrada)
-				{
-					query += " WHERE TransferenciaValor > 0 ";
-				}
-				else // saida
-				{
-					query += " WHERE TransferenciaValor < 0 ";
-				}
 
 				// add IDSetor
 				if (IDSetor != null)
@@ -582,17 +510,17 @@ namespace CamadaBLL
 				if (dataInicial != null)
 				{
 					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
-					query += " AND TransferenciaData >= @DataInicial";
+					query += " AND TransfData >= @DataInicial";
 				}
 
 				// add DataFinal
 				if (dataFinal != null)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
-					query += " AND TransferenciaData <= @DataFinal";
+					query += " AND TransfData <= @DataFinal";
 				}
 
-				query += " ORDER BY TransferenciaData";
+				query += " ORDER BY TransfData";
 
 				List<objTransfSetor> listagem = new List<objTransfSetor>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
@@ -604,7 +532,7 @@ namespace CamadaBLL
 
 				foreach (DataRow row in dt.Rows)
 				{
-					listagem.Add(ConvertRowTS_InClass(row));
+					listagem.Add(ConvertRow_InClass(row));
 				}
 
 				return listagem;
@@ -617,7 +545,7 @@ namespace CamadaBLL
 
 		// CONVERT ROW TRANSFERENCIA SETOR IN CLASS
 		//------------------------------------------------------------------------------------------------------------
-		public objTransfSetor ConvertRowTS_InClass(DataRow row)
+		public objTransfSetor ConvertRow_InClass(DataRow row)
 		{
 			objTransferencia entrada = new objTransferencia((long)row["IDTransferencia"])
 			{

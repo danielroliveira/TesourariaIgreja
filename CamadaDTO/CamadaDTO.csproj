@@ -56,8 +56,7 @@
     <Compile Include="objDespesaPeriodica.cs" />
     <Compile Include="objMovimentacao.cs" />
     <Compile Include="objTransferencia.cs" />
-    <Compile Include="objSaida.cs" />
-    <Compile Include="objEntrada.cs" />
+    <Compile Include="objEntradaForma.cs" />
     <Compile Include="objContribuicao.cs" />
     <Compile Include="objReuniao.cs" />
     <Compile Include="objCampanha.cs" />

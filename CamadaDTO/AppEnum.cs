@@ -22,6 +22,16 @@ namespace CamadaDTO
 		AnualPorMesSemana = 6
 	}
 
+	public enum EnumMovOrigem : byte
+	{
+		Contribuicao = 1,
+		AReceber = 2,
+		APagar = 3,
+		CaixaAjuste = 4,
+		TransfConta = 5,
+		TransfSetor = 6
+	}
+
 	public static class EnumUtil
 	{
 		/// <summary>
