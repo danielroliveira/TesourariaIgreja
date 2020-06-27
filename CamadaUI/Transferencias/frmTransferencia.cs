@@ -2,7 +2,6 @@
 using CamadaDTO;
 using CamadaUI.Contas;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace CamadaUI.Transferencias
 {
 	public partial class frmTransferencia : Modals.frmModFinBorder
 	{
-		TransferenciaBLL tBLL = new TransferenciaBLL();
+		TransfContaBLL tBLL = new TransfContaBLL();
 		private objTransfConta _transf;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -67,7 +66,7 @@ namespace CamadaUI.Transferencias
 			}
 
 			// define DEFAULT DATE
-			_transf.Transferencia.TransferenciaData = DataPadrao();
+			_transf.TransfData = DataPadrao();
 
 			// handlers
 			HandlerKeyDownControl(this);
@@ -139,10 +138,10 @@ namespace CamadaUI.Transferencias
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
 					lblSitBlock.Visible = true;
-					numTransferenciaAno.Maximum = _transf.Transferencia.TransferenciaData.Year;
-					numTransferenciaAno.Minimum = _transf.Transferencia.TransferenciaData.Year;
-					numTransferenciaDia.Maximum = _transf.Transferencia.TransferenciaData.Day;
-					numTransferenciaDia.Minimum = _transf.Transferencia.TransferenciaData.Day;
+					numTransferenciaAno.Maximum = _transf.TransfData.Year;
+					numTransferenciaAno.Minimum = _transf.TransfData.Year;
+					numTransferenciaDia.Maximum = _transf.TransfData.Day;
+					numTransferenciaDia.Minimum = _transf.TransfData.Day;
 				}
 
 				// btnSET
@@ -329,7 +328,7 @@ namespace CamadaUI.Transferencias
 				if (!CheckSaveData()) return;
 
 				//--- save Data
-				long newID = tBLL.InsertTranferenciaConta(_transf, ContaSaldoLocalUpdate);
+				long newID = tBLL.InsertTransferenciaConta(_transf, ContaSaldoLocalUpdate);
 				_transf.IDTransfConta = newID;
 				bind.ResetBindings(false);
 				bind.EndEdit();
@@ -365,9 +364,9 @@ namespace CamadaUI.Transferencias
 			if (!VerificaDadosClasse(txtContaSaida, "Conta de Entrada", _transf, EP)) return false;
 
 			// check VALOR
-			if (!VerificaDadosClasse(txtTransferenciaValor, "Valor da Transferência", _transf.Transferencia, EP)) return false;
+			if (!VerificaDadosClasse(txtTransferenciaValor, "Valor da Transferência", _transf, EP)) return false;
 
-			if (_transf.Transferencia.TransferenciaValor <= 0)
+			if (_transf.TransfValor <= 0)
 			{
 				// message
 				AbrirDialog("O valor da transferência não pode ser igual a zero...\n" +
@@ -382,7 +381,7 @@ namespace CamadaUI.Transferencias
 			}
 
 			// CHECK DATA DA TRANSFERENCIA
-			if (_transf.Transferencia.TransferenciaData > DateTime.Today)
+			if (_transf.TransfData > DateTime.Today)
 			{
 				// message
 				AbrirDialog("A Data da Transferência não pode ser posterior a data de hoje...\n" +
@@ -401,7 +400,7 @@ namespace CamadaUI.Transferencias
 			// CHECK CONTA ENTRADA BLOCK DATE
 			if (contaEntrada == null || contaEntrada.BloqueioData != null)
 			{
-				if (contaEntrada.BloqueioData > _transf.Transferencia.TransferenciaData)
+				if (contaEntrada.BloqueioData > _transf.TransfData)
 				{
 					AbrirDialog("A Conta de ENTRADA está Bloqueada para movimentação até:\n" +
 							$"{((DateTime)contaEntrada.BloqueioData).ToShortDateString()}",
@@ -419,7 +418,7 @@ namespace CamadaUI.Transferencias
 			// CHECK CONTA SAIDA BLOCK DATE
 			if (contaSaida == null || contaSaida.BloqueioData != null)
 			{
-				if (contaSaida.BloqueioData > _transf.Transferencia.TransferenciaData)
+				if (contaSaida.BloqueioData > _transf.TransfData)
 				{
 					AbrirDialog("A Conta de SAÍDA está Bloqueada para movimentação até:\n" +
 							$"{((DateTime)contaSaida.BloqueioData).ToShortDateString()}",
@@ -438,7 +437,7 @@ namespace CamadaUI.Transferencias
 			if (!VerificaDadosClasse(txtDescricao, "Descrição da Origem", _transf, EP)) return false;
 
 			// check SALDO VALOR
-			if (contaSaida.ContaSaldo < _transf.Transferencia.TransferenciaValor)
+			if (contaSaida.ContaSaldo < _transf.TransfValor)
 			{
 				AbrirDialog("A Conta de SAÍDA não possui SALDO suficiente para realização dessa transferência...\n" +
 							$"Valor Máximo: {contaSaida.ContaSaldo:c}",
@@ -580,7 +579,7 @@ namespace CamadaUI.Transferencias
 		{
 			if (Sit == EnumFlagEstado.RegistroSalvo)
 			{
-				cmbTransferenciaMes.SelectedValue = _transf.Transferencia.TransferenciaMes;
+				cmbTransferenciaMes.SelectedValue = _transf.TransfData.Month;
 			}
 		}
 

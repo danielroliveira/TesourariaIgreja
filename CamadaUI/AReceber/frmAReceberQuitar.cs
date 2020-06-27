@@ -27,7 +27,7 @@ namespace CamadaUI.AReceber
 		private ErrorProvider eP = new ErrorProvider();
 
 		// property to response
-		public List<objEntrada> entradasList = new List<objEntrada>();
+		public List<objMovimentacao> entradasList = new List<objMovimentacao>();
 
 		#region SUB NEW | CONSTRUCTOR
 		public frmAReceberQuitar(List<objAReceber> recList, Form formOrigem)
@@ -81,15 +81,16 @@ namespace CamadaUI.AReceber
 		{
 			foreach (objAReceber rec in _recList)
 			{
-				entradasList.Add(new objEntrada(null)
+				entradasList.Add(new objMovimentacao(null)
 				{
 					Conta = ContaSelected.Conta,
 					IDConta = (int)ContaSelected.IDConta,
 					IDSetor = rec.IDSetor,
 					IDOrigem = (int)rec.IDAReceber,
-					Origem = 2,
-					EntradaData = _entradaData,
-					EntradaValor = rec.ValorLiquido - rec.ValorRecebido,
+					MovTipo = 1,
+					Origem = EnumMovOrigem.AReceber,
+					MovData = _entradaData,
+					MovValor = rec.ValorLiquido - rec.ValorRecebido,
 				});
 			}
 		}
@@ -176,15 +177,15 @@ namespace CamadaUI.AReceber
 			// calc percent of value
 			decimal perc = (doValor - vlLiquido) / vlLiquido;
 
-			// define value of each objEntrada
-			foreach (objEntrada entrada in entradasList)
+			// define value of each objMovimentacao
+			foreach (objMovimentacao entrada in entradasList)
 			{
-				entrada.EntradaValor += entrada.EntradaValor * perc;
-				entrada.EntradaData = _entradaData;
+				entrada.MovValor += entrada.MovValor * perc;
+				entrada.MovData = _entradaData;
 
 				// change AReceber List
 				var rec = _recList.First(r => r.IDAReceber == entrada.IDOrigem);
-				rec.ValorRecebido += entrada.EntradaValor;
+				rec.ValorRecebido += entrada.MovValor;
 				rec.IDSituacao = 2;
 				rec.Situacao = "Recebido";
 			}

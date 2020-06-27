@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
@@ -170,6 +171,79 @@ namespace CamadaDTO
 				{
 					EditData._TransfData = value;
 					NotifyPropertyChanged("TransfData");
+				}
+			}
+		}
+
+		public int TransfDia
+		{
+			get => TransfData.Day;
+			set
+			{
+				try
+				{
+					// format new Date
+					string testDate = $"{value}/{TransfData.Month}/{TransfData.Year}";
+
+					// check new date
+					if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+					{
+						TransfData = newDate;
+					}
+					else
+					{
+						throw new AttributeException($"Data inválida:\n" +
+							$"{value.ToString("D2") } / { TransfData.Month.ToString("D2") } / {TransfData.Year.ToString("D4")}\n" +
+							$"Favor verificar o dia, mês e ano e inserir uma data válida.");
+					}
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+			}
+		}
+
+		public int TransfMes
+		{
+			get => TransfData.Month;
+			set
+			{
+				// format new Date
+				string testDate = $"{TransfData.Day}/{value}/{TransfData.Year}";
+
+				// check new date
+				if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+				{
+					TransfData = newDate;
+				}
+				else
+				{
+					throw new AttributeException($"Data inválida:\n" +
+						$"{TransfData.Day.ToString("D2") } / { value.ToString("D2") } / {TransfData.Year.ToString("D4")}\n" +
+						$"Favor verificar o dia, mês e ano e inserir uma data válida.");
+				}
+			}
+		}
+		public int TransfAno
+		{
+			get => TransfData.Year;
+			set
+			{
+				// format new Date
+				string testDate = $"{TransfData.Day}/{TransfData.Month}/{value}";
+
+				// check new date
+				if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+				{
+					TransfData = newDate;
+				}
+				else
+				{
+					throw new AttributeException($"Data inválida:\n" +
+						$"{ TransfData.Day.ToString("D2") } / { TransfData.Month.ToString("D2") } / { value.ToString("D4") }\n" +
+						$"Favor verificar o dia, mês e ano e inserir uma data válida.");
 				}
 			}
 		}
@@ -356,6 +430,79 @@ namespace CamadaDTO
 				{
 					EditData._TransfData = value;
 					NotifyPropertyChanged("TransfData");
+				}
+			}
+		}
+
+		public int TransfDia
+		{
+			get => TransfData.Day;
+			set
+			{
+				try
+				{
+					// format new Date
+					string testDate = $"{value}/{TransfData.Month}/{TransfData.Year}";
+
+					// check new date
+					if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+					{
+						TransfData = newDate;
+					}
+					else
+					{
+						throw new AttributeException($"Data inválida:\n" +
+							$"{value.ToString("D2") } / { TransfData.Month.ToString("D2") } / {TransfData.Year.ToString("D4")}\n" +
+							$"Favor verificar o dia, mês e ano e inserir uma data válida.");
+					}
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+			}
+		}
+
+		public int TransfMes
+		{
+			get => TransfData.Month;
+			set
+			{
+				// format new Date
+				string testDate = $"{TransfData.Day}/{value}/{TransfData.Year}";
+
+				// check new date
+				if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+				{
+					TransfData = newDate;
+				}
+				else
+				{
+					throw new AttributeException($"Data inválida:\n" +
+						$"{TransfData.Day.ToString("D2") } / { value.ToString("D2") } / {TransfData.Year.ToString("D4")}\n" +
+						$"Favor verificar o dia, mês e ano e inserir uma data válida.");
+				}
+			}
+		}
+		public int TransfAno
+		{
+			get => TransfData.Year;
+			set
+			{
+				// format new Date
+				string testDate = $"{TransfData.Day}/{TransfData.Month}/{value}";
+
+				// check new date
+				if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
+				{
+					TransfData = newDate;
+				}
+				else
+				{
+					throw new AttributeException($"Data inválida:\n" +
+						$"{ TransfData.Day.ToString("D2") } / { TransfData.Month.ToString("D2") } / { value.ToString("D4") }\n" +
+						$"Favor verificar o dia, mês e ano e inserir uma data válida.");
 				}
 			}
 		}

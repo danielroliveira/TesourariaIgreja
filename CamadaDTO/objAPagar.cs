@@ -640,4 +640,122 @@ namespace CamadaDTO
 		}
 	}
 
+	//=================================================================================================
+	// ACRESCIMO MOTIVO
+	//=================================================================================================
+	public class objAcrescimoMotivo : IEditableObject, INotifyPropertyChanged
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructCobranca
+		{
+			internal byte? _IDAcrescimoMotivo;
+			internal string _AcrescimoMotivo;
+			internal bool _Ativo;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructCobranca EditData;
+		private StructCobranca BackupData;
+		private bool inTxn = false;
+
+		public objAcrescimoMotivo()
+		{
+			EditData = new StructCobranca()
+			{
+				_IDAcrescimoMotivo = null,
+				_AcrescimoMotivo = null,
+				_Ativo = true
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructCobranca();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._IDAcrescimoMotivo.ToString();
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+		public byte? IDAcrescimoMotivo
+		{
+			get => EditData._IDAcrescimoMotivo;
+			set => EditData._IDAcrescimoMotivo = value;
+		}
+
+		// Property AcrescimoMotivo
+		//---------------------------------------------------------------
+		public string AcrescimoMotivo
+		{
+			get => EditData._AcrescimoMotivo;
+			set
+			{
+				if (value != EditData._AcrescimoMotivo)
+				{
+					EditData._AcrescimoMotivo = value;
+					NotifyPropertyChanged("AcrescimoMotivo");
+				}
+			}
+		}
+
+		// Property Ativo
+		//---------------------------------------------------------------
+		public bool Ativo
+		{
+			get => EditData._Ativo;
+			set
+			{
+				if (value != EditData._Ativo)
+				{
+					EditData._Ativo = value;
+					NotifyPropertyChanged("Ativo");
+				}
+			}
+		}
+	}
+
 }

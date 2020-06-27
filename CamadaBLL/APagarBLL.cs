@@ -553,7 +553,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public long QuitarAPagar(
 			objAPagar apagar,
-			objSaida saida,
+			objMovimentacao saida,
 			Action<int, decimal> ContaSldLocalUpdate,
 			Action<int, decimal> SetorSldLocalUpdate)
 		{
@@ -567,31 +567,31 @@ namespace CamadaBLL
 				// Verifica CONTA SALDO
 				ContaBLL cBLL = new ContaBLL();
 
-				decimal saldoAtual = cBLL.ContaSaldoGet(saida.IDConta, dbTran);
+				decimal saldoAtual = cBLL.ContaSaldoGet((int)saida.IDConta, dbTran);
 
-				if (saida.SaidaValor > saldoAtual)
+				if (saida.MovValor > saldoAtual)
 				{
 					throw new AppException("Não existe SALDO SUFICIENTE na conta para realizar esse débito...", 1);
 				}
 
 				// Verifica CONTA BLOQUEIO
-				if (!cBLL.ContaDateBlockPermit(saida.IDConta, saida.SaidaData, dbTran))
+				if (!cBLL.ContaDateBlockPermit((int)saida.IDConta, saida.MovData, dbTran))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Débito proposto...", 2);
 				}
 
 				// Inserir SAIDA
-				long newID = new SaidaBLL().InsertSaida(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
-				saida.IDSaida = newID;
+				long newID = new MovimentacaoBLL().InsertMovimentacao(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+				saida.IDMovimentacao = newID;
 
 				// Change APAGAR
-				decimal DoValor = saida.SaidaValor - saida.AcrescimoValor ?? 0;
+				decimal DoValor = saida.MovValor - saida.AcrescimoValor ?? 0;
 
 				apagar.ValorAcrescimo += saida.AcrescimoValor ?? 0;
 				apagar.ValorPago += DoValor;
 				if (apagar.ValorPago >= apagar.APagarValor)
 				{
-					apagar.PagamentoData = saida.SaidaData;
+					apagar.PagamentoData = saida.MovData;
 					apagar.IDSituacao = 2;
 					apagar.Situacao = "Quitada";
 				}
@@ -615,7 +615,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public bool EstornarAPagar(
 			objAPagar apagar,
-			objSaida saida,
+			objMovimentacao saida,
 			Action<int, decimal> ContaSldLocalUpdate,
 			Action<int, decimal> SetorSldLocalUpdate)
 		{
@@ -629,16 +629,16 @@ namespace CamadaBLL
 				// Verifica CONTA BLOQUEIO
 				ContaBLL cBLL = new ContaBLL();
 
-				if (!cBLL.ContaDateBlockPermit(saida.IDConta, saida.SaidaData, dbTran))
+				if (!cBLL.ContaDateBlockPermit((int)saida.IDConta, saida.MovData, dbTran))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data proposta...", 2);
 				}
 
 				// DELETE REMOVE SAIDA
-				new SaidaBLL().RemoveSaida(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+				new MovimentacaoBLL().DeleteMovimentacao((long)saida.IDMovimentacao, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 
 				// Change APAGAR
-				decimal DoValor = saida.SaidaValor - saida.AcrescimoValor ?? 0;
+				decimal DoValor = saida.MovValor - saida.AcrescimoValor ?? 0;
 
 				apagar.ValorAcrescimo -= saida.AcrescimoValor ?? 0;
 				apagar.ValorPago -= DoValor;
@@ -659,6 +659,130 @@ namespace CamadaBLL
 				throw ex;
 			}
 
+		}
+
+		//=================================================================================================
+		// ACRESCIMO MOTIVO
+		//=================================================================================================
+
+		// GET LIST OF ACRESCIMO MOTIVO
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAcrescimoMotivo> GetListMotivo(bool? Ativo = null, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT * FROM tblMovAcrescimoMotivo";
+				bool haveWhere = false;
+
+				// add params
+				db.LimparParametros();
+
+				if (Ativo != null)
+				{
+					db.AdicionarParametros("@Ativo", Ativo);
+					if (haveWhere)
+						query += " AND Ativo = @Ativo";
+					else
+						query += " WHERE Ativo = @Ativo";
+				}
+
+				query += " ORDER BY IDAcrescimoMotivo";
+
+				// execute datatable
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				// create list
+				List<objAcrescimoMotivo> listagem = new List<objAcrescimoMotivo>();
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					objAcrescimoMotivo cob = new objAcrescimoMotivo()
+					{
+						IDAcrescimoMotivo = (byte)row["IDAcrescimoMotivo"],
+						AcrescimoMotivo = (string)row["AcrescimoMotivo"],
+						Ativo = (bool)row["Ativo"],
+					};
+
+					listagem.Add(cob);
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
+		// INSERT ACRESCIMO MOTIVO
+		//------------------------------------------------------------------------------------------------------------
+		public int InsertAcrescimoMotivo(objAcrescimoMotivo motivo)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@AcrescimoMotivo", motivo.AcrescimoMotivo);
+				db.AdicionarParametros("@Ativo", true);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateInsertSQL("tblMovAcrescimoMotivo");
+
+				//--- insert
+				return (int)db.ExecutarInsertAndGetID(query);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE ACRESCIMO MOTIVO
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateAcrescimoMotivo(objAcrescimoMotivo motivo)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDAcrescimoMotivo", motivo.IDAcrescimoMotivo);
+				db.AdicionarParametros("@AcrescimoMotivo", motivo.AcrescimoMotivo);
+				db.AdicionarParametros("@Ativo", motivo.Ativo);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblMovAcrescimoMotivo", "IDAcrescimoMotivo");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 	}
 
@@ -794,4 +918,5 @@ namespace CamadaBLL
 
 		}
 	}
+
 }

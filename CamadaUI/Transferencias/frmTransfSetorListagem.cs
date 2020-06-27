@@ -14,7 +14,7 @@ namespace CamadaUI.Transferencias
 	{
 		private List<objTransfSetor> listTransf = new List<objTransfSetor>();
 		private BindingSource bindTransf = new BindingSource();
-		private TransferenciaBLL tBLL = new TransferenciaBLL();
+		private TransfSetorBLL tBLL = new TransfSetorBLL();
 		private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
@@ -85,7 +85,7 @@ namespace CamadaUI.Transferencias
 				Cursor.Current = Cursors.WaitCursor;
 
 				// define list
-				listTransf = tBLL.GetTransfSetorList(rbtEntrada.Checked, SetorSelected.IDSetor,
+				listTransf = tBLL.GetTransfSetorList(SetorSelected.IDSetor,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
 
@@ -112,7 +112,7 @@ namespace CamadaUI.Transferencias
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			decimal vlTotal = listTransf.Sum(x => x.Transferencia.TransferenciaValor);
+			decimal vlTotal = listTransf.Sum(x => x.TransfValor);
 			lblValorTotal.Text = vlTotal.ToString("C");
 		}
 
@@ -162,7 +162,7 @@ namespace CamadaUI.Transferencias
 			colList.Add(clnID);
 
 			//--- (1) COLUNA DATA
-			//clnTransfData.DataPropertyName = "Transferencia.TransferenciaData";
+			clnTransfData.DataPropertyName = "TransfData";
 			clnTransfData.Visible = true;
 			clnTransfData.ReadOnly = true;
 			clnTransfData.Resizable = DataGridViewTriState.False;
@@ -207,7 +207,7 @@ namespace CamadaUI.Transferencias
 			colList.Add(clnDestino);
 
 			//--- (5) COLUNA VALOR
-			//clnTransfValor.DataPropertyName = "Transferencia.TransferenciaValor";
+			clnTransfValor.DataPropertyName = "TransfValor";
 			clnTransfValor.Visible = true;
 			clnTransfValor.ReadOnly = true;
 			clnTransfValor.Resizable = DataGridViewTriState.False;
@@ -255,16 +255,11 @@ namespace CamadaUI.Transferencias
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == clnTransfData.Index)
-			{
-				objTransfSetor mov = (objTransfSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				e.Value = (mov.Transferencia.TransferenciaData);
-			}
-			else if (e.ColumnIndex == clnTipo.Index)
+			if (e.ColumnIndex == clnTipo.Index)
 			{
 				objTransfSetor mov = (objTransfSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.Transferencia.TransferenciaValor > 0)
+				if (mov.TransfValor > 0)
 				{
 					e.Value = "ENTRADA";
 				}
@@ -273,11 +268,7 @@ namespace CamadaUI.Transferencias
 					e.Value = "SAÍDA";
 				}
 			}
-			else if (e.ColumnIndex == clnTransfValor.Index)
-			{
-				objTransfSetor mov = (objTransfSetor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				e.Value = (mov.Transferencia.TransferenciaValor);
-			}
+
 		}
 
 		#endregion

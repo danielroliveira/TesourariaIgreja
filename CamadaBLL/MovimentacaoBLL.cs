@@ -49,7 +49,7 @@ namespace CamadaBLL
 		// GET Movimentacao LIST
 		//------------------------------------------------------------------------------------------------------------
 		public List<objMovimentacao> GetMovimentacaoList(
-			byte? Origem = null,
+			EnumMovOrigem? Origem = null,
 			int? IDConta = null,
 			int? IDSetor = null,
 			DateTime? dataInicial = null,
@@ -277,9 +277,15 @@ namespace CamadaBLL
 			{
 				if (dbTran == null) db.BeginTransaction();
 
+				//--- Check DescricaoOrigem
+				if (string.IsNullOrEmpty(mov.DescricaoOrigem))
+				{
+					throw new AppException("A Descrição da origem não pode estar vazia...");
+				}
+
 				//--- 1. Check if is SAIDA and check Positive Value 
 				//------------------------------------------------------------------------------------------------------------
-				if (mov.MovTipo == 2 || mov.MovValor > 0)
+				if (mov.MovTipo == 2 && mov.MovValor > 0)
 				{
 					mov.MovValor *= -1;
 				}
@@ -308,7 +314,7 @@ namespace CamadaBLL
 				mov.IDMovimentacao = newID;
 
 				//--- insert IN tblMovAcrescimo IF is necessary
-				if (mov.AcrescimoValor != 0)
+				if (mov.AcrescimoValor != null && mov.AcrescimoValor != 0)
 				{
 					InsertMovimentacaoAcrescimo(mov, db);
 				}
@@ -347,7 +353,7 @@ namespace CamadaBLL
 
 		// INSERT MOVIMENTACAO ACRESCIMO
 		//------------------------------------------------------------------------------------------------------------
-		public void InsertMovimentacaoAcrescimo(objMovimentacao mov, AcessoDados dbTran)
+		private void InsertMovimentacaoAcrescimo(objMovimentacao mov, AcessoDados dbTran)
 		{
 			try
 			{
@@ -386,6 +392,7 @@ namespace CamadaBLL
 				dbTran.LimparParametros();
 
 				//--- define Params
+				dbTran.AdicionarParametros("@IDMovimentacao", mov.IDMovimentacao);
 				dbTran.AdicionarParametros("@ImagemPath", mov.ImagemPath);
 				dbTran.AdicionarParametros("@ImagemFileName", mov.ImagemFileName);
 
@@ -593,16 +600,16 @@ namespace CamadaBLL
 					//------------------------------------------------------------------------------------------------------------
 					new ObservacaoBLL().DeleteObservacao(1, (long)mov.IDMovimentacao, db);
 
-					//--- 5. CHANGE SALDOS
+					//--- 5. CHANGE SALDOS RETURN OLD VALUES
 					//------------------------------------------------------------------------------------------------------------
 					if (ContaSdlUpdate != null)
 					{
-						new ContaBLL().ContaSaldoChange((int)mov.IDConta, mov.MovValor, db, ContaSdlUpdate);
+						new ContaBLL().ContaSaldoChange((int)mov.IDConta, mov.MovValor * (-1), db, ContaSdlUpdate);
 					}
 
 					if (SetorSdlUpdate != null)
 					{
-						new SetorBLL().SetorSaldoChange((int)mov.IDSetor, mov.MovValor, db, SetorSdlUpdate);
+						new SetorBLL().SetorSaldoChange((int)mov.IDSetor, mov.MovValor * (-1), db, SetorSdlUpdate);
 					}
 				}
 

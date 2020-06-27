@@ -351,20 +351,21 @@ namespace CamadaBLL
 				// 2. INSERT ENTRADA
 				//------------------------------------------------------
 				//--- create ENTRADA
-				var entrada = new objEntrada(null)
+				var entrada = new objMovimentacao(null)
 				{
+					MovTipo = 1,
 					Consolidado = true,
 					IDConta = ajuste.IDConta,
 					IDSetor = ajuste.IDSetor,
-					EntradaData = ajuste.MovData,
-					EntradaValor = ajuste.MovValor,
+					MovData = ajuste.MovData,
+					MovValor = ajuste.MovValor,
 					IDOrigem = (long)ajuste.IDAjuste,
-					Origem = 3, // origem ajuste
+					Origem = EnumMovOrigem.CaixaAjuste, // origem ajuste
 					Observacao = ajuste.AjusteDescricao,
 				};
 
 				//--- insert ENTRADA
-				new EntradaBLL().InsertEntrada(entrada, ContaSldUpdate, SetorSldUpdate, dbTran);
+				new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldUpdate, SetorSldUpdate, dbTran);
 
 				// 3. COMMIT AND RETURN
 				//------------------------------------------------------

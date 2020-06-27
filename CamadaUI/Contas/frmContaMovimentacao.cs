@@ -86,7 +86,7 @@ namespace CamadaUI.Contas
 				Cursor.Current = Cursors.WaitCursor;
 
 				// define list
-				listMov = mBLL.GetMovimentacaoList(ContaSelected.IDConta, null,
+				listMov = mBLL.GetMovimentacaoList(null, ContaSelected.IDConta, null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
 
@@ -113,13 +113,13 @@ namespace CamadaUI.Contas
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			decimal vlEntrada = listMov.Where(x => x.MovOrigem == "ENTRADA").Sum(x => x.MovValor);
+			decimal vlEntrada = listMov.Where(x => x.MovTipoDescricao == "ENTRADA").Sum(x => x.MovValor);
 			lblValorEntradas.Text = vlEntrada.ToString("C");
 
-			decimal vlSaida = listMov.Where(x => x.MovOrigem == "SAIDA").Sum(x => x.MovValor);
+			decimal vlSaida = listMov.Where(x => x.MovTipoDescricao == "SAIDA").Sum(x => x.MovValor);
 			lblValorSaidas.Text = vlSaida.ToString("C");
 
-			decimal vlTransf = listMov.Where(x => x.MovOrigem == "TRANSFERENCIA").Sum(x => x.MovValor);
+			decimal vlTransf = listMov.Where(x => x.MovTipoDescricao == "TRANSFERENCIA").Sum(x => x.MovValor);
 			lblValorTransferido.Text = vlTransf.ToString("C");
 		}
 
@@ -168,26 +168,26 @@ namespace CamadaUI.Contas
 			colList.Add(clnMovData);
 
 			//--- (1) COLUNA ORIGEM DA MOVIMENTACAO
-			clnMovOrigem.DataPropertyName = "MovOrigem";
-			clnMovOrigem.Visible = true;
-			clnMovOrigem.ReadOnly = true;
-			clnMovOrigem.Resizable = DataGridViewTriState.False;
-			clnMovOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnMovOrigem.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnMovOrigem.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnMovOrigem.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnMovOrigem);
-
-			//--- (2) COLUNA ORIGEM TABELA
-			clnOrigemTabela.DataPropertyName = "OrigemTabelaDescricao";
-			clnOrigemTabela.Visible = true;
-			clnOrigemTabela.ReadOnly = true;
-			clnOrigemTabela.Resizable = DataGridViewTriState.False;
-			clnOrigemTabela.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnOrigemTabela.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnOrigemTabela.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnMovTipoDescricao.DataPropertyName = "MovTipoDescricao";
+			clnMovTipoDescricao.Visible = true;
+			clnMovTipoDescricao.ReadOnly = true;
+			clnMovTipoDescricao.Resizable = DataGridViewTriState.False;
+			clnMovTipoDescricao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnMovTipoDescricao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnMovTipoDescricao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			//clnMovOrigem.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnOrigemTabela);
+			colList.Add(clnMovTipoDescricao);
+
+			//--- (2) COLUNA DESCRICAO DA ORIGEM
+			clnDescricaoOrigem.DataPropertyName = "DescricaoOrigem";
+			clnDescricaoOrigem.Visible = true;
+			clnDescricaoOrigem.ReadOnly = true;
+			clnDescricaoOrigem.Resizable = DataGridViewTriState.False;
+			clnDescricaoOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDescricaoOrigem.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricaoOrigem.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			//clnDescricaoOrigem.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnDescricaoOrigem);
 
 			//--- (3) COLUNA IDORIGEM
 			Padding newPadding = new Padding(5, 0, 0, 0);
@@ -282,23 +282,23 @@ namespace CamadaUI.Contas
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == clnMovOrigem.Index)
+			if (e.ColumnIndex == clnMovTipoDescricao.Index)
 			{
 				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovOrigem == "SAIDA")
+				if (mov.MovTipoDescricao == "SAIDA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.Firebrick;
 					e.CellStyle.ForeColor = Color.Red;
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 				}
-				else if (mov.MovOrigem == "ENTRADA")
+				else if (mov.MovTipoDescricao == "ENTRADA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
 				}
-				else if (mov.MovOrigem == "TRANSFERENCIA")
+				else if (mov.MovTipoDescricao == "TRANSFERENCIA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Honeydew;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkSeaGreen;
@@ -312,7 +312,7 @@ namespace CamadaUI.Contas
 			{
 				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovValorReal >= 0)
+				if (mov.MovValor >= 0)
 				{
 					e.CellStyle.ForeColor = Color.DarkBlue;
 					e.CellStyle.SelectionForeColor = Color.White;
@@ -324,6 +324,11 @@ namespace CamadaUI.Contas
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 					e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 				}
+			}
+			else if (e.ColumnIndex == clnDescricaoOrigem.Index)
+			{
+				e.CellStyle.Font = clnFont;
+				e.CellStyle.WrapMode = DataGridViewTriState.False;
 			}
 		}
 

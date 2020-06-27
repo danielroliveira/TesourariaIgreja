@@ -397,7 +397,7 @@ namespace CamadaUI.Entradas
 				if (resp != DialogResult.Yes) return;
 
 				//--- EXECUTE DELETE
-				cBLL.DeleteContribuicao((long)item.IDContribuicao);
+				cBLL.DeleteContribuicao((long)item.IDContribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
 
 				//--- REQUERY LIST
 				ObterDados();

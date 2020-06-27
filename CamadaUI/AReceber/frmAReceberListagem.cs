@@ -526,7 +526,7 @@ namespace CamadaUI.AReceber
 
 		// A RECEBER EXECUTE CONSOLIDACAO ENTRADAS AND TRANSFERENCIAS
 		//------------------------------------------------------------------------------------------------------------
-		private void AReceberExecuteConsolidacao(List<objAReceber> listRec, List<objEntrada> entradas)
+		private void AReceberExecuteConsolidacao(List<objAReceber> listRec, List<objMovimentacao> entradas)
 		{
 			try
 			{

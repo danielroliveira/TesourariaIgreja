@@ -217,7 +217,7 @@ namespace CamadaBLL
 			AcessoDados db = new AcessoDados();
 			long? newID = null;
 			long? otherID = null;
-			objEntrada entrada = null;
+			objMovimentacao entrada = null;
 
 			try
 			{
@@ -237,19 +237,21 @@ namespace CamadaBLL
 						newID = AddContribuicao(cont, db);
 
 						//--- Create NEW Entrada
-						entrada = new objEntrada(null)
+						entrada = new objMovimentacao(null)
 						{
+							MovTipo = 1,
 							IDConta = cont.IDConta,
 							IDSetor = cont.IDSetor,
 							IDOrigem = (long)newID,
-							Origem = 1,
-							EntradaData = cont.ContribuicaoData,
-							EntradaValor = cont.ValorBruto,
+							Origem = EnumMovOrigem.Contribuicao,
+							MovData = cont.ContribuicaoData,
+							MovValor = cont.ValorBruto,
 							Consolidado = true,
+							DescricaoOrigem = "CONTRIBUIÇÃO: " + cont.OrigemDescricao,
 						};
 
 						//--- Insert Entrada
-						new EntradaBLL().InsertEntrada(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+						new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 
 						break;
 
@@ -285,19 +287,21 @@ namespace CamadaBLL
 						otherID = new AReceberBLL().InsertAReceber(areceber, db);
 
 						//--- Create NEW Entrada
-						entrada = new objEntrada(null)
+						entrada = new objMovimentacao(null)
 						{
+							MovTipo = 1,
 							IDConta = cont.IDConta,
 							IDSetor = cont.IDSetor,
 							IDOrigem = (long)otherID,
-							Origem = 2,
-							EntradaData = cont.ContribuicaoData,
-							EntradaValor = cont.ValorBruto,
+							Origem = EnumMovOrigem.AReceber,
+							MovData = cont.ContribuicaoData,
+							MovValor = cont.ValorBruto,
 							Consolidado = false,
+							DescricaoOrigem = $"A RECEBER: Entrada de Cheque no. {cheque.ChequeNumero} {cheque.Banco}",
 						};
 
 						//--- Insert Entrada
-						new EntradaBLL().InsertEntrada(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+						new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 
 						break;
 
@@ -346,6 +350,9 @@ namespace CamadaBLL
 						}
 
 						var rBLL = new AReceberBLL();
+						var mBLL = new MovimentacaoBLL();
+
+						int numParcela = 1;
 
 						//--- Insert ListOf AReceber Parcelas
 						foreach (var parcela in listAReceber)
@@ -353,19 +360,37 @@ namespace CamadaBLL
 							otherID = rBLL.InsertAReceber(parcela, db);
 
 							//--- Create NEW Entrada
-							entrada = new objEntrada(null)
+							entrada = new objMovimentacao(null)
 							{
+								MovTipo = 1,
 								IDConta = parcela.IDContaProvisoria,
 								IDSetor = cont.IDSetor,
 								IDOrigem = (long)otherID,
-								Origem = 2,
-								EntradaData = cont.ContribuicaoData,
-								EntradaValor = parcela.ValorBruto,
+								Origem = EnumMovOrigem.AReceber,
+								MovData = cont.ContribuicaoData,
+								MovValor = parcela.ValorBruto,
 								Consolidado = false,
 							};
 
+							//--- define descricao origem of movimentacao
+							if (cartao.Parcelas == 0)
+							{
+								entrada.DescricaoOrigem = $"A RECEBER: Cartão de Débito {cartao.CartaoBandeira}";
+							}
+							else if (cartao.Parcelas == 1)
+							{
+								entrada.DescricaoOrigem = $"A RECEBER: Cartão de Crédito {cartao.CartaoBandeira}";
+							}
+							else
+							{
+								entrada.DescricaoOrigem = $"A RECEBER: Cartão Parcelado {cartao.CartaoBandeira} parcela {numParcela:D2}";
+							}
+
+							//--- add Parcela
+							numParcela += 1;
+
 							//--- Insert Entrada
-							new EntradaBLL().InsertEntrada(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+							mBLL.InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 						}
 
 						break;
@@ -470,7 +495,9 @@ namespace CamadaBLL
 
 		// DELETE
 		//------------------------------------------------------------------------------------------------------------
-		public bool DeleteContribuicao(long IDContribuicao)
+		public bool DeleteContribuicao(long IDContribuicao,
+			Action<int, decimal> ContaSdlUpdate,
+			Action<int, decimal> SetorSdlUpdate)
 		{
 			AcessoDados dbTran = null;
 
@@ -482,7 +509,7 @@ namespace CamadaBLL
 				// 1 - CHECK AReceber and Entradas
 				//------------------------------------------------------------------------------------------------------------
 				List<objAReceber> listAReceber = new List<objAReceber>();
-				List<objEntrada> listEntradas = new List<objEntrada>();
+				List<objMovimentacao> listEntradas = new List<objMovimentacao>();
 
 				if (!VerifyBeforeDelete(IDContribuicao, ref listAReceber, ref listEntradas, dbTran)) return false;
 
@@ -502,11 +529,11 @@ namespace CamadaBLL
 				//------------------------------------------------------------------------------------------------------------
 				if (listEntradas.Count > 0)
 				{
-					EntradaBLL eBLL = new EntradaBLL();
+					MovimentacaoBLL mBLL = new MovimentacaoBLL();
 
-					foreach (objEntrada entrada in listEntradas)
+					foreach (objMovimentacao entrada in listEntradas)
 					{
-						eBLL.DeleteEntrada((long)entrada.IDEntrada);
+						mBLL.DeleteMovimentacao((long)entrada.IDMovimentacao, ContaSdlUpdate, SetorSdlUpdate, dbTran);
 					}
 				}
 
@@ -541,7 +568,7 @@ namespace CamadaBLL
 
 		private bool VerifyBeforeDelete(long IDContribuicao,
 			ref List<objAReceber> listAReceber,
-			ref List<objEntrada> listEntradas,
+			ref List<objMovimentacao> listEntradas,
 			AcessoDados dbTran)
 		{
 			try
@@ -569,16 +596,16 @@ namespace CamadaBLL
 				}
 
 				// VERIFY ENTRADAS
-				listEntradas = new EntradaBLL().GetEntradaListByOrigem(1, IDContribuicao, dbTran);
+				listEntradas = new MovimentacaoBLL().GetMovimentacaoListByOrigem(EnumMovOrigem.Contribuicao, IDContribuicao, false, dbTran);
 
 				// VERIFY RECEBIMENTOS WITH CAIXA OR BLOCKED
 				errMessage = "Essa Contribuição possui entradas que foram inseridas no caixa...\n";
 
-				foreach (objEntrada entrada in listEntradas)
+				foreach (objMovimentacao entrada in listEntradas)
 				{
 					if (entrada.IDCaixa != null)
 					{
-						errMessage += $"Reg.: {entrada.IDEntrada:D4} | {entrada.EntradaData.ToShortDateString()} | Caixa: {entrada.IDCaixa:D4}\n";
+						errMessage += $"Reg.: {entrada.IDMovimentacao:D4} | {entrada.MovData.ToShortDateString()} | Caixa: {entrada.IDCaixa:D4}\n";
 						err = true;
 					}
 				}

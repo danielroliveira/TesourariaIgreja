@@ -16,7 +16,7 @@ namespace CamadaUI.APagar
 		APagarBLL pBLL = new APagarBLL();
 		BindingSource bind = new BindingSource();
 		BindingSource bindSaida = new BindingSource();
-		List<objSaida> listSaidas = new List<objSaida>();
+		List<objMovimentacao> listSaidas = new List<objMovimentacao>();
 		Form _formOrigem;
 		decimal DescontoAnterior;
 
@@ -51,7 +51,8 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listSaidas = new SaidaBLL().GetSaidaList(1, (long)_apagar.IDAPagar);
+				//listSaidas = new MovimentacaoBLL().GetSaidaList(1, (long)_apagar.IDAPagar);
+				listSaidas = new MovimentacaoBLL().GetMovimentacaoListByOrigem(EnumMovOrigem.APagar, (long)_apagar.IDAPagar, true);
 				bindSaida.DataSource = listSaidas;
 			}
 			catch (Exception ex)
@@ -135,7 +136,7 @@ namespace CamadaUI.APagar
 			var colList = new List<DataGridViewColumn>();
 
 			//--- (1) COLUNA DATA
-			clnData.DataPropertyName = "SaidaData";
+			clnData.DataPropertyName = "MovData";
 			clnData.Visible = true;
 			clnData.ReadOnly = true;
 			clnData.Resizable = DataGridViewTriState.False;
@@ -146,7 +147,7 @@ namespace CamadaUI.APagar
 			colList.Add(clnData);
 
 			//--- (2) COLUNA VALOR
-			clnValor.DataPropertyName = "SaidaValor";
+			clnValor.DataPropertyName = "MovValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
 			clnValor.Resizable = DataGridViewTriState.False;
@@ -206,8 +207,8 @@ namespace CamadaUI.APagar
 				if (frm.DialogResult != DialogResult.OK) return;
 
 				// EXECUTE
-				objSaida newSaida = frm.propSaida;
-				newSaida.IDSaida = pBLL.QuitarAPagar(_apagar, frm.propSaida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+				objMovimentacao newSaida = frm.propSaida;
+				newSaida.IDMovimentacao = pBLL.QuitarAPagar(_apagar, frm.propSaida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
 
 				// binding
 				bindSaida.Add(newSaida);
@@ -260,10 +261,10 @@ namespace CamadaUI.APagar
 				if (!CheckAuthorization(EnumAcessoTipo.Usuario_Senior, $"Estornar a Saída de APagar", this)) return;
 
 				//--- Pergunta ao USER
-				objSaida saida = (objSaida)dgvListagem.SelectedRows[0].DataBoundItem;
+				objMovimentacao saida = (objMovimentacao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 				var resp = AbrirDialog($"Você deseja realmente ESTORNAR este registro de PAGAMENTO selecionado?\n" +
-					$"DATA: {saida.SaidaData.ToShortDateString()}\nVALOR: {saida.SaidaValor}\n{saida.Conta}", "Estornar Pagamento",
+					$"DATA: {saida.MovData.ToShortDateString()}\nVALOR: {saida.MovValor}\n{saida.Conta}", "Estornar Pagamento",
 					DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 
 				if (resp == DialogResult.No) return;

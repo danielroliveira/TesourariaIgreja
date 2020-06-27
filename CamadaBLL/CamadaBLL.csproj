@@ -52,7 +52,7 @@
     <Compile Include="DespesaBLL.cs" />
     <Compile Include="MovimentacaoBLL.cs" />
     <Compile Include="TransferenciaBLL.cs" />
-    <Compile Include="EntradaBLL.cs" />
+    <Compile Include="EntradaFormaBLL.cs" />
     <Compile Include="ContribuicaoBLL.cs" />
     <Compile Include="ObservacaoBLL.cs" />
     <Compile Include="ReuniaoBLL.cs" />

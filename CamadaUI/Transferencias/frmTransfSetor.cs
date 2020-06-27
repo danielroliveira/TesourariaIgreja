@@ -13,7 +13,7 @@ namespace CamadaUI.Transferencias
 {
 	public partial class frmTransfSetor : Modals.frmModFinBorder
 	{
-		TransferenciaBLL tBLL = new TransferenciaBLL();
+		TransfSetorBLL tBLL = new TransfSetorBLL();
 		private objTransfSetor _transf;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -66,7 +66,7 @@ namespace CamadaUI.Transferencias
 			}
 
 			// define DEFAULT DATE
-			_transf.Transferencia.TransferenciaData = DataPadrao();
+			_transf.TransfData = DataPadrao();
 
 			// handlers
 			HandlerKeyDownControl(this);
@@ -137,10 +137,10 @@ namespace CamadaUI.Transferencias
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
 					lblSitBlock.Visible = true;
-					numTransferenciaAno.Maximum = _transf.Transferencia.TransferenciaData.Year;
-					numTransferenciaAno.Minimum = _transf.Transferencia.TransferenciaData.Year;
-					numTransferenciaDia.Maximum = _transf.Transferencia.TransferenciaData.Day;
-					numTransferenciaDia.Minimum = _transf.Transferencia.TransferenciaData.Day;
+					numTransferenciaAno.Maximum = _transf.TransfData.Year;
+					numTransferenciaAno.Minimum = _transf.TransfData.Year;
+					numTransferenciaDia.Maximum = _transf.TransfData.Day;
+					numTransferenciaDia.Minimum = _transf.TransfData.Day;
 				}
 
 				// btnSET
@@ -159,7 +159,7 @@ namespace CamadaUI.Transferencias
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDTransfSetor", true);
-			txtTransferenciaValor.DataBindings.Add("Text", bind, "Transferencia.TransferenciaValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtTransferenciaValor.DataBindings.Add("Text", bind, "TransfValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtSetorEntrada.DataBindings.Add("Text", bind, "SetorEntrada", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtSetorSaida.DataBindings.Add("Text", bind, "SetorSaida", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDescricao.DataBindings.Add("Text", bind, "Descricao", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -173,9 +173,9 @@ namespace CamadaUI.Transferencias
 
 			// ADD NAMED BINDINGS TO CONTROL ERROS
 			//------------------------------------------------------------------------------------------------------------
-			Binding bndEntradaMes = cmbTransferenciaMes.DataBindings.Add("SelectedValue", bind, "Transferencia.TransferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
-			Binding bndEntradaDia = numTransferenciaDia.DataBindings.Add("Text", bind, "Transferencia.TransferenciaDia", true, DataSourceUpdateMode.OnPropertyChanged);
-			Binding bndEntradaAno = numTransferenciaAno.DataBindings.Add("Text", bind, "Transferencia.TransferenciaAno", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaMes = cmbTransferenciaMes.DataBindings.Add("SelectedValue", bind, "TransfMes", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaDia = numTransferenciaDia.DataBindings.Add("Text", bind, "TransfDia", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaAno = numTransferenciaAno.DataBindings.Add("Text", bind, "TransfAno", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			Action<object, BindingCompleteEventArgs, Control> bindComplete = (o, e, c) =>
 			{
@@ -327,7 +327,7 @@ namespace CamadaUI.Transferencias
 				if (!CheckSaveData()) return;
 
 				//--- save Data
-				long newID = tBLL.InsertTranferenciaSetor(_transf, SetorSaldoLocalUpdate);
+				long newID = tBLL.InsertTransferenciaSetor(_transf, SetorSaldoLocalUpdate);
 				_transf.IDTransfSetor = newID;
 				bind.ResetBindings(false);
 				bind.EndEdit();
@@ -363,9 +363,9 @@ namespace CamadaUI.Transferencias
 			if (!VerificaDadosClasse(txtSetorSaida, "Setor de Entrada", _transf, EP)) return false;
 
 			// check VALOR
-			if (!VerificaDadosClasse(txtTransferenciaValor, "Valor da Transferência", _transf.Transferencia, EP)) return false;
+			if (!VerificaDadosClasse(txtTransferenciaValor, "Valor da Transferência", _transf, EP)) return false;
 
-			if (_transf.Transferencia.TransferenciaValor <= 0)
+			if (_transf.TransfValor <= 0)
 			{
 				// message
 				AbrirDialog("O valor da transferência não pode ser igual a zero...\n" +
@@ -380,7 +380,7 @@ namespace CamadaUI.Transferencias
 			}
 
 			// CHECK DATA DA TRANSFERENCIA
-			if (_transf.Transferencia.TransferenciaData > DateTime.Today)
+			if (_transf.TransfData > DateTime.Today)
 			{
 				// message
 				AbrirDialog("A Data da Transferência não pode ser posterior a data de hoje...\n" +
@@ -401,7 +401,7 @@ namespace CamadaUI.Transferencias
 			if (!VerificaDadosClasse(txtDescricao, "Descrição da Origem", _transf, EP)) return false;
 
 			// check SALDO VALOR
-			if (setorSaida.SetorSaldo < _transf.Transferencia.TransferenciaValor)
+			if (setorSaida.SetorSaldo < _transf.TransfValor)
 			{
 				AbrirDialog("A Setor de SAÍDA não possui SALDO suficiente para realização dessa transferência...\n" +
 							$"Valor Máximo: {setorSaida.SetorSaldo:c}",
@@ -543,7 +543,7 @@ namespace CamadaUI.Transferencias
 		{
 			if (Sit == EnumFlagEstado.RegistroSalvo)
 			{
-				cmbTransferenciaMes.SelectedValue = _transf.Transferencia.TransferenciaMes;
+				cmbTransferenciaMes.SelectedValue = _transf.TransfMes;
 			}
 		}
 

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
 
 namespace CamadaBLL
 {
@@ -276,7 +275,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public List<objAReceber> AReceberConsolidacaoList(
 			List<objAReceber> listRec,
-			List<objEntrada> entradas,
+			List<objMovimentacao> entradas,
 			Action<int, decimal> contaSaldoUpdate,
 			Action<int, decimal> setorSaldoUpdate)
 		{
@@ -288,7 +287,7 @@ namespace CamadaBLL
 				db = new AcessoDados();
 				db.BeginTransaction();
 
-				foreach (objEntrada entrada in entradas)
+				foreach (objMovimentacao entrada in entradas)
 				{
 					objAReceber receber = listRec.First(r => r.IDAReceber == entrada.IDOrigem);
 
@@ -318,55 +317,63 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		private objAReceber insertAReceberCartao(
 			objAReceber receber,
-			objEntrada entrada,
+			objMovimentacao entrada,
 			Action<int, decimal> contaSaldoUpdate,
 			Action<int, decimal> setorSaldoUpdate,
 			AcessoDados dbTran)
 		{
 			// create TRANSFER SAIDA
-			objTransferencia transfSaida = new objTransferencia(null)
+			objMovimentacao transfSaida = new objMovimentacao(null)
 			{
-				Origem = 3, // tblAReceber
+				MovTipo = 3, // TRANSFERENCIA
+				Origem = EnumMovOrigem.AReceber, // tblAReceber
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = receber.IDContaProvisoria,
 				IDSetor = receber.IDSetor,
-				TransferenciaData = entrada.EntradaData,
-				TransferenciaValor = entrada.EntradaValor * (-1)
+				MovData = entrada.MovData,
+				MovValor = entrada.MovValor * (-1)
 			};
 
 			// create TRANSFER ENTRADA
-			objTransferencia transfEntrada = new objTransferencia(null)
+			objMovimentacao transfEntrada = new objMovimentacao(null)
 			{
-				Origem = 3, // tblAReceber
+				MovTipo = 3, // TRANSFERENCIA
+				Origem = EnumMovOrigem.AReceber, // tblAReceber
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = entrada.IDConta,
 				IDSetor = receber.IDSetor,
-				TransferenciaData = entrada.EntradaData,
-				TransferenciaValor = entrada.EntradaValor
+				MovData = entrada.MovData,
+				MovValor = entrada.MovValor
 			};
 
 			// create SAIDA COMISSAO
-			objSaida saidaComissao = new objSaida(null)
+			objMovimentacao saidaComissao = new objMovimentacao(null)
 			{
-				Origem = 2, // tblAReceber 
+				MovTipo = 2, // SAIDA
+				Origem = EnumMovOrigem.AReceber, // tblAReceber 
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = receber.IDContaProvisoria,
 				IDSetor = receber.IDSetor,
-				SaidaData = entrada.EntradaData,
-				SaidaValor = receber.ValorBruto - entrada.EntradaValor
+				MovData = entrada.MovData,
+				MovValor = receber.ValorBruto - entrada.MovValor
 			};
 
 			try
 			{
+				MovimentacaoBLL mBLL = new MovimentacaoBLL();
+
 				// Update FIRST Entrada: CONSOLIDADO = TRUE
-				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, true, dbTran);
+				mBLL.UpdateConsolidado((long)receber.IDAReceber, true, dbTran);
+
 				// Insert transf saida
-				TransferenciaBLL tBLL = new TransferenciaBLL();
-				tBLL.InsertTransferencia(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+
 				// Insert transf entrada
-				tBLL.InsertTransferencia(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+
 				// Insert saida comissao
-				new SaidaBLL().InsertSaida(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+
 				// update AReceber
 				UpdateAReceber(receber, dbTran);
 			}
@@ -382,55 +389,63 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		private objAReceber insertAReceberCheque(
 			objAReceber receber,
-			objEntrada entrada,
+			objMovimentacao entrada,
 			Action<int, decimal> contaSaldoUpdate,
 			Action<int, decimal> setorSaldoUpdate,
 			AcessoDados dbTran)
 		{
 			// create TRANSFER SAIDA
-			objTransferencia transfSaida = new objTransferencia(null)
+			objMovimentacao transfSaida = new objMovimentacao(null)
 			{
-				Origem = 3, // tblAReceber
+				MovTipo = 3, // TRANSFERENCIA
+				Origem = EnumMovOrigem.AReceber, // tblAReceber
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = receber.IDContaProvisoria,
 				IDSetor = null,
-				TransferenciaData = entrada.EntradaData,
-				TransferenciaValor = entrada.EntradaValor * (-1)
+				MovData = entrada.MovData,
+				MovValor = entrada.MovValor * (-1)
 			};
 
 			// create TRANSFER ENTRADA
-			objTransferencia transfEntrada = new objTransferencia(null)
+			objMovimentacao transfEntrada = new objMovimentacao(null)
 			{
-				Origem = 3, // tblAReceber
+				MovTipo = 3, // TRANSFERENCIA
+				Origem = EnumMovOrigem.AReceber, // tblAReceber
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = entrada.IDConta,
 				IDSetor = null,
-				TransferenciaData = entrada.EntradaData,
-				TransferenciaValor = entrada.EntradaValor
+				MovData = entrada.MovData,
+				MovValor = entrada.MovValor
 			};
 
 			// create SAIDA COMISSAO
-			objSaida saidaComissao = new objSaida(null)
+			objMovimentacao saidaComissao = new objMovimentacao(null)
 			{
-				Origem = 2, // tblAReceber 
+				MovTipo = 2, // SAIDA
+				Origem = EnumMovOrigem.AReceber, // tblAReceber 
 				IDOrigem = (long)receber.IDAReceber,
 				IDConta = entrada.IDConta,
 				IDSetor = receber.IDSetor,
-				SaidaData = entrada.EntradaData,
-				SaidaValor = receber.ValorBruto - entrada.EntradaValor
+				MovData = entrada.MovData,
+				MovValor = receber.ValorBruto - entrada.MovValor
 			};
 
 			try
 			{
+				MovimentacaoBLL mBLL = new MovimentacaoBLL();
+
 				// Update FIRST Entrada: CONSOLIDADO = TRUE
-				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, true, dbTran);
+				mBLL.UpdateConsolidado((long)receber.IDAReceber, true, dbTran);
+
 				// Insert transf saida
-				TransferenciaBLL tBLL = new TransferenciaBLL();
-				tBLL.InsertTransferencia(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+
 				// Insert transf entrada
-				tBLL.InsertTransferencia(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+
 				// Insert saida comissao
-				new SaidaBLL().InsertSaida(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+
 				// update AReceber
 				UpdateAReceber(receber, dbTran);
 			}
@@ -459,15 +474,13 @@ namespace CamadaBLL
 				db = new AcessoDados();
 				db.BeginTransaction();
 
+				MovimentacaoBLL mBLL = new MovimentacaoBLL();
+
 				// Update FIRST Entrada: CONSOLIDADO = FALSE
-				new EntradaBLL().UpdateEntradaConsolidado((long)receber.IDAReceber, false, db);
+				mBLL.UpdateConsolidado((long)receber.IDAReceber, false, db);
 
 				// REMOVE transf saida entrada
-				TransferenciaBLL tBLL = new TransferenciaBLL();
-				tBLL.RemoveTransferenciaByOrigem(3, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);
-
-				// REMOVE saida comissao
-				new SaidaBLL().RemoveSaidasByOrigem(2, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);
+				mBLL.DeleteMovsByOrigem(EnumMovOrigem.AReceber, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);
 
 				// UPDATE AReceber
 				receber.ValorRecebido = 0;

@@ -32,14 +32,6 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnMovOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnOrigemTabela = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDCaixa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorReal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTransferido = new System.Windows.Forms.Label();
 			this.btnImprimir = new System.Windows.Forms.Button();
@@ -73,6 +65,14 @@
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
+			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnMovTipoDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDescricaoOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnIDCaixa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorReal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -83,7 +83,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(859, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(917, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(288, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Movimentação de Contas";
@@ -93,13 +93,13 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1147, 0);
+			this.btnClose.Location = new System.Drawing.Point(1205, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1187, 50);
+			this.panel1.Size = new System.Drawing.Size(1245, 50);
 			// 
 			// btnFechar
 			// 
@@ -129,22 +129,22 @@
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnMovData,
-			this.clnMovOrigem,
-			this.clnOrigemTabela,
-			this.clnIDOrigem,
-			this.clnConta,
-			this.clnSetor,
-			this.clnIDCaixa,
-			this.clnValorReal});
+            this.clnMovData,
+            this.clnMovTipoDescricao,
+            this.clnDescricaoOrigem,
+            this.clnIDOrigem,
+            this.clnConta,
+            this.clnSetor,
+            this.clnIDCaixa,
+            this.clnValorReal});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -157,57 +157,12 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1143, 478);
+			this.dgvListagem.Size = new System.Drawing.Size(1201, 478);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnMovData
-			// 
-			this.clnMovData.HeaderText = "Data";
-			this.clnMovData.Name = "clnMovData";
-			// 
-			// clnMovOrigem
-			// 
-			this.clnMovOrigem.HeaderText = "Tipo";
-			this.clnMovOrigem.Name = "clnMovOrigem";
-			this.clnMovOrigem.Width = 120;
-			// 
-			// clnOrigemTabela
-			// 
-			this.clnOrigemTabela.HeaderText = "Origem";
-			this.clnOrigemTabela.Name = "clnOrigemTabela";
-			this.clnOrigemTabela.Width = 150;
-			// 
-			// clnIDOrigem
-			// 
-			this.clnIDOrigem.HeaderText = "Reg.";
-			this.clnIDOrigem.Name = "clnIDOrigem";
-			// 
-			// clnConta
-			// 
-			this.clnConta.HeaderText = "Conta";
-			this.clnConta.Name = "clnConta";
-			this.clnConta.Width = 200;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.Width = 200;
-			// 
-			// clnIDCaixa
-			// 
-			this.clnIDCaixa.HeaderText = "Caixa";
-			this.clnIDCaixa.Name = "clnIDCaixa";
-			// 
-			// clnValorReal
-			// 
-			this.clnValorReal.HeaderText = "Valor";
-			this.clnValorReal.Name = "clnValorReal";
-			this.clnValorReal.Width = 120;
 			// 
 			// label1
 			// 
@@ -215,7 +170,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1073, 622);
+			this.label1.Location = new System.Drawing.Point(1131, 622);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(90, 15);
 			this.label1.TabIndex = 8;
@@ -227,7 +182,7 @@
 			this.lblValorTransferido.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTransferido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblValorTransferido.ForeColor = System.Drawing.Color.DarkGreen;
-			this.lblValorTransferido.Location = new System.Drawing.Point(1028, 639);
+			this.lblValorTransferido.Location = new System.Drawing.Point(1086, 639);
 			this.lblValorTransferido.Name = "lblValorTransferido";
 			this.lblValorTransferido.Size = new System.Drawing.Size(137, 32);
 			this.lblValorTransferido.TabIndex = 9;
@@ -453,7 +408,7 @@
 			this.lblValorEntradas.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorEntradas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblValorEntradas.ForeColor = System.Drawing.Color.DarkBlue;
-			this.lblValorEntradas.Location = new System.Drawing.Point(742, 639);
+			this.lblValorEntradas.Location = new System.Drawing.Point(800, 639);
 			this.lblValorEntradas.Name = "lblValorEntradas";
 			this.lblValorEntradas.Size = new System.Drawing.Size(137, 32);
 			this.lblValorEntradas.TabIndex = 9;
@@ -466,7 +421,7 @@
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(803, 622);
+			this.label3.Location = new System.Drawing.Point(861, 622);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(76, 15);
 			this.label3.TabIndex = 8;
@@ -476,14 +431,14 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuItemReceber,
-			this.mnuItemEstornar,
-			this.toolStripSeparator2,
-			this.mnuItemCancelar,
-			this.mnuItemNormalizar,
-			this.toolStripSeparator1,
-			this.mnuItemVerOrigem,
-			this.mnuItemAlterar});
+            this.mnuItemReceber,
+            this.mnuItemEstornar,
+            this.toolStripSeparator2,
+            this.mnuItemCancelar,
+            this.mnuItemNormalizar,
+            this.toolStripSeparator1,
+            this.mnuItemVerOrigem,
+            this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
 			// 
@@ -546,7 +501,7 @@
 			this.lblValorSaidas.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorSaidas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblValorSaidas.ForeColor = System.Drawing.Color.DarkRed;
-			this.lblValorSaidas.Location = new System.Drawing.Point(885, 639);
+			this.lblValorSaidas.Location = new System.Drawing.Point(943, 639);
 			this.lblValorSaidas.Name = "lblValorSaidas";
 			this.lblValorSaidas.Size = new System.Drawing.Size(137, 32);
 			this.lblValorSaidas.TabIndex = 9;
@@ -559,7 +514,7 @@
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.DimGray;
-			this.label4.Location = new System.Drawing.Point(959, 622);
+			this.label4.Location = new System.Drawing.Point(1017, 622);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(63, 15);
 			this.label4.TabIndex = 8;
@@ -607,10 +562,56 @@
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Escolher Conta";
 			// 
+			// clnMovData
+			// 
+			this.clnMovData.HeaderText = "Data";
+			this.clnMovData.Name = "clnMovData";
+			// 
+			// clnMovTipoDescricao
+			// 
+			this.clnMovTipoDescricao.HeaderText = "Tipo";
+			this.clnMovTipoDescricao.Name = "clnMovTipoDescricao";
+			this.clnMovTipoDescricao.Width = 120;
+			// 
+			// clnDescricaoOrigem
+			// 
+			this.clnDescricaoOrigem.HeaderText = "Origem";
+			this.clnDescricaoOrigem.Name = "clnDescricaoOrigem";
+			this.clnDescricaoOrigem.Width = 230;
+			// 
+			// clnIDOrigem
+			// 
+			this.clnIDOrigem.HeaderText = "Reg.";
+			this.clnIDOrigem.Name = "clnIDOrigem";
+			this.clnIDOrigem.Width = 80;
+			// 
+			// clnConta
+			// 
+			this.clnConta.HeaderText = "Conta";
+			this.clnConta.Name = "clnConta";
+			this.clnConta.Width = 200;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.Width = 200;
+			// 
+			// clnIDCaixa
+			// 
+			this.clnIDCaixa.HeaderText = "Caixa";
+			this.clnIDCaixa.Name = "clnIDCaixa";
+			// 
+			// clnValorReal
+			// 
+			this.clnValorReal.HeaderText = "Valor";
+			this.clnValorReal.Name = "clnValorReal";
+			this.clnValorReal.Width = 120;
+			// 
 			// frmContaMovimentacao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1187, 682);
+			this.ClientSize = new System.Drawing.Size(1245, 682);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
 			this.Controls.Add(this.label19);
@@ -691,8 +692,8 @@
 		internal System.Windows.Forms.TextBox txtConta;
 		internal System.Windows.Forms.Label label19;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovData;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovOrigem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigemTabela;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovTipoDescricao;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDescricaoOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;

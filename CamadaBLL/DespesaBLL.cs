@@ -270,7 +270,7 @@ namespace CamadaBLL
 		public long InsertDespesaRealizada(
 			objDespesa despesa,
 			objAPagar pagar,
-			objSaida saida,
+			objMovimentacao saida,
 			Action<int, decimal> ContaSldLocalUpdate,
 			Action<int, decimal> SetorSldLocalUpdate)
 		{
@@ -285,15 +285,15 @@ namespace CamadaBLL
 				// Verifica CONTA SALDO
 				ContaBLL cBLL = new ContaBLL();
 
-				decimal saldoAtual = cBLL.ContaSaldoGet(saida.IDConta, dbTran);
+				decimal saldoAtual = cBLL.ContaSaldoGet((int)saida.IDConta, dbTran);
 
-				if (saida.SaidaValor > saldoAtual)
+				if (saida.MovValor > saldoAtual)
 				{
 					throw new AppException("Não existe SALDO SUFICIENTE na conta para realizar esse débito...", 1);
 				}
 
 				// Verifica CONTA BLOQUEIO
-				if (!cBLL.ContaDateBlockPermit(saida.IDConta, saida.SaidaData, dbTran))
+				if (!cBLL.ContaDateBlockPermit((int)saida.IDConta, saida.MovData, dbTran))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Débito proposto...", 2);
 				}
@@ -306,9 +306,10 @@ namespace CamadaBLL
 				long newID = InsertDespesa(despesa, ref listPag, dbTran);
 
 				// insert Saida
-				saida.Origem = 1;
+				saida.MovTipo = 2;
+				saida.Origem = EnumMovOrigem.APagar;
 				saida.IDOrigem = (long)listPag[0].IDAPagar;
-				new SaidaBLL().InsertSaida(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+				new MovimentacaoBLL().InsertMovimentacao(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 
 				// commit and return
 				dbTran.CommitTransaction();

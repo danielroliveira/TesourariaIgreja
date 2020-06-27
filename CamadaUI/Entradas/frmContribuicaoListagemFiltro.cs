@@ -72,7 +72,7 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				EntradaBLL entradaBLL = new EntradaBLL();
+				EntradaFormaBLL entradaBLL = new EntradaFormaBLL();
 				ContribuicaoBLL contribuicaoBLL = new ContribuicaoBLL();
 				listFormas = entradaBLL.GetEntradaFormasList();
 				listTipos = contribuicaoBLL.GetContribuicaoTiposList();

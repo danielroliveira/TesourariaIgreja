@@ -127,9 +127,9 @@ namespace CamadaUI.Caixa
 		//------------------------------------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			_TEntradas = lstMov.Where(x => x.MovOrigem == "ENTRADA").Sum(x => x.MovValorReal);
-			_TSaidas = lstMov.Where(x => x.MovOrigem == "SAIDA").Sum(x => x.MovValorReal);
-			_TTransf = lstMov.Where(x => x.MovOrigem == "TRANSFERENCIA").Sum(x => x.MovValorReal);
+			_TEntradas = lstMov.Where(x => x.MovTipo == 1).Sum(x => x.MovValorAbsoluto);
+			_TSaidas = lstMov.Where(x => x.MovTipo == 2).Sum(x => x.MovValorAbsoluto);
+			_TTransf = lstMov.Where(x => x.MovTipo == 3).Sum(x => x.MovValorAbsoluto);
 
 			lblTEntradas.Text = _TEntradas.ToString("c");
 			lblTSaidas.Text = (_TSaidas * -1).ToString("c");
@@ -195,7 +195,7 @@ namespace CamadaUI.Caixa
 			var colList = new List<DataGridViewColumn>();
 
 			//--- (0) COLUNA ORIGEM DA MOVIMENTACAO
-			clnMovOrigemSigla.DataPropertyName = "MovOrigemSigla";
+			clnMovOrigemSigla.DataPropertyName = "MovTipoSigla";
 			clnMovOrigemSigla.Visible = true;
 			clnMovOrigemSigla.ReadOnly = true;
 			clnMovOrigemSigla.Resizable = DataGridViewTriState.False;
@@ -295,19 +295,19 @@ namespace CamadaUI.Caixa
 			{
 				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovOrigem == "SAIDA")
+				if (mov.MovTipoDescricao == "SAIDA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.Firebrick;
 					e.CellStyle.ForeColor = Color.Red;
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 				}
-				else if (mov.MovOrigem == "ENTRADA")
+				else if (mov.MovTipoDescricao == "ENTRADA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
 				}
-				else if (mov.MovOrigem == "TRANSFERENCIA")
+				else if (mov.MovTipoDescricao == "TRANSFERENCIA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Honeydew;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkSeaGreen;
@@ -320,7 +320,7 @@ namespace CamadaUI.Caixa
 			{
 				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovValorReal >= 0)
+				if (mov.MovValorAbsoluto >= 0)
 				{
 					e.CellStyle.ForeColor = Color.DarkBlue;
 					e.CellStyle.SelectionForeColor = Color.White;

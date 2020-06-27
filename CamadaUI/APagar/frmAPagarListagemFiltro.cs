@@ -1,7 +1,6 @@
-﻿using CamadaDTO;
-using CamadaBLL;
+﻿using CamadaBLL;
+using CamadaDTO;
 using CamadaUI.Registres;
-using CamadaUI.Setores;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

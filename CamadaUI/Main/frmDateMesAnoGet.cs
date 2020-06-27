@@ -10,7 +10,7 @@ namespace CamadaUI.Main
 	{
 		private Form _formOrigem;
 
-		private EnumDataTipo _DataTipo;
+		private EnumDataTipo _DataTipo = EnumDataTipo.PassadoPresente;
 		public DateTime? propDataInfo { get; set; }
 
 		#region SUB NEW | CONSTRUCTOR

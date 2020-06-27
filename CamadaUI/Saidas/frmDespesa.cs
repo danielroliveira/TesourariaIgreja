@@ -1,6 +1,5 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaUI.APagar;
 using CamadaUI.Registres;
 using CamadaUI.Setores;
 using System;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;

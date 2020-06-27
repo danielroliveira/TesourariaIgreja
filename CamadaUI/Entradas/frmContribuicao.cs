@@ -150,7 +150,7 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				EntradaBLL entradaBLL = new EntradaBLL();
+				EntradaFormaBLL entradaBLL = new EntradaFormaBLL();
 				listFormas = entradaBLL.GetEntradaFormasList();
 				listTipos = contBLL.GetContribuicaoTiposList();
 			}
@@ -1008,7 +1008,6 @@ namespace CamadaUI.Entradas
 					frm.ShowDialog();
 				}
 			}
-
 		}
 
 		private void btnSetContribuicaoTipo_Click(object sender, EventArgs e)

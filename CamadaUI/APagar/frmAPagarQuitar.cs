@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using System.Collections.Generic;
 
 namespace CamadaUI.APagar
 {
@@ -19,7 +20,8 @@ namespace CamadaUI.APagar
 		private objSetor SetorSelected;
 		private decimal maxValue;
 		private decimal doValor;
-		public objSaida propSaida { get; set; }
+		private List<objAcrescimoMotivo> listMotivos;
+		public objMovimentacao propSaida { get; set; }
 
 		#region SUB NEW | CONSTRUCTOR
 		public frmAPagarQuitar(objAPagar pag, Form formOrigem)
@@ -27,7 +29,7 @@ namespace CamadaUI.APagar
 			InitializeComponent();
 			_formOrigem = formOrigem;
 			_apagar = pag;
-			propSaida = new objSaida(null);
+			propSaida = new objMovimentacao(null);
 
 			CarregaComboMes();
 			HandlerKeyDownControl(this);
@@ -89,6 +91,32 @@ namespace CamadaUI.APagar
 			}
 		}
 
+		// GET LIST OF MOTIVOS
+		//------------------------------------------------------------------------------------------------------------
+		private void GetMotivosList()
+		{
+			try
+			{
+				if (listMotivos != null) return;
+
+				listMotivos = new List<objAcrescimoMotivo>();
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				listMotivos = new APagarBLL().GetListMotivo(true);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de Motivos de Acréscimo..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		// DEFINE OS VALORES INICIAIS
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineValoresIniciais()
@@ -106,10 +134,10 @@ namespace CamadaUI.APagar
 				$"Data de Bloqueio até: {ContaSelected.BloqueioData?.ToString() ?? ""}";
 
 			// define data padrao
-			propSaida.SaidaData = DataPadrao(); ;
-			txtSaidaDia.Text = propSaida.SaidaData.Day.ToString("D2");
-			cmbSaidaMes.SelectedValue = propSaida.SaidaData.Month;
-			numSaidaAno.Value = propSaida.SaidaData.Year;
+			propSaida.MovData = DataPadrao(); ;
+			txtSaidaDia.Text = propSaida.MovData.Day.ToString("D2");
+			cmbSaidaMes.SelectedValue = propSaida.MovData.Month;
+			numSaidaAno.Value = propSaida.MovData.Year;
 
 			// define year dates
 			int actualYear = DateTime.Today.Year;
@@ -124,10 +152,10 @@ namespace CamadaUI.APagar
 			doValor = maxValue;
 			txtDoValor.Text = maxValue.ToString("c");
 			lblSaidaValor.Text = maxValue.ToString("c");
-			propSaida.SaidaValor = maxValue;
+			propSaida.MovValor = maxValue;
 
-			txtDoValor.Validated += (a, b) => DefineSaidaValor();
-			txtAcrescimo.Validated += (a, b) => DefineSaidaValor();
+			txtDoValor.Validated += (a, b) => DefineMovValor();
+			txtAcrescimo.Validated += (a, b) => DefineMovValor();
 
 			lblAPagarValor.Text = _apagar.APagarValor.ToString("c");
 			lblValorDesconto.Text = _apagar.ValorDesconto.ToString("c");
@@ -135,10 +163,10 @@ namespace CamadaUI.APagar
 			lblValorEmAberto.Text = maxValue.ToString("c");
 		}
 
-		private void DefineSaidaValor()
+		private void DefineMovValor()
 		{
-			propSaida.SaidaValor = doValor + (propSaida.AcrescimoValor == null ? 0 : (decimal)propSaida.AcrescimoValor);
-			lblSaidaValor.Text = propSaida.SaidaValor.ToString("c");
+			propSaida.MovValor = doValor + (propSaida.AcrescimoValor == null ? 0 : (decimal)propSaida.AcrescimoValor);
+			lblSaidaValor.Text = propSaida.MovValor.ToString("c");
 		}
 
 		// CARREGA COMBO
@@ -174,20 +202,49 @@ namespace CamadaUI.APagar
 
 		private void btnQuitar_Click(object sender, EventArgs e)
 		{
-			//propSaida.AcrescimoValor = 
-			//propSaida.IDConta = 
-			//propSaida.IDSetor =
-			//propSaida.SaidaData =
-			//propSaida.SaidaValor = 
+			if (VerificaValores()) return;
 
+			propSaida.MovTipo = 2;
 			propSaida.Conta = txtConta.Text;
 			propSaida.Setor = lblSetor.Text;
-			propSaida.Origem = 1; // ORIGEM DESPESA
+			propSaida.Origem = EnumMovOrigem.APagar; // ORIGEM DESPESA
 			propSaida.IDOrigem = (long)_apagar.IDAPagar;
-			propSaida.Imagem = false;
+			propSaida.ImagemPath = null;
 			propSaida.Observacao = txtObservacao.Text.Length == 0 ? null : txtObservacao.Text;
 
 			DialogResult = DialogResult.OK;
+		}
+
+		private bool VerificaValores()
+		{
+			// Check conta e setor values
+			if (SetorSelected == null || ContaSelected == null)
+			{
+				AbrirDialog("Favor definir a Conta e o Setor de Débito para o pagamento...",
+					"Conta e Setor", DialogType.OK, DialogIcon.Exclamation);
+				txtConta.Focus();
+				return false;
+			}
+
+			// Check conta Saldo
+			if (propSaida.MovValor + (propSaida.AcrescimoValor ?? 0) > ContaSelected.ContaSaldo)
+			{
+				AbrirDialog("A Conta de Débito selecionada não possui saldo suficiente para realização do pagamento...",
+							"Saldo da Conta", DialogType.OK, DialogIcon.Exclamation);
+				txtConta.Focus();
+				return false;
+			}
+
+			// Check conta Data Bloqueio
+			if (ContaSelected.BloqueioData != null && propSaida.MovData < ContaSelected.BloqueioData)
+			{
+				AbrirDialog("A Conta de Débito se encontra bloqueada na Data de pagamento selecionada...",
+							"Data de Bloqueio", DialogType.OK, DialogIcon.Exclamation);
+				txtConta.Focus();
+				return false;
+			}
+
+			return true;
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
@@ -233,6 +290,38 @@ namespace CamadaUI.APagar
 			}
 		}
 
+		private void btnSetMotivo_Click(object sender, EventArgs e)
+		{
+			// get list
+			GetMotivosList();
+
+			if (listMotivos == null || listMotivos.Count == 0)
+			{
+				AbrirDialog("Não há Motivos de Acréscimo cadastrados...", "Motivos de Acréscimo",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			var dic = listMotivos.ToDictionary(x => (int)x.IDAcrescimoMotivo, x => x.AcrescimoMotivo);
+
+			Main.frmComboLista frm = new Main.frmComboLista(dic, txtAcrescimoMotivo, propSaida.IDAcrescimoMotivo);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				propSaida.IDAcrescimoMotivo = (byte)frm.propEscolha.Key;
+				propSaida.AcrescimoMotivo = frm.propEscolha.Value;
+				txtAcrescimoMotivo.Text = frm.propEscolha.Value;
+			}
+
+			//--- select
+			txtAcrescimoMotivo.Focus();
+			txtAcrescimoMotivo.SelectAll();
+		}
+
 		#endregion // BUTTONS FUNCTION --- END
 
 		#region CONTROLS
@@ -245,7 +334,7 @@ namespace CamadaUI.APagar
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtConta,
+					txtConta, txtAcrescimoMotivo
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -267,6 +356,9 @@ namespace CamadaUI.APagar
 					case "txtConta":
 						btnSetConta_Click(sender, new EventArgs());
 						break;
+					case "txtAcrescimoMotivo":
+						btnSetMotivo_Click(sender, new EventArgs());
+						break;
 					default:
 						break;
 				}
@@ -278,7 +370,7 @@ namespace CamadaUI.APagar
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtConta, };
+				Control[] controlesBloqueados = { txtConta, txtAcrescimoMotivo };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -331,7 +423,19 @@ namespace CamadaUI.APagar
 		{
 			decimal newValor = decimal.Parse(txtAcrescimo.Text, NumberStyles.Currency);
 			propSaida.AcrescimoValor = newValor;
-			txtAcrescimo.Text = newValor.ToString("c");
+
+			if (newValor != 0)
+			{
+				txtAcrescimoMotivo.Enabled = true;
+				btnSetMotivo.Enabled = true;
+				lblAcrescimoMotivo.ForeColor = Color.Black;
+			}
+			else
+			{
+				txtAcrescimoMotivo.Enabled = false;
+				btnSetMotivo.Enabled = false;
+				lblAcrescimoMotivo.ForeColor = Color.Silver;
+			}
 		}
 
 		// DATE VALIDATING
@@ -344,7 +448,7 @@ namespace CamadaUI.APagar
 			// check new date
 			if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
 			{
-				propSaida.SaidaData = newDate;
+				propSaida.MovData = newDate;
 			}
 			else
 			{
@@ -415,8 +519,7 @@ namespace CamadaUI.APagar
 
 
 
+
 		#endregion // DESIGN FORM FUNCTIONS --- END
-
-
 	}
 }

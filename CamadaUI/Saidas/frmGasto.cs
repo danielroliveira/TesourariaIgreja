@@ -17,7 +17,7 @@ namespace CamadaUI.Saidas
 	{
 		private objDespesa _despesa;
 		private objAPagar _pagar;
-		private objSaida _saida;
+		private objMovimentacao _saida;
 		private DespesaBLL despBLL = new DespesaBLL();
 		private BindingSource bindDespesa = new BindingSource();
 		private BindingSource bindPagar = new BindingSource();
@@ -55,14 +55,14 @@ namespace CamadaUI.Saidas
 			else
 			{
 				_pagar = new objAPagar(null);
-				_saida = new objSaida(null);
+				_saida = new objMovimentacao(null);
 			}
 
 			GetFormasList(dbTran);
 			GetDocTipos(dbTran);
 
 			// Define CONTA
-			if (_saida.IDSaida == null)
+			if (_saida.IDMovimentacao == null)
 			{
 				DefineConta(ContaPadrao());
 			}
@@ -106,7 +106,7 @@ namespace CamadaUI.Saidas
 			GetDocTipos(dbTran);
 
 			// Define CONTA
-			if (_saida.IDSaida == null)
+			if (_saida.IDMovimentacao == null)
 			{
 				DefineConta(ContaPadrao());
 			}
@@ -127,7 +127,7 @@ namespace CamadaUI.Saidas
 		private void ConstructorContinue()
 		{
 			// Define Setor
-			if (_saida.IDSaida == null)
+			if (_saida.IDMovimentacao == null)
 			{
 				DefineSetor(SetorPadrao());
 			}
@@ -349,7 +349,7 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		// GET SAIDA data
+		// GET SAIDA INFO
 		//------------------------------------------------------------------------------------------------------------
 		private void GetSaida(object dbTran)
 		{
@@ -358,7 +358,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				//--- GET
-				_saida = new SaidaBLL().GetSaidaList(1, (long)_pagar.IDAPagar, dbTran)[0];
+				_saida = new MovimentacaoBLL().GetMovimentacaoListByOrigem(EnumMovOrigem.APagar, (long)_pagar.IDAPagar, true, dbTran)[0];
 			}
 			catch (Exception ex)
 			{
@@ -381,7 +381,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				//--- GET
-				objConta _conta = new ContaBLL().GetConta(_saida.IDConta, dbTran);
+				objConta _conta = new ContaBLL().GetConta((int)_saida.IDConta, dbTran);
 				DefineConta(_conta);
 			}
 			catch (Exception ex)
@@ -1133,12 +1133,13 @@ namespace CamadaUI.Saidas
 		{
 			DefineConta(ContaSelected);
 			DefineSetor(SetorSelected);
+			_saida.MovTipo = 2;
 			_saida.AcrescimoValor = _pagar.ValorAcrescimo;
 			_saida.IDCaixa = null;
-			_saida.Origem = 1;
+			_saida.Origem = EnumMovOrigem.APagar;
 			_saida.Observacao = txtObservacao.Text;
-			_saida.SaidaData = _despesa.DespesaData;
-			_saida.SaidaValor = _pagar.ValorPago;
+			_saida.MovData = _despesa.DespesaData;
+			_saida.MovValor = _pagar.ValorPago;
 		}
 
 		#endregion // SALVAR REGISTRO --- END

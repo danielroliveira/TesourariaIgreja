@@ -6,7 +6,7 @@ using System.Data;
 
 namespace CamadaBLL
 {
-	public class EntradaBLL
+	public class EntradaFormaBLL
 	{
 		// GET ENTRADA FORMAS
 		//------------------------------------------------------------------------------------------------------------

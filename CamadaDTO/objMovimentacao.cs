@@ -27,7 +27,7 @@ namespace CamadaDTO
 		{
 			internal long? _IDMovimentacao;
 			internal byte _MovTipo; // 1: ENTRADA | 2: SAIDA | 3: TRANSFERENCIA
-			internal string _MovTipoDescricao;
+			internal string _MovTipoDescricao; // ENTRADA | SAIDA | TRANSFERENCIA
 			internal byte _Origem;
 			internal long _IDOrigem;
 			internal int? _IDConta;

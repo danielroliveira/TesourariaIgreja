@@ -1,12 +1,11 @@
-﻿using CamadaDTO;
+﻿using CamadaBLL;
+using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using CamadaBLL;
-using System.Diagnostics;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Saidas
 {
