@@ -33,6 +33,8 @@
 			this.lstItens = new ComponentOwl.BetterListView.BetterListView();
 			this.clnID = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
 			this.clnSetor = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
+			this.txtProcura = new CamadaUC.ucTextBoxUnclicked();
+			this.Label1 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).BeginInit();
 			this.SuspendLayout();
@@ -61,7 +63,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_24;
-			this.btnFechar.Location = new System.Drawing.Point(216, 319);
+			this.btnFechar.Location = new System.Drawing.Point(216, 429);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(142, 42);
 			this.btnFechar.TabIndex = 3;
@@ -75,7 +77,7 @@
 			// 
 			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEscolher.Location = new System.Drawing.Point(22, 319);
+			this.btnEscolher.Location = new System.Drawing.Point(22, 429);
 			this.btnEscolher.Name = "btnEscolher";
 			this.btnEscolher.Size = new System.Drawing.Size(142, 42);
 			this.btnEscolher.TabIndex = 2;
@@ -87,6 +89,9 @@
 			// 
 			// lstItens
 			// 
+			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstItens.ColorSortedColumn = System.Drawing.Color.Transparent;
 			this.lstItens.Columns.Add(this.clnID);
 			this.lstItens.Columns.Add(this.clnSetor);
@@ -94,9 +99,9 @@
 			this.lstItens.HeaderStyle = ComponentOwl.BetterListView.BetterListViewHeaderStyle.Nonclickable;
 			this.lstItens.HideSelectionMode = ComponentOwl.BetterListView.BetterListViewHideSelectionMode.KeepSelection;
 			this.lstItens.HotTracking = ComponentOwl.BetterListView.BetterListViewHotTracking.ItemHot;
-			this.lstItens.Location = new System.Drawing.Point(22, 71);
+			this.lstItens.Location = new System.Drawing.Point(22, 105);
 			this.lstItens.Name = "lstItens";
-			this.lstItens.Size = new System.Drawing.Size(336, 237);
+			this.lstItens.Size = new System.Drawing.Size(336, 313);
 			this.lstItens.TabIndex = 1;
 			this.lstItens.ItemActivate += new ComponentOwl.BetterListView.BetterListViewItemActivateEventHandler(this.lstItens_ItemActivate);
 			this.lstItens.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.lstItens_DrawColumnHeader);
@@ -117,10 +122,31 @@
 			this.clnSetor.Text = "Setor de Congregação";
 			this.clnSetor.Width = 230;
 			// 
+			// txtProcura
+			// 
+			this.txtProcura.Location = new System.Drawing.Point(87, 64);
+			this.txtProcura.Name = "txtProcura";
+			this.txtProcura.SelectionHighlightEnabled = false;
+			this.txtProcura.Size = new System.Drawing.Size(271, 27);
+			this.txtProcura.TabIndex = 8;
+			this.txtProcura.TabStop = false;
+			this.txtProcura.TextChanged += new System.EventHandler(this.txtProcura_TextChanged);
+			// 
+			// Label1
+			// 
+			this.Label1.AutoSize = true;
+			this.Label1.Location = new System.Drawing.Point(23, 67);
+			this.Label1.Name = "Label1";
+			this.Label1.Size = new System.Drawing.Size(58, 19);
+			this.Label1.TabIndex = 7;
+			this.Label1.Text = "Procura";
+			// 
 			// frmCongregacaoSetorProcura
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(381, 371);
+			this.ClientSize = new System.Drawing.Size(381, 481);
+			this.Controls.Add(this.txtProcura);
+			this.Controls.Add(this.Label1);
 			this.Controls.Add(this.lstItens);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnEscolher);
@@ -128,14 +154,18 @@
 			this.Name = "frmCongregacaoSetorProcura";
 			this.Activated += new System.EventHandler(this.frmCongregacaoSetorProcura_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCongregacaoSetorProcura_FormClosed);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCongregacaoSetorProcura_KeyDown);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form_KeyPress);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.btnEscolher, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.lstItens, 0);
+			this.Controls.SetChildIndex(this.Label1, 0);
+			this.Controls.SetChildIndex(this.txtProcura, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -146,5 +176,7 @@
 		internal ComponentOwl.BetterListView.BetterListView lstItens;
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnID;
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnSetor;
+		private CamadaUC.ucTextBoxUnclicked txtProcura;
+		internal System.Windows.Forms.Label Label1;
 	}
 }

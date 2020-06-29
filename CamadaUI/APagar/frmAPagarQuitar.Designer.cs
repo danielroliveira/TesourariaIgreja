@@ -65,9 +65,6 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.lblSetor = new System.Windows.Forms.Label();
-			this.lblAcrescimoMotivo = new System.Windows.Forms.Label();
-			this.txtAcrescimoMotivo = new System.Windows.Forms.TextBox();
-			this.btnSetMotivo = new VIBlend.WinForms.Controls.vButton();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numSaidaAno)).BeginInit();
@@ -98,9 +95,9 @@
 			// 
 			// lblDespesaDescricao
 			// 
-			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
 			this.lblDespesaDescricao.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaDescricao.Location = new System.Drawing.Point(92, 6);
@@ -135,9 +132,9 @@
 			// 
 			// lblCredor
 			// 
-			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
 			this.lblCredor.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCredor.Location = new System.Drawing.Point(91, 33);
@@ -161,7 +158,7 @@
 			// txtObservacao
 			// 
 			this.txtObservacao.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtObservacao.Location = new System.Drawing.Point(132, 509);
+			this.txtObservacao.Location = new System.Drawing.Point(130, 470);
 			this.txtObservacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtObservacao.Name = "txtObservacao";
 			this.txtObservacao.Size = new System.Drawing.Size(356, 27);
@@ -170,7 +167,7 @@
 			// label20
 			// 
 			this.label20.AutoSize = true;
-			this.label20.Location = new System.Drawing.Point(36, 512);
+			this.label20.Location = new System.Drawing.Point(34, 473);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(90, 19);
 			this.label20.TabIndex = 24;
@@ -320,7 +317,7 @@
 			// 
 			this.btnQuitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnQuitar.Image = global::CamadaUI.Properties.Resources.money_red_32;
-			this.btnQuitar.Location = new System.Drawing.Point(133, 564);
+			this.btnQuitar.Location = new System.Drawing.Point(133, 529);
 			this.btnQuitar.Name = "btnQuitar";
 			this.btnQuitar.Size = new System.Drawing.Size(120, 49);
 			this.btnQuitar.TabIndex = 27;
@@ -335,7 +332,7 @@
 			this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnCancelar.CausesValidation = false;
 			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.fechar_24;
-			this.btnCancelar.Location = new System.Drawing.Point(263, 564);
+			this.btnCancelar.Location = new System.Drawing.Point(263, 529);
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(120, 49);
 			this.btnCancelar.TabIndex = 28;
@@ -371,14 +368,13 @@
 			this.txtAcrescimo.Size = new System.Drawing.Size(150, 31);
 			this.txtAcrescimo.TabIndex = 18;
 			this.txtAcrescimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.txtAcrescimo.Validating += new System.ComponentModel.CancelEventHandler(this.txtAcrescimo_Validating);
 			// 
 			// line1
 			// 
 			this.line1.EndPoint = new System.Drawing.Point(485, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(16, 547);
+			this.line1.Location = new System.Drawing.Point(14, 508);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(490, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
@@ -391,23 +387,23 @@
 			this.numSaidaAno.Location = new System.Drawing.Point(318, 262);
 			this.numSaidaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numSaidaAno.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
+			5000,
+			0,
+			0,
+			0});
 			this.numSaidaAno.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numSaidaAno.Name = "numSaidaAno";
 			this.numSaidaAno.Size = new System.Drawing.Size(86, 31);
 			this.numSaidaAno.TabIndex = 12;
 			this.numSaidaAno.Value = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
+			2000,
+			0,
+			0,
+			0});
 			this.numSaidaAno.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// lblContaDetalhe
@@ -547,53 +543,10 @@
 			this.lblSetor.Text = "Setor de Recursos";
 			this.lblSetor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblAcrescimoMotivo
-			// 
-			this.lblAcrescimoMotivo.AutoSize = true;
-			this.lblAcrescimoMotivo.BackColor = System.Drawing.Color.Transparent;
-			this.lblAcrescimoMotivo.Font = new System.Drawing.Font("Pathway Gothic One", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAcrescimoMotivo.ForeColor = System.Drawing.Color.Silver;
-			this.lblAcrescimoMotivo.Location = new System.Drawing.Point(19, 474);
-			this.lblAcrescimoMotivo.Name = "lblAcrescimoMotivo";
-			this.lblAcrescimoMotivo.Size = new System.Drawing.Size(107, 17);
-			this.lblAcrescimoMotivo.TabIndex = 21;
-			this.lblAcrescimoMotivo.Text = "Motivo do Acréscimo:";
-			// 
-			// txtAcrescimoMotivo
-			// 
-			this.txtAcrescimoMotivo.Enabled = false;
-			this.txtAcrescimoMotivo.Location = new System.Drawing.Point(132, 470);
-			this.txtAcrescimoMotivo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtAcrescimoMotivo.MaxLength = 30;
-			this.txtAcrescimoMotivo.Name = "txtAcrescimoMotivo";
-			this.txtAcrescimoMotivo.Size = new System.Drawing.Size(316, 27);
-			this.txtAcrescimoMotivo.TabIndex = 22;
-			this.txtAcrescimoMotivo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
-			// 
-			// btnSetMotivo
-			// 
-			this.btnSetMotivo.AllowAnimations = true;
-			this.btnSetMotivo.BackColor = System.Drawing.Color.Transparent;
-			this.btnSetMotivo.Enabled = false;
-			this.btnSetMotivo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnSetMotivo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetMotivo.Location = new System.Drawing.Point(454, 470);
-			this.btnSetMotivo.Name = "btnSetMotivo";
-			this.btnSetMotivo.RoundedCornersMask = ((byte)(15));
-			this.btnSetMotivo.RoundedCornersRadius = 0;
-			this.btnSetMotivo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetMotivo.TabIndex = 23;
-			this.btnSetMotivo.TabStop = false;
-			this.btnSetMotivo.Text = "...";
-			this.btnSetMotivo.UseCompatibleTextRendering = true;
-			this.btnSetMotivo.UseVisualStyleBackColor = false;
-			this.btnSetMotivo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnSetMotivo.Click += new System.EventHandler(this.btnSetMotivo_Click);
-			// 
 			// frmAPagarQuitar
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(526, 625);
+			this.ClientSize = new System.Drawing.Size(526, 590);
 			this.Controls.Add(this.panel6);
 			this.Controls.Add(this.panel5);
 			this.Controls.Add(this.lblSetor);
@@ -605,11 +558,8 @@
 			this.Controls.Add(this.btnCancelar);
 			this.Controls.Add(this.txtSaidaDia);
 			this.Controls.Add(this.cmbSaidaMes);
-			this.Controls.Add(this.btnSetMotivo);
 			this.Controls.Add(this.btnSetConta);
-			this.Controls.Add(this.txtAcrescimoMotivo);
 			this.Controls.Add(this.txtConta);
-			this.Controls.Add(this.lblAcrescimoMotivo);
 			this.Controls.Add(this.lblContaDetalhe);
 			this.Controls.Add(this.label19);
 			this.Controls.Add(this.label25);
@@ -641,11 +591,8 @@
 			this.Controls.SetChildIndex(this.label25, 0);
 			this.Controls.SetChildIndex(this.label19, 0);
 			this.Controls.SetChildIndex(this.lblContaDetalhe, 0);
-			this.Controls.SetChildIndex(this.lblAcrescimoMotivo, 0);
 			this.Controls.SetChildIndex(this.txtConta, 0);
-			this.Controls.SetChildIndex(this.txtAcrescimoMotivo, 0);
 			this.Controls.SetChildIndex(this.btnSetConta, 0);
-			this.Controls.SetChildIndex(this.btnSetMotivo, 0);
 			this.Controls.SetChildIndex(this.cmbSaidaMes, 0);
 			this.Controls.SetChildIndex(this.txtSaidaDia, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
@@ -707,8 +654,5 @@
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label lblSetor;
 		private System.Windows.Forms.Label lblValorDesconto;
-		internal System.Windows.Forms.Label lblAcrescimoMotivo;
-		internal System.Windows.Forms.TextBox txtAcrescimoMotivo;
-		internal VIBlend.WinForms.Controls.vButton btnSetMotivo;
 	}
 }

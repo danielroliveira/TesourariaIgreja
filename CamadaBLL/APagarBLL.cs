@@ -581,6 +581,7 @@ namespace CamadaBLL
 				}
 
 				// Inserir SAIDA
+				saida.DescricaoOrigem = apagar.DespesaDescricao;
 				long newID = new MovimentacaoBLL().InsertMovimentacao(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 				saida.IDMovimentacao = newID;
 

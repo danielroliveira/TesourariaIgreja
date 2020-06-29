@@ -162,6 +162,7 @@ namespace CamadaBLL
 					IDOrigem = newID,
 					MovData = Transf.TransfData,
 					MovValor = Transf.TransfValor,
+					DescricaoOrigem = $"TRANSFERÊNCIA: entrada de {Transf.ContaSaida}",
 				};
 
 				//--- execute INSERT ENTRADA MOVIMENTACAO
@@ -180,6 +181,7 @@ namespace CamadaBLL
 					IDOrigem = newID,
 					MovData = Transf.TransfData,
 					MovValor = Transf.TransfValor * (-1),
+					DescricaoOrigem = $"TRANSFERÊNCIA: saída para {Transf.ContaEntrada}",
 				};
 
 				//--- execute INSERT SAIDA MOVIMENTACAO
@@ -392,6 +394,7 @@ namespace CamadaBLL
 					IDOrigem = newID,
 					MovData = Transf.TransfData,
 					MovValor = Transf.TransfValor,
+					DescricaoOrigem = $"TRANSFERÊNCIA: entrada de {Transf.SetorSaida}",
 				};
 
 				//--- execute INSERT ENTRADA MOVIMENTACAO
@@ -410,6 +413,7 @@ namespace CamadaBLL
 					IDOrigem = newID,
 					MovData = Transf.TransfData,
 					MovValor = Transf.TransfValor * (-1),
+					DescricaoOrigem = $"TRANSFERÊNCIA: saída para {Transf.SetorEntrada}",
 				};
 
 				//--- execute INSERT SAIDA MOVIMENTACAO

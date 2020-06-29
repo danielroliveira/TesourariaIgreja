@@ -1060,7 +1060,7 @@ namespace CamadaUI.Saidas
 
 				//--- INSERT Despesa REALIZADA
 				DefineAPagar();
-				DefineSaida();
+				if (!DefineSaida()) return;
 				long newID = despBLL.InsertDespesaRealizada(_despesa, _pagar, _saida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
 				_despesa.IDDespesa = newID;
 				bindDespesa.EndEdit();
@@ -1129,17 +1129,38 @@ namespace CamadaUI.Saidas
 
 		// DEFINE SAIDA TO SAVE
 		//------------------------------------------------------------------------------------------------------------
-		private void DefineSaida()
+		private bool DefineSaida()
 		{
 			DefineConta(ContaSelected);
 			DefineSetor(SetorSelected);
 			_saida.MovTipo = 2;
-			_saida.AcrescimoValor = _pagar.ValorAcrescimo;
+			_saida.AcrescimoValor = _pagar.ValorAcrescimo == 0 ? null : (decimal?)_pagar.ValorAcrescimo;
 			_saida.IDCaixa = null;
 			_saida.Origem = EnumMovOrigem.APagar;
 			_saida.Observacao = txtObservacao.Text;
 			_saida.MovData = _despesa.DespesaData;
-			_saida.MovValor = _pagar.ValorPago;
+			_saida.MovValor = _pagar.ValorPago + _pagar.ValorAcrescimo;
+
+			// check acrescimo
+			if (_saida.AcrescimoValor != null && _saida.AcrescimoValor != 0)
+			{
+				var motivo = new objAcrescimoMotivo()
+				{
+					AcrescimoMotivo = _saida.AcrescimoMotivo,
+					IDAcrescimoMotivo = _saida.IDAcrescimoMotivo,
+					Ativo = true
+				};
+
+				APagar.frmAcrescimoMotivo frm = new APagar.frmAcrescimoMotivo(motivo, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return false;
+
+				_saida.IDAcrescimoMotivo = frm._motivo.IDAcrescimoMotivo;
+				_saida.AcrescimoMotivo = frm._motivo.AcrescimoMotivo;
+			}
+
+			return true;
 		}
 
 		#endregion // SALVAR REGISTRO --- END

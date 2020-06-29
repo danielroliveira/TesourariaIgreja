@@ -42,10 +42,10 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvListagem = new CamadaUC.ucDataGridView();
+			this.lblAcao = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.lblAcao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.MenuListagem.SuspendLayout();
@@ -232,29 +232,6 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// clnID
-			// 
-			this.clnID.Frozen = true;
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnCadastro
-			// 
-			this.clnCadastro.Frozen = true;
-			this.clnCadastro.HeaderText = "Banco";
-			this.clnCadastro.Name = "clnCadastro";
-			this.clnCadastro.Width = 300;
-			// 
-			// clnImage
-			// 
-			this.clnImage.Frozen = true;
-			this.clnImage.HeaderText = "Ativa";
-			this.clnImage.Name = "clnImage";
-			this.clnImage.ReadOnly = true;
-			this.clnImage.Width = 70;
-			// 
 			// lblAcao
 			// 
 			this.lblAcao.AutoSize = true;
@@ -267,6 +244,29 @@
 			this.lblAcao.Text = "Adicionando Novo Registro";
 			this.lblAcao.Visible = false;
 			// 
+			// clnID
+			// 
+			this.clnID.Frozen = true;
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnCadastro
+			// 
+			this.clnCadastro.Frozen = true;
+			this.clnCadastro.HeaderText = "Classificação da Despesa";
+			this.clnCadastro.Name = "clnCadastro";
+			this.clnCadastro.Width = 300;
+			// 
+			// clnImage
+			// 
+			this.clnImage.Frozen = true;
+			this.clnImage.HeaderText = "Ativa";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
+			// 
 			// frmDespesaTipoGrupoControle
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -275,6 +275,8 @@
 			this.Controls.Add(this.tspMenu);
 			this.Name = "frmDespesaTipoGrupoControle";
 			this.Padding = new System.Windows.Forms.Padding(2);
+			this.Activated += new System.EventHandler(this.frmContribuinteListagem_Activated);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmContribuinteListagem_FormClosed);
 			this.Shown += new System.EventHandler(this.frmDespesaTipoGrupoControle_Shown);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);

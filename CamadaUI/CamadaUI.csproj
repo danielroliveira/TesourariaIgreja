@@ -65,6 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APagar\frmAcrescimoMotivo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAcrescimoMotivo.designer.cs">
+      <DependentUpon>frmAcrescimoMotivo.cs</DependentUpon>
+    </Compile>
     <Compile Include="APagar\frmAPagarAlterar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -561,6 +567,9 @@
     <Compile Include="Transferencias\frmTransfSetorListagem.designer.cs">
       <DependentUpon>frmTransfSetorListagem.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="APagar\frmAcrescimoMotivo.resx">
+      <DependentUpon>frmAcrescimoMotivo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="APagar\frmAPagarAlterar.resx">
       <DependentUpon>frmAPagarAlterar.cs</DependentUpon>
     </EmbeddedResource>

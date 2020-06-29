@@ -293,12 +293,12 @@ namespace CamadaBLL
 
 					if (receber.IDContaProvisoria != entrada.IDConta)
 					{
-						objAReceber newRec = insertAReceberCartao(receber, entrada, contaSaldoUpdate, setorSaldoUpdate, db);
+						objAReceber newRec = insertAReceberCartao(receber, entrada, contaSaldoUpdate, null, db);
 						retorno.Add(newRec);
 					}
 					else
 					{
-						objAReceber newRec = insertAReceberCheque(receber, entrada, contaSaldoUpdate, setorSaldoUpdate, db);
+						objAReceber newRec = insertAReceberCheque(receber, entrada, contaSaldoUpdate, null, db);
 						retorno.Add(newRec);
 					}
 				}
@@ -331,7 +331,8 @@ namespace CamadaBLL
 				IDConta = receber.IDContaProvisoria,
 				IDSetor = receber.IDSetor,
 				MovData = entrada.MovData,
-				MovValor = entrada.MovValor * (-1)
+				MovValor = entrada.MovValor * (-1),
+				DescricaoOrigem = "TRANSFERÊNCIA: Compensação de Cartao",
 			};
 
 			// create TRANSFER ENTRADA
@@ -343,7 +344,8 @@ namespace CamadaBLL
 				IDConta = entrada.IDConta,
 				IDSetor = receber.IDSetor,
 				MovData = entrada.MovData,
-				MovValor = entrada.MovValor
+				MovValor = entrada.MovValor,
+				DescricaoOrigem = "TRANSFERÊNCIA: Recebimento de Cartao",
 			};
 
 			// create SAIDA COMISSAO
@@ -355,7 +357,8 @@ namespace CamadaBLL
 				IDConta = receber.IDContaProvisoria,
 				IDSetor = receber.IDSetor,
 				MovData = entrada.MovData,
-				MovValor = receber.ValorBruto - entrada.MovValor
+				MovValor = receber.ValorBruto - entrada.MovValor,
+				DescricaoOrigem = "SAÍDA: Desconto Comissão de Cartao",
 			};
 
 			try
@@ -366,10 +369,10 @@ namespace CamadaBLL
 				mBLL.UpdateConsolidado((long)receber.IDAReceber, true, dbTran);
 
 				// Insert transf saida
-				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, null, dbTran);
 
 				// Insert transf entrada
-				mBLL.InsertMovimentacao(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfEntrada, contaSaldoUpdate, null, dbTran);
 
 				// Insert saida comissao
 				mBLL.InsertMovimentacao(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
@@ -403,7 +406,8 @@ namespace CamadaBLL
 				IDConta = receber.IDContaProvisoria,
 				IDSetor = null,
 				MovData = entrada.MovData,
-				MovValor = entrada.MovValor * (-1)
+				MovValor = entrada.MovValor * (-1),
+				DescricaoOrigem = "TRANSFERÊNCIA: Depósito de Cheque",
 			};
 
 			// create TRANSFER ENTRADA
@@ -415,19 +419,8 @@ namespace CamadaBLL
 				IDConta = entrada.IDConta,
 				IDSetor = null,
 				MovData = entrada.MovData,
-				MovValor = entrada.MovValor
-			};
-
-			// create SAIDA COMISSAO
-			objMovimentacao saidaComissao = new objMovimentacao(null)
-			{
-				MovTipo = 2, // SAIDA
-				Origem = EnumMovOrigem.AReceber, // tblAReceber 
-				IDOrigem = (long)receber.IDAReceber,
-				IDConta = entrada.IDConta,
-				IDSetor = receber.IDSetor,
-				MovData = entrada.MovData,
-				MovValor = receber.ValorBruto - entrada.MovValor
+				MovValor = entrada.MovValor,
+				DescricaoOrigem = "TRANSFERÊNCIA: Compensação de Cheque",
 			};
 
 			try
@@ -438,13 +431,10 @@ namespace CamadaBLL
 				mBLL.UpdateConsolidado((long)receber.IDAReceber, true, dbTran);
 
 				// Insert transf saida
-				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, null, dbTran);
 
 				// Insert transf entrada
-				mBLL.InsertMovimentacao(transfEntrada, contaSaldoUpdate, setorSaldoUpdate, dbTran);
-
-				// Insert saida comissao
-				mBLL.InsertMovimentacao(saidaComissao, contaSaldoUpdate, setorSaldoUpdate, dbTran);
+				mBLL.InsertMovimentacao(transfEntrada, contaSaldoUpdate, null, dbTran);
 
 				// update AReceber
 				UpdateAReceber(receber, dbTran);

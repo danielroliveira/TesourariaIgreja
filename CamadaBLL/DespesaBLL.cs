@@ -309,6 +309,7 @@ namespace CamadaBLL
 				saida.MovTipo = 2;
 				saida.Origem = EnumMovOrigem.APagar;
 				saida.IDOrigem = (long)listPag[0].IDAPagar;
+				saida.DescricaoOrigem = $"DESPESA: {despesa.DespesaDescricao}";
 				new MovimentacaoBLL().InsertMovimentacao(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 
 				// commit and return

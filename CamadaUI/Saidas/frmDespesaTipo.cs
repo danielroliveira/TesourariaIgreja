@@ -8,7 +8,6 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using VIBlend.WinForms.Controls;
 
 namespace CamadaUI.Saidas
 {
@@ -570,9 +569,30 @@ namespace CamadaUI.Saidas
 			textBox.SelectAll();
 		}
 
+		//--- INSERT NEW CLASSIFICAÇÃO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnInsertClassificacao_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
-
-
+				frmDespesaTipoGrupoControle frm = new frmDespesaTipoGrupoControle(this);
+				frm.ShowDialog();
+				GetGruposList();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de cadastro de Classificação..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 
 		#endregion // BUTTONS PROCURA --- END
 

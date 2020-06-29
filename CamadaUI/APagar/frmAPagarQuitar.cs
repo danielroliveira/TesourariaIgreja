@@ -20,7 +20,6 @@ namespace CamadaUI.APagar
 		private objSetor SetorSelected;
 		private decimal maxValue;
 		private decimal doValor;
-		private List<objAcrescimoMotivo> listMotivos;
 		public objMovimentacao propSaida { get; set; }
 
 		#region SUB NEW | CONSTRUCTOR
@@ -83,32 +82,6 @@ namespace CamadaUI.APagar
 				AbrirDialog("Uma exceção ocorreu ao Obter o Setor pelo ID..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				return null;
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		// GET LIST OF MOTIVOS
-		//------------------------------------------------------------------------------------------------------------
-		private void GetMotivosList()
-		{
-			try
-			{
-				if (listMotivos != null) return;
-
-				listMotivos = new List<objAcrescimoMotivo>();
-
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-				listMotivos = new APagarBLL().GetListMotivo(true);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de Motivos de Acréscimo..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
 			{
@@ -204,6 +177,26 @@ namespace CamadaUI.APagar
 		{
 			if (VerificaValores()) return;
 
+			// check acrescimo
+			if (propSaida.AcrescimoValor != null && propSaida.AcrescimoValor != 0)
+			{
+				var motivo = new objAcrescimoMotivo()
+				{
+					AcrescimoMotivo = propSaida.AcrescimoMotivo,
+					IDAcrescimoMotivo = propSaida.IDAcrescimoMotivo,
+					Ativo = true
+				};
+
+				frmAcrescimoMotivo frm = new frmAcrescimoMotivo(motivo, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				propSaida.IDAcrescimoMotivo = frm._motivo.IDAcrescimoMotivo;
+				propSaida.AcrescimoMotivo = frm._motivo.AcrescimoMotivo;
+
+			}
+
 			propSaida.MovTipo = 2;
 			propSaida.Conta = txtConta.Text;
 			propSaida.Setor = lblSetor.Text;
@@ -290,38 +283,6 @@ namespace CamadaUI.APagar
 			}
 		}
 
-		private void btnSetMotivo_Click(object sender, EventArgs e)
-		{
-			// get list
-			GetMotivosList();
-
-			if (listMotivos == null || listMotivos.Count == 0)
-			{
-				AbrirDialog("Não há Motivos de Acréscimo cadastrados...", "Motivos de Acréscimo",
-					DialogType.OK, DialogIcon.Exclamation);
-				return;
-			}
-
-			var dic = listMotivos.ToDictionary(x => (int)x.IDAcrescimoMotivo, x => x.AcrescimoMotivo);
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, txtAcrescimoMotivo, propSaida.IDAcrescimoMotivo);
-
-			// show form
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				propSaida.IDAcrescimoMotivo = (byte)frm.propEscolha.Key;
-				propSaida.AcrescimoMotivo = frm.propEscolha.Value;
-				txtAcrescimoMotivo.Text = frm.propEscolha.Value;
-			}
-
-			//--- select
-			txtAcrescimoMotivo.Focus();
-			txtAcrescimoMotivo.SelectAll();
-		}
-
 		#endregion // BUTTONS FUNCTION --- END
 
 		#region CONTROLS
@@ -334,7 +295,7 @@ namespace CamadaUI.APagar
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtConta, txtAcrescimoMotivo
+					txtConta,
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -356,9 +317,6 @@ namespace CamadaUI.APagar
 					case "txtConta":
 						btnSetConta_Click(sender, new EventArgs());
 						break;
-					case "txtAcrescimoMotivo":
-						btnSetMotivo_Click(sender, new EventArgs());
-						break;
 					default:
 						break;
 				}
@@ -370,7 +328,7 @@ namespace CamadaUI.APagar
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtConta, txtAcrescimoMotivo };
+				Control[] controlesBloqueados = { txtConta, };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -414,27 +372,6 @@ namespace CamadaUI.APagar
 			{
 				doValor = newValor;
 				txtDoValor.Text = doValor.ToString("c");
-			}
-		}
-
-		// CHECK ACRESCIMO AND FORMAT UPDATED VALUE
-		//------------------------------------------------------------------------------------------------------------
-		private void txtAcrescimo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			decimal newValor = decimal.Parse(txtAcrescimo.Text, NumberStyles.Currency);
-			propSaida.AcrescimoValor = newValor;
-
-			if (newValor != 0)
-			{
-				txtAcrescimoMotivo.Enabled = true;
-				btnSetMotivo.Enabled = true;
-				lblAcrescimoMotivo.ForeColor = Color.Black;
-			}
-			else
-			{
-				txtAcrescimoMotivo.Enabled = false;
-				btnSetMotivo.Enabled = false;
-				lblAcrescimoMotivo.ForeColor = Color.Silver;
 			}
 		}
 

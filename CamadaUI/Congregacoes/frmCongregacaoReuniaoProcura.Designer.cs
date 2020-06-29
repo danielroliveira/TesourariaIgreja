@@ -33,10 +33,10 @@
 			this.lstItens = new ComponentOwl.BetterListView.BetterListView();
 			this.clnID = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
 			this.clnItem = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
-			this.txtProcura = new System.Windows.Forms.TextBox();
-			this.Label1 = new System.Windows.Forms.Label();
 			this.clnCongregacao = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
+			this.Label1 = new System.Windows.Forms.Label();
 			this.lblCongregacao = new System.Windows.Forms.Label();
+			this.txtProcura = new CamadaUC.ucTextBoxUnclicked();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).BeginInit();
 			this.SuspendLayout();
@@ -129,14 +129,11 @@
 			this.clnItem.Text = "Reuniões";
 			this.clnItem.Width = 230;
 			// 
-			// txtProcura
+			// clnCongregacao
 			// 
-			this.txtProcura.Location = new System.Drawing.Point(89, 64);
-			this.txtProcura.Margin = new System.Windows.Forms.Padding(6);
-			this.txtProcura.Name = "txtProcura";
-			this.txtProcura.Size = new System.Drawing.Size(269, 27);
-			this.txtProcura.TabIndex = 2;
-			this.txtProcura.TextChanged += new System.EventHandler(this.txtProcura_TextChanged);
+			this.clnCongregacao.Name = "clnCongregacao";
+			this.clnCongregacao.Text = "Congregação";
+			this.clnCongregacao.Width = 250;
 			// 
 			// Label1
 			// 
@@ -146,12 +143,6 @@
 			this.Label1.Size = new System.Drawing.Size(58, 19);
 			this.Label1.TabIndex = 1;
 			this.Label1.Text = "Procura";
-			// 
-			// clnCongregacao
-			// 
-			this.clnCongregacao.Name = "clnCongregacao";
-			this.clnCongregacao.Text = "Congregação";
-			this.clnCongregacao.Width = 250;
 			// 
 			// lblCongregacao
 			// 
@@ -169,6 +160,15 @@
 			this.lblCongregacao.Text = "Congregacao";
 			this.lblCongregacao.Visible = false;
 			// 
+			// txtProcura
+			// 
+			this.txtProcura.Location = new System.Drawing.Point(86, 64);
+			this.txtProcura.Name = "txtProcura";
+			this.txtProcura.SelectionHighlightEnabled = false;
+			this.txtProcura.Size = new System.Drawing.Size(335, 27);
+			this.txtProcura.TabIndex = 6;
+			this.txtProcura.TextChanged += new System.EventHandler(this.txtProcura_TextChanged);
+			// 
 			// frmCongregacaoReuniaoProcura
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -182,7 +182,8 @@
 			this.Name = "frmCongregacaoReuniaoProcura";
 			this.Activated += new System.EventHandler(this.frmReuniaoProcura_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmReuniaoProcura_FormClosed);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmReuniaoProcura_KeyDown);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form_KeyPress);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.btnEscolher, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
@@ -204,9 +205,9 @@
 		internal ComponentOwl.BetterListView.BetterListView lstItens;
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnID;
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnItem;
-		internal System.Windows.Forms.TextBox txtProcura;
 		internal System.Windows.Forms.Label Label1;
 		private ComponentOwl.BetterListView.BetterListViewColumnHeader clnCongregacao;
 		internal System.Windows.Forms.Label lblCongregacao;
+		private CamadaUC.ucTextBoxUnclicked txtProcura;
 	}
 }

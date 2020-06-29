@@ -195,13 +195,14 @@ namespace CamadaUI.Setores
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmSetorProcura_KeyDown(object sender, KeyEventArgs e)
+		private void form_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			if (e.KeyCode == Keys.Escape) // CLOSE FORM
 			{
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
 			}
+			// UP SELECTED ITEM IN LIST
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
 				e.Handled = true;
@@ -224,6 +225,7 @@ namespace CamadaUI.Setores
 					lstItens.EnsureVisible(lstItens.SelectedItems[0]);
 				}
 			}
+			// DOWN SELECTED ITEM IN LIST
 			else if (e.KeyCode == Keys.Down && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
 				e.Handled = true;
@@ -244,6 +246,29 @@ namespace CamadaUI.Setores
 
 					lstItens.EnsureVisible(lstItens.SelectedItems[0]);
 				}
+			}
+			else if (e.KeyCode == Keys.Delete) // CLEAR PROCURA
+			{
+				txtProcura.Clear();
+			}
+			else if (e.KeyCode == Keys.Back) // BACKSPACE LAST WORD IN PROCURA
+			{
+				int len = txtProcura.Text.Length;
+				if (txtProcura.Text.Length > 0)
+				{
+					txtProcura.Text = txtProcura.Text.Substring(0, len - 1);
+				}
+			}
+		}
+
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Form_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (char.IsLetter(e.KeyChar))
+			{
+				e.Handled = true;
+				txtProcura.Text += e.KeyChar;
 			}
 		}
 

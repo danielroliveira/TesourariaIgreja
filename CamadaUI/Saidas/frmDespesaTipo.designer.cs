@@ -47,13 +47,14 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnAtivo = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
+			this.btnInsertClassificacao = new VIBlend.WinForms.Controls.vButton();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(295, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(342, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(225, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Tipos de Despesa";
@@ -63,7 +64,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(520, 0);
+			this.btnClose.Location = new System.Drawing.Point(567, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -71,7 +72,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblID);
 			this.panel1.Controls.Add(this.lbl_IdTexto);
-			this.panel1.Size = new System.Drawing.Size(560, 50);
+			this.panel1.Size = new System.Drawing.Size(607, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lbl_IdTexto, 0);
@@ -203,7 +204,7 @@
 			this.txtDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaTipo.MaxLength = 100;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
-			this.txtDespesaTipo.Size = new System.Drawing.Size(333, 27);
+			this.txtDespesaTipo.Size = new System.Drawing.Size(373, 27);
 			this.txtDespesaTipo.TabIndex = 2;
 			// 
 			// tspMenu
@@ -224,7 +225,7 @@
             this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 225);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(555, 44);
+			this.tspMenu.Size = new System.Drawing.Size(602, 44);
 			this.tspMenu.TabIndex = 9;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -302,11 +303,33 @@
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
+			// btnInsertClassificacao
+			// 
+			this.btnInsertClassificacao.AllowAnimations = true;
+			this.btnInsertClassificacao.BackColor = System.Drawing.Color.Transparent;
+			this.btnInsertClassificacao.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnInsertClassificacao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnInsertClassificacao.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnInsertClassificacao.ImageAbsolutePosition = new System.Drawing.Point(7, 3);
+			this.btnInsertClassificacao.Location = new System.Drawing.Point(512, 117);
+			this.btnInsertClassificacao.Name = "btnInsertClassificacao";
+			this.btnInsertClassificacao.RoundedCornersMask = ((byte)(15));
+			this.btnInsertClassificacao.RoundedCornersRadius = 0;
+			this.btnInsertClassificacao.Size = new System.Drawing.Size(34, 27);
+			this.btnInsertClassificacao.TabIndex = 5;
+			this.btnInsertClassificacao.TabStop = false;
+			this.btnInsertClassificacao.UseAbsoluteImagePositioning = true;
+			this.btnInsertClassificacao.UseCompatibleTextRendering = true;
+			this.btnInsertClassificacao.UseVisualStyleBackColor = false;
+			this.btnInsertClassificacao.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnInsertClassificacao.Click += new System.EventHandler(this.btnInsertClassificacao_Click);
+			// 
 			// frmDespesaTipo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 271);
+			this.ClientSize = new System.Drawing.Size(607, 271);
 			this.Controls.Add(this.tspMenu);
+			this.Controls.Add(this.btnInsertClassificacao);
 			this.Controls.Add(this.btnSetDespesaTipoGrupo);
 			this.Controls.Add(this.btnSetPeriodicidade);
 			this.Controls.Add(this.txtDespesaTipo);
@@ -329,6 +352,7 @@
 			this.Controls.SetChildIndex(this.txtDespesaTipo, 0);
 			this.Controls.SetChildIndex(this.btnSetPeriodicidade, 0);
 			this.Controls.SetChildIndex(this.btnSetDespesaTipoGrupo, 0);
+			this.Controls.SetChildIndex(this.btnInsertClassificacao, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.panel1.ResumeLayout(false);
@@ -359,5 +383,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton btnAtivo;
 		private System.Windows.Forms.ToolStripButton btnFechar;
+		internal VIBlend.WinForms.Controls.vButton btnInsertClassificacao;
 	}
 }

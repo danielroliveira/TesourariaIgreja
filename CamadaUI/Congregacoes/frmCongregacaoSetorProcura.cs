@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
-using System.Linq;
 using ComponentOwl.BetterListView;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Congregacoes
 {
@@ -196,13 +192,14 @@ namespace CamadaUI.Congregacoes
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmCongregacaoSetorProcura_KeyDown(object sender, KeyEventArgs e)
+		private void form_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			if (e.KeyCode == Keys.Escape) // CLOSE FORM
 			{
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
 			}
+			// UP SELECTED ITEM IN LIST
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
 				e.Handled = true;
@@ -225,6 +222,7 @@ namespace CamadaUI.Congregacoes
 					lstItens.EnsureVisible(lstItens.SelectedItems[0]);
 				}
 			}
+			// DOWN SELECTED ITEM IN LIST
 			else if (e.KeyCode == Keys.Down && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
 				e.Handled = true;
@@ -246,9 +244,80 @@ namespace CamadaUI.Congregacoes
 					lstItens.EnsureVisible(lstItens.SelectedItems[0]);
 				}
 			}
+			else if (e.KeyCode == Keys.Delete) // CLEAR PROCURA
+			{
+				txtProcura.Clear();
+			}
+			else if (e.KeyCode == Keys.Back) // BACKSPACE LAST WORD IN PROCURA
+			{
+				int len = txtProcura.Text.Length;
+				if (txtProcura.Text.Length > 0)
+				{
+					txtProcura.Text = txtProcura.Text.Substring(0, len - 1);
+				}
+			}
+		}
+
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Form_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (char.IsLetter(e.KeyChar))
+			{
+				e.Handled = true;
+				txtProcura.Text += e.KeyChar;
+			}
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
+
+		#region PROCURA BY TEXT
+
+		private void txtProcura_TextChanged(object sender, EventArgs e)
+		{
+			ProcurarTexto();
+			BetterListViewItemCollection itemsFound = new BetterListViewItemCollection();
+
+			if (txtProcura.Text.Length > 0)
+			{
+				itemsFound = lstItens.FindItemsWithText(txtProcura.Text);
+			}
+			else
+			{
+				lstItens.FindItemsWithText("?");
+				lstItens.SelectedItems.Clear();
+			}
+		}
+
+		private void ProcurarTexto()
+		{
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objCongregacaoSetor, bool> FiltroItem = c => c.CongregacaoSetor.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					lstItens.DataSource = listSetor.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objCongregacaoSetor, bool> FiltroID = c => c.IDCongregacaoSetor == i;
+
+					// aply filter using function
+					lstItens.DataSource = listSetor.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				lstItens.DataSource = lstItens;
+			}
+		}
+
+		#endregion // PROCURA BY TEXT --- END
 
 		#region DESIGN FORM FUNCTIONS
 

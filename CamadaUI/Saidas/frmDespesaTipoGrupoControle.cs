@@ -369,7 +369,10 @@ namespace CamadaUI.Saidas
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
-			MostraMenuPrincipal();
+			if (_formOrigem == null || _formOrigem.Name == "frmPrincipal")
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		// ADD NEW

@@ -33,7 +33,7 @@
 			this.lstItens = new ComponentOwl.BetterListView.BetterListView();
 			this.clnID = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
 			this.clnItem = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
-			this.txtProcura = new System.Windows.Forms.TextBox();
+			this.txtProcura = new CamadaUC.ucTextBoxUnclicked();
 			this.Label1 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).BeginInit();
@@ -124,11 +124,12 @@
 			// 
 			// txtProcura
 			// 
-			this.txtProcura.Location = new System.Drawing.Point(89, 64);
-			this.txtProcura.Margin = new System.Windows.Forms.Padding(6);
+			this.txtProcura.Location = new System.Drawing.Point(86, 66);
 			this.txtProcura.Name = "txtProcura";
-			this.txtProcura.Size = new System.Drawing.Size(269, 27);
-			this.txtProcura.TabIndex = 2;
+			this.txtProcura.SelectionHighlightEnabled = false;
+			this.txtProcura.Size = new System.Drawing.Size(272, 27);
+			this.txtProcura.TabIndex = 6;
+			this.txtProcura.TabStop = false;
 			this.txtProcura.TextChanged += new System.EventHandler(this.txtProcura_TextChanged);
 			// 
 			// Label1
@@ -153,7 +154,8 @@
 			this.Name = "frmBancoProcura";
 			this.Activated += new System.EventHandler(this.frmBancoProcura_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmBancoProcura_FormClosed);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmBancoProcura_KeyDown);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form_KeyPress);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.btnEscolher, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
@@ -174,7 +176,7 @@
 		internal ComponentOwl.BetterListView.BetterListView lstItens;
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnID;
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnItem;
-		internal System.Windows.Forms.TextBox txtProcura;
+		internal CamadaUC.ucTextBoxUnclicked txtProcura;
 		internal System.Windows.Forms.Label Label1;
 	}
 }
