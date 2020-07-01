@@ -541,13 +541,14 @@ namespace CamadaUI.Saidas
 			}
 			else if (e.KeyCode == Keys.Delete)
 			{
-				e.Handled = true;
 
 				switch (ctr.Name)
 				{
-					case "txtCredor":
+					case "txtDespesaDescricao":
+						e.Handled = false;
 						break;
 					default:
+						e.Handled = true;
 						break;
 				}
 			}

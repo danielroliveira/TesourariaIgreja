@@ -359,7 +359,7 @@
 			this.txtSetor.Location = new System.Drawing.Point(181, 113);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
-			this.txtSetor.Size = new System.Drawing.Size(228, 27);
+			this.txtSetor.Size = new System.Drawing.Size(274, 27);
 			this.txtSetor.TabIndex = 5;
 			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -369,7 +369,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(415, 113);
+			this.btnSetSetor.Location = new System.Drawing.Point(461, 113);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -398,7 +398,7 @@
 			this.txtConta.Location = new System.Drawing.Point(181, 75);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
-			this.txtConta.Size = new System.Drawing.Size(228, 27);
+			this.txtConta.Size = new System.Drawing.Size(274, 27);
 			this.txtConta.TabIndex = 2;
 			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -408,7 +408,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(415, 75);
+			this.btnSetConta.Location = new System.Drawing.Point(461, 75);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;

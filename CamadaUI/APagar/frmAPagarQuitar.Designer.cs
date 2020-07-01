@@ -39,7 +39,7 @@
 			this.label21 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.label23 = new System.Windows.Forms.Label();
-			this.txtSaidaDia = new CamadaUC.ucOnlyNumbers();
+			this.numSaidaDia = new System.Windows.Forms.NumericUpDown();
 			this.cmbSaidaMes = new CamadaUC.ucComboLimitedValues();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
@@ -67,6 +67,7 @@
 			this.lblSetor = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numSaidaDia)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numSaidaAno)).BeginInit();
 			this.panel6.SuspendLayout();
 			this.panel5.SuspendLayout();
@@ -95,9 +96,9 @@
 			// 
 			// lblDespesaDescricao
 			// 
-			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
 			this.lblDespesaDescricao.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaDescricao.Location = new System.Drawing.Point(92, 6);
@@ -132,9 +133,9 @@
 			// 
 			// lblCredor
 			// 
-			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
 			this.lblCredor.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCredor.Location = new System.Drawing.Point(91, 33);
@@ -212,19 +213,31 @@
 			this.label23.TabIndex = 15;
 			this.label23.Text = "Do Valor:";
 			// 
-			// txtSaidaDia
+			// numSaidaDia
 			// 
-			this.txtSaidaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtSaidaDia.Inteiro = true;
-			this.txtSaidaDia.Location = new System.Drawing.Point(104, 262);
-			this.txtSaidaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtSaidaDia.Moeda = false;
-			this.txtSaidaDia.Name = "txtSaidaDia";
-			this.txtSaidaDia.Positivo = true;
-			this.txtSaidaDia.Size = new System.Drawing.Size(52, 31);
-			this.txtSaidaDia.TabIndex = 10;
-			this.txtSaidaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.txtSaidaDia.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
+			this.numSaidaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numSaidaDia.Location = new System.Drawing.Point(104, 262);
+			this.numSaidaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.numSaidaDia.Maximum = new decimal(new int[] {
+            31,
+            0,
+            0,
+            0});
+			this.numSaidaDia.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numSaidaDia.Name = "numSaidaDia";
+			this.numSaidaDia.Size = new System.Drawing.Size(52, 31);
+			this.numSaidaDia.TabIndex = 10;
+			this.numSaidaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numSaidaDia.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numSaidaDia.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// cmbSaidaMes
 			// 
@@ -245,7 +258,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(387, 127);
+			this.btnSetConta.Location = new System.Drawing.Point(452, 127);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
@@ -264,7 +277,7 @@
 			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
-			this.txtConta.Size = new System.Drawing.Size(228, 27);
+			this.txtConta.Size = new System.Drawing.Size(293, 27);
 			this.txtConta.TabIndex = 3;
 			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -368,6 +381,7 @@
 			this.txtAcrescimo.Size = new System.Drawing.Size(150, 31);
 			this.txtAcrescimo.TabIndex = 18;
 			this.txtAcrescimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtAcrescimo.Validating += new System.ComponentModel.CancelEventHandler(this.txtAcrescimo_Validating);
 			// 
 			// line1
 			// 
@@ -387,23 +401,23 @@
 			this.numSaidaAno.Location = new System.Drawing.Point(318, 262);
 			this.numSaidaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numSaidaAno.Maximum = new decimal(new int[] {
-			5000,
-			0,
-			0,
-			0});
+            5000,
+            0,
+            0,
+            0});
 			this.numSaidaAno.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numSaidaAno.Name = "numSaidaAno";
 			this.numSaidaAno.Size = new System.Drawing.Size(86, 31);
 			this.numSaidaAno.TabIndex = 12;
 			this.numSaidaAno.Value = new decimal(new int[] {
-			2000,
-			0,
-			0,
-			0});
+            2000,
+            0,
+            0,
+            0});
 			this.numSaidaAno.Validating += new System.ComponentModel.CancelEventHandler(this.txtData_Validating);
 			// 
 			// lblContaDetalhe
@@ -556,7 +570,7 @@
 			this.Controls.Add(this.txtDoValor);
 			this.Controls.Add(this.btnQuitar);
 			this.Controls.Add(this.btnCancelar);
-			this.Controls.Add(this.txtSaidaDia);
+			this.Controls.Add(this.numSaidaDia);
 			this.Controls.Add(this.cmbSaidaMes);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
@@ -577,6 +591,7 @@
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
 			this.Shown += new System.EventHandler(this.frmAPagarQuitar_Shown);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAPagarQuitar_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.panel2, 0);
 			this.Controls.SetChildIndex(this.label23, 0);
@@ -594,7 +609,7 @@
 			this.Controls.SetChildIndex(this.txtConta, 0);
 			this.Controls.SetChildIndex(this.btnSetConta, 0);
 			this.Controls.SetChildIndex(this.cmbSaidaMes, 0);
-			this.Controls.SetChildIndex(this.txtSaidaDia, 0);
+			this.Controls.SetChildIndex(this.numSaidaDia, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
 			this.Controls.SetChildIndex(this.btnQuitar, 0);
 			this.Controls.SetChildIndex(this.txtDoValor, 0);
@@ -607,6 +622,7 @@
 			this.panel1.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numSaidaDia)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numSaidaAno)).EndInit();
 			this.panel6.ResumeLayout(false);
 			this.panel5.ResumeLayout(false);
@@ -628,7 +644,7 @@
 		internal System.Windows.Forms.Label label21;
 		internal System.Windows.Forms.Label label22;
 		internal System.Windows.Forms.Label label23;
-		private CamadaUC.ucOnlyNumbers txtSaidaDia;
+		private System.Windows.Forms.NumericUpDown numSaidaDia;
 		private CamadaUC.ucComboLimitedValues cmbSaidaMes;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;
 		internal System.Windows.Forms.TextBox txtConta;

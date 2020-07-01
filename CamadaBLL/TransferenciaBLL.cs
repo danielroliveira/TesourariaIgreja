@@ -37,7 +37,8 @@ namespace CamadaBLL
 		// GET TRANSFERENCIA CONTA LIST
 		//------------------------------------------------------------------------------------------------------------
 		public List<objTransfConta> GetTransfContaList(
-			int? IDConta = null,
+			int? IDContaEntrada = null,
+			int? IDContaSaida = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
 		{
@@ -49,26 +50,38 @@ namespace CamadaBLL
 
 				// add params
 				db.LimparParametros();
+				bool myWhere = false;
 
-				// add IDConta
-				if (IDConta != null)
+				// add IDContaEntrada
+				if (IDContaEntrada != null)
 				{
-					db.AdicionarParametros("@IDConta", IDConta);
-					query += " AND IDConta = @IDConta";
+					db.AdicionarParametros("@IDContaEntrada", IDContaEntrada);
+					query += " WHERE IDContaEntrada = @IDContaEntrada";
+					myWhere = true;
+				}
+
+				// add IDContaSaida
+				if (IDContaSaida != null)
+				{
+					db.AdicionarParametros("@IDContaSaida", IDContaSaida);
+					query += myWhere ? " AND IDContaSaida = @IDContaSaida" : " WHERE IDContaSaida = @IDContaSaida";
+					myWhere = true;
 				}
 
 				// add DataInicial
 				if (dataInicial != null)
 				{
 					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
-					query += " AND TransfData >= @DataInicial";
+					query += myWhere ? " AND TransfData >= @DataInicial" : " WHERE TransfData >= @DataInicial";
+					myWhere = true;
 				}
 
 				// add DataFinal
 				if (dataFinal != null)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
-					query += " AND TransfData <= @DataFinal";
+					query += myWhere ? " AND TransfData <= @DataFinal" : " WHERE TransfData <= @DataFinal";
+					myWhere = true;
 				}
 
 				query += " ORDER BY TransfData";
@@ -270,7 +283,8 @@ namespace CamadaBLL
 		// GET TRANSFERENCIA SETOR LIST
 		//------------------------------------------------------------------------------------------------------------
 		public List<objTransfSetor> GetTransfSetorList(
-			int? IDSetor = null,
+			int? IDSetorEntrada = null,
+			int? IDSetorSaida = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
 		{
@@ -282,26 +296,38 @@ namespace CamadaBLL
 
 				// add params
 				db.LimparParametros();
+				bool myWhere = false;
 
-				// add IDSetor
-				if (IDSetor != null)
+				// add IDSetorEntrada
+				if (IDSetorEntrada != null)
 				{
-					db.AdicionarParametros("@IDSetor", IDSetor);
-					query += " AND IDSetor = @IDSetor";
+					db.AdicionarParametros("@IDSetorEntrada", IDSetorEntrada);
+					query += myWhere ? " AND IDSetorEntrada = @IDSetorEntrada" : " WHERE IDSetorEntrada = @IDSetorEntrada";
+					myWhere = true;
+				}
+
+				// add IDSetorSaida
+				if (IDSetorSaida != null)
+				{
+					db.AdicionarParametros("@IDSetorSaida", IDSetorSaida);
+					query += myWhere ? " AND IDSetorSaida = @IDSetorSaida" : " WHERE IDSetorSaida = @IDSetorSaida";
+					myWhere = true;
 				}
 
 				// add DataInicial
 				if (dataInicial != null)
 				{
 					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
-					query += " AND TransfData >= @DataInicial";
+					query += myWhere ? " AND TransfData >= @DataInicial" : " WHERE TransfData >= @DataInicial";
+					myWhere = true;
 				}
 
 				// add DataFinal
 				if (dataFinal != null)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
-					query += " AND TransfData <= @DataFinal";
+					query += myWhere ? " AND TransfData <= @DataFinal" : " WHERE TransfData <= @DataFinal";
+					myWhere = true;
 				}
 
 				query += " ORDER BY TransfData";

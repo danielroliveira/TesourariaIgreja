@@ -147,7 +147,7 @@ namespace CamadaUI.APagar
 			colList.Add(clnData);
 
 			//--- (2) COLUNA VALOR
-			clnValor.DataPropertyName = "MovValor";
+			clnValor.DataPropertyName = "MovValorAbsoluto";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
 			clnValor.Resizable = DataGridViewTriState.False;
@@ -297,6 +297,17 @@ namespace CamadaUI.APagar
 			}
 		}
 
+		// CLOSE FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void frmAPagarSaidas_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape) // CLOSE FORM
+			{
+				e.Handled = true;
+				btnClose_Click(sender, new EventArgs());
+			}
+		}
+
 		#endregion // BUTTONS FUNCTION --- END
 
 		#region DESIGN FORM FUNCTIONS
@@ -440,5 +451,6 @@ namespace CamadaUI.APagar
 
 
 		#endregion // EDIT DESCONTO --- END
+
 	}
 }

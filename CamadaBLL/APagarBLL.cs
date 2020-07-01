@@ -569,7 +569,7 @@ namespace CamadaBLL
 
 				decimal saldoAtual = cBLL.ContaSaldoGet((int)saida.IDConta, dbTran);
 
-				if (saida.MovValor > saldoAtual)
+				if (Math.Abs(saida.MovValor) > saldoAtual)
 				{
 					throw new AppException("Não existe SALDO SUFICIENTE na conta para realizar esse débito...", 1);
 				}
@@ -586,11 +586,11 @@ namespace CamadaBLL
 				saida.IDMovimentacao = newID;
 
 				// Change APAGAR
-				decimal DoValor = saida.MovValor - saida.AcrescimoValor ?? 0;
+				decimal DoValor = Math.Abs(saida.MovValor) - (saida.AcrescimoValor ?? 0);
 
 				apagar.ValorAcrescimo += saida.AcrescimoValor ?? 0;
 				apagar.ValorPago += DoValor;
-				if (apagar.ValorPago >= apagar.APagarValor)
+				if (apagar.ValorPago >= apagar.APagarValor - apagar.ValorDesconto)
 				{
 					apagar.PagamentoData = saida.MovData;
 					apagar.IDSituacao = 2;

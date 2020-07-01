@@ -280,10 +280,10 @@
   <data name="unlock_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\unlock_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Logo_FAES_cinza_PNG_Borda" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Logo FAES cinza PNG Borda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Saidas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Saidas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_ADRJ_Fundo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo_ADRJ_Fundo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

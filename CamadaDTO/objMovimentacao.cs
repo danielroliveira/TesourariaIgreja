@@ -154,6 +154,7 @@ namespace CamadaDTO
 		{
 			get
 			{
+				if (string.IsNullOrEmpty(MovTipoDescricao)) return "";
 				return MovTipoDescricao.Substring(0, 1).ToUpper();
 			}
 		}
@@ -295,7 +296,18 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public decimal MovValorAbsoluto
 		{
-			get => EditData._MovValorAbsoluto;
+			get
+			{
+				if (EditData._MovValorAbsoluto == 0)
+				{
+					return Math.Abs(MovValor);
+				}
+				else
+				{
+					return EditData._MovValorAbsoluto;
+				}
+			}
+
 			set => EditData._MovValorAbsoluto = value;
 		}
 

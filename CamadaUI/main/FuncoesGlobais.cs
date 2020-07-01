@@ -368,7 +368,8 @@ namespace CamadaUI
 				Cursor.Current = Cursors.WaitCursor;
 
 				// execute
-				objConta conta = ContaPadrao();
+				frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
+				objConta conta = principal.propContaPadrao;
 
 				if (conta.IDConta == IDConta)
 				{
@@ -399,7 +400,8 @@ namespace CamadaUI
 				Cursor.Current = Cursors.WaitCursor;
 
 				// execute
-				objSetor setor = SetorPadrao();
+				frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
+				objSetor setor = principal.propSetorPadrao;
 
 				if (setor.IDSetor == IDSetor)
 				{

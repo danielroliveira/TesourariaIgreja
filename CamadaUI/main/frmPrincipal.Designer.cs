@@ -61,6 +61,7 @@
 			this.mnuCobrancaForma = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnMovimentação = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuCaixaFechamento = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCaixaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuTransferencia = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuTranferenciaContaEfetuar = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,7 +95,6 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuCaixaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -434,6 +434,15 @@
 			this.mnuCaixaFechamento.Name = "mnuCaixaFechamento";
 			this.mnuCaixaFechamento.Size = new System.Drawing.Size(278, 30);
 			this.mnuCaixaFechamento.Text = "Caixa Fechamento";
+			// 
+			// mnuCaixaProcurar
+			// 
+			this.mnuCaixaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCaixaProcurar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuCaixaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCaixaProcurar.Name = "mnuCaixaProcurar";
+			this.mnuCaixaProcurar.Size = new System.Drawing.Size(278, 30);
+			this.mnuCaixaProcurar.Text = "Procurar Caixa";
 			// 
 			// toolStripSeparator2
 			// 
@@ -841,15 +850,6 @@
 			this.lblHora.TabIndex = 6;
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// mnuCaixaProcurar
-			// 
-			this.mnuCaixaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuCaixaProcurar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.mnuCaixaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuCaixaProcurar.Name = "mnuCaixaProcurar";
-			this.mnuCaixaProcurar.Size = new System.Drawing.Size(278, 30);
-			this.mnuCaixaProcurar.Text = "Procurar Caixa";
 			// 
 			// frmPrincipal
 			// 

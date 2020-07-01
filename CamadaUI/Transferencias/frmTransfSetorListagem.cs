@@ -85,9 +85,18 @@ namespace CamadaUI.Transferencias
 				Cursor.Current = Cursors.WaitCursor;
 
 				// define list
-				listTransf = tBLL.GetTransfSetorList(SetorSelected.IDSetor,
-					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
-					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				if (rbtEntrada.Checked == true)
+				{
+					listTransf = tBLL.GetTransfSetorList(SetorSelected.IDSetor, null,
+						_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
+						_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				}
+				else
+				{
+					listTransf = tBLL.GetTransfSetorList(null, SetorSelected.IDSetor,
+						_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
+						_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				}
 
 				bindTransf.DataSource = listTransf;
 				dgvListagem.DataSource = bindTransf;

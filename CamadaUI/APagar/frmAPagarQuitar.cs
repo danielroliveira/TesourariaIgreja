@@ -26,6 +26,7 @@ namespace CamadaUI.APagar
 		public frmAPagarQuitar(objAPagar pag, Form formOrigem)
 		{
 			InitializeComponent();
+
 			_formOrigem = formOrigem;
 			_apagar = pag;
 			propSaida = new objMovimentacao(null);
@@ -34,6 +35,8 @@ namespace CamadaUI.APagar
 			HandlerKeyDownControl(this);
 			numSaidaAno.KeyDown += control_KeyDown;
 			numSaidaAno.Enter += Control_Enter;
+			numSaidaDia.KeyDown += control_KeyDown;
+			numSaidaDia.Enter += Control_Enter;
 
 			// get default Conta and Setor
 			ContaSelected = ContaPadrao();
@@ -108,7 +111,7 @@ namespace CamadaUI.APagar
 
 			// define data padrao
 			propSaida.MovData = DataPadrao(); ;
-			txtSaidaDia.Text = propSaida.MovData.Day.ToString("D2");
+			numSaidaDia.Text = propSaida.MovData.Day.ToString("D2");
 			cmbSaidaMes.SelectedValue = propSaida.MovData.Month;
 			numSaidaAno.Value = propSaida.MovData.Year;
 
@@ -175,7 +178,7 @@ namespace CamadaUI.APagar
 
 		private void btnQuitar_Click(object sender, EventArgs e)
 		{
-			if (VerificaValores()) return;
+			if (!VerificaValores()) return;
 
 			// check acrescimo
 			if (propSaida.AcrescimoValor != null && propSaida.AcrescimoValor != 0)
@@ -220,7 +223,7 @@ namespace CamadaUI.APagar
 			}
 
 			// Check conta Saldo
-			if (propSaida.MovValor + (propSaida.AcrescimoValor ?? 0) > ContaSelected.ContaSaldo)
+			if (Math.Abs(propSaida.MovValor) + (propSaida.AcrescimoValor ?? 0) > ContaSelected.ContaSaldo)
 			{
 				AbrirDialog("A Conta de Débito selecionada não possui saldo suficiente para realização do pagamento...",
 							"Saldo da Conta", DialogType.OK, DialogIcon.Exclamation);
@@ -260,6 +263,7 @@ namespace CamadaUI.APagar
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
+					ContaSelected = frm.propEscolha;
 					propSaida.IDConta = (int)frm.propEscolha.IDConta;
 					propSaida.Conta = frm.propEscolha.Conta;
 					txtConta.Text = frm.propEscolha.Conta;
@@ -347,9 +351,21 @@ namespace CamadaUI.APagar
 			};
 		}
 
+		// CLOSE FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void frmAPagarQuitar_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape) // CLOSE FORM
+			{
+				e.Handled = true;
+				btnCancelar_Click(sender, new EventArgs());
+			}
+		}
+
 		private void Control_Enter(object sender, EventArgs e)
 		{
-			numSaidaAno.Select(0, 4);
+			var ctrl = (NumericUpDown)sender;
+			ctrl.Select(0, 4);
 		}
 
 		// CHECK MAX VALUE OF A APAGAR
@@ -380,7 +396,7 @@ namespace CamadaUI.APagar
 		private void txtData_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			// format new Date
-			string testDate = $"{txtSaidaDia.Text}/{cmbSaidaMes.SelectedValue}/{numSaidaAno.Value}";
+			string testDate = $"{numSaidaDia.Text}/{cmbSaidaMes.SelectedValue}/{numSaidaAno.Value}";
 
 			// check new date
 			if (DateTime.TryParse(testDate, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime newDate))
@@ -397,6 +413,14 @@ namespace CamadaUI.APagar
 			}
 		}
 
+		// ACRESCIMO VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtAcrescimo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			decimal newValor = decimal.Parse(txtAcrescimo.Text, NumberStyles.Currency);
+			propSaida.AcrescimoValor = newValor;
+		}
+
 		#endregion // CONTROLS --- END
 
 		#region DESIGN FORM FUNCTIONS
@@ -407,8 +431,9 @@ namespace CamadaUI.APagar
 		{
 			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
 			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.Silver;
+				_formOrigem.Visible = false;
+				//Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
+				//pnl.BackColor = Color.Silver;
 			}
 		}
 
@@ -416,9 +441,9 @@ namespace CamadaUI.APagar
 		{
 			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
 			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.SlateGray;
-
+				_formOrigem.Visible = true;
+				//Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
+				//pnl.BackColor = Color.SlateGray;
 			}
 		}
 
@@ -450,12 +475,6 @@ namespace CamadaUI.APagar
 			if (control.Enabled == true)
 				ShowToolTip(control);
 		}
-
-
-
-
-
-
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
 	}

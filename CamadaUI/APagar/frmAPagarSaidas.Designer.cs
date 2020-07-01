@@ -654,9 +654,11 @@
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.label16);
+			this.KeyPreview = true;
 			this.Name = "frmAPagarSaidas";
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAPagarSaidas_KeyDown);
 			this.Controls.SetChildIndex(this.label16, 0);
 			this.Controls.SetChildIndex(this.panel2, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);

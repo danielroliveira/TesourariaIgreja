@@ -859,9 +859,6 @@
     <None Include="Resources\DropdownIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Logo FAES cinza PNG Borda.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Entradas.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1016,6 +1013,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\moneybag_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo_ADRJ_Fundo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

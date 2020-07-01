@@ -35,7 +35,7 @@ namespace CamadaUI
 				if (!(client == null))
 				{
 					BackgroundImageLayout = ImageLayout.Zoom;
-					client.BackgroundImage = Properties.Resources.Logo_FAES_cinza_PNG_Borda;
+					client.BackgroundImage = Properties.Resources.Logo_ADRJ_Fundo;
 				}
 			}
 		}

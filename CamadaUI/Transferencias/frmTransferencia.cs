@@ -160,7 +160,7 @@ namespace CamadaUI.Transferencias
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDTransfConta", true);
-			txtTransferenciaValor.DataBindings.Add("Text", bind, "Transferencia.TransferenciaValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtTransferenciaValor.DataBindings.Add("Text", bind, "TransfValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtContaEntrada.DataBindings.Add("Text", bind, "ContaEntrada", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtContaSaida.DataBindings.Add("Text", bind, "ContaSaida", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDescricao.DataBindings.Add("Text", bind, "Descricao", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -174,9 +174,9 @@ namespace CamadaUI.Transferencias
 
 			// ADD NAMED BINDINGS TO CONTROL ERROS
 			//------------------------------------------------------------------------------------------------------------
-			Binding bndEntradaMes = cmbTransferenciaMes.DataBindings.Add("SelectedValue", bind, "Transferencia.TransferenciaMes", true, DataSourceUpdateMode.OnPropertyChanged);
-			Binding bndEntradaDia = numTransferenciaDia.DataBindings.Add("Text", bind, "Transferencia.TransferenciaDia", true, DataSourceUpdateMode.OnPropertyChanged);
-			Binding bndEntradaAno = numTransferenciaAno.DataBindings.Add("Text", bind, "Transferencia.TransferenciaAno", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaMes = cmbTransferenciaMes.DataBindings.Add("SelectedValue", bind, "TransfMes", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaDia = numTransferenciaDia.DataBindings.Add("Text", bind, "TransfDia", true, DataSourceUpdateMode.OnPropertyChanged);
+			Binding bndEntradaAno = numTransferenciaAno.DataBindings.Add("Text", bind, "TransfAno", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			Action<object, BindingCompleteEventArgs, Control> bindComplete = (o, e, c) =>
 			{

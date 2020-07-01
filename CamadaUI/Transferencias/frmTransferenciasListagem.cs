@@ -85,9 +85,18 @@ namespace CamadaUI.Transferencias
 				Cursor.Current = Cursors.WaitCursor;
 
 				// define list
-				listTransf = tBLL.GetTransfContaList(ContaSelected.IDConta,
-					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
-					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				if (rbtEntrada.Checked == true)
+				{
+					listTransf = tBLL.GetTransfContaList(ContaSelected.IDConta, null,
+						_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
+						_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				}
+				else
+				{
+					listTransf = tBLL.GetTransfContaList(null, ContaSelected.IDConta,
+						_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
+						_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+				}
 
 				bindTransf.DataSource = listTransf;
 				dgvListagem.DataSource = bindTransf;
@@ -257,9 +266,7 @@ namespace CamadaUI.Transferencias
 		{
 			if (e.ColumnIndex == clnTipo.Index)
 			{
-				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-
-				if (mov.MovValor > 0)
+				if (rbtEntrada.Checked)
 				{
 					e.Value = "ENTRADA";
 				}

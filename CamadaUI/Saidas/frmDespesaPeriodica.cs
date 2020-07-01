@@ -796,11 +796,14 @@ namespace CamadaUI.Saidas
 			}
 			else if (e.KeyCode == Keys.Delete)
 			{
-				e.Handled = true;
 
 				switch (ctr.Name)
 				{
+					case "txtDespesaDescricao":
+						e.Handled = false;
+						break;
 					case "txtBanco":
+						e.Handled = true;
 						if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDBanco != null)
 							Sit = EnumFlagEstado.Alterado;
 
@@ -809,6 +812,7 @@ namespace CamadaUI.Saidas
 						_despesa.IDBanco = null;
 						break;
 					default:
+						e.Handled = true;
 						break;
 				}
 			}

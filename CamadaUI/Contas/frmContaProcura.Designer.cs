@@ -41,7 +41,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(154, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(222, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(187, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Escolher Conta";
@@ -51,19 +51,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(341, 0);
+			this.btnClose.Location = new System.Drawing.Point(409, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(381, 50);
+			this.panel1.Size = new System.Drawing.Size(449, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_24;
-			this.btnFechar.Location = new System.Drawing.Point(216, 382);
+			this.btnFechar.Location = new System.Drawing.Point(284, 382);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(142, 42);
 			this.btnFechar.TabIndex = 5;
@@ -101,7 +101,7 @@
 			this.lstItens.HotTracking = ComponentOwl.BetterListView.BetterListViewHotTracking.ItemHot;
 			this.lstItens.Location = new System.Drawing.Point(22, 105);
 			this.lstItens.Name = "lstItens";
-			this.lstItens.Size = new System.Drawing.Size(336, 265);
+			this.lstItens.Size = new System.Drawing.Size(404, 265);
 			this.lstItens.TabIndex = 3;
 			this.lstItens.ItemActivate += new ComponentOwl.BetterListView.BetterListViewItemActivateEventHandler(this.lstItens_ItemActivate);
 			this.lstItens.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.lstItens_DrawColumnHeader);
@@ -120,7 +120,7 @@
 			this.clnItem.AllowResize = false;
 			this.clnItem.Name = "clnItem";
 			this.clnItem.Text = "Conta de Movimentação";
-			this.clnItem.Width = 230;
+			this.clnItem.Width = 300;
 			// 
 			// Label1
 			// 
@@ -144,7 +144,7 @@
 			// frmContaProcura
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(381, 436);
+			this.ClientSize = new System.Drawing.Size(449, 436);
 			this.Controls.Add(this.txtProcura);
 			this.Controls.Add(this.Label1);
 			this.Controls.Add(this.lstItens);
