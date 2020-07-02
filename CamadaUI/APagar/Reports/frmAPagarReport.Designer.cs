@@ -30,9 +30,9 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+			this.objAPagarBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.rptvPadrao = new Microsoft.Reporting.WinForms.ReportViewer();
 			this.btnFechar = new System.Windows.Forms.Button();
-			this.objAPagarBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.objAPagarBindingSource)).BeginInit();
 			this.SuspendLayout();
@@ -55,6 +55,10 @@
 			this.lblTitulo.Location = new System.Drawing.Point(526, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(227, 50);
 			this.lblTitulo.Text = "Listagem de A Pagar";
+			// 
+			// objAPagarBindingSource
+			// 
+			this.objAPagarBindingSource.DataSource = typeof(CamadaDTO.objAPagar);
 			// 
 			// rptvPadrao
 			// 
@@ -87,10 +91,7 @@
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnFechar.UseVisualStyleBackColor = true;
-			// 
-			// objAPagarBindingSource
-			// 
-			this.objAPagarBindingSource.DataSource = typeof(CamadaDTO.objAPagar);
+			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// frmAPagarReport
 			// 

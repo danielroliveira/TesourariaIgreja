@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Registres
 {
@@ -346,7 +344,7 @@ namespace CamadaUI.Registres
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
 
 				//--- Return value
-				if (_formOrigem.GetType() != typeof(frmPrincipal))
+				if (_formOrigem != null || _formOrigem.GetType() != typeof(frmPrincipal))
 				{
 					propEscolha = _contribuinte;
 					DialogResult = DialogResult.OK;

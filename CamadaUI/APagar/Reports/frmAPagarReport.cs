@@ -61,5 +61,9 @@ namespace CamadaUI.APagar.Reports
 			rptvPadrao.LocalReport.Refresh();
 		}
 
+		private void btnFechar_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
 	}
 }

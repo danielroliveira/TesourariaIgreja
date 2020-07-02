@@ -295,6 +295,7 @@
 			this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnImprimir.UseVisualStyleBackColor = true;
+			this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
 			// 
 			// pnlPorMes
 			// 

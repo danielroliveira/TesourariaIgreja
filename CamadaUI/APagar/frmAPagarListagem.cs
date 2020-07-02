@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.APagar.Reports;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -1182,5 +1183,18 @@ namespace CamadaUI.APagar
 
 		#endregion
 
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			if (listPag == null || listPag.Count == 0)
+			{
+				AbrirDialog("Não há nenhum registro de A Pagar na listagem para ser impresso...",
+					"Listagem Vazia");
+				return;
+			}
+
+			frmAPagarReport frm = new frmAPagarReport(listPag);
+			frm.ShowDialog();
+
+		}
 	}
 }
