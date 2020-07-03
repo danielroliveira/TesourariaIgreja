@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace CamadaUI.Config
 {
@@ -40,11 +36,11 @@ namespace CamadaUI.Config
 
 				switch (_OpenedForm.Name)
 				{
-					case "frmConfigAparencia":
-						btnAparencia.BackColor = btnColorSelected;
-						break;
 					case "frmConfigGeral":
 						btnGeral.BackColor = btnColorSelected;
+						break;
+					case "frmConfigDados":
+						btnDados.BackColor = btnColorSelected;
 						break;
 					case "frmConfigImagem":
 						btnImagem.BackColor = btnColorSelected;
@@ -61,17 +57,22 @@ namespace CamadaUI.Config
 					default:
 						break;
 				}
-
 			}
 		}
 
 		#endregion
+
+		#region BUTTONS
 
 		private void btnClose_Click(object sender, EventArgs e)
 		{
 			Close();
 			_formOrigem.MenuEnabled(true);
 		}
+
+		#endregion // BUTTONS --- END
+
+		#region FUNCTIONS
 
 		private void AbrirFormNoPanel<Forms>() where Forms : Form, new()
 		{
@@ -110,14 +111,13 @@ namespace CamadaUI.Config
 			OpenedForm = null;
 		}
 
+		#endregion // FUNCTIONS --- END
+
+		#region BUTTONS CONFIGS
+
 		private void btnGeral_Click(object sender, EventArgs e)
 		{
 			AbrirFormNoPanel<frmConfigGeral>();
-		}
-
-		private void btnAparencia_Click(object sender, EventArgs e)
-		{
-			AbrirFormNoPanel<frmConfigAparencia>();
 		}
 
 		private void btnImagem_Click(object sender, EventArgs e)
@@ -139,5 +139,12 @@ namespace CamadaUI.Config
 		{
 			AbrirFormNoPanel<frmConfigUsuarios>();
 		}
+
+		private void btnDados_Click(object sender, EventArgs e)
+		{
+			AbrirFormNoPanel<frmConfigDados>();
+		}
+
+		#endregion // BUTTONS CONFIGS --- END
 	}
 }

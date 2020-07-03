@@ -191,17 +191,17 @@
     <Compile Include="Config\frmConfig.designer.cs">
       <DependentUpon>frmConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\frmConfigAparencia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Config\frmConfigAparencia.designer.cs">
-      <DependentUpon>frmConfigAparencia.cs</DependentUpon>
-    </Compile>
     <Compile Include="Config\frmConfigAvisos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Config\frmConfigAvisos.designer.cs">
       <DependentUpon>frmConfigAvisos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\frmConfigDados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfigDados.designer.cs">
+      <DependentUpon>frmConfigDados.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\frmConfigGeral.cs">
       <SubType>Form</SubType>
@@ -654,11 +654,11 @@
       <DependentUpon>frmConfig.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\frmConfigAparencia.resx">
-      <DependentUpon>frmConfigAparencia.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigAvisos.resx">
       <DependentUpon>frmConfigAvisos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\frmConfigDados.resx">
+      <DependentUpon>frmConfigDados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigGeral.resx">
       <DependentUpon>frmConfigGeral.cs</DependentUpon>

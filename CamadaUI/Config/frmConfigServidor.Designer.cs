@@ -31,12 +31,11 @@
 			this.btnSalvarConfig = new System.Windows.Forms.Button();
 			this.btnCancelar = new System.Windows.Forms.Button();
 			this.pnlPastas = new System.Windows.Forms.Panel();
-			this.rbtServRemoto = new System.Windows.Forms.RadioButton();
-			this.rbtServLocal = new System.Windows.Forms.RadioButton();
-			this.Label16 = new System.Windows.Forms.Label();
-			this.txtStringConexao = new System.Windows.Forms.TextBox();
-			this.panel2 = new System.Windows.Forms.Panel();
 			this.label1 = new System.Windows.Forms.Label();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.lblServidorTipo = new System.Windows.Forms.Label();
+			this.txtStringConexao = new System.Windows.Forms.TextBox();
+			this.Label16 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -110,27 +109,45 @@
 			this.pnlPastas.Size = new System.Drawing.Size(720, 259);
 			this.pnlPastas.TabIndex = 2;
 			// 
-			// rbtServRemoto
+			// label1
 			// 
-			this.rbtServRemoto.AutoSize = true;
-			this.rbtServRemoto.Location = new System.Drawing.Point(141, 3);
-			this.rbtServRemoto.Name = "rbtServRemoto";
-			this.rbtServRemoto.Size = new System.Drawing.Size(77, 23);
-			this.rbtServRemoto.TabIndex = 1;
-			this.rbtServRemoto.TabStop = true;
-			this.rbtServRemoto.Text = "Remoto";
-			this.rbtServRemoto.UseVisualStyleBackColor = true;
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(24, 171);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(170, 19);
+			this.label1.TabIndex = 12;
+			this.label1.Text = "Tipo de Banco de Dados:";
 			// 
-			// rbtServLocal
+			// panel2
 			// 
-			this.rbtServLocal.AutoSize = true;
-			this.rbtServLocal.Location = new System.Drawing.Point(50, 3);
-			this.rbtServLocal.Name = "rbtServLocal";
-			this.rbtServLocal.Size = new System.Drawing.Size(61, 23);
-			this.rbtServLocal.TabIndex = 0;
-			this.rbtServLocal.TabStop = true;
-			this.rbtServLocal.Text = "Local";
-			this.rbtServLocal.UseVisualStyleBackColor = true;
+			this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(207)))), ((int)(((byte)(227)))));
+			this.panel2.Controls.Add(this.lblServidorTipo);
+			this.panel2.Location = new System.Drawing.Point(200, 166);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(277, 30);
+			this.panel2.TabIndex = 11;
+			// 
+			// lblServidorTipo
+			// 
+			this.lblServidorTipo.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblServidorTipo.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblServidorTipo.Location = new System.Drawing.Point(0, 0);
+			this.lblServidorTipo.Name = "lblServidorTipo";
+			this.lblServidorTipo.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+			this.lblServidorTipo.Size = new System.Drawing.Size(277, 30);
+			this.lblServidorTipo.TabIndex = 0;
+			this.lblServidorTipo.Text = "label2";
+			// 
+			// txtStringConexao
+			// 
+			this.txtStringConexao.BackColor = System.Drawing.Color.White;
+			this.txtStringConexao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtStringConexao.Location = new System.Drawing.Point(200, 21);
+			this.txtStringConexao.Multiline = true;
+			this.txtStringConexao.Name = "txtStringConexao";
+			this.txtStringConexao.Size = new System.Drawing.Size(502, 123);
+			this.txtStringConexao.TabIndex = 10;
+			this.txtStringConexao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// Label16
 			// 
@@ -142,35 +159,6 @@
 			this.Label16.Size = new System.Drawing.Size(165, 18);
 			this.Label16.TabIndex = 9;
 			this.Label16.Text = "String de Conexão:";
-			// 
-			// txtStringConexao
-			// 
-			this.txtStringConexao.BackColor = System.Drawing.Color.White;
-			this.txtStringConexao.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtStringConexao.Location = new System.Drawing.Point(200, 21);
-			this.txtStringConexao.Multiline = true;
-			this.txtStringConexao.Name = "txtStringConexao";
-			this.txtStringConexao.Size = new System.Drawing.Size(502, 123);
-			this.txtStringConexao.TabIndex = 10;
-			// 
-			// panel2
-			// 
-			this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(207)))), ((int)(((byte)(227)))));
-			this.panel2.Controls.Add(this.rbtServRemoto);
-			this.panel2.Controls.Add(this.rbtServLocal);
-			this.panel2.Location = new System.Drawing.Point(200, 166);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(277, 30);
-			this.panel2.TabIndex = 11;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(24, 171);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(170, 19);
-			this.label1.TabIndex = 12;
-			this.label1.Text = "Tipo de Banco de Dados:";
 			// 
 			// frmConfigServidor
 			// 
@@ -189,7 +177,6 @@
 			this.pnlPastas.ResumeLayout(false);
 			this.pnlPastas.PerformLayout();
 			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -198,11 +185,10 @@
 		private System.Windows.Forms.Button btnSalvarConfig;
 		private System.Windows.Forms.Button btnCancelar;
 		private System.Windows.Forms.Panel pnlPastas;
-		internal System.Windows.Forms.RadioButton rbtServRemoto;
-		internal System.Windows.Forms.RadioButton rbtServLocal;
 		internal System.Windows.Forms.TextBox txtStringConexao;
 		internal System.Windows.Forms.Label Label16;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblServidorTipo;
 	}
 }

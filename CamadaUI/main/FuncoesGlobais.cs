@@ -68,6 +68,18 @@ namespace CamadaUI
 						new XElement("ServidorDados",
 							new XElement("StringConexao", ""),
 							new XElement("ServidorLocal", "")
+						),
+						new XElement("DadosIgreja",
+							new XElement("RazaoSocial"),
+							new XElement("CNPJ"),
+							new XElement("TelefonePrincipal"),
+							new XElement("TelefoneFinanceiro"),
+							new XElement("ContatoFinanceiro"),
+							new XElement("Endereco"),
+							new XElement("Bairro"),
+							new XElement("Cidade"),
+							new XElement("UF"),
+							new XElement("CEP")
 						)
 					)
 				)

@@ -50,7 +50,231 @@ namespace CamadaUI.Config
 			f.FormNoPanelClosed(this);
 		}
 
+		// CANCELAR BTN
+		//------------------------------------------------------------------------------------------------------------
+		private void btnCancelar_Click(object sender, EventArgs e)
+		{
+			LoadConfig();
+		}
+
+		// ALTERAR CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnContaAlterar_Click(object sender, EventArgs e)
+		{
+			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmContaProcura frm = new frmContaProcura(this, _Conta?.IDConta);
+
+			// disable forms
+			this.lblTitulo.BackColor = Color.Silver;
+			config.panel1.BackColor = Color.Silver;
+			// show
+			frm.ShowDialog();
+			// return
+			this.lblTitulo.BackColor = Color.SlateGray;
+			config.panel1.BackColor = Color.Goldenrod;
+
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				Application.OpenForms.OfType<frmPrincipal>().First().propContaPadrao = frm.propEscolha;
+				_Conta = frm.propEscolha;
+				txtContaPadrao.Text = frm.propEscolha.Conta;
+
+				// check SETOR
+				if (_Setor != null)
+				{
+					if (_Setor.IDCongregacao != _Conta.IDCongregacao)
+					{
+						// user message
+						AbrirDialog("A CONTA escolhida pertence a uma congregação diferente do SETOR padrão escolhido:\n" +
+							_Setor.Setor.ToUpper() +
+							"\nO Setor padrão atual será descartado. Favor definir um novo Setor...",
+							"Redefinir Setor", DialogType.OK, DialogIcon.Exclamation);
+
+						// clear controls
+						txtSetorPadrao.Clear();
+						_Setor = null;
+						Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao = null;
+					}
+				}
+
+			}
+
+			// focus control
+			txtContaPadrao.Focus();
+		}
+
+		// EDITAR CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnContaEditar_Click(object sender, EventArgs e)
+		{
+			Form config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmContaListagem frm = new frmContaListagem(this);
+
+			// disable forms
+			this.Visible = false;
+			config.Visible = false;
+			// show
+			frm.ShowDialog();
+
+			if (frm.DialogResult == DialogResult.Yes)
+			{
+				frmConta frmC = new frmConta(frm.propEscolha);
+				DesativaMenuPrincipal();
+				frmC.ShowDialog();
+			}
+
+			// return
+			config.Visible = true;
+			this.Visible = true;
+			// focus control
+			txtContaPadrao.Focus();
+		}
+
+		// ALTERAR SETOR
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetorAlterar_Click(object sender, EventArgs e)
+		{
+			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmSetorProcura fProc = new frmSetorProcura(this, _IDCongregacao);
+
+			// disable forms
+			this.lblTitulo.BackColor = Color.Silver;
+			config.panel1.BackColor = Color.Silver;
+			// show
+			fProc.ShowDialog();
+			// return
+			this.lblTitulo.BackColor = Color.SlateGray;
+			config.panel1.BackColor = Color.Goldenrod;
+
+			if (fProc.DialogResult == DialogResult.OK)
+			{
+				// check SETOR
+				if (_Conta != null && fProc.propEscolha.IDCongregacao != _Conta.IDCongregacao)
+				{
+					// user message
+					AbrirDialog("O SETOR escolhido pertence a uma congregação diferente da CONTA padrão atual:\n" +
+						_Conta.Conta.ToUpper() +
+						"\nO Setor escolhido será descartado. Favor escolher um novo Setor...",
+						"Redefinir Setor", DialogType.OK, DialogIcon.Exclamation);
+				}
+				else
+				{
+					Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao = fProc.propEscolha;
+					txtSetorPadrao.Text = fProc.propEscolha.Setor;
+					_Setor = fProc.propEscolha;
+				}
+			}
+
+			// focus control
+			txtSetorPadrao.Focus();
+		}
+
+		// EDITAR SETOR
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetorEditar_Click(object sender, EventArgs e)
+		{
+			Form config = Application.OpenForms.OfType<frmConfig>().First();
+
+			frmSetorListagem frmList = new frmSetorListagem(this);
+
+			// disable forms
+			this.Visible = false;
+			config.Visible = false;
+			// show
+			frmList.ShowDialog();
+
+			if (frmList.DialogResult == DialogResult.Yes)
+			{
+				frmSetor frmC = new frmSetor(frmList.propEscolha);
+				DesativaMenuPrincipal();
+				frmC.ShowDialog();
+			}
+
+			// return
+			config.Visible = true;
+			this.Visible = true;
+
+			// focus control
+			txtSetorPadrao.Focus();
+		}
+
 		#endregion
+
+		#region CONTROLS FUNCTIONS
+
+		// FORM KEYPRESS: BLOQUEIA (+)
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtContaPadrao, txtSetorPadrao
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtContaPadrao":
+						btnContaAlterar_Click(sender, new EventArgs());
+						break;
+					case "txtSetorPadrao":
+						btnSetorAlterar_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = { txtContaPadrao, txtSetorPadrao };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
+
+		// TITULO VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtIgrejaTitulo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			try
+			{
+				frmConfig fConfig = Application.OpenForms.OfType<frmConfig>().FirstOrDefault();
+
+				frmPrincipal f = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				f.AplicacaoTitulo = txtIgrejaTitulo.Text;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Houve uma execeção ao salvar Config... \n" +
+					ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
+
+		#endregion // CONTROLS FUNCTIONS --- END
 
 		#region XML FUNCTIONS
 
@@ -116,42 +340,11 @@ namespace CamadaUI.Config
 		}
 
 		#endregion
+		
+		#region SAVE CONFIG
 
-
-		private void txtIgrejaTitulo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			try
-			{
-				frmConfig fConfig = Application.OpenForms.OfType<frmConfig>().FirstOrDefault();
-
-				frmPrincipal f = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-				f.AplicacaoTitulo = txtIgrejaTitulo.Text;
-
-
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Houve uma execeção ao salvar Config... \n" +
-					ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-		}
-
-		// FORM KEYPRESS: BLOQUEIA (+)
+		// SAVE CONFIG
 		//------------------------------------------------------------------------------------------------------------
-		private void frm_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (e.KeyChar == 43)
-			{
-				//--- cria uma lista de controles que serao impedidos de receber '+'
-				Control[] controlesBloqueados = {
-					txtContaPadrao, txtSetorPadrao
-				};
-
-				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
-			}
-		}
-
 		private void btnSalvarConfig_Click(object sender, EventArgs e)
 		{
 			// check controls
@@ -189,6 +382,8 @@ namespace CamadaUI.Config
 			}
 		}
 
+		// VERIFICA OS CONTROLES BEFORE SAVE
+		//------------------------------------------------------------------------------------------------------------
 		private bool VerificaControles()
 		{
 			if (!VerificaControle(txtIgrejaTitulo, "TÍTULO DA IGREJA")) return false;
@@ -214,181 +409,7 @@ namespace CamadaUI.Config
 			return true;
 		}
 
-		private void btnCancelar_Click(object sender, EventArgs e)
-		{
-			LoadConfig();
-		}
+		#endregion // SAVE CONFIG --- END
 
-		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
-		//------------------------------------------------------------------------------------------------------------
-		private void Control_KeyDown(object sender, KeyEventArgs e)
-		{
-
-			Control ctr = (Control)sender;
-
-			if (e.KeyCode == Keys.Add)
-			{
-				e.Handled = true;
-
-				switch (ctr.Name)
-				{
-					case "txtContaPadrao":
-						btnContaAlterar_Click(sender, new EventArgs());
-						break;
-					case "txtSetorPadrao":
-						btnSetorAlterar_Click(sender, new EventArgs());
-						break;
-					default:
-						break;
-				}
-			}
-			else
-			{
-				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtContaPadrao, txtSetorPadrao };
-
-				if (controlesBloqueados.Contains(ctr))
-				{
-					e.Handled = true;
-					e.SuppressKeyPress = true;
-				}
-			}
-		}
-
-		private void btnContaAlterar_Click(object sender, EventArgs e)
-		{
-			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
-
-			frmContaProcura frm = new frmContaProcura(this, _Conta?.IDConta);
-
-			// disable forms
-			this.lblTitulo.BackColor = Color.Silver;
-			config.panel1.BackColor = Color.Silver;
-			// show
-			frm.ShowDialog();
-			// return
-			this.lblTitulo.BackColor = Color.SlateGray;
-			config.panel1.BackColor = Color.Goldenrod;
-
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				Application.OpenForms.OfType<frmPrincipal>().First().propContaPadrao = frm.propEscolha;
-				_Conta = frm.propEscolha;
-				txtContaPadrao.Text = frm.propEscolha.Conta;
-
-				// check SETOR
-				if (_Setor != null)
-				{
-					if (_Setor.IDCongregacao != _Conta.IDCongregacao)
-					{
-						// user message
-						AbrirDialog("A CONTA escolhida pertence a uma congregação diferente do SETOR padrão escolhido:\n" +
-							_Setor.Setor.ToUpper() +
-							"\nO Setor padrão atual será descartado. Favor definir um novo Setor...",
-							"Redefinir Setor", DialogType.OK, DialogIcon.Exclamation);
-
-						// clear controls
-						txtSetorPadrao.Clear();
-						_Setor = null;
-						Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao = null;
-					}
-				}
-
-			}
-
-			// focus control
-			txtContaPadrao.Focus();
-		}
-
-		private void btnContaEditar_Click(object sender, EventArgs e)
-		{
-			Form config = Application.OpenForms.OfType<frmConfig>().First();
-
-			frmContaListagem frm = new frmContaListagem(this);
-
-			// disable forms
-			this.Visible = false;
-			config.Visible = false;
-			// show
-			frm.ShowDialog();
-
-			if (frm.DialogResult == DialogResult.Yes)
-			{
-				frmConta frmC = new frmConta(frm.propEscolha);
-				DesativaMenuPrincipal();
-				frmC.ShowDialog();
-			}
-
-			// return
-			config.Visible = true;
-			this.Visible = true;
-			// focus control
-			txtContaPadrao.Focus();
-		}
-
-		private void btnSetorAlterar_Click(object sender, EventArgs e)
-		{
-			frmConfig config = Application.OpenForms.OfType<frmConfig>().First();
-
-			frmSetorProcura fProc = new frmSetorProcura(this, _IDCongregacao);
-
-			// disable forms
-			this.lblTitulo.BackColor = Color.Silver;
-			config.panel1.BackColor = Color.Silver;
-			// show
-			fProc.ShowDialog();
-			// return
-			this.lblTitulo.BackColor = Color.SlateGray;
-			config.panel1.BackColor = Color.Goldenrod;
-
-			if (fProc.DialogResult == DialogResult.OK)
-			{
-				// check SETOR
-				if (_Conta != null && fProc.propEscolha.IDCongregacao != _Conta.IDCongregacao)
-				{
-					// user message
-					AbrirDialog("O SETOR escolhido pertence a uma congregação diferente da CONTA padrão atual:\n" +
-						_Conta.Conta.ToUpper() +
-						"\nO Setor escolhido será descartado. Favor escolher um novo Setor...",
-						"Redefinir Setor", DialogType.OK, DialogIcon.Exclamation);
-				}
-				else
-				{
-					Application.OpenForms.OfType<frmPrincipal>().First().propSetorPadrao = fProc.propEscolha;
-					txtSetorPadrao.Text = fProc.propEscolha.Setor;
-					_Setor = fProc.propEscolha;
-				}
-			}
-
-			// focus control
-			txtSetorPadrao.Focus();
-		}
-
-		private void btnSetorEditar_Click(object sender, EventArgs e)
-		{
-			Form config = Application.OpenForms.OfType<frmConfig>().First();
-
-			frmSetorListagem frmList = new frmSetorListagem(this);
-
-			// disable forms
-			this.Visible = false;
-			config.Visible = false;
-			// show
-			frmList.ShowDialog();
-
-			if (frmList.DialogResult == DialogResult.Yes)
-			{
-				frmSetor frmC = new frmSetor(frmList.propEscolha);
-				DesativaMenuPrincipal();
-				frmC.ShowDialog();
-			}
-
-			// return
-			config.Visible = true;
-			this.Visible = true;
-
-			// focus control
-			txtSetorPadrao.Focus();
-		}
 	}
 }

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using CamadaBLL;
-using CamadaDTO;
 using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Main
@@ -17,7 +12,7 @@ namespace CamadaUI.Main
 	{
 		private bool Logado = false;
 		AcessoControlBLL db = new AcessoControlBLL();
-		private string Fantasia = "";
+		private string TituloIgreja = "";
 
 		//=================================================================================================
 		// LOGIN | SUBNEW
@@ -32,16 +27,16 @@ namespace CamadaUI.Main
 			btnClose.Click += btnCancel_Click;
 
 			//--- ler o arquivo de imagem da LOGO e captar o nome fantasia
-			if (File.Exists(Application.StartupPath + "//ConfigFiles//Config.xml"))
+			if (File.Exists(Application.StartupPath + "//Config.xml"))
 			{
 				XmlDocument myXML = new XmlDocument();
 				string myLogoArq;
 
 				try
 				{
-					myXML.Load(Application.StartupPath + "//ConfigFiles//Config.xml");
+					myXML.Load(Application.StartupPath + "//Config.xml");
 					//--- nome fantasia
-					Fantasia = myXML.SelectSingleNode("Configuracao").SelectSingleNode("DadosEmpresa").ChildNodes[0].InnerText;
+					TituloIgreja = myXML.SelectSingleNode("Configuracao").SelectSingleNode("DefaultValues").ChildNodes[0].InnerText;
 					//--- arquivo de imagem
 					myLogoArq = myXML.SelectSingleNode("Configuracao").SelectSingleNode("ArquivoLogo").ChildNodes[1].InnerText;
 					picLogo.ImageLocation = myLogoArq;
@@ -85,7 +80,7 @@ namespace CamadaUI.Main
 
 				//--- Bem-vindo
 				AbrirDialog("Seja Bem-Vindo: " + txtApelido.Text.ToUpper() + "\n \n" +
-							"Acesso: " + AcessoTipo.ToUpper(), Fantasia,
+							"Acesso: " + AcessoTipo.ToUpper(), TituloIgreja,
 							DialogType.OK,
 							DialogIcon.Information);
 				DialogResult = DialogResult.Yes;

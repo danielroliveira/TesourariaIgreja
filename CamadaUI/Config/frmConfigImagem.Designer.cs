@@ -70,6 +70,7 @@
 			// btnSalvarConfig
 			// 
 			this.btnSalvarConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSalvarConfig.Enabled = false;
 			this.btnSalvarConfig.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
 			this.btnSalvarConfig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
 			this.btnSalvarConfig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
@@ -83,6 +84,7 @@
 			this.btnSalvarConfig.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnSalvarConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnSalvarConfig.UseVisualStyleBackColor = true;
+			this.btnSalvarConfig.Click += new System.EventHandler(this.btnSalvarConfig_Click);
 			// 
 			// btnCancelar
 			// 
@@ -96,7 +98,7 @@
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(121, 36);
 			this.btnCancelar.TabIndex = 7;
-			this.btnCancelar.Text = "&Remover";
+			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCancelar.UseVisualStyleBackColor = true;
@@ -136,6 +138,7 @@
 			this.txtLogoColorCaminho.Name = "txtLogoColorCaminho";
 			this.txtLogoColorCaminho.Size = new System.Drawing.Size(413, 27);
 			this.txtLogoColorCaminho.TabIndex = 17;
+			this.txtLogoColorCaminho.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// picLogoMono
 			// 
@@ -156,6 +159,7 @@
 			this.txtLogoMonoCaminho.Name = "txtLogoMonoCaminho";
 			this.txtLogoMonoCaminho.Size = new System.Drawing.Size(413, 27);
 			this.txtLogoMonoCaminho.TabIndex = 18;
+			this.txtLogoMonoCaminho.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnProcLogoColor
 			// 
@@ -174,6 +178,7 @@
 			this.btnProcLogoColor.UseCompatibleTextRendering = true;
 			this.btnProcLogoColor.UseVisualStyleBackColor = false;
 			this.btnProcLogoColor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnProcLogoColor.Click += new System.EventHandler(this.btnProcLogoColor_Click);
 			// 
 			// Label17
 			// 
@@ -203,6 +208,7 @@
 			this.btnProcurarImagem.UseCompatibleTextRendering = true;
 			this.btnProcurarImagem.UseVisualStyleBackColor = false;
 			this.btnProcurarImagem.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnProcurarImagem.Click += new System.EventHandler(this.btnProcurarImagem_Click);
 			// 
 			// Label18
 			// 
@@ -222,8 +228,10 @@
 			this.Controls.Add(this.pnlPastas);
 			this.Controls.Add(this.btnCancelar);
 			this.Controls.Add(this.btnSalvarConfig);
+			this.KeyPreview = true;
 			this.Name = "frmConfigImagem";
 			this.Load += new System.EventHandler(this.frmConfigImagem_Load);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.btnSalvarConfig, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
 			this.Controls.SetChildIndex(this.pnlPastas, 0);

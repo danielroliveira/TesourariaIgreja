@@ -36,7 +36,7 @@
 			this.btnServidor = new System.Windows.Forms.Button();
 			this.btnGeral = new System.Windows.Forms.Button();
 			this.btnImagem = new System.Windows.Forms.Button();
-			this.btnAparencia = new System.Windows.Forms.Button();
+			this.btnDados = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
 			this.pnlMenu.SuspendLayout();
@@ -44,6 +44,7 @@
 			// 
 			// lblTitulo
 			// 
+			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Configuração do Sistema";
 			// 
 			// btnClose
@@ -51,6 +52,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
+			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
 			// panel1
@@ -67,7 +69,7 @@
 			this.pnlMenu.Controls.Add(this.btnServidor);
 			this.pnlMenu.Controls.Add(this.btnGeral);
 			this.pnlMenu.Controls.Add(this.btnImagem);
-			this.pnlMenu.Controls.Add(this.btnAparencia);
+			this.pnlMenu.Controls.Add(this.btnDados);
 			this.pnlMenu.Dock = System.Windows.Forms.DockStyle.Left;
 			this.pnlMenu.Location = new System.Drawing.Point(0, 50);
 			this.pnlMenu.Name = "pnlMenu";
@@ -86,7 +88,8 @@
 			this.btnUsuarios.Location = new System.Drawing.Point(1, 367);
 			this.btnUsuarios.Name = "btnUsuarios";
 			this.btnUsuarios.Size = new System.Drawing.Size(198, 55);
-			this.btnUsuarios.TabIndex = 2;
+			this.btnUsuarios.TabIndex = 7;
+			this.btnUsuarios.TabStop = false;
 			this.btnUsuarios.Text = "Usuários";
 			this.btnUsuarios.UseVisualStyleBackColor = false;
 			this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
@@ -126,7 +129,8 @@
 			this.btnAvisos.Location = new System.Drawing.Point(1, 306);
 			this.btnAvisos.Name = "btnAvisos";
 			this.btnAvisos.Size = new System.Drawing.Size(198, 55);
-			this.btnAvisos.TabIndex = 0;
+			this.btnAvisos.TabIndex = 6;
+			this.btnAvisos.TabStop = false;
 			this.btnAvisos.Text = "Avisos";
 			this.btnAvisos.UseVisualStyleBackColor = false;
 			this.btnAvisos.Click += new System.EventHandler(this.btnAvisos_Click);
@@ -143,7 +147,8 @@
 			this.btnServidor.Location = new System.Drawing.Point(1, 245);
 			this.btnServidor.Name = "btnServidor";
 			this.btnServidor.Size = new System.Drawing.Size(198, 55);
-			this.btnServidor.TabIndex = 0;
+			this.btnServidor.TabIndex = 5;
+			this.btnServidor.TabStop = false;
 			this.btnServidor.Text = "Servidor Dados";
 			this.btnServidor.UseVisualStyleBackColor = false;
 			this.btnServidor.Click += new System.EventHandler(this.btnServidor_Click);
@@ -160,7 +165,8 @@
 			this.btnGeral.Location = new System.Drawing.Point(1, 62);
 			this.btnGeral.Name = "btnGeral";
 			this.btnGeral.Size = new System.Drawing.Size(198, 55);
-			this.btnGeral.TabIndex = 0;
+			this.btnGeral.TabIndex = 2;
+			this.btnGeral.TabStop = false;
 			this.btnGeral.Text = "Geral";
 			this.btnGeral.UseVisualStyleBackColor = false;
 			this.btnGeral.Click += new System.EventHandler(this.btnGeral_Click);
@@ -177,27 +183,29 @@
 			this.btnImagem.Location = new System.Drawing.Point(1, 184);
 			this.btnImagem.Name = "btnImagem";
 			this.btnImagem.Size = new System.Drawing.Size(198, 55);
-			this.btnImagem.TabIndex = 0;
+			this.btnImagem.TabIndex = 4;
+			this.btnImagem.TabStop = false;
 			this.btnImagem.Text = "Imagem Padrão";
 			this.btnImagem.UseVisualStyleBackColor = false;
 			this.btnImagem.Click += new System.EventHandler(this.btnImagem_Click);
 			// 
-			// btnAparencia
+			// btnDados
 			// 
-			this.btnAparencia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnAparencia.FlatAppearance.BorderSize = 0;
-			this.btnAparencia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnAparencia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnAparencia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnAparencia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnAparencia.ForeColor = System.Drawing.Color.White;
-			this.btnAparencia.Location = new System.Drawing.Point(1, 123);
-			this.btnAparencia.Name = "btnAparencia";
-			this.btnAparencia.Size = new System.Drawing.Size(198, 55);
-			this.btnAparencia.TabIndex = 0;
-			this.btnAparencia.Text = "Aparência";
-			this.btnAparencia.UseVisualStyleBackColor = false;
-			this.btnAparencia.Click += new System.EventHandler(this.btnAparencia_Click);
+			this.btnDados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnDados.FlatAppearance.BorderSize = 0;
+			this.btnDados.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnDados.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnDados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnDados.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnDados.ForeColor = System.Drawing.Color.White;
+			this.btnDados.Location = new System.Drawing.Point(1, 123);
+			this.btnDados.Name = "btnDados";
+			this.btnDados.Size = new System.Drawing.Size(198, 55);
+			this.btnDados.TabIndex = 3;
+			this.btnDados.TabStop = false;
+			this.btnDados.Text = "Dados da Igreja";
+			this.btnDados.UseVisualStyleBackColor = false;
+			this.btnDados.Click += new System.EventHandler(this.btnDados_Click);
 			// 
 			// pnlCorpo
 			// 
@@ -227,7 +235,6 @@
 		#endregion
 
 		private System.Windows.Forms.Panel pnlMenu;
-		private System.Windows.Forms.Button btnAparencia;
 		private System.Windows.Forms.Panel pnlCorpo;
 		private System.Windows.Forms.Label label1;
 		private AwesomeShapeControl.Line line1;
@@ -236,5 +243,6 @@
 		private System.Windows.Forms.Button btnImagem;
 		private System.Windows.Forms.Button btnAvisos;
 		private System.Windows.Forms.Button btnUsuarios;
+		private System.Windows.Forms.Button btnDados;
 	}
 }

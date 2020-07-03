@@ -36,4 +36,16 @@
     <ServidorLocal>
     </ServidorLocal>
   </ServidorDados>
+  <DadosIgreja>
+    <RazaoSocial>Livraria Evangélica Nova Sião LTDA</RazaoSocial>
+    <CNPJ>01.458.388/0001-31</CNPJ>
+    <TelefonePrincipal>(32)  3232-7230</TelefonePrincipal>
+    <TelefoneFinanceiro>(32)  3212-7248</TelefoneFinanceiro>
+	<ContatoFinanceiro></ContatoFinanceiro>
+    <Endereco>Rua Jarbas de Lery Santos, 1651</Endereco>
+    <Bairro>Centro</Bairro>
+    <Cidade>Juiz de Fora</Cidade>
+    <UF>MG</UF>
+    <CEP>36015-150</CEP>
+  </DadosIgreja>
 </Configuracao>
