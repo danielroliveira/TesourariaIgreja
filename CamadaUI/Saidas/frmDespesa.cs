@@ -246,10 +246,12 @@ namespace CamadaUI.Saidas
 			dtpDespesaData.DataBindings.Add("Value", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			numParcelas.DataBindings.Add("Value", bind, "Parcelas", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtTitular.DataBindings.Add("Text", bind, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
+			txtTitular.DataBindings["Text"].Format += FormatNomeCNP;
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -262,6 +264,11 @@ namespace CamadaUI.Saidas
 			{
 				e.Value = $"{e.Value: 0000}";
 			}
+		}
+
+		private void FormatNomeCNP(object sender, ConvertEventArgs e)
+		{
+			e.Value = string.IsNullOrEmpty(_despesa.CNP) ? e.Value : $"{e.Value} ({_despesa.CNP})";
 		}
 
 		private void FormatCurrency(object sender, ConvertEventArgs e)

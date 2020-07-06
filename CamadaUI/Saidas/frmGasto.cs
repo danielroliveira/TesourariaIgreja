@@ -414,6 +414,7 @@ namespace CamadaUI.Saidas
 			txtDespesaDescricao.DataBindings.Add("Text", bindDespesa, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpDespesaData.DataBindings.Add("Value", bindDespesa, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaValor.DataBindings.Add("Text", bindDespesa, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtTitular.DataBindings.Add("Text", bindDespesa, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// CREATE BINDIGS APAGAR
 			txtCobrancaForma.DataBindings.Add("Text", bindPagar, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -426,6 +427,8 @@ namespace CamadaUI.Saidas
 			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
 			txtAcrescimo.DataBindings["Text"].Format += FormatCurrency;
 			txtDesconto.DataBindings["Text"].Format += FormatCurrency;
+			txtTitular.DataBindings["Text"].Format += FormatNomeCNP;
+
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -453,6 +456,11 @@ namespace CamadaUI.Saidas
 			}
 
 			EP.Clear();
+		}
+
+		private void FormatNomeCNP(object sender, ConvertEventArgs e)
+		{
+			e.Value = string.IsNullOrEmpty(_despesa.CNP) ? e.Value : $"{e.Value} ({_despesa.CNP})";
 		}
 
 		#endregion // DATABINDING --- END

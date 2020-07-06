@@ -214,12 +214,14 @@ namespace CamadaUI.Saidas
 			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtRecorrenciaRepeticao.DataBindings.Add("Text", bind, "RecorrenciaRepeticao", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblRecorrenciaTexto.DataBindings.Add("Text", bind, "RecorrenciaTexto", true, DataSourceUpdateMode.OnValidation);
+			txtTitular.DataBindings.Add("Text", bind, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
 			txtRecorrenciaRepeticao.DataBindings["Text"].Format += FormatD2;
 			lblDespesaData.DataBindings["Text"].Format += (a, e) => { e.Value = DateTime.Parse(e.Value.ToString()).ToString("dd/MMMM/yyyy"); };
+			txtTitular.DataBindings["Text"].Format += FormatNomeCNP;
 
 			// PREENCHE COMBOS
 			CarregaComboRecorrenciaTipo();
@@ -255,6 +257,11 @@ namespace CamadaUI.Saidas
 			}
 
 			EP.Clear();
+		}
+
+		private void FormatNomeCNP(object sender, ConvertEventArgs e)
+		{
+			e.Value = string.IsNullOrEmpty(_despesa.CNP) ? e.Value : $"{e.Value} ({_despesa.CNP})";
 		}
 
 		#endregion // DATABINDING --- END
