@@ -163,6 +163,8 @@
 			this.txtChequeNumero.Inteiro = true;
 			this.txtChequeNumero.Location = new System.Drawing.Point(155, 120);
 			this.txtChequeNumero.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtChequeNumero.MaxLength = 6;
+			this.txtChequeNumero.Moeda = false;
 			this.txtChequeNumero.Name = "txtChequeNumero";
 			this.txtChequeNumero.Positivo = true;
 			this.txtChequeNumero.Size = new System.Drawing.Size(100, 27);

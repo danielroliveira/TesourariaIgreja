@@ -216,7 +216,7 @@ namespace CamadaBLL
 		{
 			AcessoDados db = new AcessoDados();
 			long? newID = null;
-			long? otherID = null;
+			long? newMovID = null;
 			objMovimentacao entrada = null;
 
 			try
@@ -250,7 +250,7 @@ namespace CamadaBLL
 							DescricaoOrigem = "CONTRIBUIÇÃO: " + cont.OrigemDescricao,
 						};
 
-						//--- Insert Entrada
+						//--- Insert MOVIMENTACAO Entrada
 						new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
 
 						break;
@@ -270,6 +270,23 @@ namespace CamadaBLL
 						cheque.IDContribuicao = newID;
 						AddContribuicaoCheque(cheque, db);
 
+						//--- Create NEW MOVIMENTACAO ENTRADA
+						entrada = new objMovimentacao(null)
+						{
+							MovTipo = 1,
+							IDConta = cont.IDConta,
+							IDSetor = cont.IDSetor,
+							IDOrigem = (long)newID,
+							Origem = EnumMovOrigem.Contribuicao,
+							MovData = cont.ContribuicaoData,
+							MovValor = cont.ValorBruto,
+							Consolidado = false,
+							DescricaoOrigem = $"CONTRIBUIÇÃO: Cheque no. {cheque.ChequeNumero} {cheque.Banco}",
+						};
+
+						//--- Insert MOVIMENTACAO Entrada
+						newMovID = new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+
 						//--- Create AReceber
 						var areceber = new objAReceber(null)
 						{
@@ -281,27 +298,11 @@ namespace CamadaBLL
 							ValorBruto = cont.ValorBruto,
 							ValorLiquido = cont.ValorBruto,
 							ValorRecebido = 0,
+							IDMovProvisoria = (long)newMovID,
 						};
 
 						//--- Insert AReceber Parcela
-						otherID = new AReceberBLL().InsertAReceber(areceber, db);
-
-						//--- Create NEW Entrada
-						entrada = new objMovimentacao(null)
-						{
-							MovTipo = 1,
-							IDConta = cont.IDConta,
-							IDSetor = cont.IDSetor,
-							IDOrigem = (long)otherID,
-							Origem = EnumMovOrigem.AReceber,
-							MovData = cont.ContribuicaoData,
-							MovValor = cont.ValorBruto,
-							Consolidado = false,
-							DescricaoOrigem = $"A RECEBER: Entrada de Cheque no. {cheque.ChequeNumero} {cheque.Banco}",
-						};
-
-						//--- Insert Entrada
-						new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+						new AReceberBLL().InsertAReceber(areceber, db);
 
 						break;
 
@@ -357,16 +358,14 @@ namespace CamadaBLL
 						//--- Insert ListOf AReceber Parcelas
 						foreach (var parcela in listAReceber)
 						{
-							otherID = rBLL.InsertAReceber(parcela, db);
-
-							//--- Create NEW Entrada
+							//--- Create NEW MOVIMENTACAO Entrada
 							entrada = new objMovimentacao(null)
 							{
 								MovTipo = 1,
 								IDConta = parcela.IDContaProvisoria,
 								IDSetor = cont.IDSetor,
-								IDOrigem = (long)otherID,
-								Origem = EnumMovOrigem.AReceber,
+								IDOrigem = (long)newID,
+								Origem = EnumMovOrigem.Contribuicao,
 								MovData = cont.ContribuicaoData,
 								MovValor = parcela.ValorBruto,
 								Consolidado = false,
@@ -375,22 +374,26 @@ namespace CamadaBLL
 							//--- define descricao origem of movimentacao
 							if (cartao.Parcelas == 0)
 							{
-								entrada.DescricaoOrigem = $"A RECEBER: Cartão de Débito {cartao.CartaoBandeira}";
+								entrada.DescricaoOrigem = $"CONTRIBUIÇÃO: Cartão de Débito {cartao.CartaoBandeira}";
 							}
 							else if (cartao.Parcelas == 1)
 							{
-								entrada.DescricaoOrigem = $"A RECEBER: Cartão de Crédito {cartao.CartaoBandeira}";
+								entrada.DescricaoOrigem = $"CONTRIBUIÇÃO: Cartão de Crédito {cartao.CartaoBandeira}";
 							}
 							else
 							{
-								entrada.DescricaoOrigem = $"A RECEBER: Cartão Parcelado {cartao.CartaoBandeira} parcela {numParcela:D2}";
+								entrada.DescricaoOrigem = $"CONTRIBUIÇÃO: Cartão Parcelado {cartao.CartaoBandeira} parcela {numParcela:D2}";
 							}
 
 							//--- add Parcela
 							numParcela += 1;
 
 							//--- Insert Entrada
-							mBLL.InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+							newMovID = mBLL.InsertMovimentacao(entrada, ContaSldLocalUpdate, SetorSldLocalUpdate, db);
+
+							//--- Insert AReceber
+							parcela.IDMovProvisoria = (long)newMovID;
+							rBLL.InsertAReceber(parcela, db);
 						}
 
 						break;
@@ -521,20 +524,16 @@ namespace CamadaBLL
 
 					foreach (objAReceber receber in listAReceber)
 					{
-						rBLL.DeleteAReceber((long)receber.IDAReceber);
+						rBLL.DeleteAReceber((long)receber.IDAReceber, dbTran);
 					}
 				}
 
-				// 3 - delete ALL ENTRADA 
+				// 3 - delete ALL MOVIMENTACAO ENTRADA 
 				//------------------------------------------------------------------------------------------------------------
 				if (listEntradas.Count > 0)
 				{
 					MovimentacaoBLL mBLL = new MovimentacaoBLL();
-
-					foreach (objMovimentacao entrada in listEntradas)
-					{
-						mBLL.DeleteMovimentacao((long)entrada.IDMovimentacao, ContaSdlUpdate, SetorSdlUpdate, dbTran);
-					}
+					mBLL.DeleteMovimentacaoList(listEntradas, ContaSdlUpdate, SetorSdlUpdate, dbTran);
 				}
 
 				// 4 - delete CONTRIBUICAO
@@ -559,6 +558,11 @@ namespace CamadaBLL
 				dbTran.CommitTransaction();
 				return true;
 			}
+			catch (AppException ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
 			catch (Exception ex)
 			{
 				dbTran.RollBackTransaction();
@@ -574,9 +578,11 @@ namespace CamadaBLL
 			try
 			{
 				// GET ARECEBER
+				//------------------------------------------------------------------------------------------------------------
 				listAReceber = new AReceberBLL().GetListAReceberByIDContribuicao(IDContribuicao, dbTran);
 
 				// VERIFY ARECEBER
+				//------------------------------------------------------------------------------------------------------------
 				bool err = false;
 				string errMessage = "Os ARECEBER abaixo possuem recebimentos...\n";
 
@@ -595,10 +601,23 @@ namespace CamadaBLL
 					throw new AppException(errMessage);
 				}
 
-				// VERIFY ENTRADAS
-				listEntradas = new MovimentacaoBLL().GetMovimentacaoListByOrigem(EnumMovOrigem.Contribuicao, IDContribuicao, false, dbTran);
+				// VERIFY MOVIMENTACAO ENTRADA FROM CONTRIBUICAO
+				//------------------------------------------------------------------------------------------------------------
+				MovimentacaoBLL mBLL = new MovimentacaoBLL();
+				listEntradas = mBLL.GetMovimentacaoListByOrigem(EnumMovOrigem.Contribuicao, IDContribuicao, false, dbTran);
+
+				// VERIFY MOVIMENTACAO ENTRADA FROM ARECEBER
+				//------------------------------------------------------------------------------------------------------------
+				if (listAReceber.Count > 0)
+				{
+					foreach (objAReceber receber in listAReceber)
+					{
+						listEntradas.AddRange(mBLL.GetMovimentacaoListByOrigem(EnumMovOrigem.AReceber, (long)receber.IDAReceber, false, dbTran));
+					}
+				}
 
 				// VERIFY RECEBIMENTOS WITH CAIXA OR BLOCKED
+				//------------------------------------------------------------------------------------------------------------
 				errMessage = "Essa Contribuição possui entradas que foram inseridas no caixa...\n";
 
 				foreach (objMovimentacao entrada in listEntradas)

@@ -150,6 +150,7 @@ namespace CamadaBLL
 				ValorLiquido = (decimal)row["ValorLiquido"],
 				ValorRecebido = (decimal)row["ValorRecebido"],
 				IDContaProvisoria = (int)row["IDContaProvisoria"],
+				IDMovProvisoria = (long)row["IDMovProvisoria"],
 				Conta = (string)row["Conta"],
 				IDSituacao = (byte)row["IDSituacao"],
 				Situacao = (string)row["Situacao"],
@@ -181,6 +182,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@ValorLiquido", entrada.ValorLiquido);
 				db.AdicionarParametros("@ValorRecebido", 0);
 				db.AdicionarParametros("@IDContaProvisoria", entrada.IDContaProvisoria);
+				db.AdicionarParametros("@IDMovProvisoria", entrada.IDMovProvisoria);
 				db.AdicionarParametros("@IDSituacao", 1);
 
 				//--- convert null parameters
@@ -291,14 +293,14 @@ namespace CamadaBLL
 				{
 					objAReceber receber = listRec.First(r => r.IDAReceber == entrada.IDOrigem);
 
-					if (receber.IDContaProvisoria != entrada.IDConta)
+					if (receber.IDEntradaForma == 3) // IDEntradaForma : CARTAO
 					{
-						objAReceber newRec = insertAReceberCartao(receber, entrada, contaSaldoUpdate, null, db);
+						objAReceber newRec = insertAReceberCartao(receber, entrada, contaSaldoUpdate, setorSaldoUpdate, db);
 						retorno.Add(newRec);
 					}
 					else
 					{
-						objAReceber newRec = insertAReceberCheque(receber, entrada, contaSaldoUpdate, null, db);
+						objAReceber newRec = insertAReceberCheque(receber, entrada, contaSaldoUpdate, db);
 						retorno.Add(newRec);
 					}
 				}
@@ -366,7 +368,7 @@ namespace CamadaBLL
 				MovimentacaoBLL mBLL = new MovimentacaoBLL();
 
 				// Update FIRST Entrada: CONSOLIDADO = TRUE
-				mBLL.UpdateConsolidado((long)receber.IDAReceber, true, dbTran);
+				mBLL.UpdateConsolidado(receber.IDMovProvisoria, true, dbTran);
 
 				// Insert transf saida
 				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, null, dbTran);
@@ -394,7 +396,6 @@ namespace CamadaBLL
 			objAReceber receber,
 			objMovimentacao entrada,
 			Action<int, decimal> contaSaldoUpdate,
-			Action<int, decimal> setorSaldoUpdate,
 			AcessoDados dbTran)
 		{
 			// create TRANSFER SAIDA
@@ -428,7 +429,7 @@ namespace CamadaBLL
 				MovimentacaoBLL mBLL = new MovimentacaoBLL();
 
 				// Update FIRST Entrada: CONSOLIDADO = TRUE
-				mBLL.UpdateConsolidado((long)receber.IDAReceber, true, dbTran);
+				mBLL.UpdateConsolidado(receber.IDMovProvisoria, true, dbTran);
 
 				// Insert transf saida
 				mBLL.InsertMovimentacao(transfSaida, contaSaldoUpdate, null, dbTran);
@@ -467,7 +468,7 @@ namespace CamadaBLL
 				MovimentacaoBLL mBLL = new MovimentacaoBLL();
 
 				// Update FIRST Entrada: CONSOLIDADO = FALSE
-				mBLL.UpdateConsolidado((long)receber.IDAReceber, false, db);
+				mBLL.UpdateConsolidado(receber.IDMovProvisoria, false, db);
 
 				// REMOVE transf saida entrada
 				mBLL.DeleteMovsByOrigem(EnumMovOrigem.AReceber, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);

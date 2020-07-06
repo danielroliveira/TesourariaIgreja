@@ -20,6 +20,7 @@ namespace CamadaDTO
 			internal decimal _ValorLiquido;
 			internal decimal _ValorRecebido;
 			internal int _IDContaProvisoria;
+			internal long _IDMovProvisoria; // ID movimentacao de entrada na conta provisoria
 			internal string _Conta;
 			internal int _IDSetor;
 			internal byte _IDSituacao; // 1: EmAberto | 2: Recebido | 3: Cancelada
@@ -191,6 +192,21 @@ namespace CamadaDTO
 				{
 					EditData._IDContaProvisoria = value;
 					NotifyPropertyChanged("IDContaProvisoria");
+				}
+			}
+		}
+
+		// Property IDMovProvisoria
+		//---------------------------------------------------------------
+		public long IDMovProvisoria
+		{
+			get => EditData._IDMovProvisoria;
+			set
+			{
+				if (value != EditData._IDMovProvisoria)
+				{
+					EditData._IDMovProvisoria = value;
+					NotifyPropertyChanged("IDMovProvisoria");
 				}
 			}
 		}

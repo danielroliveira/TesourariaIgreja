@@ -557,7 +557,7 @@ namespace CamadaBLL
 				{
 					//--- 1. check DELETE tblMovAcrescimo
 					//------------------------------------------------------------------------------------------------------------
-					if (mov.AcrescimoValor != 0)
+					if (mov.AcrescimoValor != null && mov.AcrescimoValor != 0)
 					{
 						//--- clear Params
 						db.LimparParametros();
@@ -602,12 +602,12 @@ namespace CamadaBLL
 
 					//--- 5. CHANGE SALDOS RETURN OLD VALUES
 					//------------------------------------------------------------------------------------------------------------
-					if (ContaSdlUpdate != null)
+					if (ContaSdlUpdate != null && mov.IDConta != null)
 					{
 						new ContaBLL().ContaSaldoChange((int)mov.IDConta, mov.MovValor * (-1), db, ContaSdlUpdate);
 					}
 
-					if (SetorSdlUpdate != null)
+					if (SetorSdlUpdate != null && mov.IDSetor != null)
 					{
 						new SetorBLL().SetorSaldoChange((int)mov.IDSetor, mov.MovValor * (-1), db, SetorSdlUpdate);
 					}
@@ -683,21 +683,17 @@ namespace CamadaBLL
 			}
 		}
 
-
-
-
-
 		// UPDATE CONSOLIDADO FOR IDARECEBER
 		//------------------------------------------------------------------------------------------------------------
-		public void UpdateConsolidado(long IDAReceber, bool Consolidado, AcessoDados dbTran)
+		public void UpdateConsolidado(long IDMovimentacao, bool Consolidado, AcessoDados dbTran)
 		{
 			try
 			{
 				dbTran.LimparParametros();
-				dbTran.AdicionarParametros("@IDAReceber", IDAReceber);
+				dbTran.AdicionarParametros("@IDMovimentacao", IDMovimentacao);
 				dbTran.AdicionarParametros("@Consolidado", Consolidado);
 
-				string query = "UPDATE tblMovimentacao SET Consolidado = @Consolidado WHERE IDOrigem = @IDAReceber AND Origem = 2";
+				string query = "UPDATE tblMovimentacao SET Consolidado = @Consolidado WHERE IDMovimentacao = @IDMovimentacao";
 
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
 			}

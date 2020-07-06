@@ -14,16 +14,6 @@
     <CidadePadrao>Rio de Janiero</CidadePadrao>
     <UFPadrao>RJ</UFPadrao>
   </DefaultValues>
-  <Colors>
-    <TopTitleColor>
-    </TopTitleColor>
-    <PrincipalBackColor>
-    </PrincipalBackColor>
-    <PrincipalBackImage>
-    </PrincipalBackImage>
-    <PrincipalBackgroundImageLayout>
-    </PrincipalBackgroundImageLayout>
-  </Colors>
   <ArquivoLogo>
     <ArquivoLogoMono>
     </ArquivoLogoMono>

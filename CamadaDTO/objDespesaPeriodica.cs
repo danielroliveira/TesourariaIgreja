@@ -25,6 +25,10 @@ namespace CamadaDTO
 			internal string _DespesaTipo;
 			internal int _IDSetor;
 			internal string _Setor;
+			// from Despesa Titular
+			internal int? _IDTitular;
+			internal string _Titular;
+			internal string _CNP;
 			// TBL DEPESA PERIODICA
 			internal int _IDCobrancaForma;
 			internal string _CobrancaForma;
@@ -195,6 +199,37 @@ namespace CamadaDTO
 		{
 			get => EditData._Credor;
 			set => EditData._Credor = value;
+		}
+
+		// Property IDTitular
+		//---------------------------------------------------------------
+		public int? IDTitular
+		{
+			get => EditData._IDTitular;
+			set
+			{
+				if (value != EditData._IDTitular)
+				{
+					EditData._IDTitular = value;
+					NotifyPropertyChanged("IDTitular");
+				}
+			}
+		}
+
+		// Property Titular
+		//---------------------------------------------------------------
+		public string Titular
+		{
+			get => EditData._Titular;
+			set => EditData._Titular = value;
+		}
+
+		// Property CNP
+		//---------------------------------------------------------------
+		public string CNP
+		{
+			get => EditData._CNP;
+			set => EditData._CNP = value;
 		}
 
 		// Property IDDespesaTipo

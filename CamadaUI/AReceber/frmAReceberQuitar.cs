@@ -199,7 +199,7 @@ namespace CamadaUI.AReceber
 			if (doValor <= 0)
 			{
 				AbrirDialog("O Valor total a Receber não pode ficar vazio ou ser igual a Zero...\n" +
-					"Favor preencher esse campo...", "Valor a Receber Vazio",
+					"Favor preencher esse campo.", "Valor a Receber Vazio",
 					DialogType.OK, DialogIcon.Exclamation);
 				txtDoValor.Focus();
 				eP.SetError(txtDoValor, "Valor precisa ser maior que Zero...");
@@ -209,7 +209,7 @@ namespace CamadaUI.AReceber
 			{
 				AbrirDialog($"O Valor total a Receber não pode ser maior que o Valor Bruto " +
 					$"subtraído do Valor Recebido: {maxValue:c}\n" +
-					"Favor preencher esse campo...", "Valor a Receber Inválido",
+					"Favor preencher esse campo.", "Valor a Receber Inválido",
 					DialogType.OK, DialogIcon.Exclamation);
 				txtDoValor.Focus();
 				eP.SetError(txtDoValor, "Valor não pode ser maior que o Valor Bruto...");
@@ -219,7 +219,7 @@ namespace CamadaUI.AReceber
 			{
 				AbrirDialog($"O Valor total a Receber não pode ser menor que o " +
 					$"Valor Em aberto: {vlEmAberto:c}\n" +
-					"Favor preencher esse campo...", "Valor a Receber Inválido",
+					"Favor preencher esse campo.", "Valor a Receber Inválido",
 					DialogType.OK, DialogIcon.Exclamation);
 				txtDoValor.Focus();
 				eP.SetError(txtDoValor, "Valor não pode ser menor que o Valor Em Aberto...");
@@ -230,10 +230,32 @@ namespace CamadaUI.AReceber
 			if (_entradaData > DateTime.Today)
 			{
 				AbrirDialog($"A data do Recebimento não pode ser futura...\n" +
-							"Favor preencher uma data válida...", "Data Inválida",
+							"Favor preencher uma data válida!", "Data Inválida",
 							DialogType.OK, DialogIcon.Exclamation);
 				numEntradaDia.Focus();
 				eP.SetError(numEntradaDia, "Data não pode ser futura");
+				return false;
+			}
+
+			// CHECK DATE IS BLOCKED
+			if (ContaSelected.BloqueioData != null && _entradaData < ContaSelected.BloqueioData)
+			{
+				AbrirDialog($"A Conta selecionada está bloqueada nessa data do Recebimento escolhida...\n" +
+							"Favor preencher uma data válida!", "Data Inválida",
+							DialogType.OK, DialogIcon.Exclamation);
+				numEntradaDia.Focus();
+				eP.SetError(numEntradaDia, "Conta Bloqueada");
+				return false;
+			}
+
+			// CHECK CONTA IS DIFFERENT
+			if (_recList.Count(x => x.IDContaProvisoria == ContaSelected.IDConta) > 0)
+			{
+				AbrirDialog($"A Conta Escolhida para depósito necessita ser diferente da Conta Provisória do Cartão ou do Cheque...\n" +
+							"Favor informar uma conta válida!", "Conta Inválida",
+							DialogType.OK, DialogIcon.Exclamation);
+				txtConta.Focus();
+				eP.SetError(txtConta, "Conta Inválida");
 				return false;
 			}
 

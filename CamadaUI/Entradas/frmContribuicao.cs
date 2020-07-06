@@ -415,7 +415,7 @@ namespace CamadaUI.Entradas
 			}
 
 			if (!Modal)
-				new frmContribuicaoListagem().Show();
+				new frmContribuicaoListagem() { MdiParent = Application.OpenForms[0] }.Show();
 
 			Close();
 		}
@@ -516,7 +516,7 @@ namespace CamadaUI.Entradas
 
 				ContribuicaoBLL sBLL = new ContribuicaoBLL();
 
-				//--- SAVE: INSERT OR UPDATE
+				//--- SAVE: INSERT
 				if (_contribuicao.IDContribuicao == null) //--- save | Insert
 				{
 					long ID = sBLL.InsertContribuicao(_contribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate, forma);
@@ -529,7 +529,6 @@ namespace CamadaUI.Entradas
 				{
 					AbrirDialog("Não é possível atualizar uma Entrada...", "Atualização",
 						DialogType.OK, DialogIcon.Exclamation);
-					// sBLL.UpdateContribuicao(_contribuicao);
 				}
 
 				//--- change Sit

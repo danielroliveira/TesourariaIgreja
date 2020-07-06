@@ -21,6 +21,12 @@ namespace CamadaDTO
 			internal string _DocumentoNumero;
 			internal int _IDCredor;
 			internal string _Credor;
+
+			// from Despesa Titular
+			internal int? _IDTitular;
+			internal string _Titular;
+			internal string _CNP;
+
 			internal int _IDDespesaTipo;
 			internal string _DespesaTipo;
 			internal byte _IDDocumentoTipo;
@@ -53,7 +59,8 @@ namespace CamadaDTO
 				_IDSituacao = 1,
 				_Parcelas = 1,
 				_Prioridade = 3, // prioridade NORMAL
-				_Imagem = false
+				_Imagem = false,
+				_IDTitular = null
 			};
 		}
 
@@ -203,6 +210,37 @@ namespace CamadaDTO
 		{
 			get => EditData._Credor;
 			set => EditData._Credor = value;
+		}
+
+		// Property IDTitular
+		//---------------------------------------------------------------
+		public int? IDTitular
+		{
+			get => EditData._IDTitular;
+			set
+			{
+				if (value != EditData._IDTitular)
+				{
+					EditData._IDTitular = value;
+					NotifyPropertyChanged("IDTitular");
+				}
+			}
+		}
+
+		// Property Titular
+		//---------------------------------------------------------------
+		public string Titular
+		{
+			get => EditData._Titular;
+			set => EditData._Titular = value;
+		}
+
+		// Property CNP
+		//---------------------------------------------------------------
+		public string CNP
+		{
+			get => EditData._CNP;
+			set => EditData._CNP = value;
 		}
 
 		// Property IDDespesaTipo
@@ -587,4 +625,14 @@ namespace CamadaDTO
 		public bool Ativo { get; set; }
 	}
 
+	//=================================================================================================
+	// DESPESA DESPESA TITULAR
+	//=================================================================================================
+	public class objDespesaTitular
+	{
+		public int? IDTitular { get; set; }
+		public string Titular { get; set; }
+		public string CNP { get; set; }
+		public bool Ativo { get; set; }
+	}
 }

@@ -413,6 +413,50 @@ namespace CamadaUI.Saidas
 			txtCredor.SelectAll();
 		}
 
+		private void btnSetTitular_Click(object sender, EventArgs e)
+		{
+			frmTitularProcura frm = new frmTitularProcura(this, _despesa.IDTitular);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK) // SEARCH TITULAR
+			{
+				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDTitular != frm.propEscolha.IDTitular)
+					Sit = EnumFlagEstado.Alterado;
+
+				_despesa.IDTitular = (int)frm.propEscolha.IDTitular;
+				_despesa.Titular = frm.propEscolha.Titular;
+				_despesa.CNP = frm.propEscolha.CNP;
+				txtTitular.Text = frm.propEscolha.Titular;
+			}
+
+			//--- select
+			txtTitular.Focus();
+			txtTitular.SelectAll();
+		}
+
+		private void btnInsertTitular_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmTitularControle frm = new frmTitularControle(this);
+				frm.ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de cadastro de Titulares..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		private void btnSetDespesaTipo_Click(object sender, EventArgs e)
 		{
 			frmDespesaTipoProcura frm = new frmDespesaTipoProcura(this, _despesa.IDDespesaTipo == 0 ? null : (int?)_despesa.IDDespesaTipo);
@@ -480,7 +524,8 @@ namespace CamadaUI.Saidas
 					txtDespesaTipo,
 					txtDocumentoTipo,
 					txtSetor,
-					txtDespesaDescricao
+					txtDespesaDescricao,
+					txtTitular,
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -535,17 +580,26 @@ namespace CamadaUI.Saidas
 					case "txtDespesaDescricao":
 						defineDescricao();
 						break;
+					case "txtTitular":
+						btnSetTitular_Click(sender, new EventArgs());
+						break;
 					default:
 						break;
 				}
 			}
 			else if (e.KeyCode == Keys.Delete)
 			{
-
 				switch (ctr.Name)
 				{
 					case "txtDespesaDescricao":
 						e.Handled = false;
+						break;
+					case "txtTitular":
+						e.Handled = false;
+						_despesa.Titular = string.Empty;
+						_despesa.CNP = string.Empty;
+						_despesa.IDTitular = null;
+						txtTitular.Clear();
 						break;
 					default:
 						e.Handled = true;
@@ -581,6 +635,7 @@ namespace CamadaUI.Saidas
 					txtCredor,
 					txtDespesaTipo,
 					txtDocumentoTipo,
+					txtTitular,
 				 };
 
 				if (controlesBloqueados.Contains(ctr))
@@ -1146,6 +1201,5 @@ namespace CamadaUI.Saidas
 
 
 		#endregion // SALVAR REGISTRO --- END
-
 	}
 }

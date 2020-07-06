@@ -648,5 +648,129 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		//=================================================================================================
+		// DESPESA TITULAR
+		//=================================================================================================
+
+		// GET DESPESA TITULAR
+		//------------------------------------------------------------------------------------------------------------
+		public List<objDespesaTitular> GetTitularList(bool? Ativo = null)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM tblDespesaTitular";
+
+				// add params
+				db.LimparParametros();
+
+				if (Ativo != null)
+				{
+					db.AdicionarParametros("@Ativo", Ativo);
+					query += " WHERE Ativo = @Ativo";
+				}
+
+				query += " ORDER BY Titular";
+
+				List<objDespesaTitular> listagem = new List<objDespesaTitular>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					objDespesaTitular titular = new objDespesaTitular()
+					{
+						IDTitular = (int)row["IDTitular"],
+						Titular = (string)row["Titular"],
+						CNP = row["CNP"] == DBNull.Value ? string.Empty : (string)row["CNP"],
+						Ativo = (bool)row["Ativo"],
+					};
+
+					listagem.Add(titular);
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// INSERT DESPESA TITULAR
+		//------------------------------------------------------------------------------------------------------------
+		public int InsertTitutar(objDespesaTitular titular)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@Titular", titular.Titular);
+				db.AdicionarParametros("@CNP", titular.CNP);
+				db.AdicionarParametros("@Ativo", true);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateInsertSQL("tblDespesaTitular");
+
+				//--- insert and Get new ID
+				int newID = (int)db.ExecutarInsertAndGetID(query);
+
+				return newID;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE DESPESA TITULAR
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateTitular(objDespesaTitular titular)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDTitular", titular.IDTitular);
+				db.AdicionarParametros("@Titular", titular.Titular);
+				db.AdicionarParametros("@CNP", titular.CNP);
+				db.AdicionarParametros("@Ativo", titular.Ativo);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblDespesaTitular", "@IDTitular");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
 	}
 }

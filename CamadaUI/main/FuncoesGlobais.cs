@@ -55,12 +55,6 @@ namespace CamadaUI
 							new XElement("CidadePadrao", ""),
 							new XElement("UFPadrao", "")
 						),
-						new XElement("Colors",
-							new XElement("TopTitleColor", ""),
-							new XElement("PrincipalBackColor", ""),
-							new XElement("PrincipalBackImage", ""),
-							new XElement("PrincipalBackgroundImageLayout", "")
-						),
 						new XElement("ArquivoLogo",
 							new XElement("ArquivoLogoMono", ""),
 							new XElement("ArquivoLogoColor", "")

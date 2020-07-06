@@ -53,7 +53,6 @@
 			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.line1 = new AwesomeShapeControl.Line();
-			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
 			this.dtpIniciarData = new System.Windows.Forms.DateTimePicker();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
@@ -78,6 +77,10 @@
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.lblDespesaData = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.btnSetTitular = new VIBlend.WinForms.Controls.vButton();
+			this.txtTitular = new System.Windows.Forms.TextBox();
+			this.label14 = new System.Windows.Forms.Label();
+			this.btnInsertTitular = new VIBlend.WinForms.Controls.vButton();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -87,7 +90,7 @@
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(416, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(252, 50);
-			this.lblTitulo.TabIndex = 2;
+			this.lblTitulo.TabIndex = 4;
 			this.lblTitulo.Text = "Cadastro de Despesas";
 			// 
 			// btnClose
@@ -96,7 +99,7 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(668, 0);
-			this.btnClose.TabIndex = 3;
+			this.btnClose.TabIndex = 5;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -240,12 +243,12 @@
 			// txtDespesaDescricao
 			// 
 			this.txtDespesaDescricao.BackColor = System.Drawing.Color.White;
-			this.txtDespesaDescricao.Location = new System.Drawing.Point(197, 279);
+			this.txtDespesaDescricao.Location = new System.Drawing.Point(197, 304);
 			this.txtDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaDescricao.MaxLength = 100;
 			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
 			this.txtDespesaDescricao.Size = new System.Drawing.Size(433, 27);
-			this.txtDespesaDescricao.TabIndex = 19;
+			this.txtDespesaDescricao.TabIndex = 20;
 			this.txtDespesaDescricao.Tag = "";
 			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -254,22 +257,23 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(118, 282);
+			this.lblCongregacao.Location = new System.Drawing.Point(118, 307);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
-			this.lblCongregacao.TabIndex = 18;
+			this.lblCongregacao.TabIndex = 19;
 			this.lblCongregacao.Text = "Descrição";
 			// 
 			// txtDespesaValor
 			// 
 			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDespesaValor.Inteiro = false;
-			this.txtDespesaValor.Location = new System.Drawing.Point(485, 341);
+			this.txtDespesaValor.Location = new System.Drawing.Point(485, 360);
 			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtDespesaValor.Moeda = false;
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
 			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 24;
+			this.txtDespesaValor.TabIndex = 25;
 			this.txtDespesaValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label8
@@ -277,10 +281,10 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(357, 347);
+			this.label8.Location = new System.Drawing.Point(357, 366);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 23;
+			this.label8.TabIndex = 24;
 			this.label8.Text = "Valor da Despesa";
 			// 
 			// btnSetCredor
@@ -289,12 +293,12 @@
 			this.btnSetCredor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetCredor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetCredor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetCredor.Location = new System.Drawing.Point(596, 123);
+			this.btnSetCredor.Location = new System.Drawing.Point(596, 109);
 			this.btnSetCredor.Name = "btnSetCredor";
 			this.btnSetCredor.RoundedCornersMask = ((byte)(15));
 			this.btnSetCredor.RoundedCornersRadius = 0;
 			this.btnSetCredor.Size = new System.Drawing.Size(34, 27);
-			this.btnSetCredor.TabIndex = 8;
+			this.btnSetCredor.TabIndex = 6;
 			this.btnSetCredor.TabStop = false;
 			this.btnSetCredor.Text = "...";
 			this.btnSetCredor.UseCompatibleTextRendering = true;
@@ -304,12 +308,12 @@
 			// 
 			// txtCredor
 			// 
-			this.txtCredor.Location = new System.Drawing.Point(197, 123);
+			this.txtCredor.Location = new System.Drawing.Point(197, 109);
 			this.txtCredor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCredor.MaxLength = 30;
 			this.txtCredor.Name = "txtCredor";
 			this.txtCredor.Size = new System.Drawing.Size(393, 27);
-			this.txtCredor.TabIndex = 7;
+			this.txtCredor.TabIndex = 5;
 			this.txtCredor.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCredor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -318,10 +322,10 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(53, 126);
+			this.lblContribuinte.Location = new System.Drawing.Point(53, 112);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(138, 19);
-			this.lblContribuinte.TabIndex = 6;
+			this.lblContribuinte.TabIndex = 4;
 			this.lblContribuinte.Text = "Credor / Fornecedor";
 			// 
 			// label4
@@ -329,20 +333,20 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(74, 165);
+			this.label4.Location = new System.Drawing.Point(74, 190);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 19);
-			this.label4.TabIndex = 9;
+			this.label4.TabIndex = 10;
 			this.label4.Text = "Tipo de Despesa";
 			// 
 			// txtDespesaTipo
 			// 
-			this.txtDespesaTipo.Location = new System.Drawing.Point(197, 162);
+			this.txtDespesaTipo.Location = new System.Drawing.Point(197, 187);
 			this.txtDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaTipo.MaxLength = 30;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
 			this.txtDespesaTipo.Size = new System.Drawing.Size(393, 27);
-			this.txtDespesaTipo.TabIndex = 10;
+			this.txtDespesaTipo.TabIndex = 11;
 			this.txtDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
 			this.txtDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -352,12 +356,12 @@
 			this.btnSetDespesaTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetDespesaTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetDespesaTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetDespesaTipo.Location = new System.Drawing.Point(596, 162);
+			this.btnSetDespesaTipo.Location = new System.Drawing.Point(596, 187);
 			this.btnSetDespesaTipo.Name = "btnSetDespesaTipo";
 			this.btnSetDespesaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDespesaTipo.RoundedCornersRadius = 0;
 			this.btnSetDespesaTipo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetDespesaTipo.TabIndex = 11;
+			this.btnSetDespesaTipo.TabIndex = 12;
 			this.btnSetDespesaTipo.TabStop = false;
 			this.btnSetDespesaTipo.Text = "...";
 			this.btnSetDespesaTipo.UseCompatibleTextRendering = true;
@@ -371,12 +375,12 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(431, 84);
+			this.btnSetSetor.Location = new System.Drawing.Point(431, 70);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
 			this.btnSetSetor.Size = new System.Drawing.Size(34, 27);
-			this.btnSetSetor.TabIndex = 5;
+			this.btnSetSetor.TabIndex = 3;
 			this.btnSetSetor.TabStop = false;
 			this.btnSetSetor.Text = "...";
 			this.btnSetSetor.UseCompatibleTextRendering = true;
@@ -386,12 +390,12 @@
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(197, 84);
+			this.txtSetor.Location = new System.Drawing.Point(197, 70);
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
 			this.txtSetor.Size = new System.Drawing.Size(228, 27);
-			this.txtSetor.TabIndex = 4;
+			this.txtSetor.TabIndex = 2;
 			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label5
@@ -399,10 +403,10 @@
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(86, 87);
+			this.label5.Location = new System.Drawing.Point(86, 73);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
-			this.label5.TabIndex = 3;
+			this.label5.TabIndex = 1;
 			this.label5.Text = "Setor Debitado";
 			// 
 			// line1
@@ -410,47 +414,34 @@
 			this.line1.EndPoint = new System.Drawing.Point(645, 5);
 			this.line1.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 321);
+			this.line1.Location = new System.Drawing.Point(27, 340);
 			this.line1.Name = "line1";
 			this.line1.Opacity = 0.5F;
 			this.line1.Size = new System.Drawing.Size(650, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 20;
+			this.line1.TabIndex = 21;
 			this.line1.TabStop = false;
-			// 
-			// line2
-			// 
-			this.line2.EndPoint = new System.Drawing.Point(645, 5);
-			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
-			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(25, 382);
-			this.line2.Name = "line2";
-			this.line2.Opacity = 0.5F;
-			this.line2.Size = new System.Drawing.Size(650, 10);
-			this.line2.StartPoint = new System.Drawing.Point(5, 5);
-			this.line2.TabIndex = 25;
-			this.line2.TabStop = false;
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.ForeColor = System.Drawing.Color.Black;
-			this.label6.Location = new System.Drawing.Point(58, 347);
+			this.label6.Location = new System.Drawing.Point(58, 366);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(99, 19);
-			this.label6.TabIndex = 21;
+			this.label6.TabIndex = 22;
 			this.label6.Text = "Data do Início";
 			// 
 			// dtpIniciarData
 			// 
 			this.dtpIniciarData.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpIniciarData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpIniciarData.Location = new System.Drawing.Point(163, 341);
+			this.dtpIniciarData.Location = new System.Drawing.Point(163, 360);
 			this.dtpIniciarData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpIniciarData.Name = "dtpIniciarData";
 			this.dtpIniciarData.Size = new System.Drawing.Size(145, 31);
-			this.dtpIniciarData.TabIndex = 22;
+			this.dtpIniciarData.TabIndex = 23;
 			// 
 			// btnSetForma
 			// 
@@ -458,12 +449,12 @@
 			this.btnSetForma.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetForma.Location = new System.Drawing.Point(470, 201);
+			this.btnSetForma.Location = new System.Drawing.Point(470, 226);
 			this.btnSetForma.Name = "btnSetForma";
 			this.btnSetForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetForma.RoundedCornersRadius = 0;
 			this.btnSetForma.Size = new System.Drawing.Size(34, 27);
-			this.btnSetForma.TabIndex = 14;
+			this.btnSetForma.TabIndex = 15;
 			this.btnSetForma.TabStop = false;
 			this.btnSetForma.Text = "...";
 			this.btnSetForma.UseCompatibleTextRendering = true;
@@ -473,12 +464,12 @@
 			// 
 			// txtCobrancaForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(197, 201);
+			this.txtCobrancaForma.Location = new System.Drawing.Point(197, 226);
 			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCobrancaForma.MaxLength = 30;
 			this.txtCobrancaForma.Name = "txtCobrancaForma";
 			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 13;
+			this.txtCobrancaForma.TabIndex = 14;
 			this.txtCobrancaForma.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -487,10 +478,10 @@
 			this.label7.AutoSize = true;
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.ForeColor = System.Drawing.Color.Black;
-			this.label7.Location = new System.Drawing.Point(57, 204);
+			this.label7.Location = new System.Drawing.Point(57, 229);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(134, 19);
-			this.label7.TabIndex = 12;
+			this.label7.TabIndex = 13;
 			this.label7.Text = "Forma de Cobrança";
 			// 
 			// btnSetBanco
@@ -499,12 +490,12 @@
 			this.btnSetBanco.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetBanco.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetBanco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetBanco.Location = new System.Drawing.Point(470, 240);
+			this.btnSetBanco.Location = new System.Drawing.Point(470, 265);
 			this.btnSetBanco.Name = "btnSetBanco";
 			this.btnSetBanco.RoundedCornersMask = ((byte)(15));
 			this.btnSetBanco.RoundedCornersRadius = 0;
 			this.btnSetBanco.Size = new System.Drawing.Size(34, 27);
-			this.btnSetBanco.TabIndex = 17;
+			this.btnSetBanco.TabIndex = 18;
 			this.btnSetBanco.TabStop = false;
 			this.btnSetBanco.Text = "...";
 			this.btnSetBanco.UseCompatibleTextRendering = true;
@@ -514,12 +505,12 @@
 			// 
 			// txtBanco
 			// 
-			this.txtBanco.Location = new System.Drawing.Point(197, 240);
+			this.txtBanco.Location = new System.Drawing.Point(197, 265);
 			this.txtBanco.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtBanco.MaxLength = 30;
 			this.txtBanco.Name = "txtBanco";
 			this.txtBanco.Size = new System.Drawing.Size(267, 27);
-			this.txtBanco.TabIndex = 16;
+			this.txtBanco.TabIndex = 17;
 			this.txtBanco.Tag = "Pressione a tecla (+) para procurar";
 			this.txtBanco.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -528,10 +519,10 @@
 			this.label9.AutoSize = true;
 			this.label9.BackColor = System.Drawing.Color.Transparent;
 			this.label9.ForeColor = System.Drawing.Color.Black;
-			this.label9.Location = new System.Drawing.Point(142, 243);
+			this.label9.Location = new System.Drawing.Point(142, 268);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(49, 19);
-			this.label9.TabIndex = 15;
+			this.label9.TabIndex = 16;
 			this.label9.Text = "Banco";
 			// 
 			// txtRecorrenciaRepeticao
@@ -540,6 +531,7 @@
 			this.txtRecorrenciaRepeticao.Location = new System.Drawing.Point(231, 62);
 			this.txtRecorrenciaRepeticao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtRecorrenciaRepeticao.MaxLength = 2;
+			this.txtRecorrenciaRepeticao.Moeda = false;
 			this.txtRecorrenciaRepeticao.Name = "txtRecorrenciaRepeticao";
 			this.txtRecorrenciaRepeticao.Positivo = true;
 			this.txtRecorrenciaRepeticao.Size = new System.Drawing.Size(57, 27);
@@ -714,7 +706,7 @@
 			this.lblDespesaData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblDespesaData.Name = "lblDespesaData";
 			this.lblDespesaData.Size = new System.Drawing.Size(174, 30);
-			this.lblDespesaData.TabIndex = 0;
+			this.lblDespesaData.TabIndex = 2;
 			this.lblDespesaData.Text = "01/01/2000";
 			this.lblDespesaData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lblDespesaData.Click += new System.EventHandler(this.lblDespesaData_Click);
@@ -729,21 +721,86 @@
 			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(37, 13);
-			this.label2.TabIndex = 1;
+			this.label2.TabIndex = 3;
 			this.label2.Text = "Data";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// btnSetTitular
+			// 
+			this.btnSetTitular.AllowAnimations = true;
+			this.btnSetTitular.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetTitular.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetTitular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetTitular.Location = new System.Drawing.Point(596, 148);
+			this.btnSetTitular.Name = "btnSetTitular";
+			this.btnSetTitular.RoundedCornersMask = ((byte)(15));
+			this.btnSetTitular.RoundedCornersRadius = 0;
+			this.btnSetTitular.Size = new System.Drawing.Size(34, 27);
+			this.btnSetTitular.TabIndex = 9;
+			this.btnSetTitular.TabStop = false;
+			this.btnSetTitular.Text = "...";
+			this.btnSetTitular.UseCompatibleTextRendering = true;
+			this.btnSetTitular.UseVisualStyleBackColor = false;
+			this.btnSetTitular.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetTitular.Click += new System.EventHandler(this.btnSetTitular_Click);
+			// 
+			// txtTitular
+			// 
+			this.txtTitular.Location = new System.Drawing.Point(197, 148);
+			this.txtTitular.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtTitular.MaxLength = 30;
+			this.txtTitular.Name = "txtTitular";
+			this.txtTitular.Size = new System.Drawing.Size(393, 27);
+			this.txtTitular.TabIndex = 8;
+			this.txtTitular.Tag = "Pressione a tecla (+) para procurar";
+			this.txtTitular.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.BackColor = System.Drawing.Color.Transparent;
+			this.label14.ForeColor = System.Drawing.Color.Black;
+			this.label14.Location = new System.Drawing.Point(104, 151);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(87, 19);
+			this.label14.TabIndex = 7;
+			this.label14.Text = "Titularidade";
+			// 
+			// btnInsertTitular
+			// 
+			this.btnInsertTitular.AllowAnimations = true;
+			this.btnInsertTitular.BackColor = System.Drawing.Color.Transparent;
+			this.btnInsertTitular.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnInsertTitular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnInsertTitular.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnInsertTitular.ImageAbsolutePosition = new System.Drawing.Point(7, 3);
+			this.btnInsertTitular.Location = new System.Drawing.Point(636, 148);
+			this.btnInsertTitular.Name = "btnInsertTitular";
+			this.btnInsertTitular.RoundedCornersMask = ((byte)(15));
+			this.btnInsertTitular.RoundedCornersRadius = 0;
+			this.btnInsertTitular.Size = new System.Drawing.Size(34, 27);
+			this.btnInsertTitular.TabIndex = 31;
+			this.btnInsertTitular.TabStop = false;
+			this.btnInsertTitular.UseAbsoluteImagePositioning = true;
+			this.btnInsertTitular.UseCompatibleTextRendering = true;
+			this.btnInsertTitular.UseVisualStyleBackColor = false;
+			this.btnInsertTitular.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnInsertTitular.Click += new System.EventHandler(this.btnInsertTitular_Click);
 			// 
 			// frmDespesaPeriodica
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(708, 695);
+			this.Controls.Add(this.btnInsertTitular);
+			this.Controls.Add(this.btnSetTitular);
+			this.Controls.Add(this.txtTitular);
+			this.Controls.Add(this.label14);
 			this.Controls.Add(this.btnSetBanco);
 			this.Controls.Add(this.txtBanco);
 			this.Controls.Add(this.label9);
 			this.Controls.Add(this.btnSetForma);
 			this.Controls.Add(this.txtCobrancaForma);
 			this.Controls.Add(this.label7);
-			this.Controls.Add(this.line2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.txtSetor);
@@ -785,7 +842,6 @@
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
-			this.Controls.SetChildIndex(this.line2, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.txtCobrancaForma, 0);
@@ -793,6 +849,10 @@
 			this.Controls.SetChildIndex(this.label9, 0);
 			this.Controls.SetChildIndex(this.txtBanco, 0);
 			this.Controls.SetChildIndex(this.btnSetBanco, 0);
+			this.Controls.SetChildIndex(this.label14, 0);
+			this.Controls.SetChildIndex(this.txtTitular, 0);
+			this.Controls.SetChildIndex(this.btnSetTitular, 0);
+			this.Controls.SetChildIndex(this.btnInsertTitular, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -829,7 +889,6 @@
 		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label5;
 		private AwesomeShapeControl.Line line1;
-		private AwesomeShapeControl.Line line2;
 		internal System.Windows.Forms.Label label6;
 		private System.Windows.Forms.DateTimePicker dtpIniciarData;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
@@ -855,5 +914,9 @@
 		private System.Windows.Forms.ToolStripButton btnAtivo;
 		internal System.Windows.Forms.Label lblDespesaData;
 		internal System.Windows.Forms.Label label2;
+		internal VIBlend.WinForms.Controls.vButton btnSetTitular;
+		internal System.Windows.Forms.TextBox txtTitular;
+		internal System.Windows.Forms.Label label14;
+		internal VIBlend.WinForms.Controls.vButton btnInsertTitular;
 	}
 }
