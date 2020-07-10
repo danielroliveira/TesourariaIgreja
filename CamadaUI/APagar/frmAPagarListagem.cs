@@ -636,6 +636,22 @@ namespace CamadaUI.APagar
 		{
 			_Situacao = Situacao != 6 ? (int?)Situacao : null;
 			ObterDados();
+
+			if (_Situacao == 1 || _Situacao == null)
+			{
+				btnQuitar.Text = "&Quitar";
+				btnQuitar.Image = Properties.Resources.money_red_24;
+			}
+			else if (_Situacao == 2)
+			{
+				btnQuitar.Text = "&Estornar";
+				btnQuitar.Image = Properties.Resources.refresh_24;
+			}
+			else
+			{
+				btnQuitar.Text = "&Verificar";
+				btnQuitar.Image = Properties.Resources.search_page_24;
+			}
 		}
 
 		private void rbtSit_CheckedChanged(object sender, EventArgs e)

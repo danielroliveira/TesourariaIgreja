@@ -138,6 +138,7 @@ namespace CamadaUI.Saidas
 					// define MaxDate of Data da Despesa
 					dtpDespesaData.MaxDate = DateTime.Today;
 					dtpDespesaData.MinDate = DateTime.Today.AddMonths(-12);
+					lblSitBlock.Visible = false;
 				}
 				else
 				{
@@ -147,6 +148,7 @@ namespace CamadaUI.Saidas
 					// define MaxDate of Data da Despesa
 					dtpDespesaData.MaxDate = _despesa.DespesaData;
 					dtpDespesaData.MinDate = _despesa.DespesaData;
+					lblSitBlock.Visible = true;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -154,6 +156,8 @@ namespace CamadaUI.Saidas
 				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetDocumentoTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetCredor.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetTitular.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnInsertTitular.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
@@ -299,11 +303,13 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			if (Sit != EnumFlagEstado.RegistroSalvo) return;
+			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
 			_despesa = new objDespesa(null);
 			Sit = EnumFlagEstado.NovoRegistro;
-			bind.Add(_despesa);
+			bind.DataSource = _despesa;
+			listAPagar = new List<objAPagar>();
+			bindParcelas.DataSource = listAPagar;
 			txtSetor.Focus();
 		}
 

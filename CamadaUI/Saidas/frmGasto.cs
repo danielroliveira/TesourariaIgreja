@@ -226,6 +226,8 @@ namespace CamadaUI.Saidas
 				btnSetCredor.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetBanco.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetForma.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetTitular.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnInsertTitular.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
@@ -476,11 +478,18 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			if (Sit != EnumFlagEstado.RegistroSalvo) return;
+			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
 			_despesa = new objDespesa(null);
+			_pagar = new objAPagar(null);
+			_saida = new objMovimentacao(null);
+
+			bindDespesa.DataSource = _despesa;
+			bindPagar.DataSource = _pagar;
+			DefineConta(ContaPadrao());
+			DefineSetor(SetorPadrao());
+
 			Sit = EnumFlagEstado.NovoRegistro;
-			bindDespesa.Add(_despesa);
 			txtSetor.Focus();
 		}
 

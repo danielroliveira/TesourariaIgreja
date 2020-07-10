@@ -159,7 +159,7 @@
 			this.tspMenu.Location = new System.Drawing.Point(2, 630);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(689, 44);
-			this.tspMenu.TabIndex = 44;
+			this.tspMenu.TabIndex = 48;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -232,7 +232,7 @@
 			this.txtDespesaDescricao.MaxLength = 100;
 			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
 			this.txtDespesaDescricao.Size = new System.Drawing.Size(451, 27);
-			this.txtDespesaDescricao.TabIndex = 26;
+			this.txtDespesaDescricao.TabIndex = 30;
 			this.txtDespesaDescricao.Tag = "";
 			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -244,7 +244,7 @@
 			this.lblCongregacao.Location = new System.Drawing.Point(94, 411);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
-			this.lblCongregacao.TabIndex = 25;
+			this.lblCongregacao.TabIndex = 29;
 			this.lblCongregacao.Text = "Descrição";
 			// 
 			// dtpDespesaData
@@ -255,7 +255,7 @@
 			this.dtpDespesaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpDespesaData.Name = "dtpDespesaData";
 			this.dtpDespesaData.Size = new System.Drawing.Size(145, 31);
-			this.dtpDespesaData.TabIndex = 29;
+			this.dtpDespesaData.TabIndex = 33;
 			// 
 			// label1
 			// 
@@ -265,7 +265,7 @@
 			this.label1.Location = new System.Drawing.Point(170, 466);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(137, 19);
-			this.label1.TabIndex = 28;
+			this.label1.TabIndex = 32;
 			this.label1.Text = "Data do Pagamento";
 			// 
 			// label8
@@ -276,7 +276,7 @@
 			this.label8.Location = new System.Drawing.Point(43, 500);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 30;
+			this.label8.TabIndex = 34;
 			this.label8.Text = "Valor da Despesa";
 			// 
 			// label2
@@ -287,7 +287,7 @@
 			this.label2.Location = new System.Drawing.Point(412, 372);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(53, 19);
-			this.label2.TabIndex = 23;
+			this.label2.TabIndex = 27;
 			this.label2.Text = "Doc nº";
 			// 
 			// txtDocumentoNumero
@@ -299,7 +299,7 @@
 			this.txtDocumentoNumero.MaxLength = 30;
 			this.txtDocumentoNumero.Name = "txtDocumentoNumero";
 			this.txtDocumentoNumero.Size = new System.Drawing.Size(153, 27);
-			this.txtDocumentoNumero.TabIndex = 24;
+			this.txtDocumentoNumero.TabIndex = 28;
 			this.txtDocumentoNumero.Tag = "";
 			// 
 			// label3
@@ -310,7 +310,7 @@
 			this.label3.Location = new System.Drawing.Point(32, 372);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(135, 19);
-			this.label3.TabIndex = 20;
+			this.label3.TabIndex = 24;
 			this.label3.Text = "Tipo de Documento";
 			// 
 			// btnSetCredor
@@ -362,7 +362,7 @@
 			this.label4.Location = new System.Drawing.Point(50, 333);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 19);
-			this.label4.TabIndex = 17;
+			this.label4.TabIndex = 21;
 			this.label4.Text = "Tipo de Despesa";
 			// 
 			// txtDespesaTipo
@@ -372,7 +372,7 @@
 			this.txtDespesaTipo.MaxLength = 30;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
 			this.txtDespesaTipo.Size = new System.Drawing.Size(411, 27);
-			this.txtDespesaTipo.TabIndex = 18;
+			this.txtDespesaTipo.TabIndex = 22;
 			this.txtDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
 			this.txtDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -387,7 +387,7 @@
 			this.btnSetDespesaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDespesaTipo.RoundedCornersRadius = 0;
 			this.btnSetDespesaTipo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetDespesaTipo.TabIndex = 19;
+			this.btnSetDespesaTipo.TabIndex = 23;
 			this.btnSetDespesaTipo.TabStop = false;
 			this.btnSetDespesaTipo.Text = "...";
 			this.btnSetDespesaTipo.UseCompatibleTextRendering = true;
@@ -442,7 +442,7 @@
 			this.txtDocumentoTipo.MaxLength = 30;
 			this.txtDocumentoTipo.Name = "txtDocumentoTipo";
 			this.txtDocumentoTipo.Size = new System.Drawing.Size(193, 27);
-			this.txtDocumentoTipo.TabIndex = 21;
+			this.txtDocumentoTipo.TabIndex = 25;
 			this.txtDocumentoTipo.Tag = "Pressione a tecla (+) para procurar ou use atalho numérico";
 			this.txtDocumentoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtDocumentoTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
@@ -458,7 +458,7 @@
 			this.btnSetDocumentoTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDocumentoTipo.RoundedCornersRadius = 0;
 			this.btnSetDocumentoTipo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetDocumentoTipo.TabIndex = 22;
+			this.btnSetDocumentoTipo.TabIndex = 26;
 			this.btnSetDocumentoTipo.TabStop = false;
 			this.btnSetDocumentoTipo.Text = "n";
 			this.btnSetDocumentoTipo.UseCompatibleTextRendering = true;
@@ -476,7 +476,7 @@
 			this.line1.Opacity = 0.5F;
 			this.line1.Size = new System.Drawing.Size(650, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 27;
+			this.line1.TabIndex = 31;
 			this.line1.TabStop = false;
 			// 
 			// line2
@@ -489,7 +489,7 @@
 			this.line2.Opacity = 0.5F;
 			this.line2.Size = new System.Drawing.Size(650, 10);
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
-			this.line2.TabIndex = 41;
+			this.line2.TabIndex = 45;
 			this.line2.TabStop = false;
 			// 
 			// btnSetForma
@@ -503,7 +503,7 @@
 			this.btnSetForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetForma.RoundedCornersRadius = 0;
 			this.btnSetForma.Size = new System.Drawing.Size(34, 27);
-			this.btnSetForma.TabIndex = 13;
+			this.btnSetForma.TabIndex = 17;
 			this.btnSetForma.TabStop = false;
 			this.btnSetForma.Text = "n";
 			this.btnSetForma.UseCompatibleTextRendering = true;
@@ -522,7 +522,7 @@
 			this.btnSetBanco.RoundedCornersMask = ((byte)(15));
 			this.btnSetBanco.RoundedCornersRadius = 0;
 			this.btnSetBanco.Size = new System.Drawing.Size(34, 27);
-			this.btnSetBanco.TabIndex = 16;
+			this.btnSetBanco.TabIndex = 20;
 			this.btnSetBanco.TabStop = false;
 			this.btnSetBanco.Text = "...";
 			this.btnSetBanco.UseCompatibleTextRendering = true;
@@ -537,7 +537,7 @@
 			this.txtCobrancaForma.MaxLength = 30;
 			this.txtCobrancaForma.Name = "txtCobrancaForma";
 			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 12;
+			this.txtCobrancaForma.TabIndex = 16;
 			this.txtCobrancaForma.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtCobrancaForma.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
@@ -550,7 +550,7 @@
 			this.label6.Location = new System.Drawing.Point(33, 255);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(134, 19);
-			this.label6.TabIndex = 11;
+			this.label6.TabIndex = 15;
 			this.label6.Text = "Forma de Cobrança";
 			// 
 			// txtBanco
@@ -560,7 +560,7 @@
 			this.txtBanco.MaxLength = 30;
 			this.txtBanco.Name = "txtBanco";
 			this.txtBanco.Size = new System.Drawing.Size(267, 27);
-			this.txtBanco.TabIndex = 15;
+			this.txtBanco.TabIndex = 19;
 			this.txtBanco.Tag = "Pressione a tecla (+) para procurar";
 			this.txtBanco.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -572,7 +572,7 @@
 			this.label7.Location = new System.Drawing.Point(118, 294);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(49, 19);
-			this.label7.TabIndex = 14;
+			this.label7.TabIndex = 18;
 			this.label7.Text = "Banco";
 			// 
 			// btnSetConta
@@ -633,7 +633,7 @@
 			this.txtObservacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtObservacao.Name = "txtObservacao";
 			this.txtObservacao.Size = new System.Drawing.Size(433, 27);
-			this.txtObservacao.TabIndex = 43;
+			this.txtObservacao.TabIndex = 47;
 			this.txtObservacao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label20
@@ -642,7 +642,7 @@
 			this.label20.Location = new System.Drawing.Point(99, 591);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(86, 19);
-			this.label20.TabIndex = 42;
+			this.label20.TabIndex = 46;
 			this.label20.Text = "Observação";
 			// 
 			// label22
@@ -651,7 +651,7 @@
 			this.label22.Location = new System.Drawing.Point(363, 500);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(76, 19);
-			this.label22.TabIndex = 32;
+			this.label22.TabIndex = 39;
 			this.label22.Text = "Acréscimo";
 			// 
 			// label9
@@ -660,7 +660,7 @@
 			this.label9.Location = new System.Drawing.Point(212, 500);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(70, 19);
-			this.label9.TabIndex = 31;
+			this.label9.TabIndex = 36;
 			this.label9.Text = "Desconto";
 			// 
 			// label10
@@ -670,7 +670,7 @@
 			this.label10.Location = new System.Drawing.Point(341, 523);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(25, 29);
-			this.label10.TabIndex = 37;
+			this.label10.TabIndex = 40;
 			this.label10.Text = "+";
 			// 
 			// label11
@@ -680,7 +680,7 @@
 			this.label11.Location = new System.Drawing.Point(195, 520);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(20, 29);
-			this.label11.TabIndex = 35;
+			this.label11.TabIndex = 37;
 			this.label11.Text = "-";
 			// 
 			// label12
@@ -690,7 +690,7 @@
 			this.label12.Location = new System.Drawing.Point(492, 523);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(25, 29);
-			this.label12.TabIndex = 39;
+			this.label12.TabIndex = 42;
 			this.label12.Text = "=";
 			// 
 			// label13
@@ -699,7 +699,7 @@
 			this.label13.Location = new System.Drawing.Point(560, 500);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(94, 19);
-			this.label13.TabIndex = 33;
+			this.label13.TabIndex = 44;
 			this.label13.Text = "Total a pagar";
 			// 
 			// lblValorAPagar
@@ -709,7 +709,7 @@
 			this.lblValorAPagar.Location = new System.Drawing.Point(515, 522);
 			this.lblValorAPagar.Name = "lblValorAPagar";
 			this.lblValorAPagar.Size = new System.Drawing.Size(139, 31);
-			this.lblValorAPagar.TabIndex = 40;
+			this.lblValorAPagar.TabIndex = 43;
 			this.lblValorAPagar.Text = "R$ 0,00";
 			this.lblValorAPagar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -723,7 +723,7 @@
 			this.txtDesconto.Name = "txtDesconto";
 			this.txtDesconto.Positivo = true;
 			this.txtDesconto.Size = new System.Drawing.Size(122, 31);
-			this.txtDesconto.TabIndex = 36;
+			this.txtDesconto.TabIndex = 38;
 			this.txtDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtDesconto.Validating += new System.ComponentModel.CancelEventHandler(this.txtValor_Validating);
 			// 
@@ -737,7 +737,7 @@
 			this.txtAcrescimo.Name = "txtAcrescimo";
 			this.txtAcrescimo.Positivo = true;
 			this.txtAcrescimo.Size = new System.Drawing.Size(122, 31);
-			this.txtAcrescimo.TabIndex = 38;
+			this.txtAcrescimo.TabIndex = 41;
 			this.txtAcrescimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtAcrescimo.Validating += new System.ComponentModel.CancelEventHandler(this.txtValor_Validating);
 			// 
@@ -751,7 +751,7 @@
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
 			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 34;
+			this.txtDespesaValor.TabIndex = 35;
 			this.txtDespesaValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtDespesaValor.Validating += new System.ComponentModel.CancelEventHandler(this.txtValor_Validating);
 			// 
@@ -766,7 +766,7 @@
 			this.btnSetTitular.RoundedCornersMask = ((byte)(15));
 			this.btnSetTitular.RoundedCornersRadius = 0;
 			this.btnSetTitular.Size = new System.Drawing.Size(34, 27);
-			this.btnSetTitular.TabIndex = 47;
+			this.btnSetTitular.TabIndex = 13;
 			this.btnSetTitular.TabStop = false;
 			this.btnSetTitular.Text = "...";
 			this.btnSetTitular.UseCompatibleTextRendering = true;
@@ -781,7 +781,7 @@
 			this.txtTitular.MaxLength = 30;
 			this.txtTitular.Name = "txtTitular";
 			this.txtTitular.Size = new System.Drawing.Size(411, 27);
-			this.txtTitular.TabIndex = 46;
+			this.txtTitular.TabIndex = 12;
 			this.txtTitular.Tag = "Pressione a tecla (+) para procurar";
 			this.txtTitular.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -793,7 +793,7 @@
 			this.label14.Location = new System.Drawing.Point(80, 216);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(87, 19);
-			this.label14.TabIndex = 45;
+			this.label14.TabIndex = 11;
 			this.label14.Text = "Titularidade";
 			// 
 			// btnInsertTitular
@@ -809,7 +809,7 @@
 			this.btnInsertTitular.RoundedCornersMask = ((byte)(15));
 			this.btnInsertTitular.RoundedCornersRadius = 0;
 			this.btnInsertTitular.Size = new System.Drawing.Size(34, 27);
-			this.btnInsertTitular.TabIndex = 48;
+			this.btnInsertTitular.TabIndex = 14;
 			this.btnInsertTitular.TabStop = false;
 			this.btnInsertTitular.UseAbsoluteImagePositioning = true;
 			this.btnInsertTitular.UseCompatibleTextRendering = true;

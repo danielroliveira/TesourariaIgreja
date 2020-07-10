@@ -737,5 +737,9 @@ namespace CamadaUI.Saidas
 
 		#endregion
 
+		private void btnExcluir_Click(object sender, EventArgs e)
+		{
+			AbrirDialog("Em Implementação, fale com o administrador do sistema...", "Implementando");
+		}
 	}
 }

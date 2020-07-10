@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuracao>
+  <DefaultValues>
+    <IgrejaTitulo>Igreja Padrão</IgrejaTitulo>
+    <DataPadrao>01/01/2020</DataPadrao>
+    <CongregacaoPadrao>1</CongregacaoPadrao>
+    <CongregacaoDescricao>Congregacao Padrão</CongregacaoDescricao>
+    <ContaPadrao>1</ContaPadrao>
+    <ContaDescricao>Conta Principal</ContaDescricao>
+    <SetorPadrao>1</SetorPadrao>
+    <SetorDescricao>Setor Principal</SetorDescricao>
+    <DataBloqueada></DataBloqueada>
+    <CidadePadrao></CidadePadrao>
+    <UFPadrao></UFPadrao>
+  </DefaultValues>
+  <ArquivoLogo>
+    <ArquivoLogoMono>
+    </ArquivoLogoMono>
+    <ArquivoLogoColor>
+    </ArquivoLogoColor>
+  </ArquivoLogo>
+  <ServidorDados>
+    <StringConexao>
+    </StringConexao>
+    <ServidorLocal>
+    </ServidorLocal>
+  </ServidorDados>
+  <DadosIgreja>
+    <RazaoSocial></RazaoSocial>
+    <CNPJ></CNPJ>
+    <TelefonePrincipal></TelefonePrincipal>
+    <TelefoneFinanceiro></TelefoneFinanceiro>
+	<ContatoFinanceiro></ContatoFinanceiro>
+    <Endereco></Endereco>
+    <Bairro></Bairro>
+    <Cidade></Cidade>
+    <UF></UF>
+    <CEP></CEP>
+  </DadosIgreja>
+</Configuracao>

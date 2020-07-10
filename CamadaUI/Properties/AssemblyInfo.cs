@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CamadaUI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Tesouraria")]
+[assembly: AssemblyDescription("Controle de Tesouraria e Contabilidade para Igrejas")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CamadaUI")]
+[assembly: AssemblyCompany("DRO Systems")]
+[assembly: AssemblyProduct("Tesouraria Igreja")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

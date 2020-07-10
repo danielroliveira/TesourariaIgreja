@@ -264,7 +264,7 @@ namespace CamadaUI.APagar
 				objMovimentacao saida = (objMovimentacao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 				var resp = AbrirDialog($"Você deseja realmente ESTORNAR este registro de PAGAMENTO selecionado?\n" +
-					$"DATA: {saida.MovData.ToShortDateString()}\nVALOR: {saida.MovValor}\n{saida.Conta}", "Estornar Pagamento",
+					$"DATA: {saida.MovData.ToShortDateString()}\nVALOR: {saida.MovValorAbsoluto:c}\n{saida.Conta}", "Estornar Pagamento",
 					DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 
 				if (resp == DialogResult.No) return;

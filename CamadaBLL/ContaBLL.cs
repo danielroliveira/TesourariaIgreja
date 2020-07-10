@@ -248,19 +248,20 @@ namespace CamadaBLL
 			try
 			{
 				decimal saldo = ContaSaldoGet(IDConta, dbTran);
+				decimal newSaldo = saldo + valor;
 
 				//--- check NEGATIVE SALDO after change
-				if (saldo + valor < 0)
+				if (newSaldo < 0)
 				{
 					throw new AppException("O Saldo da Conta se tornará negativo após movimentação...");
 				}
 
-				string query = "UPDATE tblConta SET ContaSaldo = ContaSaldo + @valor WHERE IDConta = @IDConta";
+				string query = "UPDATE tblConta SET ContaSaldo = @newSaldo WHERE IDConta = @IDConta";
 
 				// add params
 				dbTran.LimparParametros();
 				dbTran.AdicionarParametros("@IDConta", IDConta);
-				dbTran.AdicionarParametros("@valor", valor);
+				dbTran.AdicionarParametros("@newSaldo", newSaldo);
 
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
 

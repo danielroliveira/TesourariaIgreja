@@ -144,6 +144,8 @@ namespace CamadaUI.Saidas
 				btnSetForma.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 				btnSetBanco.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 				btnSetCredor.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+				btnSetTitular.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+				btnInsertTitular.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 			}
 		}
 
@@ -514,11 +516,11 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			if (Sit != EnumFlagEstado.RegistroSalvo) return;
+			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
 			_despesa = new objDespesaPeriodica(null);
 			Sit = EnumFlagEstado.NovoRegistro;
-			bind.Add(_despesa);
+			bind.DataSource = _despesa;
 			txtSetor.Focus();
 		}
 

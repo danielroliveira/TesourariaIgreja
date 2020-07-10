@@ -90,7 +90,7 @@
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(416, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(252, 50);
-			this.lblTitulo.TabIndex = 4;
+			this.lblTitulo.TabIndex = 5;
 			this.lblTitulo.Text = "Cadastro de Despesas";
 			// 
 			// btnClose
@@ -99,7 +99,6 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(668, 0);
-			this.btnClose.TabIndex = 5;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -125,7 +124,7 @@
 			this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblID.Name = "lblID";
 			this.lblID.Size = new System.Drawing.Size(94, 30);
-			this.lblID.TabIndex = 0;
+			this.lblID.TabIndex = 1;
 			this.lblID.Text = "0001";
 			this.lblID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -139,7 +138,7 @@
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
 			this.lbl_IdTexto.Size = new System.Drawing.Size(35, 13);
-			this.lbl_IdTexto.TabIndex = 1;
+			this.lbl_IdTexto.TabIndex = 2;
 			this.lbl_IdTexto.Text = "Reg.";
 			this.lbl_IdTexto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -162,7 +161,7 @@
 			this.tspMenu.Location = new System.Drawing.Point(2, 648);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(704, 44);
-			this.tspMenu.TabIndex = 27;
+			this.tspMenu.TabIndex = 28;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -248,7 +247,7 @@
 			this.txtDespesaDescricao.MaxLength = 100;
 			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
 			this.txtDespesaDescricao.Size = new System.Drawing.Size(433, 27);
-			this.txtDespesaDescricao.TabIndex = 20;
+			this.txtDespesaDescricao.TabIndex = 21;
 			this.txtDespesaDescricao.Tag = "";
 			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -260,7 +259,7 @@
 			this.lblCongregacao.Location = new System.Drawing.Point(118, 307);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
-			this.lblCongregacao.TabIndex = 19;
+			this.lblCongregacao.TabIndex = 20;
 			this.lblCongregacao.Text = "Descrição";
 			// 
 			// txtDespesaValor
@@ -273,7 +272,7 @@
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
 			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 25;
+			this.txtDespesaValor.TabIndex = 26;
 			this.txtDespesaValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label8
@@ -284,7 +283,7 @@
 			this.label8.Location = new System.Drawing.Point(357, 366);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 24;
+			this.label8.TabIndex = 25;
 			this.label8.Text = "Valor da Despesa";
 			// 
 			// btnSetCredor
@@ -336,7 +335,7 @@
 			this.label4.Location = new System.Drawing.Point(74, 190);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 19);
-			this.label4.TabIndex = 10;
+			this.label4.TabIndex = 11;
 			this.label4.Text = "Tipo de Despesa";
 			// 
 			// txtDespesaTipo
@@ -346,7 +345,7 @@
 			this.txtDespesaTipo.MaxLength = 30;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
 			this.txtDespesaTipo.Size = new System.Drawing.Size(393, 27);
-			this.txtDespesaTipo.TabIndex = 11;
+			this.txtDespesaTipo.TabIndex = 12;
 			this.txtDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
 			this.txtDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -361,7 +360,7 @@
 			this.btnSetDespesaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDespesaTipo.RoundedCornersRadius = 0;
 			this.btnSetDespesaTipo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetDespesaTipo.TabIndex = 12;
+			this.btnSetDespesaTipo.TabIndex = 13;
 			this.btnSetDespesaTipo.TabStop = false;
 			this.btnSetDespesaTipo.Text = "...";
 			this.btnSetDespesaTipo.UseCompatibleTextRendering = true;
@@ -419,7 +418,7 @@
 			this.line1.Opacity = 0.5F;
 			this.line1.Size = new System.Drawing.Size(650, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 21;
+			this.line1.TabIndex = 22;
 			this.line1.TabStop = false;
 			// 
 			// label6
@@ -430,7 +429,7 @@
 			this.label6.Location = new System.Drawing.Point(58, 366);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(99, 19);
-			this.label6.TabIndex = 22;
+			this.label6.TabIndex = 23;
 			this.label6.Text = "Data do Início";
 			// 
 			// dtpIniciarData
@@ -441,7 +440,7 @@
 			this.dtpIniciarData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpIniciarData.Name = "dtpIniciarData";
 			this.dtpIniciarData.Size = new System.Drawing.Size(145, 31);
-			this.dtpIniciarData.TabIndex = 23;
+			this.dtpIniciarData.TabIndex = 24;
 			// 
 			// btnSetForma
 			// 
@@ -454,7 +453,7 @@
 			this.btnSetForma.RoundedCornersMask = ((byte)(15));
 			this.btnSetForma.RoundedCornersRadius = 0;
 			this.btnSetForma.Size = new System.Drawing.Size(34, 27);
-			this.btnSetForma.TabIndex = 15;
+			this.btnSetForma.TabIndex = 16;
 			this.btnSetForma.TabStop = false;
 			this.btnSetForma.Text = "...";
 			this.btnSetForma.UseCompatibleTextRendering = true;
@@ -469,7 +468,7 @@
 			this.txtCobrancaForma.MaxLength = 30;
 			this.txtCobrancaForma.Name = "txtCobrancaForma";
 			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 14;
+			this.txtCobrancaForma.TabIndex = 15;
 			this.txtCobrancaForma.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -481,7 +480,7 @@
 			this.label7.Location = new System.Drawing.Point(57, 229);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(134, 19);
-			this.label7.TabIndex = 13;
+			this.label7.TabIndex = 14;
 			this.label7.Text = "Forma de Cobrança";
 			// 
 			// btnSetBanco
@@ -495,7 +494,7 @@
 			this.btnSetBanco.RoundedCornersMask = ((byte)(15));
 			this.btnSetBanco.RoundedCornersRadius = 0;
 			this.btnSetBanco.Size = new System.Drawing.Size(34, 27);
-			this.btnSetBanco.TabIndex = 18;
+			this.btnSetBanco.TabIndex = 19;
 			this.btnSetBanco.TabStop = false;
 			this.btnSetBanco.Text = "...";
 			this.btnSetBanco.UseCompatibleTextRendering = true;
@@ -510,7 +509,7 @@
 			this.txtBanco.MaxLength = 30;
 			this.txtBanco.Name = "txtBanco";
 			this.txtBanco.Size = new System.Drawing.Size(267, 27);
-			this.txtBanco.TabIndex = 17;
+			this.txtBanco.TabIndex = 18;
 			this.txtBanco.Tag = "Pressione a tecla (+) para procurar";
 			this.txtBanco.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -522,7 +521,7 @@
 			this.label9.Location = new System.Drawing.Point(142, 268);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(49, 19);
-			this.label9.TabIndex = 16;
+			this.label9.TabIndex = 17;
 			this.label9.Text = "Banco";
 			// 
 			// txtRecorrenciaRepeticao
@@ -695,7 +694,7 @@
 			this.panel2.Location = new System.Drawing.Point(19, 411);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(671, 222);
-			this.panel2.TabIndex = 26;
+			this.panel2.TabIndex = 27;
 			// 
 			// lblDespesaData
 			// 
@@ -706,7 +705,7 @@
 			this.lblDespesaData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblDespesaData.Name = "lblDespesaData";
 			this.lblDespesaData.Size = new System.Drawing.Size(174, 30);
-			this.lblDespesaData.TabIndex = 2;
+			this.lblDespesaData.TabIndex = 3;
 			this.lblDespesaData.Text = "01/01/2000";
 			this.lblDespesaData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lblDespesaData.Click += new System.EventHandler(this.lblDespesaData_Click);
@@ -721,7 +720,7 @@
 			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(37, 13);
-			this.label2.TabIndex = 3;
+			this.label2.TabIndex = 4;
 			this.label2.Text = "Data";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -779,7 +778,7 @@
 			this.btnInsertTitular.RoundedCornersMask = ((byte)(15));
 			this.btnInsertTitular.RoundedCornersRadius = 0;
 			this.btnInsertTitular.Size = new System.Drawing.Size(34, 27);
-			this.btnInsertTitular.TabIndex = 31;
+			this.btnInsertTitular.TabIndex = 10;
 			this.btnInsertTitular.TabStop = false;
 			this.btnInsertTitular.UseAbsoluteImagePositioning = true;
 			this.btnInsertTitular.UseCompatibleTextRendering = true;

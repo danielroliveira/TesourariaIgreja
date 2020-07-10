@@ -67,6 +67,7 @@
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnExcluir = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlSituacao.SuspendLayout();
@@ -98,10 +99,10 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(418, 625);
+			this.btnFechar.Location = new System.Drawing.Point(550, 625);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 15;
+			this.btnFechar.TabIndex = 16;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -260,7 +261,7 @@
 			this.label1.Location = new System.Drawing.Point(1095, 616);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(83, 15);
-			this.label1.TabIndex = 17;
+			this.label1.TabIndex = 18;
 			this.label1.Text = "Valor Mensal:";
 			// 
 			// lblValorTotal
@@ -270,7 +271,7 @@
 			this.lblValorTotal.Location = new System.Drawing.Point(898, 635);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
-			this.lblValorTotal.TabIndex = 18;
+			this.lblValorTotal.TabIndex = 19;
 			this.lblValorTotal.Text = "R$ 0,00";
 			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -291,7 +292,7 @@
 			this.btnProcurar.RoundedCornersMask = ((byte)(15));
 			this.btnProcurar.RoundedCornersRadius = 2;
 			this.btnProcurar.Size = new System.Drawing.Size(138, 41);
-			this.btnProcurar.TabIndex = 10;
+			this.btnProcurar.TabIndex = 1;
 			this.btnProcurar.TabStop = false;
 			this.btnProcurar.Tag = "Clique aqui para efetuar a filtragem...";
 			this.btnProcurar.Text = "&Filtrar";
@@ -325,7 +326,7 @@
 			this.lblValorMensal.Location = new System.Drawing.Point(1041, 635);
 			this.lblValorMensal.Name = "lblValorMensal";
 			this.lblValorMensal.Size = new System.Drawing.Size(137, 32);
-			this.lblValorMensal.TabIndex = 19;
+			this.lblValorMensal.TabIndex = 20;
 			this.lblValorMensal.Text = "R$ 0,00";
 			this.lblValorMensal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -337,7 +338,7 @@
 			this.label3.Location = new System.Drawing.Point(966, 616);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(69, 15);
-			this.label3.TabIndex = 16;
+			this.label3.TabIndex = 17;
 			this.label3.Text = "Valor Total:";
 			// 
 			// btnSetContribuinte
@@ -479,7 +480,7 @@
 			this.btnLimpar.RoundedCornersMask = ((byte)(15));
 			this.btnLimpar.RoundedCornersRadius = 2;
 			this.btnLimpar.Size = new System.Drawing.Size(138, 41);
-			this.btnLimpar.TabIndex = 10;
+			this.btnLimpar.TabIndex = 2;
 			this.btnLimpar.TabStop = false;
 			this.btnLimpar.Text = "&Limpar";
 			this.btnLimpar.TextAbsolutePosition = new System.Drawing.Point(25, 5);
@@ -499,7 +500,7 @@
 			this.pnlSituacao.Location = new System.Drawing.Point(18, 30);
 			this.pnlSituacao.Name = "pnlSituacao";
 			this.pnlSituacao.Size = new System.Drawing.Size(254, 41);
-			this.pnlSituacao.TabIndex = 21;
+			this.pnlSituacao.TabIndex = 0;
 			// 
 			// rbtInativas
 			// 
@@ -509,7 +510,7 @@
 			this.rbtInativas.Location = new System.Drawing.Point(128, 3);
 			this.rbtInativas.Name = "rbtInativas";
 			this.rbtInativas.Size = new System.Drawing.Size(111, 34);
-			this.rbtInativas.TabIndex = 0;
+			this.rbtInativas.TabIndex = 1;
 			this.rbtInativas.Tag = "false";
 			this.rbtInativas.Text = "Inativas";
 			this.rbtInativas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -543,7 +544,7 @@
 			this.panel2.Location = new System.Drawing.Point(658, 68);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(453, 105);
-			this.panel2.TabIndex = 22;
+			this.panel2.TabIndex = 10;
 			// 
 			// MenuListagem
 			// 
@@ -569,10 +570,25 @@
 			this.DesativarToolStripMenuItem.Text = "Desativar Despesa Periódica";
 			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
+			// btnExcluir
+			// 
+			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExcluir.Location = new System.Drawing.Point(418, 625);
+			this.btnExcluir.Name = "btnExcluir";
+			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
+			this.btnExcluir.TabIndex = 15;
+			this.btnExcluir.Text = "&Excluir";
+			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnExcluir.UseVisualStyleBackColor = true;
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+			// 
 			// frmDespesaPeriodicaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1200, 680);
+			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.btnSetContribuinte);
 			this.Controls.Add(this.txtCredor);
 			this.Controls.Add(this.lblContribuinte);
@@ -616,6 +632,7 @@
 			this.Controls.SetChildIndex(this.lblContribuinte, 0);
 			this.Controls.SetChildIndex(this.txtCredor, 0);
 			this.Controls.SetChildIndex(this.btnSetContribuinte, 0);
+			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlSituacao.ResumeLayout(false);
@@ -664,5 +681,6 @@
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		internal System.Windows.Forms.Button btnExcluir;
 	}
 }

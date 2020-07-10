@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -61,6 +61,7 @@
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
 			this.lblFiltro = new System.Windows.Forms.Label();
+			this.btnExcluir = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -92,10 +93,10 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(576, 625);
+			this.btnFechar.Location = new System.Drawing.Point(708, 626);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 7;
+			this.btnFechar.TabIndex = 9;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -109,7 +110,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(312, 625);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 5;
+			this.btnAdicionar.TabIndex = 6;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -123,7 +124,7 @@
 			this.btnVisualizar.Location = new System.Drawing.Point(180, 625);
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
-			this.btnVisualizar.TabIndex = 4;
+			this.btnVisualizar.TabIndex = 5;
 			this.btnVisualizar.Text = "&Visualizar";
 			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -136,35 +137,35 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnData,
-			this.clnSetor,
-			this.clnTipo,
-			this.clnCredor,
-			this.clnDocumentoTipo,
-			this.clnSituacao,
-			this.clnValor});
+            this.clnID,
+            this.clnData,
+            this.clnSetor,
+            this.clnTipo,
+            this.clnCredor,
+            this.clnDocumentoTipo,
+            this.clnSituacao,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -179,7 +180,7 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1156, 473);
-			this.dgvListagem.TabIndex = 2;
+			this.dgvListagem.TabIndex = 3;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			// 
 			// clnID
@@ -243,7 +244,7 @@
 			this.label1.Location = new System.Drawing.Point(1109, 617);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(69, 15);
-			this.label1.TabIndex = 8;
+			this.label1.TabIndex = 10;
 			this.label1.Text = "Valor Total:";
 			// 
 			// lblValorTotal
@@ -253,7 +254,7 @@
 			this.lblValorTotal.Location = new System.Drawing.Point(1041, 636);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
-			this.lblValorTotal.TabIndex = 9;
+			this.lblValorTotal.TabIndex = 11;
 			this.lblValorTotal.Text = "R$ 0,00";
 			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -273,7 +274,7 @@
 			this.btnProcurar.RoundedCornersMask = ((byte)(15));
 			this.btnProcurar.RoundedCornersRadius = 2;
 			this.btnProcurar.Size = new System.Drawing.Size(138, 41);
-			this.btnProcurar.TabIndex = 3;
+			this.btnProcurar.TabIndex = 4;
 			this.btnProcurar.TabStop = false;
 			this.btnProcurar.Text = "Filtrar";
 			this.btnProcurar.TextAbsolutePosition = new System.Drawing.Point(25, 5);
@@ -292,7 +293,7 @@
 			this.button1.Location = new System.Drawing.Point(444, 625);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(126, 42);
-			this.button1.TabIndex = 6;
+			this.button1.TabIndex = 7;
 			this.button1.Text = "&Imprimir";
 			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -320,7 +321,7 @@
 			this.btnPeriodoPosterior.Minimum = 0;
 			this.btnPeriodoPosterior.Name = "btnPeriodoPosterior";
 			this.btnPeriodoPosterior.Size = new System.Drawing.Size(25, 25);
-			this.btnPeriodoPosterior.TabIndex = 4;
+			this.btnPeriodoPosterior.TabIndex = 0;
 			this.btnPeriodoPosterior.TabStop = false;
 			this.btnPeriodoPosterior.Text = "VArrowButton1";
 			this.btnPeriodoPosterior.Value = 0;
@@ -501,13 +502,28 @@
 			this.lblFiltro.Location = new System.Drawing.Point(717, 67);
 			this.lblFiltro.Name = "lblFiltro";
 			this.lblFiltro.Size = new System.Drawing.Size(461, 58);
-			this.lblFiltro.TabIndex = 10;
+			this.lblFiltro.TabIndex = 2;
 			this.lblFiltro.Text = "Filtro";
+			// 
+			// btnExcluir
+			// 
+			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExcluir.Location = new System.Drawing.Point(576, 626);
+			this.btnExcluir.Name = "btnExcluir";
+			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
+			this.btnExcluir.TabIndex = 8;
+			this.btnExcluir.Text = "&Excluir";
+			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnExcluir.UseVisualStyleBackColor = true;
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
 			// 
 			// frmDespesaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1200, 680);
+			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.lblFiltro);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblValorTotal);
@@ -532,6 +548,7 @@
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.lblFiltro, 0);
+			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlPorMes.ResumeLayout(false);
@@ -575,5 +592,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnDocumentoTipo;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
+		internal System.Windows.Forms.Button btnExcluir;
 	}
 }

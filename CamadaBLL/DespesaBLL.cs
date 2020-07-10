@@ -176,6 +176,9 @@ namespace CamadaBLL
 				Situacao = (string)row["Situacao"],
 				Parcelas = (byte)row["Parcelas"],
 				Prioridade = (byte)row["Prioridade"],
+				IDTitular = row["IDTitular"] == DBNull.Value ? null : (int?)row["IDTitular"],
+				Titular = row["Titular"] == DBNull.Value ? null : (string)row["Titular"],
+				CNP = row["CNP"] == DBNull.Value ? null : (string)row["CNP"],
 			};
 
 			return despesa;
@@ -203,6 +206,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDCredor", desp.IDCredor);
 				db.AdicionarParametros("@IDSetor", desp.IDSetor);
 				db.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
+				db.AdicionarParametros("@IDTitular", desp.IDTitular);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -342,9 +346,151 @@ namespace CamadaBLL
 
 		// DELETE
 		//------------------------------------------------------------------------------------------------------------
-		public bool DeleteDespesa(int IDDespesa)
+		public bool DeleteDespesaComum(long IDDespesa)
 		{
-			throw new NotImplementedException("Em implementação");
+			AcessoDados dbTran = null;
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// 1 - CHECK APagar and Movimentacao Saida
+				//------------------------------------------------------------------------------------------------------------
+				List<objAPagar> listAPagar = new List<objAPagar>();
+				List<objMovimentacao> listMovSaidas = new List<objMovimentacao>();
+
+				if (!VerifyBeforeDelete(IDDespesa, ref listAPagar, ref listMovSaidas, dbTran)) return false;
+
+				// 2 - delete ALL APAGAR 
+				//------------------------------------------------------------------------------------------------------------
+				if (listAPagar.Count > 0)
+				{
+					APagarBLL pBLL = new APagarBLL();
+
+					foreach (objAPagar pagar in listAPagar)
+					{
+						pBLL.DeleteAPagar((long)pagar.IDAPagar, dbTran);
+					}
+				}
+
+				// 3 - delete DESPESA COMUM
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblDespesaComum WHERE IDDespesa = @IDDespesa";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// 4 - delete DESPESA
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				query = "DELETE tblDespesa WHERE IDDespesa = @IDDespesa";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// 5 - COMMIT AND RETURN
+				//------------------------------------------------------------------------------------------------------------
+				dbTran.CommitTransaction();
+				return true;
+			}
+			catch (AppException ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// VERIFY DESPESA BEFORE DELETE
+		//------------------------------------------------------------------------------------------------------------
+		private bool VerifyBeforeDelete(long IDDespesa,
+			ref List<objAPagar> listAPagar,
+			ref List<objMovimentacao> listMovSaidas,
+			AcessoDados dbTran)
+		{
+			try
+			{
+				// GET APAGAR
+				//------------------------------------------------------------------------------------------------------------
+				listAPagar = new APagarBLL().GetListAPagarByDespesa(IDDespesa, dbTran);
+
+				// VERIFY APAGAR
+				//------------------------------------------------------------------------------------------------------------
+				bool err = false;
+				string errMessage = "Os a PAGAR abaixo possuem pagamentos...\n";
+
+				foreach (objAPagar pagar in listAPagar)
+				{
+					if (pagar.IDSituacao == 2)
+					{
+						errMessage += $"Reg.: {pagar.IDAPagar:D4}    {pagar.Vencimento.ToShortDateString()}\n";
+						err = true;
+					}
+				}
+
+				if (err == true)
+				{
+					errMessage += "Favor estornar antes os pagamentos se deseja EXCLUIR a despesa.";
+					throw new AppException(errMessage);
+				}
+
+				// VERIFY MOVIMENTACAO SAIDA FROM ARECEBER
+				//------------------------------------------------------------------------------------------------------------
+				MovimentacaoBLL mBLL = new MovimentacaoBLL();
+				listMovSaidas = new List<objMovimentacao>();
+
+				if (listAPagar.Count > 0)
+				{
+					foreach (objAPagar pagar in listAPagar)
+					{
+						listMovSaidas.AddRange(mBLL.GetMovimentacaoListByOrigem(EnumMovOrigem.APagar, (long)pagar.IDAPagar, true, dbTran));
+					}
+				}
+
+				// VERIFY RECEBIMENTOS WITH CAIXA OR BLOCKED
+				//------------------------------------------------------------------------------------------------------------
+				errMessage = "Essa Despesa possui pagamentos que foram inseridas no caixa...\n";
+
+				foreach (objMovimentacao saida in listMovSaidas)
+				{
+					if (saida.IDCaixa != null)
+					{
+						errMessage += $"Reg.: {saida.IDMovimentacao:D4} | {saida.MovData.ToShortDateString()} | Caixa: {saida.IDCaixa:D4}\n";
+						err = true;
+					}
+				}
+
+				if (err == true)
+				{
+					errMessage += "Favor remover o(s) caixa(s) se desejar EXCLUIR a(s) DESPESA.";
+					throw new AppException(errMessage);
+				}
+
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		//=============================================================================

@@ -13,6 +13,7 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmDespesaListagem : CamadaUI.Modals.frmModFinBorder
 	{
+		DespesaBLL dBLL = new DespesaBLL();
 		private List<objDespesa> listCont = new List<objDespesa>();
 		private Form _formOrigem;
 		private DateTime _myMes;
@@ -98,8 +99,6 @@ namespace CamadaUI.Saidas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-
-				DespesaBLL dBLL = new DespesaBLL();
 
 				// define list
 				listCont = dBLL.GetListDespesa(
@@ -345,6 +344,58 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// EXCLUIR DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExcluir_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Excluir...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// --- ask USER
+				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Despesa abaixo?\n" +
+					$"\nREG: {item.IDDespesa:D4}\nDATA: {item.DespesaData.ToShortDateString()}\nVALOR: {item.DespesaValor:c}",
+					"Excluir Despesa", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes) return;
+
+				//--- EXECUTE DELETE
+				dBLL.DeleteDespesaComum((long)item.IDDespesa);
+
+				//--- REQUERY LIST
+				ObterDados();
+
+				AbrirDialog("Despesa Excluída com Sucesso!", "Despesa Excluída");
+			}
+			catch (AppException ex)
+			{
+				AbrirDialog("A Despesa está protegida de exclusão porque:\n" +
+							ex.Message, "Bloqueio de Exclusão", DialogType.OK, DialogIcon.Exclamation);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region CONTROL FUNCTIONS
@@ -525,6 +576,5 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // DATE MONTH CONTROLER --- END
-
 	}
 }

@@ -308,6 +308,13 @@ namespace CamadaUI.Main
 
 			try
 			{
+				if (lstConn.SelectedItems.Count == 0)
+				{
+					AbrirDialog("Favor abrir o arquivo chave e selecionar uma string de conexão",
+						"Selecionar String", DialogType.OK, DialogIcon.Exclamation);
+					return;
+				}
+
 				acessoControl.SaveConnString(SourceXMLFile, lstConn.SelectedItems[0].Text);
 				DialogResult = DialogResult.OK;
 			}

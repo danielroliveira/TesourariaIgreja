@@ -458,7 +458,7 @@ namespace CamadaBLL
 
 				//--- 1. check DELETE tblMovAcrescimo
 				//------------------------------------------------------------------------------------------------------------
-				if (mov.AcrescimoValor != 0)
+				if (mov.AcrescimoValor != null && mov.AcrescimoValor != 0)
 				{
 					//--- clear Params
 					db.LimparParametros();
@@ -503,8 +503,8 @@ namespace CamadaBLL
 
 				//--- 5. CHANGE SALDOS
 				//------------------------------------------------------------------------------------------------------------
-				new ContaBLL().ContaSaldoChange((int)mov.IDConta, mov.MovValor, db, ContaSdlUpdate);
-				new SetorBLL().SetorSaldoChange((int)mov.IDSetor, mov.MovValor, db, SetorSdlUpdate);
+				new ContaBLL().ContaSaldoChange((int)mov.IDConta, mov.MovValor * (-1), db, ContaSdlUpdate);
+				new SetorBLL().SetorSaldoChange((int)mov.IDSetor, mov.MovValor * (-1), db, SetorSdlUpdate);
 
 				if (dbTran == null) db.CommitTransaction();
 				return true;

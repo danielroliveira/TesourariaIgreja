@@ -231,7 +231,10 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Titular
 		{
-			get => EditData._Titular;
+			get
+			{
+				return string.IsNullOrEmpty(EditData._Titular) ? "O PRÓPRIO" : EditData._Titular;
+			}
 			set => EditData._Titular = value;
 		}
 

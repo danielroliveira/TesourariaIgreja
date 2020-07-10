@@ -50,7 +50,7 @@ namespace CamadaUI.Config
 					picLogoColor.Image = ImageLogoColor;
 					resp = true;
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					AbrirDialog("O arquivo de imagem da LOGO Colorida não foi encontrado no caminho especificado:\n" + txtLogoMonoCaminho.Text,
 						"Erro: Arquivo da Logo",
@@ -68,7 +68,7 @@ namespace CamadaUI.Config
 					ImageLogoMono = Image.FromFile(txtLogoMonoCaminho.Text);
 					picLogoMono.Image = ImageLogoMono;
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					AbrirDialog("O arquivo de imagem da LOGO Monocromática não foi encontrado no caminho especificado:\n" +
 						txtLogoMonoCaminho.Text,

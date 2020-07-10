@@ -549,6 +549,37 @@ namespace CamadaBLL
 			}
 		}
 
+		// DELETE APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		public bool DeleteAPagar(long IDAPagar, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDAPagar", IDAPagar);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblAPagar WHERE IDAPagar = @IDAPagar";
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// QUITAR A PAGAR AND INSERT NEW SAIDA
 		//------------------------------------------------------------------------------------------------------------
 		public long QuitarAPagar(
@@ -639,10 +670,10 @@ namespace CamadaBLL
 				new MovimentacaoBLL().DeleteMovimentacao((long)saida.IDMovimentacao, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 
 				// Change APAGAR
-				decimal DoValor = saida.MovValor - saida.AcrescimoValor ?? 0;
+				decimal DoValor = saida.MovValor - (saida.AcrescimoValor ?? 0);
 
 				apagar.ValorAcrescimo -= saida.AcrescimoValor ?? 0;
-				apagar.ValorPago -= DoValor;
+				apagar.ValorPago += DoValor;
 				apagar.PagamentoData = null;
 				apagar.IDSituacao = 1;
 				apagar.Situacao = "Em Aberto";
@@ -722,7 +753,6 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
-
 
 		// INSERT ACRESCIMO MOTIVO
 		//------------------------------------------------------------------------------------------------------------
