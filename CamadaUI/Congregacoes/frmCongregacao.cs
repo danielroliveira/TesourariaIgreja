@@ -1,15 +1,13 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Congregacoes
 {
@@ -18,6 +16,14 @@ namespace CamadaUI.Congregacoes
 		private objCongregacao _congregacao;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
+
+		private List<objSetor> listSetor;
+		private List<objReuniao> listReuniao;
+
+		// DEFINE DATAGRID FONTS
+		private Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+		private Image ImgInativo = Properties.Resources.block_24;
+		private Image ImgAtivo = Properties.Resources.accept_24;
 
 		#region SUB NEW | PROPERTIES
 
@@ -40,6 +46,8 @@ namespace CamadaUI.Congregacoes
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+				ObterDadosSetor();
+				ObterDadosReuniao();
 			}
 
 			AtivoButtonImage();
@@ -63,6 +71,9 @@ namespace CamadaUI.Congregacoes
 			get { return _Sit; }
 			set
 			{
+				// before change ---> redefine format and controls
+				DefineSize(value);
+
 				_Sit = value;
 				switch (value)
 				{
@@ -96,7 +107,200 @@ namespace CamadaUI.Congregacoes
 			}
 		}
 
+		private void DefineSize(EnumFlagEstado newSit)
+		{
+			if (Sit == newSit) return;
+
+			switch (newSit)
+			{
+				case EnumFlagEstado.NovoRegistro:
+					lblReuniao.Visible = false;
+					dgvReuniao.Visible = false;
+					lblSetores.Visible = false;
+					dgvSetor.Visible = false;
+					Size = new Size(560, 503);
+					break;
+				case EnumFlagEstado.RegistroSalvo:
+				case EnumFlagEstado.Alterado:
+				case EnumFlagEstado.RegistroBloqueado:
+					lblReuniao.Visible = true;
+					dgvReuniao.Visible = true;
+					lblSetores.Visible = true;
+					dgvSetor.Visible = true;
+					Size = new Size(940, 503);
+					break;
+				default:
+					break;
+			}
+
+			//--- Redesenha a border do form
+			Rectangle rect = new Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1);
+			Pen pen = new Pen(Color.SlateGray, 3);
+			Refresh();
+			CreateGraphics().DrawRectangle(pen, rect);
+		}
+
+		// GET DATA
+		//------------------------------------------------------------------------------------------------------------
+		private void ObterDadosSetor()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				SetorBLL sBLL = new SetorBLL();
+				listSetor = sBLL.GetListSetor("", null, _congregacao.IDCongregacao);
+				dgvSetor.DataSource = listSetor;
+				FormataListagemSetor();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter os Dados da listagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void ObterDadosReuniao()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				ReuniaoBLL rBLL = new ReuniaoBLL();
+				listReuniao = rBLL.GetListReuniao("", null, _congregacao.IDCongregacao);
+				dgvReuniao.DataSource = listReuniao;
+				FormataListagemReuniao();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter os Dados da listagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
+
+		#region DATAGRID LIST FUNCTIONS
+
+		// FORMATA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void FormataListagemSetor()
+		{
+			dgvSetor.Columns.Clear();
+			dgvSetor.AutoGenerateColumns = false;
+			dgvSetor.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvSetor.MultiSelect = false;
+			dgvSetor.ColumnHeadersVisible = true;
+			dgvSetor.AllowUserToResizeRows = false;
+			dgvSetor.AllowUserToResizeColumns = false;
+			dgvSetor.RowHeadersWidth = 36;
+			dgvSetor.RowTemplate.Height = 30;
+			dgvSetor.StandardTab = true;
+			dgvSetor.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+
+			// FONT
+			dgvSetor.Font = clnFont;
+			dgvSetor.DefaultCellStyle.Font = clnFont;
+			dgvSetor.AlternatingRowsDefaultCellStyle.Font = clnFont;
+			dgvSetor.ColumnHeadersDefaultCellStyle.Font = clnFont;
+
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
+			//--- (1) COLUNA SETOR
+			clnSetor.DataPropertyName = "Setor";
+			clnSetor.Visible = true;
+			clnSetor.ReadOnly = true;
+			clnSetor.Resizable = DataGridViewTriState.False;
+			clnSetor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnSetor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnSetor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			colList.Add(clnSetor);
+
+			//--- (2) COLUNA SALDO
+			clnSaldo.DataPropertyName = "SetorSaldo";
+			clnSaldo.Visible = true;
+			clnSaldo.ReadOnly = true;
+			clnSaldo.Resizable = DataGridViewTriState.False;
+			clnSaldo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnSaldo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnSaldo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnSaldo.DefaultCellStyle.Format = "c";
+			colList.Add(clnSaldo);
+
+			//--- Add Columns
+			dgvSetor.Columns.AddRange(colList.ToArray());
+		}
+
+		private void FormataListagemReuniao()
+		{
+			dgvReuniao.Columns.Clear();
+			dgvReuniao.AutoGenerateColumns = false;
+			dgvReuniao.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvReuniao.MultiSelect = false;
+			dgvReuniao.ColumnHeadersVisible = true;
+			dgvReuniao.AllowUserToResizeRows = false;
+			dgvReuniao.AllowUserToResizeColumns = false;
+			dgvReuniao.RowHeadersWidth = 36;
+			dgvReuniao.RowTemplate.Height = 30;
+			dgvReuniao.StandardTab = true;
+			dgvReuniao.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+
+			// FONT
+			dgvReuniao.Font = clnFont;
+			dgvReuniao.DefaultCellStyle.Font = clnFont;
+			dgvReuniao.AlternatingRowsDefaultCellStyle.Font = clnFont;
+			dgvReuniao.ColumnHeadersDefaultCellStyle.Font = clnFont;
+
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
+			//--- (1) COLUNA REUNIAO
+			clnReuniao.DataPropertyName = "Reuniao";
+			clnReuniao.Visible = true;
+			clnReuniao.ReadOnly = true;
+			clnReuniao.Resizable = DataGridViewTriState.False;
+			clnReuniao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnReuniao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnReuniao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			colList.Add(clnReuniao);
+
+			//--- (2) Coluna da imagem
+			clnImage.Name = "Ativa";
+			clnImage.Resizable = DataGridViewTriState.False;
+			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			colList.Add(clnImage);
+
+			//--- Add Columns
+			dgvReuniao.Columns.AddRange(colList.ToArray());
+		}
+
+		// CONTROL IMAGES OF LIST DATAGRID
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvReuniao_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.ColumnIndex == clnImage.Index)
+			{
+				objReuniao item = (objReuniao)dgvReuniao.Rows[e.RowIndex].DataBoundItem;
+				if (item.Ativa) e.Value = ImgAtivo;
+				else e.Value = ImgInativo;
+				e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			}
+		}
+
+		#endregion
+
 
 		#region DATABINDING
 
@@ -141,7 +345,7 @@ namespace CamadaUI.Congregacoes
 		}
 		private void BindRegistroChanged(object sender, EventArgs e)
 		{
-			MessageBox.Show("alterado");
+			//MessageBox.Show("alterado");
 		}
 
 		#endregion

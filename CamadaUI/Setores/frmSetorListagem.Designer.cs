@@ -39,13 +39,13 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnSaldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -198,30 +198,6 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// MenuListagem
-			// 
-			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem});
-			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(153, 48);
-			// 
-			// AtivarToolStripMenuItem
-			// 
-			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
-			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.AtivarToolStripMenuItem.Text = "Ativar Setor";
-			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
-			// 
-			// DesativarToolStripMenuItem
-			// 
-			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
-			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
-			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
-			// 
 			// clnID
 			// 
 			this.clnID.HeaderText = "Reg.";
@@ -250,6 +226,30 @@
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
 			// 
+			// MenuListagem
+			// 
+			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AtivarToolStripMenuItem,
+            this.DesativarToolStripMenuItem});
+			this.MenuListagem.Name = "MenuFab";
+			this.MenuListagem.Size = new System.Drawing.Size(153, 48);
+			// 
+			// AtivarToolStripMenuItem
+			// 
+			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
+			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
+			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.AtivarToolStripMenuItem.Text = "Ativar Setor";
+			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			// 
+			// DesativarToolStripMenuItem
+			// 
+			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
+			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
+			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
+			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			// 
 			// frmSetorListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -265,7 +265,6 @@
 			this.KeyPreview = true;
 			this.Name = "frmSetorListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSetorListagem_KeyDown);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.Label1, 0);
 			this.Controls.SetChildIndex(this.Label2, 0);
 			this.Controls.SetChildIndex(this.txtProcura, 0);
@@ -274,6 +273,7 @@
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.MenuListagem.ResumeLayout(false);

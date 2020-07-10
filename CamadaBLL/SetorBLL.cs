@@ -13,7 +13,7 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objSetor> GetListSetor(string setor, bool? Ativa = null)
+		public List<objSetor> GetListSetor(string setor, bool? Ativa = null, int? IDCongregacao = null)
 		{
 			try
 			{
@@ -39,6 +39,15 @@ namespace CamadaBLL
 						query += " AND Ativa = @Ativa";
 					else
 						query += " WHERE Ativa = @Ativa";
+				}
+
+				if (IDCongregacao != null)
+				{
+					db.AdicionarParametros("@IDCongregacao", IDCongregacao);
+					if (haveWhere)
+						query += " AND IDCongregacao = @IDCongregacao";
+					else
+						query += " WHERE IDCongregacao = @IDCongregacao";
 				}
 
 				query += " ORDER BY Setor";

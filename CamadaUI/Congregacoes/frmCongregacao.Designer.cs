@@ -29,6 +29,14 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCongregacao));
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.txtCidade = new System.Windows.Forms.TextBox();
 			this.txtUF = new System.Windows.Forms.TextBox();
 			this.txtEnderecoLogradouro = new System.Windows.Forms.TextBox();
@@ -70,13 +78,23 @@
 			this.txtBairro = new System.Windows.Forms.TextBox();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.line2 = new AwesomeShapeControl.Line();
+			this.dgvReuniao = new System.Windows.Forms.DataGridView();
+			this.clnReuniao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.dgvSetor = new System.Windows.Forms.DataGridView();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSaldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.lblReuniao = new System.Windows.Forms.Label();
+			this.lblSetores = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvReuniao)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvSetor)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(261, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(641, 0);
 			this.lblTitulo.TabIndex = 2;
 			this.lblTitulo.Text = "Congregação | Filiais";
 			// 
@@ -85,7 +103,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(520, 0);
+			this.btnClose.Location = new System.Drawing.Point(900, 0);
 			this.btnClose.TabIndex = 3;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -93,7 +111,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblID);
 			this.panel1.Controls.Add(this.lbl_IdTexto);
-			this.panel1.Size = new System.Drawing.Size(560, 50);
+			this.panel1.Size = new System.Drawing.Size(940, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lbl_IdTexto, 0);
@@ -404,7 +422,7 @@
             this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 457);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(555, 44);
+			this.tspMenu.Size = new System.Drawing.Size(936, 44);
 			this.tspMenu.TabIndex = 30;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -544,10 +562,183 @@
 			this.line2.TabIndex = 31;
 			this.line2.TabStop = false;
 			// 
+			// dgvReuniao
+			// 
+			this.dgvReuniao.AllowUserToAddRows = false;
+			this.dgvReuniao.AllowUserToDeleteRows = false;
+			this.dgvReuniao.AllowUserToResizeColumns = false;
+			this.dgvReuniao.AllowUserToResizeRows = false;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvReuniao.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			this.dgvReuniao.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(229)))), ((int)(((byte)(233)))));
+			this.dgvReuniao.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.dgvReuniao.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+			this.dgvReuniao.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvReuniao.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			this.dgvReuniao.ColumnHeadersHeight = 27;
+			this.dgvReuniao.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			this.dgvReuniao.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clnReuniao,
+            this.clnImage});
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvReuniao.DefaultCellStyle = dataGridViewCellStyle3;
+			this.dgvReuniao.EnableHeadersVisualStyles = false;
+			this.dgvReuniao.GridColor = System.Drawing.SystemColors.ActiveCaption;
+			this.dgvReuniao.Location = new System.Drawing.Point(561, 98);
+			this.dgvReuniao.MultiSelect = false;
+			this.dgvReuniao.Name = "dgvReuniao";
+			this.dgvReuniao.ReadOnly = true;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvReuniao.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			this.dgvReuniao.RowHeadersVisible = false;
+			this.dgvReuniao.RowHeadersWidth = 45;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dgvReuniao.RowsDefaultCellStyle = dataGridViewCellStyle5;
+			this.dgvReuniao.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dgvReuniao.RowTemplate.Height = 25;
+			this.dgvReuniao.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvReuniao.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.dgvReuniao.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.dgvReuniao.Size = new System.Drawing.Size(361, 150);
+			this.dgvReuniao.TabIndex = 32;
+			this.dgvReuniao.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvReuniao_CellFormatting);
+			// 
+			// clnReuniao
+			// 
+			this.clnReuniao.HeaderText = "Título da Reunião";
+			this.clnReuniao.Name = "clnReuniao";
+			this.clnReuniao.ReadOnly = true;
+			this.clnReuniao.Width = 250;
+			// 
+			// clnImage
+			// 
+			this.clnImage.HeaderText = "Ativa";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
+			// 
+			// dgvSetor
+			// 
+			this.dgvSetor.AllowUserToAddRows = false;
+			this.dgvSetor.AllowUserToDeleteRows = false;
+			this.dgvSetor.AllowUserToResizeColumns = false;
+			this.dgvSetor.AllowUserToResizeRows = false;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvSetor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+			this.dgvSetor.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(229)))), ((int)(((byte)(233)))));
+			this.dgvSetor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.dgvSetor.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+			this.dgvSetor.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvSetor.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			this.dgvSetor.ColumnHeadersHeight = 27;
+			this.dgvSetor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			this.dgvSetor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clnSetor,
+            this.clnSaldo});
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvSetor.DefaultCellStyle = dataGridViewCellStyle8;
+			this.dgvSetor.EnableHeadersVisualStyles = false;
+			this.dgvSetor.GridColor = System.Drawing.SystemColors.ActiveCaption;
+			this.dgvSetor.Location = new System.Drawing.Point(561, 297);
+			this.dgvSetor.MultiSelect = false;
+			this.dgvSetor.Name = "dgvSetor";
+			this.dgvSetor.ReadOnly = true;
+			this.dgvSetor.RowHeadersVisible = false;
+			this.dgvSetor.RowHeadersWidth = 45;
+			this.dgvSetor.RowTemplate.Height = 30;
+			this.dgvSetor.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvSetor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.dgvSetor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.dgvSetor.Size = new System.Drawing.Size(361, 146);
+			this.dgvSetor.TabIndex = 33;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Descrição do Setor";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 220;
+			// 
+			// clnSaldo
+			// 
+			this.clnSaldo.HeaderText = "Saldo";
+			this.clnSaldo.Name = "clnSaldo";
+			this.clnSaldo.ReadOnly = true;
+			// 
+			// lblReuniao
+			// 
+			this.lblReuniao.AutoSize = true;
+			this.lblReuniao.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblReuniao.ForeColor = System.Drawing.Color.LightSlateGray;
+			this.lblReuniao.Location = new System.Drawing.Point(557, 66);
+			this.lblReuniao.Name = "lblReuniao";
+			this.lblReuniao.Size = new System.Drawing.Size(234, 26);
+			this.lblReuniao.TabIndex = 34;
+			this.lblReuniao.Text = "Reuniões da Congregação";
+			// 
+			// lblSetores
+			// 
+			this.lblSetores.AutoSize = true;
+			this.lblSetores.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSetores.ForeColor = System.Drawing.Color.LightSlateGray;
+			this.lblSetores.Location = new System.Drawing.Point(557, 268);
+			this.lblSetores.Name = "lblSetores";
+			this.lblSetores.Size = new System.Drawing.Size(186, 26);
+			this.lblSetores.TabIndex = 34;
+			this.lblSetores.Text = "Setores de Recursos";
+			// 
 			// frmCongregacao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 503);
+			this.ClientSize = new System.Drawing.Size(940, 503);
+			this.Controls.Add(this.lblSetores);
+			this.Controls.Add(this.lblReuniao);
+			this.Controls.Add(this.dgvSetor);
+			this.Controls.Add(this.dgvReuniao);
 			this.Controls.Add(this.line2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnSetorEscolher);
@@ -616,10 +807,16 @@
 			this.Controls.SetChildIndex(this.btnSetorEscolher, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.line2, 0);
+			this.Controls.SetChildIndex(this.dgvReuniao, 0);
+			this.Controls.SetChildIndex(this.dgvSetor, 0);
+			this.Controls.SetChildIndex(this.lblReuniao, 0);
+			this.Controls.SetChildIndex(this.lblSetores, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvReuniao)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvSetor)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -667,5 +864,13 @@
 		internal System.Windows.Forms.TextBox txtBairro;
 		private AwesomeShapeControl.Line line1;
 		private AwesomeShapeControl.Line line2;
+		internal System.Windows.Forms.DataGridView dgvReuniao;
+		internal System.Windows.Forms.DataGridView dgvSetor;
+		private System.Windows.Forms.Label lblReuniao;
+		private System.Windows.Forms.Label lblSetores;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSaldo;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnReuniao;
+		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 	}
 }

@@ -1099,6 +1099,8 @@
   <ItemGroup>
     <Content Include="cofre_icon.ico" />
     <Content Include="ConfigFiles\Config.xml" />
+    <Content Include="ConfigFiles\LogoColor.png" />
+    <Content Include="ConfigFiles\LogoMono.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
