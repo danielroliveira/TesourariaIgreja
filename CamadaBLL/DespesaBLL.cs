@@ -307,6 +307,7 @@ namespace CamadaBLL
 				listPag.Add(pagar);
 
 				// insert Despesa AND APagar
+				despesa.IDSituacao = 2; // quitada
 				long newID = InsertDespesa(despesa, ref listPag, dbTran);
 
 				// insert Saida

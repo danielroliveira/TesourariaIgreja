@@ -3,7 +3,6 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace CamadaBLL
 {
@@ -159,9 +158,6 @@ namespace CamadaBLL
 				long newID = db.ExecutarInsertAndGetID(query);
 				caixa.IDCaixa = newID;
 
-				//--- insert Caixa Movs
-				InsertCaixaMovs(caixa, db);
-
 				//--- return
 				db.CommitTransaction();
 				return newID;
@@ -169,63 +165,6 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				db.RollBackTransaction();
-				throw ex;
-			}
-		}
-
-		// INSERT MOVIMENTACOES
-		//------------------------------------------------------------------------------------------------------------
-		private void InsertCaixaMovs(objCaixa caixa, AcessoDados dbTran)
-		{
-			try
-			{
-				// UPDATE tblEntradas
-				dbTran.LimparParametros();
-				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
-				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
-				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
-				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
-
-				string query = "UPDATE tblEntradas SET IDCaixa = @IDCaixa " +
-					"WHERE EntradaData >= @DataInicial " +
-					"AND EntradaData <= @DataFinal " +
-					"AND IDConta = @IDConta " +
-					"AND IDCaixa IS NULL";
-
-				dbTran.ExecutarManipulacao(CommandType.Text, query);
-
-				// UPDATE tblSaidas
-				dbTran.LimparParametros();
-				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
-				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
-				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
-				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
-
-				query = "UPDATE tblSaidas SET IDCaixa = @IDCaixa " +
-					"WHERE SaidaData >= @DataInicial " +
-					"AND SaidaData <= @DataFinal " +
-					"AND IDConta = @IDConta " +
-					"AND IDCaixa IS NULL";
-
-				dbTran.ExecutarManipulacao(CommandType.Text, query);
-
-				// UPDATE tblTransferencias
-				dbTran.LimparParametros();
-				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
-				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
-				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
-				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
-
-				query = "UPDATE tblTransferencias SET IDCaixa = @IDCaixa " +
-					"WHERE TransferenciaData >= @DataInicial " +
-					"AND TransferenciaData <= @DataFinal " +
-					"AND IDConta = @IDConta " +
-					"AND IDCaixa IS NULL";
-
-				dbTran.ExecutarManipulacao(CommandType.Text, query);
-			}
-			catch (Exception ex)
-			{
 				throw ex;
 			}
 		}
@@ -275,6 +214,108 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// DELETE | REMOVE CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		public void DeleteCaixa(objCaixa caixa)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				// 1. CHECK CAIXA
+				//------------------------------------------------------------------------------------------------------------
+				if (!verifyDeleting(caixa, db))
+				{
+					throw new AppException("Caixa não pode ser excluído porque existem outro(s) caixa(s) na mesma conta depois dele...");
+				}
+
+				// 2. REMOVE AJUSTES
+				//------------------------------------------------------------------------------------------------------------
+				new AjusteBLL().RemoveAjusteFromCaixa((long)caixa.IDCaixa, db);
+
+				// 3. UPDATE MOVIMENTACAO
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				db.ConvertNullParams();
+
+				string query = "UPDATE tblMovimentacao SET IDCaixa = NULL WHERE IDCaixa = @IDCaixa";
+
+				//--- execute update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				// 4. REMOVE OBSERVACAO
+				//------------------------------------------------------------------------------------------------------------
+				ObservacaoBLL oBLL = new ObservacaoBLL();
+				oBLL.DeleteObservacao(3, (long)caixa.IDCaixa, db);
+
+				// 5. DELETE CAIXA
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				db.ConvertNullParams();
+
+				query = "DELETE tblCaixa WHERE IDCaixa = @IDCaixa";
+
+				//--- execute update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				// 6. COMMIT AND RETURN
+				//------------------------------------------------------------------------------------------------------------
+				db.CommitTransaction();
+
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// VERIFY BEFORE DELETING
+		//------------------------------------------------------------------------------------------------------------
+		private bool verifyDeleting(objCaixa caixa, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
+				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
+				dbTran.ConvertNullParams();
+
+				string query = "SELECT COUNT(*) AS Total " +
+					"FROM tblCaixa WHERE IDConta = @IDConta " +
+					"AND DataFinal >= @DataFinal AND IDCaixa <> @IDCaixa";
+
+				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("Não houve retorno na consulta de verificação de caixas");
+				}
+
+				if ((int)dt.Rows[0]["Total"] > 0)
+				{
+					return false;
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}

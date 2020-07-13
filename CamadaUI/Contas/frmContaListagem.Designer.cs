@@ -48,6 +48,7 @@
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnSaldo = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -91,7 +92,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(165, 495);
+			this.btnAdicionar.Location = new System.Drawing.Point(154, 495);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
 			this.btnAdicionar.TabIndex = 7;
@@ -268,6 +269,20 @@
 			this.DesativarToolStripMenuItem.Text = "Desativar Conta";
 			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Conta_Click);
 			// 
+			// btnSaldo
+			// 
+			this.btnSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnSaldo.Image = global::CamadaUI.Properties.Resources.Caixa_32;
+			this.btnSaldo.Location = new System.Drawing.Point(286, 495);
+			this.btnSaldo.Name = "btnSaldo";
+			this.btnSaldo.Size = new System.Drawing.Size(181, 42);
+			this.btnSaldo.TabIndex = 7;
+			this.btnSaldo.Text = "&Recalcular Saldo";
+			this.btnSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSaldo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSaldo.UseVisualStyleBackColor = true;
+			this.btnSaldo.Click += new System.EventHandler(this.btnSaldo_Click);
+			// 
 			// frmContaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -275,6 +290,7 @@
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnSaldo);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnEditar);
 			this.Controls.Add(this.txtProcura);
@@ -289,6 +305,7 @@
 			this.Controls.SetChildIndex(this.txtProcura, 0);
 			this.Controls.SetChildIndex(this.btnEditar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
+			this.Controls.SetChildIndex(this.btnSaldo, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
@@ -319,5 +336,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnBloqueioData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSaldo;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
+		internal System.Windows.Forms.Button btnSaldo;
 	}
 }

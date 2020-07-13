@@ -154,7 +154,7 @@ namespace CamadaBLL
 				if (ajuste != null)
 				{
 					ajuste.IDConta = newID;
-					InsertSaldoInicialConta(ajuste, ContaSldUpdate, SetorSldUpdate, db);
+					new AjusteBLL().InsertAjuste(ajuste, ContaSldUpdate, SetorSldUpdate, null, db);
 				}
 
 				db.CommitTransaction();
@@ -278,6 +278,44 @@ namespace CamadaBLL
 			}
 		}
 
+		// CONTA SALDO RECALCULAR
+		//------------------------------------------------------------------------------------------------------------
+		public bool ContaSaldoRecalcular(objConta conta)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				db.LimparParametros();
+				db.AdicionarParametros("@IDConta", conta.IDConta);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.StoredProcedure, "uspContaSaldoCorrect");
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("Não houve retorno da função de Recalcular o Saldo...");
+				}
+
+				decimal saldoAtual = (decimal)dt.Rows[0]["Saldo"];
+
+				if (conta.ContaSaldo != saldoAtual)
+				{
+					decimal oldSaldo = conta.ContaSaldo;
+					conta.ContaSaldo = saldoAtual;
+
+					throw new AppException("Valor do Saldo da Conta foi alterado\n" +
+						$"de: {oldSaldo:c}\n" +
+						$"para: {saldoAtual:c}");
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// CONTA BLOQUEIO DATA PERMIT
 		//------------------------------------------------------------------------------------------------------------
 		public bool ContaDateBlockPermit(int IDConta, DateTime DataMovimento, object dbTran = null)
@@ -312,71 +350,6 @@ namespace CamadaBLL
 			}
 			catch (Exception ex)
 			{
-				throw ex;
-			}
-		}
-
-		// CAIXA AJUSTE INSERT SALDO INICIAL
-		//------------------------------------------------------------------------------------------------------------
-		public bool InsertSaldoInicialConta(objCaixaAjuste ajuste,
-			Action<int, decimal> ContaSldUpdate,
-			Action<int, decimal> SetorSldUpdate,
-			AcessoDados dbTran = null)
-		{
-			AcessoDados db = dbTran == null ? new AcessoDados() : dbTran;
-
-			try
-			{
-				if (dbTran == null) db.BeginTransaction();
-
-				// 1. INSERT AJUSTE
-				//------------------------------------------------------
-				//--- clear Params
-				db.LimparParametros();
-
-				//--- define Params
-				db.AdicionarParametros("@AjusteDescricao", ajuste.AjusteDescricao);
-				db.AdicionarParametros("@IDAjusteTipo", ajuste.IDAjusteTipo);
-				db.AdicionarParametros("@IDUserAuth", ajuste.IDUserAuth);
-
-				//--- convert null parameters
-				db.ConvertNullParams();
-
-				//--- create query
-				string query = db.CreateInsertSQL("tblCaixaAjuste");
-
-				//--- insert AJUSTE
-				var newID = (int)db.ExecutarInsertAndGetID(query);
-				ajuste.IDAjuste = newID;
-
-				// 2. INSERT ENTRADA
-				//------------------------------------------------------
-				//--- create ENTRADA
-				var entrada = new objMovimentacao(null)
-				{
-					MovTipo = 1,
-					Consolidado = true,
-					IDConta = ajuste.IDConta,
-					IDSetor = ajuste.IDSetor,
-					MovData = ajuste.MovData,
-					MovValor = ajuste.MovValor,
-					IDOrigem = (long)ajuste.IDAjuste,
-					Origem = EnumMovOrigem.CaixaAjuste, // origem ajuste
-					Observacao = ajuste.AjusteDescricao,
-				};
-
-				//--- insert ENTRADA
-				new MovimentacaoBLL().InsertMovimentacao(entrada, ContaSldUpdate, SetorSldUpdate, dbTran);
-
-				// 3. COMMIT AND RETURN
-				//------------------------------------------------------
-				if (dbTran == null) db.CommitTransaction();
-
-				return true;
-			}
-			catch (Exception ex)
-			{
-				if (dbTran == null) db.RollBackTransaction();
 				throw ex;
 			}
 		}

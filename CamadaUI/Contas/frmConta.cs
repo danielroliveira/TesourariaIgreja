@@ -438,7 +438,7 @@ namespace CamadaUI.Contas
 				if (_conta.IDCongregacao != setor.IDCongregacao)
 				{
 					var resp = AbrirDialog("A Congregação Padrão do Setor de Recursos escolhido é " +
-						"diferente da congragação padrão da Nova Conta...\n" +
+						"diferente da congregação padrão da Nova Conta...\n" +
 						"Deseja continuar assim mesmo?", "Congregação Divergente",
 						DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 

@@ -247,6 +247,7 @@ namespace CamadaUI.Saidas
 		{
 			SetorSelected = setor;
 			txtSetor.Text = SetorSelected.Setor;
+			_despesa.IDSituacao = 2; // quitada
 			_despesa.IDSetor = (int)SetorSelected.IDSetor;
 			_despesa.Setor = SetorSelected.Setor;
 			_pagar.IDSetor = (int)setor.IDSetor;

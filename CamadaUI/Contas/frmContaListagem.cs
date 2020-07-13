@@ -17,6 +17,7 @@ namespace CamadaUI.Contas
 		private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
+		private ContaBLL cBLL = new ContaBLL();
 
 		#region NEW | OPEN FUNCTIONS
 
@@ -48,7 +49,6 @@ namespace CamadaUI.Contas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				ContaBLL cBLL = new ContaBLL();
 				listConta = cBLL.GetListConta("", Convert.ToBoolean(cmbAtivo.SelectedValue), false);
 				dgvListagem.DataSource = listConta;
 			}
@@ -109,7 +109,7 @@ namespace CamadaUI.Contas
 			// CREATE ARRAY OF COLUMNS
 			var colList = new List<DataGridViewColumn>();
 
-			//--- (1) COLUNA REG
+			//--- (0) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
 			clnID.DataPropertyName = "IDConta";
 			clnID.Visible = true;
@@ -120,7 +120,7 @@ namespace CamadaUI.Contas
 			clnID.DefaultCellStyle.Format = "0000";
 			colList.Add(clnID);
 
-			//--- (2) COLUNA CADASTRO
+			//--- (1) COLUNA CADASTRO
 			clnCadastro.DataPropertyName = "Conta";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = true;
@@ -130,7 +130,7 @@ namespace CamadaUI.Contas
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			colList.Add(clnCadastro);
 
-			//--- (3) COLUNA TIPO
+			//--- (2) COLUNA TIPO
 			clnTipo.DataPropertyName = "ContaTipo";
 			clnTipo.Visible = true;
 			clnTipo.ReadOnly = true;
@@ -141,7 +141,7 @@ namespace CamadaUI.Contas
 			clnTipo.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnTipo);
 
-			//--- (4) COLUNA DATA BLOQUEIO
+			//--- (3) COLUNA DATA BLOQUEIO
 			clnBloqueioData.DataPropertyName = "BloqueioData";
 			clnBloqueioData.Visible = true;
 			clnBloqueioData.ReadOnly = true;
@@ -151,7 +151,7 @@ namespace CamadaUI.Contas
 			clnBloqueioData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			colList.Add(clnBloqueioData);
 
-			//--- (5) COLUNA SALDO
+			//--- (4) COLUNA SALDO
 			clnSaldo.DataPropertyName = "ContaSaldo";
 			clnSaldo.Visible = true;
 			clnSaldo.ReadOnly = true;
@@ -366,7 +366,6 @@ namespace CamadaUI.Contas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				ContaBLL cBLL = new ContaBLL();
 				cBLL.UpdateConta(conta);
 
 				//--- altera a imagem
@@ -445,5 +444,49 @@ namespace CamadaUI.Contas
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
+
+		// RECALCULAR O SALDO DA CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSaldo_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Recalcular o Saldo da Conta...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				cBLL.ContaSaldoRecalcular(conta);
+
+				AbrirDialog($"Não houve qualquer alteração no Saldo da Conta:\n" +
+					$"{conta.Conta.ToUpper()}\n" +
+					$"Valor: {conta.ContaSaldo:c}", "Saldo Correto");
+
+			}
+			catch (AppException ex)
+			{
+				dgvListagem.SelectedRows[0].Cells[4].Value = conta.ContaSaldo;
+				AbrirDialog(ex.Message, "Saldo Alterado", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Recalcular o Saldo..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 	}
 }

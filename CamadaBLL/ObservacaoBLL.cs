@@ -8,8 +8,8 @@ namespace CamadaBLL
 	{
 		/* Origem OrigemDescricao
         *  ------ --------------------------------------------------
-        *  1      tblEntrada
-        *  2      tblSaida
+        *  1      tblMovimentacao
+        *  2      tblCaixa
         */
 
 		//===============================================================================

@@ -1,15 +1,13 @@
-﻿using CamadaDTO;
-using CamadaBLL;
+﻿using CamadaBLL;
+using CamadaDTO;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
-using System.Linq;
 
 namespace CamadaUI.Caixa
 {
@@ -21,12 +19,16 @@ namespace CamadaUI.Caixa
 		private CaixaBLL cxBLL = new CaixaBLL();
 
 		private objCaixa _caixa;
+		private objConta contaSelected;
 		private BindingSource bindCaixa = new BindingSource();
 		private Form _formOrigem;
 
 		private decimal _TEntradas;
 		private decimal _TSaidas;
 		private decimal _TTransf;
+
+		// DEFINE COLUMN FONT
+		Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
 		#region SUB NEW | CONSTRUCTOR
 
@@ -44,7 +46,21 @@ namespace CamadaUI.Caixa
 			propSituacao = _caixa.IDSituacao;
 			BindingCreator();
 
-			ObterMovimentacaoList();
+			//--- Get Data with TRANSACTION
+			var access = new AcessoControlBLL();
+			object dbTran = access.GetNewAcessoWithTransaction();
+
+			ObterConta(dbTran);
+			ObterMovimentacaoList(dbTran);
+
+			access.CommitAcessoWithTransaction(dbTran);
+
+			//--- check if exists nivelamento
+			checkAjusteNivelamento();
+
+			txtObservacao.GotFocus += txtObservacao_GotFocus;
+			txtObservacao.LostFocus += txtObservacao_LostFocus;
+
 		}
 
 		// PROPERTY SITUACAO
@@ -91,16 +107,40 @@ namespace CamadaUI.Caixa
 			}
 		}
 
+		// GET CONTA CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void ObterConta(object dbTran)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				contaSelected = new ContaBLL().GetConta(_caixa.IDConta, dbTran);
+				lblContaDetalhe.Text = $"Saldo da Conta: {contaSelected.ContaSaldo.ToString("c")} \n" +
+									$"Data de Bloqueio até: {contaSelected.BloqueioData?.ToString() ?? ""}";
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a conta do Caixa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		// GET MOVS LIST
 		//------------------------------------------------------------------------------------------------------------
-		private void ObterMovimentacaoList()
+		private void ObterMovimentacaoList(object dbTran = null)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				lstMov = new MovimentacaoBLL().GetMovimentacaoCaixaList((long)_caixa.IDCaixa);
+				lstMov = new MovimentacaoBLL().GetMovimentacaoCaixaList(_caixa, dbTran);
 				bindMovs.DataSource = lstMov;
 				dgvListagem.DataSource = bindMovs;
 
@@ -120,16 +160,15 @@ namespace CamadaUI.Caixa
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		// CALCULA VALOR DOS TOTAIS
 		//------------------------------------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			_TEntradas = lstMov.Where(x => x.MovTipo == 1).Sum(x => x.MovValorAbsoluto);
-			_TSaidas = lstMov.Where(x => x.MovTipo == 2).Sum(x => x.MovValorAbsoluto);
-			_TTransf = lstMov.Where(x => x.MovTipo == 3).Sum(x => x.MovValorAbsoluto);
+			_TEntradas = lstMov.Where(x => x.MovTipo == 1).Sum(x => x.MovValor);
+			_TSaidas = lstMov.Where(x => x.MovTipo == 2).Sum(x => x.MovValor);
+			_TTransf = lstMov.Where(x => x.MovTipo == 3).Sum(x => x.MovValor);
 
 			lblTEntradas.Text = _TEntradas.ToString("c");
 			lblTSaidas.Text = (_TSaidas * -1).ToString("c");
@@ -153,6 +192,7 @@ namespace CamadaUI.Caixa
 			lblDataFinal.DataBindings.Add("Text", bindCaixa, "DataFinal", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblDataInicial.DataBindings.Add("Text", bindCaixa, "DataInicial", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblSituacao.DataBindings.Add("Text", bindCaixa, "Situacao", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtObservacao.DataBindings.Add("Text", bindCaixa, "Observacao", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -215,14 +255,14 @@ namespace CamadaUI.Caixa
 			colList.Add(clnMovData);
 
 			//--- (2) COLUNA ORIGEM TABELA
-			clnOrigemTabela.DataPropertyName = "OrigemTabelaDescricao";
-			clnOrigemTabela.Visible = true;
-			clnOrigemTabela.ReadOnly = true;
-			clnOrigemTabela.Resizable = DataGridViewTriState.False;
-			clnOrigemTabela.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnOrigemTabela.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnOrigemTabela.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			colList.Add(clnOrigemTabela);
+			clnDescricaoOrigem.DataPropertyName = "DescricaoOrigem";
+			clnDescricaoOrigem.Visible = true;
+			clnDescricaoOrigem.ReadOnly = true;
+			clnDescricaoOrigem.Resizable = DataGridViewTriState.False;
+			clnDescricaoOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDescricaoOrigem.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricaoOrigem.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			colList.Add(clnDescricaoOrigem);
 
 			//--- (3) COLUNA IDORIGEM
 			Padding newPadding = new Padding(5, 0, 0, 0);
@@ -304,7 +344,7 @@ namespace CamadaUI.Caixa
 				}
 				else if (mov.MovTipoDescricao == "ENTRADA")
 				{
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(228, 235, 244);
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
 				}
 				else if (mov.MovTipoDescricao == "TRANSFERENCIA")
@@ -320,7 +360,7 @@ namespace CamadaUI.Caixa
 			{
 				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovValorAbsoluto >= 0)
+				if (mov.MovValor >= 0)
 				{
 					e.CellStyle.ForeColor = Color.DarkBlue;
 					e.CellStyle.SelectionForeColor = Color.White;
@@ -328,10 +368,14 @@ namespace CamadaUI.Caixa
 				}
 				else
 				{
-					e.CellStyle.ForeColor = Color.Red;
+					e.CellStyle.ForeColor = Color.DarkRed;
 					e.CellStyle.SelectionForeColor = Color.Yellow;
 					e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 				}
+			}
+			else if (e.ColumnIndex == clnDescricaoOrigem.Index)
+			{
+				e.CellStyle.Font = clnFont;
 			}
 		}
 
@@ -347,7 +391,242 @@ namespace CamadaUI.Caixa
 			MostraMenuPrincipal();
 		}
 
+		// FINALIZAR CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnFinalizar_Click(object sender, EventArgs e)
+		{
+			// deve bloquear os outros caixas anteriores
+
+			// deve marcar como FINALIZADO Sit = 2
+		}
+
+		// EXCLUIR CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExcluirCaixa_Click(object sender, EventArgs e)
+		{
+			// CHECK BLOCK SIT
+			if (_caixa.IDSituacao == 3)
+			{
+				AbrirDialog("O Caixa atual não pode ser excluído porque está bloqueado para edição e exclusão...",
+					"Caixa bloqueado", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			// ASK USER
+			var resp = AbrirDialog("Deseja realmente EXCLUIR o caixa atual?",
+							"Excluir Caixa",
+							DialogType.SIM_NAO,
+							DialogIcon.Question,
+							DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			// EXECUTE WITH CHECKING
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				cxBLL.DeleteCaixa(_caixa);
+				Close();
+				MostraMenuPrincipal();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir o Caixa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion // BUTTONS FUNCTIONS --- END
 
+		#region AJUSTE DE CAIXA
+		private void btnAjuste_Click(object sender, EventArgs e)
+		{
+			if (!checkAjusteNivelamento())
+			{
+				Ajuste_Insert();
+			}
+			else
+			{
+				Ajuste_Remove();
+			}
+
+			checkAjusteNivelamento();
+		}
+
+		private void Ajuste_Insert()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmAjusteCaixa frm = new frmAjusteCaixa(_TEntradas + _TSaidas + _TTransf, _caixa.Conta, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				//--- create ajuste
+				objCaixaAjuste ajuste = CreateAjuste(frm.propAjusteValue);
+
+				if (ajuste == null) return;
+
+				//--- insert
+				objMovimentacao newMov = new AjusteBLL().InsertAjuste(ajuste, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate, _caixa.IDCaixa);
+				bindMovs.Add(newMov);
+				CalculaTotais();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Inserir Ajuste..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private objCaixaAjuste CreateAjuste(decimal ajusteValue)
+		{
+			// get Setor de Entrada
+			objSetor setor = null;
+
+			Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				setor = frm.propEscolha;
+
+				if (contaSelected.IDCongregacao != setor.IDCongregacao)
+				{
+					var resp = AbrirDialog("A Congregação Padrão do Setor de Recursos escolhido é " +
+						"diferente da congregação padrão da Conta do Caixa...\n" +
+						"Deseja continuar assim mesmo?", "Congregação Divergente",
+						DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+					if (resp == DialogResult.No) return null;
+				}
+			}
+			else
+			{
+				return null;
+			}
+
+			objCaixaAjuste ajuste = new objCaixaAjuste(null)
+			{
+				AjusteDescricao = $"Ajuste de Nivelamento de Caixa: {_caixa.IDCaixa:D4}",
+				IDAjusteTipo = 2,
+				IDSetor = (int)setor.IDSetor,
+				Setor = setor.Setor,
+				IDUserAuth = (int)Program.usuarioAtual.IDUsuario,
+				MovData = _caixa.DataFinal,
+				MovValor = ajusteValue,
+				MovValorReal = Math.Abs(ajusteValue),
+				IDConta = _caixa.IDConta,
+				Conta = _caixa.Conta,
+
+			};
+
+			return ajuste;
+		}
+
+		private void Ajuste_Remove()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				new AjusteBLL().RemoveAjusteFromCaixa((long)_caixa.IDCaixa);
+
+				ObterMovimentacaoList();
+				CalculaTotais();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover o Ajuste..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private bool checkAjusteNivelamento()
+		{
+			bool haveAjuste = false;
+
+			foreach (objMovimentacao mov in lstMov)
+			{
+				if (mov.DescricaoOrigem.Contains("Ajuste de Nivelamento"))
+				{
+					haveAjuste = true;
+				}
+			}
+
+			if (!haveAjuste)
+			{
+				btnAjuste.Text = "Inserir Ajuste";
+				btnAjuste.Image = Properties.Resources.editar_24;
+			}
+			else
+			{
+				btnAjuste.Text = "Remover Ajuste";
+				btnAjuste.Image = Properties.Resources.delete_16;
+			}
+
+			return haveAjuste;
+		}
+
+		#endregion // AJUSTE DE CAIXA --- END
+
+		#region OBSERVACAO
+
+		private void btnSalvarObservacao_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				new ObservacaoBLL().SaveObservacao(2, (long)_caixa.IDCaixa, txtObservacao.Text);
+
+				AbrirDialog("Observação salva com sucesso.", "Observação");
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Salvar a observação..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void txtObservacao_GotFocus(object sender, EventArgs e)
+		{
+			txtObservacao.BackColor = Color.White;
+		}
+
+		private void txtObservacao_LostFocus(object sender, EventArgs e)
+		{
+			txtObservacao.BackColor = SystemColors.Control;
+		}
+
+		#endregion // OBSERVACAO --- END
 	}
 }

@@ -142,46 +142,6 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET Movimentacao LIST BY IDCaixa
-		//------------------------------------------------------------------------------------------------------------
-		public List<objMovimentacao> GetMovimentacaoCaixaList(
-			long IDCaixa,
-			object dbTran = null)
-		{
-			try
-			{
-				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
-
-				// add params
-				db.LimparParametros();
-				db.AdicionarParametros("@IDCaixa", IDCaixa);
-
-				string query = "SELECT * FROM qryMovimentacao WHERE IDCaixa = @IDCaixa";
-
-				query += " ORDER BY MovData";
-
-				List<objMovimentacao> listagem = new List<objMovimentacao>();
-				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
-
-				if (dt.Rows.Count == 0)
-				{
-					return listagem;
-				}
-
-				foreach (DataRow row in dt.Rows)
-				{
-					listagem.Add(ConvertRowInClass(row, false));
-				}
-
-				return listagem;
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
 		// GET LIST MOVIMENTACAO FROM ORIGEM AND IDORIGEM
 		//------------------------------------------------------------------------------------------------------------
 		public List<objMovimentacao> GetMovimentacaoListByOrigem(
@@ -303,6 +263,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDSetor", mov.IDSetor);
 				db.AdicionarParametros("@DescricaoOrigem", mov.DescricaoOrigem);
 				db.AdicionarParametros("@Consolidado", mov.Consolidado);
+				db.AdicionarParametros("@IDCaixa", mov.IDCaixa);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -413,6 +374,78 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET Movimentacao LIST BY IDCaixa
+		//------------------------------------------------------------------------------------------------------------
+		public List<objMovimentacao> GetMovimentacaoCaixaList(
+			objCaixa caixa,
+			object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				//--- update MOVIMENTACAO
+				if (caixa.IDUsuario == 1)
+				{
+					InsertCaixaMovs(caixa, db);
+				}
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+
+				string query = "SELECT * FROM qryMovimentacao WHERE IDCaixa = @IDCaixa";
+
+				query += " ORDER BY MovData";
+
+				List<objMovimentacao> listagem = new List<objMovimentacao>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row, false));
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE MOVIMENTACOES TO INSERT IN CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void InsertCaixaMovs(objCaixa caixa, AcessoDados dbTran)
+		{
+			try
+			{
+				// UPDATE tblMovimentacao
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				dbTran.AdicionarParametros("@IDConta", caixa.IDConta);
+				dbTran.AdicionarParametros("@DataInicial", caixa.DataInicial);
+				dbTran.AdicionarParametros("@DataFinal", caixa.DataFinal);
+
+				string query = "UPDATE tblMovimentacao SET IDCaixa = @IDCaixa " +
+					"WHERE MovData >= @DataInicial " +
+					"AND MovData <= @DataFinal " +
+					"AND IDConta = @IDConta " +
+					"AND IDCaixa IS NULL";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
 		//=================================================================================================
 		// DELETE | REMOVE
