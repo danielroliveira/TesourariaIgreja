@@ -182,10 +182,9 @@ namespace CamadaUI.Entradas
 					btnCancelar.Enabled = true;
 					lblSitBlock.Visible = false;
 
-					_contribuicao.IDConta = (int)contaSelected.IDConta;
-					_contribuicao.Conta = contaSelected.Conta;
-					_contribuicao.IDSetor = (int)setorSelected.IDSetor;
-					_contribuicao.Setor = setorSelected.Setor;
+					DefineConta(contaSelected);
+					DefineSetor(setorSelected);
+
 
 					btnSetEntradaForma.Image = null;
 					btnSetEntradaForma.Text = "n";
@@ -616,12 +615,30 @@ namespace CamadaUI.Entradas
 				_contribuicao.IDReuniao = null;
 			}
 
-			// CHECK ORIGEM
+			// CHECK ORIGEM | CONTRIBUINTE
 			bool ComOrigem = listTipos.First(x => x.IDContribuicaoTipo == _contribuicao.IDContribuicaoTipo).ComOrigem;
 
 			if (ComOrigem)
 			{
-				if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuicao, EP)) return false;
+				if (_contribuicao.IDContribuinte == null)
+				{
+					var resp = AbrirDialog("É necessário informar o CONTRIBUINTE..." +
+						"\nDeseja informar Contribuinte ANÔNIMO?",
+						"Contribuinte Vazio",
+						DialogType.SIM_NAO,
+						DialogIcon.Question,
+						DialogDefaultButton.Second);
+
+					if (resp == DialogResult.Yes)
+					{
+						_contribuicao.IDContribuinte = 0;
+						txtContribuinte.Text = "Anônimo";
+					}
+					else
+					{
+						return false;
+					}
+				}
 			}
 			else
 			{
@@ -746,15 +763,31 @@ namespace CamadaUI.Entradas
 						break;
 				}
 			}
-			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
+			else if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
-				Control[] controlesBloqueados = {
+				Control[] controlesLiberados = {
 					txtEntradaForma,
-					txtContribuicaoTipo };
+					txtContribuicaoTipo,
+				};
 
-				if (controlesBloqueados.Contains(ctr))
+				//--- cria um array de controles que serao liberados ao KEYPRESS
+				Control[] controlesID = {
+					txtConta,
+					txtSetor,
+				};
+
+				if (controlesLiberados.Contains(ctr))
 				{
+					e.Handled = false;
+				}
+				else if (controlesID.Contains(ctr))
+				{
+					if (!string.IsNullOrEmpty(ctr.Text) && !int.TryParse(ctr.Text, out _))
+					{
+						ctr.Text = string.Empty;
+					}
+
 					e.Handled = false;
 				}
 				else
@@ -762,6 +795,10 @@ namespace CamadaUI.Entradas
 					e.Handled = true;
 					e.SuppressKeyPress = true;
 				}
+			}
+			else if (ctr.Name == "txtContribuinte" && ((e.KeyCode == Keys.D0) | (e.KeyCode >= Keys.NumPad0)))
+			{
+				e.Handled = false;
 			}
 			else if (e.Alt)
 			{
@@ -834,6 +871,16 @@ namespace CamadaUI.Entradas
 								txtContribuicaoTipo.Text = tipo.ContribuicaoTipo;
 							}
 						}
+						break;
+
+					case "txtContribuinte":
+
+						if (int.Parse(e.KeyChar.ToString()) == 0)
+						{
+							txtContribuinte.Text = "Anônimo";
+							_contribuicao.IDContribuinte = 0;
+						}
+
 						break;
 
 					default:
@@ -938,10 +985,8 @@ namespace CamadaUI.Entradas
 					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDConta != frm.propEscolha.IDConta)
 						Sit = EnumFlagEstado.Alterado;
 
-					_contribuicao.IDConta = (int)frm.propEscolha.IDConta;
-					txtConta.Text = frm.propEscolha.Conta;
-					contaSelected = frm.propEscolha;
-					_contribuicao.ContribuicaoData = contaSelected.BloqueioData ?? DateTime.Today;
+					DefineConta(frm.propEscolha);
+
 				}
 
 				//--- select
@@ -1055,8 +1100,7 @@ namespace CamadaUI.Entradas
 					if (Sit != EnumFlagEstado.NovoRegistro && _contribuicao.IDSetor != frm.propEscolha.IDSetor)
 						Sit = EnumFlagEstado.Alterado;
 
-					_contribuicao.IDSetor = (int)frm.propEscolha.IDSetor;
-					txtSetor.Text = frm.propEscolha.Setor;
+					DefineSetor(frm.propEscolha);
 				}
 
 				//--- select
@@ -1202,6 +1246,149 @@ namespace CamadaUI.Entradas
 
 
 		#endregion // BUTTONS PROCURA --- END
+
+		#region DEFINE CONTA | SETOR BY ID
+
+		// DEFINE CONTA VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtConta_Validating(object sender, CancelEventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (int.TryParse(control.Text, out int IDConta)) // check is numeric
+			{
+				if (!DefineContaByID(IDConta))
+				{
+					e.Cancel = true;
+				}
+			}
+			else if (string.IsNullOrEmpty(control.Text)) // se for vazio
+			{
+				return;
+			}
+		}
+
+		// DEFINE CONTA BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private bool DefineContaByID(int IDConta)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var conta = new ContaBLL().GetConta(IDConta);
+
+				//--- check valid return
+				if (conta == null)
+				{
+					AbrirDialog("ID da conta não encontrado...",
+						"Conta", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				//--- check conta Cartao
+				if (conta.OperadoraCartao)
+				{
+					AbrirDialog("Conta tipo OPERADORA não é valida para realização de contribuição...",
+						"Conta Operadora", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				DefineConta(conta);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Conta Pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		// DEFINE CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineConta(objConta conta)
+		{
+			contaSelected = conta;
+			_contribuicao.IDConta = (int)conta.IDConta;
+			_contribuicao.Conta = conta.Conta;
+			txtConta.DataBindings["Text"].ReadValue();
+			_contribuicao.ContribuicaoData = conta.BloqueioData ?? DateTime.Today;
+			lblContaDetalhe.Text = $"Saldo da Conta: {conta.ContaSaldo:c} \n" +
+								   $"Data de Bloqueio até: {conta.BloqueioData?.ToShortDateString() ?? ""}";
+		}
+
+		// DEFINE SETOR VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtSetor_Validating(object sender, CancelEventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (int.TryParse(control.Text, out int IDSetor)) // check is numeric
+			{
+				if (!DefineSetorByID(IDSetor))
+				{
+					e.Cancel = true;
+				}
+			}
+			else if (string.IsNullOrEmpty(control.Text)) // se for vazio
+			{
+				return;
+			}
+		}
+
+		// DEFINE SETOR BY ID
+		//-----------------------------------------------------------------------------------------------------------
+		private bool DefineSetorByID(int IDSetor)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var setor = new SetorBLL().GetSetor(IDSetor);
+
+				//--- check valid return
+				if (setor == null)
+				{
+					AbrirDialog("ID do setor não encontrado...",
+						"Setor", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				DefineSetor(setor);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Conta Pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		private void DefineSetor(objSetor setor)
+		{
+			setorSelected = setor;
+			_contribuicao.IDSetor = (int)setor.IDSetor;
+			_contribuicao.Setor = setor.Setor;
+			txtSetor.DataBindings["Text"].ReadValue();
+		}
+
+		#endregion // DEFINE CONTA BY ID --- END
 
 		#region TOOLTIP
 

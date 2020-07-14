@@ -172,9 +172,7 @@ namespace CamadaUI.Entradas
 				{
 					if (DadosNovos.IDConta != (int)frm.propEscolha.IDConta) propAlterado = true;
 
-					DadosNovos.IDConta = (int)frm.propEscolha.IDConta;
-					DadosNovos.Conta = frm.propEscolha.Conta;
-					txtConta.Text = frm.propEscolha.Conta;
+					DefineConta(frm.propEscolha);
 				}
 
 				//--- select
@@ -269,10 +267,7 @@ namespace CamadaUI.Entradas
 				if (frm.DialogResult == DialogResult.OK)
 				{
 					if (DadosNovos.IDSetor != (int)frm.propEscolha.IDSetor) propAlterado = true;
-
-					DadosNovos.IDSetor = (int)frm.propEscolha.IDSetor;
-					DadosNovos.Setor = frm.propEscolha.Setor;
-					txtSetor.Text = frm.propEscolha.Setor;
+					DefineSetor(frm.propEscolha);
 				}
 
 				//--- select
@@ -387,6 +382,17 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+		// CLOSE WHEN PRESS ESC
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.Handled = true;
+				btnCancelar_Click(sender, new EventArgs());
+			}
+		}
+
 		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
@@ -464,13 +470,28 @@ namespace CamadaUI.Entradas
 			}
 			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
 			{
-				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = {
+				//--- cria um array de controles que serao liberados ao KEYPRESS
+				Control[] controlesLiberados = {
 					txtEntradaForma,
 					txtContribuicaoTipo };
 
-				if (controlesBloqueados.Contains(ctr))
+				//--- cria um array de controles que serão LIBERADOS para Numeric
+				Control[] controlesID = {
+					txtConta,
+					txtSetor,
+				};
+
+				if (controlesLiberados.Contains(ctr))
 				{
+					e.Handled = false;
+				}
+				else if (controlesID.Contains(ctr))
+				{
+					if (!string.IsNullOrEmpty(ctr.Text) && !int.TryParse(ctr.Text, out _))
+					{
+						ctr.Text = string.Empty;
+					}
+
 					e.Handled = false;
 				}
 				else
@@ -554,6 +575,145 @@ namespace CamadaUI.Entradas
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END
+
+		#region DEFINE CONTA | SETOR BY ID
+
+		// DEFINE CONTA VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtConta_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (int.TryParse(control.Text, out int IDConta)) // check is numeric
+			{
+				if (!DefineContaByID(IDConta))
+				{
+					DefineConta(null);
+					e.Cancel = true;
+				}
+			}
+			else if (string.IsNullOrEmpty(control.Text)) // se for vazio
+			{
+				return;
+			}
+		}
+
+		// DEFINE CONTA BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private bool DefineContaByID(int IDConta)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var conta = new ContaBLL().GetConta(IDConta);
+
+				//--- check valid return
+				if (conta == null)
+				{
+					AbrirDialog("ID da conta não encontrado...",
+						"Conta", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				//--- check conta Cartao
+				if (conta.OperadoraCartao)
+				{
+					AbrirDialog("Conta tipo OPERADORA não é valida para pesquisa de contribuição...",
+						"Conta Operadora", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				DefineConta(conta);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Conta Pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		// DEFINE CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineConta(objConta conta)
+		{
+			DadosNovos.IDConta = conta?.IDConta;
+			DadosNovos.Conta = conta?.Conta;
+			txtConta.Text = conta?.Conta;
+		}
+
+		// DEFINE SETOR VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtSetor_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (int.TryParse(control.Text, out int IDSetor)) // check is numeric
+			{
+				if (!DefineSetorByID(IDSetor))
+				{
+					DefineSetor(null);
+					e.Cancel = true;
+				}
+			}
+			else if (string.IsNullOrEmpty(control.Text)) // se for vazio
+			{
+				return;
+			}
+		}
+
+		// DEFINE SETOR BY ID
+		//-----------------------------------------------------------------------------------------------------------
+		private bool DefineSetorByID(int IDSetor)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var setor = new SetorBLL().GetSetor(IDSetor);
+
+				//--- check valid return
+				if (setor == null)
+				{
+					AbrirDialog("ID do setor não encontrado...",
+						"Setor", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				DefineSetor(setor);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Conta Pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void DefineSetor(objSetor setor)
+		{
+			DadosNovos.IDSetor = setor?.IDSetor;
+			DadosNovos.Setor = setor?.Setor;
+			txtSetor.Text = setor?.Setor;
+		}
+
+		#endregion // DEFINE CONTA BY ID --- END
 
 		#region TOOLTIP
 

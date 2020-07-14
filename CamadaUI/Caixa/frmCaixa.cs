@@ -43,8 +43,8 @@ namespace CamadaUI.Caixa
 			bindCaixa.DataSource = typeof(objCaixa);
 			bindCaixa.Add(_caixa);
 
-			propSituacao = _caixa.IDSituacao;
 			BindingCreator();
+			propSituacao = _caixa.IDSituacao;
 
 			//--- Get Data with TRANSACTION
 			var access = new AcessoControlBLL();
@@ -79,6 +79,7 @@ namespace CamadaUI.Caixa
 				{
 					case 1: // INICIADO
 						btnAlterar.Enabled = true;
+						btnAjuste.Enabled = true;
 						btnFinalizar.Enabled = true;
 						btnExcluirCaixa.Enabled = true;
 						txtObservacao.ReadOnly = false;
@@ -87,6 +88,7 @@ namespace CamadaUI.Caixa
 						break;
 					case 2: // FINALIZADO
 						btnAlterar.Enabled = false;
+						btnAjuste.Enabled = false;
 						btnFinalizar.Enabled = true;
 						btnExcluirCaixa.Enabled = false;
 						txtObservacao.ReadOnly = true;
@@ -95,15 +97,19 @@ namespace CamadaUI.Caixa
 						break;
 					case 3: // BLOQUEADO
 						btnAlterar.Enabled = false;
+						btnAjuste.Enabled = false;
 						btnFinalizar.Enabled = false;
 						btnExcluirCaixa.Enabled = false;
 						txtObservacao.ReadOnly = true;
-						btnFinalizar.Text = "Finalizar Caixa";
-						btnFinalizar.Image = Properties.Resources.accept_24;
+						btnFinalizar.Text = "Caixa Bloqueado";
+						btnFinalizar.Image = Properties.Resources.block_16;
 						break;
 					default:
 						break;
 				}
+
+				lblSituacao.DataBindings["Text"].ReadValue();
+
 			}
 		}
 
@@ -164,7 +170,7 @@ namespace CamadaUI.Caixa
 
 		// CALCULA VALOR DOS TOTAIS
 		//------------------------------------------------------------------------------------------------------------
-		private void CalculaTotais()
+		private decimal CalculaTotais()
 		{
 			_TEntradas = lstMov.Where(x => x.MovTipo == 1).Sum(x => x.MovValor);
 			_TSaidas = lstMov.Where(x => x.MovTipo == 2).Sum(x => x.MovValor);
@@ -174,7 +180,10 @@ namespace CamadaUI.Caixa
 			lblTSaidas.Text = (_TSaidas * -1).ToString("c");
 			lblTTransf.Text = _TTransf.ToString("c");
 
-			lblSaldoFinal.Text = (_TEntradas + _TSaidas + _TTransf).ToString("c");
+			decimal SaldoFinal = _TEntradas + _TSaidas + _TTransf;
+
+			lblSaldoFinal.Text = SaldoFinal.ToString("c");
+			return SaldoFinal;
 		}
 
 		#endregion // SUB NEW | CONSTRUCTOR --- END
@@ -391,13 +400,122 @@ namespace CamadaUI.Caixa
 			MostraMenuPrincipal();
 		}
 
-		// FINALIZAR CAIXA
+		// BUTTON FINALIZAR OR DESBLOQUEAR CAIXA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnFinalizar_Click(object sender, EventArgs e)
 		{
-			// deve bloquear os outros caixas anteriores
+			if (propSituacao == 1)
+			{
+				FinalizarCaixa();
+			}
+			else
+			{
+				DesbloquearCaixa();
+			}
+		}
 
-			// deve marcar como FINALIZADO Sit = 2
+		// FINALIZAR CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void FinalizarCaixa()
+		{
+			// Ask USER
+			var resp = AbrirDialog($"Você deseja realmente FINALIZAR o caixa da conta: {_caixa.Conta} ?" +
+				$"\nSaldo Final: {CalculaTotais():c}",
+				"Finalizar Caixa", DialogType.SIM_NAO, DialogIcon.Question);
+
+			if (resp != DialogResult.Yes) return;
+
+			// Ask USER
+			resp = AbrirDialog($"Deseja que a data final do caixa seja bloqueada?" +
+				$"\nData Final: {_caixa.DataFinal.ToShortDateString()}",
+				"Bloqueio de Data", DialogType.SIM_NAO_CANCELAR, DialogIcon.Question);
+
+			if (resp == DialogResult.Cancel) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				_caixa.CaixaFinalDoDia = resp == DialogResult.Yes;
+
+				//  Define Values
+				_caixa.SaldoFinal = CalculaTotais();
+				_caixa.FechamentoData = DateTime.Today;
+				_caixa.IDSituacao = 2;
+				_caixa.Observacao = txtObservacao.Text;
+
+				// FINALIZE caixa 
+				cxBLL.FinalizeCaixa(_caixa);
+
+				// change SIT
+				propSituacao = 2;
+
+				// CHECK ContaPadrao and change DatePadrao
+				//------------------------------------------------------------------------------------------------------------
+				DateTime blockDate = _caixa.CaixaFinalDoDia == false ? _caixa.DataFinal : _caixa.DataFinal.AddDays(1);
+
+				if (ContaPadrao().IDConta == _caixa.IDConta)
+				{
+					((frmPrincipal)Application.OpenForms[0]).propDataPadrao = blockDate;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Finalizar o Caixa Atual..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// DESBLOQUEAR CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void DesbloquearCaixa()
+		{
+			// Ask USER
+			var resp = AbrirDialog($"Você deseja realmente DESBLOQUEAR o caixa da conta: {_caixa.Conta} ?" +
+				$"\nSaldo Final: {CalculaTotais():c}",
+				"Finalizar Caixa", DialogType.SIM_NAO, DialogIcon.Question);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//  Define Values
+				_caixa.IDSituacao = 1;
+
+				// DESBLOQUEAR caixa and GET oldDataPadrao
+				DateTime oldDataPadrao = cxBLL.DesbloquearCaixa(_caixa);
+
+				// change SIT
+				propSituacao = 1;
+
+				// CHECK ContaPadrao and change DatePadrao
+				//------------------------------------------------------------------------------------------------------------
+				if (ContaPadrao().IDConta == _caixa.IDConta)
+				{
+					((frmPrincipal)Application.OpenForms[0]).propDataPadrao = oldDataPadrao;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Desbloquear o Caixa Atual..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		// EXCLUIR CAIXA

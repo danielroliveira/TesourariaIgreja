@@ -521,6 +521,29 @@ namespace CamadaUI.Transferencias
 						break;
 				}
 			}
+			else if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serao liberados ao KEYPRESS
+				Control[] controlesLiberados = {
+					txtContaSaida,
+					txtContaEntrada,
+				};
+
+				if (controlesLiberados.Contains(ctr))
+				{
+					if (!string.IsNullOrEmpty(ctr.Text) && !int.TryParse(ctr.Text, out _))
+					{
+						ctr.Text = string.Empty;
+					}
+
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
 			else if (e.KeyCode == Keys.Delete)
 			{
 				e.Handled = true;
@@ -767,5 +790,114 @@ namespace CamadaUI.Transferencias
 
 		#endregion // VISUAL EFFECTS --- END
 
+		#region DEFINE CONTA BY ID
+
+		// DEFINE CONTA BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private void txtConta_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (int.TryParse(control.Text, out int IDConta)) // check is numeric
+			{
+				if (!DefineContaByID(IDConta, control))
+				{
+					e.Cancel = true;
+					((TextBox)sender).Text = string.Empty;
+				}
+			}
+			else if (string.IsNullOrEmpty(control.Text)) // se for vazio
+			{
+				if (control.Name == "txtContaSaida" && contaSaida != null)
+				{
+					contaSaida = null;
+				}
+				else if (control.Name == "txtContaEntrada" && contaEntrada != null)
+				{
+					contaEntrada = null;
+				}
+
+				return;
+			}
+		}
+
+		private bool DefineContaByID(int IDConta, Control control)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var conta = new ContaBLL().GetConta(IDConta);
+
+				//--- check valid return
+				if (conta == null)
+				{
+					AbrirDialog("ID da conta não encontrado...",
+						"Conta", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				//--- check conta Cartao
+				if (conta.OperadoraCartao)
+				{
+					AbrirDialog("Conta tipo OPERADORA não é valida para realização de transferências...",
+						"Conta Operadora", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				if (control.Name == "txtContaSaida")
+				{
+					// check same CONTA ENTRADA SAIDA
+					if (conta.IDConta == _transf.IDContaEntrada)
+					{
+						AbrirDialog("A conta de Saída não pode ser igual à conta de Entrada...",
+							"Conta de Saída", DialogType.OK, DialogIcon.Exclamation);
+						return false;
+					}
+
+					_transf.IDContaSaida = (int)conta.IDConta;
+					txtContaSaida.Text = conta.Conta;
+					contaSaida = conta;
+					lblContaSaidaDetalhe.Text = $"Saldo da Conta: {conta.ContaSaldo:c} \n" +
+									$"Data de Bloqueio até: {conta.BloqueioData?.ToString() ?? ""}";
+
+					return true;
+				}
+				else
+				{
+					// check same CONTA ENTRADA SAIDA
+					if (conta.IDConta == _transf.IDContaSaida)
+					{
+						AbrirDialog("A conta de Entrada não pode ser igual à conta de Saída...",
+							"Conta de Entrada", DialogType.OK, DialogIcon.Exclamation);
+						return false;
+					}
+
+					_transf.IDContaEntrada = (int)conta.IDConta;
+					txtContaEntrada.Text = conta.Conta;
+					contaEntrada = conta;
+					lblContaEntradaDetalhe.Text = $"Saldo da Conta: {conta.ContaSaldo:c} \n" +
+							$"Data de Bloqueio até: {conta.BloqueioData?.ToString() ?? ""}";
+
+					return true;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Conta Pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		#endregion // DEFINE CONTA BY ID --- END
 	}
 }

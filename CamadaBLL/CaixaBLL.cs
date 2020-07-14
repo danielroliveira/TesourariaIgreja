@@ -171,14 +171,14 @@ namespace CamadaBLL
 
 		// UPDATE CAIXA
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateCaixa(objCaixa caixa)
+		public bool UpdateCaixa(objCaixa caixa, AcessoDados dbTran)
 		{
 			AcessoDados db = null;
 
 			try
 			{
-				db = new AcessoDados();
-				db.BeginTransaction();
+				db = dbTran == null ? new AcessoDados() : dbTran;
+				if (dbTran == null) db.BeginTransaction();
 
 				//--- clear Params
 				db.LimparParametros();
@@ -208,8 +208,172 @@ namespace CamadaBLL
 				oBLL.SaveObservacao(3, (long)caixa.IDCaixa, caixa.Observacao, db);
 
 				//--- commit and return
+				if (dbTran == null) db.CommitTransaction();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				if (dbTran == null) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// FINALIZE CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		public bool FinalizeCaixa(objCaixa caixa)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				// 1. BLOCK older Caixa Conta SITUACAO = 3
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				db.AdicionarParametros("@IDConta", caixa.IDConta);
+				db.AdicionarParametros("@DataFinal", caixa.DataFinal);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- define query
+				string query = "UPDATE tblCaixa SET IDSituacao = 3 " +
+					"WHERE IDConta = @IDConta " +
+					"AND DataFinal <= @DataFinal " +
+					"AND IDCaixa <> @IDCaixa";
+
+				//--- execute update
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				// 2. BLOCK CONTA Date
+				//------------------------------------------------------------------------------------------------------------
+				DateTime blockDate = caixa.CaixaFinalDoDia == false ? caixa.DataFinal : caixa.DataFinal.AddDays(1);
+				new ContaBLL().UpdateContaBloqueioData(caixa.IDConta, blockDate, db);
+
+				// 3. UPDATE Caixa
+				//------------------------------------------------------------------------------------------------------------
+				UpdateCaixa(caixa, db);
+
+				// COMMIT and RETURN
+				//------------------------------------------------------------------------------------------------------------
 				db.CommitTransaction();
 				return true;
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// UNBLOCK CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		public DateTime DesbloquearCaixa(objCaixa caixa)
+		{
+			AcessoDados db = null;
+			DateTime? oldDataPadraoConta = null;
+
+			try
+			{
+				db = new AcessoDados();
+				//--- INICIA TRANSACTION
+				db.BeginTransaction();
+
+				// 1. CHECK if Caixa is the lastest
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				db.AdicionarParametros("@IDConta", caixa.IDConta);
+				db.AdicionarParametros("@DataFinal", caixa.DataFinal);
+
+				string query = "SELECT COUNT(*) AS QUANT " +
+					"FROM tblCaixa " +
+					"WHERE IDConta = @IDConta " +
+					"AND DataInicial >= @DataFinal " +
+					"AND IDCaixa > @IDCaixa;";
+
+				//--- execute SELECT
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+					throw new Exception("Consulta não retornou nenhum resultado...");
+
+				if ((int)dt.Rows[0]["QUANT"] > 0)
+					throw new AppException("Não é possível desbloquerar porque o caixa não é o último da Conta...");
+
+				// 2. GET the PREVIOUS IDCAIXA to UNLOCK
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDCaixa", caixa.IDCaixa);
+				db.AdicionarParametros("@IDConta", caixa.IDConta);
+				db.AdicionarParametros("@DataInicial", caixa.DataInicial);
+
+				query = "SELECT TOP 1 IDCaixa, CaixaFinalDoDia, DataFinal " +
+					"FROM tblCaixa " +
+					"WHERE IDConta = @IDConta " +
+					"AND DataFinal <= @DataInicial " +
+					"AND IDCaixa < @IDCaixa " +
+					"ORDER BY IDCaixa DESC";
+
+				//--- execute SELECT
+				dt = db.ExecutarConsulta(CommandType.Text, query);
+				DataRow dtRow = null;
+
+				if (dt.Rows.Count > 0)
+					dtRow = dt.Rows[0];
+
+				// 3. UNBLOCK older Caixa Conta SET SITUACAO = 2
+				//------------------------------------------------------------------------------------------------------------
+				if (dtRow != null)
+				{
+					db.LimparParametros();
+
+					//--- define Params
+					db.AdicionarParametros("@IDCaixa", (long)dtRow["IDCaixa"]);
+
+					//--- define query
+					query = "UPDATE tblCaixa SET IDSituacao = 2 " +
+						"WHERE IDCaixa = @IDCaixa";
+
+					//--- execute update
+					db.ExecutarManipulacao(CommandType.Text, query);
+				}
+
+				// 4. unBLOCK CONTA Date
+				//------------------------------------------------------------------------------------------------------------
+				if (dtRow != null)
+				{
+					DateTime blockDate = (bool)dtRow["CaixaFinalDoDia"] == false ? (DateTime)dtRow["DataFinal"] : ((DateTime)dtRow["DataFinal"]).AddDays(1);
+					new ContaBLL().UpdateContaBloqueioData(caixa.IDConta, blockDate, db);
+
+					oldDataPadraoConta = blockDate;
+				}
+				else
+				{
+					new ContaBLL().UpdateContaBloqueioData(caixa.IDConta, caixa.DataInicial, db);
+
+					oldDataPadraoConta = caixa.DataInicial;
+				}
+
+				// 5. UPDATE Caixa
+				//------------------------------------------------------------------------------------------------------------
+				caixa.IDSituacao = 1;
+				caixa.Situacao = "Iniciado";
+				UpdateCaixa(caixa, db);
+
+				// COMMIT and RETURN
+				//------------------------------------------------------------------------------------------------------------
+				db.CommitTransaction();
+				return (DateTime)oldDataPadraoConta;
 			}
 			catch (Exception ex)
 			{
@@ -374,7 +538,7 @@ namespace CamadaBLL
 				LastCaixa = ConvertRowInClass(dt.Rows[0]);
 
 				//--- Redefine control Dates
-				LastCaixa.DataInicial = LastCaixa.DataInicial;
+				LastCaixa.DataInicial = LastCaixa.CaixaFinalDoDia ? LastCaixa.DataFinal.AddDays(1) : LastCaixa.DataFinal;
 				LastCaixa.DataFinal = (DateTime)MaxDate;
 
 				return LastCaixa;
@@ -394,7 +558,7 @@ namespace CamadaBLL
 				dbTran.LimparParametros();
 				dbTran.AdicionarParametros("@IDConta", IDConta);
 
-				string query = "SELECT MAX(MovData) AS MaxDate FROM qryMovimentacao WHERE IDConta = @IDConta";
+				string query = "SELECT MAX(MovData) AS MaxDate FROM qryMovimentacao WHERE IDConta = @IDConta AND IDCaixa IS NULL";
 
 				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
 

@@ -88,6 +88,8 @@ namespace CamadaBLL
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
+				if (dt.Rows.Count == 0) return null;
+
 				return ConvertRowInClass(dt.Rows[0]);
 
 			}

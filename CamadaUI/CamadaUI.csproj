@@ -200,6 +200,12 @@
     <Compile Include="Caixa\frmCaixaInserir.Designer.cs">
       <DependentUpon>frmCaixaInserir.cs</DependentUpon>
     </Compile>
+    <Compile Include="Caixa\frmCaixaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmCaixaListagem.designer.cs">
+      <DependentUpon>frmCaixaListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caixa\frmCartaoControle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -307,12 +313,6 @@
     </Compile>
     <Compile Include="Congregacoes\frmCongregacaoSetorProcura.Designer.cs">
       <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Contas\frmCaixaListagem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Contas\frmCaixaListagem.designer.cs">
-      <DependentUpon>frmCaixaListagem.cs</DependentUpon>
     </Compile>
     <Compile Include="Contas\frmConta.cs">
       <SubType>Form</SubType>
@@ -686,6 +686,9 @@
     <EmbeddedResource Include="Caixa\frmCaixaInserir.resx">
       <DependentUpon>frmCaixaInserir.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\frmCaixaListagem.resx">
+      <DependentUpon>frmCaixaListagem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmCartaoControle.resx">
       <DependentUpon>frmCartaoControle.cs</DependentUpon>
     </EmbeddedResource>
@@ -740,9 +743,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Congregacoes\frmCongregacaoSetorProcura.resx">
       <DependentUpon>frmCongregacaoSetorProcura.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Contas\frmCaixaListagem.resx">
-      <DependentUpon>frmCaixaListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmConta.resx">
       <DependentUpon>frmConta.cs</DependentUpon>

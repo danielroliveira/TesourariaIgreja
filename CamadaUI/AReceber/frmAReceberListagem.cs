@@ -562,9 +562,7 @@ namespace CamadaUI.AReceber
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					_IDContaProvisoria = (int)frm.propEscolha.IDConta;
-					txtConta.Text = frm.propEscolha.Conta;
-					ObterDados();
+					DefineConta(frm.propEscolha);
 				}
 
 				//--- select
@@ -676,6 +674,28 @@ namespace CamadaUI.AReceber
 						break;
 				}
 			}
+			else if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serao liberados ao FIND ID
+				Control[] controlesID = {
+					txtConta,
+				};
+
+				if (controlesID.Contains(ctr))
+				{
+					if (!string.IsNullOrEmpty(ctr.Text) && !int.TryParse(ctr.Text, out _))
+					{
+						ctr.Text = string.Empty;
+					}
+
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
 			else if (e.KeyCode == Keys.Delete)
 			{
 				if (_IDContaProvisoria != null)
@@ -703,6 +723,75 @@ namespace CamadaUI.AReceber
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END
+
+		#region DEFINE CONTA
+
+		// DEFINE CONTA VALIDATING
+		//------------------------------------------------------------------------------------------------------------
+		private void txtConta_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Control control = (Control)sender;
+
+			if (int.TryParse(control.Text, out int IDConta)) // check is numeric
+			{
+				if (!DefineContaByID(IDConta))
+				{
+					DefineConta(null);
+					e.Cancel = true;
+				}
+			}
+			else if (string.IsNullOrEmpty(control.Text)) // se for vazio
+			{
+				return;
+			}
+		}
+
+		// DEFINE CONTA BY ID
+		//------------------------------------------------------------------------------------------------------------
+		private bool DefineContaByID(int IDConta)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var conta = new ContaBLL().GetConta(IDConta);
+
+				//--- check valid return
+				if (conta == null)
+				{
+					AbrirDialog("ID da conta não encontrado...",
+						"Conta", DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+				DefineConta(conta);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Conta Pelo ID..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		// DEFINE CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineConta(objConta conta)
+		{
+			_IDContaProvisoria = conta?.IDConta;
+			txtConta.Text = conta?.Conta;
+			ObterDados();
+		}
+
+		#endregion // DEFINE CONTA BY ID --- END
 
 		#region DATE MONTH CONTROLER
 

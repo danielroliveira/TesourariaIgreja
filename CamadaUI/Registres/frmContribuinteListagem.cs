@@ -263,6 +263,14 @@ namespace CamadaUI.Registres
 			//--- get Selected item
 			objContribuinte item = (objContribuinte)dgvListagem.SelectedRows[0].DataBoundItem;
 
+			//--- check ANONIMO
+			if (item.IDContribuinte == 0)
+			{
+				AbrirDialog("Não é possível editar o contribuinte ANÔNIMO...",
+					"Contribuinte ANÔNIMO", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
 			//--- open edit form
 			frmContribuinte frm = new frmContribuinte(item, null);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();

@@ -283,6 +283,7 @@
 			this.txtConta.Size = new System.Drawing.Size(228, 27);
 			this.txtConta.TabIndex = 2;
 			this.txtConta.Tag = "Pressione a tecla (+) para procurar";
+			this.txtConta.Validating += new System.ComponentModel.CancelEventHandler(this.txtConta_Validating);
 			// 
 			// label4
 			// 
@@ -304,6 +305,7 @@
 			this.txtSetor.Size = new System.Drawing.Size(228, 27);
 			this.txtSetor.TabIndex = 5;
 			this.txtSetor.Tag = "Pressione a tecla (+) para procurar";
+			this.txtSetor.Validating += new System.ComponentModel.CancelEventHandler(this.txtSetor_Validating);
 			// 
 			// label3
 			// 
@@ -436,6 +438,7 @@
 			this.Name = "frmContribuicaoListagemFiltro";
 			this.Activated += new System.EventHandler(this.frm_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frm_FormClosed);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.label3, 0);

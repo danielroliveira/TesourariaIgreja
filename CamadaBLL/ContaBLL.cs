@@ -86,6 +86,8 @@ namespace CamadaBLL
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
+				if (dt.Rows.Count == 0) return null;
+
 				return ConvertRowInClass(dt.Rows[0]);
 
 			}
@@ -198,6 +200,37 @@ namespace CamadaBLL
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;
 
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE CONTA DATA BLOQUEIO
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateContaBloqueioData(int IDConta, DateTime BloqueioData, AcessoDados dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : dbTran;
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDConta", IDConta);
+				db.AdicionarParametros("@BloqueioData", BloqueioData);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblConta", "IDConta");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
 			}
 			catch (Exception ex)
 			{

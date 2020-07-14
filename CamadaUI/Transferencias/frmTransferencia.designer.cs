@@ -140,17 +140,17 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnSalvar,
-			this.btnCancelar,
-			this.btnFechar,
-			this.toolStripSeparator2});
+            this.btnSalvar,
+            this.btnCancelar,
+            this.btnFechar,
+            this.toolStripSeparator2});
 			this.tspMenu.Location = new System.Drawing.Point(2, 503);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(489, 44);
@@ -245,6 +245,7 @@
 			this.txtContaEntrada.TabIndex = 5;
 			this.txtContaEntrada.Tag = "Pressione a tecla (+) para escolher uma conta";
 			this.txtContaEntrada.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtContaEntrada.Validating += new System.ComponentModel.CancelEventHandler(this.txtConta_Validating);
 			// 
 			// btnSetContaEntrada
 			// 
@@ -285,6 +286,7 @@
 			this.txtContaSaida.TabIndex = 2;
 			this.txtContaSaida.Tag = "Pressione a tecla (+) para escolher uma conta";
 			this.txtContaSaida.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtContaSaida.Validating += new System.ComponentModel.CancelEventHandler(this.txtConta_Validating);
 			// 
 			// btnSetContaSaida
 			// 
@@ -346,24 +348,24 @@
 			this.numTransferenciaAno.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numTransferenciaAno.Location = new System.Drawing.Point(307, 290);
 			this.numTransferenciaAno.Maximum = new decimal(new int[] {
-			5000,
-			0,
-			0,
-			0});
+            5000,
+            0,
+            0,
+            0});
 			this.numTransferenciaAno.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numTransferenciaAno.Name = "numTransferenciaAno";
 			this.numTransferenciaAno.Size = new System.Drawing.Size(76, 31);
 			this.numTransferenciaAno.TabIndex = 11;
 			this.numTransferenciaAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numTransferenciaAno.Value = new decimal(new int[] {
-			2000,
-			0,
-			0,
-			0});
+            2000,
+            0,
+            0,
+            0});
 			this.numTransferenciaAno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// numTransferenciaDia
@@ -372,24 +374,24 @@
 			this.numTransferenciaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numTransferenciaDia.Location = new System.Drawing.Point(93, 290);
 			this.numTransferenciaDia.Maximum = new decimal(new int[] {
-			31,
-			0,
-			0,
-			0});
+            31,
+            0,
+            0,
+            0});
 			this.numTransferenciaDia.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numTransferenciaDia.Name = "numTransferenciaDia";
 			this.numTransferenciaDia.Size = new System.Drawing.Size(52, 31);
 			this.numTransferenciaDia.TabIndex = 9;
 			this.numTransferenciaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numTransferenciaDia.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numTransferenciaDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// lblSitBlock
