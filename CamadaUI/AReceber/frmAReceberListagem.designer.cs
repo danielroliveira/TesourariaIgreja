@@ -117,9 +117,9 @@
 			// 
 			// btnFechar
 			// 
-			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(971, 678);
+			this.btnFechar.Location = new System.Drawing.Point(971, 636);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 10;
@@ -140,7 +140,8 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -166,8 +167,8 @@
             this.clnValorRecebido});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
-			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+			this.dgvListagem.Location = new System.Drawing.Point(22, 124);
+			this.dgvListagem.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
 			this.dgvListagem.RowHeadersVisible = false;
@@ -176,7 +177,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1084, 478);
+			this.dgvListagem.Size = new System.Drawing.Size(1084, 452);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentClick);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
@@ -238,11 +239,11 @@
 			// 
 			// label1
 			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1014, 621);
+			this.label1.Location = new System.Drawing.Point(1014, 579);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(92, 15);
 			this.label1.TabIndex = 8;
@@ -250,10 +251,10 @@
 			// 
 			// lblValorRecebido
 			// 
-			this.lblValorRecebido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorRecebido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorRecebido.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorRecebido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorRecebido.Location = new System.Drawing.Point(969, 638);
+			this.lblValorRecebido.Location = new System.Drawing.Point(969, 596);
 			this.lblValorRecebido.Name = "lblValorRecebido";
 			this.lblValorRecebido.Size = new System.Drawing.Size(137, 32);
 			this.lblValorRecebido.TabIndex = 9;
@@ -262,9 +263,9 @@
 			// 
 			// btnImprimir
 			// 
-			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(839, 678);
+			this.btnImprimir.Location = new System.Drawing.Point(839, 636);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 9;
@@ -290,6 +291,7 @@
 			// 
 			this.btnPeriodoPosterior.AllowAnimations = true;
 			this.btnPeriodoPosterior.ArrowDirection = System.Windows.Forms.ArrowDirection.Right;
+			this.btnPeriodoPosterior.Enabled = true;
 			this.btnPeriodoPosterior.Location = new System.Drawing.Point(220, 7);
 			this.btnPeriodoPosterior.Maximum = 100;
 			this.btnPeriodoPosterior.Minimum = 0;
@@ -468,17 +470,18 @@
 			this.Panel2.Controls.Add(this.rbtPorMes);
 			this.Panel2.Controls.Add(this.pnlPorPeriodo);
 			this.Panel2.Controls.Add(this.pnlPorMes);
-			this.Panel2.Location = new System.Drawing.Point(387, 67);
+			this.Panel2.Location = new System.Drawing.Point(387, 58);
+			this.Panel2.Margin = new System.Windows.Forms.Padding(3, 3, 3, 5);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
 			this.Panel2.TabIndex = 4;
 			// 
 			// lblValorBruto
 			// 
-			this.lblValorBruto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorBruto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorBruto.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorBruto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorBruto.Location = new System.Drawing.Point(683, 638);
+			this.lblValorBruto.Location = new System.Drawing.Point(683, 596);
 			this.lblValorBruto.Name = "lblValorBruto";
 			this.lblValorBruto.Size = new System.Drawing.Size(137, 32);
 			this.lblValorBruto.TabIndex = 9;
@@ -487,11 +490,11 @@
 			// 
 			// label3
 			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(707, 621);
+			this.label3.Location = new System.Drawing.Point(707, 579);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(113, 15);
 			this.label3.TabIndex = 8;
@@ -499,12 +502,13 @@
 			// 
 			// pnlSituacao
 			// 
+			this.pnlSituacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.pnlSituacao.BackColor = System.Drawing.SystemColors.ActiveCaption;
 			this.pnlSituacao.Controls.Add(this.rbtSitTodas);
 			this.pnlSituacao.Controls.Add(this.rbtCanceladas);
 			this.pnlSituacao.Controls.Add(this.rbtRecebidos);
 			this.pnlSituacao.Controls.Add(this.rbtEmAberto);
-			this.pnlSituacao.Location = new System.Drawing.Point(22, 679);
+			this.pnlSituacao.Location = new System.Drawing.Point(22, 637);
 			this.pnlSituacao.Name = "pnlSituacao";
 			this.pnlSituacao.Size = new System.Drawing.Size(488, 41);
 			this.pnlSituacao.TabIndex = 6;
@@ -567,7 +571,7 @@
 			// 
 			this.btnReceber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReceber.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.btnReceber.Location = new System.Drawing.Point(681, 678);
+			this.btnReceber.Location = new System.Drawing.Point(681, 636);
 			this.btnReceber.Name = "btnReceber";
 			this.btnReceber.Size = new System.Drawing.Size(152, 42);
 			this.btnReceber.TabIndex = 8;
@@ -652,10 +656,10 @@
 			// 
 			// lblValorLiquido
 			// 
-			this.lblValorLiquido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorLiquido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorLiquido.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorLiquido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorLiquido.Location = new System.Drawing.Point(826, 638);
+			this.lblValorLiquido.Location = new System.Drawing.Point(826, 596);
 			this.lblValorLiquido.Name = "lblValorLiquido";
 			this.lblValorLiquido.Size = new System.Drawing.Size(137, 32);
 			this.lblValorLiquido.TabIndex = 9;
@@ -664,11 +668,11 @@
 			// 
 			// label4
 			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.DimGray;
-			this.label4.Location = new System.Drawing.Point(840, 621);
+			this.label4.Location = new System.Drawing.Point(840, 579);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(123, 15);
 			this.label4.TabIndex = 8;
@@ -680,7 +684,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(296, 87);
+			this.btnSetConta.Location = new System.Drawing.Point(296, 83);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
@@ -695,7 +699,7 @@
 			// 
 			// txtConta
 			// 
-			this.txtConta.Location = new System.Drawing.Point(22, 87);
+			this.txtConta.Location = new System.Drawing.Point(22, 83);
 			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
@@ -709,7 +713,7 @@
 			this.label19.AutoSize = true;
 			this.label19.BackColor = System.Drawing.Color.Transparent;
 			this.label19.ForeColor = System.Drawing.Color.Black;
-			this.label19.Location = new System.Drawing.Point(18, 63);
+			this.label19.Location = new System.Drawing.Point(18, 59);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(152, 19);
 			this.label19.TabIndex = 1;
@@ -717,10 +721,10 @@
 			// 
 			// lblBrutoSelected
 			// 
-			this.lblBrutoSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblBrutoSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblBrutoSelected.BackColor = System.Drawing.Color.LightGray;
 			this.lblBrutoSelected.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblBrutoSelected.Location = new System.Drawing.Point(30, 638);
+			this.lblBrutoSelected.Location = new System.Drawing.Point(30, 596);
 			this.lblBrutoSelected.Name = "lblBrutoSelected";
 			this.lblBrutoSelected.Size = new System.Drawing.Size(137, 32);
 			this.lblBrutoSelected.TabIndex = 9;
@@ -729,11 +733,11 @@
 			// 
 			// label5
 			// 
-			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label5.AutoSize = true;
 			this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.ForeColor = System.Drawing.Color.DimGray;
-			this.label5.Location = new System.Drawing.Point(40, 621);
+			this.label5.Location = new System.Drawing.Point(40, 579);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(127, 15);
 			this.label5.TabIndex = 8;
@@ -741,10 +745,10 @@
 			// 
 			// lblPrevisto
 			// 
-			this.lblPrevisto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblPrevisto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblPrevisto.BackColor = System.Drawing.Color.LightGray;
 			this.lblPrevisto.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPrevisto.Location = new System.Drawing.Point(173, 638);
+			this.lblPrevisto.Location = new System.Drawing.Point(173, 596);
 			this.lblPrevisto.Name = "lblPrevisto";
 			this.lblPrevisto.Size = new System.Drawing.Size(137, 32);
 			this.lblPrevisto.TabIndex = 9;
@@ -753,11 +757,11 @@
 			// 
 			// label7
 			// 
-			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.Color.DimGray;
-			this.label7.Location = new System.Drawing.Point(223, 621);
+			this.label7.Location = new System.Drawing.Point(223, 579);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(87, 15);
 			this.label7.TabIndex = 8;
@@ -765,10 +769,10 @@
 			// 
 			// btnReceberLote
 			// 
-			this.btnReceberLote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnReceberLote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnReceberLote.ForeColor = System.Drawing.Color.Maroon;
 			this.btnReceberLote.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.btnReceberLote.Location = new System.Drawing.Point(326, 629);
+			this.btnReceberLote.Location = new System.Drawing.Point(326, 587);
 			this.btnReceberLote.Name = "btnReceberLote";
 			this.btnReceberLote.Size = new System.Drawing.Size(168, 42);
 			this.btnReceberLote.TabIndex = 8;
@@ -782,7 +786,7 @@
 			// frmAReceberListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1128, 728);
+			this.ClientSize = new System.Drawing.Size(1128, 686);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
 			this.Controls.Add(this.label19);

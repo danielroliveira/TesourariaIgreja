@@ -114,7 +114,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(1043, 678);
+			this.btnFechar.Location = new System.Drawing.Point(1043, 636);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 7;
@@ -135,7 +135,8 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -160,7 +161,7 @@
             this.clnValorPago});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
+			this.dgvListagem.Location = new System.Drawing.Point(22, 127);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
@@ -171,7 +172,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1156, 478);
+			this.dgvListagem.Size = new System.Drawing.Size(1156, 448);
 			this.dgvListagem.TabIndex = 2;
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
@@ -232,11 +233,11 @@
 			// 
 			// label1
 			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1109, 621);
+			this.label1.Location = new System.Drawing.Point(1109, 579);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(69, 15);
 			this.label1.TabIndex = 8;
@@ -244,10 +245,10 @@
 			// 
 			// lblValorPago
 			// 
-			this.lblValorPago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorPago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorPago.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorPago.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorPago.Location = new System.Drawing.Point(1041, 638);
+			this.lblValorPago.Location = new System.Drawing.Point(1041, 596);
 			this.lblValorPago.Name = "lblValorPago";
 			this.lblValorPago.Size = new System.Drawing.Size(137, 32);
 			this.lblValorPago.TabIndex = 9;
@@ -257,7 +258,7 @@
 			// btnFiltrar
 			// 
 			this.btnFiltrar.AllowAnimations = true;
-			this.btnFiltrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnFiltrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFiltrar.BackColor = System.Drawing.Color.Transparent;
 			this.btnFiltrar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -265,7 +266,7 @@
 			this.btnFiltrar.Image = global::CamadaUI.Properties.Resources.search_24;
 			this.btnFiltrar.ImageAbsolutePosition = new System.Drawing.Point(20, 3);
 			this.btnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnFiltrar.Location = new System.Drawing.Point(22, 678);
+			this.btnFiltrar.Location = new System.Drawing.Point(22, 636);
 			this.btnFiltrar.Name = "btnFiltrar";
 			this.btnFiltrar.PressedTextColor = System.Drawing.Color.LemonChiffon;
 			this.btnFiltrar.RoundedCornersMask = ((byte)(15));
@@ -285,9 +286,9 @@
 			// 
 			// btnImprimir
 			// 
-			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(911, 678);
+			this.btnImprimir.Location = new System.Drawing.Point(911, 636);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 6;
@@ -492,7 +493,7 @@
 			this.Panel2.Controls.Add(this.rbtPorMes);
 			this.Panel2.Controls.Add(this.pnlPorPeriodo);
 			this.Panel2.Controls.Add(this.pnlPorMes);
-			this.Panel2.Location = new System.Drawing.Point(22, 67);
+			this.Panel2.Location = new System.Drawing.Point(22, 59);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
 			this.Panel2.TabIndex = 1;
@@ -500,7 +501,7 @@
 			// lblFiltro
 			// 
 			this.lblFiltro.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblFiltro.Location = new System.Drawing.Point(717, 67);
+			this.lblFiltro.Location = new System.Drawing.Point(717, 59);
 			this.lblFiltro.Name = "lblFiltro";
 			this.lblFiltro.Size = new System.Drawing.Size(461, 58);
 			this.lblFiltro.TabIndex = 10;
@@ -508,10 +509,10 @@
 			// 
 			// lblValor
 			// 
-			this.lblValor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValor.BackColor = System.Drawing.Color.LightGray;
 			this.lblValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValor.Location = new System.Drawing.Point(898, 637);
+			this.lblValor.Location = new System.Drawing.Point(898, 595);
 			this.lblValor.Name = "lblValor";
 			this.lblValor.Size = new System.Drawing.Size(137, 32);
 			this.lblValor.TabIndex = 9;
@@ -520,11 +521,11 @@
 			// 
 			// label3
 			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(966, 620);
+			this.label3.Location = new System.Drawing.Point(966, 578);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(69, 15);
 			this.label3.TabIndex = 8;
@@ -532,6 +533,7 @@
 			// 
 			// pnlSituacao
 			// 
+			this.pnlSituacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlSituacao.BackColor = System.Drawing.SystemColors.ActiveCaption;
 			this.pnlSituacao.Controls.Add(this.rbtSitTodas);
 			this.pnlSituacao.Controls.Add(this.rbtNegociadas);
@@ -539,7 +541,7 @@
 			this.pnlSituacao.Controls.Add(this.rbtCanceladas);
 			this.pnlSituacao.Controls.Add(this.rbtQuitadas);
 			this.pnlSituacao.Controls.Add(this.rbtEmAberto);
-			this.pnlSituacao.Location = new System.Drawing.Point(22, 629);
+			this.pnlSituacao.Location = new System.Drawing.Point(22, 587);
 			this.pnlSituacao.Name = "pnlSituacao";
 			this.pnlSituacao.Size = new System.Drawing.Size(718, 41);
 			this.pnlSituacao.TabIndex = 11;
@@ -626,9 +628,9 @@
 			// 
 			// btnQuitar
 			// 
-			this.btnQuitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnQuitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnQuitar.Image = global::CamadaUI.Properties.Resources.money_red_24;
-			this.btnQuitar.Location = new System.Drawing.Point(166, 678);
+			this.btnQuitar.Location = new System.Drawing.Point(166, 636);
 			this.btnQuitar.Name = "btnQuitar";
 			this.btnQuitar.Size = new System.Drawing.Size(126, 42);
 			this.btnQuitar.TabIndex = 4;
@@ -653,7 +655,7 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(263, 246);
+			this.mnuOperacoes.Size = new System.Drawing.Size(263, 224);
 			// 
 			// mnuItemQuitar
 			// 
@@ -732,7 +734,7 @@
 			// frmAPagarListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1200, 728);
+			this.ClientSize = new System.Drawing.Size(1200, 686);
 			this.Controls.Add(this.pnlSituacao);
 			this.Controls.Add(this.lblFiltro);
 			this.Controls.Add(this.label3);

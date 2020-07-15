@@ -354,10 +354,13 @@ namespace CamadaUI
 		//--- DESABILITA MENU PRINCIPAL
 		public static void DesativaMenuPrincipal()
 		{
+			OcultaMenuPrincipal();
+			/*
 			frmPrincipal frm = Application.OpenForms.OfType<frmPrincipal>().First();
 			frm.mnuPrincipal.Enabled = false;
 			frm.pnlTop.BackColor = Color.SlateGray;
 			frm.btnConfig.Enabled = false;
+			*/
 		}
 
 		#endregion

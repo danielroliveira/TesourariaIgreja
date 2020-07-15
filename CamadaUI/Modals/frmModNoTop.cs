@@ -1,17 +1,16 @@
 ﻿
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CamadaUI.Modals
 {
-	public partial class frmModFinBorder : Form
+	public partial class frmModNoTop : Form
 	{
 		int Px;
 		int Py;
 		bool mover;
 
-		public frmModFinBorder()
+		public frmModNoTop()
 		{
 			InitializeComponent();
 			Handler_MouseMove();
