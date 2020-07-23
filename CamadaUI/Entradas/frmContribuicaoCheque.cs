@@ -249,7 +249,7 @@ namespace CamadaUI.Entradas
 
 			Control ctr = (Control)sender;
 
-			if (e.KeyCode == Keys.Add)
+			if (e.KeyCode == Keys.Add || e.KeyCode == Keys.F4)
 			{
 				e.Handled = true;
 
