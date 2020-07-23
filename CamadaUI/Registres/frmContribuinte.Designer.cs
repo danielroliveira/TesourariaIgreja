@@ -91,7 +91,7 @@
 			this.txtCongregacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCongregacao.MaxLength = 30;
 			this.txtCongregacao.Name = "txtCongregacao";
-			this.txtCongregacao.Size = new System.Drawing.Size(228, 27);
+			this.txtCongregacao.Size = new System.Drawing.Size(265, 27);
 			this.txtCongregacao.TabIndex = 15;
 			this.txtCongregacao.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCongregacao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -310,7 +310,7 @@
 			this.btnCongEscolher.BackColor = System.Drawing.Color.Transparent;
 			this.btnCongEscolher.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnCongEscolher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnCongEscolher.Location = new System.Drawing.Point(368, 265);
+			this.btnCongEscolher.Location = new System.Drawing.Point(405, 265);
 			this.btnCongEscolher.Name = "btnCongEscolher";
 			this.btnCongEscolher.RoundedCornersMask = ((byte)(15));
 			this.btnCongEscolher.RoundedCornersRadius = 0;

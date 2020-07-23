@@ -63,11 +63,11 @@
 			this.txtObservacao = new System.Windows.Forms.TextBox();
 			this.Label9 = new System.Windows.Forms.Label();
 			this.btnAjuste = new System.Windows.Forms.Button();
-			this.panel2 = new System.Windows.Forms.Panel();
+			this.pnlObservacao = new System.Windows.Forms.Panel();
 			this.lblContaDetalhe = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
-			this.panel2.SuspendLayout();
+			this.pnlObservacao.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -516,16 +516,16 @@
 			this.btnAjuste.UseVisualStyleBackColor = false;
 			this.btnAjuste.Click += new System.EventHandler(this.btnAjuste_Click);
 			// 
-			// panel2
+			// pnlObservacao
 			// 
-			this.panel2.BackColor = System.Drawing.Color.Gainsboro;
-			this.panel2.Controls.Add(this.txtObservacao);
-			this.panel2.Controls.Add(this.Label9);
-			this.panel2.Controls.Add(this.btnSalvarObservacao);
-			this.panel2.Location = new System.Drawing.Point(13, 525);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(306, 152);
-			this.panel2.TabIndex = 26;
+			this.pnlObservacao.BackColor = System.Drawing.Color.Gainsboro;
+			this.pnlObservacao.Controls.Add(this.txtObservacao);
+			this.pnlObservacao.Controls.Add(this.Label9);
+			this.pnlObservacao.Controls.Add(this.btnSalvarObservacao);
+			this.pnlObservacao.Location = new System.Drawing.Point(13, 525);
+			this.pnlObservacao.Name = "pnlObservacao";
+			this.pnlObservacao.Size = new System.Drawing.Size(306, 152);
+			this.pnlObservacao.TabIndex = 26;
 			// 
 			// lblContaDetalhe
 			// 
@@ -543,7 +543,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1154, 686);
 			this.Controls.Add(this.lblContaDetalhe);
-			this.Controls.Add(this.panel2);
+			this.Controls.Add(this.pnlObservacao);
 			this.Controls.Add(this.btnAjuste);
 			this.Controls.Add(this.btnExcluirCaixa);
 			this.Controls.Add(this.btnFechar);
@@ -588,13 +588,13 @@
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.btnExcluirCaixa, 0);
 			this.Controls.SetChildIndex(this.btnAjuste, 0);
-			this.Controls.SetChildIndex(this.panel2, 0);
+			this.Controls.SetChildIndex(this.pnlObservacao, 0);
 			this.Controls.SetChildIndex(this.lblContaDetalhe, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
+			this.pnlObservacao.ResumeLayout(false);
+			this.pnlObservacao.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -636,7 +636,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
 		internal System.Windows.Forms.Button btnAjuste;
-		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.Panel pnlObservacao;
 		internal System.Windows.Forms.Label lblContaDetalhe;
 	}
 }

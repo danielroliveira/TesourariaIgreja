@@ -351,10 +351,15 @@ namespace CamadaUI.Registres
 				}
 
 			}
+			catch (AppException ex)
+			{
+				AbrirDialog("Uma duplicação de registro irá acontecer ao Salvar Registro de Contribuinte..." + "\n" +
+							ex.Message, "Duplicação", DialogType.OK, DialogIcon.Exclamation);
+			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Contribuinte..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Warning);
 			}
 			finally
 			{
@@ -370,10 +375,23 @@ namespace CamadaUI.Registres
 		{
 			if (!VerificaDadosClasse(txtContribuinte, "Contribuinte", _contribuinte)) return false;
 
-			if (!ValidacaoCNP.ValidaCNP(_contribuinte.CNP))
+			string CPFnumber = txtCNP.Text.Replace("-", "").Replace(".", "").Replace("_", "").Trim();
+
+			if (string.IsNullOrEmpty(CPFnumber))
 			{
-				AbrirDialog("CPF ou CNPJ inválido,\n favor inserir um CPF/CNPJ válido...",
-					"CPF ou CNPJ inválido!",
+				var resp = AbrirDialog("Não foi informado o CPF do contribuinte," +
+					"\n Se você deseja inserir um contribuinte sem informar o CPF, pressione OK...",
+							"CPF Vazio!",
+							DialogType.OK_CANCELAR,
+							DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp == DialogResult.Cancel) return false;
+
+			}
+			else if (!ValidacaoCNP.ValidaCNP(_contribuinte.CNP))
+			{
+				AbrirDialog("CPF inválido,\n favor inserir um CPF válido...",
+					"CPF inválido!",
 					DialogType.OK,
 					DialogIcon.Warning);
 				txtCNP.Focus();

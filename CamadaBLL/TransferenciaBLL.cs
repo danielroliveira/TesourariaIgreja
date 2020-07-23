@@ -175,6 +175,7 @@ namespace CamadaBLL
 					IDOrigem = newID,
 					MovData = Transf.TransfData,
 					MovValor = Transf.TransfValor,
+					MovTipo = 3,
 					DescricaoOrigem = $"TRANSFERÊNCIA: entrada de {Transf.ContaSaida}",
 				};
 
@@ -194,6 +195,7 @@ namespace CamadaBLL
 					IDOrigem = newID,
 					MovData = Transf.TransfData,
 					MovValor = Transf.TransfValor * (-1),
+					MovTipo = 3,
 					DescricaoOrigem = $"TRANSFERÊNCIA: saída para {Transf.ContaEntrada}",
 				};
 

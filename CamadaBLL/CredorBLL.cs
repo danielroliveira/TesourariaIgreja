@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using CamadaDAL;
 using CamadaDTO;
 
@@ -116,9 +117,51 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public int InsertCredor(objCredor credor)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- check duplicated CREDOR
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+				db.AdicionarParametros("@Credor", credor.Credor);
+				db.ConvertNullParams();
+
+				//--- create and execute query
+				string query = "SELECT * FROM tblCredor WHERE Credor = @Credor";
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count > 0)
+				{
+					throw new AppException("Já existe um Credor cadastrado que possui o mesmo nome...");
+				}
+
+				//--- check duplicated CNP
+				//------------------------------------------------------------------------------------------------------------
+				string CNP = credor.CNP.Replace("/", "").Replace("-", "").Replace(".", "").Trim();
+
+				if (!string.IsNullOrEmpty(CNP))
+				{
+					db.LimparParametros();
+					db.AdicionarParametros("@CNP", credor.CNP);
+					db.ConvertNullParams();
+
+					//--- create and execute query
+					query = "SELECT * FROM tblCredor WHERE CNP = @CNP";
+					dt = db.ExecutarConsulta(CommandType.Text, query);
+
+					if (dt.Rows.Count > 0)
+					{
+						throw new AppException("Já existe um Credor cadastrado que possui o mesmo CPF...");
+					}
+				}
+				else
+				{
+					credor.CNP = string.Empty;
+				}
 
 				//--- clear Params
 				db.LimparParametros();
@@ -144,14 +187,33 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateInsertSQL("tblCredor");
+				query = db.CreateInsertSQL("tblCredor");
 
 				//--- insert
-				return (int)db.ExecutarInsertAndGetID(query);
+				int newID = (int)db.ExecutarInsertAndGetID(query);
 
+				//--- COMMIT and RETURN
+				db.CommitTransaction();
+				return newID;
+			}
+			catch (SqlException ex)
+			{
+				//--- ROOLBACK
+				db.RollBackTransaction();
+
+				if (ex.Number == 2627)
+				{
+					throw new AppException("Já existe um Credor com o mesmo nome...");
+				}
+				else
+				{
+					throw ex;
+				}
 			}
 			catch (Exception ex)
 			{
+				//--- ROOLBACK
+				db.RollBackTransaction(); 
 				throw ex;
 			}
 		}
@@ -160,9 +222,53 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public bool UpdateCredor(objCredor credor)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- check duplicated CREDOR
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+				db.AdicionarParametros("@Credor", credor.Credor);
+				db.AdicionarParametros("@IDCredor", credor.IDCredor);
+				db.ConvertNullParams();
+
+				//--- create and execute query
+				string query = "SELECT * FROM tblCredor WHERE Credor = @Credor AND IDCredor <> @IDCredor";
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count > 0)
+				{
+					throw new AppException("Já existe um Credor cadastrado que possui o mesmo nome...");
+				}
+
+				//--- check duplicated CNP
+				//------------------------------------------------------------------------------------------------------------
+				string CNP = credor.CNP.Replace("/", "").Replace("-", "").Replace(".", "").Trim();
+
+				if (!string.IsNullOrEmpty(CNP))
+				{
+					db.LimparParametros();
+					db.AdicionarParametros("@CNP", credor.CNP);
+					db.AdicionarParametros("@IDCredor", credor.IDCredor);
+					db.ConvertNullParams();
+
+					//--- create and execute query
+					query = "SELECT * FROM tblCredor WHERE CNP = @CNP AND IDCredor <> @IDCredor";
+					dt = db.ExecutarConsulta(CommandType.Text, query);
+
+					if (dt.Rows.Count > 0)
+					{
+						throw new AppException("Já existe um Credor cadastrado que possui o mesmo CPF...");
+					}
+				}
+				else
+				{
+					credor.CNP = string.Empty;
+				}
 
 				//--- clear Params
 				db.LimparParametros();
@@ -189,14 +295,19 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateUpdateSQL("tblCredor", "IDCredor");
+				query = db.CreateUpdateSQL("tblCredor", "IDCredor");
 
 				//--- UPDATE
 				db.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- COMMIT
+				db.CommitTransaction();
 				return true;
 			}
 			catch (Exception ex)
 			{
+				//--- ROOLBACK
+				db.RollBackTransaction();
 				throw ex;
 			}
 		}

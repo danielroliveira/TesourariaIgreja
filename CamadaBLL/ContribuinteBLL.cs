@@ -3,6 +3,8 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CamadaBLL
 {
@@ -107,84 +109,211 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertContribuinte(objContribuinte congregacao)
+		public int InsertContribuinte(objContribuinte contribuinte)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = new AcessoDados();
+				db.BeginTransaction();
 
-				//--- clear Params
+				//--- check duplicated CONTRIBUINTE
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+				db.AdicionarParametros("@Contribuinte", contribuinte.Contribuinte);
+				db.ConvertNullParams();
+
+				//--- create and execute query
+				string query = "SELECT * FROM tblContribuinte WHERE Contribuinte = @Contribuinte";
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count > 0)
+				{
+					throw new AppException("Já existe um Contribuinte cadastrado que possui o mesmo nome...");
+				}
+
+				//--- check duplicated CNP
+				//------------------------------------------------------------------------------------------------------------
+				string CNP = contribuinte.CNP.Replace("/", "").Replace("-", "").Replace(".", "").Trim();
+
+				if (!string.IsNullOrEmpty(CNP))
+				{
+					db.LimparParametros();
+					db.AdicionarParametros("@CNP", contribuinte.CNP);
+					db.ConvertNullParams();
+
+					//--- create and execute query
+					query = "SELECT * FROM tblContribuinte WHERE CNP = @CNP";
+					dt = db.ExecutarConsulta(CommandType.Text, query);
+
+					if (dt.Rows.Count > 0)
+					{
+						throw new AppException("Já existe um Contribuinte cadastrado que possui o mesmo CPF...");
+					}
+				}
+				else
+				{
+					contribuinte.CNP = string.Empty;
+				}
+
+				// INSERT Contribuinte
+				//------------------------------------------------------------------------------------------------------------
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@Contribuinte", congregacao.Contribuinte);
-				db.AdicionarParametros("@NascimentoData", congregacao.NascimentoData);
-				db.AdicionarParametros("@IDMembro", congregacao.IDMembro);
-				db.AdicionarParametros("@Dizimista", congregacao.Dizimista);
-				db.AdicionarParametros("@CNP", congregacao.CNP);
-				db.AdicionarParametros("@IDCongregacao", congregacao.IDCongregacao);
-				db.AdicionarParametros("@TelefoneCelular", congregacao.TelefoneCelular);
-				db.AdicionarParametros("@Ativo", congregacao.Ativo);
+				db.AdicionarParametros("@Contribuinte", contribuinte.Contribuinte);
+				db.AdicionarParametros("@NascimentoData", contribuinte.NascimentoData);
+				db.AdicionarParametros("@IDMembro", contribuinte.IDMembro);
+				db.AdicionarParametros("@Dizimista", contribuinte.Dizimista);
+				db.AdicionarParametros("@CNP", contribuinte.CNP);
+				db.AdicionarParametros("@IDCongregacao", contribuinte.IDCongregacao);
+				db.AdicionarParametros("@TelefoneCelular", contribuinte.TelefoneCelular);
+				db.AdicionarParametros("@Ativo", contribuinte.Ativo);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "INSERT INTO tblContribuinte (" +
-							   "Contribuinte, NascimentoData, IDMembro, Dizimista, " +
-							   "CNP, IDCongregacao, TelefoneCelular, Ativo " +
-							   ") VALUES (" +
-							   "@Contribuinte, @NascimentoData, @IDMembro, @Dizimista, " +
-							   "@CNP, @IDCongregacao, @TelefoneCelular, @Ativo)";
-				//--- insert
-				return (int)db.ExecutarInsertAndGetID(query);
+				query = "INSERT INTO tblContribuinte (" +
+						"Contribuinte, NascimentoData, IDMembro, Dizimista, " +
+						"CNP, IDCongregacao, TelefoneCelular, Ativo " +
+						") VALUES (" +
+						"@Contribuinte, @NascimentoData, @IDMembro, @Dizimista, " +
+						"@CNP, @IDCongregacao, @TelefoneCelular, @Ativo)";
 
+				//--- insert
+				int newID = (int)db.ExecutarInsertAndGetID(query);
+
+				//--- COMMIT and RETURN
+				db.CommitTransaction();
+				return newID;
+
+			}
+			catch (SqlException ex)
+			{
+				//--- ROLLBACK
+				db.RollBackTransaction();
+
+				if (ex.Number == 2627)
+				{
+					throw new AppException("Já existe um Contribuinte com o mesmo nome...");
+				}
+				else
+				{
+					throw ex;
+				}
 			}
 			catch (Exception ex)
 			{
+				//--- ROLLBACK
+				db.RollBackTransaction();
 				throw ex;
 			}
 		}
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateContribuinte(objContribuinte congregacao)
+		public bool UpdateContribuinte(objContribuinte contribuinte)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = new AcessoDados();
+				db.BeginTransaction();
 
-				//--- clear Params
+				//--- check duplicated CONTRIBUINTE
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+				db.AdicionarParametros("@Contribuinte", contribuinte.Contribuinte);
+				db.AdicionarParametros("@IDContribuinte", contribuinte.IDContribuinte);
+				db.ConvertNullParams();
+
+				//--- create and execute query
+				string query = "SELECT * FROM tblContribuinte WHERE Contribuinte = @Contribuinte AND IDContribuinte <> @IDContribuinte";
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count > 0)
+				{
+					throw new AppException("Já existe um Contribuinte cadastrado que possui o mesmo nome...");
+				}
+
+				//--- check duplicated CNP
+				//------------------------------------------------------------------------------------------------------------
+				string CNP = contribuinte.CNP.Replace("/", "").Replace("-", "").Replace(".", "").Trim();
+
+				if (!string.IsNullOrEmpty(CNP))
+				{
+					db.LimparParametros();
+					db.AdicionarParametros("@CNP", contribuinte.CNP);
+					db.AdicionarParametros("@IDContribuinte", contribuinte.IDContribuinte);
+					db.ConvertNullParams();
+
+					//--- create and execute query
+					query = "SELECT * FROM tblContribuinte WHERE CNP = @CNP AND IDContribuinte <> @IDContribuinte";
+					dt = db.ExecutarConsulta(CommandType.Text, query);
+
+					if (dt.Rows.Count > 0)
+					{
+						throw new AppException("Já existe um Contribuinte cadastrado que possui o mesmo CPF...");
+					}
+				}
+				else
+				{
+					contribuinte.CNP = string.Empty;
+				}
+
+				//--- UPDATE
+				//------------------------------------------------------------------------------------------------------------//--- clear Params
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDContribuinte", congregacao.IDContribuinte);
-				db.AdicionarParametros("@Contribuinte", congregacao.Contribuinte);
-				db.AdicionarParametros("@NascimentoData", congregacao.NascimentoData);
-				db.AdicionarParametros("@IDMembro", congregacao.IDMembro);
-				db.AdicionarParametros("@Dizimista", congregacao.Dizimista);
-				db.AdicionarParametros("@CNP", congregacao.CNP);
-				db.AdicionarParametros("@IDCongregacao", congregacao.IDCongregacao);
-				db.AdicionarParametros("@TelefoneCelular", congregacao.TelefoneCelular);
-				db.AdicionarParametros("@Ativo", congregacao.Ativo);
+				db.AdicionarParametros("@IDContribuinte", contribuinte.IDContribuinte);
+				db.AdicionarParametros("@Contribuinte", contribuinte.Contribuinte);
+				db.AdicionarParametros("@NascimentoData", contribuinte.NascimentoData);
+				db.AdicionarParametros("@IDMembro", contribuinte.IDMembro);
+				db.AdicionarParametros("@Dizimista", contribuinte.Dizimista);
+				db.AdicionarParametros("@CNP", contribuinte.CNP);
+				db.AdicionarParametros("@IDCongregacao", contribuinte.IDCongregacao);
+				db.AdicionarParametros("@TelefoneCelular", contribuinte.TelefoneCelular);
+				db.AdicionarParametros("@Ativo", contribuinte.Ativo);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = "UPDATE tblContribuinte SET " +
-							   "Contribuinte = @Contribuinte, NascimentoData = @NascimentoData, " +
-							   "IDMembro = @IDMembro, Dizimista = @Dizimista, TelefoneCelular = @TelefoneCelular, " +
-							   "CNP = @CNP, IDCongregacao = @IDCongregacao, Ativo = @Ativo " +
-							   "WHERE " +
-							   "IDContribuinte = @IDContribuinte";
+				query = "UPDATE tblContribuinte SET " +
+					    "Contribuinte = @Contribuinte, NascimentoData = @NascimentoData, " +
+					    "IDMembro = @IDMembro, Dizimista = @Dizimista, TelefoneCelular = @TelefoneCelular, " +
+					    "CNP = @CNP, IDCongregacao = @IDCongregacao, Ativo = @Ativo " +
+					    "WHERE " +
+					    "IDContribuinte = @IDContribuinte";
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
+
+				db.CommitTransaction();
 				return true;
 
 			}
+			catch (SqlException ex)
+			{
+				//--- ROLLBACK
+				db.RollBackTransaction();
+
+				if (ex.Number == 2627)
+				{
+					throw new AppException("Já existe um Contribuinte com o mesmo nome...");
+				}
+				else
+				{
+					throw ex;
+				}
+			}
 			catch (Exception ex)
 			{
+				//--- ROLLBACK
+				db.RollBackTransaction();
 				throw ex;
 			}
 		}

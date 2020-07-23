@@ -738,11 +738,13 @@ namespace CamadaUI.Caixa
 		private void txtObservacao_GotFocus(object sender, EventArgs e)
 		{
 			txtObservacao.BackColor = Color.White;
+			pnlObservacao.BackColor = Color.Silver;
 		}
 
 		private void txtObservacao_LostFocus(object sender, EventArgs e)
 		{
 			txtObservacao.BackColor = SystemColors.Control;
+			pnlObservacao.BackColor = Color.Gainsboro;
 		}
 
 		#endregion // OBSERVACAO --- END

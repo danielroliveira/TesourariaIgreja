@@ -298,7 +298,6 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
-
 			try
 			{
 				// --- Ampulheta ON
@@ -336,10 +335,15 @@ namespace CamadaUI.Registres
 				}
 
 			}
+			catch (AppException ex)
+			{
+				AbrirDialog("Uma duplicação de registro irá acontecer ao Salvar Registro de Credor..." + "\n" +
+							ex.Message, "Duplicação", DialogType.OK, DialogIcon.Exclamation);
+			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Credor..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Warning);
 			}
 			finally
 			{
