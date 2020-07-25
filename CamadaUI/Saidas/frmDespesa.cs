@@ -1230,7 +1230,15 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				Imagem.ImagemUtil.ImagemGetFileAndSave(EnumImagemOrigem.Despesa, (long)_despesa.IDDespesa);
+				objImagem imagem = new objImagem()
+				{
+					IDOrigem = (long)_despesa.IDDespesa,
+					Origem = EnumImagemOrigem.Despesa,
+					ImagemFileName = _despesa.Imagem.ImagemFileName,
+					ImagemPath = _despesa.Imagem.ImagemPath
+				};
+
+				Imagem.ImagemUtil.ImagemGetFileAndSave(imagem, this);
 			}
 			catch (Exception ex)
 			{

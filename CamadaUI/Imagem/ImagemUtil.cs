@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CamadaBLL;
 using CamadaDTO;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -13,7 +14,7 @@ namespace CamadaUI.Imagem
 {
 	public static class ImagemUtil
 	{
-		public static objImagem ImagemGetFileAndSave(EnumImagemOrigem origem, long IDOrigem)
+		public static objImagem ImagemGetFileAndSave(objImagem imagem, Form formOrigem)
 		{
 			try
 			{
@@ -22,33 +23,64 @@ namespace CamadaUI.Imagem
 
 				// GET IMAGE FOLDER
 				string ImageFolder = GetImageFolder();
-				string ImageName = "";
 
-				// GET ImageFile
-				using (OpenFileDialog OFD = new OpenFileDialog()
+				if (string.IsNullOrEmpty(imagem.ImagemFileName))
 				{
-					Filter = "Arquivo PDF (*.pdf)|*.pdf|Image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png"
-				})
-				{
-					if (OFD.ShowDialog() == DialogResult.OK)
+					// GET ImageFile
+					using (OpenFileDialog OFD = new OpenFileDialog()
 					{
-						ImageName = string.Format(@"{0}", OFD.FileName);
-						var img = new FileInfo(ImageName);
-						//frmImagemViewer frm = new frmImagemViewer(img.FullName);
-						//frm.ShowDialog();
+						Filter = "Arquivo PDF (*.pdf)|*.pdf|Image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png",
+						Title = "Escolher arquivo de imagem",
+						InitialDirectory = ImageFolder
+					})
+					{
+						if (OFD.ShowDialog() == DialogResult.OK)
+						{
+							imagem.ImagemFileName = OFD.SafeFileName;
+							imagem.ImagemPath = OFD.FileName;
+
+							using (frmImagemDialog frm = new frmImagemDialog(imagem, formOrigem))
+							{
+								frm.ShowDialog();
+
+								if (frm.DialogResult == DialogResult.OK)
+								{
+									imagem.ImagemFileName = frm.propImagem.ImagemFileName;
+									imagem.ImagemPath = frm.propImagem.ImagemPath;
+								}
+								else
+								{
+									return null;
+								}
+							}
+						}
+						else
+						{
+							return null;
+						}
+					}
+				}
+				else
+				{
+					using (frmImagemDialog frm = new frmImagemDialog(imagem, formOrigem))
+					{
+						frm.ShowDialog();
+
+						if (frm.DialogResult == DialogResult.OK)
+						{
+							imagem.ImagemFileName = frm.propImagem.ImagemFileName;
+							imagem.ImagemPath = frm.propImagem.ImagemPath;
+						}
+						else
+						{
+							return null;
+						}
 					}
 				}
 
-				if (string.IsNullOrEmpty(ImageName))
-				{
-					return null;
-				}
-
-				return new objImagem()
-				{
-					Origem = origem,
-					IDOrigem = IDOrigem
-				};
+				// save in database
+				ImagemSave(imagem);
+				return imagem;
 			}
 			catch (Exception ex)
 			{
@@ -61,15 +93,23 @@ namespace CamadaUI.Imagem
 			}
 		}
 
-		public static objImagem ImagemSave(EnumImagemOrigem origem, long IDOrigem)
+		public static void ImagemSave(objImagem imagem)
 		{
-			// 
+			try
+			{   // --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
-			return new objImagem()
+				new ImagemBLL().SaveImagem(imagem);
+			}
+			catch (Exception ex)
 			{
-				Origem = origem,
-				IDOrigem = IDOrigem
-			};
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		public static string GetImageFolder()
