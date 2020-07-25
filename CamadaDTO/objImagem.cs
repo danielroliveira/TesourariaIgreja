@@ -1,4 +1,6 @@
-﻿namespace CamadaDTO
+﻿using System;
+
+namespace CamadaDTO
 {
 	public class objImagem
 	{
@@ -7,5 +9,6 @@
 		public string ImagemFileName { get; set; }
 		public EnumImagemOrigem Origem { get; set; }
 		public long IDOrigem { get; set; }
+		public DateTime? ReferenceDate { get; set; }
 	}
 }

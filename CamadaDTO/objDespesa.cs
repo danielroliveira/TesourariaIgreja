@@ -404,7 +404,7 @@ namespace CamadaDTO
 				if (value != EditData._Imagem)
 				{
 					EditData._Imagem = value;
-					NotifyPropertyChanged("Imagem");
+					//NotifyPropertyChanged("Imagem");
 				}
 			}
 		}

@@ -81,6 +81,8 @@
 			this.btnInsertTitular = new VIBlend.WinForms.Controls.vButton();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.lblSitBlock = new System.Windows.Forms.Label();
+			this.btnRemoverImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlParcelas.SuspendLayout();
@@ -230,7 +232,9 @@
 			// 
 			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnInserirImagem,
-            this.btnVerImagem});
+            this.btnVerImagem,
+            this.toolStripSeparator3,
+            this.btnRemoverImagem});
 			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
 			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -239,12 +243,13 @@
 			this.mnuImagem.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.mnuImagem.Size = new System.Drawing.Size(114, 41);
 			this.mnuImagem.Text = "Imagem";
+			this.mnuImagem.Click += new System.EventHandler(this.mnuImagem_Click);
 			// 
 			// btnInserirImagem
 			// 
 			this.btnInserirImagem.Image = global::CamadaUI.Properties.Resources.add_16;
 			this.btnInserirImagem.Name = "btnInserirImagem";
-			this.btnInserirImagem.Size = new System.Drawing.Size(180, 24);
+			this.btnInserirImagem.Size = new System.Drawing.Size(191, 24);
 			this.btnInserirImagem.Text = "Inserir Imagem";
 			this.btnInserirImagem.Click += new System.EventHandler(this.btnInserirImagem_Click);
 			// 
@@ -252,8 +257,9 @@
 			// 
 			this.btnVerImagem.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.btnVerImagem.Name = "btnVerImagem";
-			this.btnVerImagem.Size = new System.Drawing.Size(180, 24);
+			this.btnVerImagem.Size = new System.Drawing.Size(191, 24);
 			this.btnVerImagem.Text = "Ver Imagem";
+			this.btnVerImagem.Click += new System.EventHandler(this.btnVerImagem_Click);
 			// 
 			// txtDespesaDescricao
 			// 
@@ -770,6 +776,19 @@
 			this.lblSitBlock.TabIndex = 34;
 			this.lblSitBlock.Text = "- Apenas Visualização -";
 			// 
+			// btnRemoverImagem
+			// 
+			this.btnRemoverImagem.Image = global::CamadaUI.Properties.Resources.delete_16;
+			this.btnRemoverImagem.Name = "btnRemoverImagem";
+			this.btnRemoverImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnRemoverImagem.Text = "Remover Imagem";
+			this.btnRemoverImagem.Click += new System.EventHandler(this.btnRemoverImagem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
+			// 
 			// frmDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -901,5 +920,7 @@
 		private System.Windows.Forms.ToolStripDropDownButton mnuImagem;
 		private System.Windows.Forms.ToolStripMenuItem btnInserirImagem;
 		private System.Windows.Forms.ToolStripMenuItem btnVerImagem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem btnRemoverImagem;
 	}
 }

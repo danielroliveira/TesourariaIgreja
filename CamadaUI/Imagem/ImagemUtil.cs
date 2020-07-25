@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CamadaBLL;
+﻿using CamadaBLL;
 using CamadaDTO;
+using System;
+using System.IO;
+using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
@@ -24,14 +20,14 @@ namespace CamadaUI.Imagem
 				// GET IMAGE FOLDER
 				string ImageFolder = GetImageFolder();
 
-				if (string.IsNullOrEmpty(imagem.ImagemFileName))
+				if (string.IsNullOrEmpty(imagem.ImagemFileName)) // if IMAGE = NULL
 				{
 					// GET ImageFile
 					using (OpenFileDialog OFD = new OpenFileDialog()
 					{
 						Filter = "Arquivo PDF (*.pdf)|*.pdf|Image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png",
 						Title = "Escolher arquivo de imagem",
-						InitialDirectory = ImageFolder
+						InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
 					})
 					{
 						if (OFD.ShowDialog() == DialogResult.OK)
@@ -60,7 +56,7 @@ namespace CamadaUI.Imagem
 						}
 					}
 				}
-				else
+				else // IF THERE IS IMAGE --> OPEN/EDIT IMAGE
 				{
 					using (frmImagemDialog frm = new frmImagemDialog(imagem, formOrigem))
 					{
@@ -73,18 +69,89 @@ namespace CamadaUI.Imagem
 						}
 						else
 						{
-							return null;
+							return imagem;
 						}
 					}
 				}
 
+				// copy to default folder
+				imagem = CopyImageToDefaultFolder(imagem, ImageFolder);
+
 				// save in database
 				ImagemSave(imagem);
+
 				return imagem;
 			}
 			catch (Exception ex)
 			{
 				throw new Exception("Uma exceção ocorreu ao Obter o arquivo da imagem..." + "\n" + ex.Message);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private static objImagem CopyImageToDefaultFolder(objImagem image, string ImageFolder)
+		{
+			try
+			{
+				//--- check referece date
+				if (image.ReferenceDate == null)
+				{
+					throw new Exception("Não há data de referência...");
+				}
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// GEt fileInfo
+				FileInfo file = new FileInfo(image.ImagemPath);
+
+				// copy file to Default Folder
+				string subFolder = "";
+
+				switch (image.Origem)
+				{
+					case EnumImagemOrigem.Despesa:
+						subFolder = "Despesas";
+						image.ImagemFileName = $"Desp{image.IDOrigem:D4}_{image.ImagemFileName}";
+						break;
+					case EnumImagemOrigem.APagar:
+						subFolder = "APagar";
+						image.ImagemFileName = $"Pag{image.IDOrigem:D4}_{image.ImagemFileName}";
+						break;
+					case EnumImagemOrigem.Movimentacao:
+						subFolder = "Movimentacao";
+						image.ImagemFileName = $"Mov{image.IDOrigem:D4}_{image.ImagemFileName}";
+						break;
+					default:
+						break;
+				}
+
+				DateTime refDate = (DateTime)image.ReferenceDate;
+				string folderDate = $"{refDate:yyyy}{refDate:MM}";
+				string completeFolder = $"{ImageFolder}\\{subFolder}\\{folderDate}";
+
+				// check directory
+				if (!Directory.Exists(completeFolder))
+				{
+					Directory.CreateDirectory(completeFolder);
+				}
+
+				FileInfo newFile = file.CopyTo($"{ImageFolder}\\{subFolder}\\{folderDate}\\{image.ImagemFileName}", true);
+
+				// define new Image Path
+				image.ImagemPath = $"\\{subFolder}\\{folderDate}\\{image.ImagemFileName}";
+
+				// return
+				return image;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
 			}
 			finally
 			{
@@ -149,6 +216,54 @@ namespace CamadaUI.Imagem
 			catch (Exception ex)
 			{
 				throw ex;
+			}
+		}
+
+		public static void ImagemVisualizar(objImagem imagem)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// GET IMAGE FOLDER
+				string ImageFolder = GetImageFolder();
+
+				System.Diagnostics.Process.Start($"{ImageFolder}\\{imagem.ImagemPath}");
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		public static objImagem ImagemRemover(objImagem imagem)
+		{
+			imagem.ImagemFileName = string.Empty;
+			imagem.ImagemPath = string.Empty;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				ImagemSave(imagem);
+
+				return imagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 	}

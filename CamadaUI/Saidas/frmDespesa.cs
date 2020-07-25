@@ -1,6 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaUI.Main;
+using CamadaUI.Imagem;
 using CamadaUI.Registres;
 using CamadaUI.Setores;
 using System;
@@ -1216,6 +1216,7 @@ namespace CamadaUI.Saidas
 
 		#endregion // SALVAR REGISTRO --- END
 
+		#region IMAGE CONTROL
 		private void btnInserirImagem_Click(object sender, EventArgs e)
 		{
 			if (_despesa.IDDespesa == null)
@@ -1234,11 +1235,13 @@ namespace CamadaUI.Saidas
 				{
 					IDOrigem = (long)_despesa.IDDespesa,
 					Origem = EnumImagemOrigem.Despesa,
-					ImagemFileName = _despesa.Imagem.ImagemFileName,
-					ImagemPath = _despesa.Imagem.ImagemPath
+					ImagemFileName = _despesa.Imagem == null ? string.Empty : _despesa.Imagem.ImagemFileName,
+					ImagemPath = _despesa.Imagem == null ? string.Empty : _despesa.Imagem.ImagemPath,
+					ReferenceDate = _despesa.DespesaData,
 				};
 
-				Imagem.ImagemUtil.ImagemGetFileAndSave(imagem, this);
+				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
+				_despesa.Imagem = imagem;
 			}
 			catch (Exception ex)
 			{
@@ -1251,5 +1254,111 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.Default;
 			}
 		}
+
+		private void btnVerImagem_Click(object sender, EventArgs e)
+		{
+			if (_despesa.IDDespesa == null)
+			{
+				AbrirDialog("Ainda não existe nenhuma imagem associada a essa Despesa..." +
+					"\nÉ necessário salvar a despesa para anexar uma imagem...",
+					"Necessário Salvar", DialogType.OK, DialogIcon.Warning);
+				return;
+			}
+
+			if (_despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemFileName))
+			{
+				var resp = AbrirDialog("Ainda não existe nenhuma imagem associada a essa Despesa..." +
+					"\nDeseja INSERIR uma nova imagem à despesa?",
+					"Não há Imagem", DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					btnInserirImagem_Click(sender, e);
+				}
+
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				ImagemUtil.ImagemVisualizar(_despesa.Imagem);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Visualizar a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		private void mnuImagem_Click(object sender, EventArgs e)
+		{
+			if (_despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemFileName))
+			{
+				btnInserirImagem.Text = "Inserir Imagem";
+				btnRemoverImagem.Enabled = false;
+			}
+			else
+			{
+				btnInserirImagem.Text = "Alterar Imagem";
+				btnRemoverImagem.Enabled = true;
+			}
+		}
+
+		private void btnRemoverImagem_Click(object sender, EventArgs e)
+		{
+			DialogResult resp;
+
+			if (_despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemFileName))
+			{
+				resp = AbrirDialog("Ainda não existe nenhuma imagem associada a essa Despesa para que seja removida...",
+					"Não há Imagem", DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					btnInserirImagem_Click(sender, e);
+				}
+
+				return;
+			}
+
+			resp = AbrirDialog("Deseja realmente REMOVER ou DESASSOCIAR a imagem da despesa atual?" +
+				"A imagem não será excluída...",
+				"Remover Imagem", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				_despesa.Imagem = ImagemUtil.ImagemRemover(_despesa.Imagem);
+
+				AbrirDialog("Imagem desassociada com sucesso!" +
+					"\nPor segurança a imagem foi guardada na pasta de Imagens Removidas.",
+					"Imagem Removida", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		#endregion // IMAGE CONTROL --- END
 	}
 }
