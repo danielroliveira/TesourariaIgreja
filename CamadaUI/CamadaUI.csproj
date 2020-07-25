@@ -386,6 +386,12 @@
     <Compile Include="Entradas\frmContribuicaoListagemFiltro.Designer.cs">
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Imagem\frmImagemDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Imagem\frmImagemDialog.Designer.cs">
+      <DependentUpon>frmImagemDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmComboLista.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -447,6 +453,7 @@
       <DependentUpon>frmUsuarioContaAcesso.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\FuncoesGlobais.cs" />
+    <Compile Include="Imagem\ImagemUtil.cs" />
     <Compile Include="Main\InputBox.cs" />
     <Compile Include="Main\Utilidades.cs" />
     <Compile Include="Modals\frmModConfig.cs">
@@ -786,6 +793,9 @@
     <EmbeddedResource Include="Entradas\frmContribuicaoListagemFiltro.resx">
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Imagem\frmImagemDialog.resx">
+      <DependentUpon>frmImagemDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\frmComboLista.resx">
       <DependentUpon>frmComboLista.cs</DependentUpon>
     </EmbeddedResource>
@@ -1119,6 +1129,8 @@
     <Content Include="ConfigFiles\Config.xml" />
     <Content Include="ConfigFiles\LogoColor.png" />
     <Content Include="ConfigFiles\LogoMono.png" />
+    <None Include="Resources\backup_24.png" />
+    <None Include="Resources\ImagesFolder_30.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

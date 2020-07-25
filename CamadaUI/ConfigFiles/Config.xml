@@ -12,6 +12,7 @@
     <DataBloqueada></DataBloqueada>
     <CidadePadrao></CidadePadrao>
     <UFPadrao></UFPadrao>
+	<DocumentsImageFolder></DocumentsImageFolder>
   </DefaultValues>
   <ArquivoLogo>
     <ArquivoLogoMono>

@@ -374,6 +374,8 @@ namespace CamadaUI.APagar
 			txtValorDesconto.ReadOnly = false;
 			txtValorDesconto.Focus();
 			txtValorDesconto.SelectAll();
+
+			ShowToolTip(txtValorDesconto as Control);
 		}
 
 		private void txtValorDesconto_KeyDown(object sender, KeyEventArgs e)

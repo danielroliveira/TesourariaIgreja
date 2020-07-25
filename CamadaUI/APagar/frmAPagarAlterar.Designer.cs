@@ -121,9 +121,9 @@
 			// 
 			// lblDespesaDescricao
 			// 
-			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDespesaDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
 			this.lblDespesaDescricao.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaDescricao.Location = new System.Drawing.Point(92, 6);
@@ -240,6 +240,7 @@
 			this.txtValorDesconto.Inteiro = false;
 			this.txtValorDesconto.Location = new System.Drawing.Point(164, 218);
 			this.txtValorDesconto.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtValorDesconto.Moeda = false;
 			this.txtValorDesconto.Name = "txtValorDesconto";
 			this.txtValorDesconto.Positivo = true;
 			this.txtValorDesconto.Size = new System.Drawing.Size(145, 31);
@@ -329,23 +330,23 @@
 			this.numReferenciaAno.Location = new System.Drawing.Point(331, 288);
 			this.numReferenciaAno.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numReferenciaAno.Maximum = new decimal(new int[] {
-			5000,
-			0,
-			0,
-			0});
+            5000,
+            0,
+            0,
+            0});
 			this.numReferenciaAno.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numReferenciaAno.Name = "numReferenciaAno";
 			this.numReferenciaAno.Size = new System.Drawing.Size(86, 27);
 			this.numReferenciaAno.TabIndex = 18;
 			this.numReferenciaAno.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			// 
 			// panel2
 			// 
@@ -372,9 +373,9 @@
 			// 
 			// lblCredor
 			// 
-			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCredor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
 			this.lblCredor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCredor.Location = new System.Drawing.Point(91, 33);
@@ -436,6 +437,7 @@
 			this.txtAPagarValor.Size = new System.Drawing.Size(145, 24);
 			this.txtAPagarValor.TabIndex = 30;
 			this.txtAPagarValor.TabStop = false;
+			this.txtAPagarValor.Tag = "Digite aqui o novo Valor";
 			this.txtAPagarValor.Text = "R$ 0,00";
 			this.txtAPagarValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.txtAPagarValor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAPagarValor_KeyDown);
@@ -482,8 +484,8 @@
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnAlterar,
-			this.btnFechar});
+            this.btnAlterar,
+            this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(4, 474);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(524, 44);

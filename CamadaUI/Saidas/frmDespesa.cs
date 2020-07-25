@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Main;
 using CamadaUI.Registres;
 using CamadaUI.Setores;
 using System;
@@ -1214,5 +1215,33 @@ namespace CamadaUI.Saidas
 
 
 		#endregion // SALVAR REGISTRO --- END
+
+		private void btnInserirImagem_Click(object sender, EventArgs e)
+		{
+			if (_despesa.IDDespesa == null)
+			{
+				AbrirDialog("É necessário salvar a despesa para anexar uma imagem...",
+					"Necessário Salvar", DialogType.OK, DialogIcon.Warning);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Imagem.ImagemUtil.ImagemGetFileAndSave(EnumImagemOrigem.Despesa, (long)_despesa.IDDespesa);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 	}
 }

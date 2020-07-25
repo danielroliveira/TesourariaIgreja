@@ -54,6 +54,7 @@
     <Compile Include="objAPagar.cs" />
     <Compile Include="objCaixaAjuste.cs" />
     <Compile Include="objDespesaPeriodica.cs" />
+    <Compile Include="objImagem.cs" />
     <Compile Include="objMovimentacao.cs" />
     <Compile Include="objTransferencia.cs" />
     <Compile Include="objEntradaForma.cs" />

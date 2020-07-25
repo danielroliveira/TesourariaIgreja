@@ -53,7 +53,8 @@ namespace CamadaUI
 							new XElement("SetorDescricao", ""),
 							new XElement("DataBloqueada", ""),
 							new XElement("CidadePadrao", ""),
-							new XElement("UFPadrao", "")
+							new XElement("UFPadrao", ""),
+							new XElement("DocumentsImageFolder", "")
 						),
 						new XElement("ArquivoLogo",
 							new XElement("ArquivoLogoMono", ""),

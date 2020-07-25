@@ -37,8 +37,9 @@ namespace CamadaDTO
 			internal string _Situacao;
 			internal byte _Parcelas;
 			internal byte _Prioridade;  // 1: Imediata | 2: Alta Prioridade | 3: Normal | 4: Baixa | 5: Suspender
-			internal bool _Imagem;
 
+			// from tblImagem
+			internal objImagem _Imagem;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -59,8 +60,11 @@ namespace CamadaDTO
 				_IDSituacao = 1,
 				_Parcelas = 1,
 				_Prioridade = 3, // prioridade NORMAL
-				_Imagem = false,
-				_IDTitular = null
+				_IDTitular = null,
+				_Imagem = new objImagem()
+				{
+					Origem = EnumImagemOrigem.Despesa,
+				},
 			};
 		}
 
@@ -392,7 +396,7 @@ namespace CamadaDTO
 
 		// Property Imagem
 		//---------------------------------------------------------------
-		public bool Imagem
+		public objImagem Imagem
 		{
 			get => EditData._Imagem;
 			set

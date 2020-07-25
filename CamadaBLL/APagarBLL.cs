@@ -428,7 +428,6 @@ namespace CamadaBLL
 				ValorDesconto = (decimal)row["ValorDesconto"],
 				ReferenciaMes = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaMes"],
 				ReferenciaAno = row["ReferenciaMes"] == DBNull.Value ? null : (int?)row["ReferenciaAno"],
-				Imagem = (bool)row["Imagem"],
 				IDSetor = (int)row["IDSetor"],
 				Setor = (string)row["Setor"],
 			};

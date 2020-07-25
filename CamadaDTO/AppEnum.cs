@@ -32,6 +32,13 @@ namespace CamadaDTO
 		TransfSetor = 6
 	}
 
+	public enum EnumImagemOrigem : byte
+	{
+		Despesa = 1,
+		APagar = 2,
+		Movimentacao = 3
+	}
+
 	public static class EnumUtil
 	{
 		/// <summary>

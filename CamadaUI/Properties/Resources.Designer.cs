@@ -123,6 +123,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap backup_24 {
+            get {
+                object obj = ResourceManager.GetObject("backup_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap block_16 {
             get {
                 object obj = ResourceManager.GetObject("block_16", resourceCulture);
@@ -356,6 +366,16 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap igreja_32 {
             get {
                 object obj = ResourceManager.GetObject("igreja_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ImagesFolder_30 {
+            get {
+                object obj = ResourceManager.GetObject("ImagesFolder_30", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

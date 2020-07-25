@@ -181,6 +181,13 @@ namespace CamadaBLL
 				CNP = row["CNP"] == DBNull.Value ? null : (string)row["CNP"],
 			};
 
+			// SET IMAGEM
+			despesa.Imagem.IDOrigem = (long)despesa.IDDespesa;
+			despesa.Imagem.Origem = EnumImagemOrigem.Despesa;
+			despesa.Imagem.ImagemFileName = row["ImagemFileName"] == DBNull.Value ? string.Empty : (string)row["ImagemFileName"];
+			despesa.Imagem.ImagemPath = row["ImagemPath"] == DBNull.Value ? string.Empty : (string)row["ImagemPath"];
+
+			// RETURN
 			return despesa;
 		}
 

@@ -523,6 +523,7 @@
 			this.txtValorDesconto.Size = new System.Drawing.Size(126, 26);
 			this.txtValorDesconto.TabIndex = 29;
 			this.txtValorDesconto.TabStop = false;
+			this.txtValorDesconto.Tag = "Digite aqui o novo Desconto";
 			this.txtValorDesconto.Text = "R$ 0,00";
 			this.txtValorDesconto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValorDesconto_KeyDown);
 			this.txtValorDesconto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.UcOnlyNumbers_KeyPress);

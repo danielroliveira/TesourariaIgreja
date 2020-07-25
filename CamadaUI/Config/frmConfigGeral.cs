@@ -8,6 +8,7 @@ using CamadaUI.Setores;
 using System.Xml;
 using System.Drawing;
 using CamadaDTO;
+using System.IO;
 
 namespace CamadaUI.Config
 {
@@ -239,6 +240,9 @@ namespace CamadaUI.Config
 					case "txtSetorPadrao":
 						btnSetorAlterar_Click(sender, new EventArgs());
 						break;
+					case "txtImageFolder":
+						btnProcImageFolder_Click(sender, new EventArgs());
+						break;
 					default:
 						break;
 				}
@@ -246,7 +250,7 @@ namespace CamadaUI.Config
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtContaPadrao, txtSetorPadrao };
+				Control[] controlesBloqueados = { txtContaPadrao, txtSetorPadrao, txtImageFolder };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -317,6 +321,9 @@ namespace CamadaUI.Config
 				// UF PADRAO
 				txtUFPadrao.Text = LoadNode(doc, "UFPadrao");
 
+				// IMAGES FOLDER
+				txtImageFolder.Text = LoadNode(doc, "DocumentsImageFolder");
+
 			}
 			catch (Exception ex)
 			{
@@ -366,6 +373,9 @@ namespace CamadaUI.Config
 				SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
 				SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
 				SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
+				SaveConfigValorNode("DocumentsImageFolder", txtImageFolder.Text);
+
+				//< DocumentsImageFolder ></ DocumentsImageFolder >
 
 				AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
 					DialogType.OK, DialogIcon.Information);
@@ -411,5 +421,84 @@ namespace CamadaUI.Config
 
 		#endregion // SAVE CONFIG --- END
 
+		private void btnProcImageFolder_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				string oldPath = txtImageFolder.Text;
+				string path = "";
+
+				// CHECK IF EXISTS DEFAULT BACKUP FOLDER
+				if (oldPath == string.Empty)
+				{
+					string defFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+					defFolder += "\\Tesouraria\\DocumentosImagens\\";
+
+					if (Directory.Exists(defFolder))
+					{
+						path = defFolder;
+					}
+					else
+					{
+						DialogResult resp = AbrirDialog("Ainda não foi criada a pasta padrão para os Documentos e Comprovantes. \n" +
+							"Deseja criar a pasta padrão?",
+							"Pasta de Documentos",
+							DialogType.SIM_NAO,
+							DialogIcon.Question);
+
+						if (resp == DialogResult.Yes)
+						{
+							Directory.CreateDirectory(defFolder);
+							path = defFolder;
+						}
+						else
+						{
+							path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+						}
+					}
+				}
+				else
+				{
+					if (!Directory.Exists(oldPath))
+					{
+						oldPath = "";
+						btnProcImageFolder_Click(sender, e);
+						return;
+					}
+					else
+					{
+						path = oldPath;
+					}
+				}
+
+				// get folder
+				using (FolderBrowserDialog FBDiag = new FolderBrowserDialog()
+				{
+					Description = "Pasta de Imagens dos Documentos",
+					SelectedPath = path,
+					ShowNewFolderButton = true
+				})
+				{
+
+					DialogResult result = FBDiag.ShowDialog();
+					if (result == DialogResult.OK)
+					{
+						path = FBDiag.SelectedPath;
+					}
+					else
+					{
+						return;
+					}
+				}
+
+				SaveConfigValorNode("DocumentsImageFolder", path);
+				txtImageFolder.Text = path;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Salvar a pasta de Imagens dos Documentos..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
 	}
 }

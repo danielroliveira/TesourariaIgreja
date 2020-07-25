@@ -2,13 +2,11 @@
 using CamadaDTO;
 using System;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using System.Collections.Generic;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.APagar
 {

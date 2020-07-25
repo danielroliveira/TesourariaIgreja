@@ -306,6 +306,9 @@ namespace CamadaUI.APagar
 			txtAPagarValor.ReadOnly = false;
 			txtAPagarValor.Focus();
 			txtAPagarValor.SelectAll();
+
+			ShowToolTip(txtAPagarValor as Control);
+
 		}
 
 		private void txtAPagarValor_KeyDown(object sender, KeyEventArgs e)
@@ -328,7 +331,7 @@ namespace CamadaUI.APagar
 
 			if (ValorAnterior != newValor)
 			{
-				var resp = AbrirDialog($"O valor da Despesa Periódica Original será alterada para {newValor:c}\n" +
+				var resp = AbrirDialog($"O valor da Despesa Periódica Original será alterada permanentemente para {newValor:c}\n" +
 					"Você deseja continuar?",
 					"Despesa Periódica - Alterar Valor",
 					DialogType.SIM_NAO,

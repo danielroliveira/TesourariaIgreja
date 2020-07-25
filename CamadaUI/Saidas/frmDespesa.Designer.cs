@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDespesa));
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
@@ -39,6 +40,9 @@
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuImagem = new System.Windows.Forms.ToolStripDropDownButton();
+			this.btnInserirImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnVerImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.txtDespesaDescricao = new System.Windows.Forms.TextBox();
 			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.dtpDespesaData = new System.Windows.Forms.DateTimePicker();
@@ -152,7 +156,8 @@
             this.btnSalvar,
             this.btnCancelar,
             this.btnFechar,
-            this.toolStripSeparator2});
+            this.toolStripSeparator2,
+            this.mnuImagem});
 			this.tspMenu.Location = new System.Drawing.Point(2, 617);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(772, 44);
@@ -220,6 +225,35 @@
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
+			// 
+			// mnuImagem
+			// 
+			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnInserirImagem,
+            this.btnVerImagem});
+			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
+			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.mnuImagem.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
+			this.mnuImagem.Name = "mnuImagem";
+			this.mnuImagem.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.mnuImagem.Size = new System.Drawing.Size(114, 41);
+			this.mnuImagem.Text = "Imagem";
+			// 
+			// btnInserirImagem
+			// 
+			this.btnInserirImagem.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnInserirImagem.Name = "btnInserirImagem";
+			this.btnInserirImagem.Size = new System.Drawing.Size(180, 24);
+			this.btnInserirImagem.Text = "Inserir Imagem";
+			this.btnInserirImagem.Click += new System.EventHandler(this.btnInserirImagem_Click);
+			// 
+			// btnVerImagem
+			// 
+			this.btnVerImagem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnVerImagem.Name = "btnVerImagem";
+			this.btnVerImagem.Size = new System.Drawing.Size(180, 24);
+			this.btnVerImagem.Text = "Ver Imagem";
 			// 
 			// txtDespesaDescricao
 			// 
@@ -730,7 +764,7 @@
 			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
-			this.lblSitBlock.Location = new System.Drawing.Point(320, 626);
+			this.lblSitBlock.Location = new System.Drawing.Point(487, 627);
 			this.lblSitBlock.Name = "lblSitBlock";
 			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
 			this.lblSitBlock.TabIndex = 34;
@@ -864,5 +898,8 @@
 		internal VIBlend.WinForms.Controls.vButton btnInsertTitular;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Label lblSitBlock;
+		private System.Windows.Forms.ToolStripDropDownButton mnuImagem;
+		private System.Windows.Forms.ToolStripMenuItem btnInserirImagem;
+		private System.Windows.Forms.ToolStripMenuItem btnVerImagem;
 	}
 }

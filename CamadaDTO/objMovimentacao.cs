@@ -46,10 +46,9 @@ namespace CamadaDTO
 			internal decimal? _AcrescimoValor;
 			internal byte? _IDAcrescimoMotivo;
 			internal string _AcrescimoMotivo;
-			// tbl MovImagem
-			internal string _ImagemPath;
-			internal string _ImagemFileName;
 
+			// tblImagem
+			internal objImagem _Imagem;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -70,8 +69,12 @@ namespace CamadaDTO
 				_AcrescimoValor = null,
 				_IDAcrescimoMotivo = null,
 				_AcrescimoMotivo = "",
-				_ImagemFileName = "",
-				_ImagemPath = "",
+				_Imagem = new objImagem()
+				{
+					ImagemFileName = "",
+					ImagemPath = "",
+					Origem = EnumImagemOrigem.Movimentacao,
+				}
 			};
 		}
 
@@ -469,12 +472,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string ImagemPath
 		{
-			get => EditData._ImagemPath;
+			get => EditData._Imagem.ImagemPath;
 			set
 			{
-				if (value != EditData._ImagemPath)
+				if (value != EditData._Imagem.ImagemPath)
 				{
-					EditData._ImagemPath = value;
+					EditData._Imagem.ImagemPath = value;
 					NotifyPropertyChanged("ImagemPath");
 				}
 			}
@@ -484,12 +487,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string ImagemFileName
 		{
-			get => EditData._ImagemFileName;
+			get => EditData._Imagem.ImagemFileName;
 			set
 			{
-				if (value != EditData._ImagemFileName)
+				if (value != EditData._Imagem.ImagemFileName)
 				{
-					EditData._ImagemFileName = value;
+					EditData._Imagem.ImagemFileName = value;
 					NotifyPropertyChanged("ImagemFileName");
 				}
 			}
