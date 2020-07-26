@@ -30,7 +30,7 @@
 		{
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
 			this.label1 = new System.Windows.Forms.Label();
-			this.btnEscolher = new System.Windows.Forms.Button();
+			this.btnSalvar = new System.Windows.Forms.Button();
 			this.btnAlterar = new System.Windows.Forms.Button();
 			this.btnCancelar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -75,7 +75,7 @@
 			this.btnProcurar.UseCompatibleTextRendering = true;
 			this.btnProcurar.UseVisualStyleBackColor = false;
 			this.btnProcurar.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnProcurar.Click += new System.EventHandler(this.btnAlterar_Click);
+			this.btnProcurar.Click += new System.EventHandler(this.btnProcurar_Click);
 			// 
 			// label1
 			// 
@@ -86,27 +86,28 @@
 			this.label1.TabIndex = 3;
 			this.label1.Text = "imagem de comprovante, nfe, boleto, etc.";
 			// 
-			// btnEscolher
+			// btnSalvar
 			// 
-			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnEscolher.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-			this.btnEscolher.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
-			this.btnEscolher.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
-			this.btnEscolher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_16;
-			this.btnEscolher.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnEscolher.Location = new System.Drawing.Point(20, 143);
-			this.btnEscolher.Name = "btnEscolher";
-			this.btnEscolher.Size = new System.Drawing.Size(145, 40);
-			this.btnEscolher.TabIndex = 4;
-			this.btnEscolher.Text = "Usar Imagem";
-			this.btnEscolher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnEscolher.UseVisualStyleBackColor = true;
-			this.btnEscolher.Click += new System.EventHandler(this.btnEscolher_Click);
+			this.btnSalvar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnSalvar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+			this.btnSalvar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
+			this.btnSalvar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
+			this.btnSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSalvar.Image = global::CamadaUI.Properties.Resources.accept_16;
+			this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSalvar.Location = new System.Drawing.Point(20, 143);
+			this.btnSalvar.Name = "btnSalvar";
+			this.btnSalvar.Size = new System.Drawing.Size(145, 40);
+			this.btnSalvar.TabIndex = 4;
+			this.btnSalvar.Text = "&Salvar Imagem";
+			this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSalvar.UseVisualStyleBackColor = true;
+			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
 			// 
 			// btnAlterar
 			// 
 			this.btnAlterar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnAlterar.Enabled = false;
 			this.btnAlterar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
 			this.btnAlterar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightYellow;
 			this.btnAlterar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightBlue;
@@ -117,7 +118,7 @@
 			this.btnAlterar.Name = "btnAlterar";
 			this.btnAlterar.Size = new System.Drawing.Size(145, 40);
 			this.btnAlterar.TabIndex = 5;
-			this.btnAlterar.Text = "Alterar Imagem";
+			this.btnAlterar.Text = "&Alterar Imagem";
 			this.btnAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAlterar.UseVisualStyleBackColor = true;
 			this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
@@ -135,7 +136,7 @@
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(115, 40);
 			this.btnCancelar.TabIndex = 7;
-			this.btnCancelar.Text = "Cancelar";
+			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCancelar.UseVisualStyleBackColor = true;
 			this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -153,7 +154,7 @@
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(145, 40);
 			this.btnVisualizar.TabIndex = 6;
-			this.btnVisualizar.Text = "Visualizar";
+			this.btnVisualizar.Text = "&Visualizar";
 			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnVisualizar.UseVisualStyleBackColor = true;
 			this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
@@ -176,7 +177,7 @@
 			this.Controls.Add(this.btnCancelar);
 			this.Controls.Add(this.btnAlterar);
 			this.Controls.Add(this.btnVisualizar);
-			this.Controls.Add(this.btnEscolher);
+			this.Controls.Add(this.btnSalvar);
 			this.Controls.Add(this.lblPath);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.btnProcurar);
@@ -188,7 +189,7 @@
 			this.Controls.SetChildIndex(this.btnProcurar, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.lblPath, 0);
-			this.Controls.SetChildIndex(this.btnEscolher, 0);
+			this.Controls.SetChildIndex(this.btnSalvar, 0);
 			this.Controls.SetChildIndex(this.btnVisualizar, 0);
 			this.Controls.SetChildIndex(this.btnAlterar, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
@@ -201,7 +202,7 @@
 		#endregion
 		internal VIBlend.WinForms.Controls.vButton btnProcurar;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button btnEscolher;
+		private System.Windows.Forms.Button btnSalvar;
 		private System.Windows.Forms.Button btnAlterar;
 		private System.Windows.Forms.Button btnCancelar;
 		private System.Windows.Forms.Button btnVisualizar;

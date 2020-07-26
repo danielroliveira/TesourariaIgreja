@@ -398,14 +398,22 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public objImagem Imagem
 		{
-			get => EditData._Imagem;
+			get
+			{
+				if (EditData._Imagem == null)
+				{
+					EditData._Imagem = new objImagem();
+				}
+
+				EditData._Imagem.Origem = EnumImagemOrigem.Despesa;
+				EditData._Imagem.ReferenceDate = DespesaData;
+				if (IDDespesa != null) EditData._Imagem.IDOrigem = (long)IDDespesa;
+				return EditData._Imagem;
+			}
+
 			set
 			{
-				if (value != EditData._Imagem)
-				{
-					EditData._Imagem = value;
-					//NotifyPropertyChanged("Imagem");
-				}
+				EditData._Imagem = value;
 			}
 		}
 

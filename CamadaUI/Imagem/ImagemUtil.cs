@@ -35,7 +35,7 @@ namespace CamadaUI.Imagem
 							imagem.ImagemFileName = OFD.SafeFileName;
 							imagem.ImagemPath = OFD.FileName;
 
-							using (frmImagemDialog frm = new frmImagemDialog(imagem, formOrigem))
+							using (frmImagemDialog frm = new frmImagemDialog(imagem, true, formOrigem))
 							{
 								frm.ShowDialog();
 
@@ -58,12 +58,18 @@ namespace CamadaUI.Imagem
 				}
 				else // IF THERE IS IMAGE --> OPEN/EDIT IMAGE
 				{
-					using (frmImagemDialog frm = new frmImagemDialog(imagem, formOrigem))
+					objImagem oldImage = imagem.ShallowCopy();
+
+					using (frmImagemDialog frm = new frmImagemDialog(imagem, false, formOrigem))
 					{
 						frm.ShowDialog();
 
 						if (frm.DialogResult == DialogResult.OK)
 						{
+							// remove old file
+							RemoveImageToDefaultFolder(oldImage, ImageFolder);
+
+							// change image to new file name
 							imagem.ImagemFileName = frm.propImagem.ImagemFileName;
 							imagem.ImagemPath = frm.propImagem.ImagemPath;
 						}
@@ -140,10 +146,65 @@ namespace CamadaUI.Imagem
 					Directory.CreateDirectory(completeFolder);
 				}
 
-				FileInfo newFile = file.CopyTo($"{ImageFolder}\\{subFolder}\\{folderDate}\\{image.ImagemFileName}", true);
+				// check file exists
+				if (File.Exists($"{ImageFolder}\\{subFolder}\\{folderDate}\\{image.ImagemFileName}"))
+				{
+					throw new Exception("Já existe um arquivo com mesmo nome na pasta padrão:\n" +
+						$"{ImageFolder}\\{subFolder}\\{folderDate}\\{image.ImagemFileName}");
+				}
+
+				file.MoveTo($"{ImageFolder}\\{subFolder}\\{folderDate}\\{image.ImagemFileName}");
 
 				// define new Image Path
 				image.ImagemPath = $"\\{subFolder}\\{folderDate}\\{image.ImagemFileName}";
+
+				// return
+				return image;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private static objImagem RemoveImageToDefaultFolder(objImagem image, string ImageFolder)
+		{
+			try
+			{
+				//--- check referece date
+				if (image.ReferenceDate == null)
+				{
+					throw new Exception("Não há data de referência...");
+				}
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// GEt fileInfo
+				FileInfo file = new FileInfo($"{ImageFolder}\\{image.ImagemPath}");
+
+				DateTime refDate = (DateTime)image.ReferenceDate;
+				string folderDate = $"{refDate:yyyy}{refDate:MM}";
+				string removedFolder = $"{ImageFolder}\\Removidas\\{folderDate}";
+
+				// check directory
+				if (!Directory.Exists(removedFolder))
+				{
+					Directory.CreateDirectory(removedFolder);
+				}
+
+				// backup file
+				file.MoveTo($"{ImageFolder}\\Removidas\\{folderDate}\\{image.ImagemFileName}");
+
+				// define new Image Path
+				image.ImagemPath = "";
+				image.ImagemFileName = "";
 
 				// return
 				return image;
@@ -244,17 +305,18 @@ namespace CamadaUI.Imagem
 
 		public static objImagem ImagemRemover(objImagem imagem)
 		{
-			imagem.ImagemFileName = string.Empty;
-			imagem.ImagemPath = string.Empty;
-
 			try
 			{
+				string imageFolder = GetImageFolder();
+
+				// --- move to Removed folder
+				imagem = RemoveImageToDefaultFolder(imagem, imageFolder);
+
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				ImagemSave(imagem);
 
 				return imagem;
-
 			}
 			catch (Exception ex)
 			{

@@ -10,5 +10,13 @@ namespace CamadaDTO
 		public EnumImagemOrigem Origem { get; set; }
 		public long IDOrigem { get; set; }
 		public DateTime? ReferenceDate { get; set; }
+
+		// GET SHALLOW COPY OF OBJECT
+		//------------------------------------------------------------------------------------------------------------
+		public objImagem ShallowCopy()
+		{
+			return (objImagem)this.MemberwiseClone();
+		}
+
 	}
 }

@@ -1240,8 +1240,33 @@ namespace CamadaUI.Saidas
 					ReferenceDate = _despesa.DespesaData,
 				};
 
+				// open form to edit or save image
+				bool IsNew = _despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemPath);
 				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
+
+				// check if isUpdated
+				bool IsUpdated = false;
+				if (_despesa.Imagem != null)
+				{
+					IsUpdated = (_despesa.Imagem.ImagemFileName != imagem.ImagemFileName) || (_despesa.Imagem.ImagemPath != imagem.ImagemPath);
+				}
+
+				// update imagem object
 				_despesa.Imagem = imagem;
+
+				// emit message
+				if (IsNew && imagem != null)
+				{
+					AbrirDialog("Imagem associada e salva com sucesso!" +
+								"\nPor segurança a imagem foi transferida para a pasta padrão.",
+								"Imagem Salva", DialogType.OK, DialogIcon.Information);
+				}
+				else if (IsUpdated)
+				{
+					AbrirDialog("Imagem alterada com sucesso!" +
+								"\nPor segurança a imagem anterior foi transferida para a pasta de imagens removidas.",
+								"Imagem Alterada", DialogType.OK, DialogIcon.Information);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -1318,19 +1343,13 @@ namespace CamadaUI.Saidas
 
 			if (_despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemFileName))
 			{
-				resp = AbrirDialog("Ainda não existe nenhuma imagem associada a essa Despesa para que seja removida...",
-					"Não há Imagem", DialogType.SIM_NAO, DialogIcon.Question);
-
-				if (resp == DialogResult.Yes)
-				{
-					btnInserirImagem_Click(sender, e);
-				}
-
+				AbrirDialog("Ainda não existe nenhuma imagem associada a essa Despesa para que seja removida...",
+					"Não há Imagem", DialogType.OK, DialogIcon.Warning);
 				return;
 			}
 
 			resp = AbrirDialog("Deseja realmente REMOVER ou DESASSOCIAR a imagem da despesa atual?" +
-				"A imagem não será excluída...",
+				"\nA imagem não será excluída mas movida para pasta de Imagens Removidas...",
 				"Remover Imagem", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 
 			if (resp != DialogResult.Yes) return;
@@ -1340,6 +1359,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				//_despesa.Imagem.ReferenceDate = _despesa.DespesaData;
 				_despesa.Imagem = ImagemUtil.ImagemRemover(_despesa.Imagem);
 
 				AbrirDialog("Imagem desassociada com sucesso!" +

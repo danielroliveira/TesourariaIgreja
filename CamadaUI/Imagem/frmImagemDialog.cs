@@ -13,7 +13,7 @@ namespace CamadaUI.Imagem
 
 		#region CONSTRUCTOR | SUB NEW
 
-		public frmImagemDialog(objImagem imagem, Form formOrigem)
+		public frmImagemDialog(objImagem imagem, bool IsNewImage, Form formOrigem)
 		{
 			InitializeComponent();
 
@@ -21,13 +21,15 @@ namespace CamadaUI.Imagem
 			propImagem = imagem;
 			Height = 200;
 
+			btnSalvar.Enabled = IsNewImage;
+
 			lblPath.Text = imagem.ImagemPath;
 			ResizeFontLabel(lblPath);
 		}
 
 		private void frmImagemDialog_Load(object sender, EventArgs e)
 		{
-			btnEscolher.Focus();
+			btnSalvar.Focus();
 		}
 
 		#endregion // CONSTRUCTOR | SUB NEW --- END
@@ -35,6 +37,11 @@ namespace CamadaUI.Imagem
 		#region BUTTONS FUNCTION
 
 		private void btnAlterar_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+		}
+
+		private void btnProcurar_Click(object sender, EventArgs e)
 		{
 			// GET ImageFile
 			using (OpenFileDialog OFD = new OpenFileDialog()
@@ -44,15 +51,25 @@ namespace CamadaUI.Imagem
 			{
 				if (OFD.ShowDialog() == DialogResult.OK)
 				{
-					propImagem.ImagemFileName = OFD.SafeFileName;
-					propImagem.ImagemPath = OFD.FileName;
-					lblPath.Text = propImagem.ImagemPath;
-					ResizeFontLabel(lblPath);
+					if (propImagem.ImagemFileName != OFD.SafeFileName)
+					{
+						propImagem.ImagemFileName = OFD.SafeFileName;
+						propImagem.ImagemPath = OFD.FileName;
+						lblPath.Text = propImagem.ImagemPath;
+						ResizeFontLabel(lblPath);
+						btnAlterar.Enabled = true;
+					}
+					else
+					{
+						AbrirDialog("O arquivo de imagem escolhido continua sendo o mesmo.",
+							"Escolher Arquivo");
+						return;
+					}
 				};
 			}
 		}
 
-		private void btnEscolher_Click(object sender, EventArgs e)
+		private void btnSalvar_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
 		}
@@ -63,7 +80,7 @@ namespace CamadaUI.Imagem
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				System.Diagnostics.Process.Start(propImagem.ImagemPath);
+				ImagemUtil.ImagemVisualizar(propImagem);
 			}
 			catch (Exception ex)
 			{
@@ -106,6 +123,8 @@ namespace CamadaUI.Imagem
 				pnl.BackColor = Color.SlateGray;
 			}
 		}
+
+
 
 		#endregion // VISUAL EFFECTS --- END
 
