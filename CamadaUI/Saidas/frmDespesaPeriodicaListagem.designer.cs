@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -68,6 +68,10 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnExcluir = new System.Windows.Forms.Button();
+			this.line1 = new AwesomeShapeControl.Line();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.visualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlSituacao.SuspendLayout();
@@ -99,10 +103,10 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(550, 634);
+			this.btnFechar.Location = new System.Drawing.Point(1081, 634);
 			this.btnFechar.Name = "btnFechar";
-			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 16;
+			this.btnFechar.Size = new System.Drawing.Size(97, 42);
+			this.btnFechar.TabIndex = 21;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -113,10 +117,10 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(154, 634);
+			this.btnAdicionar.Location = new System.Drawing.Point(23, 634);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 13;
+			this.btnAdicionar.TabIndex = 12;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -127,10 +131,10 @@
 			// 
 			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.btnVisualizar.Location = new System.Drawing.Point(22, 634);
+			this.btnVisualizar.Location = new System.Drawing.Point(154, 634);
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
-			this.btnVisualizar.TabIndex = 12;
+			this.btnVisualizar.TabIndex = 13;
 			this.btnVisualizar.Text = "&Visualizar";
 			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -143,24 +147,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle9.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle10.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -259,10 +263,10 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1095, 625);
+			this.label1.Location = new System.Drawing.Point(977, 624);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(83, 15);
-			this.label1.TabIndex = 18;
+			this.label1.TabIndex = 19;
 			this.label1.Text = "Valor Mensal:";
 			// 
 			// lblValorTotal
@@ -270,10 +274,10 @@
 			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTotal.Location = new System.Drawing.Point(898, 644);
+			this.lblValorTotal.Location = new System.Drawing.Point(780, 643);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
-			this.lblValorTotal.TabIndex = 19;
+			this.lblValorTotal.TabIndex = 18;
 			this.lblValorTotal.Text = "R$ 0,00";
 			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -311,11 +315,11 @@
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button1.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.button1.Location = new System.Drawing.Point(286, 634);
+			this.button1.Location = new System.Drawing.Point(437, 634);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(126, 42);
-			this.button1.TabIndex = 14;
-			this.button1.Text = "&Imprimir";
+			this.button1.Size = new System.Drawing.Size(182, 42);
+			this.button1.TabIndex = 15;
+			this.button1.Text = "&Imprimir Listagem";
 			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.button1.UseVisualStyleBackColor = true;
@@ -326,7 +330,7 @@
 			this.lblValorMensal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorMensal.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorMensal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorMensal.Location = new System.Drawing.Point(1041, 644);
+			this.lblValorMensal.Location = new System.Drawing.Point(923, 643);
 			this.lblValorMensal.Name = "lblValorMensal";
 			this.lblValorMensal.Size = new System.Drawing.Size(137, 32);
 			this.lblValorMensal.TabIndex = 20;
@@ -339,7 +343,7 @@
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(966, 625);
+			this.label3.Location = new System.Drawing.Point(848, 624);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(69, 15);
 			this.label3.TabIndex = 17;
@@ -552,11 +556,15 @@
 			// 
 			// MenuListagem
 			// 
+			this.MenuListagem.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem});
+            this.DesativarToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.visualizarToolStripMenuItem,
+            this.excluirToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(221, 48);
+			this.MenuListagem.Size = new System.Drawing.Size(275, 136);
 			// 
 			// AtivarToolStripMenuItem
 			// 
@@ -578,20 +586,51 @@
 			// 
 			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.btnExcluir.Location = new System.Drawing.Point(418, 634);
+			this.btnExcluir.Location = new System.Drawing.Point(286, 634);
 			this.btnExcluir.Name = "btnExcluir";
 			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
-			this.btnExcluir.TabIndex = 15;
+			this.btnExcluir.TabIndex = 14;
 			this.btnExcluir.Text = "&Excluir";
 			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnExcluir.UseVisualStyleBackColor = true;
 			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
 			// 
+			// line1
+			// 
+			this.line1.EndPoint = new System.Drawing.Point(5, 42);
+			this.line1.LineColor = System.Drawing.Color.Silver;
+			this.line1.LineWidth = 3F;
+			this.line1.Location = new System.Drawing.Point(420, 630);
+			this.line1.Name = "line1";
+			this.line1.Size = new System.Drawing.Size(10, 47);
+			this.line1.StartPoint = new System.Drawing.Point(5, 5);
+			this.line1.TabIndex = 16;
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(217, 6);
+			// 
+			// visualizarToolStripMenuItem
+			// 
+			this.visualizarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.visualizarToolStripMenuItem.Name = "visualizarToolStripMenuItem";
+			this.visualizarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
+			this.visualizarToolStripMenuItem.Text = "Visualizar";
+			// 
+			// excluirToolStripMenuItem
+			// 
+			this.excluirToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.excluirToolStripMenuItem.Name = "excluirToolStripMenuItem";
+			this.excluirToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
+			this.excluirToolStripMenuItem.Text = "Excluir";
+			// 
 			// frmDespesaPeriodicaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1200, 686);
+			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.btnSetContribuinte);
 			this.Controls.Add(this.txtCredor);
@@ -637,6 +676,7 @@
 			this.Controls.SetChildIndex(this.btnSetContribuinte, 0);
 			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
+			this.Controls.SetChildIndex(this.line1, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlSituacao.ResumeLayout(false);
@@ -686,5 +726,9 @@
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
 		internal System.Windows.Forms.Button btnExcluir;
+		private AwesomeShapeControl.Line line1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem visualizarToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem excluirToolStripMenuItem;
 	}
 }

@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CamadaBLL
 {
@@ -354,7 +355,7 @@ namespace CamadaBLL
 
 		// DELETE
 		//------------------------------------------------------------------------------------------------------------
-		public bool DeleteDespesaComum(long IDDespesa)
+		public bool DeleteDespesaComum(objDespesa despesa)
 		{
 			AcessoDados dbTran = null;
 
@@ -368,7 +369,7 @@ namespace CamadaBLL
 				List<objAPagar> listAPagar = new List<objAPagar>();
 				List<objMovimentacao> listMovSaidas = new List<objMovimentacao>();
 
-				if (!VerifyBeforeDelete(IDDespesa, ref listAPagar, ref listMovSaidas, dbTran)) return false;
+				if (!VerifyBeforeDelete(despesa, ref listAPagar, ref listMovSaidas, dbTran)) return false;
 
 				// 2 - delete ALL APAGAR 
 				//------------------------------------------------------------------------------------------------------------
@@ -387,7 +388,7 @@ namespace CamadaBLL
 
 				//--- define Params
 				dbTran.LimparParametros();
-				dbTran.AdicionarParametros("@IDDespesa", IDDespesa);
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
 				dbTran.ConvertNullParams();
 
 				//--- create query
@@ -401,7 +402,7 @@ namespace CamadaBLL
 
 				//--- define Params
 				dbTran.LimparParametros();
-				dbTran.AdicionarParametros("@IDDespesa", IDDespesa);
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
 				dbTran.ConvertNullParams();
 
 				//--- create query
@@ -429,13 +430,22 @@ namespace CamadaBLL
 
 		// VERIFY DESPESA BEFORE DELETE
 		//------------------------------------------------------------------------------------------------------------
-		private bool VerifyBeforeDelete(long IDDespesa,
+		private bool VerifyBeforeDelete(objDespesa despesa,
 			ref List<objAPagar> listAPagar,
 			ref List<objMovimentacao> listMovSaidas,
 			AcessoDados dbTran)
 		{
 			try
 			{
+				long IDDespesa = (long)despesa.IDDespesa;
+
+				// VERIFY IMAGEM
+				//------------------------------------------------------------------------------------------------------------
+				if (despesa.Imagem != null && !string.IsNullOrEmpty(despesa.Imagem.ImagemFileName))
+				{
+					throw new AppException("A despesa não pode ser excluída pois possui uma imagem vinculada a ela...");
+				}
+
 				// GET APAGAR
 				//------------------------------------------------------------------------------------------------------------
 				listAPagar = new APagarBLL().GetListAPagarByDespesa(IDDespesa, dbTran);
@@ -445,6 +455,15 @@ namespace CamadaBLL
 				bool err = false;
 				string errMessage = "Os a PAGAR abaixo possuem pagamentos...\n";
 
+				Action<objAPagar> addMessage = (pagar) =>
+				{
+					errMessage += $"Reg.: {pagar.IDAPagar:D4}    {pagar.Vencimento.ToShortDateString()}\n";
+					err = true;
+				};
+
+				listAPagar.Where(x => x.IDSituacao == 2).ToList().ForEach(addMessage);
+
+				/*
 				foreach (objAPagar pagar in listAPagar)
 				{
 					if (pagar.IDSituacao == 2)
@@ -453,6 +472,7 @@ namespace CamadaBLL
 						err = true;
 					}
 				}
+				*/
 
 				if (err == true)
 				{
@@ -460,7 +480,19 @@ namespace CamadaBLL
 					throw new AppException(errMessage);
 				}
 
-				// VERIFY MOVIMENTACAO SAIDA FROM ARECEBER
+				// VERIFY APAGAR IMAGES
+				//------------------------------------------------------------------------------------------------------------
+				errMessage = "Os APagar abaixo possuem IMEGEM associada\n";
+
+				listAPagar.Where(x => x.Imagem != null && !string.IsNullOrEmpty(x.Imagem.ImagemFileName)).ToList().ForEach(addMessage);
+
+				if (err == true)
+				{
+					errMessage += "Favor remover/desassociar as imagens do APagar se deseja EXCLUIR a despesa.";
+					throw new AppException(errMessage);
+				}
+
+				// VERIFY MOVIMENTACAO SAIDA FROM APAGAR
 				//------------------------------------------------------------------------------------------------------------
 				MovimentacaoBLL mBLL = new MovimentacaoBLL();
 				listMovSaidas = new List<objMovimentacao>();
@@ -477,6 +509,15 @@ namespace CamadaBLL
 				//------------------------------------------------------------------------------------------------------------
 				errMessage = "Essa Despesa possui pagamentos que foram inseridas no caixa...\n";
 
+				Action<objMovimentacao> addMessageMov = (saida) =>
+				{
+					errMessage += $"Reg.: {saida.IDMovimentacao:D4} | {saida.MovData.ToShortDateString()} | Caixa: {saida.IDCaixa:D4}\n";
+					err = true;
+				};
+
+				listMovSaidas.Where(x => x.IDCaixa != null).ToList().ForEach(addMessageMov);
+
+				/*
 				foreach (objMovimentacao saida in listMovSaidas)
 				{
 					if (saida.IDCaixa != null)
@@ -485,10 +526,23 @@ namespace CamadaBLL
 						err = true;
 					}
 				}
+				*/
 
 				if (err == true)
 				{
 					errMessage += "Favor remover o(s) caixa(s) se desejar EXCLUIR a(s) DESPESA.";
+					throw new AppException(errMessage);
+				}
+
+				// VERIFY MOVIMENTACAO SAIDA IMAGES
+				//------------------------------------------------------------------------------------------------------------
+				errMessage = "Os APagar abaixo possuem IMEGEM associada\n";
+
+				listMovSaidas.Where(x => x.Imagem != null && !string.IsNullOrEmpty(x.Imagem.ImagemFileName)).ToList().ForEach(addMessageMov);
+
+				if (err == true)
+				{
+					errMessage += "Favor remover/desassociar as imagens do APagar se deseja EXCLUIR a despesa.";
 					throw new AppException(errMessage);
 				}
 

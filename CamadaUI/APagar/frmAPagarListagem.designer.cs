@@ -73,6 +73,11 @@
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuItemQuitar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemVerPagamentos = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemCancelar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemNegociar = new System.Windows.Forms.ToolStripMenuItem();
@@ -288,11 +293,11 @@
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(911, 636);
+			this.btnImprimir.Location = new System.Drawing.Point(854, 636);
 			this.btnImprimir.Name = "btnImprimir";
-			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
+			this.btnImprimir.Size = new System.Drawing.Size(183, 42);
 			this.btnImprimir.TabIndex = 6;
-			this.btnImprimir.Text = "&Imprimir";
+			this.btnImprimir.Text = "&Imprimir Listagem";
 			this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnImprimir.UseVisualStyleBackColor = true;
@@ -646,6 +651,7 @@
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuItemQuitar,
             this.mnuItemVerPagamentos,
+            this.mnuImagem,
             this.toolStripSeparator2,
             this.mnuItemCancelar,
             this.mnuItemNegociar,
@@ -655,7 +661,7 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(263, 224);
+			this.mnuOperacoes.Size = new System.Drawing.Size(263, 272);
 			// 
 			// mnuItemQuitar
 			// 
@@ -672,6 +678,47 @@
 			this.mnuItemVerPagamentos.Size = new System.Drawing.Size(262, 26);
 			this.mnuItemVerPagamentos.Text = "Ver Pagamentos | Estornar";
 			this.mnuItemVerPagamentos.Click += new System.EventHandler(this.mnuItemVerPagamentos_Click);
+			// 
+			// mnuImagem
+			// 
+			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator3,
+            this.mnuImagemRemover});
+			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.mnuImagem.Name = "mnuImagem";
+			this.mnuImagem.Size = new System.Drawing.Size(262, 26);
+			this.mnuImagem.Text = "Imagem";
+			// 
+			// mnuImagemInserir
+			// 
+			this.mnuImagemInserir.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.mnuImagemInserir.Name = "mnuImagemInserir";
+			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemInserir.Text = "Inserir Imagem";
+			this.mnuImagemInserir.Click += new System.EventHandler(this.mnuImagemInserir_Click);
+			// 
+			// mnuImagemVisualizar
+			// 
+			this.mnuImagemVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
+			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemVisualizar.Text = "Ver Imagem";
+			this.mnuImagemVisualizar.Click += new System.EventHandler(this.mnuImagemVisualizar_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
+			// 
+			// mnuImagemRemover
+			// 
+			this.mnuImagemRemover.Image = global::CamadaUI.Properties.Resources.delete_page_30;
+			this.mnuImagemRemover.Name = "mnuImagemRemover";
+			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemRemover.Text = "Remover Imagem";
+			this.mnuImagemRemover.Click += new System.EventHandler(this.mnuImagemRemover_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -827,5 +874,10 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemVerPagamentos;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagem;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
 	}
 }

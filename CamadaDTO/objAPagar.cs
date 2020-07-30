@@ -34,11 +34,12 @@ namespace CamadaDTO
 			internal decimal _ValorDesconto;
 			internal int? _ReferenciaMes;
 			internal int? _ReferenciaAno;
-			internal bool _Imagem;
 			internal int? _IDCredor;
 			internal string _Credor;
 			internal int _IDSetor;
 			internal string _Setor;
+			// from tblImagem
+			internal objImagem _Imagem;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -61,7 +62,10 @@ namespace CamadaDTO
 				_ValorPago = 0,
 				_ValorAcrescimo = 0,
 				_ValorDesconto = 0,
-				_Imagem = false,
+				_Imagem = new objImagem()
+				{
+					Origem = EnumImagemOrigem.Despesa,
+				},
 			};
 		}
 
@@ -417,21 +421,6 @@ namespace CamadaDTO
 			}
 		}
 
-		// Property Imagem
-		//---------------------------------------------------------------
-		public bool Imagem
-		{
-			get => EditData._Imagem;
-			set
-			{
-				if (value != EditData._Imagem)
-				{
-					EditData._Imagem = value;
-					NotifyPropertyChanged("Imagem");
-				}
-			}
-		}
-
 		// Property IDCredor
 		//---------------------------------------------------------------
 		public int? IDCredor
@@ -462,6 +451,30 @@ namespace CamadaDTO
 		{
 			get => EditData._Setor;
 			set => EditData._Setor = value;
+		}
+
+		// Property Imagem
+		//---------------------------------------------------------------
+		public objImagem Imagem
+		{
+			get
+			{
+				if (EditData._Imagem == null)
+				{
+					EditData._Imagem = new objImagem();
+				}
+
+				EditData._Imagem.Origem = EnumImagemOrigem.APagar;
+				EditData._Imagem.ReferenceDate = Vencimento;
+				if (IDAPagar != null) EditData._Imagem.IDOrigem = (long)IDAPagar;
+
+				return EditData._Imagem;
+			}
+
+			set
+			{
+				EditData._Imagem = value;
+			}
 		}
 
 	}

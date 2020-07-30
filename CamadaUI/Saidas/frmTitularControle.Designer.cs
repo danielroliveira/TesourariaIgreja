@@ -42,11 +42,11 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvListagem = new CamadaUC.ucDataGridView();
-			this.lblAcao = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCNP = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.lblAcao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.MenuListagem.SuspendLayout();
@@ -74,9 +74,9 @@
 			this.panel1.Controls.Add(this.lblAcao);
 			this.panel1.Location = new System.Drawing.Point(2, 2);
 			this.panel1.Size = new System.Drawing.Size(674, 50);
+			this.panel1.Controls.SetChildIndex(this.lblAcao, 0);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
-			this.panel1.Controls.SetChildIndex(this.lblAcao, 0);
 			// 
 			// tspMenu
 			// 
@@ -234,18 +234,6 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// lblAcao
-			// 
-			this.lblAcao.AutoSize = true;
-			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
-			this.lblAcao.Location = new System.Drawing.Point(6, 14);
-			this.lblAcao.Name = "lblAcao";
-			this.lblAcao.Size = new System.Drawing.Size(210, 22);
-			this.lblAcao.TabIndex = 3;
-			this.lblAcao.Text = "Adicionando Novo Registro";
-			this.lblAcao.Visible = false;
-			// 
 			// clnID
 			// 
 			this.clnID.Frozen = true;
@@ -276,6 +264,18 @@
 			this.clnImage.Name = "clnImage";
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
+			// 
+			// lblAcao
+			// 
+			this.lblAcao.AutoSize = true;
+			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
+			this.lblAcao.Location = new System.Drawing.Point(6, 14);
+			this.lblAcao.Name = "lblAcao";
+			this.lblAcao.Size = new System.Drawing.Size(210, 22);
+			this.lblAcao.TabIndex = 3;
+			this.lblAcao.Text = "Adicionando Novo Registro";
+			this.lblAcao.Visible = false;
 			// 
 			// frmTitularControle
 			// 

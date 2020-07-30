@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Imagem;
 using CamadaUI.Registres;
 using CamadaUI.Setores;
 using System;
@@ -1142,8 +1143,15 @@ namespace CamadaUI.Saidas
 
 				Sit = EnumFlagEstado.RegistroSalvo;
 
-				AbrirDialog("Registro de Despesa Realizada salva e quitada com sucesso!",
-					"Salvamento Efetuado");
+				var resp = AbrirDialog("Registro de Despesa Realizada salva e quitada com sucesso!" +
+					"\nDeseja inserir uma imagem associada à Despesa?",
+					"Salvamento Efetuado | Inserir Imagem",
+					DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					InserirImagem();
+				}
 
 			}
 			catch (Exception ex)
@@ -1238,5 +1246,65 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // SALVAR REGISTRO --- END
+
+		#region IMAGE CONTROL
+
+		private void InserirImagem()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objImagem imagem = new objImagem()
+				{
+					IDOrigem = (long)_despesa.IDDespesa,
+					Origem = EnumImagemOrigem.Despesa,
+					ImagemFileName = _despesa.Imagem == null ? string.Empty : _despesa.Imagem.ImagemFileName,
+					ImagemPath = _despesa.Imagem == null ? string.Empty : _despesa.Imagem.ImagemPath,
+					ReferenceDate = _despesa.DespesaData,
+				};
+
+				// open form to edit or save image
+				bool IsNew = _despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemPath);
+				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
+
+				// check if isUpdated
+				bool IsUpdated = false;
+				if (_despesa.Imagem != null && imagem != null)
+				{
+					IsUpdated = (_despesa.Imagem.ImagemFileName != imagem.ImagemFileName) || (_despesa.Imagem.ImagemPath != imagem.ImagemPath);
+				}
+
+				// update imagem object
+				_despesa.Imagem = imagem;
+
+				// emit message
+				if (IsNew && imagem != null)
+				{
+					AbrirDialog("Imagem associada e salva com sucesso!" +
+								"\nPor segurança a imagem foi transferida para a pasta padrão.",
+								"Imagem Salva", DialogType.OK, DialogIcon.Information);
+				}
+				else if (IsUpdated)
+				{
+					AbrirDialog("Imagem alterada com sucesso!" +
+								"\nPor segurança a imagem anterior foi transferida para a pasta de imagens removidas.",
+								"Imagem Alterada", DialogType.OK, DialogIcon.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // IMAGE CONTROL --- END
 	}
 }

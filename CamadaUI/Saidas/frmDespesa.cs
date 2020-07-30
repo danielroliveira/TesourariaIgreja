@@ -25,6 +25,7 @@ namespace CamadaUI.Saidas
 
 		private List<objDespesaDocumentoTipo> listDocTipos;
 		private objSetor setorSelected;
+		private Form _formOrigem;
 
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
@@ -32,9 +33,10 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR WITH DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesa(objDespesa despesa)
+		public frmDespesa(objDespesa despesa, Form formOrigem = null)
 		{
 			InitializeComponent();
+			_formOrigem = formOrigem;
 			ConstructorContinue(despesa);
 		}
 
@@ -325,7 +327,15 @@ namespace CamadaUI.Saidas
 			}
 
 			Close();
-			MostraMenuPrincipal();
+
+			if (_formOrigem != null && _formOrigem.Name == "frmDespesaListagem")
+			{
+				new frmDespesaListagem().Show();
+			}
+			else
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
@@ -993,7 +1003,6 @@ namespace CamadaUI.Saidas
 					Identificador = $"{_despesa.DocumentoNumero} | {(i + 1).ToString("D2")}",
 					IDSituacao = 1,
 					Parcela = (byte)(i + 1),
-					Imagem = false,
 					PagamentoData = null,
 					Prioridade = 3,
 					ValorPago = 0,
@@ -1246,7 +1255,7 @@ namespace CamadaUI.Saidas
 
 				// check if isUpdated
 				bool IsUpdated = false;
-				if (_despesa.Imagem != null)
+				if (_despesa.Imagem != null && imagem != null)
 				{
 					IsUpdated = (_despesa.Imagem.ImagemFileName != imagem.ImagemFileName) || (_despesa.Imagem.ImagemPath != imagem.ImagemPath);
 				}
@@ -1320,7 +1329,6 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		private void mnuImagem_Click(object sender, EventArgs e)
@@ -1376,7 +1384,6 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		#endregion // IMAGE CONTROL --- END

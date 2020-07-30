@@ -468,6 +468,33 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property Imagem
+		//---------------------------------------------------------------
+		public objImagem Imagem
+		{
+			get
+			{
+				if (EditData._Imagem == null)
+				{
+					EditData._Imagem = new objImagem();
+				}
+
+				EditData._Imagem.Origem = EnumImagemOrigem.Movimentacao;
+				EditData._Imagem.ReferenceDate = MovData;
+				if (IDMovimentacao != null) EditData._Imagem.IDOrigem = (long)IDMovimentacao;
+
+				return EditData._Imagem;
+			}
+
+			set
+			{
+				EditData._Imagem = value;
+			}
+		}
+
+
+
+		/*
 		// Property ImagemPath
 		//---------------------------------------------------------------
 		public string ImagemPath
@@ -497,6 +524,6 @@ namespace CamadaDTO
 				}
 			}
 		}
-
+		*/
 	}
 }

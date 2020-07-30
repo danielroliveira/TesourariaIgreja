@@ -1,6 +1,7 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
 using CamadaUI.APagar.Reports;
+using CamadaUI.Imagem;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -424,6 +425,21 @@ namespace CamadaUI.APagar
 
 		}
 
+		// IMPRIMIR LISTAGEM
+		//-------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			if (listPag == null || listPag.Count == 0)
+			{
+				AbrirDialog("Não há nenhum registro de A Pagar na listagem para ser impresso...",
+					"Listagem Vazia");
+				return;
+			}
+
+			frmAPagarReport frm = new frmAPagarReport(listPag);
+			frm.ShowDialog();
+		}
+
 		#endregion
 
 		#region CONTROL FUNCTIONS
@@ -712,6 +728,21 @@ namespace CamadaUI.APagar
 
 			// mostra o MENU ativar e desativar
 			objAPagar pagItem = (objAPagar)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+			// mnuImagem
+			if (pagItem.IDAPagar != null)
+			{
+				mnuImagem.Enabled = true;
+				bool IsThereImagem = pagItem.Imagem != null && !string.IsNullOrEmpty(pagItem.Imagem.ImagemFileName);
+
+				mnuImagemRemover.Enabled = IsThereImagem;
+				mnuImagemInserir.Text = IsThereImagem ? "Alterar Imagem" : "Inserir Imagem";
+				mnuImagemVisualizar.Enabled = IsThereImagem;
+			}
+			else
+			{
+				mnuImagem.Enabled = false;
+			}
 
 			// mnuVerPagamentos
 			mnuItemVerPagamentos.Enabled = pagItem.ValorPago > 0;
@@ -1125,29 +1156,64 @@ namespace CamadaUI.APagar
 			}
 		}
 
-		// TRANSFORMAR APAGAR PERIODICO EM REAL
-		//------------------------------------------------------------------------------------------------------------
-		private objAPagar TornarReal(objDespesaPeriodica desp)
+		private void mnuImagemInserir_Click(object sender, EventArgs e)
 		{
-			var resp = AbrirDialog("Você deseja transformar este APagar PERIÓDICO em REAL?" +
-				desp.DespesaDescricao.ToLower(),
-				"Transformar em Real",
-				DialogType.SIM_NAO,
-				DialogIcon.Question,
-				DialogDefaultButton.Second);
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Inserir Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
 
-			if (resp == DialogResult.No) return null;
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				objImagem imagem = new objImagem()
+				{
+					IDOrigem = (long)item.IDAPagar,
+					Origem = EnumImagemOrigem.APagar,
+					ImagemFileName = item.Imagem == null ? string.Empty : item.Imagem.ImagemFileName,
+					ImagemPath = item.Imagem == null ? string.Empty : item.Imagem.ImagemPath,
+					ReferenceDate = item.Vencimento,
+				};
 
+				// open form to edit or save image
+				bool IsNew = item.Imagem == null || string.IsNullOrEmpty(item.Imagem.ImagemPath);
+				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
+
+				// check if isUpdated
+				bool IsUpdated = false;
+				if (item.Imagem != null && imagem != null)
+				{
+					IsUpdated = (item.Imagem.ImagemFileName != imagem.ImagemFileName) || (item.Imagem.ImagemPath != imagem.ImagemPath);
+				}
+
+				// update imagem object
+				item.Imagem = imagem;
+
+				// emit message
+				if (IsNew && imagem != null)
+				{
+					AbrirDialog("Imagem associada e salva com sucesso!" +
+								"\nPor segurança a imagem foi transferida para a pasta padrão.",
+								"Imagem Salva", DialogType.OK, DialogIcon.Information);
+				}
+				else if (IsUpdated)
+				{
+					AbrirDialog("Imagem alterada com sucesso!" +
+								"\nPor segurança a imagem anterior foi transferida para a pasta de imagens removidas.",
+								"Imagem Alterada", DialogType.OK, DialogIcon.Information);
+				}
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Tornar o Periódico em Real..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a imagem..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -1155,8 +1221,82 @@ namespace CamadaUI.APagar
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
 
-			return null;
+		private void mnuImagemVisualizar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				ImagemUtil.ImagemVisualizar(item.Imagem);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Visualizar a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuImagemRemover_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			DialogResult resp;
+
+			resp = AbrirDialog("Deseja realmente REMOVER ou DESASSOCIAR a imagem do APagar selecionado?" +
+				"\nA imagem não será excluída mas movida para pasta de Imagens Removidas...",
+				"Remover Imagem", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//_despesa.Imagem.ReferenceDate = _despesa.DespesaData;
+				item.Imagem = ImagemUtil.ImagemRemover(item.Imagem);
+
+				AbrirDialog("Imagem desassociada com sucesso!" +
+					"\nPor segurança a imagem foi guardada na pasta de Imagens Removidas.",
+					"Imagem Removida", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion // MENU SUSPENSO --- END
@@ -1198,19 +1338,5 @@ namespace CamadaUI.APagar
 		}
 
 		#endregion
-
-		private void btnImprimir_Click(object sender, EventArgs e)
-		{
-			if (listPag == null || listPag.Count == 0)
-			{
-				AbrirDialog("Não há nenhum registro de A Pagar na listagem para ser impresso...",
-					"Listagem Vazia");
-				return;
-			}
-
-			frmAPagarReport frm = new frmAPagarReport(listPag);
-			frm.ShowDialog();
-
-		}
 	}
 }

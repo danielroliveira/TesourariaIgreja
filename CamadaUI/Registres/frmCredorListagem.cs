@@ -207,7 +207,11 @@ namespace CamadaUI.Registres
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
-			MostraMenuPrincipal();
+
+			if (Application.OpenForms.Count == 1)
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		// BTN ADICIONAR

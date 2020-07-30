@@ -203,7 +203,7 @@ namespace CamadaUI.APagar
 			propSaida.Setor = lblSetor.Text;
 			propSaida.Origem = EnumMovOrigem.APagar; // ORIGEM DESPESA
 			propSaida.IDOrigem = (long)_apagar.IDAPagar;
-			propSaida.ImagemPath = null;
+			propSaida.Imagem = null;
 			propSaida.Observacao = txtObservacao.Text.Length == 0 ? null : txtObservacao.Text;
 
 			DialogResult = DialogResult.OK;

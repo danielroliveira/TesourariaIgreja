@@ -357,7 +357,6 @@ namespace CamadaBLL
 				IDCredor = desp.IDCredor,
 				IDDespesa = (long)desp.IDDespesa,
 				IDSituacao = 1,
-				Imagem = false,
 				PagamentoData = null,
 				Identificador = $"PER{desp.IDDespesa:D4} | {dtAtual.Year}{dtAtual.Month:D2}{dtAtual.Day:D2}",
 				Parcela = null,
@@ -404,7 +403,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		private objAPagar ConvertRowInClass(DataRow row)
 		{
-			objAPagar despesa = new objAPagar((long)row["IDAPagar"])
+			objAPagar pagar = new objAPagar((long)row["IDAPagar"])
 			{
 				IDDespesa = (long)row["IDDespesa"],
 				DespesaDescricao = (string)row["DespesaDescricao"],
@@ -432,7 +431,13 @@ namespace CamadaBLL
 				Setor = (string)row["Setor"],
 			};
 
-			return despesa;
+			// SET IMAGEM
+			pagar.Imagem.IDOrigem = (long)pagar.IDAPagar;
+			pagar.Imagem.Origem = EnumImagemOrigem.APagar;
+			pagar.Imagem.ImagemFileName = row["ImagemFileName"] == DBNull.Value ? string.Empty : (string)row["ImagemFileName"];
+			pagar.Imagem.ImagemPath = row["ImagemPath"] == DBNull.Value ? string.Empty : (string)row["ImagemPath"];
+
+			return pagar;
 
 		}
 
@@ -452,7 +457,6 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@IDDespesa", pag.IDDespesa);
 				dbTran.AdicionarParametros("@Identificador", pag.Identificador);
 				dbTran.AdicionarParametros("@IDSituacao", pag.IDSituacao);
-				dbTran.AdicionarParametros("@Imagem", pag.Imagem);
 				dbTran.AdicionarParametros("@Parcela", pag.Parcela);
 				dbTran.AdicionarParametros("@Prioridade", pag.Prioridade);
 				dbTran.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);
@@ -520,7 +524,6 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDDespesa", pag.IDDespesa);
 				db.AdicionarParametros("@Identificador", pag.Identificador);
 				db.AdicionarParametros("@IDSituacao", pag.IDSituacao);
-				db.AdicionarParametros("@Imagem", pag.Imagem);
 				db.AdicionarParametros("@Parcela", pag.Parcela);
 				db.AdicionarParametros("@Prioridade", pag.Prioridade);
 				db.AdicionarParametros("@ReferenciaAno", pag.ReferenciaAno);

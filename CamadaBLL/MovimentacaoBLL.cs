@@ -216,8 +216,8 @@ namespace CamadaBLL
 				Movimentacao.AcrescimoValor = row["AcrescimoValor"] == DBNull.Value ? null : (decimal?)row["AcrescimoValor"];
 				Movimentacao.AcrescimoMotivo = row["AcrescimoMotivo"] == DBNull.Value ? string.Empty : (string)row["AcrescimoMotivo"];
 				Movimentacao.IDAcrescimoMotivo = row["IDAcrescimoMotivo"] == DBNull.Value ? null : (byte?)row["IDAcrescimoMotivo"];
-				Movimentacao.ImagemPath = row["ImagemPath"] == DBNull.Value ? string.Empty : (string)row["ImagemPath"];
-				Movimentacao.ImagemFileName = row["ImagemFileName"] == DBNull.Value ? string.Empty : (string)row["ImagemFileName"];
+				Movimentacao.Imagem.ImagemPath = row["ImagemPath"] == DBNull.Value ? string.Empty : (string)row["ImagemPath"];
+				Movimentacao.Imagem.ImagemFileName = row["ImagemFileName"] == DBNull.Value ? string.Empty : (string)row["ImagemFileName"];
 			}
 
 			return Movimentacao;
@@ -280,12 +280,6 @@ namespace CamadaBLL
 					InsertMovimentacaoAcrescimo(mov, db);
 				}
 
-				//--- insert in tblMovImagem IF is necessary
-				if (!string.IsNullOrEmpty(mov.ImagemFileName))
-				{
-					InsertMovimentacaoImagem(mov, db);
-				}
-
 				//--- insert OBSERVACAO
 				new ObservacaoBLL().SaveObservacao(1, newID, mov.Observacao, db);
 
@@ -333,37 +327,6 @@ namespace CamadaBLL
 								"(IDMovimentacao, AcrescimoValor, IDAcrescimoMotivo) " +
 								"VALUES " +
 								"(@IDMovimentacao, @AcrescimoValor, @IDAcrescimoMotivo)";
-
-				//--- execute INSERT
-				dbTran.ExecutarManipulacao(CommandType.Text, query);
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
-		// INSERT MOVIMENTACAO ACRESCIMO
-		//------------------------------------------------------------------------------------------------------------
-		public void InsertMovimentacaoImagem(objMovimentacao mov, AcessoDados dbTran)
-		{
-			try
-			{
-				//--- clear Params
-				dbTran.LimparParametros();
-
-				//--- define Params
-				dbTran.AdicionarParametros("@IDMovimentacao", mov.IDMovimentacao);
-				dbTran.AdicionarParametros("@ImagemPath", mov.ImagemPath);
-				dbTran.AdicionarParametros("@ImagemFileName", mov.ImagemFileName);
-
-				//--- convert null parameters
-				dbTran.ConvertNullParams();
-
-				string query = "INSERT INTO tblMovImagem " +
-							   "(IDMovimentacao, ImagemPath, ImagemFileName) " +
-							   "VALUES " +
-							   "(@IDMovimentacao, @ImagemPath, @ImagemFileName)";
 
 				//--- execute INSERT
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
@@ -506,6 +469,7 @@ namespace CamadaBLL
 
 				//--- 2. check DELETE tblMovImagem
 				//------------------------------------------------------------------------------------------------------------
+				/*
 				if (mov.ImagemPath != String.Empty)
 				{
 					//--- clear Params
@@ -518,6 +482,7 @@ namespace CamadaBLL
 					//--- DELETE
 					db.ExecutarManipulacao(CommandType.Text, query);
 				}
+				*/
 
 				//--- 3. DELETE tblMovimentacao
 				//------------------------------------------------------------------------------------------------------------
@@ -605,6 +570,7 @@ namespace CamadaBLL
 
 					//--- 2. check DELETE tblMovImagem
 					//------------------------------------------------------------------------------------------------------------
+					/*
 					if (mov.ImagemPath != String.Empty)
 					{
 						//--- clear Params
@@ -617,6 +583,7 @@ namespace CamadaBLL
 						//--- DELETE
 						db.ExecutarManipulacao(CommandType.Text, query);
 					}
+					*/
 
 					//--- 3. DELETE tblMovimentacao
 					//------------------------------------------------------------------------------------------------------------

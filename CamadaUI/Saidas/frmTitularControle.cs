@@ -433,7 +433,11 @@ namespace CamadaUI.Saidas
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
-			MostraMenuPrincipal();
+
+			if (Application.OpenForms.Count == 1)
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		// ADD NEW

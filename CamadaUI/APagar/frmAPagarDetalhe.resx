@@ -120,4 +120,27 @@
   <metadata name="tspMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="mnuImagem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOcSURBVEhL7ZRNbBNHGIYHISRUSmmPlZDoJbcSqCDBbIC2
+        J5B66I0jR44ceqoqIdNCK1AFtBKcETdAlJbwl9hJbAT5Idi7+XH8x9qmxCs74Njx7tqOZ8b+OrOZtWPs
+        hsjxDV7p1ciW53vme+cbow/iKi6qfcWcCms7Zq3qxJW7AY/zY7F1Yypkog4bUFqKwXI+UXNZT7Dv4jVw
+        bPwyhDy/3J8a/H2b2N6+CoWCo5SLWIX1TBiy6VnILcxaazY1w74LWQdaAf8J4ZGfIeT97X7o6YXtokR7
+        wqEf9xWNLOswDhlNhlhwuOYXARdo8TEGfWHBbXDEe46tv/ZHJ5yfiDLrE3ajHuJC3+F76DAe7TqVzb6m
+        PE4zG7W65l3aq7EYrkc99geEh89AxHMWwsxRz7m/Eh7np6Lsu0UH0EzBjcqFh6hojneXcukQLS79y8AR
+        yL8JWtYzK+tqsDp6EYJDp1m3Z2oODTtvxHy3dojSa6vsRgvUjYA+REDGuyGXDtKykYQ3SR+oc27LsaAb
+        orODMK+OQkFEnY70QzJwA7S5m6t8G7TIo0ui9NpiUWs22PR2VziYd8zvkndom8fN4+dQ7rIxD9hMWuYH
+        5Z+XzQXAGV+MDKFv8QDqrQ6i/5/41uCXVnE+ZI1eiflt82dmPTV24Hy8n5pD7OpcSGd1TwpMs1qB+elf
+        z/utSX6XIzMDkAiPWMO3rLOutX+AdQzUxa7uETovMM1qBH/JwGy49BTkMypkUnPr8mI6CGYuAUU9DUuJ
+        O1Vej0EBe9FPAtOsRvCeKu84l3pe0bUJaqR863Zem6Q5zU/z6jVqeFCF1QUytuNqdfrYzpJy4AuBq2s1
+        2HjydWXp1RCl00eByF8BUfratFSzOSFVuQWuLhvMozGe9dB84iwm/i62ybEB18GWZUdM4OqqgQdY1J7N
+        FT3wPSbK/ubNG7EsNQ+ZDS7cQ1WT3830N603t2lTkYpYcfQKXF0WmI2+Bfd+XiVTh1oWaNdl5aALfPu2
+        CFxdNtgcQRVD7iZvD8dGjaekHwSqUXbUxlNEyNSRlpvbdWlyf7Y87dgtUI3CD1bA5pNd5U7HjGXpjsA0
+        i/2ZJ7GHgeW9tJMxs7dbobLjhMA0i0dNRreyH3f2bonSq8LMoc8EpllkGMXJ893Q8ZgV6bpAtBZ+vOkl
+        8fd2FMzeLqZK33GBaK3SZFeWyAfYhg5G7XME2Nv9SCBaC/ulv7HSo3XUsuQU5d97IfQfTPgXzQ718s0A
+        AAAASUVORK5CYII=
+</value>
+  </data>
 </root>

@@ -28,8 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAPagarSaidas));
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.lblDespesaDescricao = new System.Windows.Forms.Label();
@@ -55,6 +57,11 @@
 			this.btnEstornar = new System.Windows.Forms.ToolStripButton();
 			this.btnConcederDesconto = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
+			this.mnuImagem = new System.Windows.Forms.ToolStripDropDownButton();
+			this.btnInserirImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnVerImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnRemoverImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.label1 = new System.Windows.Forms.Label();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
@@ -74,6 +81,13 @@
 			this.label19 = new System.Windows.Forms.Label();
 			this.panel6 = new System.Windows.Forms.Panel();
 			this.lblValorAcrescimo = new System.Windows.Forms.Label();
+			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.estornarPagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.tspMenu.SuspendLayout();
@@ -82,6 +96,7 @@
 			this.panel4.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.panel6.SuspendLayout();
+			this.mnuOperacoes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -346,7 +361,8 @@
             this.btnQuitar,
             this.btnEstornar,
             this.btnConcederDesconto,
-            this.btnFechar});
+            this.btnFechar,
+            this.mnuImagem});
 			this.tspMenu.Location = new System.Drawing.Point(2, 593);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(708, 44);
@@ -361,8 +377,7 @@
 			this.btnQuitar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnQuitar.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnQuitar.Name = "btnQuitar";
-			this.btnQuitar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnQuitar.Size = new System.Drawing.Size(145, 41);
+			this.btnQuitar.Size = new System.Drawing.Size(135, 41);
 			this.btnQuitar.Text = "&Quitar";
 			this.btnQuitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
@@ -375,7 +390,7 @@
 			this.btnEstornar.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnEstornar.Name = "btnEstornar";
 			this.btnEstornar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnEstornar.Size = new System.Drawing.Size(140, 41);
+			this.btnEstornar.Size = new System.Drawing.Size(135, 41);
 			this.btnEstornar.Text = "E&stornar";
 			this.btnEstornar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEstornar.Click += new System.EventHandler(this.btnEstornar_Click);
@@ -407,6 +422,53 @@
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.Click += new System.EventHandler(this.btnClose_Click);
 			// 
+			// mnuImagem
+			// 
+			this.mnuImagem.AutoSize = false;
+			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnInserirImagem,
+            this.btnVerImagem,
+            this.toolStripSeparator3,
+            this.btnRemoverImagem});
+			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
+			this.mnuImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.mnuImagem.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
+			this.mnuImagem.Name = "mnuImagem";
+			this.mnuImagem.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.mnuImagem.Size = new System.Drawing.Size(130, 41);
+			this.mnuImagem.Text = "Imagem";
+			// 
+			// btnInserirImagem
+			// 
+			this.btnInserirImagem.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnInserirImagem.Name = "btnInserirImagem";
+			this.btnInserirImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnInserirImagem.Text = "Inserir Imagem";
+			this.btnInserirImagem.Click += new System.EventHandler(this.btnInserirImagem_Click);
+			// 
+			// btnVerImagem
+			// 
+			this.btnVerImagem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnVerImagem.Name = "btnVerImagem";
+			this.btnVerImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnVerImagem.Text = "Ver Imagem";
+			this.btnVerImagem.Click += new System.EventHandler(this.btnVerImagem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
+			// 
+			// btnRemoverImagem
+			// 
+			this.btnRemoverImagem.Image = global::CamadaUI.Properties.Resources.delete_16;
+			this.btnRemoverImagem.Name = "btnRemoverImagem";
+			this.btnRemoverImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnRemoverImagem.Text = "Remover Imagem";
+			this.btnRemoverImagem.Click += new System.EventHandler(this.btnRemoverImagem_Click);
+			// 
 			// panel3
 			// 
 			this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
@@ -433,20 +495,20 @@
 			// 
 			this.dgvListagem.AllowUserToAddRows = false;
 			this.dgvListagem.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Azure;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.Azure;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
 			this.dgvListagem.BackgroundColor = System.Drawing.Color.AliceBlue;
 			this.dgvListagem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvListagem.ColumnHeadersHeight = 25;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnData,
@@ -455,7 +517,7 @@
             this.clnObservacao});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(33, 355);
+			this.dgvListagem.Location = new System.Drawing.Point(29, 355);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
 			this.dgvListagem.ReadOnly = true;
@@ -463,6 +525,7 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.None;
 			this.dgvListagem.Size = new System.Drawing.Size(651, 214);
 			this.dgvListagem.TabIndex = 26;
+			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
 			// clnData
 			// 
@@ -495,7 +558,7 @@
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.Color.SlateGray;
-			this.label2.Location = new System.Drawing.Point(35, 324);
+			this.label2.Location = new System.Drawing.Point(31, 324);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(124, 26);
 			this.label2.TabIndex = 27;
@@ -635,6 +698,64 @@
 			this.lblValorAcrescimo.Text = "R$ 0,00";
 			this.lblValorAcrescimo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
+			// mnuOperacoes
+			// 
+			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.estornarPagamentoToolStripMenuItem,
+            this.toolStripMenuItem1});
+			this.mnuOperacoes.Name = "mnuOperacoes";
+			this.mnuOperacoes.Size = new System.Drawing.Size(221, 56);
+			// 
+			// estornarPagamentoToolStripMenuItem
+			// 
+			this.estornarPagamentoToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.refresh_16;
+			this.estornarPagamentoToolStripMenuItem.Name = "estornarPagamentoToolStripMenuItem";
+			this.estornarPagamentoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+			this.estornarPagamentoToolStripMenuItem.Text = "Estornar Pagamento";
+			this.estornarPagamentoToolStripMenuItem.Click += new System.EventHandler(this.estornarPagamentoToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator1,
+            this.mnuImagemRemover});
+			this.toolStripMenuItem1.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(220, 26);
+			this.toolStripMenuItem1.Text = "Imagem";
+			// 
+			// mnuImagemInserir
+			// 
+			this.mnuImagemInserir.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.mnuImagemInserir.Name = "mnuImagemInserir";
+			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemInserir.Text = "Inserir Imagem";
+			this.mnuImagemInserir.Click += new System.EventHandler(this.mnuImagemInserir_Click);
+			// 
+			// mnuImagemVisualizar
+			// 
+			this.mnuImagemVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
+			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemVisualizar.Text = "Ver Imagem";
+			this.mnuImagemVisualizar.Click += new System.EventHandler(this.mnuImagemVisualizar_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(201, 6);
+			// 
+			// mnuImagemRemover
+			// 
+			this.mnuImagemRemover.Image = global::CamadaUI.Properties.Resources.delete_page_30;
+			this.mnuImagemRemover.Name = "mnuImagemRemover";
+			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemRemover.Text = "Remover Imagem";
+			this.mnuImagemRemover.Click += new System.EventHandler(this.mnuImagemRemover_Click);
+			// 
 			// frmAPagarSaidas
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -689,6 +810,7 @@
 			this.panel5.PerformLayout();
 			this.panel6.ResumeLayout(false);
 			this.panel6.PerformLayout();
+			this.mnuOperacoes.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -740,5 +862,17 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnObservacao;
+		private System.Windows.Forms.ToolStripDropDownButton mnuImagem;
+		private System.Windows.Forms.ToolStripMenuItem btnInserirImagem;
+		private System.Windows.Forms.ToolStripMenuItem btnVerImagem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem btnRemoverImagem;
+		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
+		private System.Windows.Forms.ToolStripMenuItem estornarPagamentoToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
 	}
 }

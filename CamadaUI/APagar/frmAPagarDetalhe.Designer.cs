@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAPagarDetalhe));
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.lblDespesaDescricao = new System.Windows.Forms.Label();
@@ -73,6 +74,11 @@
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
 			this.btnOK = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
+			this.mnuImagem = new System.Windows.Forms.ToolStripDropDownButton();
+			this.btnInserirImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnVerImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnRemoverImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcela)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numReferenciaAno)).BeginInit();
@@ -291,6 +297,7 @@
 			this.txtAPagarValor.Inteiro = false;
 			this.txtAPagarValor.Location = new System.Drawing.Point(164, 218);
 			this.txtAPagarValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarValor.Moeda = false;
 			this.txtAPagarValor.Name = "txtAPagarValor";
 			this.txtAPagarValor.Positivo = true;
 			this.txtAPagarValor.Size = new System.Drawing.Size(145, 31);
@@ -658,7 +665,8 @@
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOK,
-            this.btnFechar});
+            this.btnFechar,
+            this.mnuImagem});
 			this.tspMenu.Location = new System.Drawing.Point(4, 489);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(524, 44);
@@ -693,6 +701,52 @@
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.Click += new System.EventHandler(this.btnClose_Click);
 			// 
+			// mnuImagem
+			// 
+			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnInserirImagem,
+            this.btnVerImagem,
+            this.toolStripSeparator3,
+            this.btnRemoverImagem});
+			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
+			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.mnuImagem.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
+			this.mnuImagem.Name = "mnuImagem";
+			this.mnuImagem.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.mnuImagem.Size = new System.Drawing.Size(114, 41);
+			this.mnuImagem.Text = "Imagem";
+			this.mnuImagem.Click += new System.EventHandler(this.mnuImagem_Click);
+			// 
+			// btnInserirImagem
+			// 
+			this.btnInserirImagem.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnInserirImagem.Name = "btnInserirImagem";
+			this.btnInserirImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnInserirImagem.Text = "Inserir Imagem";
+			this.btnInserirImagem.Click += new System.EventHandler(this.btnInserirImagem_Click);
+			// 
+			// btnVerImagem
+			// 
+			this.btnVerImagem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnVerImagem.Name = "btnVerImagem";
+			this.btnVerImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnVerImagem.Text = "Ver Imagem";
+			this.btnVerImagem.Click += new System.EventHandler(this.btnVerImagem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
+			// 
+			// btnRemoverImagem
+			// 
+			this.btnRemoverImagem.Image = global::CamadaUI.Properties.Resources.delete_16;
+			this.btnRemoverImagem.Name = "btnRemoverImagem";
+			this.btnRemoverImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnRemoverImagem.Text = "Remover Imagem";
+			this.btnRemoverImagem.Click += new System.EventHandler(this.btnRemoverImagem_Click);
+			// 
 			// frmAPagarDetalhe
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -707,8 +761,8 @@
 			this.Controls.SetChildIndex(this.panel2, 0);
 			this.Controls.SetChildIndex(this.pnlEditar, 0);
 			this.Controls.SetChildIndex(this.pnlVisualizar, 0);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcela)).EndInit();
@@ -772,5 +826,10 @@
 		private System.Windows.Forms.ToolStrip tspMenu;
 		private System.Windows.Forms.ToolStripButton btnOK;
 		private System.Windows.Forms.ToolStripButton btnFechar;
+		private System.Windows.Forms.ToolStripDropDownButton mnuImagem;
+		private System.Windows.Forms.ToolStripMenuItem btnInserirImagem;
+		private System.Windows.Forms.ToolStripMenuItem btnVerImagem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem btnRemoverImagem;
 	}
 }

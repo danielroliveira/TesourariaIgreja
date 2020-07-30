@@ -290,7 +290,14 @@ namespace CamadaUI.Imagem
 				// GET IMAGE FOLDER
 				string ImageFolder = GetImageFolder();
 
-				System.Diagnostics.Process.Start($"{ImageFolder}\\{imagem.ImagemPath}");
+				if (File.Exists(imagem.ImagemPath))
+				{
+					System.Diagnostics.Process.Start($"{imagem.ImagemPath}");
+				}
+				else
+				{
+					System.Diagnostics.Process.Start($"{ImageFolder}\\{imagem.ImagemPath}");
+				}
 			}
 			catch (Exception ex)
 			{
