@@ -60,19 +60,18 @@
 			this.lblValorEntradas = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.mnuItemReceber = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemEstornar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuItemCancelar = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemNormalizar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
 			this.lblValorSaidas = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
+			this.mnuImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
+			this.verCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -478,69 +477,19 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemReceber,
-            this.mnuItemEstornar,
-            this.toolStripSeparator2,
-            this.mnuItemCancelar,
-            this.mnuItemNormalizar,
-            this.toolStripSeparator1,
             this.mnuItemVerOrigem,
-            this.mnuItemAlterar});
+            this.verCaixaToolStripMenuItem,
+            this.mnuImagem});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
-			// 
-			// mnuItemReceber
-			// 
-			this.mnuItemReceber.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.mnuItemReceber.Name = "mnuItemReceber";
-			this.mnuItemReceber.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemReceber.Text = "Receber";
-			// 
-			// mnuItemEstornar
-			// 
-			this.mnuItemEstornar.Image = global::CamadaUI.Properties.Resources.refresh_16;
-			this.mnuItemEstornar.Name = "mnuItemEstornar";
-			this.mnuItemEstornar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemEstornar.Text = "Estornar Recebimento";
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(230, 6);
-			// 
-			// mnuItemCancelar
-			// 
-			this.mnuItemCancelar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.mnuItemCancelar.Name = "mnuItemCancelar";
-			this.mnuItemCancelar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemCancelar.Text = "Cancelar";
-			// 
-			// mnuItemNormalizar
-			// 
-			this.mnuItemNormalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.mnuItemNormalizar.Name = "mnuItemNormalizar";
-			this.mnuItemNormalizar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemNormalizar.Text = "Normalizar";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(230, 6);
+			this.mnuOperacoes.Size = new System.Drawing.Size(161, 82);
 			// 
 			// mnuItemVerOrigem
 			// 
 			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
-			this.mnuItemVerOrigem.Size = new System.Drawing.Size(233, 26);
+			this.mnuItemVerOrigem.Size = new System.Drawing.Size(160, 26);
 			this.mnuItemVerOrigem.Text = "Ver Origem";
 			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
-			// 
-			// mnuItemAlterar
-			// 
-			this.mnuItemAlterar.Image = global::CamadaUI.Properties.Resources.refresh_24;
-			this.mnuItemAlterar.Name = "mnuItemAlterar";
-			this.mnuItemAlterar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemAlterar.Text = "Alterar";
 			// 
 			// lblValorSaidas
 			// 
@@ -608,6 +557,51 @@
 			this.label19.Size = new System.Drawing.Size(106, 19);
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Escolher Conta";
+			// 
+			// mnuImagem
+			// 
+			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator3,
+            this.mnuImagemRemover});
+			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.mnuImagem.Name = "mnuImagem";
+			this.mnuImagem.Size = new System.Drawing.Size(160, 26);
+			this.mnuImagem.Text = "Imagem";
+			// 
+			// mnuImagemInserir
+			// 
+			this.mnuImagemInserir.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.mnuImagemInserir.Name = "mnuImagemInserir";
+			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemInserir.Text = "Inserir Imagem";
+			// 
+			// mnuImagemVisualizar
+			// 
+			this.mnuImagemVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
+			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemVisualizar.Text = "Ver Imagem";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
+			// 
+			// mnuImagemRemover
+			// 
+			this.mnuImagemRemover.Image = global::CamadaUI.Properties.Resources.delete_page_30;
+			this.mnuImagemRemover.Name = "mnuImagemRemover";
+			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemRemover.Text = "Remover Imagem";
+			// 
+			// verCaixaToolStripMenuItem
+			// 
+			this.verCaixaToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.verCaixaToolStripMenuItem.Name = "verCaixaToolStripMenuItem";
+			this.verCaixaToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
+			this.verCaixaToolStripMenuItem.Text = "Ver Caixa";
 			// 
 			// frmContaMovimentacao
 			// 
@@ -679,14 +673,7 @@
 		internal System.Windows.Forms.Label lblValorEntradas;
 		internal System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemReceber;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemCancelar;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemNormalizar;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemVerOrigem;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemEstornar;
 		internal System.Windows.Forms.Label lblValorSaidas;
 		internal System.Windows.Forms.Label label4;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;
@@ -700,5 +687,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDCaixa;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
+		private System.Windows.Forms.ToolStripMenuItem verCaixaToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagem;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
 	}
 }
