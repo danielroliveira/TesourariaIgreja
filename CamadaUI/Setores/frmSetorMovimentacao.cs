@@ -295,7 +295,7 @@ namespace CamadaUI.Setores
 				}
 				else if (mov.MovTipoDescricao == "ENTRADA")
 				{
-					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(227, 231, 234);
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
 				}
 				else if (mov.MovTipoDescricao == "TRANSFERENCIA")

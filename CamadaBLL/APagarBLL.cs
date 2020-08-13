@@ -553,17 +553,23 @@ namespace CamadaBLL
 
 		// DELETE APAGAR
 		//------------------------------------------------------------------------------------------------------------
-		public bool DeleteAPagar(long IDAPagar, object dbTran = null)
+		public bool DeleteAPagar(objAPagar pagar, object dbTran = null)
 		{
 			try
 			{
+				if (pagar.Imagem != null && !string.IsNullOrEmpty(pagar.Imagem.ImagemFileName)) 
+				{ 
+					string errMessage = "Favor remover/desassociar as imagens do APagar se deseja EXCLUIR.";
+					throw new AppException(errMessage);
+				}
+
 				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				//--- clear Params
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDAPagar", IDAPagar);
+				db.AdicionarParametros("@IDAPagar", pagar.IDAPagar);
 
 				//--- convert null parameters
 				db.ConvertNullParams();

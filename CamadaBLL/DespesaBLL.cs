@@ -379,7 +379,7 @@ namespace CamadaBLL
 
 					foreach (objAPagar pagar in listAPagar)
 					{
-						pBLL.DeleteAPagar((long)pagar.IDAPagar, dbTran);
+						pBLL.DeleteAPagar(pagar, dbTran);
 					}
 				}
 
@@ -536,13 +536,13 @@ namespace CamadaBLL
 
 				// VERIFY MOVIMENTACAO SAIDA IMAGES
 				//------------------------------------------------------------------------------------------------------------
-				errMessage = "Os APagar abaixo possuem IMEGEM associada\n";
+				errMessage = "As Saídas abaixo possuem IMEGEM associada\n";
 
 				listMovSaidas.Where(x => x.Imagem != null && !string.IsNullOrEmpty(x.Imagem.ImagemFileName)).ToList().ForEach(addMessageMov);
 
 				if (err == true)
 				{
-					errMessage += "Favor remover/desassociar as imagens do APagar se deseja EXCLUIR a despesa.";
+					errMessage += "Favor remover/desassociar as imagens das Saídas se deseja EXCLUIR a despesa.";
 					throw new AppException(errMessage);
 				}
 
@@ -682,7 +682,6 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
-
 
 		//=================================================================================================
 		// DESPESA GRUPO

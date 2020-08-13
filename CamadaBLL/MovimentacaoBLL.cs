@@ -447,7 +447,14 @@ namespace CamadaBLL
 					throw new AppException("A MOVIMENTAÇÃO de CAIXA não pode ser removida porque a Data se encontra bloqueada...");
 				}
 
-				//--- DELETE REMOVE MOVIMENTACAO (AND ACRESCIMO AND IMAGEM IF NECESSARY)
+				//--- 3. Check Imagem
+				if (mov.Imagem != null && !string.IsNullOrEmpty(mov.Imagem.ImagemFileName))
+				{
+					string errMessage = "Favor remover/desassociar as imagens das Saídas se deseja EXCLUIR.";
+					throw new AppException(errMessage);
+				}
+
+				//--- DELETE REMOVE MOVIMENTACAO (AND ACRESCIMO)
 				//------------------------------------------------------------------------------------------------------------
 
 				string query = "";

@@ -3,6 +3,7 @@ using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.APagar.Reports
 {
@@ -10,14 +11,13 @@ namespace CamadaUI.APagar.Reports
 	{
 		private List<objAPagar> _apagarList;
 
-		public frmAPagarReport(List<objAPagar> apagarList)
+		#region SUB NEW | CONSTRUCTOR
+
+		public frmAPagarReport(List<objAPagar> apagarList, DateTime dtInicial, DateTime dtFinal)
 		{
 			InitializeComponent();
 
 			_apagarList = apagarList;
-
-			// Criar a lista de ClientePF
-			//dadosEmpresa.Add(ObterDadosEmpresa);
 
 			ReportDataSource dst = new ReportDataSource("dstAPagar", _apagarList);
 
@@ -29,8 +29,8 @@ namespace CamadaUI.APagar.Reports
 			// --- insert data
 			rptvPadrao.LocalReport.DataSources.Add(dst);
 
-			// --- set Logo Path
-			//getLogo(dadosEmpresa[0].ArquivoLogoMono);
+			//--- add Parameters
+			addParameters(dtInicial, dtFinal);
 
 			// -- display
 			rptvPadrao.SetDisplayMode(DisplayMode.PrintLayout);
@@ -40,7 +40,6 @@ namespace CamadaUI.APagar.Reports
 
 		private void frmAPagarReport_Load(object sender, EventArgs e)
 		{
-
 			//--- define o tamanho
 			int tamMaxH = Screen.PrimaryScreen.Bounds.Height;
 			Height = tamMaxH - (tamMaxH * 10) / 100;
@@ -49,21 +48,54 @@ namespace CamadaUI.APagar.Reports
 			this.rptvPadrao.RefreshReport();
 		}
 
-		private void getLogo(string path)
+		#endregion // SUB NEW --- END
+
+		#region PARAMETERS
+
+		private void addParameters(DateTime dtInicial, DateTime dtFinal)
 		{
 			List<ReportParameter> @params = new List<ReportParameter>();
 
-			rptvPadrao.LocalReport.EnableExternalImages = true;
-			ReportParameter parameterLogo = new ReportParameter("LogoPath", @"file:\\" + path);
+			// obter Dados da Igreja
+			objDadosIgreja dadosIgreja = ObterDadosIgreja();
 
-			@params.Add(parameterLogo);
+			//--- set Periodo
+			setPeriodo(dtInicial, dtFinal, @params);
+
+			//--- set Logo Path
+			setLogo(dadosIgreja.ArquivoLogoMono, @params);
+
+			//--- add Parameters
 			rptvPadrao.LocalReport.SetParameters(@params);
 			rptvPadrao.LocalReport.Refresh();
 		}
+
+		private void setLogo(string path, List<ReportParameter> @params)
+		{
+			rptvPadrao.LocalReport.EnableExternalImages = true;
+			ReportParameter parameterLogo = new ReportParameter("LogoPath", @"file://" + path);
+
+			@params.Add(parameterLogo);
+		}
+
+		private void setPeriodo(DateTime dtInicial, DateTime dtFinal, List<ReportParameter> @params)
+		{
+			ReportParameter DataInicial = new ReportParameter("dtInicial", dtInicial.ToShortDateString());
+			ReportParameter DataFinal = new ReportParameter("dtFinal", dtFinal.ToShortDateString());
+
+			@params.Add(DataInicial);
+			@params.Add(DataFinal);
+		}
+
+		#endregion // PARAMETERS --- END
+
+		#region BUTTONS
 
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
 		}
+
+		#endregion // BUTTONS --- END
 	}
 }

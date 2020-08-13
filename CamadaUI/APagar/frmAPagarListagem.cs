@@ -436,7 +436,16 @@ namespace CamadaUI.APagar
 				return;
 			}
 
-			frmAPagarReport frm = new frmAPagarReport(listPag);
+			DateTime dtInicial = _dtInicial;
+			DateTime dtFinal = _dtFinal;
+
+			if (_ProcuraTipo == 3)
+			{
+				dtInicial = listPag.Min(x => x.Vencimento);
+				dtFinal = listPag.Max(x => x.Vencimento);
+			}
+
+			frmAPagarReport frm = new frmAPagarReport(listPag, dtInicial, dtFinal);
 			frm.ShowDialog();
 		}
 

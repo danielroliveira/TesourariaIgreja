@@ -210,6 +210,35 @@ namespace CamadaUI
 			}
 		}
 
+		// GET DADOS IGREJA
+		//------------------------------------------------------------------------------------------------------------
+		public static objDadosIgreja ObterDadosIgreja()
+		{
+			try
+			{
+				objDadosIgreja DadosEmpresa = new objDadosIgreja() {
+					RazaoSocial = ObterConfigValorNode("RazaoSocial"),
+					TelefoneFinanceiro = ObterConfigValorNode("TelefoneFinanceiro"),
+					TelefonePrincipal = ObterConfigValorNode("TelefonePrincipal"),
+					CNPJ = ObterConfigValorNode("CNPJ"),
+					ContatoFinanceiro = ObterConfigValorNode("ContatoFinanceiro"),
+					Endereco = ObterConfigValorNode("Endereco"),
+					Bairro = ObterConfigValorNode("Bairro"),
+					Cidade = ObterConfigValorNode("Cidade"),
+					UF = ObterConfigValorNode("UF"),
+					CEP = ObterConfigValorNode("CEP"),
+					ArquivoLogoColor = ObterConfigValorNode("ArquivoLogoColor"),
+					ArquivoLogoMono = ObterConfigValorNode("ArquivoLogoMono")
+				};
+
+				return DadosEmpresa;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		#endregion
 
 		#region CHECK CONTROLS TO SAVE

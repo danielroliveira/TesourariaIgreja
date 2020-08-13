@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,17 +61,17 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
-			this.lblValorSaidas = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
-			this.txtConta = new System.Windows.Forms.TextBox();
-			this.label19 = new System.Windows.Forms.Label();
+			this.verCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
-			this.verCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lblValorSaidas = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
+			this.txtConta = new System.Windows.Forms.TextBox();
+			this.label19 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -120,20 +120,20 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -491,6 +491,51 @@
 			this.mnuItemVerOrigem.Text = "Ver Origem";
 			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
 			// 
+			// verCaixaToolStripMenuItem
+			// 
+			this.verCaixaToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.verCaixaToolStripMenuItem.Name = "verCaixaToolStripMenuItem";
+			this.verCaixaToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
+			this.verCaixaToolStripMenuItem.Text = "Ver Caixa";
+			// 
+			// mnuImagem
+			// 
+			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator3,
+            this.mnuImagemRemover});
+			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.mnuImagem.Name = "mnuImagem";
+			this.mnuImagem.Size = new System.Drawing.Size(160, 26);
+			this.mnuImagem.Text = "Imagem";
+			// 
+			// mnuImagemInserir
+			// 
+			this.mnuImagemInserir.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.mnuImagemInserir.Name = "mnuImagemInserir";
+			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemInserir.Text = "Inserir Imagem";
+			// 
+			// mnuImagemVisualizar
+			// 
+			this.mnuImagemVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
+			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemVisualizar.Text = "Ver Imagem";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
+			// 
+			// mnuImagemRemover
+			// 
+			this.mnuImagemRemover.Image = global::CamadaUI.Properties.Resources.delete_page_30;
+			this.mnuImagemRemover.Name = "mnuImagemRemover";
+			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
+			this.mnuImagemRemover.Text = "Remover Imagem";
+			// 
 			// lblValorSaidas
 			// 
 			this.lblValorSaidas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -557,51 +602,6 @@
 			this.label19.Size = new System.Drawing.Size(106, 19);
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Escolher Conta";
-			// 
-			// mnuImagem
-			// 
-			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuImagemInserir,
-            this.mnuImagemVisualizar,
-            this.toolStripSeparator3,
-            this.mnuImagemRemover});
-			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
-			this.mnuImagem.Name = "mnuImagem";
-			this.mnuImagem.Size = new System.Drawing.Size(160, 26);
-			this.mnuImagem.Text = "Imagem";
-			// 
-			// mnuImagemInserir
-			// 
-			this.mnuImagemInserir.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.mnuImagemInserir.Name = "mnuImagemInserir";
-			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
-			this.mnuImagemInserir.Text = "Inserir Imagem";
-			// 
-			// mnuImagemVisualizar
-			// 
-			this.mnuImagemVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
-			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
-			this.mnuImagemVisualizar.Text = "Ver Imagem";
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
-			// 
-			// mnuImagemRemover
-			// 
-			this.mnuImagemRemover.Image = global::CamadaUI.Properties.Resources.delete_page_30;
-			this.mnuImagemRemover.Name = "mnuImagemRemover";
-			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
-			this.mnuImagemRemover.Text = "Remover Imagem";
-			// 
-			// verCaixaToolStripMenuItem
-			// 
-			this.verCaixaToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.verCaixaToolStripMenuItem.Name = "verCaixaToolStripMenuItem";
-			this.verCaixaToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
-			this.verCaixaToolStripMenuItem.Text = "Ver Caixa";
 			// 
 			// frmContaMovimentacao
 			// 
