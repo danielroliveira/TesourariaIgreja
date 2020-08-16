@@ -145,7 +145,7 @@ namespace CamadaDTO
 					case 4:
 						return "Usuário Local";
 					default:
-						return "";
+						return "Manutenção";
 				}
 			}
 		}

@@ -446,7 +446,7 @@ namespace CamadaUI.Caixa
 				_caixa.Observacao = txtObservacao.Text;
 
 				// FINALIZE caixa 
-				cxBLL.FinalizeCaixa(_caixa);
+				_ = cxBLL.FinalizeCaixa(_caixa);
 
 				// change SIT
 				propSituacao = 2;

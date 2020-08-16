@@ -1,11 +1,8 @@
-﻿using System;
+﻿using CamadaDAL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CamadaDTO;
-using CamadaDAL;
 
 namespace CamadaBLL
 {
@@ -19,8 +16,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblUsuario";
-				bool haveWhere = false;
+				string query = "SELECT * FROM tblUsuario WHERE UsuarioAcesso <> 0 ";
 
 				// add params
 				db.LimparParametros();
@@ -28,17 +24,13 @@ namespace CamadaBLL
 				if (!string.IsNullOrEmpty(usuarioApelido))
 				{
 					db.AdicionarParametros("@UsuarioApelido", usuarioApelido);
-					query += " WHERE UsuarioApelido LIKE '%'+@UsuarioApelido+'%' ";
-					haveWhere = true;
+					query += " AND UsuarioApelido LIKE '%'+@UsuarioApelido+'%' ";
 				}
 
 				if (Ativo != null)
 				{
 					db.AdicionarParametros("@Ativo", Ativo);
-					if (haveWhere)
-						query += " AND UsuarioAtivo = @Ativo";
-					else
-						query += " WHERE UsuarioAtivo = @Ativo";
+					query += " AND UsuarioAtivo = @Ativo";
 				}
 
 				query += " ORDER BY UsuarioApelido";
@@ -98,7 +90,7 @@ namespace CamadaBLL
 			usuario.UsuarioApelido = (string)row["UsuarioApelido"];
 			usuario.UsuarioAcesso = row["UsuarioAcesso"] == DBNull.Value ? (byte)0 : (byte)row["UsuarioAcesso"];
 			usuario.UsuarioAtivo = (bool)row["UsuarioAtivo"];
-			usuario.Email = row["UsuarioAcesso"] == DBNull.Value ? "" : (string)row["Email"];
+			usuario.Email = row["Email"] == DBNull.Value ? string.Empty : (string)row["Email"];
 
 			return usuario;
 		}

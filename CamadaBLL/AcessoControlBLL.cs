@@ -19,7 +19,8 @@ namespace CamadaBLL
 		//=================================================================================================
 		public objUsuario GetAuthorization(
 			string UsuarioApelido,
-			string UsuarioSenha, EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.Usuario_Local, // usuario_local = 4
+			string UsuarioSenha, 
+			EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.Usuario_Local, // usuario_local = 4
 			string AuthDescription = "Acesso Login"
 			)
 		{

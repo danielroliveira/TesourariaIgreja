@@ -218,6 +218,12 @@
     <Compile Include="Caixa\frmCartaoTaxa.designer.cs">
       <DependentUpon>frmCartaoTaxa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Caixa\Reports\frmCaixaReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\Reports\frmCaixaReport.Designer.cs">
+      <DependentUpon>frmCaixaReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -708,6 +714,10 @@
     <EmbeddedResource Include="Caixa\frmCartaoTaxa.resx">
       <DependentUpon>frmCartaoTaxa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\Reports\frmCaixaReport.resx">
+      <DependentUpon>frmCaixaReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\Reports\rptCaixa.rdlc" />
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -926,6 +936,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CamadaDTO.objAPagar.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objCaixa.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
