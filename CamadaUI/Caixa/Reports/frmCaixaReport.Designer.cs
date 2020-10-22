@@ -28,12 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			this.rptvPadrao = new Microsoft.Reporting.WinForms.ReportViewer();
 			this.btnFechar = new System.Windows.Forms.Button();
-			this.objAPagarBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.Panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.objAPagarBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// Panel1
@@ -85,10 +82,6 @@
 			this.btnFechar.UseVisualStyleBackColor = true;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
-			// objAPagarBindingSource
-			// 
-			this.objAPagarBindingSource.DataSource = typeof(CamadaDTO.objAPagar);
-			// 
 			// frmCaixaReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -101,7 +94,6 @@
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.Panel1, 0);
 			this.Panel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.objAPagarBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -110,6 +102,5 @@
 
 		private Microsoft.Reporting.WinForms.ReportViewer rptvPadrao;
 		internal System.Windows.Forms.Button btnFechar;
-		private System.Windows.Forms.BindingSource objAPagarBindingSource;
 	}
 }

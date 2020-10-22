@@ -9,17 +9,20 @@ namespace CamadaUI.Caixa.Reports
 {
 	public partial class frmCaixaReport : CamadaUI.Modals.frmModFinBorderSizeable
 	{
-		private List<objAPagar> _apagarList;
+		private List<objMovimentacao> _movList;
+		private objCaixa _caixa;
 
 		#region SUB NEW | CONSTRUCTOR
 
-		public frmCaixaReport(List<objAPagar> apagarList, DateTime dtInicial, DateTime dtFinal)
+		public frmCaixaReport(objCaixa caixa, List<objMovimentacao> movList)
 		{
 			InitializeComponent();
 
-			_apagarList = apagarList;
+			_caixa = caixa;
+			_movList = movList;
 
-			ReportDataSource dst = new ReportDataSource("dstAPagar", _apagarList);
+			ReportDataSource dstCaixa = new ReportDataSource("dstCaixa", _caixa);
+			ReportDataSource dstMov = new ReportDataSource("dstMov", _movList);
 
 			// --- define o relatório
 			// -------------------------------------------------------------
@@ -27,10 +30,11 @@ namespace CamadaUI.Caixa.Reports
 			rptvPadrao.LocalReport.DataSources.Clear();
 
 			// --- insert data
-			rptvPadrao.LocalReport.DataSources.Add(dst);
+			rptvPadrao.LocalReport.DataSources.Add(dstCaixa);
+			rptvPadrao.LocalReport.DataSources.Add(dstMov);
 
 			//--- add Parameters
-			addParameters(dtInicial, dtFinal);
+			//addParameters(dtInicial, dtFinal);
 
 			// -- display
 			rptvPadrao.SetDisplayMode(DisplayMode.PrintLayout);

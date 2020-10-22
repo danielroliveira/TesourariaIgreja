@@ -220,7 +220,6 @@
 			this.btnEntradas.Size = new System.Drawing.Size(138, 46);
 			this.btnEntradas.Text = "Entradas";
 			this.btnEntradas.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-			this.btnEntradas.ButtonClick += new System.EventHandler(this.btnEntradas_ButtonClick);
 			// 
 			// mnuContribuicaoInserir
 			// 
@@ -294,7 +293,6 @@
 			this.btnSaidas.Padding = new System.Windows.Forms.Padding(5);
 			this.btnSaidas.Size = new System.Drawing.Size(120, 46);
 			this.btnSaidas.Text = "Saídas";
-			this.btnSaidas.Click += new System.EventHandler(this.btnSaidas_ButtonClick);
 			// 
 			// mnuDespesaInserir
 			// 

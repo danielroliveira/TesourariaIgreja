@@ -489,21 +489,6 @@ namespace CamadaUI
 			control.ShowDropDown();
 		}
 
-
-		/*
-			private void MenuOpen_AdHandler()
-				'
-				Foreach c In tsPrincipal.Items
-					If (c.GetType Is GetType(ToolStripSplitButton)) Then
-						AddHandler DirectCast(c, ToolStripSplitButton).ButtonClick, AddressOf tsbButtonClick
-						AddHandler DirectCast(c, ToolStripSplitButton).MouseHover, AddressOf tsbButtonClick
-					End If
-				Next
-				'
-			End Sub
-			
-		*/
-
 		// APPLICATION EXIT
 		// =============================================================================
 		private void btnSair_Click(object sender, EventArgs e)
@@ -516,42 +501,6 @@ namespace CamadaUI
 		private void btnMinimizer_Click(object sender, EventArgs e)
 		{
 			WindowState = FormWindowState.Minimized;
-		}
-
-		// OPEN ESCRITURA
-		// =============================================================================
-		private void btnBiblia_Click(object sender, EventArgs e)
-		{
-			//frmLeitura f = new frmLeitura();
-			//f.Show();
-			Visible = false;
-		}
-
-		// OPEN HARPA
-		// =============================================================================
-		private void btnHarpa_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//Form f = new Harpa.frmHarpa();
-				//f.Show();
-				Visible = false;
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Hinos..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
 		}
 
 		// OPEN CONFIG
@@ -571,51 +520,6 @@ namespace CamadaUI
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Configuração..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-		private void btnEntradas_ButtonClick(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//Form f = new Louvor.frmLouvorLista();
-				//f.Show();
-				//Visible = false;
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Louvores..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		private void btnSaidas_ButtonClick(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//Form f = new Louvor.frmLouvorLista();
-				//f.Show();
-				//Visible = false;
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Louvores..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
