@@ -20,6 +20,8 @@ namespace CamadaDTO
 			internal decimal? _ValorRealizado;
 			internal int _IDConta;
 			internal string _Conta;
+			internal int _IDSetor;
+			internal string _Setor;
 			internal decimal _ContaSaldo;
 			internal DateTime? _BloqueioData;
 			internal bool _Concluida;
@@ -234,6 +236,29 @@ namespace CamadaDTO
 		{
 			get => EditData._ContaSaldo;
 			set => EditData._ContaSaldo = value;
+		}
+
+		// Property IDSetor
+		//---------------------------------------------------------------
+		public int IDSetor
+		{
+			get => EditData._IDSetor;
+			set
+			{
+				if (value != EditData._IDSetor)
+				{
+					EditData._IDSetor = value;
+					NotifyPropertyChanged("IDSetor");
+				}
+			}
+		}
+
+		// Property Setor
+		//---------------------------------------------------------------
+		public string Setor
+		{
+			get => EditData._Setor;
+			set => EditData._Setor = value;
 		}
 
 		// Property BloqueioData

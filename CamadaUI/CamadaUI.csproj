@@ -595,6 +595,24 @@
     <Compile Include="Saidas\frmGasto.designer.cs">
       <DependentUpon>frmGasto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmProvisorio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmProvisorio.designer.cs">
+      <DependentUpon>frmProvisorio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmProvisorioAutorizante.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmProvisorioAutorizante.designer.cs">
+      <DependentUpon>frmProvisorioAutorizante.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saidas\frmProvisorioComprador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmProvisorioComprador.designer.cs">
+      <DependentUpon>frmProvisorioComprador.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmTitularControle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -904,6 +922,15 @@
     <EmbeddedResource Include="Saidas\frmGasto.resx">
       <DependentUpon>frmGasto.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmProvisorio.resx">
+      <DependentUpon>frmProvisorio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmProvisorioAutorizante.resx">
+      <DependentUpon>frmProvisorioAutorizante.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmProvisorioComprador.resx">
+      <DependentUpon>frmProvisorioComprador.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmTitularControle.resx">
       <DependentUpon>frmTitularControle.cs</DependentUpon>
     </EmbeddedResource>
@@ -1142,6 +1169,8 @@
     <Content Include="ConfigFiles\LogoMono.png" />
     <None Include="Resources\backup_24.png" />
     <None Include="Resources\ImagesFolder_30.png" />
+    <None Include="Resources\periodica_24.png" />
+    <None Include="Resources\provisoria_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

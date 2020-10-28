@@ -3,13 +3,14 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 
 namespace CamadaBLL
 {
 	//=================================================================================================
 	// DESPESA PROVISORIA
 	//=================================================================================================
-	class DespesaProvisoriaBLL
+	public class DespesaProvisoriaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
@@ -155,6 +156,7 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@RetiradaData", desp.RetiradaData);
 				dbTran.AdicionarParametros("@Comprador", desp.Comprador);
 				dbTran.AdicionarParametros("@IDConta", desp.IDConta);
+				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
 				dbTran.AdicionarParametros("@Concluida", desp.Concluida);
 
 				//--- convert null parameters
@@ -195,6 +197,7 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@RetiradaData", desp.RetiradaData);
 				dbTran.AdicionarParametros("@Comprador", desp.Comprador);
 				dbTran.AdicionarParametros("@IDConta", desp.IDConta);
+				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
 				dbTran.AdicionarParametros("@Concluida", desp.Concluida);
 				dbTran.AdicionarParametros("@DevolucaoData", desp.DevolucaoData);
 				dbTran.AdicionarParametros("@ValorRealizado", desp.ValorRealizado);
@@ -206,6 +209,87 @@ namespace CamadaBLL
 
 				//--- insert
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET LIST DESPESA RELACIONADA WITH PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		public List<objDespesa> GetDespesasRealizado(int IDProvisorio, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT * FROM qryDespesaComum ";
+				
+				// add params
+				db.LimparParametros();
+
+				db.AdicionarParametros("@IDProvisorio", IDProvisorio);
+
+				query += "WHERE IDDespesa IN (SELECT IDDespesa FROM tblDespesaProvisoriaRealizado WHERE IDProvisorio = @IDProvisorio)";
+				query += " ORDER BY IDDespesa";
+
+				List<objDespesa> listagem = new List<objDespesa>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				DespesaBLL dBLL = new DespesaBLL();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(dBLL.ConvertRowInClass(row));
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET LIST DESPESA AUTORIZANTES
+		//------------------------------------------------------------------------------------------------------------
+		public List<string> GetAutorizanteList()
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT Autorizante FROM tblDespesaProvisoria GROUP BY Autorizante;";
+
+				// add params
+				db.LimparParametros();
+
+				query += " ORDER BY Autorizante";
+
+				List<string> listagem = new List<string>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				DespesaBLL dBLL = new DespesaBLL();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add((string)row[0]);
+				}
+
+				return listagem;
 
 			}
 			catch (Exception ex)

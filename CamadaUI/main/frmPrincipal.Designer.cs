@@ -53,6 +53,9 @@
 			this.mnuSubDespesaPeriodica = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaPeriodicaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaPeriodicaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSubDespesaProvisoria = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaProvisoriaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaProvisoriaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuAPagarProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -279,6 +282,7 @@
             this.mnuDespesaProcurar,
             this.toolStripSeparator7,
             this.mnuSubDespesaPeriodica,
+            this.mnuSubDespesaProvisoria,
             this.toolStripSeparator5,
             this.mnuAPagarProcurar,
             this.toolStripSeparator4,
@@ -334,6 +338,7 @@
             this.mnuDespesaPeriodicaInserir,
             this.mnuDespesaPeriodicaProcurar});
 			this.mnuSubDespesaPeriodica.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSubDespesaPeriodica.Image = global::CamadaUI.Properties.Resources.periodica_24;
 			this.mnuSubDespesaPeriodica.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSubDespesaPeriodica.Name = "mnuSubDespesaPeriodica";
 			this.mnuSubDespesaPeriodica.Size = new System.Drawing.Size(253, 30);
@@ -357,6 +362,37 @@
 			this.mnuDespesaPeriodicaProcurar.Name = "mnuDespesaPeriodicaProcurar";
 			this.mnuDespesaPeriodicaProcurar.Size = new System.Drawing.Size(264, 30);
 			this.mnuDespesaPeriodicaProcurar.Text = "Procurar Despesa Periódica";
+			// 
+			// mnuSubDespesaProvisoria
+			// 
+			this.mnuSubDespesaProvisoria.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDespesaProvisoriaInserir,
+            this.mnuDespesaProvisoriaProcurar});
+			this.mnuSubDespesaProvisoria.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSubDespesaProvisoria.Image = global::CamadaUI.Properties.Resources.provisoria_24;
+			this.mnuSubDespesaProvisoria.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSubDespesaProvisoria.Name = "mnuSubDespesaProvisoria";
+			this.mnuSubDespesaProvisoria.Size = new System.Drawing.Size(253, 30);
+			this.mnuSubDespesaProvisoria.Text = "Despesa Provisória";
+			// 
+			// mnuDespesaProvisoriaInserir
+			// 
+			this.mnuDespesaProvisoriaInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaProvisoriaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuDespesaProvisoriaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaProvisoriaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuDespesaProvisoriaInserir.Name = "mnuDespesaProvisoriaInserir";
+			this.mnuDespesaProvisoriaInserir.Size = new System.Drawing.Size(268, 30);
+			this.mnuDespesaProvisoriaInserir.Text = "Inserir Despesa Provisória";
+			// 
+			// mnuDespesaProvisoriaProcurar
+			// 
+			this.mnuDespesaProvisoriaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaProvisoriaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaProvisoriaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaProvisoriaProcurar.Name = "mnuDespesaProvisoriaProcurar";
+			this.mnuDespesaProvisoriaProcurar.Size = new System.Drawing.Size(268, 30);
+			this.mnuDespesaProvisoriaProcurar.Text = "Procurar Despesa Provisória";
 			// 
 			// toolStripSeparator5
 			// 
@@ -948,6 +984,9 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuSetorProcurar;
 		private System.Windows.Forms.ToolStripMenuItem mnuSetorMov;
 		private System.Windows.Forms.ToolStripMenuItem mnuCaixaProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuSubDespesaProvisoria;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProvisoriaInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProvisoriaProcurar;
 	}
 }
 
