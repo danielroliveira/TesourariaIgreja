@@ -25,7 +25,8 @@ namespace CamadaUI.Saidas
 
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
-		#region SUB NEW | CONSTRUCTOR | PROPERTIES
+		#region SUB NEW | CONSTRUCTOR | PROPERTIES  
+		// testing
 
 		// CONSTRUCTOR WITH OBJECT DESPESA
 		//------------------------------------------------------------------------------------------------------------
