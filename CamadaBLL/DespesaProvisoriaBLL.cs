@@ -53,8 +53,10 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public List<objDespesaProvisoria> GetListDespesaProvisoria(
 			int? IDConta = null,
+			int? IDSetor = null,
 			DateTime? dataInicial = null,
-			DateTime? dataFinal = null)
+			DateTime? dataFinal = null, 
+			bool? Concluida = null)
 		{
 			try
 			{
@@ -66,11 +68,27 @@ namespace CamadaBLL
 				// add params
 				db.LimparParametros();
 
-				// add IDSetor
+				// add IDConta
 				if (IDConta != null)
 				{
 					db.AdicionarParametros("@IDConta", IDConta);
 					query += myWhere ? " AND IDConta = @IDConta" : " WHERE IDConta = @IDConta";
+					myWhere = true;
+				}
+
+				// add IDSetor
+				if (IDSetor != null)
+				{
+					db.AdicionarParametros("@IDSetor", IDConta);
+					query += myWhere ? " AND IDSetor = @IDSetor" : " WHERE IDSetor = @IDSetor";
+					myWhere = true;
+				}
+
+				// add Concluida
+				if (Concluida != null)
+				{
+					db.AdicionarParametros("@Concluida", Concluida);
+					query += myWhere ? " AND Concluida = @Concluida" : " WHERE Concluida = @Concluida";
 					myWhere = true;
 				}
 
@@ -118,7 +136,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public objDespesaProvisoria ConvertRowInClass(DataRow row)
 		{
-			objDespesaProvisoria despesa = new objDespesaProvisoria((long)row["IDProvisorio"])
+			objDespesaProvisoria despesa = new objDespesaProvisoria((int)row["IDProvisorio"])
 			{
 				Finalidade = (string)row["Finalidade"],
 				Autorizante = (string)row["Autorizante"],
@@ -127,8 +145,10 @@ namespace CamadaBLL
 				Comprador = (string)row["Comprador"],
 				DevolucaoData = row["DevolucaoData"] == DBNull.Value ? null : (DateTime?)row["DevolucaoData"] ,
 				ValorRealizado = row["ValorRealizado"] == DBNull.Value ? null : (decimal?)row["ValorRealizado"],
-				IDConta = (byte)row["IDConta"],
+				IDConta = (int)row["IDConta"],
 				Conta = (string)row["Conta"],
+				IDSetor = (int)row["IDSetor"],
+				Setor = (string)row["Setor"],
 				ContaSaldo = row["ContaSaldo"] == DBNull.Value ? 0 : (decimal)row["ContaSaldo"],
 				BloqueioData = row["BloqueioData"] == DBNull.Value ? null : (DateTime?)row["BloqueioData"],
 				Concluida = (bool)row["Concluida"],
@@ -267,7 +287,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT Autorizante FROM tblDespesaProvisoria GROUP BY Autorizante;";
+				string query = "SELECT Autorizante FROM tblDespesaProvisoria GROUP BY Autorizante ";
 
 				// add params
 				db.LimparParametros();

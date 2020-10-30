@@ -4,6 +4,7 @@ using CamadaUI.Setores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
@@ -17,7 +18,7 @@ namespace CamadaUI.Saidas
 		private List<objDespesa> lstDespesas;
 		private DespesaProvisoriaBLL despBLL = new DespesaProvisoriaBLL();
 		private BindingSource bindProvisoria = new BindingSource();
-		private BindingSource bindDesp = new BindingSource();
+		private BindingSource bindDespesa = new BindingSource();
 		private EnumFlagEstado _Sit;
 
 		private objSetor SetorSelected;
@@ -26,7 +27,6 @@ namespace CamadaUI.Saidas
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
 		#region SUB NEW | CONSTRUCTOR | PROPERTIES  
-		// testing
 
 		// CONSTRUCTOR WITH OBJECT DESPESA
 		//------------------------------------------------------------------------------------------------------------
@@ -71,7 +71,6 @@ namespace CamadaUI.Saidas
 			// binding
 			bindProvisoria.DataSource = typeof(objDespesaProvisoria);
 			bindProvisoria.Add(_provisoria);
-			bindDesp.Add(lstDespesas);
 			BindingCreator();
 
 			if (_provisoria.IDProvisorio == null)
@@ -122,6 +121,8 @@ namespace CamadaUI.Saidas
 				{
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
+					btnInserirDespesa.Enabled = false;
+					btnConcluir.Enabled = false;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = DateTime.Today;
 					dtpRetiradaData.MinDate = DateTime.Today.AddMonths(-12);
@@ -130,9 +131,11 @@ namespace CamadaUI.Saidas
 				{
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
+					btnInserirDespesa.Enabled = true;
+					btnConcluir.Enabled = true;
 					// define MaxDate of Data da Despesa
-					dtpRetiradaData.MaxDate = DateTime.Today;
-					dtpRetiradaData.MinDate = (DateTime)_provisoria.BloqueioData;
+					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
+					dtpRetiradaData.MinDate = _provisoria.RetiradaData;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -179,6 +182,9 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.WaitCursor;
 				//--- GET
 				lstDespesas = new DespesaProvisoriaBLL().GetDespesasRealizado((int)_provisoria.IDProvisorio, dbTran);
+				bindDespesa.DataSource = lstDespesas;
+				dgvListagem.DataSource = bindDespesa;
+				FormataListagem();
 			}
 			catch (Exception ex)
 			{
@@ -268,8 +274,85 @@ namespace CamadaUI.Saidas
 
 		#endregion // DATABINDING --- END
 
+		#region DATAGRID FUNCTIONS
+
+		// FORMATA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void FormataListagem()
+		{
+			dgvListagem.Columns.Clear();
+			dgvListagem.AutoGenerateColumns = false;
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.MultiSelect = false;
+			dgvListagem.ColumnHeadersVisible = true;
+			dgvListagem.AllowUserToResizeRows = false;
+			dgvListagem.AllowUserToResizeColumns = false;
+			dgvListagem.RowHeadersWidth = 36;
+			dgvListagem.RowTemplate.Height = 30;
+			dgvListagem.StandardTab = true;
+			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+
+			// DEFINE COLUMN FONT
+			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			// CREATE ARRAY OF COLUMNS
+			var colList = new List<DataGridViewColumn>();
+
+			//--- (1) COLUNA REG
+			Padding newPadding = new Padding(5, 0, 0, 0);
+			clnID.DataPropertyName = "IDDespesa";
+			clnID.Visible = true;
+			clnID.ReadOnly = true;
+			clnID.Resizable = DataGridViewTriState.False;
+			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnID.DefaultCellStyle.Padding = newPadding;
+			clnID.DefaultCellStyle.Format = "0000";
+			clnID.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnID);
+
+			//--- (2) COLUNA DATA
+			clnDespesaData.DataPropertyName = "DespesaData";
+			clnDespesaData.Visible = true;
+			clnDespesaData.ReadOnly = true;
+			clnDespesaData.Resizable = DataGridViewTriState.False;
+			clnDespesaData.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDespesaData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDespesaData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDespesaData.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnDespesaData);
+
+			//--- (5) COLUNA CREDOR
+			clnCredor.DataPropertyName = "Credor";
+			clnCredor.Visible = true;
+			clnCredor.ReadOnly = true;
+			clnCredor.Resizable = DataGridViewTriState.False;
+			clnCredor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCredor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredor.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnCredor);
+
+			//--- (8) COLUNA VALOR
+			clnValor.DataPropertyName = "DespesaValor";
+			clnValor.Visible = true;
+			clnValor.ReadOnly = true;
+			clnValor.Resizable = DataGridViewTriState.False;
+			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnValor);
+
+			//--- Add Columns
+			dgvListagem.Columns.AddRange(colList.ToArray());
+		}
+
+		#endregion // DATAGRID FUNCTIONS --- END
+
 		#region BUTTONS
 
+		// FECHAR | CLOSE
+		//------------------------------------------------------------------------------------------------------------
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			if (Sit == EnumFlagEstado.Alterado || Sit == EnumFlagEstado.NovoRegistro)
@@ -284,6 +367,8 @@ namespace CamadaUI.Saidas
 			MostraMenuPrincipal();
 		}
 
+		// CANCELAR
+		//------------------------------------------------------------------------------------------------------------
 		private void btnCancelar_Click(object sender, EventArgs e)
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
@@ -306,6 +391,21 @@ namespace CamadaUI.Saidas
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
+		}
+
+		// ANEXAR DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnInserirDespesa_Click(object sender, EventArgs e)
+		{
+			var frm = new frmDespesaListagem(this);
+			frm.ShowDialog();
+
+			if (frm.DialogResult != DialogResult.OK) return;
+
+			objDespesa newDesp = frm.propEscolha;
+
+
+
 		}
 
 		#endregion // BUTTONS --- END
@@ -423,26 +523,64 @@ namespace CamadaUI.Saidas
 			txtComprador.SelectAll();
 		}
 
-		private void btnInsertTitular_Click(object sender, EventArgs e)
+		// LIBERAR PARA INSERIR NOVO AUTORIZANTE
+		//------------------------------------------------------------------------------------------------------------
+		private void btnInsertAutorizante_Click(object sender, EventArgs e)
 		{
-			try
+			if (txtAutorizante.Text.Trim().Length > 0)
 			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
+				var resp = AbrirDialog("Deseja substituir o Autorizante escolhido atualmente?\n" +
+					txtAutorizante.Text,
+					"Inserir Autorizante", DialogType.SIM_NAO, DialogIcon.Question);
 
-				frmTitularControle frm = new frmTitularControle(this);
-				frm.ShowDialog();
+				if (resp == DialogResult.Yes)
+				{
+					txtAutorizante.Clear();
+				}
+				else
+				{
+					return;
+				}
 			}
-			catch (Exception ex)
+
+			txtAutorizante.Tag = "Insira aqui o nome do novo Autorizante...";
+			ShowToolTip(txtAutorizante);
+			txtAutorizante.Enter -= text_Enter;
+
+			txtAutorizante.KeyDown -= Control_KeyDown;
+			txtAutorizante.Validating += (a, b) => PrimeiraLetraMaiuscula(txtAutorizante);
+			txtAutorizante.Focus();
+			btnInsertAutorizante.Enabled = false;
+		}
+
+		// LIBERAR PARA INSERIR COMPRADOR
+		//------------------------------------------------------------------------------------------------------------
+		private void btnInsertComprador_Click(object sender, EventArgs e)
+		{
+			if (txtComprador.Text.Trim().Length > 0)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de cadastro de Titulares..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				var resp = AbrirDialog("Deseja substituir o Comprador escolhido atualmente?\n" +
+					txtComprador.Text,
+					"Inserir Comprador", DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					txtComprador.Clear();
+				}
+				else
+				{
+					return;
+				}
 			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
+
+			txtComprador.Tag = "Insira aqui o nome do novo Comprador...";
+			ShowToolTip(txtComprador);
+			txtComprador.Enter -= text_Enter;
+
+			txtComprador.KeyDown -= Control_KeyDown;
+			txtComprador.Validating += (a, b) => PrimeiraLetraMaiuscula(txtComprador);
+			txtComprador.Focus();
+			btnInsertComprador.Enabled = false;
 		}
 
 		#endregion // BUTTONS PROCURA --- END
@@ -621,6 +759,12 @@ namespace CamadaUI.Saidas
 				_ = AbrirDialog("Registro de Despesa Provisória salva com sucesso!",
 					"Salvamento Efetuado",
 					DialogType.OK, DialogIcon.Information);
+
+				// return with keydown handler Autorizante & Comprador
+				txtAutorizante.Tag = "Pressione a tecla (+) para procurar...";
+				txtAutorizante.KeyDown += Control_KeyDown;
+				txtComprador.Tag = "Pressione a tecla (+) para procurar...";
+				txtComprador.KeyDown += Control_KeyDown;
 			}
 			catch (Exception ex)
 			{
@@ -658,5 +802,7 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // SALVAR REGISTRO --- END
+
+
 	}
 }

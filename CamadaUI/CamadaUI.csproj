@@ -595,6 +595,12 @@
     <Compile Include="Saidas\frmGasto.designer.cs">
       <DependentUpon>frmGasto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmProvisoriaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmProvisoriaListagem.designer.cs">
+      <DependentUpon>frmProvisoriaListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmProvisorio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -921,6 +927,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmGasto.resx">
       <DependentUpon>frmGasto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmProvisoriaListagem.resx">
+      <DependentUpon>frmProvisoriaListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmProvisorio.resx">
       <DependentUpon>frmProvisorio.cs</DependentUpon>

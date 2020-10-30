@@ -46,18 +46,18 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCampanhas = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaidas = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuAPagarProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuDespesaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaRealizada = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuSubDespesaPeriodica = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuDespesaPeriodicaInserir = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuDespesaPeriodicaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSubDespesaProvisoria = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaProvisoriaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaProvisoriaProcurar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuAPagarProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSubDespesaPeriodica = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaPeriodicaInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaPeriodicaProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuDespesaTipo = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
@@ -277,14 +277,14 @@
 			// btnSaidas
 			// 
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAPagarProcurar,
+            this.toolStripSeparator5,
             this.mnuDespesaInserir,
             this.mnuDespesaRealizada,
             this.mnuDespesaProcurar,
             this.toolStripSeparator7,
-            this.mnuSubDespesaPeriodica,
             this.mnuSubDespesaProvisoria,
-            this.toolStripSeparator5,
-            this.mnuAPagarProcurar,
+            this.mnuSubDespesaPeriodica,
             this.toolStripSeparator4,
             this.mnuDespesaTipo,
             this.mnuDespesaGrupo,
@@ -297,6 +297,20 @@
 			this.btnSaidas.Padding = new System.Windows.Forms.Padding(5);
 			this.btnSaidas.Size = new System.Drawing.Size(120, 46);
 			this.btnSaidas.Text = "Saídas";
+			// 
+			// mnuAPagarProcurar
+			// 
+			this.mnuAPagarProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuAPagarProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuAPagarProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuAPagarProcurar.Name = "mnuAPagarProcurar";
+			this.mnuAPagarProcurar.Size = new System.Drawing.Size(253, 30);
+			this.mnuAPagarProcurar.Text = "Procurar a Pagar";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(250, 6);
 			// 
 			// mnuDespesaInserir
 			// 
@@ -332,37 +346,6 @@
 			this.toolStripSeparator7.Name = "toolStripSeparator7";
 			this.toolStripSeparator7.Size = new System.Drawing.Size(250, 6);
 			// 
-			// mnuSubDespesaPeriodica
-			// 
-			this.mnuSubDespesaPeriodica.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuDespesaPeriodicaInserir,
-            this.mnuDespesaPeriodicaProcurar});
-			this.mnuSubDespesaPeriodica.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuSubDespesaPeriodica.Image = global::CamadaUI.Properties.Resources.periodica_24;
-			this.mnuSubDespesaPeriodica.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuSubDespesaPeriodica.Name = "mnuSubDespesaPeriodica";
-			this.mnuSubDespesaPeriodica.Size = new System.Drawing.Size(253, 30);
-			this.mnuSubDespesaPeriodica.Text = "Despesa Periódica";
-			// 
-			// mnuDespesaPeriodicaInserir
-			// 
-			this.mnuDespesaPeriodicaInserir.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuDespesaPeriodicaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
-			this.mnuDespesaPeriodicaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuDespesaPeriodicaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuDespesaPeriodicaInserir.Name = "mnuDespesaPeriodicaInserir";
-			this.mnuDespesaPeriodicaInserir.Size = new System.Drawing.Size(264, 30);
-			this.mnuDespesaPeriodicaInserir.Text = "Inserir Despesa Periódica";
-			// 
-			// mnuDespesaPeriodicaProcurar
-			// 
-			this.mnuDespesaPeriodicaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuDespesaPeriodicaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuDespesaPeriodicaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuDespesaPeriodicaProcurar.Name = "mnuDespesaPeriodicaProcurar";
-			this.mnuDespesaPeriodicaProcurar.Size = new System.Drawing.Size(264, 30);
-			this.mnuDespesaPeriodicaProcurar.Text = "Procurar Despesa Periódica";
-			// 
 			// mnuSubDespesaProvisoria
 			// 
 			this.mnuSubDespesaProvisoria.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -394,19 +377,36 @@
 			this.mnuDespesaProvisoriaProcurar.Size = new System.Drawing.Size(268, 30);
 			this.mnuDespesaProvisoriaProcurar.Text = "Procurar Despesa Provisória";
 			// 
-			// toolStripSeparator5
+			// mnuSubDespesaPeriodica
 			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(250, 6);
+			this.mnuSubDespesaPeriodica.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDespesaPeriodicaInserir,
+            this.mnuDespesaPeriodicaProcurar});
+			this.mnuSubDespesaPeriodica.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSubDespesaPeriodica.Image = global::CamadaUI.Properties.Resources.periodica_24;
+			this.mnuSubDespesaPeriodica.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSubDespesaPeriodica.Name = "mnuSubDespesaPeriodica";
+			this.mnuSubDespesaPeriodica.Size = new System.Drawing.Size(253, 30);
+			this.mnuSubDespesaPeriodica.Text = "Despesa Periódica";
 			// 
-			// mnuAPagarProcurar
+			// mnuDespesaPeriodicaInserir
 			// 
-			this.mnuAPagarProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuAPagarProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuAPagarProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuAPagarProcurar.Name = "mnuAPagarProcurar";
-			this.mnuAPagarProcurar.Size = new System.Drawing.Size(253, 30);
-			this.mnuAPagarProcurar.Text = "Procurar a Pagar";
+			this.mnuDespesaPeriodicaInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaPeriodicaInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuDespesaPeriodicaInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaPeriodicaInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuDespesaPeriodicaInserir.Name = "mnuDespesaPeriodicaInserir";
+			this.mnuDespesaPeriodicaInserir.Size = new System.Drawing.Size(264, 30);
+			this.mnuDespesaPeriodicaInserir.Text = "Inserir Despesa Periódica";
+			// 
+			// mnuDespesaPeriodicaProcurar
+			// 
+			this.mnuDespesaPeriodicaProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaPeriodicaProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaPeriodicaProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaPeriodicaProcurar.Name = "mnuDespesaPeriodicaProcurar";
+			this.mnuDespesaPeriodicaProcurar.Size = new System.Drawing.Size(264, 30);
+			this.mnuDespesaPeriodicaProcurar.Text = "Procurar Despesa Periódica";
 			// 
 			// toolStripSeparator4
 			// 

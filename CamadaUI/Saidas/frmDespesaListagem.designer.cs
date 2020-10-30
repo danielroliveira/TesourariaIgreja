@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnImprimirListagem = new System.Windows.Forms.Button();
 			this.pnlPorMes = new System.Windows.Forms.Panel();
 			this.btnPeriodoPosterior = new VIBlend.WinForms.Controls.vArrowButton();
 			this.btnMesAtual = new VIBlend.WinForms.Controls.vButton();
@@ -84,8 +84,8 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(951, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(209, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(940, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(220, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Procurar Despesa";
 			// 
@@ -150,24 +150,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -303,18 +303,18 @@
 			this.btnProcurar.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.OFFICESILVER;
 			this.btnProcurar.Click += new System.EventHandler(this.btnProcurar_Click);
 			// 
-			// button1
+			// btnImprimirListagem
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button1.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.button1.Location = new System.Drawing.Point(617, 634);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(185, 42);
-			this.button1.TabIndex = 8;
-			this.button1.Text = "&Imprimir Listagem";
-			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.button1.UseVisualStyleBackColor = true;
+			this.btnImprimirListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnImprimirListagem.Image = global::CamadaUI.Properties.Resources.imprimir_24;
+			this.btnImprimirListagem.Location = new System.Drawing.Point(617, 634);
+			this.btnImprimirListagem.Name = "btnImprimirListagem";
+			this.btnImprimirListagem.Size = new System.Drawing.Size(185, 42);
+			this.btnImprimirListagem.TabIndex = 8;
+			this.btnImprimirListagem.Text = "&Imprimir Listagem";
+			this.btnImprimirListagem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnImprimirListagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnImprimirListagem.UseVisualStyleBackColor = true;
 			// 
 			// pnlPorMes
 			// 
@@ -644,7 +644,7 @@
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btnImprimirListagem);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnVisualizar);
 			this.KeyPreview = true;
@@ -652,7 +652,7 @@
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.Controls.SetChildIndex(this.btnVisualizar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
-			this.Controls.SetChildIndex(this.button1, 0);
+			this.Controls.SetChildIndex(this.btnImprimirListagem, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
@@ -684,7 +684,7 @@
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label lblValorTotal;
 		internal VIBlend.WinForms.Controls.vButton btnProcurar;
-		internal System.Windows.Forms.Button button1;
+		internal System.Windows.Forms.Button btnImprimirListagem;
 		internal System.Windows.Forms.Panel pnlPorMes;
 		internal VIBlend.WinForms.Controls.vArrowButton btnPeriodoPosterior;
 		internal VIBlend.WinForms.Controls.vButton btnMesAtual;

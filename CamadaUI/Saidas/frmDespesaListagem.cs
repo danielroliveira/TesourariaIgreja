@@ -21,6 +21,7 @@ namespace CamadaUI.Saidas
 		private DateTime _dtInicial;
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
+		public objDespesa propEscolha = null;
 
 		public struct StructPesquisa
 		{
@@ -46,6 +47,15 @@ namespace CamadaUI.Saidas
 
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
+
+			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio") 
+			{
+				btnAdicionar.Text = "&Escolher";
+				btnVisualizar.Enabled = false;
+				btnExcluir.Enabled = false;
+				btnImprimirListagem.Enabled = false;
+				lblTitulo.Text = "Escolher Despesa";
+			}
 
 			// define a data inicial
 			propMes = DateTime.Parse(ObterDefault("DataPadrao"));
@@ -295,12 +305,27 @@ namespace CamadaUI.Saidas
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
-			MostraMenuPrincipal();
+			if (_formOrigem == null || (_formOrigem != null && _formOrigem.Name != "frmProvisorio"))
+			{ 
+				MostraMenuPrincipal();
+			}
 		}
 
 		// ADICIONAR DESPESA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
+		{
+			if (_formOrigem != null || _formOrigem.Name != "frmProvisorio")
+			{
+				Adicionar();
+			}
+			else
+			{
+				Escolher();
+			}
+		}
+
+		private void Adicionar() 
 		{
 			frmDespesa frm = new frmDespesa(new objDespesa(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
@@ -309,10 +334,22 @@ namespace CamadaUI.Saidas
 			frm.Show();
 		}
 
+		private void Escolher()
+		{
+			//--- get Selected item
+			propEscolha = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			DialogResult = DialogResult.OK;
+		}
+
 		// EDITAR DESPESA ESCOLHIDA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnVisualizar_Click(object sender, EventArgs e)
 		{
+			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio")
+			{
+				return;
+			}
+
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
@@ -584,6 +621,9 @@ namespace CamadaUI.Saidas
 		{
 			// check button
 			if (e.Button != MouseButtons.Right) return;
+
+			// check Escolha
+			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio") return;
 
 			Control c = (Control)sender;
 			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);

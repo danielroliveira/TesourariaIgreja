@@ -58,15 +58,15 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnInsertComprador = new VIBlend.WinForms.Controls.vButton();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
 			this.btnInserirDespesa = new VIBlend.WinForms.Controls.vButton();
 			this.btnConcluir = new VIBlend.WinForms.Controls.vButton();
 			this.btnInsertAutorizante = new VIBlend.WinForms.Controls.vButton();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDespesaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
@@ -447,7 +447,7 @@
 			this.btnInsertComprador.UseCompatibleTextRendering = true;
 			this.btnInsertComprador.UseVisualStyleBackColor = false;
 			this.btnInsertComprador.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnInsertComprador.Click += new System.EventHandler(this.btnInsertTitular_Click);
+			this.btnInsertComprador.Click += new System.EventHandler(this.btnInsertComprador_Click);
 			// 
 			// dgvListagem
 			// 
@@ -473,9 +473,9 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnForma,
-            this.clnIdentificador,
-            this.clnVencimento,
+            this.clnID,
+            this.clnDespesaData,
+            this.clnCredor,
             this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
@@ -492,32 +492,6 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(608, 168);
 			this.dgvListagem.TabIndex = 49;
-			// 
-			// clnForma
-			// 
-			this.clnForma.HeaderText = "Forma";
-			this.clnForma.Name = "clnForma";
-			this.clnForma.ReadOnly = true;
-			this.clnForma.Width = 250;
-			// 
-			// clnIdentificador
-			// 
-			this.clnIdentificador.HeaderText = "No. Reg.:";
-			this.clnIdentificador.Name = "clnIdentificador";
-			this.clnIdentificador.ReadOnly = true;
-			this.clnIdentificador.Width = 115;
-			// 
-			// clnVencimento
-			// 
-			this.clnVencimento.HeaderText = "Vencimento";
-			this.clnVencimento.Name = "clnVencimento";
-			this.clnVencimento.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
 			// 
 			// line2
 			// 
@@ -557,10 +531,11 @@
 			this.btnInserirDespesa.RoundedCornersRadius = 0;
 			this.btnInserirDespesa.Size = new System.Drawing.Size(162, 35);
 			this.btnInserirDespesa.TabIndex = 52;
-			this.btnInserirDespesa.Text = "Inserir Nova Despesa";
+			this.btnInserirDespesa.Text = "Anexar Despesa";
 			this.btnInserirDespesa.UseCompatibleTextRendering = true;
 			this.btnInserirDespesa.UseVisualStyleBackColor = false;
 			this.btnInserirDespesa.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnInserirDespesa.Click += new System.EventHandler(this.btnInserirDespesa_Click);
 			// 
 			// btnConcluir
 			// 
@@ -599,7 +574,34 @@
 			this.btnInsertAutorizante.UseCompatibleTextRendering = true;
 			this.btnInsertAutorizante.UseVisualStyleBackColor = false;
 			this.btnInsertAutorizante.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnInsertAutorizante.Click += new System.EventHandler(this.btnInsertTitular_Click);
+			this.btnInsertAutorizante.Click += new System.EventHandler(this.btnInsertAutorizante_Click);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.:";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnDespesaData
+			// 
+			this.clnDespesaData.HeaderText = "Data";
+			this.clnDespesaData.Name = "clnDespesaData";
+			this.clnDespesaData.ReadOnly = true;
+			this.clnDespesaData.Width = 90;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 300;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
 			// frmProvisorio
 			// 
@@ -705,14 +707,14 @@
 		internal System.Windows.Forms.Label label14;
 		internal VIBlend.WinForms.Controls.vButton btnInsertComprador;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		private AwesomeShapeControl.Line line2;
 		internal System.Windows.Forms.Label label6;
 		internal VIBlend.WinForms.Controls.vButton btnInserirDespesa;
 		internal VIBlend.WinForms.Controls.vButton btnConcluir;
 		internal VIBlend.WinForms.Controls.vButton btnInsertAutorizante;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDespesaData;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 	}
 }
