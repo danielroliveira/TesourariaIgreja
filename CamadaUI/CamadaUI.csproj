@@ -80,7 +80,7 @@
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -1176,10 +1176,6 @@
     <Content Include="ConfigFiles\Config.xml" />
     <Content Include="ConfigFiles\LogoColor.png" />
     <Content Include="ConfigFiles\LogoMono.png" />
-    <None Include="Resources\backup_24.png" />
-    <None Include="Resources\ImagesFolder_30.png" />
-    <None Include="Resources\periodica_24.png" />
-    <None Include="Resources\provisoria_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1193,6 +1189,10 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\backup_24.png" />
+    <None Include="Resources\ImagesFolder_30.png" />
+    <None Include="Resources\periodica_24.png" />
+    <None Include="Resources\provisoria_24.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

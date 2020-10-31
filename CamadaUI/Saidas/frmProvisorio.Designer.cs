@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
@@ -58,15 +58,15 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnInsertComprador = new VIBlend.WinForms.Controls.vButton();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDespesaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
 			this.btnInserirDespesa = new VIBlend.WinForms.Controls.vButton();
 			this.btnConcluir = new VIBlend.WinForms.Controls.vButton();
 			this.btnInsertAutorizante = new VIBlend.WinForms.Controls.vButton();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDespesaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
@@ -138,7 +138,7 @@
             this.btnCancelar,
             this.btnFechar,
             this.toolStripSeparator2});
-			this.tspMenu.Location = new System.Drawing.Point(2, 667);
+			this.tspMenu.Location = new System.Drawing.Point(2, 605);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(689, 44);
 			this.tspMenu.TabIndex = 48;
@@ -214,7 +214,7 @@
 			// 
 			this.dtpRetiradaData.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpRetiradaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpRetiradaData.Location = new System.Drawing.Point(162, 326);
+			this.dtpRetiradaData.Location = new System.Drawing.Point(162, 313);
 			this.dtpRetiradaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpRetiradaData.Name = "dtpRetiradaData";
 			this.dtpRetiradaData.Size = new System.Drawing.Size(145, 31);
@@ -225,7 +225,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(161, 301);
+			this.label1.Location = new System.Drawing.Point(161, 288);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(119, 19);
 			this.label1.TabIndex = 32;
@@ -236,7 +236,7 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(331, 301);
+			this.label8.Location = new System.Drawing.Point(331, 288);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(119, 19);
 			this.label8.TabIndex = 34;
@@ -378,7 +378,7 @@
 			// 
 			this.txtValorProvisorio.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtValorProvisorio.Inteiro = false;
-			this.txtValorProvisorio.Location = new System.Drawing.Point(335, 326);
+			this.txtValorProvisorio.Location = new System.Drawing.Point(335, 313);
 			this.txtValorProvisorio.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtValorProvisorio.Moeda = false;
 			this.txtValorProvisorio.Name = "txtValorProvisorio";
@@ -455,21 +455,21 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -479,7 +479,7 @@
             this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(45, 423);
+			this.dgvListagem.Location = new System.Drawing.Point(45, 384);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
@@ -493,12 +493,39 @@
 			this.dgvListagem.Size = new System.Drawing.Size(608, 168);
 			this.dgvListagem.TabIndex = 49;
 			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.:";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnDespesaData
+			// 
+			this.clnDespesaData.HeaderText = "Data";
+			this.clnDespesaData.Name = "clnDespesaData";
+			this.clnDespesaData.ReadOnly = true;
+			this.clnDespesaData.Width = 90;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 300;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
+			// 
 			// line2
 			// 
 			this.line2.EndPoint = new System.Drawing.Point(460, 5);
 			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(194, 390);
+			this.line2.Location = new System.Drawing.Point(194, 359);
 			this.line2.Name = "line2";
 			this.line2.Opacity = 0.5F;
 			this.line2.Size = new System.Drawing.Size(465, 10);
@@ -512,7 +539,7 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.LightSlateGray;
-			this.label6.Location = new System.Drawing.Point(25, 382);
+			this.label6.Location = new System.Drawing.Point(25, 351);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(166, 23);
 			this.label6.TabIndex = 50;
@@ -525,7 +552,7 @@
 			this.btnInserirDespesa.Enabled = false;
 			this.btnInserirDespesa.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnInserirDespesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnInserirDespesa.Location = new System.Drawing.Point(45, 608);
+			this.btnInserirDespesa.Location = new System.Drawing.Point(45, 561);
 			this.btnInserirDespesa.Name = "btnInserirDespesa";
 			this.btnInserirDespesa.RoundedCornersMask = ((byte)(15));
 			this.btnInserirDespesa.RoundedCornersRadius = 0;
@@ -544,7 +571,7 @@
 			this.btnConcluir.Enabled = false;
 			this.btnConcluir.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnConcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnConcluir.Location = new System.Drawing.Point(218, 608);
+			this.btnConcluir.Location = new System.Drawing.Point(218, 561);
 			this.btnConcluir.Name = "btnConcluir";
 			this.btnConcluir.RoundedCornersMask = ((byte)(15));
 			this.btnConcluir.RoundedCornersRadius = 0;
@@ -576,37 +603,10 @@
 			this.btnInsertAutorizante.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnInsertAutorizante.Click += new System.EventHandler(this.btnInsertAutorizante_Click);
 			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.:";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnDespesaData
-			// 
-			this.clnDespesaData.HeaderText = "Data";
-			this.clnDespesaData.Name = "clnDespesaData";
-			this.clnDespesaData.ReadOnly = true;
-			this.clnDespesaData.Width = 90;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Credor";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 300;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			// 
 			// frmProvisorio
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(693, 714);
+			this.ClientSize = new System.Drawing.Size(693, 652);
 			this.Controls.Add(this.btnConcluir);
 			this.Controls.Add(this.btnInserirDespesa);
 			this.Controls.Add(this.line2);
