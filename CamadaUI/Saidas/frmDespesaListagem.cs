@@ -48,7 +48,7 @@ namespace CamadaUI.Saidas
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
 
-			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio") 
+			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio")
 			{
 				btnAdicionar.Text = "&Escolher";
 				btnVisualizar.Enabled = false;
@@ -306,7 +306,7 @@ namespace CamadaUI.Saidas
 		{
 			Close();
 			if (_formOrigem == null || (_formOrigem != null && _formOrigem.Name != "frmProvisorio"))
-			{ 
+			{
 				MostraMenuPrincipal();
 			}
 		}
@@ -325,7 +325,7 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		private void Adicionar() 
+		private void Adicionar()
 		{
 			frmDespesa frm = new frmDespesa(new objDespesa(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
@@ -349,23 +349,25 @@ namespace CamadaUI.Saidas
 			{
 				return;
 			}
-
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
+			else
 			{
-				AbrirDialog("Favor selecionar um registro para Editar...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
+				//--- check selected item
+				if (dgvListagem.SelectedRows.Count == 0)
+				{
+					AbrirDialog("Favor selecionar um registro para Editar...",
+						"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+					return;
+				}
+
+				//--- get Selected item
+				objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+				frmDespesa frm = new frmDespesa(item, this);
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				DesativaMenuPrincipal();
+				Close();
+				frm.Show();
 			}
-
-			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			frmDespesa frm = new frmDespesa(item, this);
-			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-			DesativaMenuPrincipal();
-			Close();
-			frm.Show();
 		}
 
 		// PROCURAR

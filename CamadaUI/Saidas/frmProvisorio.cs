@@ -393,6 +393,10 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		#endregion // BUTTONS --- END
+
+		#region ANEXAR DESPESA
+
 		// ANEXAR DESPESA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnInserirDespesa_Click(object sender, EventArgs e)
@@ -403,12 +407,33 @@ namespace CamadaUI.Saidas
 			if (frm.DialogResult != DialogResult.OK) return;
 
 			objDespesa newDesp = frm.propEscolha;
-
-
-
+			if (VerificaDespesaAnexada(newDesp) == false) return;
 		}
 
-		#endregion // BUTTONS --- END
+		private bool VerificaDespesaAnexada(objDespesa newDesp)
+		{
+			// check data
+			if (newDesp.DespesaData < _provisoria.RetiradaData)
+			{
+				AbrirDialog("A despesa realizada não pode ter uma data anterior à data da despesa provisória...\n" +
+					$"Favor escolher uma despesa com data igual ou depois de {_provisoria.RetiradaData.ToShortDateString()}.", "Anexar Despesa Realizada",
+					DialogType.OK, DialogIcon.Information);
+				return false;
+			}
+
+			// check situacao
+			if (newDesp.IDSituacao == 1)
+			{
+				AbrirDialog("A despesa realizada não pode estar em aberto, precisa estar quitada..." +
+					"\nFavor escolher uma despesa quitada.", "Anexar Despesa Realizada",
+					DialogType.OK, DialogIcon.Information);
+				return false;
+			}
+
+			return true;
+		}
+
+		#endregion // ANEXAR DESPESA --- END
 
 		#region BUTTONS PROCURA
 
