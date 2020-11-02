@@ -291,7 +291,6 @@
 			// 
 			this.btnPeriodoPosterior.AllowAnimations = true;
 			this.btnPeriodoPosterior.ArrowDirection = System.Windows.Forms.ArrowDirection.Right;
-			this.btnPeriodoPosterior.Enabled = true;
 			this.btnPeriodoPosterior.Location = new System.Drawing.Point(220, 7);
 			this.btnPeriodoPosterior.Maximum = 100;
 			this.btnPeriodoPosterior.Minimum = 0;
@@ -594,7 +593,7 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
+			this.mnuOperacoes.Size = new System.Drawing.Size(234, 194);
 			// 
 			// mnuItemReceber
 			// 

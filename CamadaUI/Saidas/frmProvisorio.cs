@@ -121,8 +121,9 @@ namespace CamadaUI.Saidas
 				{
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
+					btnAnexarDespesa.Enabled = false;
 					btnInserirDespesa.Enabled = false;
-					btnConcluir.Enabled = false;
+					btnFinalizar.Enabled = false;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = DateTime.Today;
 					dtpRetiradaData.MinDate = DateTime.Today.AddMonths(-12);
@@ -131,8 +132,9 @@ namespace CamadaUI.Saidas
 				{
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
+					btnAnexarDespesa.Enabled = true;
 					btnInserirDespesa.Enabled = true;
-					btnConcluir.Enabled = true;
+					btnFinalizar.Enabled = true;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
 					dtpRetiradaData.MinDate = _provisoria.RetiradaData;
@@ -393,13 +395,18 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		private void btnRecibo_Click(object sender, EventArgs e)
+		{
+
+		}
+
 		#endregion // BUTTONS --- END
 
 		#region ANEXAR DESPESA
 
 		// ANEXAR DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		private void btnInserirDespesa_Click(object sender, EventArgs e)
+		private void btnAnexarDespesa_Click(object sender, EventArgs e)
 		{
 			var frm = new frmDespesaListagem(this);
 			frm.ShowDialog();
@@ -408,6 +415,11 @@ namespace CamadaUI.Saidas
 
 			objDespesa newDesp = frm.propEscolha;
 			if (VerificaDespesaAnexada(newDesp) == false) return;
+
+			//--- save
+			SaveAttachDespesa(newDesp);
+			_provisoria.EndEdit();
+			Sit = EnumFlagEstado.RegistroSalvo;
 		}
 
 		private bool VerificaDespesaAnexada(objDespesa newDesp)
@@ -431,6 +443,81 @@ namespace CamadaUI.Saidas
 			}
 
 			return true;
+		}
+
+		// INSERIR NOVA DESPESA GASTO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnInserirDespesa_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmGasto frm = new frmGasto(new objDespesa(null));
+				frm.ShowDialog();
+
+				//--- check inserted Despesa
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				//--- save
+				SaveAttachDespesa(frm.propDespesa);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Despesa Realizada..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		// INSERT DESPESA IN LIST AND ATTACH ON PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		private void SaveAttachDespesa(objDespesa despesa)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				if (_provisoria.IDProvisorio == null || Sit == EnumFlagEstado.NovoRegistro)
+				{
+					throw new Exception("Essa despesa provisória ainda não foi salva...");
+				}
+
+				//--- check concluida
+				if (despesa.DespesaValor >= _provisoria.ValorProvisorio - (_provisoria.ValorRealizado ?? 0))
+				{
+					var resp = AbrirDialog("O Valor total da Despesa a ser inserida é maior que o valor esperado da Despesa Provisória." +
+									"\nDeseja FINALIZAR a despesa provisória após anexar essa Despesa?", "Finalizar Provisório",
+									DialogType.SIM_NAO, DialogIcon.Question);
+
+					if (resp == DialogResult.Yes)
+					{
+						_provisoria.Concluida = true;
+						_provisoria.DevolucaoData = DateTime.Today;
+					}
+				}
+
+				despBLL.AttachDespesaToProvisoria(_provisoria, despesa);
+				bindDespesa.Add(despesa);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Anexar Despesa ao Provisório..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion // ANEXAR DESPESA --- END
@@ -826,8 +913,85 @@ namespace CamadaUI.Saidas
 			return true;
 		}
 
+
 		#endregion // SALVAR REGISTRO --- END
 
+		#region MENU SUSPENSO
+
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
+		{
+			// check blocked
+			if (_provisoria.Concluida) return;
+
+			// check button
+			if (e.Button != MouseButtons.Right) return;
+
+			Control c = (Control)sender;
+			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+			dgvListagem.ClearSelection();
+
+			if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+			// seleciona o ROW
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
+			dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+			// mostra o MENU ativar e desativar
+			//objDespesa item = (objDespesa)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+			// revela menu
+			mnuOperacoes.Show(c.PointToScreen(e.Location));
+
+		}
+
+		private void mnuItemAnexar_Click(object sender, EventArgs e)
+		{
+			btnAnexarDespesa_Click(sender, e);
+		}
+
+		private void mnuItemDesvincular_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return;
+
+			//--- Get A Pagar on list
+			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//--- ask user
+			var resp = AbrirDialog($"Deseja desvincular a despesa realizada: {item.IDDespesa:D4} valor: {item.DespesaValor:c} da despesa Provisória?",
+				"Desvincular", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				despBLL.DettachDespesaToProvisoria(_provisoria, item);
+				bindDespesa.Remove(item);
+				_provisoria.EndEdit();
+				Sit = EnumFlagEstado.RegistroSalvo;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Desvincular a Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuItemInserir_Click(object sender, EventArgs e)
+		{
+			btnInserirDespesa_Click(sender, e);
+		}
+
+		#endregion // MENU SUSPENSO --- END
 
 	}
 }

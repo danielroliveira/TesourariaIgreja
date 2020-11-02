@@ -51,6 +51,7 @@ namespace CamadaUI.Saidas
 			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio")
 			{
 				btnAdicionar.Text = "&Escolher";
+				btnAdicionar.Image = Properties.Resources.accept_24;
 				btnVisualizar.Enabled = false;
 				btnExcluir.Enabled = false;
 				btnImprimirListagem.Enabled = false;
@@ -315,7 +316,7 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			if (_formOrigem != null || _formOrigem.Name != "frmProvisorio")
+			if (_formOrigem == null || (_formOrigem != null && _formOrigem.Name != "frmProvisorio"))
 			{
 				Adicionar();
 			}
@@ -347,7 +348,7 @@ namespace CamadaUI.Saidas
 		{
 			if (_formOrigem != null && _formOrigem.Name == "frmProvisorio")
 			{
-				return;
+				Escolher();
 			}
 			else
 			{

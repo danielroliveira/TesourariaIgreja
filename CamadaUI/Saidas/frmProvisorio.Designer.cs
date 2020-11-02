@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
@@ -52,7 +53,6 @@
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.lblContaDetalhe = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
-			this.txtValorProvisorio = new CamadaUC.ucOnlyNumbers();
 			this.btnSetComprador = new VIBlend.WinForms.Controls.vButton();
 			this.txtComprador = new System.Windows.Forms.TextBox();
 			this.label14 = new System.Windows.Forms.Label();
@@ -64,12 +64,20 @@
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
-			this.btnInserirDespesa = new VIBlend.WinForms.Controls.vButton();
-			this.btnConcluir = new VIBlend.WinForms.Controls.vButton();
+			this.btnAnexarDespesa = new VIBlend.WinForms.Controls.vButton();
 			this.btnInsertAutorizante = new VIBlend.WinForms.Controls.vButton();
+			this.btnInserirDespesa = new VIBlend.WinForms.Controls.vButton();
+			this.txtValorProvisorio = new CamadaUC.ucOnlyNumbers();
+			this.btnFinalizar = new VIBlend.WinForms.Controls.vButton();
+			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.mnuItemAnexar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemDesvincular = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnRecibo = new System.Windows.Forms.ToolStripButton();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
+			this.mnuOperacoes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -137,7 +145,8 @@
             this.btnSalvar,
             this.btnCancelar,
             this.btnFechar,
-            this.toolStripSeparator2});
+            this.toolStripSeparator2,
+            this.btnRecibo});
 			this.tspMenu.Location = new System.Drawing.Point(2, 605);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(689, 44);
@@ -374,19 +383,6 @@
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Conta Debitada";
 			// 
-			// txtValorProvisorio
-			// 
-			this.txtValorProvisorio.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValorProvisorio.Inteiro = false;
-			this.txtValorProvisorio.Location = new System.Drawing.Point(335, 313);
-			this.txtValorProvisorio.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtValorProvisorio.Moeda = false;
-			this.txtValorProvisorio.Name = "txtValorProvisorio";
-			this.txtValorProvisorio.Positivo = true;
-			this.txtValorProvisorio.Size = new System.Drawing.Size(145, 31);
-			this.txtValorProvisorio.TabIndex = 35;
-			this.txtValorProvisorio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
 			// btnSetComprador
 			// 
 			this.btnSetComprador.AllowAnimations = true;
@@ -492,6 +488,7 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(608, 168);
 			this.dgvListagem.TabIndex = 49;
+			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
 			// clnID
 			// 
@@ -545,42 +542,30 @@
 			this.label6.TabIndex = 50;
 			this.label6.Text = "Despesas Efetuadas";
 			// 
-			// btnInserirDespesa
+			// btnAnexarDespesa
 			// 
-			this.btnInserirDespesa.AllowAnimations = true;
-			this.btnInserirDespesa.BackColor = System.Drawing.Color.Transparent;
-			this.btnInserirDespesa.Enabled = false;
-			this.btnInserirDespesa.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnInserirDespesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnInserirDespesa.Location = new System.Drawing.Point(45, 561);
-			this.btnInserirDespesa.Name = "btnInserirDespesa";
-			this.btnInserirDespesa.RoundedCornersMask = ((byte)(15));
-			this.btnInserirDespesa.RoundedCornersRadius = 0;
-			this.btnInserirDespesa.Size = new System.Drawing.Size(162, 35);
-			this.btnInserirDespesa.TabIndex = 52;
-			this.btnInserirDespesa.Text = "Anexar Despesa";
-			this.btnInserirDespesa.UseCompatibleTextRendering = true;
-			this.btnInserirDespesa.UseVisualStyleBackColor = false;
-			this.btnInserirDespesa.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnInserirDespesa.Click += new System.EventHandler(this.btnInserirDespesa_Click);
-			// 
-			// btnConcluir
-			// 
-			this.btnConcluir.AllowAnimations = true;
-			this.btnConcluir.BackColor = System.Drawing.Color.Transparent;
-			this.btnConcluir.Enabled = false;
-			this.btnConcluir.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnConcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnConcluir.Location = new System.Drawing.Point(218, 561);
-			this.btnConcluir.Name = "btnConcluir";
-			this.btnConcluir.RoundedCornersMask = ((byte)(15));
-			this.btnConcluir.RoundedCornersRadius = 0;
-			this.btnConcluir.Size = new System.Drawing.Size(215, 35);
-			this.btnConcluir.TabIndex = 52;
-			this.btnConcluir.Text = "Concluir Despesa Provisória";
-			this.btnConcluir.UseCompatibleTextRendering = true;
-			this.btnConcluir.UseVisualStyleBackColor = false;
-			this.btnConcluir.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnAnexarDespesa.AllowAnimations = true;
+			this.btnAnexarDespesa.BackColor = System.Drawing.Color.Transparent;
+			this.btnAnexarDespesa.Enabled = false;
+			this.btnAnexarDespesa.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnAnexarDespesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnAnexarDespesa.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.btnAnexarDespesa.ImageAbsolutePosition = new System.Drawing.Point(6, 1);
+			this.btnAnexarDespesa.Location = new System.Drawing.Point(45, 561);
+			this.btnAnexarDespesa.Name = "btnAnexarDespesa";
+			this.btnAnexarDespesa.RoundedCornersMask = ((byte)(15));
+			this.btnAnexarDespesa.RoundedCornersRadius = 0;
+			this.btnAnexarDespesa.Size = new System.Drawing.Size(162, 35);
+			this.btnAnexarDespesa.TabIndex = 52;
+			this.btnAnexarDespesa.Text = "Anexar Despesa";
+			this.btnAnexarDespesa.TextAbsolutePosition = new System.Drawing.Point(25, 5);
+			this.btnAnexarDespesa.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnAnexarDespesa.UseAbsoluteImagePositioning = true;
+			this.btnAnexarDespesa.UseAbsoluteTextPositioning = true;
+			this.btnAnexarDespesa.UseCompatibleTextRendering = true;
+			this.btnAnexarDespesa.UseVisualStyleBackColor = false;
+			this.btnAnexarDespesa.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnAnexarDespesa.Click += new System.EventHandler(this.btnAnexarDespesa_Click);
 			// 
 			// btnInsertAutorizante
 			// 
@@ -603,12 +588,123 @@
 			this.btnInsertAutorizante.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnInsertAutorizante.Click += new System.EventHandler(this.btnInsertAutorizante_Click);
 			// 
+			// btnInserirDespesa
+			// 
+			this.btnInserirDespesa.AllowAnimations = true;
+			this.btnInserirDespesa.BackColor = System.Drawing.Color.Transparent;
+			this.btnInserirDespesa.Enabled = false;
+			this.btnInserirDespesa.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnInserirDespesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnInserirDespesa.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.btnInserirDespesa.ImageAbsolutePosition = new System.Drawing.Point(11, 6);
+			this.btnInserirDespesa.Location = new System.Drawing.Point(213, 561);
+			this.btnInserirDespesa.Name = "btnInserirDespesa";
+			this.btnInserirDespesa.RoundedCornersMask = ((byte)(15));
+			this.btnInserirDespesa.RoundedCornersRadius = 0;
+			this.btnInserirDespesa.Size = new System.Drawing.Size(162, 35);
+			this.btnInserirDespesa.TabIndex = 52;
+			this.btnInserirDespesa.Text = "Inserir Despesa";
+			this.btnInserirDespesa.TextAbsolutePosition = new System.Drawing.Point(25, 5);
+			this.btnInserirDespesa.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnInserirDespesa.UseAbsoluteImagePositioning = true;
+			this.btnInserirDespesa.UseAbsoluteTextPositioning = true;
+			this.btnInserirDespesa.UseCompatibleTextRendering = true;
+			this.btnInserirDespesa.UseVisualStyleBackColor = false;
+			this.btnInserirDespesa.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnInserirDespesa.Click += new System.EventHandler(this.btnInserirDespesa_Click);
+			// 
+			// txtValorProvisorio
+			// 
+			this.txtValorProvisorio.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValorProvisorio.Inteiro = false;
+			this.txtValorProvisorio.Location = new System.Drawing.Point(335, 313);
+			this.txtValorProvisorio.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtValorProvisorio.Moeda = false;
+			this.txtValorProvisorio.Name = "txtValorProvisorio";
+			this.txtValorProvisorio.Positivo = true;
+			this.txtValorProvisorio.Size = new System.Drawing.Size(145, 31);
+			this.txtValorProvisorio.TabIndex = 35;
+			this.txtValorProvisorio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// btnFinalizar
+			// 
+			this.btnFinalizar.AllowAnimations = true;
+			this.btnFinalizar.BackColor = System.Drawing.Color.Transparent;
+			this.btnFinalizar.Enabled = false;
+			this.btnFinalizar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnFinalizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnFinalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnFinalizar.ImageAbsolutePosition = new System.Drawing.Point(10, 5);
+			this.btnFinalizar.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+			this.btnFinalizar.Location = new System.Drawing.Point(473, 561);
+			this.btnFinalizar.Name = "btnFinalizar";
+			this.btnFinalizar.RoundedCornersMask = ((byte)(15));
+			this.btnFinalizar.RoundedCornersRadius = 0;
+			this.btnFinalizar.Size = new System.Drawing.Size(180, 35);
+			this.btnFinalizar.TabIndex = 53;
+			this.btnFinalizar.Text = "Finalizar Provisória";
+			this.btnFinalizar.TextAbsolutePosition = new System.Drawing.Point(25, 5);
+			this.btnFinalizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnFinalizar.UseAbsoluteImagePositioning = true;
+			this.btnFinalizar.UseAbsoluteTextPositioning = true;
+			this.btnFinalizar.UseCompatibleTextRendering = true;
+			this.btnFinalizar.UseVisualStyleBackColor = false;
+			this.btnFinalizar.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			// 
+			// mnuOperacoes
+			// 
+			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuItemAnexar,
+            this.mnuItemDesvincular,
+            this.mnuItemInserir});
+			this.mnuOperacoes.Name = "mnuOperacoes";
+			this.mnuOperacoes.Size = new System.Drawing.Size(224, 82);
+			// 
+			// mnuItemAnexar
+			// 
+			this.mnuItemAnexar.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.mnuItemAnexar.Name = "mnuItemAnexar";
+			this.mnuItemAnexar.Size = new System.Drawing.Size(223, 26);
+			this.mnuItemAnexar.Text = "Anexar Despesa";
+			this.mnuItemAnexar.Click += new System.EventHandler(this.mnuItemAnexar_Click);
+			// 
+			// mnuItemDesvincular
+			// 
+			this.mnuItemDesvincular.Image = global::CamadaUI.Properties.Resources.delete_16;
+			this.mnuItemDesvincular.Name = "mnuItemDesvincular";
+			this.mnuItemDesvincular.Size = new System.Drawing.Size(223, 26);
+			this.mnuItemDesvincular.Text = "Desvincular Despesa";
+			this.mnuItemDesvincular.Click += new System.EventHandler(this.mnuItemDesvincular_Click);
+			// 
+			// mnuItemInserir
+			// 
+			this.mnuItemInserir.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.mnuItemInserir.Name = "mnuItemInserir";
+			this.mnuItemInserir.Size = new System.Drawing.Size(223, 26);
+			this.mnuItemInserir.Text = "Inserir Despesa";
+			this.mnuItemInserir.Click += new System.EventHandler(this.mnuItemInserir_Click);
+			// 
+			// btnRecibo
+			// 
+			this.btnRecibo.Image = global::CamadaUI.Properties.Resources.imprimir_24;
+			this.btnRecibo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnRecibo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnRecibo.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
+			this.btnRecibo.Name = "btnRecibo";
+			this.btnRecibo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnRecibo.Size = new System.Drawing.Size(91, 41);
+			this.btnRecibo.Text = "&Recibo";
+			this.btnRecibo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnRecibo.Click += new System.EventHandler(this.btnRecibo_Click);
+			// 
 			// frmProvisorio
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(693, 652);
-			this.Controls.Add(this.btnConcluir);
+			this.Controls.Add(this.btnFinalizar);
 			this.Controls.Add(this.btnInserirDespesa);
+			this.Controls.Add(this.btnAnexarDespesa);
 			this.Controls.Add(this.line2);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.dgvListagem);
@@ -665,13 +761,15 @@
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.line2, 0);
+			this.Controls.SetChildIndex(this.btnAnexarDespesa, 0);
 			this.Controls.SetChildIndex(this.btnInserirDespesa, 0);
-			this.Controls.SetChildIndex(this.btnConcluir, 0);
+			this.Controls.SetChildIndex(this.btnFinalizar, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
+			this.mnuOperacoes.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -709,12 +807,18 @@
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		private AwesomeShapeControl.Line line2;
 		internal System.Windows.Forms.Label label6;
-		internal VIBlend.WinForms.Controls.vButton btnInserirDespesa;
-		internal VIBlend.WinForms.Controls.vButton btnConcluir;
+		internal VIBlend.WinForms.Controls.vButton btnAnexarDespesa;
 		internal VIBlend.WinForms.Controls.vButton btnInsertAutorizante;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnDespesaData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
+		internal VIBlend.WinForms.Controls.vButton btnInserirDespesa;
+		internal VIBlend.WinForms.Controls.vButton btnFinalizar;
+		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemAnexar;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemDesvincular;
+		private System.Windows.Forms.ToolStripButton btnRecibo;
 	}
 }

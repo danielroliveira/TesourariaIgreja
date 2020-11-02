@@ -3,7 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Net;
+using System.Data.SqlClient;
 
 namespace CamadaBLL
 {
@@ -55,7 +55,7 @@ namespace CamadaBLL
 			int? IDConta = null,
 			int? IDSetor = null,
 			DateTime? dataInicial = null,
-			DateTime? dataFinal = null, 
+			DateTime? dataFinal = null,
 			bool? Concluida = null)
 		{
 			try
@@ -143,7 +143,7 @@ namespace CamadaBLL
 				ValorProvisorio = (decimal)row["ValorProvisorio"],
 				RetiradaData = (DateTime)row["RetiradaData"],
 				Comprador = (string)row["Comprador"],
-				DevolucaoData = row["DevolucaoData"] == DBNull.Value ? null : (DateTime?)row["DevolucaoData"] ,
+				DevolucaoData = row["DevolucaoData"] == DBNull.Value ? null : (DateTime?)row["DevolucaoData"],
 				ValorRealizado = row["ValorRealizado"] == DBNull.Value ? null : (decimal?)row["ValorRealizado"],
 				IDConta = (int)row["IDConta"],
 				Conta = (string)row["Conta"],
@@ -200,12 +200,10 @@ namespace CamadaBLL
 
 		// UPDATE DESPESA PROVISORIA
 		//------------------------------------------------------------------------------------------------------------
-		public void UpdateDespesaProvisoria(objDespesaProvisoria desp)
+		public void UpdateDespesaProvisoria(objDespesaProvisoria desp, AcessoDados dbTran)
 		{
 			try
 			{
-				AcessoDados dbTran = new AcessoDados();
-
 				//--- clear Params
 				dbTran.LimparParametros();
 
@@ -246,7 +244,7 @@ namespace CamadaBLL
 				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				string query = "SELECT * FROM qryDespesaComum ";
-				
+
 				// add params
 				db.LimparParametros();
 
@@ -318,5 +316,109 @@ namespace CamadaBLL
 			}
 		}
 
+		// ATTACH DESPESA TO PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		public void AttachDespesaToProvisoria(objDespesaProvisoria Provisorio, objDespesa Despesa)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- limpar parametros
+				db.LimparParametros();
+				db.AdicionarParametros("@IDProvisorio", Provisorio.IDProvisorio);
+				db.AdicionarParametros("@IDDespesa", Despesa.IDDespesa);
+
+				//--- execute insert tblDespesaProvisoriaRealizado
+				string query = "INSERT INTO tblDespesaProvisoriaRealizado " +
+					"(IDProvisorio, IDDespesa) " +
+					"VALUES (@IDProvisorio, @IDDespesa);";
+
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- execute Update Desepesa Provisoria
+				Provisorio.ValorRealizado = Provisorio.ValorRealizado == null ? Despesa.DespesaValor : Provisorio.ValorRealizado + Despesa.DespesaValor;
+				Provisorio.EndEdit();
+
+				UpdateDespesaProvisoria(Provisorio, db);
+
+				//--- commit
+				db.CommitTransaction();
+			}
+			catch (SqlException ex)
+			{
+				db.RollBackTransaction();
+
+				if (ex.Number == 2627)
+				{
+					throw new AppException("Já existe um Vínculo criado entre a Despesa Provisória com a Despesa Escolhida...");
+				}
+				else
+				{
+					throw ex;
+				}
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// DETTACH DESPESA TO PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		public void DettachDespesaToProvisoria(objDespesaProvisoria Provisorio, objDespesa Despesa)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- limpar parametros
+				db.LimparParametros();
+				db.AdicionarParametros("@IDProvisorio", Provisorio.IDProvisorio);
+				db.AdicionarParametros("@IDDespesa", Despesa.IDDespesa);
+
+				//--- execute insert tblDespesaProvisoriaRealizado
+				string query = "DELETE tblDespesaProvisoriaRealizado " +
+					"WHERE IDProvisorio = @IDProvisorio AND IDDespesa = @IDDespesa";
+
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- execute Update Desepesa Provisoria
+				Provisorio.Concluida = false;
+				Provisorio.DevolucaoData = null;
+				Provisorio.ValorRealizado -= Despesa.DespesaValor;
+				Provisorio.EndEdit();
+
+				UpdateDespesaProvisoria(Provisorio, db);
+
+				//--- commit
+				db.CommitTransaction();
+			}
+			catch (SqlException ex)
+			{
+				db.RollBackTransaction();
+
+				if (ex.Number == 2627)
+				{
+					throw new AppException("Já existe um Vínculo criado entre a Despesa Provisória com a Despesa Escolhida...");
+				}
+				else
+				{
+					throw ex;
+				}
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
 	}
 }

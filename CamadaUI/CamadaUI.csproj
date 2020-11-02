@@ -631,6 +631,12 @@
     <Compile Include="Saidas\frmTitularProcura.designer.cs">
       <DependentUpon>frmTitularProcura.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\Reports\frmProvisorioReciboReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\Reports\frmProvisorioReciboReport.designer.cs">
+      <DependentUpon>frmProvisorioReciboReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setores\frmSetor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -946,6 +952,10 @@
     <EmbeddedResource Include="Saidas\frmTitularProcura.resx">
       <DependentUpon>frmTitularProcura.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\Reports\frmProvisorioReciboReport.resx">
+      <DependentUpon>frmProvisorioReciboReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\Reports\rptProvisorioRecibo.rdlc" />
     <EmbeddedResource Include="Setores\frmSetor.resx">
       <DependentUpon>frmSetor.cs</DependentUpon>
     </EmbeddedResource>

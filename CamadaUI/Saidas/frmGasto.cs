@@ -16,7 +16,7 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmGasto : CamadaUI.Modals.frmModFinBorder
 	{
-		private objDespesa _despesa;
+		public objDespesa propDespesa;
 		private objAPagar _pagar;
 		private objMovimentacao _saida;
 		private DespesaBLL despBLL = new DespesaBLL();
@@ -31,6 +31,7 @@ namespace CamadaUI.Saidas
 		private objConta ContaSelected;
 
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
+		private Form _formOrigem = null;
 
 		#region SUB NEW | CONSTRUCTOR | PROPERTIES
 
@@ -45,7 +46,7 @@ namespace CamadaUI.Saidas
 			object dbTran = acesso.GetNewAcessoWithTransaction();
 
 			// set DESPESA
-			_despesa = despesa;
+			propDespesa = despesa;
 
 			// GET DATA
 			if (despesa.IDDespesa != null)
@@ -57,6 +58,12 @@ namespace CamadaUI.Saidas
 			{
 				_pagar = new objAPagar(null);
 				_saida = new objMovimentacao(null);
+
+				if (Application.OpenForms.OfType<frmProvisorio>().Count() == 1)
+				{
+					_formOrigem = Application.OpenForms.OfType<frmProvisorio>().First();
+					_formOrigem.Visible = false;
+				}
 			}
 
 			GetFormasList(dbTran);
@@ -94,7 +101,7 @@ namespace CamadaUI.Saidas
 
 			if (despesa != null)
 			{
-				_despesa = despesa;
+				propDespesa = despesa;
 				GetAPagar(dbTran);
 				GetSaida(dbTran);
 			}
@@ -141,15 +148,15 @@ namespace CamadaUI.Saidas
 
 			// binding
 			bindDespesa.DataSource = typeof(objDespesa);
-			bindDespesa.Add(_despesa);
+			bindDespesa.Add(propDespesa);
 			bindPagar.DataSource = typeof(objAPagar);
 			bindPagar.Add(_pagar);
 			BindingCreator();
 
-			if (_despesa.IDDespesa == null)
+			if (propDespesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
-				_despesa.DespesaData = DataPadrao();
+				propDespesa.DespesaData = DataPadrao();
 			}
 			else
 			{
@@ -157,7 +164,7 @@ namespace CamadaUI.Saidas
 			}
 
 			// handlers
-			_despesa.PropertyChanged += RegistroAlterado;
+			propDespesa.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
 		}
 
@@ -165,7 +172,7 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void frmGasto_Shown(object sender, EventArgs e)
 		{
-			if (_despesa == null)
+			if (propDespesa == null)
 			{
 				Close();
 				return;
@@ -215,8 +222,8 @@ namespace CamadaUI.Saidas
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
 					// define MaxDate of Data da Despesa
-					dtpDespesaData.MaxDate = _despesa.DespesaData;
-					dtpDespesaData.MinDate = _despesa.DespesaData;
+					dtpDespesaData.MaxDate = propDespesa.DespesaData;
+					dtpDespesaData.MinDate = propDespesa.DespesaData;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -248,9 +255,9 @@ namespace CamadaUI.Saidas
 		{
 			SetorSelected = setor;
 			txtSetor.Text = SetorSelected.Setor;
-			_despesa.IDSituacao = 2; // quitada
-			_despesa.IDSetor = (int)SetorSelected.IDSetor;
-			_despesa.Setor = SetorSelected.Setor;
+			propDespesa.IDSituacao = 2; // quitada
+			propDespesa.IDSetor = (int)SetorSelected.IDSetor;
+			propDespesa.Setor = SetorSelected.Setor;
 			_pagar.IDSetor = (int)setor.IDSetor;
 			_pagar.Setor = setor.Setor;
 			_saida.IDSetor = (int)setor.IDSetor;
@@ -339,7 +346,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				//--- GET
-				_pagar = new APagarBLL().GetListAPagarByDespesa((long)_despesa.IDDespesa, dbTran)[0];
+				_pagar = new APagarBLL().GetListAPagarByDespesa((long)propDespesa.IDDespesa, dbTran)[0];
 			}
 			catch (Exception ex)
 			{
@@ -464,7 +471,7 @@ namespace CamadaUI.Saidas
 
 		private void FormatNomeCNP(object sender, ConvertEventArgs e)
 		{
-			e.Value = string.IsNullOrEmpty(_despesa.CNP) ? e.Value : $"{e.Value} ({_despesa.CNP})";
+			e.Value = string.IsNullOrEmpty(propDespesa.CNP) ? e.Value : $"{e.Value} ({propDespesa.CNP})";
 		}
 
 		#endregion // DATABINDING --- END
@@ -482,11 +489,11 @@ namespace CamadaUI.Saidas
 
 			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
-			_despesa = new objDespesa(null);
+			propDespesa = new objDespesa(null);
 			_pagar = new objAPagar(null);
 			_saida = new objMovimentacao(null);
 
-			bindDespesa.DataSource = _despesa;
+			bindDespesa.DataSource = propDespesa;
 			bindPagar.DataSource = _pagar;
 			DefineConta(ContaPadrao());
 			DefineSetor(SetorPadrao());
@@ -505,8 +512,7 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			Close();
-			MostraMenuPrincipal();
+			CloseAndMostraMenu(false);
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
@@ -518,8 +524,7 @@ namespace CamadaUI.Saidas
 
 				if (response == DialogResult.Yes)
 				{
-					Close();
-					MostraMenuPrincipal();
+					CloseAndMostraMenu(false);
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -532,6 +537,20 @@ namespace CamadaUI.Saidas
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+		}
+
+		private void CloseAndMostraMenu(bool saved)
+		{
+			if (_formOrigem != null)
+			{
+				DialogResult = saved ? DialogResult.OK : DialogResult.Cancel;
+				_formOrigem.Visible = true;
+			}
+			else
+			{
+				Close();
+				MostraMenuPrincipal();
+			}
 		}
 
 		#endregion // BUTTONS --- END
@@ -581,13 +600,13 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmSetorProcura frm = new frmSetorProcura(this, _despesa.IDSetor);
+				frmSetorProcura frm = new frmSetorProcura(this, propDespesa.IDSetor);
 				frm.ShowDialog();
 
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDSetor != frm.propEscolha.IDSetor)
+					if (Sit != EnumFlagEstado.NovoRegistro && propDespesa.IDSetor != frm.propEscolha.IDSetor)
 						Sit = EnumFlagEstado.Alterado;
 
 					DefineSetor(frm.propEscolha);
@@ -617,10 +636,10 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
 			{
-				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frm.propEscolha.IDCredor)
+				if (Sit != EnumFlagEstado.NovoRegistro && propDespesa.IDCredor != frm.propEscolha.IDCredor)
 					Sit = EnumFlagEstado.Alterado;
 
-				_despesa.IDCredor = (int)frm.propEscolha.IDCredor;
+				propDespesa.IDCredor = (int)frm.propEscolha.IDCredor;
 				txtCredor.Text = frm.propEscolha.Credor;
 			}
 			else if (frm.DialogResult == DialogResult.Yes) // ADD NEW CONTRIBUINTE
@@ -630,10 +649,10 @@ namespace CamadaUI.Saidas
 
 				if (frmNovo.DialogResult == DialogResult.OK)
 				{
-					if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frmNovo.propEscolha.IDCredor)
+					if (Sit != EnumFlagEstado.NovoRegistro && propDespesa.IDCredor != frmNovo.propEscolha.IDCredor)
 						Sit = EnumFlagEstado.Alterado;
 
-					_despesa.IDCredor = (int)frmNovo.propEscolha.IDCredor;
+					propDespesa.IDCredor = (int)frmNovo.propEscolha.IDCredor;
 					txtCredor.Text = frmNovo.propEscolha.Credor;
 				}
 			}
@@ -645,16 +664,16 @@ namespace CamadaUI.Saidas
 
 		private void btnSetDespesaTipo_Click(object sender, EventArgs e)
 		{
-			frmDespesaTipoProcura frm = new frmDespesaTipoProcura(this, _despesa.IDDespesaTipo == 0 ? null : (int?)_despesa.IDDespesaTipo);
+			frmDespesaTipoProcura frm = new frmDespesaTipoProcura(this, propDespesa.IDDespesaTipo == 0 ? null : (int?)propDespesa.IDDespesaTipo);
 			frm.ShowDialog();
 
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
 			{
-				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frm.propEscolha.IDDespesaTipo)
+				if (Sit != EnumFlagEstado.NovoRegistro && propDespesa.IDCredor != frm.propEscolha.IDDespesaTipo)
 					Sit = EnumFlagEstado.Alterado;
 
-				_despesa.IDDespesaTipo = (int)frm.propEscolha.IDDespesaTipo;
+				propDespesa.IDDespesaTipo = (int)frm.propEscolha.IDDespesaTipo;
 				txtDespesaTipo.Text = frm.propEscolha.DespesaTipo;
 			}
 
@@ -677,7 +696,7 @@ namespace CamadaUI.Saidas
 
 			var dic = listDocTipos.ToDictionary(x => (int)x.IDDocumentoTipo, x => x.DocumentoTipo);
 
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _despesa.IDDocumentoTipo);
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, propDespesa.IDDocumentoTipo);
 
 			// show form
 			frm.ShowDialog();
@@ -685,7 +704,7 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_despesa.IDDocumentoTipo = (byte)frm.propEscolha.Key;
+				propDespesa.IDDocumentoTipo = (byte)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 
@@ -757,18 +776,18 @@ namespace CamadaUI.Saidas
 
 		private void btnSetTitular_Click(object sender, EventArgs e)
 		{
-			frmTitularProcura frm = new frmTitularProcura(this, _despesa.IDTitular);
+			frmTitularProcura frm = new frmTitularProcura(this, propDespesa.IDTitular);
 			frm.ShowDialog();
 
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK) // SEARCH TITULAR
 			{
-				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDTitular != frm.propEscolha.IDTitular)
+				if (Sit != EnumFlagEstado.NovoRegistro && propDespesa.IDTitular != frm.propEscolha.IDTitular)
 					Sit = EnumFlagEstado.Alterado;
 
-				_despesa.IDTitular = (int)frm.propEscolha.IDTitular;
-				_despesa.Titular = frm.propEscolha.Titular;
-				_despesa.CNP = frm.propEscolha.CNP;
+				propDespesa.IDTitular = (int)frm.propEscolha.IDTitular;
+				propDespesa.Titular = frm.propEscolha.Titular;
+				propDespesa.CNP = frm.propEscolha.CNP;
 				txtTitular.Text = frm.propEscolha.Titular;
 			}
 
@@ -896,9 +915,9 @@ namespace CamadaUI.Saidas
 				{
 					case "txtTitular":
 						e.Handled = false;
-						_despesa.Titular = string.Empty;
-						_despesa.CNP = string.Empty;
-						_despesa.IDTitular = null;
+						propDespesa.Titular = string.Empty;
+						propDespesa.CNP = string.Empty;
+						propDespesa.IDTitular = null;
 						txtTitular.Clear();
 						break;
 					case "txtBanco":
@@ -978,11 +997,11 @@ namespace CamadaUI.Saidas
 
 							if (tipo == null) return;
 
-							if (tipo.IDDocumentoTipo != _despesa.IDDocumentoTipo)
+							if (tipo.IDDocumentoTipo != propDespesa.IDDocumentoTipo)
 							{
 								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
-								_despesa.IDDocumentoTipo = (byte)tipo.IDDocumentoTipo;
+								propDespesa.IDDocumentoTipo = (byte)tipo.IDDocumentoTipo;
 								txtDocumentoTipo.Text = tipo.DocumentoTipo;
 							}
 						}
@@ -1025,18 +1044,18 @@ namespace CamadaUI.Saidas
 		{
 			// Oferta: TIPO de DESPESA + CREDOR
 
-			if (string.IsNullOrEmpty(_despesa.DespesaTipo))
+			if (string.IsNullOrEmpty(propDespesa.DespesaTipo))
 			{
 				AbrirDialog("Favor definir o Tipo de Despesa...", "Tipo de Despesa");
 				txtDespesaTipo.Focus();
 				return;
 			}
 
-			string descricao = _despesa.DespesaTipo;
+			string descricao = propDespesa.DespesaTipo;
 
-			if (!string.IsNullOrEmpty(_despesa.Credor))
+			if (!string.IsNullOrEmpty(propDespesa.Credor))
 			{
-				descricao += " - " + _despesa.Credor;
+				descricao += " - " + propDespesa.Credor;
 
 				// define text
 				txtDespesaDescricao.Text = descricao;
@@ -1084,7 +1103,7 @@ namespace CamadaUI.Saidas
 		{
 			decimal desconto = decimal.Parse(string.IsNullOrEmpty(txtDesconto.Text) ? "0" : txtDesconto.Text, NumberStyles.Currency, new CultureInfo("pt-BR"));
 			decimal acrescimo = decimal.Parse(string.IsNullOrEmpty(txtAcrescimo.Text) ? "0" : txtAcrescimo.Text, NumberStyles.Currency, new CultureInfo("pt-BR"));
-			lblValorAPagar.Text = (_despesa.DespesaValor - desconto + acrescimo).ToString("c");
+			lblValorAPagar.Text = (propDespesa.DespesaValor - desconto + acrescimo).ToString("c");
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END
@@ -1136,8 +1155,8 @@ namespace CamadaUI.Saidas
 				//--- INSERT Despesa REALIZADA
 				DefineAPagar();
 				if (!DefineSaida()) return;
-				long newID = despBLL.InsertDespesaRealizada(_despesa, _pagar, _saida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
-				_despesa.IDDespesa = newID;
+				long newID = despBLL.InsertDespesaRealizada(propDespesa, _pagar, _saida, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+				propDespesa.IDDespesa = newID;
 				bindDespesa.EndEdit();
 				bindDespesa.ResetBindings(false);
 
@@ -1151,6 +1170,12 @@ namespace CamadaUI.Saidas
 				if (resp == DialogResult.Yes)
 				{
 					InserirImagem();
+				}
+
+				//--- close form if formOrigem = frmProvisorio
+				if (_formOrigem != null)
+				{
+					CloseAndMostraMenu(true);
 				}
 
 			}
@@ -1170,16 +1195,16 @@ namespace CamadaUI.Saidas
 		private bool VerificaRegistro()
 		{
 			// CHECK FIELDS
-			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtCredor, "Credor/Fornecedor", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDespesaTipo, "Tipo de Despesa", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDocumentoTipo, "Tipo de Documento", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDocumentoNumero, "Número do Documento", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
+			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", propDespesa, EP)) return false;
+			if (!VerificaDadosClasse(txtCredor, "Credor/Fornecedor", propDespesa, EP)) return false;
+			if (!VerificaDadosClasse(txtDespesaTipo, "Tipo de Despesa", propDespesa, EP)) return false;
+			if (!VerificaDadosClasse(txtDocumentoTipo, "Tipo de Documento", propDespesa, EP)) return false;
+			if (!VerificaDadosClasse(txtDocumentoNumero, "Número do Documento", propDespesa, EP)) return false;
+			if (!VerificaDadosClasse(txtDespesaDescricao, "Descrição da Despesa", propDespesa, EP)) return false;
 			if (!VerificaDadosClasse(txtCobrancaForma, "Forma de Cobranca", _pagar, EP)) return false;
 
 			// CHECK VALUE
-			if (_despesa.DespesaValor <= 0)
+			if (propDespesa.DespesaValor <= 0)
 			{
 				AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +
 					"Favor inserir o valor desta despesa corretamente.", "Valor da Despesa",
@@ -1196,17 +1221,17 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineAPagar()
 		{
-			_pagar.APagarValor = _despesa.DespesaValor;
-			_pagar.IDCredor = _despesa.IDCredor;
-			_pagar.Identificador = _despesa.DocumentoNumero;
-			_pagar.IDSetor = _despesa.IDSetor;
+			_pagar.APagarValor = propDespesa.DespesaValor;
+			_pagar.IDCredor = propDespesa.IDCredor;
+			_pagar.Identificador = propDespesa.DocumentoNumero;
+			_pagar.IDSetor = propDespesa.IDSetor;
 			_pagar.IDSituacao = 2;
-			_pagar.PagamentoData = _despesa.DespesaData;
+			_pagar.PagamentoData = propDespesa.DespesaData;
 			_pagar.Parcela = 1;
 			_pagar.Prioridade = 3;
 			_pagar.Situacao = "Quitado";
-			_pagar.ValorPago = _despesa.DespesaValor - _pagar.ValorDesconto;
-			_pagar.Vencimento = _despesa.DespesaData;
+			_pagar.ValorPago = propDespesa.DespesaValor - _pagar.ValorDesconto;
+			_pagar.Vencimento = propDespesa.DespesaData;
 		}
 
 		// DEFINE SAIDA TO SAVE
@@ -1220,7 +1245,7 @@ namespace CamadaUI.Saidas
 			_saida.IDCaixa = null;
 			_saida.Origem = EnumMovOrigem.APagar;
 			_saida.Observacao = txtObservacao.Text;
-			_saida.MovData = _despesa.DespesaData;
+			_saida.MovData = propDespesa.DespesaData;
 			_saida.MovValor = _pagar.ValorPago + _pagar.ValorAcrescimo;
 
 			// check acrescimo
@@ -1258,26 +1283,26 @@ namespace CamadaUI.Saidas
 
 				objImagem imagem = new objImagem()
 				{
-					IDOrigem = (long)_despesa.IDDespesa,
+					IDOrigem = (long)propDespesa.IDDespesa,
 					Origem = EnumImagemOrigem.Despesa,
-					ImagemFileName = _despesa.Imagem == null ? string.Empty : _despesa.Imagem.ImagemFileName,
-					ImagemPath = _despesa.Imagem == null ? string.Empty : _despesa.Imagem.ImagemPath,
-					ReferenceDate = _despesa.DespesaData,
+					ImagemFileName = propDespesa.Imagem == null ? string.Empty : propDespesa.Imagem.ImagemFileName,
+					ImagemPath = propDespesa.Imagem == null ? string.Empty : propDespesa.Imagem.ImagemPath,
+					ReferenceDate = propDespesa.DespesaData,
 				};
 
 				// open form to edit or save image
-				bool IsNew = _despesa.Imagem == null || string.IsNullOrEmpty(_despesa.Imagem.ImagemPath);
+				bool IsNew = propDespesa.Imagem == null || string.IsNullOrEmpty(propDespesa.Imagem.ImagemPath);
 				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
 
 				// check if isUpdated
 				bool IsUpdated = false;
-				if (_despesa.Imagem != null && imagem != null)
+				if (propDespesa.Imagem != null && imagem != null)
 				{
-					IsUpdated = (_despesa.Imagem.ImagemFileName != imagem.ImagemFileName) || (_despesa.Imagem.ImagemPath != imagem.ImagemPath);
+					IsUpdated = (propDespesa.Imagem.ImagemFileName != imagem.ImagemFileName) || (propDespesa.Imagem.ImagemPath != imagem.ImagemPath);
 				}
 
 				// update imagem object
-				_despesa.Imagem = imagem;
+				propDespesa.Imagem = imagem;
 
 				// emit message
 				if (IsNew && imagem != null)
