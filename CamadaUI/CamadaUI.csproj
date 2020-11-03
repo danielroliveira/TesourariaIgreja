@@ -983,6 +983,8 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CamadaDTO.objAPagar.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCaixa.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDadosIgreja.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDespesaProvisoria.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

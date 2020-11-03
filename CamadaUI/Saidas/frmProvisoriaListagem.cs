@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Saidas.Reports;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -224,6 +225,43 @@ namespace CamadaUI.Saidas
 			frm.Show();
 		}
 
+		private void btnRecibo_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Imprimir o Recibo...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesaProvisoria item = (objDespesaProvisoria)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var frm = new frmProvisorioReciboReport(item);
+				frm.ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir Relatório..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+
+
+
+		}
+
 		#endregion
 
 		#region FILTRAGEM PROCURA
@@ -304,5 +342,6 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
+
 	}
 }

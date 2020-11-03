@@ -37,12 +37,13 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.label3 = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnRetiradaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnFinalidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValorProvisorio = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.label3 = new System.Windows.Forms.Label();
+			this.btnRecibo = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.SuspendLayout();
@@ -74,7 +75,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(691, 495);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
-			this.btnFechar.TabIndex = 8;
+			this.btnFechar.TabIndex = 9;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -85,10 +86,10 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(165, 495);
+			this.btnAdicionar.Location = new System.Drawing.Point(22, 495);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 7;
+			this.btnAdicionar.TabIndex = 6;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -99,10 +100,10 @@
 			// 
 			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(22, 495);
+			this.btnEditar.Location = new System.Drawing.Point(154, 495);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 6;
+			this.btnEditar.TabIndex = 7;
 			this.btnEditar.Text = "&Editar";
 			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -185,15 +186,6 @@
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(395, 70);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(64, 19);
-			this.label3.TabIndex = 1;
-			this.label3.Text = "Situação";
-			// 
 			// clnID
 			// 
 			this.clnID.HeaderText = "Reg.";
@@ -228,6 +220,29 @@
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(395, 70);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(64, 19);
+			this.label3.TabIndex = 3;
+			this.label3.Text = "Situação";
+			// 
+			// btnRecibo
+			// 
+			this.btnRecibo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnRecibo.Image = global::CamadaUI.Properties.Resources.imprimir_24;
+			this.btnRecibo.Location = new System.Drawing.Point(286, 495);
+			this.btnRecibo.Name = "btnRecibo";
+			this.btnRecibo.Size = new System.Drawing.Size(126, 42);
+			this.btnRecibo.TabIndex = 8;
+			this.btnRecibo.Text = "&Recibo";
+			this.btnRecibo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnRecibo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnRecibo.UseVisualStyleBackColor = true;
+			this.btnRecibo.Click += new System.EventHandler(this.btnRecibo_Click);
+			// 
 			// frmProvisoriaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -235,6 +250,7 @@
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnRecibo);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnEditar);
 			this.Controls.Add(this.txtProcura);
@@ -243,15 +259,16 @@
 			this.KeyPreview = true;
 			this.Name = "frmProvisoriaListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProvisoriaListagem_KeyDown);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.Label1, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtProcura, 0);
 			this.Controls.SetChildIndex(this.btnEditar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
+			this.Controls.SetChildIndex(this.btnRecibo, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.ResumeLayout(false);
@@ -274,5 +291,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnFinalidade;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorProvisorio;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
+		internal System.Windows.Forms.Button btnRecibo;
 	}
 }

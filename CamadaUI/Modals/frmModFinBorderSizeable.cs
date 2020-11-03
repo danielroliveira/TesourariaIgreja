@@ -366,6 +366,7 @@ namespace CamadaUI.Modals
 		private void btnClose_Click(object sender, EventArgs e)
 		{
 			Close();
+			Dispose();
 		}
 
 		private void btnMaximizar_Click(object sender, EventArgs e)

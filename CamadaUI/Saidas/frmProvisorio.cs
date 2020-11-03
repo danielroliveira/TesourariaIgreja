@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Saidas.Reports;
 using CamadaUI.Setores;
 using System;
 using System.Collections.Generic;
@@ -124,6 +125,7 @@ namespace CamadaUI.Saidas
 					btnAnexarDespesa.Enabled = false;
 					btnInserirDespesa.Enabled = false;
 					btnFinalizar.Enabled = false;
+					btnRecibo.Enabled = false;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = DateTime.Today;
 					dtpRetiradaData.MinDate = DateTime.Today.AddMonths(-12);
@@ -135,6 +137,7 @@ namespace CamadaUI.Saidas
 					btnAnexarDespesa.Enabled = true;
 					btnInserirDespesa.Enabled = true;
 					btnFinalizar.Enabled = true;
+					btnRecibo.Enabled = true;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
 					dtpRetiradaData.MinDate = _provisoria.RetiradaData;
@@ -397,7 +400,25 @@ namespace CamadaUI.Saidas
 
 		private void btnRecibo_Click(object sender, EventArgs e)
 		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
+				var frm = new frmProvisorioReciboReport(_provisoria);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir Relatório..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion // BUTTONS --- END

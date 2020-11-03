@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.APagar.Reports
+﻿namespace CamadaUI.Saidas.Reports
 {
 	partial class frmProvisorioReciboReport
 	{
@@ -57,9 +57,10 @@
 			// 
 			// rptvPadrao
 			// 
-			this.rptvPadrao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.rptvPadrao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.rptvPadrao.LocalReport.EnableExternalImages = true;
 			this.rptvPadrao.LocalReport.ReportEmbeddedResource = "CamadaUI.Saidas.Reports.rptProvisorioRecibo.rdlc";
 			this.rptvPadrao.Location = new System.Drawing.Point(19, 72);
 			this.rptvPadrao.Margin = new System.Windows.Forms.Padding(10);

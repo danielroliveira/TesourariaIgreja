@@ -5,32 +5,35 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 
-namespace CamadaUI.APagar.Reports
+namespace CamadaUI.Saidas.Reports
 {
 	public partial class frmProvisorioReciboReport : CamadaUI.Modals.frmModFinBorderSizeable
 	{
-		private objDespesaProvisoria _provisoria;
+		//private objDespesaProvisoria _provisoria;
 
 		#region SUB NEW | CONSTRUCTOR
 
-		public frmProvisorioReciboReport(objDespesaProvisoria apagarList, DateTime dtInicial, DateTime dtFinal)
+		public frmProvisorioReciboReport(objDespesaProvisoria provisorio)
 		{
 			InitializeComponent();
 
-			_provisoria = apagarList;
+			//--- Define Data sources
+			var lstProvisoria = new List<objDespesaProvisoria>() { provisorio };
+			ReportDataSource dstProvisorio = new ReportDataSource("dstProvisorio", lstProvisoria);
 
-			ReportDataSource dst = new ReportDataSource("dstProvisorio", _provisoria);
+			objDadosIgreja dadosIgreja = ObterDadosIgreja();
+			var lstDados = new List<objDadosIgreja>() { dadosIgreja };
+			ReportDataSource dstDados = new ReportDataSource("dstDados", lstDados);
 
-			// --- define o relatório
-			// -------------------------------------------------------------
+			CreateReciboTexto(provisorio, dadosIgreja);
+
 			// --- clear dataSources
 			rptvPadrao.LocalReport.DataSources.Clear();
 
-			// --- insert data
-			rptvPadrao.LocalReport.DataSources.Add(dst);
-
-			//--- add Parameters
-			addParameters(dtInicial, dtFinal);
+			// --- insert DataSources
+			rptvPadrao.LocalReport.DataSources.Add(dstProvisorio);
+			rptvPadrao.LocalReport.DataSources.Add(dstDados);
+			addParameters(dadosIgreja.ArquivoLogoMono);
 
 			// -- display
 			rptvPadrao.SetDisplayMode(DisplayMode.PrintLayout);
@@ -52,39 +55,31 @@ namespace CamadaUI.APagar.Reports
 
 		#region PARAMETERS
 
-		private void addParameters(DateTime dtInicial, DateTime dtFinal)
+		private void addParameters(string LogoPath)
 		{
 			List<ReportParameter> @params = new List<ReportParameter>();
 
-			// obter Dados da Igreja
-			objDadosIgreja dadosIgreja = ObterDadosIgreja();
+			rptvPadrao.LocalReport.EnableExternalImages = true;
+			ReportParameter parameterLogo = new ReportParameter("LogoPath", @"file://" + LogoPath);
 
-			//--- set Periodo
-			setPeriodo(dtInicial, dtFinal, @params);
-
-			//--- set Logo Path
-			setLogo(dadosIgreja.ArquivoLogoMono, @params);
+			@params.Add(parameterLogo);
 
 			//--- add Parameters
 			rptvPadrao.LocalReport.SetParameters(@params);
 			rptvPadrao.LocalReport.Refresh();
 		}
 
-		private void setLogo(string path, List<ReportParameter> @params)
+		private void CreateReciboTexto(objDespesaProvisoria provisorio, objDadosIgreja dados)
 		{
-			rptvPadrao.LocalReport.EnableExternalImages = true;
-			ReportParameter parameterLogo = new ReportParameter("LogoPath", @"file://" + path);
+			string Extenso = Utilidades.EscreverExtenso(provisorio.ValorProvisorio);
 
-			@params.Add(parameterLogo);
-		}
+			string texto = $"Eu, {provisorio.Comprador} declaro que recebi da " +
+				$"{(dados.RazaoSocial.Trim().Length == 0 ? "Instituição " : dados.RazaoSocial)} " +
+				$"o valor de {provisorio.ValorProvisorio:C} ({Extenso}) para a seguinte finalidade: {provisorio.Finalidade.ToUpper()}. " +
+				$"Comprometo-me a, após a execução do objetivo fim, apresentar o comprovante, nota fiscal ou recibo " +
+				$"da compra ou do serviço prestado.";
 
-		private void setPeriodo(DateTime dtInicial, DateTime dtFinal, List<ReportParameter> @params)
-		{
-			ReportParameter DataInicial = new ReportParameter("dtInicial", dtInicial.ToShortDateString());
-			ReportParameter DataFinal = new ReportParameter("dtFinal", dtFinal.ToShortDateString());
-
-			@params.Add(DataInicial);
-			@params.Add(DataFinal);
+			provisorio.ReciboTexto = texto;
 		}
 
 		#endregion // PARAMETERS --- END
@@ -94,6 +89,7 @@ namespace CamadaUI.APagar.Reports
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
+			Dispose();
 		}
 
 		#endregion // BUTTONS --- END
