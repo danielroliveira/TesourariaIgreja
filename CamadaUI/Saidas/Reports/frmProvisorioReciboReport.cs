@@ -33,7 +33,7 @@ namespace CamadaUI.Saidas.Reports
 			// --- insert DataSources
 			rptvPadrao.LocalReport.DataSources.Add(dstProvisorio);
 			rptvPadrao.LocalReport.DataSources.Add(dstDados);
-			addParameters(dadosIgreja.ArquivoLogoMono);
+			addParameters(dadosIgreja.ArquivoLogoMono, dadosIgreja.Cidade);
 
 			// -- display
 			rptvPadrao.SetDisplayMode(DisplayMode.PrintLayout);
@@ -55,14 +55,16 @@ namespace CamadaUI.Saidas.Reports
 
 		#region PARAMETERS
 
-		private void addParameters(string LogoPath)
+		private void addParameters(string LogoPath, string Cidade)
 		{
 			List<ReportParameter> @params = new List<ReportParameter>();
 
 			rptvPadrao.LocalReport.EnableExternalImages = true;
 			ReportParameter parameterLogo = new ReportParameter("LogoPath", @"file://" + LogoPath);
+			ReportParameter parameterCidade = new ReportParameter("Cidade", Cidade);
 
 			@params.Add(parameterLogo);
+			@params.Add(parameterCidade);
 
 			//--- add Parameters
 			rptvPadrao.LocalReport.SetParameters(@params);

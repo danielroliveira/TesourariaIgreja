@@ -97,6 +97,7 @@ namespace CamadaDTO
 		public int? IDContribuinte
 		{
 			get => EditData._IDContribuinte;
+			set => EditData._IDContribuinte = value;
 		}
 
 		// Property Contribuinte

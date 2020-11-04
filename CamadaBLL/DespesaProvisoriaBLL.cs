@@ -277,7 +277,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET LIST DESPESA AUTORIZANTES
+		// GET LIST PROVISORIA AUTORIZANTES
 		//------------------------------------------------------------------------------------------------------------
 		public List<string> GetAutorizanteList()
 		{
@@ -291,6 +291,45 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				query += " ORDER BY Autorizante";
+
+				List<string> listagem = new List<string>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				DespesaBLL dBLL = new DespesaBLL();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add((string)row[0]);
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET LIST PROVISORIA COMPRADORES
+		//------------------------------------------------------------------------------------------------------------
+		public List<string> GetCompradorList()
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT Comprador FROM tblDespesaProvisoria GROUP BY Comprador ";
+
+				// add params
+				db.LimparParametros();
+
+				query += " ORDER BY Comprador";
 
 				List<string> listagem = new List<string>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
@@ -420,5 +459,28 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// FINALIZE DESPESA PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		public void FinalizeProvisoria(objDespesaProvisoria Provisorio)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- execute Update Desepesa Provisoria
+				Provisorio.Concluida = true;
+				Provisorio.DevolucaoData = DateTime.Today;
+				Provisorio.EndEdit();
+
+				UpdateDespesaProvisoria(Provisorio, db);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
 	}
 }

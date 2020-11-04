@@ -79,6 +79,10 @@ namespace CamadaUI.Saidas
 				Sit = EnumFlagEstado.NovoRegistro;
 				_provisoria.RetiradaData = DateTime.Today;
 			}
+			else if (_provisoria.Concluida)
+			{
+				Sit = EnumFlagEstado.RegistroBloqueado;
+			}
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
@@ -126,6 +130,7 @@ namespace CamadaUI.Saidas
 					btnInserirDespesa.Enabled = false;
 					btnFinalizar.Enabled = false;
 					btnRecibo.Enabled = false;
+					lblConcluida.Visible = false;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = DateTime.Today;
 					dtpRetiradaData.MinDate = DateTime.Today.AddMonths(-12);
@@ -134,10 +139,11 @@ namespace CamadaUI.Saidas
 				{
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
-					btnAnexarDespesa.Enabled = true;
-					btnInserirDespesa.Enabled = true;
-					btnFinalizar.Enabled = true;
-					btnRecibo.Enabled = true;
+					btnAnexarDespesa.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+					btnInserirDespesa.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+					btnFinalizar.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+					btnRecibo.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+					lblConcluida.Visible = value == EnumFlagEstado.RegistroBloqueado;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
 					dtpRetiradaData.MinDate = _provisoria.RetiradaData;
@@ -541,6 +547,46 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// FINALIZAR CONCLUIR DESPESA PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnFinalizar_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				if (_provisoria.IDProvisorio == null || Sit == EnumFlagEstado.NovoRegistro)
+				{
+					throw new Exception("Essa despesa provisória ainda não foi salva...");
+				}
+
+				var resp = AbrirDialog("A Despesa Provisória será concluída e não poderá ser alterada..." +
+								"\nDeseja realmente FINALIZAR esta despesa provisória?", "Finalizar Provisório",
+								DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp == DialogResult.Yes)
+				{
+					_provisoria.Concluida = true;
+					_provisoria.DevolucaoData = DateTime.Today;
+				}
+
+				despBLL.FinalizeProvisoria(_provisoria);
+				_provisoria.EndEdit();
+				Sit = EnumFlagEstado.RegistroBloqueado;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Finalizar Despesa Provisória..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion // ANEXAR DESPESA --- END
 
 		#region BUTTONS PROCURA
@@ -549,6 +595,8 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnSetConta_Click(object sender, EventArgs e)
 		{
+			if (!btnSetConta.Enabled) return;
+
 			try
 			{
 				// --- Ampulheta ON
@@ -583,6 +631,8 @@ namespace CamadaUI.Saidas
 
 		private void btnSetSetor_Click(object sender, EventArgs e)
 		{
+			if (!btnSetSetor.Enabled) return;
+
 			try
 			{
 				// --- Ampulheta ON
@@ -618,6 +668,8 @@ namespace CamadaUI.Saidas
 
 		private void btnSetAutorizante_Click(object sender, EventArgs e)
 		{
+			if (!btnSetAutorizante.Enabled) return;
+
 			frmProvisorioAutorizante frm = new frmProvisorioAutorizante(this, txtAutorizante.Text);
 			frm.ShowDialog();
 
@@ -638,6 +690,8 @@ namespace CamadaUI.Saidas
 
 		private void btnSetComprador_Click(object sender, EventArgs e)
 		{
+			if (!btnSetComprador.Enabled) return;
+
 			frmProvisorioComprador frm = new frmProvisorioComprador(this, txtComprador.Text);
 			frm.ShowDialog();
 
@@ -755,7 +809,7 @@ namespace CamadaUI.Saidas
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
-			if (Sit == EnumFlagEstado.RegistroSalvo)
+			if (Sit != EnumFlagEstado.NovoRegistro)
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;

@@ -135,7 +135,7 @@ namespace CamadaUI.Registres
 		}
 		private void BindRegistroChanged(object sender, EventArgs e)
 		{
-			MessageBox.Show("alterado");
+			//MessageBox.Show("alterado");
 		}
 
 		// CARREGA COMBO
@@ -328,8 +328,10 @@ namespace CamadaUI.Registres
 				{
 					//--- save | Insert
 					int ID = cBLL.InsertContribuinte(_contribuinte);
+
 					//--- define newID
-					_contribuinte.IDCongregacao = ID;
+					_contribuinte.IDContribuinte = ID;
+					lblID.DataBindings["Text"].ReadValue();
 				}
 				else
 				{
@@ -338,13 +340,15 @@ namespace CamadaUI.Registres
 				}
 
 				//--- change Sit
+				_contribuinte.EndEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
+
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
 
 				//--- Return value
-				if (_formOrigem != null || _formOrigem.GetType() != typeof(frmPrincipal))
+				if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
 				{
 					propEscolha = _contribuinte;
 					DialogResult = DialogResult.OK;

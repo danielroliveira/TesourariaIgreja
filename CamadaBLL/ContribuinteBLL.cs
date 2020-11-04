@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CamadaBLL
 {
@@ -18,8 +17,8 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM qryContribuinte";
-				bool haveWhere = false;
+				string query = "SELECT * FROM qryContribuinte WHERE IDContribuinte > 0 ";
+				bool haveWhere = true;
 
 				// add params
 				db.LimparParametros();
@@ -27,7 +26,7 @@ namespace CamadaBLL
 				if (!string.IsNullOrEmpty(contribuinte))
 				{
 					db.AdicionarParametros("@Contribuinte", contribuinte);
-					query += " WHERE Contribuinte LIKE '%'+@Contribuinte+'%' ";
+					query += " AND Contribuinte LIKE '%'+@Contribuinte+'%' ";
 					haveWhere = true;
 				}
 
@@ -284,11 +283,11 @@ namespace CamadaBLL
 
 				//--- create query
 				query = "UPDATE tblContribuinte SET " +
-					    "Contribuinte = @Contribuinte, NascimentoData = @NascimentoData, " +
-					    "IDMembro = @IDMembro, Dizimista = @Dizimista, TelefoneCelular = @TelefoneCelular, " +
-					    "CNP = @CNP, IDCongregacao = @IDCongregacao, Ativo = @Ativo " +
-					    "WHERE " +
-					    "IDContribuinte = @IDContribuinte";
+						"Contribuinte = @Contribuinte, NascimentoData = @NascimentoData, " +
+						"IDMembro = @IDMembro, Dizimista = @Dizimista, TelefoneCelular = @TelefoneCelular, " +
+						"CNP = @CNP, IDCongregacao = @IDCongregacao, Ativo = @Ativo " +
+						"WHERE " +
+						"IDContribuinte = @IDContribuinte";
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
 

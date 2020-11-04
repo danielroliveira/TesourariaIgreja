@@ -1,15 +1,13 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Congregacoes
 {
@@ -269,7 +267,7 @@ namespace CamadaUI.Congregacoes
 				// mostra o MENU ativar e desativar
 				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objCongregacaoSetor Setor = (objCongregacaoSetor)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objCongregacao Setor = (objCongregacao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 					if (Setor.Ativo == true)
 					{
@@ -294,11 +292,11 @@ namespace CamadaUI.Congregacoes
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objCongregacaoSetor setor = (objCongregacaoSetor)dgvListagem.SelectedRows[0].DataBoundItem;
+			objCongregacao setor = (objCongregacao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
 			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativo ? "DESATIVAR " : "ATIVAR")} esse Setor?\n" +
-									  setor.CongregacaoSetor.ToUpper(), (setor.Ativo ? "DESATIVAR " : "ATIVAR"),
+									  setor.Congregacao.ToUpper(), (setor.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
@@ -312,9 +310,10 @@ namespace CamadaUI.Congregacoes
 				Cursor.Current = Cursors.WaitCursor;
 
 				CongregacaoBLL cBLL = new CongregacaoBLL();
-				cBLL.UpdateCongregacaoSetor(setor);
+				cBLL.UpdateCongregacao(setor);
 
 				//--- altera a imagem
+				ObterDados(sender, e);
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)

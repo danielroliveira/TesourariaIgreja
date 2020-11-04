@@ -1,5 +1,4 @@
 ﻿using CamadaBLL;
-using CamadaDTO;
 using ComponentOwl.BetterListView;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmProvisorioComprador : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<string> lstAutorizante = new List<string>();
+		private List<string> lstComprador = new List<string>();
 		private Form _formOrigem;
 		public string propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
 
@@ -47,7 +46,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				lstAutorizante = new DespesaProvisoriaBLL().GetAutorizanteList();
+				lstComprador = new DespesaProvisoriaBLL().GetCompradorList();
 				PreencheListagem();
 			}
 			catch (Exception ex)
@@ -65,7 +64,7 @@ namespace CamadaUI.Saidas
 
 		private void PreencheListagem()
 		{
-			lstItens.DataSource = lstAutorizante;
+			lstItens.DataSource = lstComprador;
 			FormataListagem();
 		}
 
@@ -182,8 +181,8 @@ namespace CamadaUI.Saidas
 		{
 			if (lstItens.SelectedItems.Count == 0) return null;
 
-			string IDSelected = lstItens.SelectedItems[0].Value.ToString();
-			return lstAutorizante.First(s => s == IDSelected);
+			string IDSelected = lstItens.SelectedItems[0].Text.ToString();
+			return lstComprador.First(s => s == IDSelected);
 		}
 
 		#endregion
@@ -297,11 +296,11 @@ namespace CamadaUI.Saidas
 				Func<string, bool> FiltroItem = c => c.ToLower().Contains(txtProcura.Text.ToLower());
 
 				// aply filter using function
-				lstItens.DataSource = lstAutorizante.FindAll(c => FiltroItem(c));
+				lstItens.DataSource = lstComprador.FindAll(c => FiltroItem(c));
 			}
 			else
 			{
-				lstItens.DataSource = lstAutorizante;
+				lstItens.DataSource = lstComprador;
 			}
 		}
 

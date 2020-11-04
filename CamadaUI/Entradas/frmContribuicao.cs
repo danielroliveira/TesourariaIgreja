@@ -591,6 +591,23 @@ namespace CamadaUI.Entradas
 			// CHECK CONTA BLOCK DATE
 
 
+			// CHECK DESCRICAO
+			if (!VerificaDadosClasse(txtOrigemDescricao, "Descrição da Origem", _contribuicao, EP)) return false;
+
+			if (_contribuicao.OrigemDescricao.Length > 200)
+			{
+				// message
+				AbrirDialog("O Texto da Descrição não pode conter mais do que 200 caracteres...\n" +
+					"Favor preecher esse campo com até 200 caracteres.", "Descrição da Contribuição",
+					DialogType.OK, DialogIcon.Exclamation);
+				// error provider
+				EP.SetError(txtOrigemDescricao, "Máximo de 200 caracteres!");
+				// select
+				txtOrigemDescricao.Focus();
+				// return
+				return false;
+			}
+
 			// check CAMPANHA
 			bool ComCampanha = listTipos.First(x => x.IDContribuicaoTipo == _contribuicao.IDContribuicaoTipo).ComCampanha;
 
@@ -644,9 +661,6 @@ namespace CamadaUI.Entradas
 			{
 				_contribuicao.IDContribuinte = null;
 			}
-
-			// CHECK DESCRICAO
-			if (!VerificaDadosClasse(txtOrigemDescricao, "Descrição da Origem", _contribuicao, EP)) return false;
 
 			return true;
 		}

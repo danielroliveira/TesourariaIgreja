@@ -162,7 +162,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>19.1952cm</Width>
+                  <Width>19.39017cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -173,6 +173,20 @@
                       <CellContents>
                         <Rectangle Name="Rectangle2">
                           <ReportItems>
+                            <Rectangle Name="Rectangle1">
+                              <KeepTogether>true</KeepTogether>
+                              <Top>1.57427cm</Top>
+                              <Left>0.00848cm</Left>
+                              <Height>4.21509cm</Height>
+                              <Width>19.38169cm</Width>
+                              <Style>
+                                <Border>
+                                  <Style>Dashed</Style>
+                                  <Width>0.5pt</Width>
+                                </Border>
+                                <BackgroundColor>Gainsboro</BackgroundColor>
+                              </Style>
+                            </Rectangle>
                             <Textbox Name="ReciboTexto">
                               <CanGrow>true</CanGrow>
                               <CanShrink>true</CanShrink>
@@ -192,10 +206,11 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>ReciboTexto</rd:DefaultName>
-                              <Top>1.88207cm</Top>
-                              <Left>0.07197cm</Left>
+                              <Top>1.72332cm</Top>
+                              <Left>0.29687cm</Left>
                               <Height>2.75635cm</Height>
-                              <Width>19cm</Width>
+                              <Width>18.73959cm</Width>
+                              <ZIndex>1</ZIndex>
                               <Style>
                                 <Border />
                               </Style>
@@ -221,7 +236,7 @@
                               <Left>5.81766cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.57458cm</Width>
-                              <ZIndex>1</ZIndex>
+                              <ZIndex>2</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -237,7 +252,7 @@
                               <Left>5.81766cm</Left>
                               <Height>0cm</Height>
                               <Width>6.57458cm</Width>
-                              <ZIndex>2</ZIndex>
+                              <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -251,7 +266,10 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!RetiradaData.Value</Value>
+                                      <Value>=Parameters!Cidade.Value &amp; ", " 
+&amp; Day(Fields!RetiradaData.Value)
+&amp; " de " &amp; MonthName(Month(Fields!RetiradaData.Value))
+&amp; " de " &amp; Year(Fields!RetiradaData.Value)</Value>
                                       <Style>
                                         <FontFamily>Tahoma</FontFamily>
                                         <FontSize>12pt</FontSize>
@@ -268,8 +286,8 @@
                               <Top>4.93123cm</Top>
                               <Left>11.40354cm</Left>
                               <Height>0.6cm</Height>
-                              <Width>7.79167cm</Width>
-                              <ZIndex>3</ZIndex>
+                              <Width>7.63292cm</Width>
+                              <ZIndex>4</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -301,13 +319,45 @@
                               <Top>0.3175cm</Top>
                               <Left>13.95676cm</Left>
                               <Height>0.76681cm</Height>
-                              <Width>5.07969cm</Width>
-                              <ZIndex>4</ZIndex>
+                              <Width>5.0797cm</Width>
+                              <ZIndex>5</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
                                 </Border>
                                 <rd:FormatSymbolCulture>pt-BR</rd:FormatSymbolCulture>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="RetiradaData3">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!RetiradaData.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontSize>18pt</FontSize>
+                                        <Format>dd/MM/yyyy</Format>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Left</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>RetiradaData</rd:DefaultName>
+                              <Top>0.3175cm</Top>
+                              <Left>0.29687cm</Left>
+                              <Height>0.76681cm</Height>
+                              <Width>3.82292cm</Width>
+                              <ZIndex>6</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
                               </Style>
                             </Textbox>
                           </ReportItems>
@@ -318,6 +368,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -338,9 +389,9 @@
             </TablixRowHierarchy>
             <DataSetName>dstProvisorio</DataSetName>
             <Top>2.181cm</Top>
-            <Left>0.15875cm</Left>
+            <Left>0.15874cm</Left>
             <Height>7.62649cm</Height>
-            <Width>19.1952cm</Width>
+            <Width>19.39017cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -501,7 +552,7 @@
           </Tablix>
           <Line Name="Line2">
             <Top>3.26531cm</Top>
-            <Left>5.25cm</Left>
+            <Left>5.5675cm</Left>
             <Height>0cm</Height>
             <Width>8.09241cm</Width>
             <ZIndex>3</ZIndex>
@@ -558,7 +609,7 @@
               </Paragraph>
             </Paragraphs>
             <Top>2.4985cm</Top>
-            <Left>5.25cm</Left>
+            <Left>5.5675cm</Left>
             <Height>0.83031cm</Height>
             <Width>8.08976cm</Width>
             <ZIndex>6</ZIndex>
@@ -569,7 +620,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>9.80749cm</Height>
+        <Height>10.03239cm</Height>
         <Style />
       </Body>
       <Width>19.54891cm</Width>
@@ -583,11 +634,19 @@
         <TopMargin>0.5cm</TopMargin>
         <BottomMargin>0.5cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
-        <Style />
+        <Style>
+          <Border />
+        </Style>
       </Page>
     </ReportSection>
   </ReportSections>
   <ReportParameters>
+    <ReportParameter Name="Cidade">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
     <ReportParameter Name="LogoPath">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -602,6 +661,11 @@
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Cidade</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>LogoPath</ParameterName>
         </CellDefinition>

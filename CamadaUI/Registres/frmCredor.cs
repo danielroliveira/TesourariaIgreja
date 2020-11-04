@@ -157,7 +157,7 @@ namespace CamadaUI.Registres
 		}
 		private void BindRegistroChanged(object sender, EventArgs e)
 		{
-			MessageBox.Show("alterado");
+			//MessageBox.Show("alterado");
 		}
 
 		#endregion
@@ -311,8 +311,11 @@ namespace CamadaUI.Registres
 				{
 					//--- save | Insert
 					int ID = cBLL.InsertCredor(_credor);
+
 					//--- define newID
 					_credor.IDCredor = ID;
+					lblID.DataBindings["Text"].ReadValue();
+
 				}
 				else //--- update
 				{
@@ -320,7 +323,9 @@ namespace CamadaUI.Registres
 				}
 
 				//--- change Sit
+				_credor.EndEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
+
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);

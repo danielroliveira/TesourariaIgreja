@@ -38,6 +38,7 @@
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnRecibo = new System.Windows.Forms.ToolStripButton();
 			this.txtFinalidade = new System.Windows.Forms.TextBox();
 			this.lblFin = new System.Windows.Forms.Label();
 			this.dtpRetiradaData = new System.Windows.Forms.DateTimePicker();
@@ -73,7 +74,7 @@
 			this.mnuItemAnexar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemDesvincular = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemInserir = new System.Windows.Forms.ToolStripMenuItem();
-			this.btnRecibo = new System.Windows.Forms.ToolStripButton();
+			this.lblConcluida = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
@@ -195,6 +196,19 @@
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
+			// 
+			// btnRecibo
+			// 
+			this.btnRecibo.Image = global::CamadaUI.Properties.Resources.imprimir_24;
+			this.btnRecibo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnRecibo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnRecibo.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
+			this.btnRecibo.Name = "btnRecibo";
+			this.btnRecibo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnRecibo.Size = new System.Drawing.Size(91, 41);
+			this.btnRecibo.Text = "&Recibo";
+			this.btnRecibo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnRecibo.Click += new System.EventHandler(this.btnRecibo_Click);
 			// 
 			// txtFinalidade
 			// 
@@ -650,6 +664,7 @@
 			this.btnFinalizar.UseCompatibleTextRendering = true;
 			this.btnFinalizar.UseVisualStyleBackColor = false;
 			this.btnFinalizar.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnFinalizar.Click += new System.EventHandler(this.btnFinalizar_Click);
 			// 
 			// mnuOperacoes
 			// 
@@ -685,23 +700,24 @@
 			this.mnuItemInserir.Text = "Inserir Despesa";
 			this.mnuItemInserir.Click += new System.EventHandler(this.mnuItemInserir_Click);
 			// 
-			// btnRecibo
+			// lblConcluida
 			// 
-			this.btnRecibo.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnRecibo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnRecibo.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnRecibo.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
-			this.btnRecibo.Name = "btnRecibo";
-			this.btnRecibo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnRecibo.Size = new System.Drawing.Size(91, 41);
-			this.btnRecibo.Text = "&Recibo";
-			this.btnRecibo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnRecibo.Click += new System.EventHandler(this.btnRecibo_Click);
+			this.lblConcluida.AutoSize = true;
+			this.lblConcluida.BackColor = System.Drawing.Color.AntiqueWhite;
+			this.lblConcluida.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblConcluida.ForeColor = System.Drawing.Color.DarkRed;
+			this.lblConcluida.Location = new System.Drawing.Point(434, 614);
+			this.lblConcluida.Name = "lblConcluida";
+			this.lblConcluida.Size = new System.Drawing.Size(144, 29);
+			this.lblConcluida.TabIndex = 54;
+			this.lblConcluida.Text = "CONCLUÍDA !";
+			this.lblConcluida.Visible = false;
 			// 
 			// frmProvisorio
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(693, 652);
+			this.Controls.Add(this.lblConcluida);
 			this.Controls.Add(this.btnFinalizar);
 			this.Controls.Add(this.btnInserirDespesa);
 			this.Controls.Add(this.btnAnexarDespesa);
@@ -764,6 +780,7 @@
 			this.Controls.SetChildIndex(this.btnAnexarDespesa, 0);
 			this.Controls.SetChildIndex(this.btnInserirDespesa, 0);
 			this.Controls.SetChildIndex(this.btnFinalizar, 0);
+			this.Controls.SetChildIndex(this.lblConcluida, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -820,5 +837,6 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemDesvincular;
 		private System.Windows.Forms.ToolStripButton btnRecibo;
+		private System.Windows.Forms.Label lblConcluida;
 	}
 }

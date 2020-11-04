@@ -1,5 +1,4 @@
 ﻿using CamadaBLL;
-using CamadaDTO;
 using ComponentOwl.BetterListView;
 using System;
 using System.Collections.Generic;
@@ -182,7 +181,7 @@ namespace CamadaUI.Saidas
 		{
 			if (lstItens.SelectedItems.Count == 0) return null;
 
-			string IDSelected = lstItens.SelectedItems[0].Value.ToString();
+			string IDSelected = lstItens.SelectedItems[0].Text.ToString();
 			return lstAutorizante.First(s => s == IDSelected);
 		}
 

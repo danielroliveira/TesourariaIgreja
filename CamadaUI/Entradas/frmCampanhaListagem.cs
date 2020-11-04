@@ -1,15 +1,13 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Entradas
 {
@@ -339,6 +337,11 @@ namespace CamadaUI.Entradas
 			{
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
+			}
+			else if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+				btnAdicionar_Click(sender, e);
 			}
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
