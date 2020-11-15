@@ -44,8 +44,13 @@
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.label3 = new System.Windows.Forms.Label();
 			this.btnRecibo = new System.Windows.Forms.Button();
+			this.btnExcluir = new System.Windows.Forms.Button();
+			this.pnlDias = new System.Windows.Forms.Panel();
+			this.rbtTodas = new System.Windows.Forms.RadioButton();
+			this.rbtUltimosDias = new System.Windows.Forms.RadioButton();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
+			this.pnlDias.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -75,7 +80,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(691, 495);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
-			this.btnFechar.TabIndex = 9;
+			this.btnFechar.TabIndex = 11;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -89,7 +94,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(22, 495);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 6;
+			this.btnAdicionar.TabIndex = 7;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -103,7 +108,7 @@
 			this.btnEditar.Location = new System.Drawing.Point(154, 495);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 7;
+			this.btnEditar.TabIndex = 8;
 			this.btnEditar.Text = "&Editar";
 			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -182,7 +187,7 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(795, 368);
-			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.TabIndex = 6;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			// 
@@ -236,17 +241,66 @@
 			this.btnRecibo.Location = new System.Drawing.Point(286, 495);
 			this.btnRecibo.Name = "btnRecibo";
 			this.btnRecibo.Size = new System.Drawing.Size(126, 42);
-			this.btnRecibo.TabIndex = 8;
+			this.btnRecibo.TabIndex = 9;
 			this.btnRecibo.Text = "&Recibo";
 			this.btnRecibo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnRecibo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnRecibo.UseVisualStyleBackColor = true;
 			this.btnRecibo.Click += new System.EventHandler(this.btnRecibo_Click);
 			// 
+			// btnExcluir
+			// 
+			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExcluir.Location = new System.Drawing.Point(418, 495);
+			this.btnExcluir.Name = "btnExcluir";
+			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
+			this.btnExcluir.TabIndex = 10;
+			this.btnExcluir.Text = "&Excluir";
+			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnExcluir.UseVisualStyleBackColor = true;
+			// 
+			// pnlDias
+			// 
+			this.pnlDias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(215)))), ((int)(((byte)(233)))));
+			this.pnlDias.Controls.Add(this.rbtTodas);
+			this.pnlDias.Controls.Add(this.rbtUltimosDias);
+			this.pnlDias.Location = new System.Drawing.Point(599, 64);
+			this.pnlDias.Name = "pnlDias";
+			this.pnlDias.Size = new System.Drawing.Size(187, 35);
+			this.pnlDias.TabIndex = 5;
+			this.pnlDias.Visible = false;
+			// 
+			// rbtTodas
+			// 
+			this.rbtTodas.AutoSize = true;
+			this.rbtTodas.Location = new System.Drawing.Point(113, 6);
+			this.rbtTodas.Name = "rbtTodas";
+			this.rbtTodas.Size = new System.Drawing.Size(65, 23);
+			this.rbtTodas.TabIndex = 1;
+			this.rbtTodas.Text = "Todas";
+			this.rbtTodas.UseVisualStyleBackColor = true;
+			// 
+			// rbtUltimosDias
+			// 
+			this.rbtUltimosDias.AutoSize = true;
+			this.rbtUltimosDias.Checked = true;
+			this.rbtUltimosDias.Location = new System.Drawing.Point(17, 6);
+			this.rbtUltimosDias.Name = "rbtUltimosDias";
+			this.rbtUltimosDias.Size = new System.Drawing.Size(76, 23);
+			this.rbtUltimosDias.TabIndex = 0;
+			this.rbtUltimosDias.TabStop = true;
+			this.rbtUltimosDias.Text = "30 Dias";
+			this.rbtUltimosDias.UseVisualStyleBackColor = true;
+			this.rbtUltimosDias.CheckedChanged += new System.EventHandler(this.rbtUltimosDias_CheckedChanged);
+			// 
 			// frmProvisoriaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(839, 549);
+			this.Controls.Add(this.pnlDias);
+			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
@@ -269,8 +323,12 @@
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
+			this.Controls.SetChildIndex(this.btnExcluir, 0);
+			this.Controls.SetChildIndex(this.pnlDias, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
+			this.pnlDias.ResumeLayout(false);
+			this.pnlDias.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -292,5 +350,9 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorProvisorio;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 		internal System.Windows.Forms.Button btnRecibo;
+		internal System.Windows.Forms.Button btnExcluir;
+		private System.Windows.Forms.Panel pnlDias;
+		private System.Windows.Forms.RadioButton rbtTodas;
+		private System.Windows.Forms.RadioButton rbtUltimosDias;
 	}
 }

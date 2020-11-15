@@ -63,7 +63,7 @@ namespace CamadaUI
 					Main.frmConnString fcString = new Main.frmConnString();
 					fcString.ShowDialog();
 
-					if (fcString.DialogResult == DialogResult.Cancel)
+					if (fcString.DialogResult != DialogResult.OK)
 					{
 						Application.Exit();
 						return;

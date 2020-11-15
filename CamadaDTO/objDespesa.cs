@@ -38,6 +38,10 @@ namespace CamadaDTO
 			internal byte _Parcelas;
 			internal byte _Prioridade;  // 1: Imediata | 2: Alta Prioridade | 3: Normal | 4: Baixa | 5: Suspender
 
+			// from tblDespesaDataPeriodo
+			internal DateTime? _DataInicial;
+			internal DateTime? _DataFinal;
+
 			// from tblImagem
 			internal objImagem _Imagem;
 		}
@@ -65,6 +69,8 @@ namespace CamadaDTO
 				{
 					Origem = EnumImagemOrigem.Despesa,
 				},
+				_DataFinal = null,
+				_DataInicial = null,
 			};
 		}
 
@@ -417,6 +423,52 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property DataInicial
+		//---------------------------------------------------------------
+		public DateTime? DataInicial
+		{
+			get => EditData._DataInicial;
+			set
+			{
+				if (value != EditData._DataInicial)
+				{
+					EditData._DataInicial = value;
+					NotifyPropertyChanged("DataInicial");
+				}
+			}
+		}
+
+		// Property DataFinal
+		//---------------------------------------------------------------
+		public DateTime? DataFinal
+		{
+			get => EditData._DataFinal;
+			set
+			{
+				if (value != EditData._DataFinal)
+				{
+					EditData._DataFinal = value;
+					NotifyPropertyChanged("DataFinal");
+				}
+			}
+		}
+
+		// Property PeriodoData
+		//---------------------------------------------------------------
+		public string PeriodoData
+		{
+			get
+			{
+				if (DataInicial != null && DataFinal != null)
+				{
+					return ((DateTime)DataInicial).ToShortDateString() + " a " + ((DateTime)DataFinal).ToShortDateString();
+				}
+				else
+				{
+					return "Sem Período";
+				}
+			}
+		}
 	}
 
 	//=================================================================================================
@@ -617,7 +669,6 @@ namespace CamadaDTO
 				}
 			}
 		}
-
 	}
 
 	//=================================================================================================

@@ -43,6 +43,8 @@
 			this.mnuImagem = new System.Windows.Forms.ToolStripDropDownButton();
 			this.btnInserirImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnVerImagem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnRemoverImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.txtDespesaDescricao = new System.Windows.Forms.TextBox();
 			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.dtpDespesaData = new System.Windows.Forms.DateTimePicker();
@@ -79,16 +81,22 @@
 			this.txtTitular = new System.Windows.Forms.TextBox();
 			this.btnSetTitular = new VIBlend.WinForms.Controls.vButton();
 			this.btnInsertTitular = new VIBlend.WinForms.Controls.vButton();
-			this.panel2 = new System.Windows.Forms.Panel();
+			this.pnlDataValor = new System.Windows.Forms.Panel();
 			this.lblSitBlock = new System.Windows.Forms.Label();
-			this.btnRemoverImagem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.dtpDataInicial = new System.Windows.Forms.DateTimePicker();
+			this.dtpDataFinal = new System.Windows.Forms.DateTimePicker();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
+			this.chkReferencia = new System.Windows.Forms.CheckBox();
+			this.pnlReferencia = new System.Windows.Forms.Panel();
+			this.lblReferencia = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlParcelas.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
-			this.panel2.SuspendLayout();
+			this.pnlDataValor.SuspendLayout();
+			this.pnlReferencia.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -160,10 +168,10 @@
             this.btnFechar,
             this.toolStripSeparator2,
             this.mnuImagem});
-			this.tspMenu.Location = new System.Drawing.Point(2, 617);
+			this.tspMenu.Location = new System.Drawing.Point(2, 600);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(772, 44);
-			this.tspMenu.TabIndex = 26;
+			this.tspMenu.TabIndex = 28;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -261,14 +269,27 @@
 			this.btnVerImagem.Text = "Ver Imagem";
 			this.btnVerImagem.Click += new System.EventHandler(this.btnVerImagem_Click);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
+			// 
+			// btnRemoverImagem
+			// 
+			this.btnRemoverImagem.Image = global::CamadaUI.Properties.Resources.delete_16;
+			this.btnRemoverImagem.Name = "btnRemoverImagem";
+			this.btnRemoverImagem.Size = new System.Drawing.Size(191, 24);
+			this.btnRemoverImagem.Text = "Remover Imagem";
+			this.btnRemoverImagem.Click += new System.EventHandler(this.btnRemoverImagem_Click);
+			// 
 			// txtDespesaDescricao
 			// 
 			this.txtDespesaDescricao.BackColor = System.Drawing.Color.White;
-			this.txtDespesaDescricao.Location = new System.Drawing.Point(216, 306);
+			this.txtDespesaDescricao.Location = new System.Drawing.Point(216, 258);
 			this.txtDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaDescricao.MaxLength = 100;
 			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
-			this.txtDespesaDescricao.Size = new System.Drawing.Size(433, 27);
+			this.txtDespesaDescricao.Size = new System.Drawing.Size(507, 27);
 			this.txtDespesaDescricao.TabIndex = 20;
 			this.txtDespesaDescricao.Tag = "";
 			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -278,7 +299,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(137, 309);
+			this.lblCongregacao.Location = new System.Drawing.Point(137, 261);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 19;
@@ -292,7 +313,7 @@
 			this.dtpDespesaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpDespesaData.Name = "dtpDespesaData";
 			this.dtpDespesaData.Size = new System.Drawing.Size(145, 31);
-			this.dtpDespesaData.TabIndex = 1;
+			this.dtpDespesaData.TabIndex = 0;
 			// 
 			// label1
 			// 
@@ -302,7 +323,7 @@
 			this.label1.Location = new System.Drawing.Point(77, 12);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(120, 19);
-			this.label1.TabIndex = 0;
+			this.label1.TabIndex = 3;
 			this.label1.Text = "Data da Despesa";
 			// 
 			// txtDespesaValor
@@ -315,7 +336,7 @@
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
 			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 3;
+			this.txtDespesaValor.TabIndex = 2;
 			this.txtDespesaValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label8
@@ -326,7 +347,7 @@
 			this.label8.Location = new System.Drawing.Point(364, 12);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 2;
+			this.label8.TabIndex = 1;
 			this.label8.Text = "Valor da Despesa";
 			// 
 			// label2
@@ -334,7 +355,7 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(153, 270);
+			this.label2.Location = new System.Drawing.Point(503, 222);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(57, 19);
 			this.label2.TabIndex = 17;
@@ -344,7 +365,7 @@
 			// 
 			this.txtDocumentoNumero.BackColor = System.Drawing.Color.White;
 			this.txtDocumentoNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.txtDocumentoNumero.Location = new System.Drawing.Point(216, 267);
+			this.txtDocumentoNumero.Location = new System.Drawing.Point(566, 219);
 			this.txtDocumentoNumero.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDocumentoNumero.MaxLength = 30;
 			this.txtDocumentoNumero.Name = "txtDocumentoNumero";
@@ -357,7 +378,7 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(75, 231);
+			this.label3.Location = new System.Drawing.Point(75, 222);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(135, 19);
 			this.label3.TabIndex = 14;
@@ -369,7 +390,7 @@
 			this.btnSetCredor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetCredor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetCredor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetCredor.Location = new System.Drawing.Point(615, 111);
+			this.btnSetCredor.Location = new System.Drawing.Point(649, 102);
 			this.btnSetCredor.Name = "btnSetCredor";
 			this.btnSetCredor.RoundedCornersMask = ((byte)(15));
 			this.btnSetCredor.RoundedCornersRadius = 0;
@@ -384,11 +405,11 @@
 			// 
 			// txtCredor
 			// 
-			this.txtCredor.Location = new System.Drawing.Point(216, 111);
+			this.txtCredor.Location = new System.Drawing.Point(216, 102);
 			this.txtCredor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCredor.MaxLength = 30;
 			this.txtCredor.Name = "txtCredor";
-			this.txtCredor.Size = new System.Drawing.Size(393, 27);
+			this.txtCredor.Size = new System.Drawing.Size(427, 27);
 			this.txtCredor.TabIndex = 5;
 			this.txtCredor.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCredor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -398,7 +419,7 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(72, 114);
+			this.lblContribuinte.Location = new System.Drawing.Point(72, 105);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(138, 19);
 			this.lblContribuinte.TabIndex = 4;
@@ -409,7 +430,7 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(93, 192);
+			this.label4.Location = new System.Drawing.Point(93, 183);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 19);
 			this.label4.TabIndex = 11;
@@ -417,11 +438,11 @@
 			// 
 			// txtDespesaTipo
 			// 
-			this.txtDespesaTipo.Location = new System.Drawing.Point(216, 189);
+			this.txtDespesaTipo.Location = new System.Drawing.Point(216, 180);
 			this.txtDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaTipo.MaxLength = 30;
 			this.txtDespesaTipo.Name = "txtDespesaTipo";
-			this.txtDespesaTipo.Size = new System.Drawing.Size(393, 27);
+			this.txtDespesaTipo.Size = new System.Drawing.Size(427, 27);
 			this.txtDespesaTipo.TabIndex = 12;
 			this.txtDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
 			this.txtDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -432,7 +453,7 @@
 			this.btnSetDespesaTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetDespesaTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetDespesaTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetDespesaTipo.Location = new System.Drawing.Point(615, 189);
+			this.btnSetDespesaTipo.Location = new System.Drawing.Point(649, 180);
 			this.btnSetDespesaTipo.Name = "btnSetDespesaTipo";
 			this.btnSetDespesaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDespesaTipo.RoundedCornersRadius = 0;
@@ -451,7 +472,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(450, 72);
+			this.btnSetSetor.Location = new System.Drawing.Point(450, 63);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -466,7 +487,7 @@
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(216, 72);
+			this.txtSetor.Location = new System.Drawing.Point(216, 63);
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
@@ -479,7 +500,7 @@
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(105, 75);
+			this.label5.Location = new System.Drawing.Point(105, 66);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
 			this.label5.TabIndex = 1;
@@ -498,16 +519,17 @@
 			// 
 			// pnlParcelas
 			// 
+			this.pnlParcelas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.pnlParcelas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(215)))), ((int)(((byte)(233)))));
 			this.pnlParcelas.Controls.Add(this.numParcelas);
 			this.pnlParcelas.Controls.Add(this.lblParcelas);
 			this.pnlParcelas.Controls.Add(this.chkParcelado);
 			this.pnlParcelas.Controls.Add(this.btnParcelasGerar);
-			this.pnlParcelas.Location = new System.Drawing.Point(12, 436);
+			this.pnlParcelas.Location = new System.Drawing.Point(12, 419);
 			this.pnlParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnlParcelas.Name = "pnlParcelas";
 			this.pnlParcelas.Size = new System.Drawing.Size(129, 168);
-			this.pnlParcelas.TabIndex = 24;
+			this.pnlParcelas.TabIndex = 26;
 			// 
 			// numParcelas
 			// 
@@ -566,7 +588,7 @@
 			// 
 			// txtDocumentoTipo
 			// 
-			this.txtDocumentoTipo.Location = new System.Drawing.Point(216, 228);
+			this.txtDocumentoTipo.Location = new System.Drawing.Point(216, 219);
 			this.txtDocumentoTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDocumentoTipo.MaxLength = 30;
 			this.txtDocumentoTipo.Name = "txtDocumentoTipo";
@@ -582,7 +604,7 @@
 			this.btnSetDocumentoTipo.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetDocumentoTipo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetDocumentoTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetDocumentoTipo.Location = new System.Drawing.Point(450, 228);
+			this.btnSetDocumentoTipo.Location = new System.Drawing.Point(450, 219);
 			this.btnSetDocumentoTipo.Name = "btnSetDocumentoTipo";
 			this.btnSetDocumentoTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetDocumentoTipo.RoundedCornersRadius = 0;
@@ -597,28 +619,29 @@
 			// 
 			// line2
 			// 
-			this.line2.EndPoint = new System.Drawing.Point(601, 5);
+			this.line2.EndPoint = new System.Drawing.Point(608, 5);
 			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(137, 406);
+			this.line2.Location = new System.Drawing.Point(153, 394);
 			this.line2.Name = "line2";
 			this.line2.Opacity = 0.5F;
-			this.line2.Size = new System.Drawing.Size(606, 10);
-			this.line2.StartPoint = new System.Drawing.Point(5, 5);
-			this.line2.TabIndex = 23;
+			this.line2.Size = new System.Drawing.Size(613, 11);
+			this.line2.StartPoint = new System.Drawing.Point(5, 6);
+			this.line2.TabIndex = 25;
 			this.line2.TabStop = false;
 			// 
 			// label6
 			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.LightSlateGray;
-			this.label6.Location = new System.Drawing.Point(16, 399);
+			this.label6.Location = new System.Drawing.Point(12, 388);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(120, 23);
-			this.label6.TabIndex = 22;
-			this.label6.Text = "Parcelamento";
+			this.label6.Size = new System.Drawing.Size(141, 23);
+			this.label6.TabIndex = 24;
+			this.label6.Text = "PARCELAMENTO";
 			// 
 			// dgvListagem
 			// 
@@ -631,6 +654,7 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -650,7 +674,7 @@
             this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(153, 436);
+			this.dgvListagem.Location = new System.Drawing.Point(153, 419);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
@@ -662,7 +686,7 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(608, 168);
-			this.dgvListagem.TabIndex = 25;
+			this.dgvListagem.TabIndex = 27;
 			// 
 			// clnForma
 			// 
@@ -695,7 +719,7 @@
 			this.label7.AutoSize = true;
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.ForeColor = System.Drawing.Color.Black;
-			this.label7.Location = new System.Drawing.Point(123, 153);
+			this.label7.Location = new System.Drawing.Point(123, 144);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(87, 19);
 			this.label7.TabIndex = 7;
@@ -703,11 +727,11 @@
 			// 
 			// txtTitular
 			// 
-			this.txtTitular.Location = new System.Drawing.Point(216, 150);
+			this.txtTitular.Location = new System.Drawing.Point(216, 141);
 			this.txtTitular.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtTitular.MaxLength = 30;
 			this.txtTitular.Name = "txtTitular";
-			this.txtTitular.Size = new System.Drawing.Size(393, 27);
+			this.txtTitular.Size = new System.Drawing.Size(427, 27);
 			this.txtTitular.TabIndex = 8;
 			this.txtTitular.Tag = "Pressione a tecla (+) para procurar";
 			this.txtTitular.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -718,7 +742,7 @@
 			this.btnSetTitular.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetTitular.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetTitular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetTitular.Location = new System.Drawing.Point(615, 150);
+			this.btnSetTitular.Location = new System.Drawing.Point(649, 141);
 			this.btnSetTitular.Name = "btnSetTitular";
 			this.btnSetTitular.RoundedCornersMask = ((byte)(15));
 			this.btnSetTitular.RoundedCornersRadius = 0;
@@ -739,7 +763,7 @@
 			this.btnInsertTitular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnInsertTitular.Image = global::CamadaUI.Properties.Resources.add_16;
 			this.btnInsertTitular.ImageAbsolutePosition = new System.Drawing.Point(7, 3);
-			this.btnInsertTitular.Location = new System.Drawing.Point(655, 150);
+			this.btnInsertTitular.Location = new System.Drawing.Point(689, 141);
 			this.btnInsertTitular.Name = "btnInsertTitular";
 			this.btnInsertTitular.RoundedCornersMask = ((byte)(15));
 			this.btnInsertTitular.RoundedCornersRadius = 0;
@@ -752,49 +776,120 @@
 			this.btnInsertTitular.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnInsertTitular.Click += new System.EventHandler(this.btnInsertTitular_Click);
 			// 
-			// panel2
+			// pnlDataValor
 			// 
-			this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(215)))), ((int)(((byte)(233)))));
-			this.panel2.Controls.Add(this.dtpDespesaData);
-			this.panel2.Controls.Add(this.label1);
-			this.panel2.Controls.Add(this.txtDespesaValor);
-			this.panel2.Controls.Add(this.label8);
-			this.panel2.Location = new System.Drawing.Point(12, 344);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(749, 44);
-			this.panel2.TabIndex = 21;
+			this.pnlDataValor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.pnlDataValor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(215)))), ((int)(((byte)(233)))));
+			this.pnlDataValor.Controls.Add(this.dtpDespesaData);
+			this.pnlDataValor.Controls.Add(this.label1);
+			this.pnlDataValor.Controls.Add(this.txtDespesaValor);
+			this.pnlDataValor.Controls.Add(this.label8);
+			this.pnlDataValor.Location = new System.Drawing.Point(12, 295);
+			this.pnlDataValor.Name = "pnlDataValor";
+			this.pnlDataValor.Size = new System.Drawing.Size(749, 44);
+			this.pnlDataValor.TabIndex = 22;
 			// 
 			// lblSitBlock
 			// 
+			this.lblSitBlock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblSitBlock.AutoSize = true;
 			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
-			this.lblSitBlock.Location = new System.Drawing.Point(487, 627);
+			this.lblSitBlock.Location = new System.Drawing.Point(487, 607);
 			this.lblSitBlock.Name = "lblSitBlock";
 			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
-			this.lblSitBlock.TabIndex = 34;
+			this.lblSitBlock.TabIndex = 0;
 			this.lblSitBlock.Text = "- Apenas Visualização -";
 			// 
-			// btnRemoverImagem
+			// dtpDataInicial
 			// 
-			this.btnRemoverImagem.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnRemoverImagem.Name = "btnRemoverImagem";
-			this.btnRemoverImagem.Size = new System.Drawing.Size(191, 24);
-			this.btnRemoverImagem.Text = "Remover Imagem";
-			this.btnRemoverImagem.Click += new System.EventHandler(this.btnRemoverImagem_Click);
+			this.dtpDataInicial.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dtpDataInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpDataInicial.Location = new System.Drawing.Point(261, 7);
+			this.dtpDataInicial.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.dtpDataInicial.Name = "dtpDataInicial";
+			this.dtpDataInicial.Size = new System.Drawing.Size(145, 31);
+			this.dtpDataInicial.TabIndex = 3;
 			// 
-			// toolStripSeparator3
+			// dtpDataFinal
 			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
+			this.dtpDataFinal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dtpDataFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpDataFinal.Location = new System.Drawing.Point(492, 7);
+			this.dtpDataFinal.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.dtpDataFinal.Name = "dtpDataFinal";
+			this.dtpDataFinal.Size = new System.Drawing.Size(145, 31);
+			this.dtpDataFinal.TabIndex = 5;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.BackColor = System.Drawing.Color.Transparent;
+			this.label10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.ForeColor = System.Drawing.Color.Black;
+			this.label10.Location = new System.Drawing.Point(208, 13);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(46, 15);
+			this.label10.TabIndex = 2;
+			this.label10.Text = "INICIAL";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.BackColor = System.Drawing.Color.Transparent;
+			this.label11.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label11.ForeColor = System.Drawing.Color.Black;
+			this.label11.Location = new System.Drawing.Point(449, 13);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(39, 15);
+			this.label11.TabIndex = 4;
+			this.label11.Text = "FINAL";
+			// 
+			// chkReferencia
+			// 
+			this.chkReferencia.AutoSize = true;
+			this.chkReferencia.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.chkReferencia.Location = new System.Drawing.Point(169, 14);
+			this.chkReferencia.Name = "chkReferencia";
+			this.chkReferencia.Size = new System.Drawing.Size(15, 14);
+			this.chkReferencia.TabIndex = 1;
+			this.chkReferencia.UseVisualStyleBackColor = true;
+			this.chkReferencia.CheckedChanged += new System.EventHandler(this.chkReferencia_CheckedChanged);
+			// 
+			// pnlReferencia
+			// 
+			this.pnlReferencia.BackColor = System.Drawing.Color.Gainsboro;
+			this.pnlReferencia.Controls.Add(this.dtpDataInicial);
+			this.pnlReferencia.Controls.Add(this.chkReferencia);
+			this.pnlReferencia.Controls.Add(this.label10);
+			this.pnlReferencia.Controls.Add(this.dtpDataFinal);
+			this.pnlReferencia.Controls.Add(this.label11);
+			this.pnlReferencia.Controls.Add(this.lblReferencia);
+			this.pnlReferencia.Location = new System.Drawing.Point(12, 338);
+			this.pnlReferencia.Name = "pnlReferencia";
+			this.pnlReferencia.Size = new System.Drawing.Size(749, 44);
+			this.pnlReferencia.TabIndex = 23;
+			// 
+			// lblReferencia
+			// 
+			this.lblReferencia.AutoSize = true;
+			this.lblReferencia.BackColor = System.Drawing.Color.Transparent;
+			this.lblReferencia.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblReferencia.ForeColor = System.Drawing.Color.DimGray;
+			this.lblReferencia.Location = new System.Drawing.Point(78, 11);
+			this.lblReferencia.Name = "lblReferencia";
+			this.lblReferencia.Size = new System.Drawing.Size(91, 19);
+			this.lblReferencia.TabIndex = 0;
+			this.lblReferencia.Text = "REFERÊNCIA";
 			// 
 			// frmDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(776, 664);
+			this.ClientSize = new System.Drawing.Size(776, 644);
+			this.Controls.Add(this.pnlReferencia);
 			this.Controls.Add(this.lblSitBlock);
-			this.Controls.Add(this.panel2);
+			this.Controls.Add(this.pnlDataValor);
 			this.Controls.Add(this.btnInsertTitular);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.line2);
@@ -851,8 +946,9 @@
 			this.Controls.SetChildIndex(this.line2, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.btnInsertTitular, 0);
-			this.Controls.SetChildIndex(this.panel2, 0);
+			this.Controls.SetChildIndex(this.pnlDataValor, 0);
 			this.Controls.SetChildIndex(this.lblSitBlock, 0);
+			this.Controls.SetChildIndex(this.pnlReferencia, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -861,8 +957,10 @@
 			this.pnlParcelas.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numParcelas)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
+			this.pnlDataValor.ResumeLayout(false);
+			this.pnlDataValor.PerformLayout();
+			this.pnlReferencia.ResumeLayout(false);
+			this.pnlReferencia.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -915,12 +1013,19 @@
 		internal System.Windows.Forms.TextBox txtTitular;
 		internal VIBlend.WinForms.Controls.vButton btnSetTitular;
 		internal VIBlend.WinForms.Controls.vButton btnInsertTitular;
-		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.Panel pnlDataValor;
 		private System.Windows.Forms.Label lblSitBlock;
 		private System.Windows.Forms.ToolStripDropDownButton mnuImagem;
 		private System.Windows.Forms.ToolStripMenuItem btnInserirImagem;
 		private System.Windows.Forms.ToolStripMenuItem btnVerImagem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem btnRemoverImagem;
+		private System.Windows.Forms.DateTimePicker dtpDataInicial;
+		private System.Windows.Forms.DateTimePicker dtpDataFinal;
+		internal System.Windows.Forms.Label label10;
+		internal System.Windows.Forms.Label label11;
+		private System.Windows.Forms.CheckBox chkReferencia;
+		private System.Windows.Forms.Panel pnlReferencia;
+		internal System.Windows.Forms.Label lblReferencia;
 	}
 }

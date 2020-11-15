@@ -44,14 +44,26 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void ObterDados()
 		{
+			// define buttons enabled from Ativo
+			bool concluida = bool.Parse(cmbAtivo.SelectedValue.ToString());
+			DefineButtons(concluida);
+
+			// get list data
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				bool concluida = bool.Parse(cmbAtivo.SelectedValue.ToString());
+				DateTime? dtInicial = null;
+				DateTime? dtFinal = null;
 
-				listTipo = dBLL.GetListDespesaProvisoria(null, null, null, null, concluida);
+				if (concluida && rbtUltimosDias.Checked)
+				{
+					dtInicial = DateTime.Today.AddDays(-30);
+					dtFinal = DateTime.Today;
+				}
+
+				listTipo = dBLL.GetListDespesaProvisoria(null, null, dtInicial, dtFinal, concluida);
 				dgvListagem.DataSource = listTipo;
 			}
 			catch (Exception ex)
@@ -64,7 +76,6 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		// CARREGA COMBO
@@ -83,6 +94,17 @@ namespace CamadaUI.Saidas
 			cmbAtivo.ValueMember = "Ativo";
 			cmbAtivo.DisplayMember = "Texto";
 			cmbAtivo.SelectedValue = false;
+		}
+
+		private void DefineButtons(bool concluida)
+		{
+			btnExcluir.Enabled = !concluida;
+			btnRecibo.Enabled = !concluida;
+			btnEditar.Text = concluida ? "Abrir" : "Editar";
+			btnEditar.Image = concluida ? Properties.Resources.search_24 : Properties.Resources.editar_16;
+
+			pnlDias.Visible = concluida;
+
 		}
 
 		#endregion
@@ -129,7 +151,7 @@ namespace CamadaUI.Saidas
 			clnRetiradaData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			colList.Add(clnRetiradaData);
 
-			//--- (2) COLUNA CADASTRO
+			//--- (2) COLUNA FINALIDADE
 			clnFinalidade.DataPropertyName = "Finalidade";
 			clnFinalidade.Visible = true;
 			clnFinalidade.ReadOnly = true;
@@ -139,14 +161,14 @@ namespace CamadaUI.Saidas
 			clnFinalidade.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			colList.Add(clnFinalidade);
 
-			//--- (3) COLUNA GRUPO
+			//--- (3) COLUNA VALOR
 			clnValorProvisorio.DataPropertyName = "ValorProvisorio";
 			clnValorProvisorio.Visible = true;
 			clnValorProvisorio.ReadOnly = true;
 			clnValorProvisorio.Resizable = DataGridViewTriState.False;
 			clnValorProvisorio.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValorProvisorio.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnValorProvisorio.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnValorProvisorio.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorProvisorio.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValorProvisorio.DefaultCellStyle.Format = "C"; //"#,##0.00";
 			colList.Add(clnValorProvisorio);
 
@@ -295,6 +317,11 @@ namespace CamadaUI.Saidas
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
 			}
+			else if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+				btnAdicionar_Click(sender, new EventArgs());
+			}
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
 				e.Handled = true;
@@ -343,5 +370,9 @@ namespace CamadaUI.Saidas
 
 		#endregion // CONTROLS FUNCTION --- END
 
+		private void rbtUltimosDias_CheckedChanged(object sender, EventArgs e)
+		{
+			ObterDados();
+		}
 	}
 }

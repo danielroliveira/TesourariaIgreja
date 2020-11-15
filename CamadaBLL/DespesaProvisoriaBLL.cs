@@ -481,6 +481,41 @@ namespace CamadaBLL
 			}
 		}
 
+		// DELETE DESPESA PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		public void DeleteProvisoria(long IDProvisorio)
+		{
+			AcessoDados db = null;
 
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- limpar parametros
+				db.LimparParametros();
+				db.AdicionarParametros("@IDProvisorio", IDProvisorio);
+
+				//--- execute insert tblDespesaProvisoriaRealizado
+				string query = "DELETE tblDespesaProvisoria " +
+					"WHERE IDProvisorio = @IDProvisorio";
+
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- commit
+				db.CommitTransaction();
+			}
+			catch (SqlException ex)
+			{
+				db.RollBackTransaction();
+				throw new AppException("Não é possível excluir essa Despesa Provisória..." +
+					ex.Message);
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
 	}
 }

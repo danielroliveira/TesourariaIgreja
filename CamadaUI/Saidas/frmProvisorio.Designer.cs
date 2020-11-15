@@ -36,6 +36,7 @@
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
 			this.btnSalvar = new System.Windows.Forms.ToolStripButton();
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
+			this.btnExcluir = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnRecibo = new System.Windows.Forms.ToolStripButton();
@@ -145,6 +146,7 @@
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnSalvar,
             this.btnCancelar,
+            this.btnExcluir,
             this.btnFechar,
             this.toolStripSeparator2,
             this.btnRecibo});
@@ -178,6 +180,18 @@
 			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+			// 
+			// btnExcluir
+			// 
+			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExcluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnExcluir.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnExcluir.Name = "btnExcluir";
+			this.btnExcluir.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnExcluir.Size = new System.Drawing.Size(90, 41);
+			this.btnExcluir.Text = "&Excluir";
+			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
 			// 
 			// btnFechar
 			// 
@@ -213,11 +227,11 @@
 			// txtFinalidade
 			// 
 			this.txtFinalidade.BackColor = System.Drawing.Color.White;
-			this.txtFinalidade.Location = new System.Drawing.Point(165, 255);
+			this.txtFinalidade.Location = new System.Drawing.Point(163, 255);
 			this.txtFinalidade.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtFinalidade.MaxLength = 100;
 			this.txtFinalidade.Name = "txtFinalidade";
-			this.txtFinalidade.Size = new System.Drawing.Size(451, 27);
+			this.txtFinalidade.Size = new System.Drawing.Size(490, 27);
 			this.txtFinalidade.TabIndex = 30;
 			this.txtFinalidade.Tag = "";
 			this.txtFinalidade.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
@@ -227,7 +241,7 @@
 			this.lblFin.AutoSize = true;
 			this.lblFin.BackColor = System.Drawing.Color.Transparent;
 			this.lblFin.ForeColor = System.Drawing.Color.Black;
-			this.lblFin.Location = new System.Drawing.Point(83, 258);
+			this.lblFin.Location = new System.Drawing.Point(81, 258);
 			this.lblFin.Name = "lblFin";
 			this.lblFin.Size = new System.Drawing.Size(76, 19);
 			this.lblFin.TabIndex = 29;
@@ -237,7 +251,7 @@
 			// 
 			this.dtpRetiradaData.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpRetiradaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpRetiradaData.Location = new System.Drawing.Point(162, 313);
+			this.dtpRetiradaData.Location = new System.Drawing.Point(163, 310);
 			this.dtpRetiradaData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpRetiradaData.Name = "dtpRetiradaData";
 			this.dtpRetiradaData.Size = new System.Drawing.Size(145, 31);
@@ -248,7 +262,7 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(161, 288);
+			this.label1.Location = new System.Drawing.Point(159, 288);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(119, 19);
 			this.label1.TabIndex = 32;
@@ -259,7 +273,7 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(331, 288);
+			this.label8.Location = new System.Drawing.Point(329, 288);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(119, 19);
 			this.label8.TabIndex = 34;
@@ -271,7 +285,7 @@
 			this.btnSetAutorizante.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetAutorizante.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetAutorizante.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetAutorizante.Location = new System.Drawing.Point(582, 177);
+			this.btnSetAutorizante.Location = new System.Drawing.Point(580, 177);
 			this.btnSetAutorizante.Name = "btnSetAutorizante";
 			this.btnSetAutorizante.RoundedCornersMask = ((byte)(15));
 			this.btnSetAutorizante.RoundedCornersRadius = 0;
@@ -286,7 +300,8 @@
 			// 
 			// txtAutorizante
 			// 
-			this.txtAutorizante.Location = new System.Drawing.Point(165, 177);
+			this.txtAutorizante.BackColor = System.Drawing.Color.White;
+			this.txtAutorizante.Location = new System.Drawing.Point(163, 177);
 			this.txtAutorizante.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtAutorizante.MaxLength = 30;
 			this.txtAutorizante.Name = "txtAutorizante";
@@ -300,7 +315,7 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(76, 180);
+			this.lblContribuinte.Location = new System.Drawing.Point(74, 180);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(83, 19);
 			this.lblContribuinte.TabIndex = 8;
@@ -312,7 +327,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(399, 138);
+			this.btnSetSetor.Location = new System.Drawing.Point(397, 138);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -327,7 +342,7 @@
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(165, 138);
+			this.txtSetor.Location = new System.Drawing.Point(163, 138);
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
@@ -340,7 +355,7 @@
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(54, 141);
+			this.label5.Location = new System.Drawing.Point(52, 141);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
 			this.label5.TabIndex = 5;
@@ -352,7 +367,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(399, 69);
+			this.btnSetConta.Location = new System.Drawing.Point(397, 69);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
@@ -367,7 +382,7 @@
 			// 
 			// txtConta
 			// 
-			this.txtConta.Location = new System.Drawing.Point(165, 69);
+			this.txtConta.Location = new System.Drawing.Point(163, 69);
 			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
@@ -380,7 +395,7 @@
 			this.lblContaDetalhe.BackColor = System.Drawing.Color.Transparent;
 			this.lblContaDetalhe.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblContaDetalhe.ForeColor = System.Drawing.Color.Black;
-			this.lblContaDetalhe.Location = new System.Drawing.Point(165, 99);
+			this.lblContaDetalhe.Location = new System.Drawing.Point(163, 99);
 			this.lblContaDetalhe.Name = "lblContaDetalhe";
 			this.lblContaDetalhe.Size = new System.Drawing.Size(228, 35);
 			this.lblContaDetalhe.TabIndex = 4;
@@ -391,7 +406,7 @@
 			this.label19.AutoSize = true;
 			this.label19.BackColor = System.Drawing.Color.Transparent;
 			this.label19.ForeColor = System.Drawing.Color.Black;
-			this.label19.Location = new System.Drawing.Point(49, 72);
+			this.label19.Location = new System.Drawing.Point(47, 72);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(110, 19);
 			this.label19.TabIndex = 1;
@@ -403,7 +418,7 @@
 			this.btnSetComprador.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetComprador.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetComprador.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetComprador.Location = new System.Drawing.Point(582, 216);
+			this.btnSetComprador.Location = new System.Drawing.Point(580, 216);
 			this.btnSetComprador.Name = "btnSetComprador";
 			this.btnSetComprador.RoundedCornersMask = ((byte)(15));
 			this.btnSetComprador.RoundedCornersRadius = 0;
@@ -418,7 +433,8 @@
 			// 
 			// txtComprador
 			// 
-			this.txtComprador.Location = new System.Drawing.Point(165, 216);
+			this.txtComprador.BackColor = System.Drawing.Color.White;
+			this.txtComprador.Location = new System.Drawing.Point(163, 216);
 			this.txtComprador.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtComprador.MaxLength = 30;
 			this.txtComprador.Name = "txtComprador";
@@ -432,7 +448,7 @@
 			this.label14.AutoSize = true;
 			this.label14.BackColor = System.Drawing.Color.Transparent;
 			this.label14.ForeColor = System.Drawing.Color.Black;
-			this.label14.Location = new System.Drawing.Point(79, 219);
+			this.label14.Location = new System.Drawing.Point(77, 219);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(80, 19);
 			this.label14.TabIndex = 11;
@@ -446,7 +462,7 @@
 			this.btnInsertComprador.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnInsertComprador.Image = global::CamadaUI.Properties.Resources.add_16;
 			this.btnInsertComprador.ImageAbsolutePosition = new System.Drawing.Point(7, 3);
-			this.btnInsertComprador.Location = new System.Drawing.Point(622, 216);
+			this.btnInsertComprador.Location = new System.Drawing.Point(620, 216);
 			this.btnInsertComprador.Name = "btnInsertComprador";
 			this.btnInsertComprador.RoundedCornersMask = ((byte)(15));
 			this.btnInsertComprador.RoundedCornersRadius = 0;
@@ -489,7 +505,7 @@
             this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(45, 384);
+			this.dgvListagem.Location = new System.Drawing.Point(43, 384);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
@@ -536,7 +552,7 @@
 			this.line2.EndPoint = new System.Drawing.Point(460, 5);
 			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(194, 359);
+			this.line2.Location = new System.Drawing.Point(192, 359);
 			this.line2.Name = "line2";
 			this.line2.Opacity = 0.5F;
 			this.line2.Size = new System.Drawing.Size(465, 10);
@@ -550,7 +566,7 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.LightSlateGray;
-			this.label6.Location = new System.Drawing.Point(25, 351);
+			this.label6.Location = new System.Drawing.Point(23, 351);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(166, 23);
 			this.label6.TabIndex = 50;
@@ -565,7 +581,7 @@
 			this.btnAnexarDespesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnAnexarDespesa.Image = global::CamadaUI.Properties.Resources.money_red_24;
 			this.btnAnexarDespesa.ImageAbsolutePosition = new System.Drawing.Point(6, 1);
-			this.btnAnexarDespesa.Location = new System.Drawing.Point(45, 561);
+			this.btnAnexarDespesa.Location = new System.Drawing.Point(43, 561);
 			this.btnAnexarDespesa.Name = "btnAnexarDespesa";
 			this.btnAnexarDespesa.RoundedCornersMask = ((byte)(15));
 			this.btnAnexarDespesa.RoundedCornersRadius = 0;
@@ -589,7 +605,7 @@
 			this.btnInsertAutorizante.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnInsertAutorizante.Image = global::CamadaUI.Properties.Resources.add_16;
 			this.btnInsertAutorizante.ImageAbsolutePosition = new System.Drawing.Point(7, 3);
-			this.btnInsertAutorizante.Location = new System.Drawing.Point(622, 177);
+			this.btnInsertAutorizante.Location = new System.Drawing.Point(620, 177);
 			this.btnInsertAutorizante.Name = "btnInsertAutorizante";
 			this.btnInsertAutorizante.RoundedCornersMask = ((byte)(15));
 			this.btnInsertAutorizante.RoundedCornersRadius = 0;
@@ -611,7 +627,7 @@
 			this.btnInserirDespesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnInserirDespesa.Image = global::CamadaUI.Properties.Resources.add_24;
 			this.btnInserirDespesa.ImageAbsolutePosition = new System.Drawing.Point(11, 6);
-			this.btnInserirDespesa.Location = new System.Drawing.Point(213, 561);
+			this.btnInserirDespesa.Location = new System.Drawing.Point(211, 561);
 			this.btnInserirDespesa.Name = "btnInserirDespesa";
 			this.btnInserirDespesa.RoundedCornersMask = ((byte)(15));
 			this.btnInserirDespesa.RoundedCornersRadius = 0;
@@ -631,7 +647,7 @@
 			// 
 			this.txtValorProvisorio.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtValorProvisorio.Inteiro = false;
-			this.txtValorProvisorio.Location = new System.Drawing.Point(335, 313);
+			this.txtValorProvisorio.Location = new System.Drawing.Point(333, 310);
 			this.txtValorProvisorio.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtValorProvisorio.Moeda = false;
 			this.txtValorProvisorio.Name = "txtValorProvisorio";
@@ -650,7 +666,7 @@
 			this.btnFinalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
 			this.btnFinalizar.ImageAbsolutePosition = new System.Drawing.Point(10, 5);
 			this.btnFinalizar.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-			this.btnFinalizar.Location = new System.Drawing.Point(473, 561);
+			this.btnFinalizar.Location = new System.Drawing.Point(471, 561);
 			this.btnFinalizar.Name = "btnFinalizar";
 			this.btnFinalizar.RoundedCornersMask = ((byte)(15));
 			this.btnFinalizar.RoundedCornersRadius = 0;
@@ -838,5 +854,6 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuItemDesvincular;
 		private System.Windows.Forms.ToolStripButton btnRecibo;
 		private System.Windows.Forms.Label lblConcluida;
+		private System.Windows.Forms.ToolStripButton btnExcluir;
 	}
 }

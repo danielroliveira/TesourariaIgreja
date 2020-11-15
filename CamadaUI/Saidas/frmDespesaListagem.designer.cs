@@ -29,20 +29,12 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDocumentoTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
@@ -74,6 +66,15 @@
 			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.line2 = new AwesomeShapeControl.Line();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDocumentoTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnPeriodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -84,7 +85,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(940, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(1045, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(220, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Procurar Despesa";
@@ -94,19 +95,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1160, 0);
+			this.btnClose.Location = new System.Drawing.Point(1265, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1200, 50);
+			this.panel1.Size = new System.Drawing.Size(1305, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(1074, 632);
+			this.btnFechar.Location = new System.Drawing.Point(1179, 634);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(104, 42);
 			this.btnFechar.TabIndex = 11;
@@ -150,24 +151,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -177,6 +178,7 @@
             this.clnTipo,
             this.clnCredor,
             this.clnDocumentoTipo,
+            this.clnPeriodo,
             this.clnSituacao,
             this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
@@ -192,63 +194,10 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1156, 492);
+			this.dgvListagem.Size = new System.Drawing.Size(1261, 492);
 			this.dgvListagem.TabIndex = 3;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 60;
-			// 
-			// clnData
-			// 
-			this.clnData.HeaderText = "Data";
-			this.clnData.Name = "clnData";
-			this.clnData.ReadOnly = true;
-			this.clnData.Width = 85;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor de Recursos";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 200;
-			// 
-			// clnTipo
-			// 
-			this.clnTipo.HeaderText = "Tipo de Despesa";
-			this.clnTipo.Name = "clnTipo";
-			this.clnTipo.ReadOnly = true;
-			this.clnTipo.Width = 170;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Credor";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 200;
-			// 
-			// clnDocumentoTipo
-			// 
-			this.clnDocumentoTipo.HeaderText = "Doc. Tipo";
-			this.clnDocumentoTipo.Name = "clnDocumentoTipo";
-			this.clnDocumentoTipo.ReadOnly = true;
-			// 
-			// clnSituacao
-			// 
-			this.clnSituacao.HeaderText = "Situação";
-			this.clnSituacao.Name = "clnSituacao";
-			this.clnSituacao.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
 			// 
 			// label1
 			// 
@@ -256,7 +205,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(977, 623);
+			this.label1.Location = new System.Drawing.Point(1082, 623);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(69, 15);
 			this.label1.TabIndex = 9;
@@ -267,7 +216,7 @@
 			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTotal.Location = new System.Drawing.Point(909, 642);
+			this.lblValorTotal.Location = new System.Drawing.Point(1014, 642);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
 			this.lblValorTotal.TabIndex = 10;
@@ -517,7 +466,7 @@
 			this.lblFiltro.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblFiltro.Location = new System.Drawing.Point(717, 61);
 			this.lblFiltro.Name = "lblFiltro";
-			this.lblFiltro.Size = new System.Drawing.Size(461, 58);
+			this.lblFiltro.Size = new System.Drawing.Size(506, 58);
 			this.lblFiltro.TabIndex = 2;
 			this.lblFiltro.Text = "Filtro";
 			// 
@@ -630,10 +579,70 @@
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
 			this.line2.TabIndex = 13;
 			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 60;
+			// 
+			// clnData
+			// 
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
+			this.clnData.Width = 85;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor de Recursos";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 200;
+			// 
+			// clnTipo
+			// 
+			this.clnTipo.HeaderText = "Tipo de Despesa";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.ReadOnly = true;
+			this.clnTipo.Width = 170;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 220;
+			// 
+			// clnDocumentoTipo
+			// 
+			this.clnDocumentoTipo.HeaderText = "Doc. Tipo";
+			this.clnDocumentoTipo.Name = "clnDocumentoTipo";
+			this.clnDocumentoTipo.ReadOnly = true;
+			// 
+			// clnPeriodo
+			// 
+			this.clnPeriodo.HeaderText = "Ref. Período";
+			this.clnPeriodo.Name = "clnPeriodo";
+			this.clnPeriodo.ReadOnly = true;
+			this.clnPeriodo.Width = 170;
+			// 
+			// clnSituacao
+			// 
+			this.clnSituacao.HeaderText = "Situação";
+			this.clnSituacao.Name = "clnSituacao";
+			this.clnSituacao.ReadOnly = true;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
+			// 
 			// frmDespesaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1200, 686);
+			this.ClientSize = new System.Drawing.Size(1305, 686);
 			this.Controls.Add(this.line2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnExcluir);
@@ -700,14 +709,6 @@
 		internal VIBlend.WinForms.Controls.vButton btnDtInicial;
 		internal System.Windows.Forms.Panel Panel2;
 		private System.Windows.Forms.Label lblFiltro;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnDocumentoTipo;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		internal System.Windows.Forms.Button btnExcluir;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
 		private System.Windows.Forms.ToolStripMenuItem mnuVisualizar;
@@ -720,5 +721,14 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
 		private AwesomeShapeControl.Line line1;
 		private AwesomeShapeControl.Line line2;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDocumentoTipo;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnPeriodo;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 	}
 }

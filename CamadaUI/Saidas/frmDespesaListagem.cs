@@ -253,7 +253,17 @@ namespace CamadaUI.Saidas
 			clnDocumentoTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnDocumentoTipo.DefaultCellStyle.Font = clnFont;
 
-			//--- (7) COLUNA SITUACAO
+			//--- (7) COLUNA PERIODO DATA
+			clnPeriodo.DataPropertyName = "PeriodoData";
+			clnPeriodo.Visible = true;
+			clnPeriodo.ReadOnly = true;
+			clnPeriodo.Resizable = DataGridViewTriState.False;
+			clnPeriodo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnPeriodo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnPeriodo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnPeriodo.DefaultCellStyle.Font = clnFont;
+
+			//--- (8) COLUNA SITUACAO
 			clnSituacao.DataPropertyName = "Situacao";
 			clnSituacao.Visible = true;
 			clnSituacao.ReadOnly = true;
@@ -263,7 +273,7 @@ namespace CamadaUI.Saidas
 			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnSituacao.DefaultCellStyle.Font = clnFont;
 
-			//--- (8) COLUNA VALOR
+			//--- (9) COLUNA VALOR
 			clnValor.DataPropertyName = "DespesaValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -281,6 +291,7 @@ namespace CamadaUI.Saidas
 				clnTipo,
 				clnCredor,
 				clnDocumentoTipo,
+				clnPeriodo,
 				clnSituacao,
 				clnValor);
 		}

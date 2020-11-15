@@ -364,7 +364,17 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Reuniao
 		{
-			get => EditData._Reuniao;
+			get
+			{
+				if (string.IsNullOrEmpty(EditData._Reuniao))
+				{
+					return "Não Informada";
+				}
+				else
+				{
+					return EditData._Reuniao;
+				}
+			}
 			set => EditData._Reuniao = value;
 		}
 

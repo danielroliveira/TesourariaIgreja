@@ -17,7 +17,7 @@ namespace CamadaUI.Saidas
 	{
 		private objDespesaProvisoria _provisoria;
 		private List<objDespesa> lstDespesas;
-		private DespesaProvisoriaBLL despBLL = new DespesaProvisoriaBLL();
+		private DespesaProvisoriaBLL provBLL = new DespesaProvisoriaBLL();
 		private BindingSource bindProvisoria = new BindingSource();
 		private BindingSource bindDespesa = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -41,6 +41,7 @@ namespace CamadaUI.Saidas
 
 			// set DESPESA
 			_provisoria = provisoria;
+			dtpRetiradaData.MinDate = DateTime.Today;
 
 			// GET DATA
 			if (provisoria.IDProvisorio != null)
@@ -131,6 +132,7 @@ namespace CamadaUI.Saidas
 					btnFinalizar.Enabled = false;
 					btnRecibo.Enabled = false;
 					lblConcluida.Visible = false;
+					btnExcluir.Enabled = false;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = DateTime.Today;
 					dtpRetiradaData.MinDate = DateTime.Today.AddMonths(-12);
@@ -143,6 +145,7 @@ namespace CamadaUI.Saidas
 					btnInserirDespesa.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					btnFinalizar.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					btnRecibo.Enabled = value != EnumFlagEstado.RegistroBloqueado;
+					btnExcluir.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					lblConcluida.Visible = value == EnumFlagEstado.RegistroBloqueado;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
@@ -168,6 +171,18 @@ namespace CamadaUI.Saidas
 								   $"Data de Bloqueio até: {conta.BloqueioData?.ToString() ?? ""}";
 			_provisoria.IDConta = (int)conta.IDConta;
 			_provisoria.Conta = conta.Conta;
+
+			if (conta.BloqueioData != null)
+			{
+				if (_provisoria.RetiradaData < conta.BloqueioData)
+				{
+					AbrirDialog("A data da Despesa Provisória não pode ser anterior à Data de Bloqueio da Conta escolhida..." +
+						"\nA Data da Despesa Provisória será alterada.", "Data de Bloqueio");
+					_provisoria.RetiradaData = (DateTime)conta.BloqueioData;
+				}
+
+				dtpRetiradaData.MinDate = (DateTime)conta.BloqueioData;
+			}
 		}
 
 		// INTERNAL PROPERTY SETOR
@@ -532,7 +547,7 @@ namespace CamadaUI.Saidas
 					}
 				}
 
-				despBLL.AttachDespesaToProvisoria(_provisoria, despesa);
+				provBLL.AttachDespesaToProvisoria(_provisoria, despesa);
 				bindDespesa.Add(despesa);
 			}
 			catch (Exception ex)
@@ -571,7 +586,7 @@ namespace CamadaUI.Saidas
 					_provisoria.DevolucaoData = DateTime.Today;
 				}
 
-				despBLL.FinalizeProvisoria(_provisoria);
+				provBLL.FinalizeProvisoria(_provisoria);
 				_provisoria.EndEdit();
 				Sit = EnumFlagEstado.RegistroBloqueado;
 			}
@@ -682,6 +697,10 @@ namespace CamadaUI.Saidas
 				_provisoria.Autorizante = frm.propEscolha;
 				txtAutorizante.Text = frm.propEscolha;
 			}
+			else if (frm.DialogResult == DialogResult.Yes) // SEARCH AUTORIZANTE
+			{
+				btnInsertAutorizante_Click(sender, e);
+			}
 
 			//--- select
 			txtAutorizante.Focus();
@@ -704,7 +723,10 @@ namespace CamadaUI.Saidas
 				_provisoria.Comprador = frm.propEscolha;
 				txtComprador.Text = frm.propEscolha;
 			}
-
+			else if (frm.DialogResult == DialogResult.Yes) // SEARCH AUTORIZANTE
+			{
+				btnInsertComprador_Click(sender, e);
+			}
 			//--- select
 			txtComprador.Focus();
 			txtComprador.SelectAll();
@@ -736,6 +758,8 @@ namespace CamadaUI.Saidas
 
 			txtAutorizante.KeyDown -= Control_KeyDown;
 			txtAutorizante.Validating += (a, b) => PrimeiraLetraMaiuscula(txtAutorizante);
+			txtAutorizante.BackColor = Color.LightYellow;
+			txtAutorizante.LostFocus += (a, b) => txtAutorizante.BackColor = Color.White;
 			txtAutorizante.Focus();
 			btnInsertAutorizante.Enabled = false;
 		}
@@ -766,8 +790,59 @@ namespace CamadaUI.Saidas
 
 			txtComprador.KeyDown -= Control_KeyDown;
 			txtComprador.Validating += (a, b) => PrimeiraLetraMaiuscula(txtComprador);
+			txtComprador.BackColor = Color.LightYellow;
+			txtComprador.LostFocus += (a, b) => txtComprador.BackColor = Color.White;
 			txtComprador.Focus();
 			btnInsertComprador.Enabled = false;
+		}
+
+		// DELETE PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExcluir_Click(object sender, EventArgs e)
+		{
+			if (_provisoria.Concluida)
+			{
+				AbrirDialog("Não é possível Excluir uma Despesa Provisória que já está Concluída",
+					"Excluir Despesa Provisória", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			if (lstDespesas.Count > 0)
+			{
+				AbrirDialog("Não é possível Excluir uma Despesa Provisória que possui Despesas Realizadas anexadas.",
+					"Excluir Despesa Provisória", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- ask to user
+			var resp = AbrirDialog("Você tem certeza que deseja excluir essa Despesa provisória?" +
+				"\nEssa exclusão não tem retorno.", "Excluir Despesa Provisória",
+				DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- delete
+				provBLL.DeleteProvisoria((long)_provisoria.IDProvisorio);
+
+				//--- close
+				btnFechar_Click(sender, e);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir a Despesa Provisória..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
 		}
 
 		#endregion // BUTTONS PROCURA --- END
@@ -936,7 +1011,7 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- INSERT Despesa REALIZADA
-				long newID = despBLL.InsertDespesaProvisoria(_provisoria);
+				long newID = provBLL.InsertDespesaProvisoria(_provisoria);
 				_provisoria.IDProvisorio = newID;
 				bindProvisoria.EndEdit();
 				bindProvisoria.ResetBindings(false);
@@ -1044,7 +1119,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				despBLL.DettachDespesaToProvisoria(_provisoria, item);
+				provBLL.DettachDespesaToProvisoria(_provisoria, item);
 				bindDespesa.Remove(item);
 				_provisoria.EndEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
@@ -1067,6 +1142,7 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // MENU SUSPENSO --- END
+
 
 	}
 }

@@ -79,7 +79,7 @@ namespace CamadaUI.Entradas
 			}
 
 			// define DEFAULT DATE
-			_contribuicao.ContribuicaoData = DataPadrao();
+			DefineDataPadrao();
 
 			// handlers
 			_contribuicao.PropertyChanged += RegistroAlterado;
@@ -116,6 +116,11 @@ namespace CamadaUI.Entradas
 				return;
 			}
 
+			// block keyDown then Sit = Alterado
+			txtValorBruto.KeyDown += control_KeyDown_Block;
+			numEntradaDia.KeyDown += control_KeyDown_Block;
+			numEntradaAno.KeyDown += control_KeyDown_Block;
+			cmbEntradaMes.KeyDown += control_KeyDown_Block;
 		}
 
 		// GET CONTRIBUICAO BY ID
@@ -188,6 +193,7 @@ namespace CamadaUI.Entradas
 
 					btnSetEntradaForma.Image = null;
 					btnSetEntradaForma.Text = "n";
+					btnSetEntradaForma.Enabled = true;
 				}
 				else
 				{
@@ -207,6 +213,11 @@ namespace CamadaUI.Entradas
 					{
 						btnSetEntradaForma.Enabled = false;
 					}
+
+					numEntradaAno.Maximum = _contribuicao.ContribuicaoData.Year;
+					numEntradaAno.Minimum = _contribuicao.ContribuicaoData.Year;
+					numEntradaDia.Maximum = _contribuicao.ContribuicaoData.Day;
+					numEntradaDia.Minimum = _contribuicao.ContribuicaoData.Day;
 				}
 
 				// btnSET
@@ -279,6 +290,27 @@ namespace CamadaUI.Entradas
 			ChangeLblColor(txtCampanha, lblCampanha);
 			ChangeLblColor(txtContribuinte, lblContribuinte);
 
+		}
+
+		// DEFINE A DATA PADRAO DA CONTRIBUICAO DATA
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineDataPadrao()
+		{
+			if (contaSelected.BloqueioData != null)
+			{
+				if (DataPadrao() < contaSelected.BloqueioData)
+				{
+					_contribuicao.ContribuicaoData = (DateTime)contaSelected.BloqueioData;
+				}
+				else
+				{
+					_contribuicao.ContribuicaoData = DataPadrao();
+				}
+			}
+			else
+			{
+				_contribuicao.ContribuicaoData = DataPadrao();
+			}
 		}
 
 		#endregion
@@ -465,7 +497,7 @@ namespace CamadaUI.Entradas
 			_contribuicao = new objContribuicao(null);
 
 			// define DEFAULT DATE
-			_contribuicao.ContribuicaoData = contaSelected.BloqueioData ?? DateTime.Today;
+			DefineDataPadrao();
 
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _contribuicao;
@@ -532,6 +564,7 @@ namespace CamadaUI.Entradas
 
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
+
 				//--- emit massage
 				var resp = AbrirDialog("Registro Salvo com sucesso!" +
 										"\nDeseja inserir uma NOVA contribuição?",
@@ -625,7 +658,27 @@ namespace CamadaUI.Entradas
 
 			if (ComAtividade)
 			{
-				if (!VerificaDadosClasse(txtReuniao, "Reunião", _contribuicao, EP)) return false;
+				if (_contribuicao.IDReuniao == null)
+				{
+					var resp = AbrirDialog("É desejável informar a REUNIÃO na qual aconteceu a contribuição..." +
+						"\nDeseja deixar a reunião como \"Não Informada\"?",
+						"Reunião Não Informada",
+						DialogType.SIM_NAO,
+						DialogIcon.Question,
+						DialogDefaultButton.First);
+
+					if (resp == DialogResult.Yes)
+					{
+						_contribuicao.IDReuniao = null;
+						txtContribuinte.Text = "Não Informada";
+					}
+					else
+					{
+						EP.SetError(txtReuniao, "Favor informar uma reunião");
+						txtReuniao.Focus();
+						return false;
+					}
+				}
 			}
 			else
 			{
@@ -644,7 +697,7 @@ namespace CamadaUI.Entradas
 						"Contribuinte Vazio",
 						DialogType.SIM_NAO,
 						DialogIcon.Question,
-						DialogDefaultButton.Second);
+						DialogDefaultButton.First);
 
 					if (resp == DialogResult.Yes)
 					{
@@ -653,6 +706,8 @@ namespace CamadaUI.Entradas
 					}
 					else
 					{
+						EP.SetError(txtContribuinte, "Favor informar um contribuinte");
+						txtContribuinte.Focus();
 						return false;
 					}
 				}
@@ -1334,7 +1389,7 @@ namespace CamadaUI.Entradas
 			_contribuicao.IDConta = (int)conta.IDConta;
 			_contribuicao.Conta = conta.Conta;
 			txtConta.DataBindings["Text"].ReadValue();
-			_contribuicao.ContribuicaoData = conta.BloqueioData ?? DateTime.Today;
+			DefineDataPadrao();
 			lblContaDetalhe.Text = $"Saldo da Conta: {conta.ContaSaldo:c} \n" +
 								   $"Data de Bloqueio até: {conta.BloqueioData?.ToShortDateString() ?? ""}";
 		}

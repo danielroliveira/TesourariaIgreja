@@ -90,10 +90,10 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(314, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(339, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(231, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(422, 50);
 			this.lblTitulo.TabIndex = 2;
-			this.lblTitulo.Text = "Cadastro de Despesas - Gastos";
+			this.lblTitulo.Text = "Cadastro de Despesas Realizada - Gasto";
 			// 
 			// btnClose
 			// 

@@ -198,6 +198,11 @@ namespace CamadaUI.Saidas
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
 			}
+			else if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+				DialogResult = DialogResult.Yes;
+			}
 			// UP SELECTED ITEM IN LIST
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{

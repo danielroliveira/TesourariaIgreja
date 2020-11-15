@@ -180,6 +180,8 @@ namespace CamadaBLL
 				IDTitular = row["IDTitular"] == DBNull.Value ? null : (int?)row["IDTitular"],
 				Titular = row["Titular"] == DBNull.Value ? null : (string)row["Titular"],
 				CNP = row["CNP"] == DBNull.Value ? null : (string)row["CNP"],
+				DataFinal = row["DataFinal"] == DBNull.Value ? null : (DateTime?)row["DataFinal"],
+				DataInicial = row["DataInicial"] == DBNull.Value ? null : (DateTime?)row["DataInicial"],
 			};
 
 			// SET IMAGEM
@@ -227,6 +229,9 @@ namespace CamadaBLL
 				//--- insert Despesa Comum
 				desp.IDDespesa = newID;
 				InsertDespesaComum(desp, db);
+
+				//--- insert DespesaDataPeriodo if necessary
+				InsertDespesaDataPeriodo(desp, db);
 
 				//--- insert IDDespesa in APagar List items
 				listAPagar.ForEach(x => x.IDDespesa = newID);
@@ -277,6 +282,41 @@ namespace CamadaBLL
 			}
 		}
 
+		// INSERT DESPESA DATA PERIODO
+		//------------------------------------------------------------------------------------------------------------
+		private void InsertDespesaDataPeriodo(objDespesa desp, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- check DataInicial and DataFinal
+				if (desp.DataInicial == null || desp.DataFinal == null)
+				{
+					return;
+				}
+
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
+				dbTran.AdicionarParametros("@DataInicial", desp.DataInicial);
+				dbTran.AdicionarParametros("@DataFinal", desp.DataFinal);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblDespesaDataPeriodo");
+
+				//--- insert
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// INSERT DESPESA REALIZADA | GASTO | DESPESA QUITADA
 		//------------------------------------------------------------------------------------------------------------
 		public long InsertDespesaRealizada(
@@ -310,7 +350,7 @@ namespace CamadaBLL
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data de Débito proposto...", 2);
 				}
 
-				// create APaga list
+				// create APagar list
 				List<objAPagar> listPag = new List<objAPagar>();
 				listPag.Add(pagar);
 
@@ -397,7 +437,21 @@ namespace CamadaBLL
 				//--- DELETE
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
 
-				// 4 - delete DESPESA
+				// 4 - delete DESPESA DATA PERIODO
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				query = "DELETE tblDespesaDataPeriodo WHERE IDDespesa = @IDDespesa";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// 5 - delete DESPESA
 				//------------------------------------------------------------------------------------------------------------
 
 				//--- define Params

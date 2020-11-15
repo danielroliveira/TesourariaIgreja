@@ -71,12 +71,16 @@ namespace CamadaUI.Saidas
 
 			ChangeParcelado(_despesa.Parcelas > 1);
 
+			// check Periodo Referencia
+			CheckPeriodoReferencia();
+
 			if (_despesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				_despesa.IDSetor = (int)setorSelected.IDSetor;
 				_despesa.Setor = setorSelected.Setor;
 				_despesa.DespesaData = DataPadrao();
+
 			}
 			else
 			{
@@ -138,20 +142,28 @@ namespace CamadaUI.Saidas
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
+
 					// define MaxDate of Data da Despesa
 					dtpDespesaData.MaxDate = DateTime.Today;
 					dtpDespesaData.MinDate = DateTime.Today.AddMonths(-12);
 					lblSitBlock.Visible = false;
+
+					EnableControlReferencia();
 				}
 				else
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
+
 					// define MaxDate of Data da Despesa
 					dtpDespesaData.MaxDate = _despesa.DespesaData;
 					dtpDespesaData.MinDate = _despesa.DespesaData;
+
 					lblSitBlock.Visible = true;
+
+					EnableControlReferencia();
+
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -234,6 +246,7 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+
 		#endregion // SUB NEW | CONSTRUCTOR --- END
 
 		#region DATABINDING
@@ -254,6 +267,9 @@ namespace CamadaUI.Saidas
 			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			numParcelas.DataBindings.Add("Value", bind, "Parcelas", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtTitular.DataBindings.Add("Text", bind, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
+
+			dtpDataInicial.DataBindings.Add("Value", bind, "DataInicial", true, DataSourceUpdateMode.OnPropertyChanged);
+			dtpDataFinal.DataBindings.Add("Value", bind, "DataFinal", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -1219,6 +1235,36 @@ namespace CamadaUI.Saidas
 				}
 			}
 
+			//--- check DATA PERIODO
+			if (chkReferencia.Checked)
+			{
+				if (_despesa.DataInicial == null || _despesa.DataFinal == null)
+				{
+					AbrirDialog("As Datas do Período de Referência INICIAL e/ou FINAL não podem ficar vazias\n" +
+							"Favor inserir o valor nestes campos corretamente.", "Data Inicial/Final",
+							DialogType.OK, DialogIcon.Exclamation);
+					EP.SetError(dtpDataInicial, "Valor necessário...");
+					dtpDataInicial.Focus();
+					return false;
+				}
+
+				if (_despesa.DataInicial > _despesa.DataFinal)
+				{
+					AbrirDialog("A Data Final do Período de Referência não podem ser anterior a Data Inicial\n" +
+							"Favor reinserir o valor nestes campos corretamente.", "Data Inicial/Final",
+							DialogType.OK, DialogIcon.Exclamation);
+					EP.SetError(dtpDataFinal, "Valor incorreto...");
+					dtpDataFinal.Focus();
+					return false;
+				}
+
+			}
+			else
+			{
+				_despesa.DataInicial = null;
+				_despesa.DataFinal = null;
+			}
+
 			return true;
 		}
 
@@ -1387,5 +1433,126 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // IMAGE CONTROL --- END
+
+		#region PERIODO REFERENCIA
+
+		private void chkReferencia_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!chkReferencia.Checked)
+			{
+				_despesa.DataFinal = null;
+				_despesa.DataInicial = null;
+
+			}
+			else
+			{
+				if (_despesa.DataInicial == null || _despesa.DataFinal == null)
+				{
+					dtpDataInicial.MinDate = DateTime.Today.AddYears(-3);
+					dtpDataInicial.MaxDate = DateTime.Today;
+					dtpDataFinal.MinDate = DateTime.Today.AddYears(-3);
+					dtpDataFinal.MaxDate = DateTime.Today;
+					dtpDataInicial.Value = _despesa.DespesaData;
+					dtpDataFinal.Value = _despesa.DespesaData;
+				}
+			}
+
+			EnableControlReferencia();
+		}
+
+		// UPDATE PERIODO REFERENCIA
+		//------------------------------------------------------------------------------------------------------------
+		private void CheckPeriodoReferencia()
+		{
+			if (_despesa.DataInicial == null || _despesa.DataFinal == null)
+			{
+				chkReferencia.Checked = false;
+			}
+			else
+			{
+				chkReferencia.Checked = true;
+			}
+		}
+
+		// CONTROL PERIODO 
+		//------------------------------------------------------------------------------------------------------------
+		private void EnableControlReferencia()
+		{
+			bool IsEnable = chkReferencia.Checked;
+			bool IsLocked;
+			bool IsVisible;
+
+			// IS UNLOCKED AND VISIBLE? SIT => NEW
+			if (Sit == EnumFlagEstado.NovoRegistro)
+			{
+				IsLocked = false;
+				IsVisible = true;
+			}
+			else
+			{
+				// IS DISABLED AND VISIBLE
+				if (_despesa.DataInicial != null)
+				{
+					IsLocked = true;
+					IsVisible = true;
+				}
+				// IS DISABLED AND INVISIBLE
+				else
+				{
+					IsLocked = true;
+					IsVisible = false;
+				}
+			}
+
+			// APPLYING USING VARIABLES
+			if (IsVisible && !IsLocked) // IS NEW
+			{
+				chkReferencia.Visible = true;
+
+				if (IsEnable)
+				{
+					dtpDataInicial.Enabled = true;
+					dtpDataFinal.Enabled = true;
+				}
+				else
+				{
+					dtpDataInicial.Enabled = false;
+					dtpDataFinal.Enabled = false;
+				}
+
+				pnlReferencia.Visible = true;
+				pnlDataValor.Location = new Point(12, 295);
+
+			}
+			else if (IsVisible && IsLocked) // IS SAVED WITH DATE
+			{
+				chkReferencia.Visible = false;
+
+				// IS LOCKED
+				dtpDataFinal.MaxDate = (DateTime)_despesa.DataFinal;
+				dtpDataFinal.MinDate = (DateTime)_despesa.DataFinal;
+				dtpDataInicial.MaxDate = (DateTime)_despesa.DataInicial;
+				dtpDataInicial.MinDate = (DateTime)_despesa.DataInicial;
+
+				// IS VISIBLE
+				pnlReferencia.Visible = true;
+				pnlDataValor.Location = new Point(12, 295);
+			}
+			else if (!IsVisible && IsLocked) // IS SAVED WITHOUT DATE
+			{
+				chkReferencia.Visible = false;
+
+				pnlReferencia.Visible = false;
+				pnlDataValor.Location = new Point(12, 320);
+			}
+
+
+
+
+
+		}
+
+		#endregion // PERIODO REFERENCIA --- END
+
 	}
 }

@@ -329,6 +329,11 @@ namespace CamadaUI.Saidas
 				e.Handled = true;
 				btnFechar_Click(sender, new EventArgs());
 			}
+			else if (e.KeyCode == Keys.Add)
+			{
+				e.Handled = true;
+				btnAdicionar_Click(sender, new EventArgs());
+			}
 			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
 			{
 				e.Handled = true;
