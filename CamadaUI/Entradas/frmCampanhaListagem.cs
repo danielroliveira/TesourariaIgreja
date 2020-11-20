@@ -13,7 +13,9 @@ namespace CamadaUI.Entradas
 {
 	public partial class frmCampanhaListagem : CamadaUI.Modals.frmModFinBorder
 	{
+		private CampanhaBLL cBLL = new CampanhaBLL();
 		private List<objCampanha> listCampanha = new List<objCampanha>();
+		private BindingSource bind = new BindingSource();
 		private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
@@ -48,9 +50,10 @@ namespace CamadaUI.Entradas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				CampanhaBLL sBLL = new CampanhaBLL();
-				listCampanha = sBLL.GetListCampanha("", Convert.ToBoolean(cmbAtivo.SelectedValue));
-				dgvListagem.DataSource = listCampanha;
+
+				listCampanha = cBLL.GetListCampanha("", Convert.ToBoolean(cmbAtivo.SelectedValue));
+				bind.DataSource = listCampanha;
+				dgvListagem.DataSource = bind;
 			}
 			catch (Exception ex)
 			{
@@ -73,8 +76,8 @@ namespace CamadaUI.Entradas
 			DataTable dtAtivo = new DataTable();
 			dtAtivo.Columns.Add("Ativo");
 			dtAtivo.Columns.Add("Texto");
-			dtAtivo.Rows.Add(new object[] { false, "Inativo" });
-			dtAtivo.Rows.Add(new object[] { true, "Ativo" });
+			dtAtivo.Rows.Add(new object[] { true, "Ativas" });
+			dtAtivo.Rows.Add(new object[] { false, "Concluídas" });
 
 			//--- Set DataTable
 			cmbAtivo.DataSource = dtAtivo;
@@ -122,21 +125,41 @@ namespace CamadaUI.Entradas
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-			//--- (3) Coluna da imagem
+			//--- (3) COLUNA OBJETIVO VALOR
+			clnObjetivoValor.DataPropertyName = "ObjetivoValor";
+			clnObjetivoValor.Visible = true;
+			clnObjetivoValor.ReadOnly = true;
+			clnObjetivoValor.Resizable = DataGridViewTriState.False;
+			clnObjetivoValor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnObjetivoValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnObjetivoValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnObjetivoValor.DefaultCellStyle.Format = "C";
+
+			//--- (4) COLUNA SALDO
+			clnCampanhaSaldo.DataPropertyName = "CampanhaSaldo";
+			clnCampanhaSaldo.Visible = true;
+			clnCampanhaSaldo.ReadOnly = true;
+			clnCampanhaSaldo.Resizable = DataGridViewTriState.False;
+			clnCampanhaSaldo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCampanhaSaldo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnCampanhaSaldo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnCampanhaSaldo.DefaultCellStyle.Format = "C";
+
+			//--- (5) Coluna da imagem
 			clnImage.Name = "Ativa";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnObjetivoValor, clnCampanhaSaldo, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == 2)
+			if (e.ColumnIndex == clnImage.Index)
 			{
 				objCampanha item = (objCampanha)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 				if (item.Ativa) e.Value = ImgAtivo;
@@ -263,24 +286,20 @@ namespace CamadaUI.Entradas
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
+				objCampanha Campanha = (objCampanha)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+				if (Campanha.Ativa == true)
 				{
-					objCampanha Campanha = (objCampanha)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
-
-					if (Campanha.Ativa == true)
-					{
-						AtivarToolStripMenuItem.Enabled = false;
-						DesativarToolStripMenuItem.Enabled = true;
-					}
-					else
-					{
-						AtivarToolStripMenuItem.Enabled = true;
-						DesativarToolStripMenuItem.Enabled = false;
-					}
-
-					// revela menu
-					MenuListagem.Show(c.PointToScreen(e.Location));
+					mnuConcluir.Text = "Concluir/Finalizar Campanha";
 				}
+				else
+				{
+					mnuConcluir.Text = "Reativar Campanha";
+				}
+
+				// revela menu
+				MenuListagem.Show(c.PointToScreen(e.Location));
+
 			}
 		}
 
@@ -290,16 +309,25 @@ namespace CamadaUI.Entradas
 			if (dgvListagem.SelectedRows.Count == 0) return;
 
 			//--- Verifica o item
-			objCampanha setor = (objCampanha)dgvListagem.SelectedRows[0].DataBoundItem;
+			objCampanha camp = (objCampanha)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(setor.Ativa ? "DESATIVAR " : "ATIVAR")} essa Campanha?\n" +
-									  setor.Campanha.ToUpper(), (setor.Ativa ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(camp.Ativa ? "CONCLUIR | FINALIZAR" : "REATIVAR")} essa Campanha?\n" +
+									  camp.Campanha.ToUpper(), (camp.Ativa ? "CONCLUIR " : "REATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			setor.Ativa = !setor.Ativa;
+			if (camp.Ativa)
+			{
+				camp.Ativa = false;
+				camp.ConclusaoData = DateTime.Today;
+			}
+			else
+			{
+				camp.Ativa = true;
+				camp.ConclusaoData = null;
+			}
 
 			//--- Salvar o Registro
 			try
@@ -307,15 +335,49 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				CampanhaBLL cBLL = new CampanhaBLL();
-				cBLL.UpdateCampanha(setor);
+				cBLL.UpdateCampanha(camp);
 
-				//--- altera a imagem
-				FiltrarListagem(sender, e);
+				//--- obter listagem
+				ObterDados(sender, e);
 			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Alterar Campanha..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuRecalcularSaldo_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return;
+
+			//--- Verifica o item
+			objCampanha camp = (objCampanha)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				decimal SaldoAtual = cBLL.GetCampanhaSaldo((int)camp.IDCampanha);
+
+				if (SaldoAtual != camp.CampanhaSaldo)
+				{
+					camp.CampanhaSaldo = cBLL.GetCampanhaSaldo((int)camp.IDCampanha);
+					cBLL.UpdateCampanha(camp);
+					AbrirDialog("O Saldo Atual da Campanha foi alterado...", "Saldo Atual");
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter o Saldo da Campanha..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -390,5 +452,7 @@ namespace CamadaUI.Entradas
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
+
+
 	}
 }

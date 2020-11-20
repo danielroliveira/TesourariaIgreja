@@ -89,15 +89,19 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public objCampanha ConvertRowInClass(DataRow row)
 		{
-			objCampanha campanha = new objCampanha((int)row["IDCampanha"]) { };
+			objCampanha campanha = new objCampanha((int)row["IDCampanha"])
+			{
 
-			campanha.Campanha = (string)row["Campanha"];
-			campanha.IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"];
-			campanha.Setor = row["Setor"] == DBNull.Value ? "" : (string)row["Setor"];
-			campanha.CampanhaSaldo = row["CampanhaSaldo"] == DBNull.Value ? 0 : (decimal)row["CampanhaSaldo"];
-			campanha.InicioData = row["InicioData"] == DBNull.Value ? DateTime.Today : (DateTime)row["InicioData"];
-			campanha.ConclusaoData = row["InicioData"] == DBNull.Value ? null : (DateTime?)row["InicioData"];
-			campanha.Ativa = (bool)row["Ativa"];
+				Campanha = (string)row["Campanha"],
+				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
+				Setor = row["Setor"] == DBNull.Value ? "" : (string)row["Setor"],
+				CampanhaSaldo = row["CampanhaSaldo"] == DBNull.Value ? 0 : (decimal)row["CampanhaSaldo"],
+				InicioData = row["InicioData"] == DBNull.Value ? DateTime.Today : (DateTime)row["InicioData"],
+				ConclusaoData = row["ConclusaoData"] == DBNull.Value ? null : (DateTime?)row["ConclusaoData"],
+				Ativa = (bool)row["Ativa"],
+				ObjetivoValor = (decimal)row["ObjetivoValor"],
+
+			};
 
 			return campanha;
 		}
@@ -117,6 +121,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Campanha", campanha.Campanha);
 				db.AdicionarParametros("@IDSetor", campanha.IDSetor);
 				db.AdicionarParametros("@CampanhaSaldo", campanha.CampanhaSaldo);
+				db.AdicionarParametros("@ObjetivoValor", campanha.ObjetivoValor);
 				db.AdicionarParametros("@InicioData", campanha.InicioData);
 				db.AdicionarParametros("@Ativa", campanha.Ativa);
 
@@ -151,6 +156,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Campanha", campanha.Campanha);
 				db.AdicionarParametros("@IDSetor", campanha.IDSetor);
 				db.AdicionarParametros("@CampanhaSaldo", campanha.CampanhaSaldo);
+				db.AdicionarParametros("@ObjetivoValor", campanha.ObjetivoValor);
 				db.AdicionarParametros("@InicioData", campanha.InicioData);
 				db.AdicionarParametros("@ConclusaoData", campanha.ConclusaoData);
 				db.AdicionarParametros("@Ativa", campanha.Ativa);
@@ -170,6 +176,32 @@ namespace CamadaBLL
 			{
 				throw ex;
 			}
+		}
+
+		// GET TOTAL SALDO CAMPANHA
+		//------------------------------------------------------------------------------------------------------------
+		public decimal GetCampanhaSaldo(int IDCampanha)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT SUM(ValorRecebido) AS Total FROM qryContribuicao WHERE IDCampanha = @IDCampanha";
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCampanha", IDCampanha);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				decimal saldo = dt.Rows[0][0] == DBNull.Value ? 0 : (decimal)dt.Rows[0][0];
+
+				return saldo;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
 		}
 	}
 }

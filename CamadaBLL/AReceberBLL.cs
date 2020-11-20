@@ -289,6 +289,8 @@ namespace CamadaBLL
 				db = new AcessoDados();
 				db.BeginTransaction();
 
+				ContribuicaoBLL contBLL = new ContribuicaoBLL();
+
 				foreach (objMovimentacao entrada in entradas)
 				{
 					objAReceber receber = listRec.First(r => r.IDAReceber == entrada.IDOrigem);
@@ -303,6 +305,10 @@ namespace CamadaBLL
 						objAReceber newRec = insertAReceberCheque(receber, entrada, contaSaldoUpdate, db);
 						retorno.Add(newRec);
 					}
+
+					// update Contribuicao
+					contBLL.UpdateValorRecebidoAndCheckRealizado(receber.IDContribuicao, entrada.MovValor, db);
+
 				}
 
 				db.CommitTransaction();
@@ -381,6 +387,7 @@ namespace CamadaBLL
 
 				// update AReceber
 				UpdateAReceber(receber, dbTran);
+
 			}
 			catch (Exception ex)
 			{
@@ -472,6 +479,10 @@ namespace CamadaBLL
 
 				// REMOVE transf saida entrada
 				mBLL.DeleteMovsByOrigem(EnumMovOrigem.AReceber, (long)receber.IDAReceber, contaSaldoUpdate, setorSaldoUpdate, db);
+
+				// UPDATE Contribuicao
+				var cBLL = new ContribuicaoBLL();
+				cBLL.UpdateValorRecebidoEstorno(receber.IDContribuicao, receber.ValorRecebido, db);
 
 				// UPDATE AReceber
 				receber.ValorRecebido = 0;

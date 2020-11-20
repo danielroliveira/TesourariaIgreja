@@ -12,6 +12,7 @@ namespace CamadaUI.Entradas
 {
 	public partial class frmCampanha : CamadaUI.Modals.frmModFinBorder
 	{
+		private CampanhaBLL cBLL = new CampanhaBLL();
 		private objCampanha _campanha;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -39,11 +40,14 @@ namespace CamadaUI.Entradas
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+
 			}
 
 			AtivoButtonImage();
 			HandlerKeyDownControl(this);
 			txtCampanha.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCampanha);
+			GetSaldo();
+
 		}
 
 		// PROPERTY SITUACAO
@@ -86,6 +90,44 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+		// OBTER SALDO DA CAMPANHA E UPDATE
+		//------------------------------------------------------------------------------------------------------------
+		private void GetSaldo()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				if (_campanha.IDCampanha == null)
+				{
+					_campanha.CampanhaSaldo = 0;
+				}
+				else
+				{
+					decimal SaldoAtual = cBLL.GetCampanhaSaldo((int)_campanha.IDCampanha);
+
+					if (SaldoAtual != _campanha.CampanhaSaldo)
+					{
+						_campanha.CampanhaSaldo = cBLL.GetCampanhaSaldo((int)_campanha.IDCampanha);
+
+						cBLL.UpdateCampanha(_campanha);
+						Sit = EnumFlagEstado.RegistroSalvo;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter o Saldo da Campanha..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region DATABINDING
@@ -101,10 +143,12 @@ namespace CamadaUI.Entradas
 			lblCampanhaSaldo.DataBindings.Add("Text", bind, "CampanhaSaldo", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpInicioData.DataBindings.Add("Value", bind, "InicioData", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblConclusaoData.DataBindings.Add("Text", bind, "ConclusaoData", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtObjetivo.DataBindings.Add("Text", bind, "ObjetivoValor", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			lblCampanhaSaldo.DataBindings["Text"].Format += FormatCurrency;
+			txtObjetivo.DataBindings["Text"].Format += FormatCurrency;
 			lblConclusaoData.DataBindings["Text"].Format += FormatNullDate;
 		}
 
@@ -120,7 +164,7 @@ namespace CamadaUI.Entradas
 
 		private void FormatNullDate(object sender, ConvertEventArgs e)
 		{
-			e.Value = e.Value == null ? " Ativa" : e.Value;
+			e.Value = e.Value == null || e.Value == DBNull.Value ? " Ativa" : e.Value;
 		}
 
 		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
@@ -190,6 +234,7 @@ namespace CamadaUI.Entradas
 			AtivoButtonImage();
 			bind.DataSource = _campanha;
 			txtCampanha.Focus();
+			GetSaldo();
 		}
 
 		private void AtivoButtonImage()
@@ -199,12 +244,12 @@ namespace CamadaUI.Entradas
 				if (_campanha.Ativa == true) //--- Nesse caso é Forma Ativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchON_30;
-					btnAtivo.Text = "Ativo";
+					btnAtivo.Text = "Ativa";
 				}
 				else if (_campanha.Ativa == false) //--- Nesse caso é Forma Inativo
 				{
 					btnAtivo.Image = Properties.Resources.SwitchOFF_30;
-					btnAtivo.Text = "Inativo";
+					btnAtivo.Text = "Concluída";
 				}
 			}
 			catch (Exception ex)
@@ -230,22 +275,21 @@ namespace CamadaUI.Entradas
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				CampanhaBLL sBLL = new CampanhaBLL();
-
 				//--- SAVE: INSERT OR UPDATE
 				if (_campanha.IDCampanha == null) //--- save | Insert
 				{
-					int ID = sBLL.InsertCampanha(_campanha);
+					int ID = cBLL.InsertCampanha(_campanha);
 					//--- define newID
 					_campanha.IDCampanha = ID;
 				}
 				else //--- update
 				{
-					sBLL.UpdateCampanha(_campanha);
+					cBLL.UpdateCampanha(_campanha);
 				}
 
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
+
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
@@ -268,6 +312,15 @@ namespace CamadaUI.Entradas
 			if (!VerificaDadosClasse(txtCampanha, "Campanha", _campanha)) return false;
 			if (!VerificaDadosClasse(txtSetor, "Setor", _campanha)) return false;
 			if (!VerificaDadosClasse(dtpInicioData, "Data de Início", _campanha)) return false;
+			if (!VerificaDadosClasse(txtObjetivo, "Valor do Objetivo Alvo", _campanha)) return false;
+
+			if (_campanha.ObjetivoValor <= 0)
+			{
+				AbrirDialog("O Valor objetivo alvo não pode ser igual ou menor que zero..." +
+					"\nFavor inserir um valor maior que zero.", "Valor Objetivo", DialogType.OK, DialogIcon.Exclamation);
+				txtObjetivo.Focus();
+				return false;
+			}
 
 			return true;
 		}

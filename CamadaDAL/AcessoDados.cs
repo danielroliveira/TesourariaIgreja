@@ -348,7 +348,7 @@ namespace CamadaDAL
 		#region TRANSACTION
 
 		// BEGIN TRANSACTION
-		public void BeginTransaction()
+		public void BeginTransaction(bool IsolationReadUncommitted = false)
 		{
 			if (isTran) return;
 
@@ -357,7 +357,15 @@ namespace CamadaDAL
 				conn.Open();
 			}
 
-			trans = conn.BeginTransaction();
+			if (!IsolationReadUncommitted)
+			{
+				trans = conn.BeginTransaction();
+			}
+			else
+			{
+				trans = conn.BeginTransaction(IsolationLevel.ReadUncommitted);
+			}
+
 			isTran = true;
 
 		}

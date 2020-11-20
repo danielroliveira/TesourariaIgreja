@@ -368,7 +368,6 @@
                             </Border>
                           </Style>
                         </Rectangle>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -403,7 +402,7 @@
             <Value>=Parameters!LogoPath.Value</Value>
             <Sizing>FitProportional</Sizing>
             <Top>0.13758cm</Top>
-            <Left>1.524cm</Left>
+            <Left>1.2065cm</Left>
             <Height>1.66419cm</Height>
             <Width>5.01385cm</Width>
             <ZIndex>1</ZIndex>

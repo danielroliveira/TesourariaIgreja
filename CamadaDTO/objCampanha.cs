@@ -15,6 +15,7 @@ namespace CamadaDTO
 			internal int? _IDSetor;
 			internal string _Setor;
 			internal decimal _CampanhaSaldo;
+			internal decimal _ObjetivoValor;
 			internal DateTime _InicioData;
 			internal DateTime? _ConclusaoData;
 			internal bool _Ativa;
@@ -145,6 +146,21 @@ namespace CamadaDTO
 				{
 					EditData._CampanhaSaldo = value;
 					NotifyPropertyChanged("CampanhaSaldo");
+				}
+			}
+		}
+
+		// Property ObjetivoValor
+		//---------------------------------------------------------------
+		public decimal ObjetivoValor
+		{
+			get => EditData._ObjetivoValor;
+			set
+			{
+				if (value != EditData._ObjetivoValor)
+				{
+					EditData._ObjetivoValor = value;
+					NotifyPropertyChanged("ObjetivoValor");
 				}
 			}
 		}

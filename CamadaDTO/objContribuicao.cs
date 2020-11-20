@@ -32,6 +32,8 @@ namespace CamadaDTO
 			internal string _Reuniao;
 			internal int? _IDCampanha;
 			internal string _Campanha;
+			internal decimal _ValorRecebido;
+			internal bool _Realizado;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -49,6 +51,8 @@ namespace CamadaDTO
 				_IDEntradaForma = 1,
 				_IDContribuicaoTipo = 1,
 				_ValorBruto = 0,
+				_ValorRecebido = 0,
+				_Realizado = false,
 			};
 
 			EntradaForma = "Dinheiro";
@@ -401,6 +405,35 @@ namespace CamadaDTO
 			set => EditData._Campanha = value;
 		}
 
+		// Property ValorRecebido
+		//---------------------------------------------------------------
+		public decimal ValorRecebido
+		{
+			get => EditData._ValorRecebido;
+			set
+			{
+				if (value != EditData._ValorRecebido)
+				{
+					EditData._ValorRecebido = value;
+					NotifyPropertyChanged("ValorRecebido");
+				}
+			}
+		}
+
+		// Property Realizado
+		//---------------------------------------------------------------
+		public bool Realizado
+		{
+			get => EditData._Realizado;
+			set
+			{
+				if (value != EditData._Realizado)
+				{
+					EditData._Realizado = value;
+					NotifyPropertyChanged("Realizado");
+				}
+			}
+		}
 	}
 
 	//=================================================================================================

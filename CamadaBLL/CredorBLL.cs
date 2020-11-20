@@ -1,9 +1,9 @@
-﻿using System;
+﻿using CamadaDAL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CamadaDAL;
-using CamadaDTO;
 
 namespace CamadaBLL
 {
@@ -141,7 +141,8 @@ namespace CamadaBLL
 
 				//--- check duplicated CNP
 				//------------------------------------------------------------------------------------------------------------
-				string CNP = credor.CNP.Replace("/", "").Replace("-", "").Replace(".", "").Trim();
+				string CNP = credor.CNP ?? string.Empty;
+				CNP = CNP.Replace("/", "").Replace("-", "").Replace(".", "").Trim();
 
 				if (!string.IsNullOrEmpty(CNP))
 				{
@@ -213,7 +214,7 @@ namespace CamadaBLL
 			catch (Exception ex)
 			{
 				//--- ROOLBACK
-				db.RollBackTransaction(); 
+				db.RollBackTransaction();
 				throw ex;
 			}
 		}

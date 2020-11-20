@@ -51,6 +51,8 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.lblConclusaoData = new System.Windows.Forms.Label();
 			this.Label34 = new System.Windows.Forms.Label();
+			this.txtObjetivo = new CamadaUC.ucOnlyNumbers();
+			this.label3 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -144,10 +146,10 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 304);
+			this.tspMenu.Location = new System.Drawing.Point(2, 353);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(606, 44);
-			this.tspMenu.TabIndex = 13;
+			this.tspMenu.TabIndex = 15;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -228,11 +230,11 @@
 			this.line1.EndPoint = new System.Drawing.Point(550, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(25, 222);
+			this.line1.Location = new System.Drawing.Point(25, 267);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(555, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 8;
+			this.line1.TabIndex = 10;
 			this.line1.TabStop = false;
 			// 
 			// btnSetorEscolher
@@ -279,10 +281,10 @@
 			this.lblCampanhaSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblCampanhaSaldo.BackColor = System.Drawing.Color.Transparent;
 			this.lblCampanhaSaldo.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCampanhaSaldo.Location = new System.Drawing.Point(181, 250);
+			this.lblCampanhaSaldo.Location = new System.Drawing.Point(177, 292);
 			this.lblCampanhaSaldo.Name = "lblCampanhaSaldo";
-			this.lblCampanhaSaldo.Size = new System.Drawing.Size(100, 29);
-			this.lblCampanhaSaldo.TabIndex = 10;
+			this.lblCampanhaSaldo.Size = new System.Drawing.Size(132, 29);
+			this.lblCampanhaSaldo.TabIndex = 12;
 			this.lblCampanhaSaldo.Text = "R$ 0,00";
 			this.lblCampanhaSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -292,30 +294,30 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(36, 255);
+			this.label1.Location = new System.Drawing.Point(32, 297);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(141, 19);
-			this.label1.TabIndex = 9;
+			this.label1.TabIndex = 11;
 			this.label1.Text = "Saldo da Campanha:";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// dtpInicioData
 			// 
 			this.dtpInicioData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpInicioData.Location = new System.Drawing.Point(186, 175);
+			this.dtpInicioData.Location = new System.Drawing.Point(186, 219);
 			this.dtpInicioData.Name = "dtpInicioData";
 			this.dtpInicioData.Size = new System.Drawing.Size(135, 27);
-			this.dtpInicioData.TabIndex = 7;
+			this.dtpInicioData.TabIndex = 9;
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(81, 179);
+			this.label2.Location = new System.Drawing.Point(81, 223);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(99, 19);
-			this.label2.TabIndex = 6;
+			this.label2.TabIndex = 8;
 			this.label2.Text = "Data de Início";
 			// 
 			// lblConclusaoData
@@ -323,10 +325,10 @@
 			this.lblConclusaoData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblConclusaoData.BackColor = System.Drawing.Color.Transparent;
 			this.lblConclusaoData.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblConclusaoData.Location = new System.Drawing.Point(434, 250);
+			this.lblConclusaoData.Location = new System.Drawing.Point(446, 292);
 			this.lblConclusaoData.Name = "lblConclusaoData";
 			this.lblConclusaoData.Size = new System.Drawing.Size(127, 29);
-			this.lblConclusaoData.TabIndex = 12;
+			this.lblConclusaoData.TabIndex = 14;
 			this.lblConclusaoData.Text = "00/00/0000";
 			this.lblConclusaoData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -336,17 +338,40 @@
 			this.Label34.AutoSize = true;
 			this.Label34.BackColor = System.Drawing.Color.Transparent;
 			this.Label34.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Label34.Location = new System.Drawing.Point(303, 255);
+			this.Label34.Location = new System.Drawing.Point(315, 297);
 			this.Label34.Name = "Label34";
 			this.Label34.Size = new System.Drawing.Size(135, 19);
-			this.Label34.TabIndex = 11;
+			this.Label34.TabIndex = 13;
 			this.Label34.Text = "Data da Conclusão:";
 			this.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// txtObjetivo
+			// 
+			this.txtObjetivo.Inteiro = false;
+			this.txtObjetivo.Location = new System.Drawing.Point(186, 176);
+			this.txtObjetivo.Moeda = true;
+			this.txtObjetivo.Name = "txtObjetivo";
+			this.txtObjetivo.Positivo = true;
+			this.txtObjetivo.Size = new System.Drawing.Size(135, 27);
+			this.txtObjetivo.TabIndex = 7;
+			this.txtObjetivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.ForeColor = System.Drawing.Color.Black;
+			this.label3.Location = new System.Drawing.Point(116, 179);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(64, 19);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "Objetivo";
 			// 
 			// frmCampanha
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(611, 350);
+			this.ClientSize = new System.Drawing.Size(611, 399);
+			this.Controls.Add(this.txtObjetivo);
 			this.Controls.Add(this.lblConclusaoData);
 			this.Controls.Add(this.Label34);
 			this.Controls.Add(this.dtpInicioData);
@@ -358,6 +383,7 @@
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.txtCampanha);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.lblCongregacao);
 			this.KeyPreview = true;
@@ -365,6 +391,7 @@
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
+			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtCampanha, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
@@ -377,6 +404,7 @@
 			this.Controls.SetChildIndex(this.dtpInicioData, 0);
 			this.Controls.SetChildIndex(this.Label34, 0);
 			this.Controls.SetChildIndex(this.lblConclusaoData, 0);
+			this.Controls.SetChildIndex(this.txtObjetivo, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -409,5 +437,7 @@
 		private System.Windows.Forms.ToolStripLabel btnAtivo;
 		internal System.Windows.Forms.Label lblConclusaoData;
 		internal System.Windows.Forms.Label Label34;
+		private CamadaUC.ucOnlyNumbers txtObjetivo;
+		internal System.Windows.Forms.Label label3;
 	}
 }

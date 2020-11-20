@@ -39,12 +39,16 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnObjetivoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCampanhaSaldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.mnuEditarCampanha = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuRecalcularSaldo = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuConcluir = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -52,7 +56,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(245, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(483, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(306, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Campanhas de Arrecadação";
@@ -62,19 +66,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(551, 0);
+			this.btnClose.Location = new System.Drawing.Point(789, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(591, 50);
+			this.panel1.Size = new System.Drawing.Size(829, 50);
 			// 
 			// btnFechar
 			// 
-			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(443, 495);
+			this.btnFechar.Location = new System.Drawing.Point(681, 495);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
 			this.btnFechar.TabIndex = 8;
@@ -145,7 +149,7 @@
 			this.cmbAtivo.FormattingEnabled = true;
 			this.cmbAtivo.Location = new System.Drawing.Point(466, 67);
 			this.cmbAtivo.Name = "cmbAtivo";
-			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
+			this.cmbAtivo.Size = new System.Drawing.Size(115, 27);
 			this.cmbAtivo.TabIndex = 4;
 			// 
 			// dgvListagem
@@ -159,9 +163,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -175,9 +179,11 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnCadastro,
-			this.clnImage});
+            this.clnID,
+            this.clnCadastro,
+            this.clnObjetivoValor,
+            this.clnCampanhaSaldo,
+            this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 111);
@@ -190,40 +196,18 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(547, 371);
+			this.dgvListagem.Size = new System.Drawing.Size(785, 371);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// MenuListagem
-			// 
-			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.AtivarToolStripMenuItem,
-			this.DesativarToolStripMenuItem});
-			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(153, 48);
-			// 
-			// AtivarToolStripMenuItem
-			// 
-			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
-			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.AtivarToolStripMenuItem.Text = "Ativar Setor";
-			// 
-			// DesativarToolStripMenuItem
-			// 
-			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
-			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
 			// 
 			// clnID
 			// 
 			this.clnID.HeaderText = "Reg.";
 			this.clnID.Name = "clnID";
 			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
+			this.clnID.Width = 70;
 			// 
 			// clnCadastro
 			// 
@@ -232,6 +216,20 @@
 			this.clnCadastro.ReadOnly = true;
 			this.clnCadastro.Width = 350;
 			// 
+			// clnObjetivoValor
+			// 
+			this.clnObjetivoValor.HeaderText = "Objetivo Valor";
+			this.clnObjetivoValor.Name = "clnObjetivoValor";
+			this.clnObjetivoValor.ReadOnly = true;
+			this.clnObjetivoValor.Width = 120;
+			// 
+			// clnCampanhaSaldo
+			// 
+			this.clnCampanhaSaldo.HeaderText = "Saldo Atual";
+			this.clnCampanhaSaldo.Name = "clnCampanhaSaldo";
+			this.clnCampanhaSaldo.ReadOnly = true;
+			this.clnCampanhaSaldo.Width = 120;
+			// 
 			// clnImage
 			// 
 			this.clnImage.HeaderText = "Ativo";
@@ -239,10 +237,50 @@
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
 			// 
+			// MenuListagem
+			// 
+			this.MenuListagem.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuEditarCampanha,
+            this.mnuRecalcularSaldo,
+            this.toolStripSeparator1,
+            this.mnuConcluir});
+			this.MenuListagem.Name = "MenuFab";
+			this.MenuListagem.Size = new System.Drawing.Size(222, 82);
+			// 
+			// mnuEditarCampanha
+			// 
+			this.mnuEditarCampanha.Image = global::CamadaUI.Properties.Resources.editar_16;
+			this.mnuEditarCampanha.Name = "mnuEditarCampanha";
+			this.mnuEditarCampanha.Size = new System.Drawing.Size(221, 24);
+			this.mnuEditarCampanha.Text = "Ver/Editar Campanha";
+			this.mnuEditarCampanha.Click += new System.EventHandler(this.btnEditar_Click);
+			// 
+			// mnuRecalcularSaldo
+			// 
+			this.mnuRecalcularSaldo.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.mnuRecalcularSaldo.Name = "mnuRecalcularSaldo";
+			this.mnuRecalcularSaldo.Size = new System.Drawing.Size(221, 24);
+			this.mnuRecalcularSaldo.Text = "Recalcular Saldo Total";
+			this.mnuRecalcularSaldo.Click += new System.EventHandler(this.mnuRecalcularSaldo_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
+			// 
+			// mnuConcluir
+			// 
+			this.mnuConcluir.Image = global::CamadaUI.Properties.Resources.accept_16;
+			this.mnuConcluir.Name = "mnuConcluir";
+			this.mnuConcluir.Size = new System.Drawing.Size(221, 24);
+			this.mnuConcluir.Text = "Concluir Campanha";
+			this.mnuConcluir.Click += new System.EventHandler(this.AtivarDesativar_Campanha_Click);
+			// 
 			// frmCampanhaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(591, 549);
+			this.ClientSize = new System.Drawing.Size(829, 549);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
@@ -282,10 +320,14 @@
 		private CamadaUC.ucComboLimitedValues cmbAtivo;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
-		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
-		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		internal System.Windows.Forms.ToolStripMenuItem mnuConcluir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnObjetivoValor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCampanhaSaldo;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
+		private System.Windows.Forms.ToolStripMenuItem mnuEditarCampanha;
+		private System.Windows.Forms.ToolStripMenuItem mnuRecalcularSaldo;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }

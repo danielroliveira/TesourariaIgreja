@@ -201,6 +201,8 @@ namespace CamadaBLL
 				Reuniao = row["Reuniao"] == DBNull.Value ? null : (string)row["Reuniao"],
 				IDCampanha = row["IDCampanha"] == DBNull.Value ? null : (int?)row["IDCampanha"],
 				Campanha = row["Campanha"] == DBNull.Value ? null : (string)row["Campanha"],
+				ValorRecebido = (decimal)row["ValorRecebido"],
+				Realizado = (bool)row["Realizado"],
 			};
 
 			return entrada;
@@ -234,6 +236,8 @@ namespace CamadaBLL
 					case 1: // DINHEIRO
 
 						//--- Insert Contribuicao
+						cont.Realizado = true;
+						cont.ValorRecebido = cont.ValorBruto;
 						newID = AddContribuicao(cont, db);
 
 						//--- Create NEW Entrada
@@ -261,6 +265,8 @@ namespace CamadaBLL
 							throw new Exception("Não há registro de informação do cheque...");
 
 						//--- Insert Contribuicao
+						cont.Realizado = false;
+						cont.ValorRecebido = 0;
 						newID = AddContribuicao(cont, db);
 						cont.IDContribuicao = newID;
 
@@ -320,6 +326,8 @@ namespace CamadaBLL
 						}
 
 						//--- Insert Contribuicao
+						cont.Realizado = false;
+						cont.ValorRecebido = 0;
 						newID = AddContribuicao(cont, db);
 						cont.IDContribuicao = newID;
 
@@ -478,6 +486,8 @@ namespace CamadaBLL
 				db.AdicionarParametros("@OrigemDescricao", entrada.OrigemDescricao);
 				db.AdicionarParametros("@IDReuniao", entrada.IDReuniao);
 				db.AdicionarParametros("@IDCampanha", entrada.IDCampanha);
+				db.AdicionarParametros("@ValorRecebido", entrada.ValorRecebido);
+				db.AdicionarParametros("@Realizado", entrada.Realizado);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -494,6 +504,81 @@ namespace CamadaBLL
 			{
 				throw ex;
 			}
+		}
+
+		// UPDATE VALOR_RECEBIDO WHEN ARECEBER QUITADO
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateValorRecebidoAndCheckRealizado(long IDContribuicao, decimal ValorMovimentado, AcessoDados dbTran)
+		{
+			try
+			{
+				// clear Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDContribuicao", IDContribuicao);
+
+				// CheckRealizado and Update
+				string query = "SELECT COUNT(IDContribuicao) AS QTDE " +
+					"FROM tblAReceber " +
+					"WHERE IDContribuicao = @IDContribuicao AND IDSituacao = 1";
+
+				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
+				bool realizado = false;
+
+				if (dt.Rows.Count > 0 && (int)dt.Rows[0][0] > 0)
+				{
+					realizado = false;
+				}
+				else
+				{
+					realizado = true;
+				}
+
+				// UPDATE VALOR RECEBIDO
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDContribuicao", IDContribuicao);
+				dbTran.AdicionarParametros("@ValorRecebido", ValorMovimentado);
+				dbTran.AdicionarParametros("@Realizado", realizado);
+
+				query = "UPDATE tblContribuicao " +
+					"SET ValorRecebido = ValorRecebido + @ValorRecebido, Realizado = @Realizado " +
+					"WHERE IDContribuicao = @IDContribuicao";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			return true;
+		}
+
+		// UPDATE VALOR_RECEBIDO WHEN ARECEBER ESTORNO
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateValorRecebidoEstorno(long IDContribuicao, decimal ValorEstorno, AcessoDados dbTran)
+		{
+			try
+			{
+				// UPDATE VALOR RECEBIDO
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDContribuicao", IDContribuicao);
+				dbTran.AdicionarParametros("@ValorEstorno", ValorEstorno);
+				dbTran.AdicionarParametros("@Realizado", false);
+
+				string query = "UPDATE tblContribuicao " +
+					"SET ValorRecebido = ValorRecebido - @ValorEstorno, Realizado = @Realizado " +
+					"WHERE IDContribuicao = @IDContribuicao";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			return true;
 		}
 
 		// DELETE

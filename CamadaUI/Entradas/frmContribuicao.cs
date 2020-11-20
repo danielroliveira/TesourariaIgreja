@@ -544,13 +544,16 @@ namespace CamadaUI.Entradas
 
 					forma = cheque;
 				}
-
-				ContribuicaoBLL sBLL = new ContribuicaoBLL();
+				else if (_contribuicao.IDEntradaForma == 1) // Dinheiro 
+				{
+					_contribuicao.ValorRecebido = _contribuicao.ValorBruto;
+					_contribuicao.Realizado = true;
+				}
 
 				//--- SAVE: INSERT
 				if (_contribuicao.IDContribuicao == null) //--- save | Insert
 				{
-					long ID = sBLL.InsertContribuicao(_contribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate, forma);
+					long ID = contBLL.InsertContribuicao(_contribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate, forma);
 
 					//--- define newID
 					_contribuicao.IDContribuicao = ID;
@@ -988,7 +991,13 @@ namespace CamadaUI.Entradas
 			else if (!string.IsNullOrEmpty(_contribuicao.Campanha))
 				descricao += _contribuicao.Campanha;
 			else
-				descricao += _contribuicao.Reuniao + " - " + _contribuicao.ContribuicaoData.ToShortDateString();
+			{
+				if (_contribuicao.IDReuniao != null)
+					descricao += _contribuicao.Reuniao + " - " + _contribuicao.ContribuicaoData.ToShortDateString();
+				else
+					descricao += "Reunião não informada - " + _contribuicao.ContribuicaoData.ToShortDateString();
+			}
+
 
 			txtOrigemDescricao.Text = descricao;
 		}
