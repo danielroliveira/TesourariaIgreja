@@ -39,12 +39,12 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -196,27 +196,6 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnCadastro
-			// 
-			this.clnCadastro.HeaderText = "Congregação Setor";
-			this.clnCadastro.Name = "clnCadastro";
-			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 350;
-			// 
-			// clnImage
-			// 
-			this.clnImage.HeaderText = "Ativo";
-			this.clnImage.Name = "clnImage";
-			this.clnImage.ReadOnly = true;
-			this.clnImage.Width = 70;
-			// 
 			// MenuListagem
 			// 
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -240,6 +219,27 @@
 			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
 			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnCadastro
+			// 
+			this.clnCadastro.HeaderText = "Congregação";
+			this.clnCadastro.Name = "clnCadastro";
+			this.clnCadastro.ReadOnly = true;
+			this.clnCadastro.Width = 350;
+			// 
+			// clnImage
+			// 
+			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
 			// 
 			// frmCongregacaoListagem
 			// 
@@ -283,11 +283,11 @@
 		internal System.Windows.Forms.Label Label1;
 		private CamadaUC.ucComboLimitedValues cmbAtivo;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
-		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
+		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 	}
 }

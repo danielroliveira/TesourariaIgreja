@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
-using System.Linq;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Congregacoes
 {
@@ -193,14 +188,14 @@ namespace CamadaUI.Congregacoes
 
 			if (_setor.Ativo == true) //--- ATIVA
 			{
-				var response = AbrirDialog("Você deseja realmente DESATIVAR a Forma de Entrada:\n" +
+				var response = AbrirDialog("Você deseja realmente DESATIVAR a Regional:\n" +
 							   txtCongregacaoSetor.Text.ToUpper(),
 							   "Desativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
 			}
 			else //--- INATIVO
 			{
-				var response = AbrirDialog("Você deseja realmente ATIVAR a Forma de Entrada:\n" +
+				var response = AbrirDialog("Você deseja realmente ATIVAR a Regional:\n" +
 							   txtCongregacaoSetor.Text.ToUpper(),
 							   "Ativar Conta", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (response == DialogResult.No) return;
@@ -231,7 +226,7 @@ namespace CamadaUI.Congregacoes
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Ativar a congregação..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Ativar a Regional..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}
@@ -274,7 +269,7 @@ namespace CamadaUI.Congregacoes
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Congregação Setor..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Salvar Registro de Regional de Congregação..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -287,7 +282,7 @@ namespace CamadaUI.Congregacoes
 
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtCongregacaoSetor, "Congregação Setor", _setor)) return false;
+			if (!VerificaDadosClasse(txtCongregacaoSetor, "Congregação Regional", _setor)) return false;
 			return true;
 		}
 

@@ -193,7 +193,7 @@
 			this.mnuSetoresCongregacao.Name = "mnuSetoresCongregacao";
 			this.mnuSetoresCongregacao.Size = new System.Drawing.Size(262, 38);
 			this.mnuSetoresCongregacao.Tag = "1";
-			this.mnuSetoresCongregacao.Text = "Setores de Congregação";
+			this.mnuSetoresCongregacao.Text = "Regionais";
 			// 
 			// mnuReunioes
 			// 

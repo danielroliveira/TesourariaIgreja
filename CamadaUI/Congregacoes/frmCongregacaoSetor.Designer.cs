@@ -52,9 +52,10 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(261, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(230, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(290, 50);
 			this.lblTitulo.TabIndex = 2;
-			this.lblTitulo.Text = "Setor das Congregações";
+			this.lblTitulo.Text = "Regional de Congregações";
 			// 
 			// btnClose
 			// 
@@ -99,11 +100,11 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(85, 94);
+			this.lblCongregacao.Location = new System.Drawing.Point(61, 94);
 			this.lblCongregacao.Name = "lblCongregacao";
-			this.lblCongregacao.Size = new System.Drawing.Size(42, 19);
+			this.lblCongregacao.Size = new System.Drawing.Size(66, 19);
 			this.lblCongregacao.TabIndex = 1;
-			this.lblCongregacao.Text = "Setor";
+			this.lblCongregacao.Text = "Regional";
 			// 
 			// txtCongregacaoSetor
 			// 
@@ -175,7 +176,7 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 273);
+			this.tspMenu.Location = new System.Drawing.Point(2, 263);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
 			this.tspMenu.TabIndex = 30;
@@ -268,7 +269,7 @@
 			// frmCongregacaoSetor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 319);
+			this.ClientSize = new System.Drawing.Size(560, 309);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.txtCoordenadorTelefone);
