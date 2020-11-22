@@ -440,6 +440,12 @@
     <Compile Include="Main\frmPrincipal.designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\frmReportGlobal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmReportGlobal.designer.cs">
+      <DependentUpon>frmReportGlobal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmUserAuthorization.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -857,6 +863,9 @@
     <EmbeddedResource Include="Main\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmReportGlobal.resx">
+      <DependentUpon>frmReportGlobal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\frmUserAuthorization.resx">
       <DependentUpon>frmUserAuthorization.cs</DependentUpon>
     </EmbeddedResource>
@@ -955,6 +964,8 @@
     <EmbeddedResource Include="Saidas\Reports\frmProvisorioReciboReport.resx">
       <DependentUpon>frmProvisorioReciboReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\Reports\rptDespesaGrupoList.rdlc" />
+    <EmbeddedResource Include="Saidas\Reports\rptDespesaTipoList.rdlc" />
     <EmbeddedResource Include="Saidas\Reports\rptProvisorioRecibo.rdlc" />
     <EmbeddedResource Include="Setores\frmSetor.resx">
       <DependentUpon>frmSetor.cs</DependentUpon>
@@ -983,8 +994,11 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CamadaDTO.objAPagar.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCaixa.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objCampanha.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDadosIgreja.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaProvisoria.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDespesaTipo.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDespesaTipoGrupo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

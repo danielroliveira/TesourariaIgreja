@@ -1,10 +1,7 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaUI.Contas;
-using CamadaUI.Setores;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -140,6 +137,9 @@ namespace CamadaUI.Entradas
 		{
 			decimal vlTotal = listCont.Sum(x => x.ValorBruto);
 			lblValorTotal.Text = vlTotal.ToString("C");
+
+			decimal vlRecebido = listCont.Sum(x => x.ValorRecebido);
+			lblValorRecebido.Text = vlRecebido.ToString("C");
 		}
 
 		// DEFINE O LABEL FILTRO
@@ -286,6 +286,16 @@ namespace CamadaUI.Entradas
 			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.DefaultCellStyle.Font = clnFont;
 
+			//--- (9) COLUNA VALOR RECEBIDO
+			clnValorRecebido.DataPropertyName = "ValorRecebido";
+			clnValorRecebido.Visible = true;
+			clnValorRecebido.ReadOnly = true;
+			clnValorRecebido.Resizable = DataGridViewTriState.False;
+			clnValorRecebido.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorRecebido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.DefaultCellStyle.Font = clnFont;
+
 			//--- Add Columns
 			dgvListagem.Columns.AddRange(
 				clnID,
@@ -295,7 +305,8 @@ namespace CamadaUI.Entradas
 				clnTipo,
 				clnContribuinte,
 				clnForma,
-				clnValor);
+				clnValor,
+				clnValorRecebido);
 		}
 
 		// ON ENTER SELECT ITEM
@@ -602,5 +613,6 @@ namespace CamadaUI.Entradas
 
 
 		#endregion // DATE MONTH CONTROLER --- END
+
 	}
 }

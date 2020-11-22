@@ -203,6 +203,36 @@ namespace CamadaUI.Saidas
 			frm.Show();
 		}
 
+		// PRINT LIST
+		//------------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> mylist = listTipo.Cast<object>().ToList();
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Saidas.Reports.rptDespesaTipoList.rdlc",
+					"Listagem de Tipos de Despesa",
+					mylist);
+				frm.ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region FILTRAGEM PROCURA
@@ -302,6 +332,7 @@ namespace CamadaUI.Saidas
 				dBLL.UpdateDespesaTipo(tipo);
 
 				//--- altera a imagem
+				ObterDados();
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)

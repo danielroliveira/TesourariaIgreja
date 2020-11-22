@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -42,6 +42,7 @@
 			this.clnContribuinte = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorRecebido = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
@@ -62,6 +63,8 @@
 			this.Panel2 = new System.Windows.Forms.Panel();
 			this.lblFiltro = new System.Windows.Forms.Label();
 			this.btnExcluir = new System.Windows.Forms.Button();
+			this.lblValorRecebido = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -71,7 +74,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(820, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(925, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(340, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Procurar Contribuições";
@@ -81,19 +84,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1160, 0);
+			this.btnClose.Location = new System.Drawing.Point(1265, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1200, 50);
+			this.panel1.Size = new System.Drawing.Size(1305, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(708, 631);
+			this.btnFechar.Location = new System.Drawing.Point(1148, 632);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 7;
@@ -137,24 +140,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -165,7 +168,8 @@
             this.clnTipo,
             this.clnContribuinte,
             this.clnForma,
-            this.clnValor});
+            this.clnValor,
+            this.clnValorRecebido});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -179,7 +183,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1156, 479);
+			this.dgvListagem.Size = new System.Drawing.Size(1261, 479);
 			this.dgvListagem.TabIndex = 2;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			// 
@@ -237,24 +241,30 @@
 			this.clnValor.Name = "clnValor";
 			this.clnValor.ReadOnly = true;
 			// 
+			// clnValorRecebido
+			// 
+			this.clnValorRecebido.HeaderText = "Vl Recebido";
+			this.clnValorRecebido.Name = "clnValorRecebido";
+			this.clnValorRecebido.ReadOnly = true;
+			// 
 			// label1
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1109, 623);
+			this.label1.Location = new System.Drawing.Point(1010, 623);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(69, 15);
+			this.label1.Size = new System.Drawing.Size(122, 15);
 			this.label1.TabIndex = 8;
-			this.label1.Text = "Valor Total:";
+			this.label1.Text = "Valor Recebido Total:";
 			// 
 			// lblValorTotal
 			// 
 			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTotal.Location = new System.Drawing.Point(1041, 642);
+			this.lblValorTotal.Location = new System.Drawing.Point(842, 642);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
 			this.lblValorTotal.TabIndex = 9;
@@ -505,7 +515,7 @@
 			this.lblFiltro.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblFiltro.Location = new System.Drawing.Point(717, 67);
 			this.lblFiltro.Name = "lblFiltro";
-			this.lblFiltro.Size = new System.Drawing.Size(461, 58);
+			this.lblFiltro.Size = new System.Drawing.Size(561, 58);
 			this.lblFiltro.TabIndex = 10;
 			this.lblFiltro.Text = "Filtro";
 			// 
@@ -523,12 +533,38 @@
 			this.btnExcluir.UseVisualStyleBackColor = true;
 			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
 			// 
+			// lblValorRecebido
+			// 
+			this.lblValorRecebido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorRecebido.BackColor = System.Drawing.Color.LightGray;
+			this.lblValorRecebido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValorRecebido.Location = new System.Drawing.Point(993, 641);
+			this.lblValorRecebido.Name = "lblValorRecebido";
+			this.lblValorRecebido.Size = new System.Drawing.Size(137, 32);
+			this.lblValorRecebido.TabIndex = 9;
+			this.lblValorRecebido.Text = "R$ 0,00";
+			this.lblValorRecebido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label3
+			// 
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.ForeColor = System.Drawing.Color.DimGray;
+			this.label3.Location = new System.Drawing.Point(910, 623);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(69, 15);
+			this.label3.TabIndex = 8;
+			this.label3.Text = "Valor Total:";
+			// 
 			// frmContribuicaoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1200, 686);
+			this.ClientSize = new System.Drawing.Size(1305, 686);
 			this.Controls.Add(this.lblFiltro);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label1);
+			this.Controls.Add(this.lblValorRecebido);
 			this.Controls.Add(this.lblValorTotal);
 			this.Controls.Add(this.btnProcurar);
 			this.Controls.Add(this.Panel2);
@@ -550,7 +586,9 @@
 			this.Controls.SetChildIndex(this.Panel2, 0);
 			this.Controls.SetChildIndex(this.btnProcurar, 0);
 			this.Controls.SetChildIndex(this.lblValorTotal, 0);
+			this.Controls.SetChildIndex(this.lblValorRecebido, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.lblFiltro, 0);
 			this.panel1.ResumeLayout(false);
@@ -587,6 +625,8 @@
 		internal VIBlend.WinForms.Controls.vButton btnDtFinal;
 		internal VIBlend.WinForms.Controls.vButton btnDtInicial;
 		internal System.Windows.Forms.Panel Panel2;
+		private System.Windows.Forms.Label lblFiltro;
+		internal System.Windows.Forms.Button btnExcluir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
@@ -595,7 +635,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnContribuinte;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
-		private System.Windows.Forms.Label lblFiltro;
-		internal System.Windows.Forms.Button btnExcluir;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorRecebido;
+		internal System.Windows.Forms.Label lblValorRecebido;
+		internal System.Windows.Forms.Label label3;
 	}
 }

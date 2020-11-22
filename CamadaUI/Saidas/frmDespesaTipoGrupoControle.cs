@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -395,6 +396,35 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// IMPRIMIR REPORT
+		//------------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> mylist = list.Cast<object>().ToList();
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Saidas.Reports.rptDespesaGrupoList.rdlc", "Listagem de Grupos de Despesa", mylist);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion // BUTTONS FUNCTION --- END
 
 		//=================================================================================================
@@ -646,5 +676,7 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
+
 	}
 }

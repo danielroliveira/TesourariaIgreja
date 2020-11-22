@@ -150,7 +150,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1245, 478);
+			this.dgvListagem.Size = new System.Drawing.Size(1261, 478);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentClick);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
