@@ -244,14 +244,14 @@ namespace CamadaUI.Saidas
 			clnCredor.DefaultCellStyle.Font = clnFont;
 
 			//--- (6) COLUNA DOCUMENTO TIPO
-			clnDocumentoTipo.DataPropertyName = "DocumentoTipo";
-			clnDocumentoTipo.Visible = true;
-			clnDocumentoTipo.ReadOnly = true;
-			clnDocumentoTipo.Resizable = DataGridViewTriState.False;
-			clnDocumentoTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnDocumentoTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnDocumentoTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnDocumentoTipo.DefaultCellStyle.Font = clnFont;
+			clnDespesaDescricao.DataPropertyName = "DespesaDescricao";
+			clnDespesaDescricao.Visible = true;
+			clnDespesaDescricao.ReadOnly = true;
+			clnDespesaDescricao.Resizable = DataGridViewTriState.False;
+			clnDespesaDescricao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDespesaDescricao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDespesaDescricao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDespesaDescricao.DefaultCellStyle.Font = clnFont;
 
 			//--- (7) COLUNA PERIODO DATA
 			clnPeriodo.DataPropertyName = "PeriodoData";
@@ -289,8 +289,8 @@ namespace CamadaUI.Saidas
 				clnData,
 				clnSetor,
 				clnTipo,
+				clnDespesaDescricao,
 				clnCredor,
-				clnDocumentoTipo,
 				clnPeriodo,
 				clnSituacao,
 				clnValor);

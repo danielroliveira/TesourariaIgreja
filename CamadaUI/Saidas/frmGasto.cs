@@ -33,11 +33,13 @@ namespace CamadaUI.Saidas
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 		private Form _formOrigem = null;
 
+		private DateTime? _MinDateProvisoria = null;
+
 		#region SUB NEW | CONSTRUCTOR | PROPERTIES
 
 		// CONSTRUCTOR WITH OBJECT DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmGasto(objDespesa despesa)
+		public frmGasto(objDespesa despesa, int? IDContaFromProvisoria = null, DateTime? MinDateFromProvisoria = null)
 		{
 			InitializeComponent();
 
@@ -47,6 +49,9 @@ namespace CamadaUI.Saidas
 
 			// set DESPESA
 			propDespesa = despesa;
+
+			// Save Min Date if from Provisoria
+			_MinDateProvisoria = MinDateFromProvisoria;
 
 			// GET DATA
 			if (despesa.IDDespesa != null)
@@ -72,7 +77,15 @@ namespace CamadaUI.Saidas
 			// Define CONTA
 			if (_saida.IDMovimentacao == null)
 			{
-				DefineConta(ContaPadrao());
+				if (IDContaFromProvisoria != null)
+				{
+					_saida.IDConta = (int)IDContaFromProvisoria;
+					GetConta(dbTran);
+				}
+				else
+				{
+					DefineConta(ContaPadrao());
+				}
 			}
 			else
 			{
@@ -156,7 +169,18 @@ namespace CamadaUI.Saidas
 			if (propDespesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
-				propDespesa.DespesaData = DataPadrao();
+
+				if (_MinDateProvisoria != null)
+				{
+					propDespesa.DespesaData = (DateTime)_MinDateProvisoria;
+					dtpDespesaData.MinDate = (DateTime)_MinDateProvisoria;
+					txtConta.Enabled = false;
+					btnSetConta.Enabled = false;
+				}
+				else
+				{
+					propDespesa.DespesaData = DataPadrao();
+				}
 			}
 			else
 			{
@@ -1211,6 +1235,17 @@ namespace CamadaUI.Saidas
 					DialogType.OK, DialogIcon.Exclamation);
 				EP.SetError(txtDespesaValor, "Valor necessário...");
 				txtDespesaValor.Focus();
+				return false;
+			}
+
+			// CHECK MIN DATE FROM PROVISORIA
+			if (_MinDateProvisoria != null && propDespesa.DespesaData < (DateTime)_MinDateProvisoria)
+			{
+				AbrirDialog("A Data da Despesa Realizada precisa ser posterior ou igual a Data da Despesa Provisória...\n" +
+					"Favor inserir a data desta despesa corretamente.", "Data da Despesa",
+					DialogType.OK, DialogIcon.Exclamation);
+				EP.SetError(dtpDespesaData, "Data Incorreta...");
+				dtpDespesaData.Focus();
 				return false;
 			}
 

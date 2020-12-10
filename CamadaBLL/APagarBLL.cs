@@ -43,6 +43,16 @@ namespace CamadaBLL
 					db.AdicionarParametros("@IDSituacao", IDSituacao);
 					query += myWhere ? " AND IDSituacao = @IDSituacao" : " WHERE IDSituacao = @IDSituacao";
 					myWhere = true;
+					//if (IDSituacao == 0) // VENCIDAS
+					//{
+					//	db.AdicionarParametros("@DataInicial", DateTime.Today);
+					//	query += myWhere ? " AND Vencimento <= @DataInicial" : " WHERE Vencimento <= @DataInicial";
+					//	query += " AND IDSituacao = 1";
+					//	myWhere = true;
+					//}
+					//else
+					//{
+					//}
 				}
 
 				// add IDDespesaTipo
@@ -54,7 +64,7 @@ namespace CamadaBLL
 				}
 
 				// add DataInicial
-				if (dataInicial != null)
+				if (dataInicial != null && IDSituacao != 0)
 				{
 					db.AdicionarParametros("@DataInicial", (DateTime)dataInicial);
 					query += myWhere ? " AND Vencimento >= @DataInicial" : " WHERE Vencimento >= @DataInicial";
@@ -62,7 +72,7 @@ namespace CamadaBLL
 				}
 
 				// add DataFinal
-				if (dataFinal != null)
+				if (dataFinal != null && IDSituacao != 0)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
 					query += myWhere ? " AND Vencimento <= @DataFinal" : " WHERE Vencimento <= @DataFinal";
@@ -557,8 +567,8 @@ namespace CamadaBLL
 		{
 			try
 			{
-				if (pagar.Imagem != null && !string.IsNullOrEmpty(pagar.Imagem.ImagemFileName)) 
-				{ 
+				if (pagar.Imagem != null && !string.IsNullOrEmpty(pagar.Imagem.ImagemFileName))
+				{
 					string errMessage = "Favor remover/desassociar as imagens do APagar se deseja EXCLUIR.";
 					throw new AppException(errMessage);
 				}

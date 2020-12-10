@@ -1,18 +1,18 @@
-﻿using System;
-using System.ComponentModel;
+﻿using CamadaBLL;
+using CamadaDTO;
+using CamadaUI.Caixa;
+using CamadaUI.Main;
+using CamadaUI.Registres;
+using CamadaUI.Setores;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using CamadaBLL;
-using CamadaDTO;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
-using CamadaUI.Caixa;
-using CamadaUI.Registres;
-using CamadaUI.Setores;
-using CamadaUI.Main;
 
 namespace CamadaUI.Saidas
 {
@@ -810,12 +810,12 @@ namespace CamadaUI.Saidas
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
-			if (Sit == EnumFlagEstado.RegistroSalvo)
-			{
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-				return;
-			}
+			//if (Sit == EnumFlagEstado.RegistroSalvo)
+			//{
+			//	e.Handled = true;
+			//	e.SuppressKeyPress = true;
+			//	return;
+			//}
 			//---------------------------------------------------
 
 			Control ctr = (Control)sender;
@@ -884,7 +884,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
-					txtCobrancaForma, txtDespesaDescricao,
+					txtCobrancaForma, //txtDespesaDescricao,
 				};
 
 				if (controlesBloqueados.Contains(ctr))

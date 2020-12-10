@@ -216,7 +216,18 @@ namespace CamadaUI.APagar
 			clnForma.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnForma);
 
-			//--- (4) COLUNA CREDOR
+			//--- (4) COLUNA DESCRICAO
+			clnDescricao.DataPropertyName = "DespesaDescricao";
+			clnDescricao.Visible = true;
+			clnDescricao.ReadOnly = true;
+			clnDescricao.Resizable = DataGridViewTriState.False;
+			clnDescricao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDescricao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricao.DefaultCellStyle.Font = clnFont;
+			colList.Add(clnDescricao);
+
+			//--- (5) COLUNA CREDOR
 			clnCredor.DataPropertyName = "Credor";
 			clnCredor.Visible = true;
 			clnCredor.ReadOnly = true;
@@ -227,7 +238,7 @@ namespace CamadaUI.APagar
 			clnCredor.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnCredor);
 
-			//--- (5) COLUNA SITUACAO
+			//--- (6) COLUNA SITUACAO
 			clnSituacao.DataPropertyName = "Situacao";
 			clnSituacao.Visible = true;
 			clnSituacao.ReadOnly = true;
@@ -238,7 +249,7 @@ namespace CamadaUI.APagar
 			clnSituacao.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnSituacao);
 
-			//--- (6) COLUNA REFERENCIA
+			//--- (7) COLUNA REFERENCIA
 			clnReferencia.DataPropertyName = "Referencia";
 			clnReferencia.Visible = true;
 			clnReferencia.ReadOnly = true;
@@ -249,7 +260,7 @@ namespace CamadaUI.APagar
 			clnReferencia.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnReferencia);
 
-			//--- (7) COLUNA VALOR
+			//--- (8) COLUNA VALOR
 			clnValor.DataPropertyName = "APagarValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -261,7 +272,7 @@ namespace CamadaUI.APagar
 			clnValor.DefaultCellStyle.Format = "#,##0.00";
 			colList.Add(clnValor);
 
-			//--- (8) COLUNA VALOR PAGO
+			//--- (9) COLUNA VALOR PAGO
 			clnValorPago.DataPropertyName = "ValorPago";
 			clnValorPago.Visible = true;
 			clnValorPago.ReadOnly = true;

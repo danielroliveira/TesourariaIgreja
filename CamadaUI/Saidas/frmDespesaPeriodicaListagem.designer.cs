@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -67,11 +67,11 @@
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.btnExcluir = new System.Windows.Forms.Button();
-			this.line1 = new AwesomeShapeControl.Line();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.visualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnExcluir = new System.Windows.Forms.Button();
+			this.line1 = new AwesomeShapeControl.Line();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlSituacao.SuspendLayout();
@@ -147,24 +147,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle9.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle10.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -323,7 +323,6 @@
 			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.btnAdicionar_Click);
 			// 
 			// lblValorMensal
 			// 
@@ -466,11 +465,11 @@
 			this.label2.AutoSize = true;
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(23, 62);
+			this.label2.Location = new System.Drawing.Point(27, 62);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(113, 19);
+			this.label2.Size = new System.Drawing.Size(109, 19);
 			this.label2.TabIndex = 1;
-			this.label2.Text = "Setor de Crédito";
+			this.label2.Text = "Setor de Débito";
 			// 
 			// btnLimpar
 			// 
@@ -564,13 +563,13 @@
             this.visualizarToolStripMenuItem,
             this.excluirToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(275, 136);
+			this.MenuListagem.Size = new System.Drawing.Size(275, 114);
 			// 
 			// AtivarToolStripMenuItem
 			// 
 			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
 			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
 			this.AtivarToolStripMenuItem.Text = "Ativar Despesa Periódica";
 			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
@@ -578,9 +577,28 @@
 			// 
 			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
 			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
 			this.DesativarToolStripMenuItem.Text = "Desativar Despesa Periódica";
 			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
+			// 
+			// visualizarToolStripMenuItem
+			// 
+			this.visualizarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.visualizarToolStripMenuItem.Name = "visualizarToolStripMenuItem";
+			this.visualizarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
+			this.visualizarToolStripMenuItem.Text = "Visualizar";
+			// 
+			// excluirToolStripMenuItem
+			// 
+			this.excluirToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.excluirToolStripMenuItem.Name = "excluirToolStripMenuItem";
+			this.excluirToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
+			this.excluirToolStripMenuItem.Text = "Excluir";
 			// 
 			// btnExcluir
 			// 
@@ -606,25 +624,6 @@
 			this.line1.Size = new System.Drawing.Size(10, 47);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
 			this.line1.TabIndex = 16;
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(217, 6);
-			// 
-			// visualizarToolStripMenuItem
-			// 
-			this.visualizarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.visualizarToolStripMenuItem.Name = "visualizarToolStripMenuItem";
-			this.visualizarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
-			this.visualizarToolStripMenuItem.Text = "Visualizar";
-			// 
-			// excluirToolStripMenuItem
-			// 
-			this.excluirToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.excluirToolStripMenuItem.Name = "excluirToolStripMenuItem";
-			this.excluirToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
-			this.excluirToolStripMenuItem.Text = "Excluir";
 			// 
 			// frmDespesaPeriodicaListagem
 			// 

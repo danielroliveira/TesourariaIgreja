@@ -277,6 +277,35 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET IF DESPESA IS ALREADY VINCULATE
+		//------------------------------------------------------------------------------------------------------------
+		public bool DespesaAlreadyVinculada(long IDDespesa)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				// add params
+				db.LimparParametros();
+
+				db.AdicionarParametros("@IDDespesa", IDDespesa);
+				string query = "SELECT * FROM tblDespesaProvisoriaRealizado WHERE IDDespesa = @IDDespesa";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return false;
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// GET LIST PROVISORIA AUTORIZANTES
 		//------------------------------------------------------------------------------------------------------------
 		public List<string> GetAutorizanteList()
@@ -492,12 +521,28 @@ namespace CamadaBLL
 				db = new AcessoDados();
 				db.BeginTransaction();
 
+				// 1- REMOVE VINCULO DESPESA
+				//-------------------------------------------------------------
+
 				//--- limpar parametros
 				db.LimparParametros();
 				db.AdicionarParametros("@IDProvisorio", IDProvisorio);
 
 				//--- execute insert tblDespesaProvisoriaRealizado
-				string query = "DELETE tblDespesaProvisoria " +
+				string query = "DELETE tblDespesaProvisoriaRealizado " +
+					"WHERE IDProvisorio = @IDProvisorio";
+
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				// 2- REMOVE PROVISORIA
+				//-------------------------------------------------------------
+
+				//--- limpar parametros
+				db.LimparParametros();
+				db.AdicionarParametros("@IDProvisorio", IDProvisorio);
+
+				//--- execute DELETE tblDespesaProvisoria
+				query = "DELETE tblDespesaProvisoria " +
 					"WHERE IDProvisorio = @IDProvisorio";
 
 				db.ExecutarManipulacao(CommandType.Text, query);

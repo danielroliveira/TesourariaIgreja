@@ -88,10 +88,10 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(416, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(252, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(431, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(237, 50);
 			this.lblTitulo.TabIndex = 5;
-			this.lblTitulo.Text = "Cadastro de Despesas";
+			this.lblTitulo.Text = "Despesa Periódica";
 			// 
 			// btnClose
 			// 

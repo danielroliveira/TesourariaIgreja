@@ -367,6 +367,7 @@ namespace CamadaUI.Saidas
 			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.DefaultCellStyle.Font = clnFont;
+			clnValor.DefaultCellStyle.Format = "c";
 			colList.Add(clnValor);
 
 			//--- Add Columns
@@ -464,6 +465,8 @@ namespace CamadaUI.Saidas
 			Sit = EnumFlagEstado.RegistroSalvo;
 		}
 
+		// CHECK DESPESA REALIZADA BEFORE ANEXAR
+		//------------------------------------------------------------------------------------------------------------
 		private bool VerificaDespesaAnexada(objDespesa newDesp)
 		{
 			// check data
@@ -484,6 +487,32 @@ namespace CamadaUI.Saidas
 				return false;
 			}
 
+			// check Despesa Already Anexada
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				if (provBLL.DespesaAlreadyVinculada((long)newDesp.IDDespesa))
+				{
+					AbrirDialog("Essa despesa escolhida já está anexada/vinculada com uma Despesa Provisória..." +
+						"\nFavor escolher outra despesa realizada.", "Anexar Despesa Realizada",
+						DialogType.OK, DialogIcon.Information);
+					return false;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao verifica se a despesa já estava vinculada..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
 			return true;
 		}
 
@@ -496,14 +525,18 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmGasto frm = new frmGasto(new objDespesa(null));
+				frmGasto frm = new frmGasto(new objDespesa(null), _provisoria.IDConta, _provisoria.RetiradaData);
 				frm.ShowDialog();
 
 				//--- check inserted Despesa
 				if (frm.DialogResult != DialogResult.OK) return;
 
+				//--- check Despesa Realizada
+				objDespesa newDesp = frm.propDespesa;
+				if (VerificaDespesaAnexada(newDesp) == false) return;
+
 				//--- save
-				SaveAttachDespesa(frm.propDespesa);
+				SaveAttachDespesa(newDesp);
 
 			}
 			catch (Exception ex)
@@ -549,6 +582,9 @@ namespace CamadaUI.Saidas
 
 				provBLL.AttachDespesaToProvisoria(_provisoria, despesa);
 				bindDespesa.Add(despesa);
+
+				_provisoria.EndEdit();
+				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 			catch (Exception ex)
 			{
@@ -576,15 +612,16 @@ namespace CamadaUI.Saidas
 					throw new Exception("Essa despesa provisória ainda não foi salva...");
 				}
 
-				var resp = AbrirDialog("A Despesa Provisória será concluída e não poderá ser alterada..." +
-								"\nDeseja realmente FINALIZAR esta despesa provisória?", "Finalizar Provisório",
-								DialogType.SIM_NAO, DialogIcon.Question);
+				var resp = AbrirDialog("A Despesa Provisória será FINALIZADA..." +
+					"\nIsso significa que o recurso restante foi devolvido à CONTA." +
+					"\nDeseja realmente FINALIZAR esta despesa provisória?", "Finalizar Provisório",
+					DialogType.SIM_NAO, DialogIcon.Question);
 
-				if (resp == DialogResult.Yes)
-				{
-					_provisoria.Concluida = true;
-					_provisoria.DevolucaoData = DateTime.Today;
-				}
+				if (resp != DialogResult.Yes) return;
+
+				// finalize
+				_provisoria.Concluida = true;
+				_provisoria.DevolucaoData = DateTime.Today;
 
 				provBLL.FinalizeProvisoria(_provisoria);
 				_provisoria.EndEdit();
@@ -1142,7 +1179,6 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // MENU SUSPENSO --- END
-
 
 	}
 }
