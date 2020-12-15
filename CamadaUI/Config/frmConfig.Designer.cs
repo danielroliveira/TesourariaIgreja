@@ -38,6 +38,7 @@
 			this.btnImagem = new System.Windows.Forms.Button();
 			this.btnDados = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
+			this.btnEmail = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.pnlMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -62,6 +63,7 @@
 			// pnlMenu
 			// 
 			this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.pnlMenu.Controls.Add(this.btnEmail);
 			this.pnlMenu.Controls.Add(this.btnUsuarios);
 			this.pnlMenu.Controls.Add(this.line1);
 			this.pnlMenu.Controls.Add(this.label1);
@@ -85,10 +87,10 @@
 			this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnUsuarios.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnUsuarios.ForeColor = System.Drawing.Color.White;
-			this.btnUsuarios.Location = new System.Drawing.Point(1, 367);
+			this.btnUsuarios.Location = new System.Drawing.Point(1, 428);
 			this.btnUsuarios.Name = "btnUsuarios";
 			this.btnUsuarios.Size = new System.Drawing.Size(198, 55);
-			this.btnUsuarios.TabIndex = 7;
+			this.btnUsuarios.TabIndex = 8;
 			this.btnUsuarios.TabStop = false;
 			this.btnUsuarios.Text = "Usuários";
 			this.btnUsuarios.UseVisualStyleBackColor = false;
@@ -126,10 +128,10 @@
 			this.btnAvisos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnAvisos.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnAvisos.ForeColor = System.Drawing.Color.White;
-			this.btnAvisos.Location = new System.Drawing.Point(1, 306);
+			this.btnAvisos.Location = new System.Drawing.Point(1, 367);
 			this.btnAvisos.Name = "btnAvisos";
 			this.btnAvisos.Size = new System.Drawing.Size(198, 55);
-			this.btnAvisos.TabIndex = 6;
+			this.btnAvisos.TabIndex = 7;
 			this.btnAvisos.TabStop = false;
 			this.btnAvisos.Text = "Avisos";
 			this.btnAvisos.UseVisualStyleBackColor = false;
@@ -215,6 +217,24 @@
 			this.pnlCorpo.Size = new System.Drawing.Size(744, 579);
 			this.pnlCorpo.TabIndex = 2;
 			// 
+			// btnEmail
+			// 
+			this.btnEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnEmail.FlatAppearance.BorderSize = 0;
+			this.btnEmail.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnEmail.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnEmail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnEmail.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnEmail.ForeColor = System.Drawing.Color.White;
+			this.btnEmail.Location = new System.Drawing.Point(1, 306);
+			this.btnEmail.Name = "btnEmail";
+			this.btnEmail.Size = new System.Drawing.Size(198, 55);
+			this.btnEmail.TabIndex = 6;
+			this.btnEmail.TabStop = false;
+			this.btnEmail.Text = "Servidor Email";
+			this.btnEmail.UseVisualStyleBackColor = false;
+			this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
+			// 
 			// frmConfig
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -244,5 +264,6 @@
 		private System.Windows.Forms.Button btnAvisos;
 		private System.Windows.Forms.Button btnUsuarios;
 		private System.Windows.Forms.Button btnDados;
+		private System.Windows.Forms.Button btnEmail;
 	}
 }

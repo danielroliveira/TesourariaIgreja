@@ -48,6 +48,9 @@ namespace CamadaUI.Config
 					case "frmConfigServidor":
 						btnServidor.BackColor = btnColorSelected;
 						break;
+					case "frmConfigEmailServer":
+						btnEmail.BackColor = btnColorSelected;
+						break;
 					case "frmConfigAvisos":
 						btnAvisos.BackColor = btnColorSelected;
 						break;
@@ -128,6 +131,11 @@ namespace CamadaUI.Config
 		private void btnServidor_Click(object sender, EventArgs e)
 		{
 			AbrirFormNoPanel<frmConfigServidor>();
+		}
+
+		private void btnEmail_Click(object sender, EventArgs e)
+		{
+			AbrirFormNoPanel<frmConfigEmailServer>();
 		}
 
 		private void btnAvisos_Click(object sender, EventArgs e)

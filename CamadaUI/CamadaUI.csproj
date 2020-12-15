@@ -242,6 +242,12 @@
     <Compile Include="Config\frmConfigDados.designer.cs">
       <DependentUpon>frmConfigDados.cs</DependentUpon>
     </Compile>
+    <Compile Include="Config\frmConfigEmailServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfigEmailServer.designer.cs">
+      <DependentUpon>frmConfigEmailServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfigGeral.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -763,6 +769,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigDados.resx">
       <DependentUpon>frmConfigDados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\frmConfigEmailServer.resx">
+      <DependentUpon>frmConfigEmailServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigGeral.resx">
       <DependentUpon>frmConfigGeral.cs</DependentUpon>
