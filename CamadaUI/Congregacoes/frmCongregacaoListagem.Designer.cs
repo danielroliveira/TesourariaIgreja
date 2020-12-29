@@ -39,12 +39,12 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -74,7 +74,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(443, 495);
+			this.btnFechar.Location = new System.Drawing.Point(443, 624);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
 			this.btnFechar.TabIndex = 8;
@@ -88,7 +88,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(165, 495);
+			this.btnAdicionar.Location = new System.Drawing.Point(165, 624);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
 			this.btnAdicionar.TabIndex = 7;
@@ -102,7 +102,7 @@
 			// 
 			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(22, 495);
+			this.btnEditar.Location = new System.Drawing.Point(22, 624);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
 			this.btnEditar.TabIndex = 6;
@@ -190,11 +190,32 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(547, 371);
+			this.dgvListagem.Size = new System.Drawing.Size(547, 500);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnCadastro
+			// 
+			this.clnCadastro.HeaderText = "Congregação";
+			this.clnCadastro.Name = "clnCadastro";
+			this.clnCadastro.ReadOnly = true;
+			this.clnCadastro.Width = 350;
+			// 
+			// clnImage
+			// 
+			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
 			// 
 			// MenuListagem
 			// 
@@ -220,31 +241,10 @@
 			this.DesativarToolStripMenuItem.Text = "Desativar Setor";
 			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Setor_Click);
 			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnCadastro
-			// 
-			this.clnCadastro.HeaderText = "Congregação";
-			this.clnCadastro.Name = "clnCadastro";
-			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 350;
-			// 
-			// clnImage
-			// 
-			this.clnImage.HeaderText = "Ativo";
-			this.clnImage.Name = "clnImage";
-			this.clnImage.ReadOnly = true;
-			this.clnImage.Width = 70;
-			// 
 			// frmCongregacaoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(591, 549);
+			this.ClientSize = new System.Drawing.Size(591, 678);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);

@@ -110,11 +110,11 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(73, 120);
+			this.label3.Location = new System.Drawing.Point(119, 120);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(94, 19);
+			this.label3.Size = new System.Drawing.Size(48, 19);
 			this.label3.TabIndex = 3;
-			this.label3.Text = "Classificação";
+			this.label3.Text = "Grupo";
 			// 
 			// txtDespesaTipoGrupo
 			// 
@@ -140,7 +140,7 @@
 			this.btnSetDespesaTipoGrupo.Size = new System.Drawing.Size(34, 27);
 			this.btnSetDespesaTipoGrupo.TabIndex = 5;
 			this.btnSetDespesaTipoGrupo.TabStop = false;
-			this.btnSetDespesaTipoGrupo.Text = "n";
+			this.btnSetDespesaTipoGrupo.Text = "...";
 			this.btnSetDespesaTipoGrupo.UseCompatibleTextRendering = true;
 			this.btnSetDespesaTipoGrupo.UseVisualStyleBackColor = false;
 			this.btnSetDespesaTipoGrupo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;

@@ -678,7 +678,9 @@ namespace CamadaDTO
 	{
 		public int? IDDespesaTipoGrupo { get; set; }
 		public string DespesaTipoGrupo { get; set; }
+		public string DespesaTipo { get; set; }
 		public bool Ativo { get; set; }
+		public int Quant { get; set; }
 	}
 
 	//=================================================================================================

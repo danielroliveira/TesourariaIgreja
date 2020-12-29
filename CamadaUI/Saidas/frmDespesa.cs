@@ -505,7 +505,7 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
 			{
-				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCredor != frm.propEscolha.IDDespesaTipo)
+				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDDespesaTipo != frm.propEscolha.IDDespesaTipo)
 					Sit = EnumFlagEstado.Alterado;
 
 				_despesa.IDDespesaTipo = (int)frm.propEscolha.IDDespesaTipo;

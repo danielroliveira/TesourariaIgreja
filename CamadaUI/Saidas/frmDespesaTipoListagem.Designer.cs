@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnEditar = new System.Windows.Forms.Button();
@@ -39,14 +39,14 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnGrupo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnImprimir = new System.Windows.Forms.Button();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnGrupo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -54,7 +54,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(522, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(627, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(220, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Tipos de Despesa";
@@ -64,19 +64,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(742, 0);
+			this.btnClose.Location = new System.Drawing.Point(847, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(782, 50);
+			this.panel1.Size = new System.Drawing.Size(887, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(634, 495);
+			this.btnFechar.Location = new System.Drawing.Point(739, 624);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
 			this.btnFechar.TabIndex = 9;
@@ -90,7 +90,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(165, 495);
+			this.btnAdicionar.Location = new System.Drawing.Point(165, 624);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
 			this.btnAdicionar.TabIndex = 7;
@@ -104,7 +104,7 @@
 			// 
 			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(22, 495);
+			this.btnEditar.Location = new System.Drawing.Point(22, 624);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
 			this.btnEditar.TabIndex = 6;
@@ -126,7 +126,7 @@
 			// 
 			this.Label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.Label2.AutoSize = true;
-			this.Label2.Location = new System.Drawing.Point(395, 70);
+			this.Label2.Location = new System.Drawing.Point(385, 70);
 			this.Label2.Name = "Label2";
 			this.Label2.Size = new System.Drawing.Size(64, 19);
 			this.Label2.TabIndex = 3;
@@ -143,10 +143,11 @@
 			// 
 			// cmbAtivo
 			// 
+			this.cmbAtivo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmbAtivo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbAtivo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbAtivo.FormattingEnabled = true;
-			this.cmbAtivo.Location = new System.Drawing.Point(465, 67);
+			this.cmbAtivo.Location = new System.Drawing.Point(455, 67);
 			this.cmbAtivo.Name = "cmbAtivo";
 			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
 			this.cmbAtivo.TabIndex = 4;
@@ -157,24 +158,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -194,39 +195,11 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(738, 371);
+			this.dgvListagem.Size = new System.Drawing.Size(843, 500);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnCadastro
-			// 
-			this.clnCadastro.HeaderText = "Tipo de Despesa";
-			this.clnCadastro.Name = "clnCadastro";
-			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 350;
-			// 
-			// clnGrupo
-			// 
-			this.clnGrupo.HeaderText = "Classificação";
-			this.clnGrupo.Name = "clnGrupo";
-			this.clnGrupo.ReadOnly = true;
-			this.clnGrupo.Width = 200;
-			// 
-			// clnImage
-			// 
-			this.clnImage.HeaderText = "Ativo";
-			this.clnImage.Name = "clnImage";
-			this.clnImage.ReadOnly = true;
-			this.clnImage.Width = 70;
 			// 
 			// MenuListagem
 			// 
@@ -256,7 +229,7 @@
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(308, 495);
+			this.btnImprimir.Location = new System.Drawing.Point(308, 624);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 8;
@@ -266,10 +239,38 @@
 			this.btnImprimir.UseVisualStyleBackColor = true;
 			this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
 			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnCadastro
+			// 
+			this.clnCadastro.HeaderText = "Tipo de Despesa";
+			this.clnCadastro.Name = "clnCadastro";
+			this.clnCadastro.ReadOnly = true;
+			this.clnCadastro.Width = 350;
+			// 
+			// clnGrupo
+			// 
+			this.clnGrupo.HeaderText = "Classificação";
+			this.clnGrupo.Name = "clnGrupo";
+			this.clnGrupo.ReadOnly = true;
+			this.clnGrupo.Width = 300;
+			// 
+			// clnImage
+			// 
+			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
+			// 
 			// frmDespesaTipoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(782, 549);
+			this.ClientSize = new System.Drawing.Size(887, 678);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
@@ -313,10 +314,10 @@
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		internal System.Windows.Forms.Button btnImprimir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnGrupo;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
-		internal System.Windows.Forms.Button btnImprimir;
 	}
 }

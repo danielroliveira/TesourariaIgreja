@@ -547,6 +547,12 @@
     <Compile Include="Saidas\frmDespesa.Designer.cs">
       <DependentUpon>frmDespesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesaGrupoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaGrupoProcura.designer.cs">
+      <DependentUpon>frmDespesaGrupoProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmDespesaListagem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -848,6 +854,7 @@
     <EmbeddedResource Include="Entradas\frmContribuicaoListagemFiltro.resx">
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\Reports\rptEntradasPorPeriodoList.rdlc" />
     <EmbeddedResource Include="Imagem\frmImagemDialog.resx">
       <DependentUpon>frmImagemDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -921,6 +928,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesa.resx">
       <DependentUpon>frmDespesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaGrupoProcura.resx">
+      <DependentUpon>frmDespesaGrupoProcura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaListagem.resx">
       <DependentUpon>frmDespesaListagem.cs</DependentUpon>
@@ -1004,6 +1014,7 @@
     <None Include="Properties\DataSources\CamadaDTO.objAPagar.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCaixa.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCampanha.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objContribuicao.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDadosIgreja.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaProvisoria.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipo.datasource" />

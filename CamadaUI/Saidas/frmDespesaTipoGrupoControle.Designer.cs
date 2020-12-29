@@ -43,10 +43,11 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvListagem = new CamadaUC.ucDataGridView();
+			this.lblAcao = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnQuant = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.lblAcao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.MenuListagem.SuspendLayout();
@@ -55,17 +56,17 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(287, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(285, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(424, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(227, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Classificação de Despesa";
+			this.lblTitulo.Text = "Grupos de Despesa";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(572, 0);
+			this.btnClose.Location = new System.Drawing.Point(651, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -73,7 +74,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblAcao);
 			this.panel1.Location = new System.Drawing.Point(2, 2);
-			this.panel1.Size = new System.Drawing.Size(612, 50);
+			this.panel1.Size = new System.Drawing.Size(691, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lblAcao, 0);
@@ -94,7 +95,7 @@
             this.btnImprimir});
 			this.tspMenu.Location = new System.Drawing.Point(2, 614);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(612, 44);
+			this.tspMenu.Size = new System.Drawing.Size(691, 44);
 			this.tspMenu.TabIndex = 2;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -225,6 +226,7 @@
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnID,
             this.clnCadastro,
+            this.clnQuant,
             this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
@@ -237,7 +239,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(592, 537);
+			this.dgvListagem.Size = new System.Drawing.Size(671, 537);
 			this.dgvListagem.StandardTab = true;
 			this.dgvListagem.TabIndex = 1;
 			this.dgvListagem.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvListagem_CellBeginEdit);
@@ -245,6 +247,18 @@
 			this.dgvListagem.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvListagem_CellValidating);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// lblAcao
+			// 
+			this.lblAcao.AutoSize = true;
+			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
+			this.lblAcao.Location = new System.Drawing.Point(15, 14);
+			this.lblAcao.Name = "lblAcao";
+			this.lblAcao.Size = new System.Drawing.Size(210, 22);
+			this.lblAcao.TabIndex = 3;
+			this.lblAcao.Text = "Adicionando Novo Registro";
+			this.lblAcao.Visible = false;
 			// 
 			// clnID
 			// 
@@ -261,6 +275,14 @@
 			this.clnCadastro.Name = "clnCadastro";
 			this.clnCadastro.Width = 400;
 			// 
+			// clnQuant
+			// 
+			this.clnQuant.Frozen = true;
+			this.clnQuant.HeaderText = "Quant.";
+			this.clnQuant.Name = "clnQuant";
+			this.clnQuant.ReadOnly = true;
+			this.clnQuant.Width = 80;
+			// 
 			// clnImage
 			// 
 			this.clnImage.Frozen = true;
@@ -269,22 +291,10 @@
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
 			// 
-			// lblAcao
-			// 
-			this.lblAcao.AutoSize = true;
-			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
-			this.lblAcao.Location = new System.Drawing.Point(15, 14);
-			this.lblAcao.Name = "lblAcao";
-			this.lblAcao.Size = new System.Drawing.Size(210, 22);
-			this.lblAcao.TabIndex = 3;
-			this.lblAcao.Text = "Adicionando Novo Registro";
-			this.lblAcao.Visible = false;
-			// 
 			// frmDespesaTipoGrupoControle
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(616, 660);
+			this.ClientSize = new System.Drawing.Size(695, 660);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.tspMenu);
 			this.Name = "frmDespesaTipoGrupoControle";
@@ -318,9 +328,10 @@
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
 		internal CamadaUC.ucDataGridView dgvListagem;
 		private System.Windows.Forms.Label lblAcao;
+		private System.Windows.Forms.ToolStripButton btnImprimir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnQuant;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
-		private System.Windows.Forms.ToolStripButton btnImprimir;
 	}
 }

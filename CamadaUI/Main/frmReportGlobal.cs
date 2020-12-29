@@ -13,7 +13,11 @@ namespace CamadaUI.Main
 
 		#region SUB NEW | CONSTRUCTOR
 
-		public frmReportGlobal(string ReportPathName, string ReportFormTitulo, List<object> DtSourcePrincipal, List<object> DtSourceSecundario = null)
+		public frmReportGlobal(string ReportPathName,
+			string ReportFormTitulo,
+			List<object> DtSourcePrincipal,
+			List<object> DtSourceSecundario = null,
+			List<ReportParameter> parameters = null)
 		{
 			InitializeComponent();
 
@@ -36,7 +40,8 @@ namespace CamadaUI.Main
 			// --- insert DataSources
 			rptvPadrao.LocalReport.DataSources.Add(dstPrincipal);
 			rptvPadrao.LocalReport.DataSources.Add(dstDados);
-			addParameters();
+			addLogoParameters();
+			addParameters(parameters);
 
 			if (DtSourceSecundario != null)
 			{
@@ -64,7 +69,17 @@ namespace CamadaUI.Main
 
 		#region PARAMETERS
 
-		private void addParameters()
+		private void addParameters(List<ReportParameter> parameters)
+		{
+			if (parameters != null)
+			{
+				//--- add Parameters
+				rptvPadrao.LocalReport.SetParameters(parameters);
+				rptvPadrao.LocalReport.Refresh();
+			}
+		}
+
+		private void addLogoParameters()
 		{
 			List<ReportParameter> @params = new List<ReportParameter>();
 

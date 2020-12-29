@@ -749,7 +749,11 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblDespesaTipoGrupo";
+				string query = "SELECT G.IDDespesaTipoGrupo, G.DespesaTipoGrupo, " +
+					"G.Ativo, T.DespesaTipo " +
+					"FROM tblDespesaTipoGrupo AS G " +
+					"LEFT JOIN tblDespesaTipo AS T " +
+					"ON G.IDDespesaTipoGrupo = T.IDDespesaTipoGrupo";
 
 				// add params
 				db.LimparParametros();
@@ -757,7 +761,7 @@ namespace CamadaBLL
 				if (Ativo != null)
 				{
 					db.AdicionarParametros("@Ativo", Ativo);
-					query += " WHERE Ativo = @Ativo";
+					query += " WHERE G.Ativo = @Ativo";
 				}
 
 				query += " ORDER BY DespesaTipoGrupo";
@@ -776,7 +780,65 @@ namespace CamadaBLL
 					{
 						IDDespesaTipoGrupo = (byte)row["IDDespesaTipoGrupo"],
 						DespesaTipoGrupo = (string)row["DespesaTipoGrupo"],
+						DespesaTipo = row["DespesaTipo"] == DBNull.Value ? string.Empty : (string)row["DespesaTipo"],
 						Ativo = (bool)row["Ativo"],
+					};
+
+					listagem.Add(forma);
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET DESPESA GRUPOS
+		//------------------------------------------------------------------------------------------------------------
+		public List<objDespesaTipoGrupo> GetDespesaTipoGruposWithCount(bool? Ativo = null)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT " +
+					"G.IDDespesaTipoGrupo, G.DespesaTipoGrupo, G.Ativo, COUNT(T.IDDespesaTipo) AS Quant " +
+					"FROM " +
+					"tblDespesaTipoGrupo AS G " +
+					"LEFT JOIN " +
+					"tblDespesaTipo AS T ON G.IDDespesaTipoGrupo = T.IDDespesaTipoGrupo ";
+
+				// add params
+				db.LimparParametros();
+
+				if (Ativo != null)
+				{
+					db.AdicionarParametros("@Ativo", Ativo);
+					query += " WHERE G.Ativo = @Ativo";
+				}
+
+				query += " GROUP BY G.IDDespesaTipoGrupo, G.DespesaTipoGrupo, G.Ativo" + " ORDER BY DespesaTipoGrupo ";
+
+				List<objDespesaTipoGrupo> listagem = new List<objDespesaTipoGrupo>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					objDespesaTipoGrupo forma = new objDespesaTipoGrupo()
+					{
+						IDDespesaTipoGrupo = (byte)row["IDDespesaTipoGrupo"],
+						DespesaTipoGrupo = (string)row["DespesaTipoGrupo"],
+						DespesaTipo = string.Empty,
+						Ativo = (bool)row["Ativo"],
+						Quant = (int)row["Quant"]
 					};
 
 					listagem.Add(forma);

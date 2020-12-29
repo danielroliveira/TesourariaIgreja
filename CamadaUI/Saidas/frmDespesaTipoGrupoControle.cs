@@ -80,6 +80,7 @@ namespace CamadaUI.Saidas
 						IDDespesaTipoGrupo = grupo.IDDespesaTipoGrupo,
 						Ativo = grupo.Ativo,
 						DespesaTipoGrupo = grupo.DespesaTipoGrupo,
+						Quant = grupo.Quant,
 						RowSit = grupo.IDDespesaTipoGrupo == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
 					};
 
@@ -138,7 +139,7 @@ namespace CamadaUI.Saidas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				list = classGrupo.convertFrom(dBLL.GetDespesaTipoGruposList());
+				list = classGrupo.convertFrom(dBLL.GetDespesaTipoGruposWithCount());
 				bindList.DataSource = list;
 				dgvListagem.DataSource = bindList;
 
@@ -198,6 +199,16 @@ namespace CamadaUI.Saidas
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
+			//--- (3) COLUNA QUANT
+			clnQuant.DataPropertyName = "Quant";
+			clnQuant.Visible = true;
+			clnQuant.ReadOnly = false;
+			clnQuant.Resizable = DataGridViewTriState.False;
+			clnQuant.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnQuant.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnQuant.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnQuant.DefaultCellStyle.Format = "00";
+
 			//--- (4) Coluna da imagem
 			clnImage.Name = "Ativo";
 			clnImage.ReadOnly = true;
@@ -206,7 +217,7 @@ namespace CamadaUI.Saidas
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnQuant, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
@@ -352,7 +363,7 @@ namespace CamadaUI.Saidas
 			{
 				SendKeys.Send("{TAB}");
 			}
-			else if (e.ColumnIndex == 2)
+			else if (e.ColumnIndex >= 2)
 			{
 				SendKeys.Send("+{TAB}");
 			}

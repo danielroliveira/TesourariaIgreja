@@ -6,8 +6,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Saidas
 {
@@ -18,7 +18,6 @@ namespace CamadaUI.Saidas
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 
-		private List<objDespesaTipoGrupo> listGrupos;
 		private Dictionary<int, string> dicPeriodicidade = new Dictionary<int, string>();
 
 		private Form _formOrigem;
@@ -35,7 +34,6 @@ namespace CamadaUI.Saidas
 
 			_tipo = obj;
 			_formOrigem = formOrigem;
-			GetGruposList();
 			PreencheDictionary();
 
 			// binding
@@ -65,29 +63,6 @@ namespace CamadaUI.Saidas
 		{
 			txtDespesaTipo.Enter += text_Enter;
 			txtDespesaTipoGrupo.Enter += text_Enter;
-		}
-
-		// GET LIST OF GRUPOS
-		//------------------------------------------------------------------------------------------------------------
-		private void GetGruposList()
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				listGrupos = dBLL.GetDespesaTipoGruposList();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de CLASSIFICAÇÃO..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
 		}
 
 		private void PreencheDictionary()
@@ -456,49 +431,21 @@ namespace CamadaUI.Saidas
 				Control ctr = (Control)sender;
 				e.Handled = true;
 
-				switch (ctr.Name)
+				if (ctr.Name == "txtPeriodicidade" && dicPeriodicidade.Count > 0)
 				{
-					case "txtPeriodicidade":
+					if (dicPeriodicidade.ContainsKey(byte.Parse(e.KeyChar.ToString())))
+					{
+						var tipo = dicPeriodicidade.FirstOrDefault(x => x.Key == byte.Parse(e.KeyChar.ToString()));
 
-						if (dicPeriodicidade.Count > 0)
+						if (tipo.Key != _tipo.Periodicidade)
 						{
-							if (dicPeriodicidade.ContainsKey(byte.Parse(e.KeyChar.ToString())))
-							{
-								var tipo = dicPeriodicidade.FirstOrDefault(x => x.Key == byte.Parse(e.KeyChar.ToString()));
+							if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
-								if (tipo.Key != _tipo.Periodicidade)
-								{
-									if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
-
-									_tipo.Periodicidade = (byte)tipo.Key;
-									txtPeriodicidade.Text = tipo.Value;
-								}
-							}
+							_tipo.Periodicidade = (byte)tipo.Key;
+							txtPeriodicidade.Text = tipo.Value;
 						}
-						break;
-
-					case "txtDespesaTipoGrupo":
-
-						if (listGrupos.Count > 0)
-						{
-							var tipo = listGrupos.FirstOrDefault(x => x.IDDespesaTipoGrupo == int.Parse(e.KeyChar.ToString()));
-
-							if (tipo == null) return;
-
-							if (tipo.IDDespesaTipoGrupo != _tipo.IDDespesaTipoGrupo)
-							{
-								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
-
-								_tipo.IDDespesaTipoGrupo = (byte)tipo.IDDespesaTipoGrupo;
-								txtDespesaTipoGrupo.Text = tipo.DespesaTipoGrupo;
-							}
-						}
-						break;
-
-					default:
-						break;
+					}
 				}
-
 			}
 		}
 
@@ -540,33 +487,22 @@ namespace CamadaUI.Saidas
 
 		private void btnSetDespesaTipoGrupo_Click(object sender, EventArgs e)
 		{
-			if (listGrupos.Count == 0)
-			{
-				AbrirDialog("Não há Grupos de Despesa cadastradas...", "Grupos de Despesa",
-					DialogType.OK, DialogIcon.Exclamation);
-				return;
-			}
-
-			// seleciona o TextBox
-			TextBox textBox = txtDespesaTipoGrupo;
-
-			var dic = listGrupos.ToDictionary(x => (int)x.IDDespesaTipoGrupo, x => x.DespesaTipoGrupo);
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _tipo.IDDespesaTipoGrupo);
-
-			// show form
+			frmDespesaGrupoProcura frm = new frmDespesaGrupoProcura(this, _tipo.IDDespesaTipoGrupo == 0 ? null : (int?)_tipo.IDDespesaTipoGrupo);
 			frm.ShowDialog();
 
 			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
+			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
 			{
-				_tipo.IDDespesaTipoGrupo = (byte)frm.propEscolha.Key;
-				textBox.Text = frm.propEscolha.Value;
+				if (Sit != EnumFlagEstado.NovoRegistro && _tipo.IDDespesaTipo != frm.propEscolha.IDDespesaTipoGrupo)
+					Sit = EnumFlagEstado.Alterado;
+
+				_tipo.IDDespesaTipoGrupo = (byte)frm.propEscolha.IDDespesaTipoGrupo;
+				txtDespesaTipoGrupo.Text = frm.propEscolha.DespesaTipoGrupo;
 			}
 
 			//--- select
-			textBox.Focus();
-			textBox.SelectAll();
+			txtDespesaTipoGrupo.Focus();
+			txtDespesaTipoGrupo.SelectAll();
 		}
 
 		//--- INSERT NEW CLASSIFICAÇÃO
@@ -580,7 +516,6 @@ namespace CamadaUI.Saidas
 
 				frmDespesaTipoGrupoControle frm = new frmDespesaTipoGrupoControle(this);
 				frm.ShowDialog();
-				GetGruposList();
 			}
 			catch (Exception ex)
 			{

@@ -11,15 +11,15 @@ using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Saidas
 {
-	public partial class frmDespesaTipoProcura : CamadaUI.Modals.frmModFinBorder
+	public partial class frmDespesaGrupoProcura : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objDespesaTipo> listTipo = new List<objDespesaTipo>();
+		private List<objDespesaTipoGrupo> listGrupo = new List<objDespesaTipoGrupo>();
 		private Form _formOrigem;
-		public objDespesaTipo propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
+		public objDespesaTipoGrupo propEscolha { get; set; } //--- PROPRIEDADE DE ESCOLHA
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmDespesaTipoProcura(Form formOrigem, int? DefaultID = null)
+		public frmDespesaGrupoProcura(Form formOrigem, int? DefaultID = null)
 		{
 			InitializeComponent();
 
@@ -47,8 +47,9 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listTipo = new DespesaBLL().GetDespesaTiposList(true);
+				listGrupo = new DespesaBLL().GetDespesaTipoGruposWithCount(true);
 				PreencheListagem();
+
 			}
 			catch (Exception ex)
 			{
@@ -65,7 +66,7 @@ namespace CamadaUI.Saidas
 
 		private void PreencheListagem()
 		{
-			lstItens.DataSource = listTipo;
+			lstItens.DataSource = listGrupo;
 			FormataListagem();
 		}
 
@@ -106,16 +107,17 @@ namespace CamadaUI.Saidas
 		private void FormataListagem()
 		{
 
-
-
 			lstItens.MultiSelect = false;
 			lstItens.HideSelection = false;
 
-			clnID.DisplayMember = "IDDespesaTipo";
-			clnID.ValueMember = "IDDespesaTipo";
+			clnID.DisplayMember = "IDDespesaTipoGrupo";
+			clnID.ValueMember = "IDDespesaTipoGrupo";
 
-			clnTipo.ValueMember = "DespesaTipo";
-			clnTipo.DisplayMember = "DespesaTipo";
+			clnGrupo.ValueMember = "DespesaTipoGrupo";
+			clnGrupo.DisplayMember = "DespesaTipoGrupo";
+
+			clnQuant.ValueMember = "Quant";
+			clnQuant.DisplayMember = "Quant";
 
 			lstItens.SearchSettings = new BetterListViewSearchSettings(BetterListViewSearchMode.PrefixOrSubstring,
 																	   BetterListViewSearchOptions.UpdateSearchHighlight,
@@ -148,6 +150,10 @@ namespace CamadaUI.Saidas
 			{
 				eventArgs.Item.Text = $"{intValue: 00}";
 			}
+
+			eventArgs.Item.SubItems[2].AlignHorizontal = TextAlignmentHorizontal.Right;
+
+			//eventArgs.Item.SubItems[2].Text = $"{eventArgs.Item.SubItems[2].Value: 00}";
 		}
 
 		// HANDLER ITEM ACTIVATE TO BTN ESCOLHER
@@ -168,7 +174,7 @@ namespace CamadaUI.Saidas
 
 		private void btnEscolher_Click(object sender, EventArgs e)
 		{
-			objDespesaTipo item = GetSelectedItem();
+			objDespesaTipoGrupo item = GetSelectedItem();
 
 			//--- check selected item
 			if (item == null)
@@ -183,12 +189,12 @@ namespace CamadaUI.Saidas
 			DialogResult = DialogResult.OK;
 		}
 
-		private objDespesaTipo GetSelectedItem()
+		private objDespesaTipoGrupo GetSelectedItem()
 		{
 			if (lstItens.SelectedItems.Count == 0) return null;
 
 			int IDSelected = (int)lstItens.SelectedItems[0].Value;
-			return listTipo.First(s => s.IDDespesaTipo == IDSelected);
+			return listGrupo.First(s => s.IDDespesaTipoGrupo == IDSelected);
 		}
 
 		#endregion
@@ -302,23 +308,23 @@ namespace CamadaUI.Saidas
 				if (!int.TryParse(txtProcura.Text, out int i))
 				{
 					// declare function
-					Func<objDespesaTipo, bool> FiltroItem = c => c.DespesaTipo.ToLower().Contains(txtProcura.Text.ToLower());
+					Func<objDespesaTipoGrupo, bool> FiltroItem = c => c.DespesaTipoGrupo.ToLower().Contains(txtProcura.Text.ToLower());
 
 					// aply filter using function
-					lstItens.DataSource = listTipo.FindAll(c => FiltroItem(c));
+					lstItens.DataSource = listGrupo.FindAll(c => FiltroItem(c));
 				}
 				else
 				{
 					// declare function
-					Func<objDespesaTipo, bool> FiltroID = c => c.IDDespesaTipo == i;
+					Func<objDespesaTipoGrupo, bool> FiltroID = c => c.IDDespesaTipoGrupo == i;
 
 					// aply filter using function
-					lstItens.DataSource = listTipo.FindAll(c => FiltroID(c));
+					lstItens.DataSource = listGrupo.FindAll(c => FiltroID(c));
 				}
 			}
 			else
 			{
-				lstItens.DataSource = listTipo;
+				lstItens.DataSource = listGrupo;
 			}
 		}
 
@@ -326,7 +332,7 @@ namespace CamadaUI.Saidas
 
 		#region DESIGN FORM FUNCTIONS
 
-		private void frmDespesaTipoProcura_Activated(object sender, EventArgs e)
+		private void frmDespesaGrupoProcura_Activated(object sender, EventArgs e)
 		{
 			if (_formOrigem != null)
 			{
@@ -335,7 +341,7 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		private void frmDespesaTipoProcura_FormClosed(object sender, FormClosedEventArgs e)
+		private void frmDespesaGrupoProcura_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			if (_formOrigem != null)
 			{
@@ -345,5 +351,6 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
 	}
 }

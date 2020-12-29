@@ -35,6 +35,7 @@
 			this.clnTipo = new ComponentOwl.BetterListView.BetterListViewColumnHeader();
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtProcura = new CamadaUC.ucTextBoxUnclicked();
+			this.grpGrupo = new ComponentOwl.BetterListView.BetterListViewGroup();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstItens)).BeginInit();
 			this.SuspendLayout();
@@ -63,7 +64,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_24;
-			this.btnFechar.Location = new System.Drawing.Point(337, 586);
+			this.btnFechar.Location = new System.Drawing.Point(337, 626);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(142, 42);
 			this.btnFechar.TabIndex = 3;
@@ -77,7 +78,7 @@
 			// 
 			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEscolher.Location = new System.Drawing.Point(22, 586);
+			this.btnEscolher.Location = new System.Drawing.Point(22, 626);
 			this.btnEscolher.Name = "btnEscolher";
 			this.btnEscolher.Size = new System.Drawing.Size(142, 42);
 			this.btnEscolher.TabIndex = 2;
@@ -89,19 +90,20 @@
 			// 
 			// lstItens
 			// 
-			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstItens.ColorSortedColumn = System.Drawing.Color.Transparent;
 			this.lstItens.Columns.Add(this.clnID);
 			this.lstItens.Columns.Add(this.clnTipo);
 			this.lstItens.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstItens.Groups.Add(this.grpGrupo);
 			this.lstItens.HeaderStyle = ComponentOwl.BetterListView.BetterListViewHeaderStyle.Nonclickable;
 			this.lstItens.HideSelectionMode = ComponentOwl.BetterListView.BetterListViewHideSelectionMode.KeepSelection;
 			this.lstItens.HotTracking = ComponentOwl.BetterListView.BetterListViewHotTracking.ItemHot;
 			this.lstItens.Location = new System.Drawing.Point(22, 110);
 			this.lstItens.Name = "lstItens";
-			this.lstItens.Size = new System.Drawing.Size(457, 465);
+			this.lstItens.Size = new System.Drawing.Size(457, 505);
 			this.lstItens.TabIndex = 1;
 			this.lstItens.ItemActivate += new ComponentOwl.BetterListView.BetterListViewItemActivateEventHandler(this.lstItens_ItemActivate);
 			this.lstItens.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.lstItens_DrawColumnHeader);
@@ -141,10 +143,16 @@
 			this.txtProcura.TabStop = false;
 			this.txtProcura.TextChanged += new System.EventHandler(this.txtProcura_TextChanged);
 			// 
+			// grpGrupo
+			// 
+			this.grpGrupo.Font = new System.Drawing.Font("Segoe UI", 11F);
+			this.grpGrupo.Header = "betterListViewGroup1";
+			this.grpGrupo.Name = "grpGrupo";
+			// 
 			// frmDespesaTipoProcura
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(502, 638);
+			this.ClientSize = new System.Drawing.Size(502, 678);
 			this.Controls.Add(this.txtProcura);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lstItens);
@@ -178,5 +186,6 @@
 		internal ComponentOwl.BetterListView.BetterListViewColumnHeader clnTipo;
 		private System.Windows.Forms.Label label1;
 		private CamadaUC.ucTextBoxUnclicked txtProcura;
+		private ComponentOwl.BetterListView.BetterListViewGroup grpGrupo;
 	}
 }

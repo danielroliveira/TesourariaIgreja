@@ -284,6 +284,7 @@ namespace CamadaUI.Entradas
 			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.DefaultCellStyle.Format = "#,##0.00";
 			clnValor.DefaultCellStyle.Font = clnFont;
 
 			//--- (9) COLUNA VALOR RECEBIDO
@@ -294,6 +295,7 @@ namespace CamadaUI.Entradas
 			clnValorRecebido.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnValorRecebido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValorRecebido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.DefaultCellStyle.Format = "#,##0.00";
 			clnValorRecebido.DefaultCellStyle.Font = clnFont;
 
 			//--- Add Columns
@@ -614,5 +616,40 @@ namespace CamadaUI.Entradas
 
 		#endregion // DATE MONTH CONTROLER --- END
 
+		// IMPRIMIR REPORT
+		//------------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> mylist = listCont.Cast<object>().ToList();
+
+				//--- create Params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtInicial", _dtInicial.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _dtFinal.ToShortDateString()));
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Entradas.Reports.rptEntradasPorPeriodoList.rdlc",
+					"Relatório de Contribuições",
+					mylist, null, param);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 	}
 }

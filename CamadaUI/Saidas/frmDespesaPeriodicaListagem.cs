@@ -167,6 +167,7 @@ namespace CamadaUI.Saidas
 			clnSetor.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnSetor);
 
+			/*
 			//--- (4) COLUNA TIPO
 			clnTipo.DataPropertyName = "DespesaTipo";
 			clnTipo.Visible = true;
@@ -177,8 +178,21 @@ namespace CamadaUI.Saidas
 			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnTipo.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnTipo);
+			*/
 
-			//--- (5) COLUNA CREDOR
+			//--- (5) COLUNA DESCRICAO
+			clnDescricao.DataPropertyName = "DespesaDescricao";
+			clnDescricao.Visible = true;
+			clnDescricao.ReadOnly = true;
+			clnDescricao.Resizable = DataGridViewTriState.False;
+			clnDescricao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDescricao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricao.DefaultCellStyle.Font = clnFont;
+			clnDescricao.Width = 380;
+			colList.Add(clnDescricao);
+
+			//--- (6) COLUNA CREDOR
 			clnCredor.DataPropertyName = "Credor";
 			clnCredor.Visible = true;
 			clnCredor.ReadOnly = true;
@@ -189,7 +203,7 @@ namespace CamadaUI.Saidas
 			clnCredor.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnCredor);
 
-			//--- (6) COLUNA DOCUMENTO TIPO
+			//--- (7) COLUNA DOCUMENTO TIPO
 			clnRecorrencia.DataPropertyName = "RecorrenciaTipoDescricao";
 			clnRecorrencia.Visible = true;
 			clnRecorrencia.ReadOnly = true;
@@ -200,7 +214,7 @@ namespace CamadaUI.Saidas
 			clnRecorrencia.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnRecorrencia);
 
-			//--- (7) COLUNA VALOR
+			//--- (8) COLUNA VALOR
 			clnValor.DataPropertyName = "DespesaValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -210,17 +224,6 @@ namespace CamadaUI.Saidas
 			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnValor);
-
-			//--- (7) COLUNA VALOR MENSAL
-			clnValorMensal.DataPropertyName = "DespesaValorMensal";
-			clnValorMensal.Visible = true;
-			clnValorMensal.ReadOnly = true;
-			clnValorMensal.Resizable = DataGridViewTriState.False;
-			clnValorMensal.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValorMensal.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorMensal.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorMensal.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnValorMensal);
 
 			//--- (9) COLUNA ATIVO IMAGE
 			clnAtivo.ReadOnly = true;
