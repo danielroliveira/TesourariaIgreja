@@ -55,7 +55,8 @@ namespace CamadaBLL
 			int? IDContribuinte = null,
 			int? IDCampanha = null,
 			DateTime? dataInicial = null,
-			DateTime? dataFinal = null)
+			DateTime? dataFinal = null,
+			bool? SetorIndefinido = null)
 		{
 			try
 			{
@@ -75,12 +76,21 @@ namespace CamadaBLL
 					myWhere = true;
 				}
 
-				// add IDSetor
-				if (IDSetor != null)
+				// add Setor Indefinido
+				if (SetorIndefinido != null && SetorIndefinido == true)
 				{
-					db.AdicionarParametros("@IDSetor", IDSetor);
-					query += myWhere ? " AND IDSetor = @IDSetor" : " WHERE IDSetor = @IDSetor";
+					query += myWhere ? " AND IDSetor IS NULL" : " WHERE IDSetor IS NULL";
 					myWhere = true;
+				}
+				else
+				{
+					// add IDSetor
+					if (IDSetor != null)
+					{
+						db.AdicionarParametros("@IDSetor", IDSetor);
+						query += myWhere ? " AND IDSetor = @IDSetor" : " WHERE IDSetor = @IDSetor";
+						myWhere = true;
+					}
 				}
 
 				// add IDEntradaForma
@@ -190,8 +200,8 @@ namespace CamadaBLL
 				ValorBruto = (decimal)row["ValorBruto"],
 				IDContribuicaoTipo = (byte)row["IDContribuicaoTipo"],
 				ContribuicaoTipo = (string)row["ContribuicaoTipo"],
-				IDSetor = (int)row["IDSetor"],
-				Setor = (string)row["Setor"],
+				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
+				Setor = row["Setor"] == DBNull.Value ? "A DEFINIR" : (string)row["Setor"],
 				IDConta = (int)row["IDConta"],
 				Conta = (string)row["Conta"],
 				IDContribuinte = row["IDContribuinte"] == DBNull.Value ? null : (int?)row["IDContribuinte"],
@@ -445,6 +455,8 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@OrigemDescricao", cont.OrigemDescricao);
 				dbTran.AdicionarParametros("@IDReuniao", cont.IDReuniao);
 				dbTran.AdicionarParametros("@IDCampanha", cont.IDCampanha);
+				dbTran.AdicionarParametros("@ValorRecebido", cont.ValorRecebido);
+				dbTran.AdicionarParametros("@Realizado", cont.Realizado);
 
 				//--- convert null parameters
 				dbTran.ConvertNullParams();
@@ -579,6 +591,37 @@ namespace CamadaBLL
 			}
 
 			return true;
+		}
+
+		// UPDATE UNDEFINED SETOR
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateContribuicaoSetor(objContribuicao entrada)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDContribuicao", entrada.IDContribuicao);
+				db.AdicionarParametros("@IDSetor", entrada.IDSetor);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblContribuicao", "@IDContribuicao");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		// DELETE
@@ -812,6 +855,7 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
 		// INSERT CONTRIBUICAO CARTAO
 		//------------------------------------------------------------------------------------------------------------
 		private void AddContribuicaoCartao(objContribuicaoCartao cartao, AcessoDados dbTran)

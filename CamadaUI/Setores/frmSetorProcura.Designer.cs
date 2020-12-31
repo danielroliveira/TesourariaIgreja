@@ -63,7 +63,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_24;
-			this.btnFechar.Location = new System.Drawing.Point(216, 382);
+			this.btnFechar.Location = new System.Drawing.Point(216, 632);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(142, 42);
 			this.btnFechar.TabIndex = 5;
@@ -77,7 +77,7 @@
 			// 
 			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEscolher.Location = new System.Drawing.Point(22, 382);
+			this.btnEscolher.Location = new System.Drawing.Point(22, 632);
 			this.btnEscolher.Name = "btnEscolher";
 			this.btnEscolher.Size = new System.Drawing.Size(142, 42);
 			this.btnEscolher.TabIndex = 4;
@@ -101,7 +101,7 @@
 			this.lstItens.HotTracking = ComponentOwl.BetterListView.BetterListViewHotTracking.ItemHot;
 			this.lstItens.Location = new System.Drawing.Point(22, 105);
 			this.lstItens.Name = "lstItens";
-			this.lstItens.Size = new System.Drawing.Size(336, 265);
+			this.lstItens.Size = new System.Drawing.Size(336, 515);
 			this.lstItens.TabIndex = 3;
 			this.lstItens.ItemActivate += new ComponentOwl.BetterListView.BetterListViewItemActivateEventHandler(this.lstItens_ItemActivate);
 			this.lstItens.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.lstItens_DrawColumnHeader);
@@ -144,7 +144,7 @@
 			// frmSetorProcura
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(381, 436);
+			this.ClientSize = new System.Drawing.Size(381, 686);
 			this.Controls.Add(this.txtProcura);
 			this.Controls.Add(this.Label1);
 			this.Controls.Add(this.lstItens);

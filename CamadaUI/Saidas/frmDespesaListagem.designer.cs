@@ -35,6 +35,15 @@
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDespesaDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnPeriodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
@@ -66,15 +75,6 @@
 			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.line2 = new AwesomeShapeControl.Line();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDespesaDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnPeriodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -198,6 +198,68 @@
 			this.dgvListagem.TabIndex = 3;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 50;
+			// 
+			// clnData
+			// 
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
+			this.clnData.Width = 85;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 120;
+			// 
+			// clnTipo
+			// 
+			this.clnTipo.HeaderText = "Tipo de Despesa";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.ReadOnly = true;
+			this.clnTipo.Width = 170;
+			// 
+			// clnDespesaDescricao
+			// 
+			this.clnDespesaDescricao.HeaderText = "Descrição";
+			this.clnDespesaDescricao.Name = "clnDespesaDescricao";
+			this.clnDespesaDescricao.ReadOnly = true;
+			this.clnDespesaDescricao.Width = 225;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 225;
+			// 
+			// clnPeriodo
+			// 
+			this.clnPeriodo.HeaderText = "Ref. Período";
+			this.clnPeriodo.Name = "clnPeriodo";
+			this.clnPeriodo.ReadOnly = true;
+			this.clnPeriodo.Width = 170;
+			// 
+			// clnSituacao
+			// 
+			this.clnSituacao.HeaderText = "Situação";
+			this.clnSituacao.Name = "clnSituacao";
+			this.clnSituacao.ReadOnly = true;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
+			this.clnValor.Width = 90;
 			// 
 			// label1
 			// 
@@ -493,7 +555,7 @@
             this.toolStripSeparator2,
             this.mnuExcluir});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(210, 88);
+			this.mnuOperacoes.Size = new System.Drawing.Size(210, 110);
 			// 
 			// mnuVisualizar
 			// 
@@ -578,68 +640,6 @@
 			this.line2.Size = new System.Drawing.Size(10, 47);
 			this.line2.StartPoint = new System.Drawing.Point(5, 5);
 			this.line2.TabIndex = 13;
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 50;
-			// 
-			// clnData
-			// 
-			this.clnData.HeaderText = "Data";
-			this.clnData.Name = "clnData";
-			this.clnData.ReadOnly = true;
-			this.clnData.Width = 85;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 120;
-			// 
-			// clnTipo
-			// 
-			this.clnTipo.HeaderText = "Tipo de Despesa";
-			this.clnTipo.Name = "clnTipo";
-			this.clnTipo.ReadOnly = true;
-			this.clnTipo.Width = 170;
-			// 
-			// clnDespesaDescricao
-			// 
-			this.clnDespesaDescricao.HeaderText = "Descrição";
-			this.clnDespesaDescricao.Name = "clnDespesaDescricao";
-			this.clnDespesaDescricao.ReadOnly = true;
-			this.clnDespesaDescricao.Width = 225;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Credor";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 225;
-			// 
-			// clnPeriodo
-			// 
-			this.clnPeriodo.HeaderText = "Ref. Período";
-			this.clnPeriodo.Name = "clnPeriodo";
-			this.clnPeriodo.ReadOnly = true;
-			this.clnPeriodo.Width = 170;
-			// 
-			// clnSituacao
-			// 
-			this.clnSituacao.HeaderText = "Situação";
-			this.clnSituacao.Name = "clnSituacao";
-			this.clnSituacao.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			this.clnValor.Width = 90;
 			// 
 			// frmDespesaListagem
 			// 

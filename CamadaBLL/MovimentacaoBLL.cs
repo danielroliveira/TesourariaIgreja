@@ -290,7 +290,7 @@ namespace CamadaBLL
 				}
 
 				//--- altera o saldo do SETOR
-				if (SetorSdlUpdate != null)
+				if (SetorSdlUpdate != null && mov.IDSetor != null)
 				{
 					new SetorBLL().SetorSaldoChange((int)mov.IDSetor, mov.MovValor, db, SetorSdlUpdate);
 				}

@@ -14,8 +14,8 @@ namespace CamadaDTO
 		{
 			internal int? _IDCredor;
 			internal string _Credor;
-			internal byte _CredorTipo;
-			internal string _CredorTipoDescricao;
+			internal byte _IDCredorTipo;
+			internal string _CredorTipo;
 			internal string _CNP;
 			internal string _EnderecoLogradouro;
 			internal string _EnderecoNumero;
@@ -29,6 +29,8 @@ namespace CamadaDTO
 			internal bool _Whatsapp;
 			internal string _Email;
 			internal bool _Ativo;
+			internal byte _PessoaTipo;
+			internal string _PessoaTipoDescricao;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -45,8 +47,8 @@ namespace CamadaDTO
 				_Credor = "",
 				_Ativo = true,
 				_EnderecoLogradouro = "",
-				_CredorTipo = 4,
-				_CredorTipoDescricao = ""
+				_IDCredorTipo = 4,
+				_CredorTipo = ""
 			};
 		}
 
@@ -122,9 +124,24 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property IDCredorTipo
+		//---------------------------------------------------------------
+		public byte IDCredorTipo
+		{
+			get => EditData._IDCredorTipo;
+			set
+			{
+				if (value != EditData._IDCredorTipo)
+				{
+					EditData._IDCredorTipo = value;
+					NotifyPropertyChanged("IDCredorTipo");
+				}
+			}
+		}
+
 		// Property CredorTipo
 		//---------------------------------------------------------------
-		public byte CredorTipo
+		public string CredorTipo
 		{
 			get => EditData._CredorTipo;
 			set
@@ -133,28 +150,6 @@ namespace CamadaDTO
 				{
 					EditData._CredorTipo = value;
 					NotifyPropertyChanged("CredorTipo");
-				}
-			}
-		}
-
-		// Property CredorTipoDescricao
-		//---------------------------------------------------------------
-		public string CredorTipoDescricao
-		{
-			get
-			{
-				switch (CredorTipo)
-				{
-					case 1:
-						return "Pessoa Física";
-					case 2:
-						return "Pessoa Jurídica";
-					case 3:
-						return "Órgão Público";
-					case 4:
-						return "Credor Simples";
-					default:
-						return "";
 				}
 			}
 		}
@@ -382,6 +377,36 @@ namespace CamadaDTO
 				{
 					EditData._Ativo = value;
 					NotifyPropertyChanged("Ativo");
+				}
+			}
+		}
+
+		// Property PessoaTipo
+		//---------------------------------------------------------------
+		public byte PessoaTipo
+		{
+			get => EditData._PessoaTipo;
+			set
+			{
+				if (value != EditData._PessoaTipo)
+				{
+					EditData._PessoaTipo = value;
+					NotifyPropertyChanged("PessoaTipo");
+				}
+			}
+		}
+
+		// Property PessoaTipoDescricao
+		//---------------------------------------------------------------
+		public string PessoaTipoDescricao
+		{
+			get => EditData._PessoaTipoDescricao;
+			set
+			{
+				if (value != EditData._PessoaTipoDescricao)
+				{
+					EditData._PessoaTipoDescricao = value;
+					NotifyPropertyChanged("PessoaTipoDescricao");
 				}
 			}
 		}

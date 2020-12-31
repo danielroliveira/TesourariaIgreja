@@ -287,7 +287,7 @@
 			this.btnAtivo.Name = "btnAtivo";
 			this.btnAtivo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.btnAtivo.Size = new System.Drawing.Size(96, 41);
-			this.btnAtivo.Text = "&Ativa";
+			this.btnAtivo.Text = "&Ativo";
 			this.btnAtivo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAtivo.Click += new System.EventHandler(this.btnAtivo_Click);
 			// 

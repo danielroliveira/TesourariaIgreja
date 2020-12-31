@@ -50,6 +50,7 @@
 			this.btnLimpar = new VIBlend.WinForms.Controls.vButton();
 			this.btnCancelar = new VIBlend.WinForms.Controls.vButton();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.chkSetorIndefinido = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();
@@ -85,7 +86,7 @@
 			this.btnSetCampanha.RoundedCornersMask = ((byte)(15));
 			this.btnSetCampanha.RoundedCornersRadius = 0;
 			this.btnSetCampanha.Size = new System.Drawing.Size(34, 27);
-			this.btnSetCampanha.TabIndex = 15;
+			this.btnSetCampanha.TabIndex = 16;
 			this.btnSetCampanha.TabStop = false;
 			this.btnSetCampanha.Text = "...";
 			this.btnSetCampanha.UseCompatibleTextRendering = true;
@@ -104,7 +105,7 @@
 			this.btnSetContribuinte.RoundedCornersMask = ((byte)(15));
 			this.btnSetContribuinte.RoundedCornersRadius = 0;
 			this.btnSetContribuinte.Size = new System.Drawing.Size(34, 27);
-			this.btnSetContribuinte.TabIndex = 18;
+			this.btnSetContribuinte.TabIndex = 19;
 			this.btnSetContribuinte.TabStop = false;
 			this.btnSetContribuinte.Text = "...";
 			this.btnSetContribuinte.UseCompatibleTextRendering = true;
@@ -119,7 +120,7 @@
 			this.txtCampanha.MaxLength = 30;
 			this.txtCampanha.Name = "txtCampanha";
 			this.txtCampanha.Size = new System.Drawing.Size(389, 27);
-			this.txtCampanha.TabIndex = 14;
+			this.txtCampanha.TabIndex = 15;
 			this.txtCampanha.Tag = "Pressione a tecla (+) para procurar";
 			// 
 			// lblCampanha
@@ -130,7 +131,7 @@
 			this.lblCampanha.Location = new System.Drawing.Point(97, 239);
 			this.lblCampanha.Name = "lblCampanha";
 			this.lblCampanha.Size = new System.Drawing.Size(78, 19);
-			this.lblCampanha.TabIndex = 13;
+			this.lblCampanha.TabIndex = 14;
 			this.lblCampanha.Text = "Campanha";
 			// 
 			// txtContribuinte
@@ -140,7 +141,7 @@
 			this.txtContribuinte.MaxLength = 30;
 			this.txtContribuinte.Name = "txtContribuinte";
 			this.txtContribuinte.Size = new System.Drawing.Size(389, 27);
-			this.txtContribuinte.TabIndex = 17;
+			this.txtContribuinte.TabIndex = 18;
 			this.txtContribuinte.Tag = "Pressione a tecla (+) para procurar";
 			// 
 			// lblContribuinte
@@ -151,7 +152,7 @@
 			this.lblContribuinte.Location = new System.Drawing.Point(86, 278);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(89, 19);
-			this.lblContribuinte.TabIndex = 16;
+			this.lblContribuinte.TabIndex = 17;
 			this.lblContribuinte.Text = "Contribuinte";
 			// 
 			// vButton1
@@ -165,7 +166,7 @@
 			this.vButton1.RoundedCornersMask = ((byte)(15));
 			this.vButton1.RoundedCornersRadius = 0;
 			this.vButton1.Size = new System.Drawing.Size(34, 27);
-			this.vButton1.TabIndex = 12;
+			this.vButton1.TabIndex = 13;
 			this.vButton1.TabStop = false;
 			this.vButton1.Text = "n";
 			this.vButton1.UseCompatibleTextRendering = true;
@@ -184,7 +185,7 @@
 			this.btnSetEntradaTipo.RoundedCornersMask = ((byte)(15));
 			this.btnSetEntradaTipo.RoundedCornersRadius = 0;
 			this.btnSetEntradaTipo.Size = new System.Drawing.Size(34, 27);
-			this.btnSetEntradaTipo.TabIndex = 9;
+			this.btnSetEntradaTipo.TabIndex = 10;
 			this.btnSetEntradaTipo.TabStop = false;
 			this.btnSetEntradaTipo.Text = "n";
 			this.btnSetEntradaTipo.UseCompatibleTextRendering = true;
@@ -200,7 +201,7 @@
 			this.txtEntradaForma.MaxLength = 30;
 			this.txtEntradaForma.Name = "txtEntradaForma";
 			this.txtEntradaForma.Size = new System.Drawing.Size(228, 27);
-			this.txtEntradaForma.TabIndex = 11;
+			this.txtEntradaForma.TabIndex = 12;
 			this.txtEntradaForma.Tag = "Pressione a tecla (+) para procurar ou atalho numérico";
 			// 
 			// label6
@@ -211,7 +212,7 @@
 			this.label6.Location = new System.Drawing.Point(27, 200);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(148, 19);
-			this.label6.TabIndex = 10;
+			this.label6.TabIndex = 11;
 			this.label6.Text = "Meio de Contribuição";
 			// 
 			// txtContribuicaoTipo
@@ -222,7 +223,7 @@
 			this.txtContribuicaoTipo.MaxLength = 30;
 			this.txtContribuicaoTipo.Name = "txtContribuicaoTipo";
 			this.txtContribuicaoTipo.Size = new System.Drawing.Size(228, 27);
-			this.txtContribuicaoTipo.TabIndex = 8;
+			this.txtContribuicaoTipo.TabIndex = 9;
 			this.txtContribuicaoTipo.Tag = "Pressione a tecla (+) para procurar ou atalho numérico";
 			// 
 			// label5
@@ -233,7 +234,7 @@
 			this.label5.Location = new System.Drawing.Point(32, 161);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(143, 19);
-			this.label5.TabIndex = 7;
+			this.label5.TabIndex = 8;
 			this.label5.Text = "Tipo de Contribuição";
 			// 
 			// btnSetConta
@@ -334,7 +335,7 @@
 			this.btnProcurar.RoundedCornersMask = ((byte)(15));
 			this.btnProcurar.RoundedCornersRadius = 2;
 			this.btnProcurar.Size = new System.Drawing.Size(136, 43);
-			this.btnProcurar.TabIndex = 19;
+			this.btnProcurar.TabIndex = 0;
 			this.btnProcurar.Tag = "Pressione aqui para procurar...";
 			this.btnProcurar.Text = "&Procurar";
 			this.btnProcurar.TextAbsolutePosition = new System.Drawing.Point(30, 5);
@@ -361,7 +362,7 @@
 			this.btnLimpar.RoundedCornersMask = ((byte)(15));
 			this.btnLimpar.RoundedCornersRadius = 2;
 			this.btnLimpar.Size = new System.Drawing.Size(136, 43);
-			this.btnLimpar.TabIndex = 20;
+			this.btnLimpar.TabIndex = 1;
 			this.btnLimpar.Text = "&Limpar";
 			this.btnLimpar.TextAbsolutePosition = new System.Drawing.Point(30, 5);
 			this.btnLimpar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -387,7 +388,7 @@
 			this.btnCancelar.RoundedCornersMask = ((byte)(15));
 			this.btnCancelar.RoundedCornersRadius = 2;
 			this.btnCancelar.Size = new System.Drawing.Size(136, 43);
-			this.btnCancelar.TabIndex = 21;
+			this.btnCancelar.TabIndex = 2;
 			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextAbsolutePosition = new System.Drawing.Point(35, 5);
 			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -409,12 +410,24 @@
 			this.panel2.Location = new System.Drawing.Point(12, 341);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(626, 60);
-			this.panel2.TabIndex = 22;
+			this.panel2.TabIndex = 20;
+			// 
+			// chkSetorIndefinido
+			// 
+			this.chkSetorIndefinido.AutoSize = true;
+			this.chkSetorIndefinido.Location = new System.Drawing.Point(473, 121);
+			this.chkSetorIndefinido.Name = "chkSetorIndefinido";
+			this.chkSetorIndefinido.Size = new System.Drawing.Size(129, 23);
+			this.chkSetorIndefinido.TabIndex = 7;
+			this.chkSetorIndefinido.Text = "Setor Indefinido";
+			this.chkSetorIndefinido.UseVisualStyleBackColor = true;
+			this.chkSetorIndefinido.CheckedChanged += new System.EventHandler(this.chkSetorIndefinido_CheckedChanged);
 			// 
 			// frmContribuicaoListagemFiltro
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(650, 413);
+			this.Controls.Add(this.chkSetorIndefinido);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.btnSetCampanha);
 			this.Controls.Add(this.btnSetContribuinte);
@@ -460,6 +473,7 @@
 			this.Controls.SetChildIndex(this.btnSetContribuinte, 0);
 			this.Controls.SetChildIndex(this.btnSetCampanha, 0);
 			this.Controls.SetChildIndex(this.panel2, 0);
+			this.Controls.SetChildIndex(this.chkSetorIndefinido, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -491,5 +505,6 @@
 		internal VIBlend.WinForms.Controls.vButton btnLimpar;
 		internal VIBlend.WinForms.Controls.vButton btnCancelar;
 		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.CheckBox chkSetorIndefinido;
 	}
 }

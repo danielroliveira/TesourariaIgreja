@@ -39,9 +39,6 @@
 			this.Label1 = new System.Windows.Forms.Label();
 			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +46,10 @@
 			this.btnProcurar = new System.Windows.Forms.Button();
 			this.btnEscolher = new System.Windows.Forms.Button();
 			this.lblRegistrosEncontrados = new System.Windows.Forms.Label();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredorTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -56,7 +57,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(468, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(633, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(130, 50);
 			this.lblTitulo.Text = "Credores";
 			// 
@@ -65,14 +66,14 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(598, 0);
+			this.btnClose.Location = new System.Drawing.Point(763, 0);
 			this.btnClose.TabIndex = 2;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.lblRegistrosEncontrados);
-			this.panel1.Size = new System.Drawing.Size(638, 50);
+			this.panel1.Size = new System.Drawing.Size(803, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lblRegistrosEncontrados, 0);
@@ -81,7 +82,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(510, 495);
+			this.btnFechar.Location = new System.Drawing.Point(510, 624);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(110, 42);
 			this.btnFechar.TabIndex = 11;
@@ -95,7 +96,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(386, 495);
+			this.btnAdicionar.Location = new System.Drawing.Point(386, 624);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(110, 42);
 			this.btnAdicionar.TabIndex = 10;
@@ -109,7 +110,7 @@
 			// 
 			this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEditar.Image = global::CamadaUI.Properties.Resources.editar_16;
-			this.btnEditar.Location = new System.Drawing.Point(262, 495);
+			this.btnEditar.Location = new System.Drawing.Point(262, 624);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(110, 42);
 			this.btnEditar.TabIndex = 9;
@@ -169,6 +170,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -184,6 +188,7 @@
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnID,
             this.clnCadastro,
+            this.clnCredorTipo,
             this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
@@ -197,34 +202,13 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(606, 371);
+			this.dgvListagem.Size = new System.Drawing.Size(771, 500);
 			this.dgvListagem.TabIndex = 6;
 			this.dgvListagem.DataSourceChanged += new System.EventHandler(this.dgvListagem_DataSourceChanged);
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
-			// 
-			// clnCadastro
-			// 
-			this.clnCadastro.HeaderText = "Credor";
-			this.clnCadastro.Name = "clnCadastro";
-			this.clnCadastro.ReadOnly = true;
-			this.clnCadastro.Width = 400;
-			// 
-			// clnImage
-			// 
-			this.clnImage.HeaderText = "Ativo";
-			this.clnImage.Name = "clnImage";
-			this.clnImage.ReadOnly = true;
-			this.clnImage.Width = 70;
 			// 
 			// MenuListagem
 			// 
@@ -268,7 +252,7 @@
 			this.btnProcurar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnProcurar.Enabled = false;
 			this.btnProcurar.Image = global::CamadaUI.Properties.Resources.refresh_24;
-			this.btnProcurar.Location = new System.Drawing.Point(14, 495);
+			this.btnProcurar.Location = new System.Drawing.Point(14, 624);
 			this.btnProcurar.Name = "btnProcurar";
 			this.btnProcurar.Size = new System.Drawing.Size(110, 42);
 			this.btnProcurar.TabIndex = 7;
@@ -285,7 +269,7 @@
 			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnEscolher.Enabled = false;
 			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEscolher.Location = new System.Drawing.Point(138, 495);
+			this.btnEscolher.Location = new System.Drawing.Point(138, 624);
 			this.btnEscolher.Name = "btnEscolher";
 			this.btnEscolher.Size = new System.Drawing.Size(110, 42);
 			this.btnEscolher.TabIndex = 8;
@@ -309,10 +293,41 @@
 			this.lblRegistrosEncontrados.Text = "Nenhum registro encontrado...";
 			this.lblRegistrosEncontrados.Visible = false;
 			// 
+			// clnID
+			// 
+			this.clnID.Frozen = true;
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 80;
+			// 
+			// clnCadastro
+			// 
+			this.clnCadastro.Frozen = true;
+			this.clnCadastro.HeaderText = "Credor";
+			this.clnCadastro.Name = "clnCadastro";
+			this.clnCadastro.ReadOnly = true;
+			this.clnCadastro.Width = 400;
+			// 
+			// clnCredorTipo
+			// 
+			this.clnCredorTipo.Frozen = true;
+			this.clnCredorTipo.HeaderText = "Tipo";
+			this.clnCredorTipo.Name = "clnCredorTipo";
+			this.clnCredorTipo.ReadOnly = true;
+			this.clnCredorTipo.Width = 180;
+			// 
+			// clnImage
+			// 
+			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.Name = "clnImage";
+			this.clnImage.ReadOnly = true;
+			this.clnImage.Width = 70;
+			// 
 			// frmCredorListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(638, 549);
+			this.ClientSize = new System.Drawing.Size(803, 678);
 			this.Controls.Add(this.btnEscolher);
 			this.Controls.Add(this.btnProcurar);
 			this.Controls.Add(this.lblProc);
@@ -369,6 +384,7 @@
 		private System.Windows.Forms.Label lblRegistrosEncontrados;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredorTipo;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 	}
 }

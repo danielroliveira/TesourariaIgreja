@@ -136,21 +136,30 @@ namespace CamadaUI.Registres
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-			//--- (3) Coluna da imagem
+			//--- (3) COLUNA CADASTRO
+			clnCredorTipo.DataPropertyName = "CredorTipo";
+			clnCredorTipo.Visible = true;
+			clnCredorTipo.ReadOnly = true;
+			clnCredorTipo.Resizable = DataGridViewTriState.False;
+			clnCredorTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCredorTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredorTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+			//--- (4) Coluna da imagem
 			clnImage.Name = "Ativo";
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnCredorTipo, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == 2)
+			if (e.ColumnIndex == clnImage.Index)
 			{
 				objCredor item = (objCredor)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 				if (item.Ativo) e.Value = ImgAtivo;

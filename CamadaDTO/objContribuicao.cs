@@ -21,7 +21,7 @@ namespace CamadaDTO
 			internal decimal _ValorBruto;
 			internal byte _IDContribuicaoTipo;
 			internal string _ContribuicaoTipo;
-			internal int _IDSetor;
+			internal int? _IDSetor;
 			internal string _Setor;
 			internal int _IDConta;
 			internal string _Conta;
@@ -267,7 +267,7 @@ namespace CamadaDTO
 
 		// Property IDSetor
 		//---------------------------------------------------------------
-		public int IDSetor
+		public int? IDSetor
 		{
 			get => EditData._IDSetor;
 			set

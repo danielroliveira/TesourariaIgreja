@@ -33,6 +33,15 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnReferencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorPago = new System.Windows.Forms.Label();
 			this.btnFiltrar = new VIBlend.WinForms.Controls.vButton();
@@ -78,15 +87,6 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnReferencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -185,6 +185,65 @@
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 50;
+			// 
+			// clnVencimento
+			// 
+			this.clnVencimento.HeaderText = "Venc.";
+			this.clnVencimento.Name = "clnVencimento";
+			this.clnVencimento.ReadOnly = true;
+			this.clnVencimento.Width = 85;
+			// 
+			// clnForma
+			// 
+			this.clnForma.HeaderText = "Forma";
+			this.clnForma.Name = "clnForma";
+			this.clnForma.ReadOnly = true;
+			this.clnForma.Width = 150;
+			// 
+			// clnDescricao
+			// 
+			this.clnDescricao.HeaderText = "Descrição da Despesa";
+			this.clnDescricao.Name = "clnDescricao";
+			this.clnDescricao.ReadOnly = true;
+			this.clnDescricao.Width = 250;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 300;
+			// 
+			// clnSituacao
+			// 
+			this.clnSituacao.HeaderText = "Situação";
+			this.clnSituacao.Name = "clnSituacao";
+			this.clnSituacao.ReadOnly = true;
+			// 
+			// clnReferencia
+			// 
+			this.clnReferencia.HeaderText = "Ref.";
+			this.clnReferencia.Name = "clnReferencia";
+			this.clnReferencia.ReadOnly = true;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
+			// 
+			// clnValorPago
+			// 
+			this.clnValorPago.HeaderText = "Vl.Pago";
+			this.clnValorPago.Name = "clnValorPago";
+			this.clnValorPago.ReadOnly = true;
 			// 
 			// label1
 			// 
@@ -611,7 +670,7 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(263, 250);
+			this.mnuOperacoes.Size = new System.Drawing.Size(263, 272);
 			// 
 			// mnuItemQuitar
 			// 
@@ -727,65 +786,6 @@
 			this.mnuItemAlterar.Size = new System.Drawing.Size(262, 26);
 			this.mnuItemAlterar.Text = "Alterar";
 			this.mnuItemAlterar.Click += new System.EventHandler(this.mnuItemAlterar_Click);
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 50;
-			// 
-			// clnVencimento
-			// 
-			this.clnVencimento.HeaderText = "Venc.";
-			this.clnVencimento.Name = "clnVencimento";
-			this.clnVencimento.ReadOnly = true;
-			this.clnVencimento.Width = 85;
-			// 
-			// clnForma
-			// 
-			this.clnForma.HeaderText = "Forma";
-			this.clnForma.Name = "clnForma";
-			this.clnForma.ReadOnly = true;
-			this.clnForma.Width = 150;
-			// 
-			// clnDescricao
-			// 
-			this.clnDescricao.HeaderText = "Descrição da Despesa";
-			this.clnDescricao.Name = "clnDescricao";
-			this.clnDescricao.ReadOnly = true;
-			this.clnDescricao.Width = 250;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Credor";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 300;
-			// 
-			// clnSituacao
-			// 
-			this.clnSituacao.HeaderText = "Situação";
-			this.clnSituacao.Name = "clnSituacao";
-			this.clnSituacao.ReadOnly = true;
-			// 
-			// clnReferencia
-			// 
-			this.clnReferencia.HeaderText = "Ref.";
-			this.clnReferencia.Name = "clnReferencia";
-			this.clnReferencia.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			// 
-			// clnValorPago
-			// 
-			this.clnValorPago.HeaderText = "Vl.Pago";
-			this.clnValorPago.Name = "clnValorPago";
-			this.clnValorPago.ReadOnly = true;
 			// 
 			// frmAPagarListagem
 			// 

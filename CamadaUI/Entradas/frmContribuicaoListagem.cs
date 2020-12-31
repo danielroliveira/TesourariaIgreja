@@ -35,6 +35,7 @@ namespace CamadaUI.Entradas
 			public string Contribuinte;
 			public int? IDCampanha;
 			public string Campanha;
+			public bool? SetorIndefinido;
 		}
 
 		public StructPesquisa Dados;
@@ -114,7 +115,9 @@ namespace CamadaUI.Entradas
 					Dados.IDContribuinte,
 					Dados.IDCampanha,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
-					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null,
+					Dados.SetorIndefinido);
+
 				dgvListagem.DataSource = listCont;
 				CalculaTotais();
 			}
@@ -382,6 +385,42 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+		// IMPRIMIR REPORT
+		//------------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> mylist = listCont.Cast<object>().ToList();
+
+				//--- create Params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtInicial", _dtInicial.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _dtFinal.ToShortDateString()));
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Entradas.Reports.rptEntradasPorPeriodoList.rdlc",
+					"Relatório de Contribuições",
+					mylist, null, param);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		// EXCLUIR CONTRIBUICAO
 		//------------------------------------------------------------------------------------------------------------
 		private void btnExcluir_Click(object sender, EventArgs e)
@@ -616,33 +655,112 @@ namespace CamadaUI.Entradas
 
 		#endregion // DATE MONTH CONTROLER --- END
 
-		// IMPRIMIR REPORT
-		//------------------------------------------------------------------------------------------------------------
-		private void btnImprimir_Click(object sender, EventArgs e)
+		#region MENU SUSPENSO
+
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
 		{
+			// check button
+			if (e.Button != MouseButtons.Right) return;
+
+			Control c = (Control)sender;
+			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+			dgvListagem.ClearSelection();
+
+			if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+			// seleciona o ROW
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
+			dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+			// mostra o MENU ativar e desativar
+			objContribuicao contribuicao = (objContribuicao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+			// mnuDefinir Setor
+			mnuDefinirSetor.Enabled = contribuicao.IDSetor == null; ;
+
+			// revela menu
+			mnuOperacoes.Show(c.PointToScreen(e.Location));
+
+		}
+
+		private void mnuVisualizar_Click(object sender, EventArgs e)
+		{
+			btnVisualizar_Click(sender, e);
+		}
+
+		private void mnuExcluir_Click(object sender, EventArgs e)
+		{
+			btnExcluir_Click(sender, e);
+		}
+
+		private void mnuDefinirSetor_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Definir o Setor...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- convert list
-				List<object> mylist = listCont.Cast<object>().ToList();
-
-				//--- create Params
-				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtInicial", _dtInicial.ToShortDateString()));
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _dtFinal.ToShortDateString()));
-
-				//--- create Report Global and Show
-				var frm = new Main.frmReportGlobal("CamadaUI.Entradas.Reports.rptEntradasPorPeriodoList.rdlc",
-					"Relatório de Contribuições",
-					mylist, null, param);
+				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, item.IDSetor);
 				frm.ShowDialog();
 
+				//--- check return
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				item.IDSetor = frm.propEscolha.IDSetor;
+				item.Setor = frm.propEscolha.Setor;
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura de setor..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+			DialogResult resp;
+
+			resp = AbrirDialog("Deseja realmente DEFINIR o SETOR na contribuição selecionada?" +
+				$"\nSetor Escolhido: {item.Setor.ToUpper()}" +
+				"\nEssa ação será definitiva...",
+				"Definir Setor", DialogType.SIM_NAO,
+				DialogIcon.Question,
+				DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes)
+			{
+				item.CancelEdit();
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				cBLL.UpdateContribuicaoSetor(item);
+				ObterDados();
+
+				AbrirDialog("Setor Definido com sucesso!",
+					"Setor Definido", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Definir o Setor..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -651,5 +769,8 @@ namespace CamadaUI.Entradas
 				Cursor.Current = Cursors.Default;
 			}
 		}
+
+		#endregion // MENU SUSPENSO --- END
+
 	}
 }

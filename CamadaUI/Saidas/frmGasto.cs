@@ -1238,6 +1238,17 @@ namespace CamadaUI.Saidas
 				return false;
 			}
 
+			//--- check DATA FUTURA
+			if (propDespesa.DespesaData > DateTime.Today)
+			{
+				AbrirDialog("A Data da Despesa não pode ser maior que a Data de hoje\n" +
+						"Favor reinserir a Data da Despesa anterior.", "Data da Despesa",
+						DialogType.OK, DialogIcon.Exclamation);
+				EP.SetError(dtpDespesaData, "Valor incorreto...");
+				dtpDespesaData.Focus();
+				return false;
+			}
+
 			// CHECK MIN DATE FROM PROVISORIA
 			if (_MinDateProvisoria != null && propDespesa.DespesaData < (DateTime)_MinDateProvisoria)
 			{

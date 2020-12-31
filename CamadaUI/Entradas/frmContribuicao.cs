@@ -604,7 +604,7 @@ namespace CamadaUI.Entradas
 		{
 			if (!VerificaDadosClasse(txtEntradaForma, "Forma da Entrada", _contribuicao, EP)) return false;
 			if (!VerificaDadosClasse(txtContribuicaoTipo, "Tipo de Entrada", _contribuicao, EP)) return false;
-			if (!VerificaDadosClasse(txtSetor, "Setor de Entrada", _contribuicao, EP)) return false;
+			//if (!VerificaDadosClasse(txtSetor, "Setor de Entrada", _contribuicao, EP)) return false;
 			if (!VerificaDadosClasse(txtConta, "Conta de Entrada", _contribuicao, EP)) return false;
 
 			// check VALOR BRUTO
@@ -621,6 +621,17 @@ namespace CamadaUI.Entradas
 				// select
 				txtValorBruto.Focus();
 				// return
+				return false;
+			}
+
+			//--- check DATA FUTURA
+			if (_contribuicao.ContribuicaoData > DateTime.Today)
+			{
+				AbrirDialog("A Data da Contribuição não pode ser maior que a Data de hoje\n" +
+						"Favor reinserir a Data da Contribuição corretamente.", "Data da Contribuição",
+						DialogType.OK, DialogIcon.Exclamation);
+				EP.SetError(numEntradaDia, "Valor incorreto...");
+				numEntradaDia.Focus();
 				return false;
 			}
 
@@ -817,20 +828,34 @@ namespace CamadaUI.Entradas
 				switch (ctr.Name)
 				{
 					case "txtContribuinte":
-						if (_contribuicao.IDContribuinte != null) Sit = EnumFlagEstado.Alterado;
+						if (_contribuicao.IDContribuinte != null && Sit != EnumFlagEstado.NovoRegistro) Sit = EnumFlagEstado.Alterado;
 						txtContribuinte.Clear();
 						_contribuicao.IDContribuinte = null;
 						break;
 					case "txtReuniao":
-						if (_contribuicao.IDReuniao != null) Sit = EnumFlagEstado.Alterado;
+						if (_contribuicao.IDReuniao != null && Sit != EnumFlagEstado.NovoRegistro) Sit = EnumFlagEstado.Alterado;
 						txtReuniao.Clear();
 						_contribuicao.IDReuniao = null;
 						break;
 					case "txtCampanha":
-						if (_contribuicao.IDCampanha != null) Sit = EnumFlagEstado.Alterado;
+						if (_contribuicao.IDCampanha != null && Sit != EnumFlagEstado.NovoRegistro) Sit = EnumFlagEstado.Alterado;
 						txtCampanha.Clear();
 						_contribuicao.IDCampanha = null;
 						break;
+					case "txtSetor":
+
+						DialogResult resp = AbrirDialog("Deseja colocar o SETOR dessa Contribuição como INDEFINIDO?",
+							"Setor Indefinido", DialogType.SIM_NAO,
+							DialogIcon.Question, DialogDefaultButton.Second);
+
+						if (resp == DialogResult.Yes)
+						{
+							if (_contribuicao.IDSetor != null && Sit != EnumFlagEstado.NovoRegistro) Sit = EnumFlagEstado.Alterado;
+							txtSetor.Text = "A DEFINIR";
+							_contribuicao.IDSetor = null;
+						}
+						break;
+
 					default:
 						break;
 				}

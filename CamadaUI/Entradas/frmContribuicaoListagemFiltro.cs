@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using CamadaBLL;
 using CamadaDTO;
-using CamadaBLL;
 using CamadaUI.Contas;
-using CamadaUI.Setores;
-using static CamadaUI.Utilidades;
-using System.Linq;
 using CamadaUI.Registres;
+using CamadaUI.Setores;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Entradas
 {
@@ -40,6 +40,7 @@ namespace CamadaUI.Entradas
 			txtEntradaForma.Text = DadosNovos.Forma;
 			txtContribuinte.Text = DadosNovos.Contribuinte;
 			txtCampanha.Text = DadosNovos.Campanha;
+			chkSetorIndefinido.Checked = DadosNovos.SetorIndefinido != null && DadosNovos.SetorIndefinido == true;
 
 			// ADD HANDLERS
 			txtConta.KeyDown += Control_KeyDown;
@@ -771,5 +772,28 @@ namespace CamadaUI.Entradas
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
+		private void chkSetorIndefinido_CheckedChanged(object sender, EventArgs e)
+		{
+			if (DadosNovos.SetorIndefinido != chkSetorIndefinido.Checked)
+			{
+				propAlterado = true;
+			}
+
+			if (chkSetorIndefinido.Checked)
+			{
+				txtSetor.Clear();
+				txtSetor.Enabled = false;
+				btnSetSetor.Enabled = false;
+				DefineSetor(null);
+				DadosNovos.SetorIndefinido = true;
+			}
+			else
+			{
+				DadosNovos.SetorIndefinido = false;
+				txtSetor.Enabled = true;
+				btnSetSetor.Enabled = true;
+			}
+		}
 	}
 }

@@ -93,7 +93,8 @@ namespace CamadaBLL
 			objCredor credor = new objCredor((int)row["IDCredor"])
 			{
 				Credor = (string)row["Credor"],
-				CredorTipo = row["CredorTipo"] == DBNull.Value ? (byte)0 : (byte)row["CredorTipo"],
+				IDCredorTipo = row["IDCredorTipo"] == DBNull.Value ? (byte)0 : (byte)row["IDCredorTipo"],
+				CredorTipo = row["CredorTipo"] == DBNull.Value ? string.Empty : (string)row["CredorTipo"],
 				CNP = row["CNP"] == DBNull.Value ? "" : (string)row["CNP"],
 				EnderecoLogradouro = row["EnderecoLogradouro"] == DBNull.Value ? "" : (string)row["EnderecoLogradouro"],
 				EnderecoComplemento = row["EnderecoComplemento"] == DBNull.Value ? "" : (string)row["EnderecoComplemento"],
@@ -106,7 +107,9 @@ namespace CamadaBLL
 				TelefoneFixo = row["TelefoneFixo"] == DBNull.Value ? "" : (string)row["TelefoneFixo"],
 				Whatsapp = row["Whatsapp"] == DBNull.Value ? false : (bool)row["Whatsapp"],
 				Email = row["Email"] == DBNull.Value ? "" : (string)row["Email"],
-				Ativo = (bool)row["Ativo"]
+				Ativo = (bool)row["Ativo"],
+				PessoaTipo = row["PessoaTipo"] == DBNull.Value ? (byte)0 : (byte)row["PessoaTipo"],
+				PessoaTipoDescricao = row["PessoaTipoDescricao"] == DBNull.Value ? string.Empty : (string)row["PessoaTipoDescricao"],
 			};
 
 			return credor;
@@ -169,7 +172,7 @@ namespace CamadaBLL
 
 				//--- define Params
 				db.AdicionarParametros("@Credor", credor.Credor);
-				db.AdicionarParametros("@CredorTipo", credor.CredorTipo);
+				db.AdicionarParametros("@IDCredorTipo", credor.IDCredorTipo);
 				db.AdicionarParametros("@CNP", credor.CNP);
 				db.AdicionarParametros("@EnderecoLogradouro", credor.EnderecoLogradouro);
 				db.AdicionarParametros("@EnderecoNumero", credor.EnderecoNumero);
@@ -277,7 +280,7 @@ namespace CamadaBLL
 				//--- define Params
 				db.AdicionarParametros("@IDCredor", credor.IDCredor);
 				db.AdicionarParametros("@Credor", credor.Credor);
-				db.AdicionarParametros("@CredorTipo", credor.CredorTipo);
+				db.AdicionarParametros("@IDCredorTipo", credor.IDCredorTipo);
 				db.AdicionarParametros("@CNP", credor.CNP);
 				db.AdicionarParametros("@EnderecoLogradouro", credor.EnderecoLogradouro);
 				db.AdicionarParametros("@EnderecoNumero", credor.EnderecoNumero);

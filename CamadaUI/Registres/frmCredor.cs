@@ -110,6 +110,8 @@ namespace CamadaUI.Registres
 			dicTipo.Add(2, "Pessoa Jurídica");
 			dicTipo.Add(3, "Órgão Público");
 			dicTipo.Add(4, "Credor Simples");
+			dicTipo.Add(5, "Funcionario");
+			dicTipo.Add(6, "Colaborador");
 		}
 
 		#endregion
@@ -123,7 +125,7 @@ namespace CamadaUI.Registres
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDCredor", true);
 			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCredorTipo.DataBindings.Add("Text", bind, "CredorTipoDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCredorTipo.DataBindings.Add("Text", bind, "CredorTipo", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCNP.DataBindings.Add("Text", bind, "CNP", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoLogradouro.DataBindings.Add("Text", bind, "EnderecoLogradouro", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEnderecoNumero.DataBindings.Add("Text", bind, "EnderecoNumero", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -361,9 +363,9 @@ namespace CamadaUI.Registres
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtCredor, "Credor", _credor)) return false;
-			if (!VerificaDadosClasse(txtCredorTipo, "CredorTipo", _credor)) return false;
+			if (!VerificaDadosClasse(txtCredorTipo, "IDCredorTipo", _credor)) return false;
 
-			if (_credor.CredorTipo == 1 || _credor.CredorTipo == 2) // check CNP if Credor PJ or PF
+			if (_credor.IDCredorTipo != 3 || _credor.IDCredorTipo != 4) // check CNP if Credor PJ or PF
 			{
 				if (!VerificaDadosClasse(txtCNP, "CNP", _credor)) return false;
 
@@ -497,11 +499,11 @@ namespace CamadaUI.Registres
 							{
 								var tipo = dicTipo.FirstOrDefault(x => x.Key == byte.Parse(e.KeyChar.ToString()));
 
-								if (tipo.Key != _credor.CredorTipo)
+								if (tipo.Key != _credor.IDCredorTipo)
 								{
 									if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
-									_credor.CredorTipo = (byte)tipo.Key;
+									_credor.IDCredorTipo = (byte)tipo.Key;
 									txtCredorTipo.Text = tipo.Value;
 									CheckCredorTipo();
 								}
@@ -542,9 +544,12 @@ namespace CamadaUI.Registres
 			};
 
 			// verifica valor do combo Tipo do Credor
-			switch (_credor.CredorTipo)
+			switch (_credor.IDCredorTipo)
 			{
 				case 1: // PESSOA FISICA
+				case 5: // FUNCIONARIO PF
+				case 6: // COLABORADOR PF
+
 					lblCNP.Text = "CPF";
 					txtCNP.Enabled = true;
 					if (txtCNP.Text.Trim().Replace("/", "").Replace(".", "").Replace("-", "").Length != 11)
@@ -585,15 +590,6 @@ namespace CamadaUI.Registres
 					break;
 
 				case 3: // ORGAO PUBLICO
-					lblCNP.Text = "";
-					txtCNP.Enabled = false;
-					txtCNP.Clear();
-					controls.ForEach(x => x.Enabled = false);
-					controls.ForEach(x => x.Text = "");
-					pnlChk.Visible = false;
-
-					break;
-
 				case 4: // CREDOR SIMPLES
 					lblCNP.Text = "";
 					txtCNP.Enabled = false;
@@ -651,7 +647,7 @@ namespace CamadaUI.Registres
 			// seleciona o TextBox
 			TextBox textBox = txtCredorTipo;
 
-			Main.frmComboLista frm = new Main.frmComboLista(dicTipo, textBox, _credor.CredorTipo);
+			Main.frmComboLista frm = new Main.frmComboLista(dicTipo, textBox, _credor.IDCredorTipo);
 
 			// show form
 			frm.ShowDialog();
@@ -659,7 +655,7 @@ namespace CamadaUI.Registres
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_credor.CredorTipo = (byte)frm.propEscolha.Key;
+				_credor.IDCredorTipo = (byte)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 				CheckCredorTipo();
 			}

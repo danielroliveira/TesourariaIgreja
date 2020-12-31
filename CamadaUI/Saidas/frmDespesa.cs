@@ -1235,6 +1235,17 @@ namespace CamadaUI.Saidas
 				}
 			}
 
+			//--- check DATA FUTURA
+			if (_despesa.DespesaData > DateTime.Today)
+			{
+				AbrirDialog("A Data da Despesa não pode ser maior que a Data de hoje\n" +
+						"Favor reinserir a Data da Despesa anterior.", "Data da Despesa",
+						DialogType.OK, DialogIcon.Exclamation);
+				EP.SetError(dtpDespesaData, "Valor incorreto...");
+				dtpDespesaData.Focus();
+				return false;
+			}
+
 			//--- check DATA PERIODO
 			if (chkReferencia.Checked)
 			{
@@ -1449,9 +1460,7 @@ namespace CamadaUI.Saidas
 				if (_despesa.DataInicial == null || _despesa.DataFinal == null)
 				{
 					dtpDataInicial.MinDate = DateTime.Today.AddYears(-3);
-					dtpDataInicial.MaxDate = DateTime.Today;
 					dtpDataFinal.MinDate = DateTime.Today.AddYears(-3);
-					dtpDataFinal.MaxDate = DateTime.Today;
 					dtpDataInicial.Value = _despesa.DespesaData;
 					dtpDataFinal.Value = _despesa.DespesaData;
 				}

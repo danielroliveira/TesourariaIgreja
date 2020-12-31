@@ -1097,6 +1097,17 @@ namespace CamadaUI.Saidas
 				return false;
 			}
 
+			//--- check DATA FUTURA
+			if (_provisoria.RetiradaData > DateTime.Today)
+			{
+				AbrirDialog("A Data da Despesa não pode ser maior que a Data de hoje\n" +
+						"Favor reinserir a Data da Despesa anterior.", "Data da Despesa",
+						DialogType.OK, DialogIcon.Exclamation);
+				EP.SetError(dtpRetiradaData, "Valor incorreto...");
+				dtpRetiradaData.Focus();
+				return false;
+			}
+
 			return true;
 		}
 
