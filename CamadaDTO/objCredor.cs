@@ -29,8 +29,11 @@ namespace CamadaDTO
 			internal bool _Whatsapp;
 			internal string _Email;
 			internal bool _Ativo;
-			internal byte _PessoaTipo;
+			internal byte? _PessoaTipo;
 			internal string _PessoaTipoDescricao;
+			internal decimal? _ComissaoTaxa;
+			internal int? _IDSetor;
+			internal string _Setor;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -48,7 +51,10 @@ namespace CamadaDTO
 				_Ativo = true,
 				_EnderecoLogradouro = "",
 				_IDCredorTipo = 4,
-				_CredorTipo = ""
+				_CredorTipo = "",
+				_PessoaTipo = null,
+				_ComissaoTaxa = null,
+				_IDSetor = null,
 			};
 		}
 
@@ -383,7 +389,7 @@ namespace CamadaDTO
 
 		// Property PessoaTipo
 		//---------------------------------------------------------------
-		public byte PessoaTipo
+		public byte? PessoaTipo
 		{
 			get => EditData._PessoaTipo;
 			set
@@ -407,6 +413,51 @@ namespace CamadaDTO
 				{
 					EditData._PessoaTipoDescricao = value;
 					NotifyPropertyChanged("PessoaTipoDescricao");
+				}
+			}
+		}
+
+		// Property ComissaoTaxa
+		//---------------------------------------------------------------
+		public decimal? ComissaoTaxa
+		{
+			get => EditData._ComissaoTaxa;
+			set
+			{
+				if (value != EditData._ComissaoTaxa)
+				{
+					EditData._ComissaoTaxa = value;
+					NotifyPropertyChanged("ComissaoTaxa");
+				}
+			}
+		}
+
+		// Property IDSetor
+		//---------------------------------------------------------------
+		public int? IDSetor
+		{
+			get => EditData._IDSetor;
+			set
+			{
+				if (value != EditData._IDSetor)
+				{
+					EditData._IDSetor = value;
+					NotifyPropertyChanged("IDSetor");
+				}
+			}
+		}
+
+		// Property Setor
+		//---------------------------------------------------------------
+		public string Setor
+		{
+			get => EditData._Setor;
+			set
+			{
+				if (value != EditData._Setor)
+				{
+					EditData._Setor = value;
+					NotifyPropertyChanged("Setor");
 				}
 			}
 		}

@@ -53,6 +53,7 @@
     <Compile Include="objCartao.cs" />
     <Compile Include="objAPagar.cs" />
     <Compile Include="objCaixaAjuste.cs" />
+    <Compile Include="objComissao.cs" />
     <Compile Include="objDadosIgreja.cs" />
     <Compile Include="objDespesaPeriodica.cs" />
     <Compile Include="objDespesaProvisoria.cs" />

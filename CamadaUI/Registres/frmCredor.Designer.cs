@@ -71,17 +71,25 @@
 			this.btnSetCredor = new VIBlend.WinForms.Controls.vButton();
 			this.txtCredorTipo = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.pnlColaborador = new System.Windows.Forms.Panel();
+			this.btnSetSetor = new VIBlend.WinForms.Controls.vButton();
+			this.txtComissaoTaxa = new System.Windows.Forms.TextBox();
+			this.txtSetor = new System.Windows.Forms.TextBox();
+			this.label12 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlChk.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picWathsapp)).BeginInit();
+			this.pnlColaborador.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(298, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(222, 50);
-			this.lblTitulo.TabIndex = 0;
+			this.lblTitulo.TabIndex = 2;
 			this.lblTitulo.Text = "Cadastro de Credor";
 			// 
 			// btnClose
@@ -90,7 +98,7 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(520, 0);
-			this.btnClose.TabIndex = 1;
+			this.btnClose.TabIndex = 3;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -141,7 +149,7 @@
 			this.Label16.Location = new System.Drawing.Point(90, 419);
 			this.Label16.Name = "Label16";
 			this.Label16.Size = new System.Drawing.Size(51, 19);
-			this.Label16.TabIndex = 29;
+			this.Label16.TabIndex = 30;
 			this.Label16.Text = "e-Mail";
 			// 
 			// txtEmail
@@ -152,7 +160,7 @@
 			this.txtEmail.MaxLength = 200;
 			this.txtEmail.Name = "txtEmail";
 			this.txtEmail.Size = new System.Drawing.Size(371, 27);
-			this.txtEmail.TabIndex = 30;
+			this.txtEmail.TabIndex = 31;
 			// 
 			// Label5
 			// 
@@ -325,7 +333,7 @@
 			this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblID.Name = "lblID";
 			this.lblID.Size = new System.Drawing.Size(94, 30);
-			this.lblID.TabIndex = 2;
+			this.lblID.TabIndex = 0;
 			this.lblID.Text = "0001";
 			this.lblID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -339,7 +347,7 @@
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
 			this.lbl_IdTexto.Size = new System.Drawing.Size(35, 13);
-			this.lbl_IdTexto.TabIndex = 3;
+			this.lbl_IdTexto.TabIndex = 1;
 			this.lbl_IdTexto.Text = "Reg.";
 			this.lbl_IdTexto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -370,10 +378,10 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 472);
+			this.tspMenu.Location = new System.Drawing.Point(3, 541);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
-			this.tspMenu.TabIndex = 31;
+			this.tspMenu.TabIndex = 33;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -504,7 +512,7 @@
 			this.pnlChk.Location = new System.Drawing.Point(472, 374);
 			this.pnlChk.Name = "pnlChk";
 			this.pnlChk.Size = new System.Drawing.Size(55, 32);
-			this.pnlChk.TabIndex = 28;
+			this.pnlChk.TabIndex = 29;
 			this.pnlChk.TabStop = true;
 			// 
 			// picWathsapp
@@ -580,10 +588,95 @@
 			this.label3.TabIndex = 4;
 			this.label3.Text = "Tipo de Credor";
 			// 
+			// pnlColaborador
+			// 
+			this.pnlColaborador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(212)))), ((int)(((byte)(218)))));
+			this.pnlColaborador.Controls.Add(this.btnSetSetor);
+			this.pnlColaborador.Controls.Add(this.txtComissaoTaxa);
+			this.pnlColaborador.Controls.Add(this.txtSetor);
+			this.pnlColaborador.Controls.Add(this.label12);
+			this.pnlColaborador.Controls.Add(this.label4);
+			this.pnlColaborador.Controls.Add(this.label6);
+			this.pnlColaborador.Location = new System.Drawing.Point(12, 457);
+			this.pnlColaborador.Name = "pnlColaborador";
+			this.pnlColaborador.Size = new System.Drawing.Size(536, 69);
+			this.pnlColaborador.TabIndex = 32;
+			// 
+			// btnSetSetor
+			// 
+			this.btnSetSetor.AllowAnimations = true;
+			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetSetor.Location = new System.Drawing.Point(340, 32);
+			this.btnSetSetor.Name = "btnSetSetor";
+			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
+			this.btnSetSetor.RoundedCornersRadius = 0;
+			this.btnSetSetor.Size = new System.Drawing.Size(34, 27);
+			this.btnSetSetor.TabIndex = 3;
+			this.btnSetSetor.TabStop = false;
+			this.btnSetSetor.Text = "...";
+			this.btnSetSetor.UseCompatibleTextRendering = true;
+			this.btnSetSetor.UseVisualStyleBackColor = false;
+			this.btnSetSetor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetSetor.Click += new System.EventHandler(this.btnSetSetor_Click);
+			// 
+			// txtComissaoTaxa
+			// 
+			this.txtComissaoTaxa.Location = new System.Drawing.Point(428, 32);
+			this.txtComissaoTaxa.Name = "txtComissaoTaxa";
+			this.txtComissaoTaxa.Size = new System.Drawing.Size(80, 27);
+			this.txtComissaoTaxa.TabIndex = 5;
+			this.txtComissaoTaxa.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtComissaoTaxa.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtComissaoTaxa_KeyPress);
+			this.txtComissaoTaxa.Leave += new System.EventHandler(this.txtComissaoTaxa_Leave);
+			// 
+			// txtSetor
+			// 
+			this.txtSetor.Location = new System.Drawing.Point(68, 32);
+			this.txtSetor.MaxLength = 30;
+			this.txtSetor.Name = "txtSetor";
+			this.txtSetor.Size = new System.Drawing.Size(266, 27);
+			this.txtSetor.TabIndex = 2;
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.BackColor = System.Drawing.Color.Transparent;
+			this.label12.ForeColor = System.Drawing.Color.Black;
+			this.label12.Location = new System.Drawing.Point(20, 35);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(42, 19);
+			this.label12.TabIndex = 1;
+			this.label12.Text = "Setor";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.BackColor = System.Drawing.Color.Transparent;
+			this.label4.ForeColor = System.Drawing.Color.Black;
+			this.label4.Location = new System.Drawing.Point(7, 7);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(223, 19);
+			this.label4.TabIndex = 0;
+			this.label4.Text = "COLABORADOR COMISSIONADO";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.BackColor = System.Drawing.Color.Transparent;
+			this.label6.ForeColor = System.Drawing.Color.Black;
+			this.label6.Location = new System.Drawing.Point(383, 35);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(39, 19);
+			this.label6.TabIndex = 4;
+			this.label6.Text = "Taxa";
+			// 
 			// frmCredor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 518);
+			this.ClientSize = new System.Drawing.Size(560, 588);
+			this.Controls.Add(this.pnlColaborador);
 			this.Controls.Add(this.btnSetCredor);
 			this.Controls.Add(this.txtCredorTipo);
 			this.Controls.Add(this.label3);
@@ -644,7 +737,6 @@
 			this.Controls.SetChildIndex(this.txtCidade, 0);
 			this.Controls.SetChildIndex(this.txtTelefoneFixo, 0);
 			this.Controls.SetChildIndex(this.txtTelefoneCelular, 0);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.line2, 0);
@@ -653,6 +745,8 @@
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtCredorTipo, 0);
 			this.Controls.SetChildIndex(this.btnSetCredor, 0);
+			this.Controls.SetChildIndex(this.pnlColaborador, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -660,6 +754,8 @@
 			this.pnlChk.ResumeLayout(false);
 			this.pnlChk.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picWathsapp)).EndInit();
+			this.pnlColaborador.ResumeLayout(false);
+			this.pnlColaborador.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -708,5 +804,12 @@
 		internal VIBlend.WinForms.Controls.vButton btnSetCredor;
 		internal System.Windows.Forms.TextBox txtCredorTipo;
 		internal System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Panel pnlColaborador;
+		internal System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox txtComissaoTaxa;
+		internal System.Windows.Forms.Label label6;
+		internal VIBlend.WinForms.Controls.vButton btnSetSetor;
+		internal System.Windows.Forms.TextBox txtSetor;
+		internal System.Windows.Forms.Label label12;
 	}
 }

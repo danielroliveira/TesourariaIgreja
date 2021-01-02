@@ -511,6 +511,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Registres\frmColaboradorListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmColaboradorListagem.designer.cs">
+      <DependentUpon>frmColaboradorListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registres\frmContribuinte.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -911,6 +917,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmColaboradorListagem.resx">
+      <DependentUpon>frmColaboradorListagem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmContribuinte.resx">
       <DependentUpon>frmContribuinte.cs</DependentUpon>
     </EmbeddedResource>
@@ -1222,6 +1231,8 @@
     <Content Include="ConfigFiles\Config.xml" />
     <Content Include="ConfigFiles\LogoColor.png" />
     <Content Include="ConfigFiles\LogoMono.png" />
+    <None Include="Resources\Colaborador_32.png" />
+    <None Include="Resources\Funcionarios_32.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

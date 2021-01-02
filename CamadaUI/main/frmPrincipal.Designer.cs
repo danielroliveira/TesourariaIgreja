@@ -34,6 +34,8 @@
 			this.btnCadastros = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuContribuintes = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCredores = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuColaboradores = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuFuncionarios = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSetoresCongregacao = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,6 +142,8 @@
 			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuContribuintes,
             this.mnuCredores,
+            this.mnuColaboradores,
+            this.mnuFuncionarios,
             this.toolStripSeparator1,
             this.mnuCongregacoes,
             this.mnuSetoresCongregacao,
@@ -169,6 +173,24 @@
 			this.mnuCredores.Name = "mnuCredores";
 			this.mnuCredores.Size = new System.Drawing.Size(262, 38);
 			this.mnuCredores.Text = "Credores";
+			// 
+			// mnuColaboradores
+			// 
+			this.mnuColaboradores.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuColaboradores.Image = global::CamadaUI.Properties.Resources.Colaborador_32;
+			this.mnuColaboradores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuColaboradores.Name = "mnuColaboradores";
+			this.mnuColaboradores.Size = new System.Drawing.Size(262, 38);
+			this.mnuColaboradores.Text = "Colaboradores";
+			// 
+			// mnuFuncionarios
+			// 
+			this.mnuFuncionarios.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuFuncionarios.Image = global::CamadaUI.Properties.Resources.Funcionarios_32;
+			this.mnuFuncionarios.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuFuncionarios.Name = "mnuFuncionarios";
+			this.mnuFuncionarios.Size = new System.Drawing.Size(262, 38);
+			this.mnuFuncionarios.Text = "Funcionarios";
 			// 
 			// toolStripSeparator1
 			// 
@@ -987,6 +1009,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuSubDespesaProvisoria;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProvisoriaInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProvisoriaProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuColaboradores;
+		private System.Windows.Forms.ToolStripMenuItem mnuFuncionarios;
 	}
 }
 

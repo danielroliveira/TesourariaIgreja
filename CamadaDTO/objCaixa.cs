@@ -1,7 +1,5 @@
-﻿using System;
+﻿
 using System.ComponentModel;
-using System.Globalization;
-using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 
 namespace CamadaDTO

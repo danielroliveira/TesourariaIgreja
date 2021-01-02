@@ -11,7 +11,7 @@ using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Registres
 {
-	public partial class frmCredor : CamadaUI.Modals.frmModFinBorder
+	public partial class frmCredor : Modals.frmModFinBorder
 	{
 		private objCredor _credor;
 		private BindingSource bind = new BindingSource();
@@ -139,8 +139,12 @@ namespace CamadaUI.Registres
 			txtEmail.DataBindings.Add("Text", bind, "Email", true, DataSourceUpdateMode.OnPropertyChanged);
 			chkWhatsapp.DataBindings.Add("Checked", bind, "Whatsapp", true, DataSourceUpdateMode.OnPropertyChanged);
 
+			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtComissaoTaxa.DataBindings.Add("Text", bind, "ComissaoTaxa", true, DataSourceUpdateMode.OnPropertyChanged);
+
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
+			txtComissaoTaxa.DataBindings["Text"].Format += FormatPercent;
 			bind.CurrentChanged += BindRegistroChanged;
 
 		}
@@ -148,6 +152,21 @@ namespace CamadaUI.Registres
 		private void FormatID(object sender, ConvertEventArgs e)
 		{
 			e.Value = e.Value == DBNull.Value ? null : $"{e.Value: 0000}";
+		}
+
+		private void FormatPercent(object sender, ConvertEventArgs e)
+		{
+			if (decimal.TryParse(e.Value == null ? null : e.Value.ToString(), out decimal comissao))
+			{
+				if (comissao > 0.99m)
+				{
+					e.Value = (((decimal)e.Value) / 100).ToString("#,##0.00%");
+				}
+				else
+				{
+					e.Value = ((decimal)e.Value).ToString("#,##0.00%");
+				}
+			}
 		}
 
 		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
@@ -222,6 +241,7 @@ namespace CamadaUI.Registres
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
 				bind.CancelEdit();
+				CheckCredorTipo();
 				Sit = EnumFlagEstado.RegistroSalvo;
 				AtivoButtonImage();
 			}
@@ -378,6 +398,22 @@ namespace CamadaUI.Registres
 					txtCNP.Focus();
 					return false;
 				}
+
+				if (_credor.IDCredorTipo == 6)
+				{
+					if (!VerificaDadosClasse(txtSetor, "Setor", _credor)) return false;
+					if (!VerificaDadosClasse(txtComissaoTaxa, "Taxa de Comissão", _credor)) return false;
+
+					if (_credor.ComissaoTaxa > 99m)
+					{
+						AbrirDialog("A Taxa de Comissão não pode ser maior ou igual a 100%.",
+							"Defina uma taxa menor que 100%",
+							DialogType.OK,
+							DialogIcon.Warning);
+						txtComissaoTaxa.Focus();
+						return false;
+					}
+				}
 			}
 
 			return true;
@@ -428,6 +464,9 @@ namespace CamadaUI.Registres
 					case "txtCredorTipo":
 						btnSetCredor_Click(sender, new EventArgs());
 						break;
+					case "txtSetor":
+						btnSetSetor_Click(sender, new EventArgs());
+						break;
 					default:
 						break;
 				}
@@ -435,14 +474,6 @@ namespace CamadaUI.Registres
 			else if (e.KeyCode == Keys.Delete)
 			{
 				e.Handled = true;
-
-				switch (ctr.Name)
-				{
-					case "txtCredorTipo":
-						break;
-					default:
-						break;
-				}
 			}
 			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
 			{
@@ -470,6 +501,7 @@ namespace CamadaUI.Registres
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
 					txtCredorTipo,
+					txtSetor,
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -548,7 +580,6 @@ namespace CamadaUI.Registres
 			{
 				case 1: // PESSOA FISICA
 				case 5: // FUNCIONARIO PF
-				case 6: // COLABORADOR PF
 
 					lblCNP.Text = "CPF";
 					txtCNP.Enabled = true;
@@ -566,6 +597,14 @@ namespace CamadaUI.Registres
 						txtCidade.Text = ObterDefault("CidadePadrao");
 						txtUF.Text = ObterDefault("UFPadrao");
 					}
+
+					this.Size = new Size(560, 518);
+					pnlColaborador.Visible = false;
+					txtComissaoTaxa.Clear();
+					txtSetor.Clear();
+					_credor.IDSetor = null;
+					_credor.ComissaoTaxa = null;
+					RedesenhaBorder();
 
 					break;
 
@@ -587,6 +626,14 @@ namespace CamadaUI.Registres
 						txtUF.Text = ObterDefault("UFPadrao");
 					}
 
+					this.Size = new Size(560, 518);
+					pnlColaborador.Visible = false;
+					txtComissaoTaxa.Clear();
+					txtSetor.Clear();
+					_credor.IDSetor = null;
+					_credor.ComissaoTaxa = null;
+					RedesenhaBorder();
+
 					break;
 
 				case 3: // ORGAO PUBLICO
@@ -594,9 +641,43 @@ namespace CamadaUI.Registres
 					lblCNP.Text = "";
 					txtCNP.Enabled = false;
 					txtCNP.Clear();
+
 					controls.ForEach(x => x.Enabled = false);
 					controls.ForEach(x => x.Text = "");
 					pnlChk.Visible = false;
+
+					this.Size = new Size(560, 518);
+					pnlColaborador.Visible = false;
+					txtComissaoTaxa.Clear();
+					txtSetor.Clear();
+					_credor.IDSetor = null;
+					_credor.ComissaoTaxa = null;
+					RedesenhaBorder();
+
+					break;
+
+				case 6: // COLABORADOR PF
+
+					lblCNP.Text = "CPF";
+					txtCNP.Enabled = true;
+					if (txtCNP.Text.Trim().Replace("/", "").Replace(".", "").Replace("-", "").Length != 11)
+					{
+						txtCNP.Clear();
+					}
+
+					controls.ForEach(x => x.Enabled = true);
+					pnlChk.Visible = true;
+
+					// get default config value
+					if (Sit == EnumFlagEstado.NovoRegistro)
+					{
+						txtCidade.Text = ObterDefault("CidadePadrao");
+						txtUF.Text = ObterDefault("UFPadrao");
+					}
+
+					this.Size = new Size(560, 588);
+					pnlColaborador.Visible = true;
+					RedesenhaBorder();
 
 					break;
 
@@ -704,7 +785,82 @@ namespace CamadaUI.Registres
 			}
 		}
 
+		private void RedesenhaBorder()
+		{
+			// --- Redesenha a border do form
+			Rectangle rect = new Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1);
+			Pen pen = new Pen(Color.SlateGray, 3);
+			// 
+			Refresh();
+			CreateGraphics().DrawRectangle(pen, rect);
+		}
+
 		#endregion // FORM DESIGN --- END
 
+		#region COLABORADOR SETOR & COMISSAO
+
+		private void btnSetSetor_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, _credor.IDSetor);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK)
+				{
+					if (Sit != EnumFlagEstado.NovoRegistro && _credor.IDSetor != frm.propEscolha.IDSetor)
+						Sit = EnumFlagEstado.Alterado;
+
+					DefineSetor(frm.propEscolha);
+				}
+
+				//--- select
+				txtSetor.Focus();
+				txtSetor.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void DefineSetor(objSetor setor)
+		{
+			_credor.IDSetor = (int)setor.IDSetor;
+			_credor.Setor = setor.Setor;
+			txtSetor.DataBindings["Text"].ReadValue();
+		}
+
+		private void txtComissaoTaxa_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			// create permited chars
+			var permited = new char[] { (char)Keys.Back, (char)44 };
+
+			// convert '.' in ','
+			if (e.KeyChar == (char)46) e.KeyChar = (char)44;
+
+			// check permited array
+			if (!char.IsNumber(e.KeyChar) && !permited.Contains(e.KeyChar))
+			{
+				e.Handled = true;
+			}
+		}
+
+		private void txtComissaoTaxa_Leave(object sender, EventArgs e)
+		{
+			txtComissaoTaxa.DataBindings["Text"].ReadValue();
+		}
+
+		#endregion // COLABORADOR --- END
 	}
 }

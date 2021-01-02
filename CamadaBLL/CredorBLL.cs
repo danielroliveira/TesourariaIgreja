@@ -11,7 +11,7 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objCredor> GetListCredor(string Credor, bool? Ativo = null)
+		public List<objCredor> GetListCredor(string Credor, bool? Ativo = null, byte? CredorTipo = null)
 		{
 			try
 			{
@@ -36,7 +36,19 @@ namespace CamadaBLL
 					if (haveWhere)
 						query += " AND Ativo = @Ativo";
 					else
+					{
 						query += " WHERE Ativo = @Ativo";
+						haveWhere = true;
+					}
+				}
+
+				if (CredorTipo != null)
+				{
+					db.AdicionarParametros("@IDCredorTipo", CredorTipo);
+					if (haveWhere)
+						query += " AND IDCredorTipo = @IDCredorTipo";
+					else
+						query += " WHERE IDCredorTipo = @IDCredorTipo";
 				}
 
 				query += " ORDER BY Credor";
@@ -63,7 +75,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET CONGREGACAO
+		// GET CREDOR
 		//------------------------------------------------------------------------------------------------------------
 		public objCredor GetCredor(int IDCredor)
 		{
@@ -108,8 +120,11 @@ namespace CamadaBLL
 				Whatsapp = row["Whatsapp"] == DBNull.Value ? false : (bool)row["Whatsapp"],
 				Email = row["Email"] == DBNull.Value ? "" : (string)row["Email"],
 				Ativo = (bool)row["Ativo"],
-				PessoaTipo = row["PessoaTipo"] == DBNull.Value ? (byte)0 : (byte)row["PessoaTipo"],
+				PessoaTipo = row["PessoaTipo"] == DBNull.Value ? null : (byte?)row["PessoaTipo"],
 				PessoaTipoDescricao = row["PessoaTipoDescricao"] == DBNull.Value ? string.Empty : (string)row["PessoaTipoDescricao"],
+				ComissaoTaxa = row["ComissaoTaxa"] == DBNull.Value ? null : (decimal?)row["ComissaoTaxa"],
+				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
+				Setor = row["Setor"] == DBNull.Value ? string.Empty : (string)row["Setor"],
 			};
 
 			return credor;
@@ -195,6 +210,11 @@ namespace CamadaBLL
 
 				//--- insert
 				int newID = (int)db.ExecutarInsertAndGetID(query);
+				credor.IDCredor = newID;
+
+				//--- SAVE | UPDATE | INSERT --> COLABORADOR
+				//------------------------------------------------------------------------------------------------------------
+				ColaboradorCheckAndSave(credor, db);
 
 				//--- COMMIT and RETURN
 				db.CommitTransaction();
@@ -304,6 +324,10 @@ namespace CamadaBLL
 				//--- UPDATE
 				db.ExecutarManipulacao(CommandType.Text, query);
 
+				//--- SAVE | UPDATE | INSERT --> COLABORADOR
+				//------------------------------------------------------------------------------------------------------------
+				ColaboradorCheckAndSave(credor, db);
+
 				//--- COMMIT
 				db.CommitTransaction();
 				return true;
@@ -315,5 +339,40 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// SAVE CREDOR COLABORADOR: INSERT | UPDATE | DELETE
+		//------------------------------------------------------------------------------------------------------------
+		private void ColaboradorCheckAndSave(objCredor credor, AcessoDados dbTran)
+		{
+			try
+			{
+				// delete
+				dbTran.LimparParametros();
+				string query = $"DELETE tblCredorColaborador WHERE IDCredor = {credor.IDCredor}";
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				if (credor.IDCredorTipo == 6) // credor colaborador
+				{
+					// insert
+					if (credor.IDSetor != null && credor.ComissaoTaxa != null)
+					{
+						dbTran.LimparParametros();
+						dbTran.AdicionarParametros("@IDCredor", credor.IDCredor);
+						dbTran.AdicionarParametros("@IDSetor", credor.IDSetor);
+						dbTran.AdicionarParametros("@ComissaoTaxa", credor.ComissaoTaxa);
+
+						query = "INSERT INTO tblCredorColaborador (IDCredor, IDSetor, ComissaoTaxa) " +
+							"VALUES (@IDCredor, @IDSetor, @ComissaoTaxa)";
+
+						dbTran.ExecutarManipulacao(CommandType.Text, query);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 	}
 }
