@@ -12,128 +12,261 @@ namespace CamadaUI.Comissoes
 {
 	public partial class frmComissao : Modals.frmModFinBorder
 	{
-		private objCredor Colaborador;
+		private objComissao _comissao;
 		private List<objContribuicao> list;
+		private BindingSource bind = new BindingSource();
+		private BindingSource BindList = new BindingSource();
 		private Form _formOrigem;
 		private ComissaoBLL cBLL = new ComissaoBLL();
-		private DateTime? _MaxDate = null;
-		private DateTime _DataFinal;
-		private DateTime? _MinDate = null;
 
 		#region SUB NEW | CONSTRUCTOR
 
-		public frmComissao(Form formOrigem)
+		public frmComissao(
+			objComissao comissao,
+			List<objContribuicao> lstContribuicao = null,
+			Form formOrigem = null)
 		{
 			InitializeComponent();
 
+			_comissao = comissao;
+			bind.DataSource = _comissao;
+			BindingCreator();
+
 			_formOrigem = formOrigem;
 
-			dtpDataFinal.MaxDate = DateTime.Today;
-			dtpDataFinal.MinDate = DateTime.Today;
+			list = lstContribuicao;
+			ObterDadosListagem();
+
 
 			// HANDLER to use TAB for ENTER
 			HandlerKeyDownControl(this);
-			dtpDataFinal.ValueChanged += (a, b) => DefineDataFinal();
 		}
 
-		private void ObterDados()
+		// OBTEM DADOS DA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void ObterDadosListagem()
 		{
-			if (Colaborador == null || Colaborador.IDSetor == null) return;
-
-			try
+			if (list == null) // obter dados da listagem contribuicao
 			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//--- Get CONTRIBUICAO LIST
-				list = cBLL.GetContribuicaoComissaoList((int)Colaborador.IDSetor);
-
-				if (list == null || list.Count == 0)
+				try
 				{
-					AbrirDialog("Não há contribuições disponíveis para comissão" +
-						$" para o colaborador escolhido: \n{Colaborador.Credor}",
-						"Não há registros", DialogType.OK, DialogIcon.Exclamation);
+					// --- Ampulheta ON
+					Cursor.Current = Cursors.WaitCursor;
+
+					//--- Get CONTRIBUICAO LIST
+					list = cBLL.GetInsertedContribuicaoList((int)_comissao.IDComissao);
+
+					if (list == null || list.Count == 0)
+					{
+						AbrirDialog("Não há contribuições disponíveis para comissão" +
+							$" para o colaborador escolhido: \n{_comissao.Credor}",
+							"Não há registros", DialogType.OK, DialogIcon.Exclamation);
+						return;
+					}
+
+					BindList.DataSource = list;
+					dgvListagem.DataSource = BindList;
+					FormataListagem();
+					CalculaTotais();
+
 				}
-
-				PreecheCampos();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Obter a lista das contribuições..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				btnEfetuar.Enabled = false;
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
+				catch (Exception ex)
+				{
+					AbrirDialog("Uma exceção ocorreu ao Obter a lista das contribuições..." + "\n" +
+								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+					btnEfetuar.Enabled = false;
+				}
+				finally
+				{
+					// --- Ampulheta OFF
+					Cursor.Current = Cursors.Default;
+				}
 			}
 		}
 
-		// PREENCHE OS CAMPOS DEPOIS DA DATA ESCOLHIDA
-		//------------------------------------------------------------------------------------------------------------
-		private void PreecheCampos()
+		//--- CALCULA OS TOTAIS E ALTERA AS LABELS
+		//----------------------------------------------------------------------------------
+		private void CalculaTotais()
 		{
-			if (Colaborador == null || Colaborador.IDSetor == null) return;
-
-			lblSetor.Text = Colaborador.Setor;
-
-			if (list == null || list.Count == 0)
-			{
-				_MaxDate = null;
-				_MinDate = null;
-
-				lblDataInicial.Text = "00/00/0000";
-				dtpDataFinal.Enabled = false;
-				dtpDataFinal.MaxDate = DateTime.Today;
-				dtpDataFinal.MinDate = DateTime.Today;
-				lblMaxDate.Text = "Data máx.: INDEFINIDA";
-				btnEfetuar.Enabled = false;
-
-			}
-			else
-			{
-				_MaxDate = list.Max(x => x.ContribuicaoData);
-				_MinDate = list.Min(x => x.ContribuicaoData);
-
-				// define Min and Max Date to CONTROL
-				dtpDataFinal.Enabled = true;
-				dtpDataFinal.MinDate = (DateTime)_MinDate;
-				dtpDataFinal.Value = (DateTime)_MaxDate;
-				dtpDataFinal.MaxDate = (DateTime)_MaxDate;
-
-				lblDataInicial.Text = _MinDate.ToString();
-				lblMaxDate.Text = "Data máx.: " + ((DateTime)_MaxDate).ToShortDateString();
-				btnEfetuar.Enabled = true;
-
-			}
-
-			DefineDataFinal();
-
-		}
-
-		// DEFINE A DATA FINAL
-		//------------------------------------------------------------------------------------------------------------
-		private void DefineDataFinal()
-		{
-			if (_DataFinal == dtpDataFinal.Value) return;
-
-			if (_MaxDate != null)
-			{
-				_DataFinal = dtpDataFinal.Value;
-				decimal soma = list.Where(x => x.ContribuicaoData <= _DataFinal).Sum(x => x.ValorRecebido);
-				int count = list.Where(x => x.ContribuicaoData <= _DataFinal).Count();
-				lblSomaTotal.Text = soma.ToString("c");
-				lblQuantidade.Text = count.ToString("D2") + " registros";
-			}
-			else
-			{
-				lblSomaTotal.Text = 0.ToString("c");
-				lblQuantidade.Text = "nenhum registro";
-			}
+			decimal vlTotal = list.Sum(x => x.ValorRecebido);
+			lblValorContribuicoes.Text = vlTotal.ToString("C");
 		}
 
 		#endregion // SUB NEW | CONSTRUCTOR --- END
+
+		#region DATABINDING
+
+		// ADD DATA BINDIGNS
+		//------------------------------------------------------------------------------------------------------------
+		private void BindingCreator()
+		{
+			// CREATE BINDINGS
+			lblID.DataBindings.Add("Text", bind, "IDComissao", true);
+			lblColaborador.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDataInicial.DataBindings.Add("Text", bind, "DataInicial", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDataFinal.DataBindings.Add("Text", bind, "DataFinal", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblComissaoTaxa.DataBindings.Add("Text", bind, "ComissaoTaxa", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblValorContribuicoes.DataBindings.Add("Text", bind, "ValorContribuicoes", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblValorDescontado.DataBindings.Add("Text", bind, "ValorDescontado", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblValorComissao.DataBindings.Add("Text", bind, "ValorComissao", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblSituacao.DataBindings.Add("Text", bind, "Situacao", true, DataSourceUpdateMode.OnPropertyChanged);
+
+			// FORMAT HANDLERS
+			lblID.DataBindings["Text"].Format += FormatID;
+			lblComissaoTaxa.DataBindings["Text"].Format += FormatPercent;
+			lblValorComissao.DataBindings["Text"].Format += FormatCurrency;
+			lblValorDescontado.DataBindings["Text"].Format += FormatCurrency;
+			lblValorContribuicoes.DataBindings["Text"].Format += FormatCurrency;
+
+		}
+
+		private void FormatID(object sender, ConvertEventArgs e)
+		{
+			e.Value = e.Value == DBNull.Value ? null : $"{e.Value: 0000}";
+		}
+
+		private void FormatPercent(object sender, ConvertEventArgs e)
+		{
+			if (decimal.TryParse(e.Value == null ? null : e.Value.ToString(), out decimal comissao))
+			{
+				if (comissao > 0.99m)
+				{
+					e.Value = (((decimal)e.Value) / 100).ToString("#,##0.00%");
+				}
+				else
+				{
+					e.Value = ((decimal)e.Value).ToString("#,##0.00%");
+				}
+			}
+		}
+
+		private void FormatCurrency(object sender, ConvertEventArgs e)
+		{
+			e.Value = string.Format("{0:c}", e.Value);
+		}
+
+		#endregion
+
+
+
+		#region DATAGRID LIST FUNCTIONS
+
+		// FORMATA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void FormataListagem()
+		{
+			dgvListagem.Columns.Clear();
+			dgvListagem.AutoGenerateColumns = false;
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.MultiSelect = false;
+			dgvListagem.ColumnHeadersVisible = true;
+			dgvListagem.AllowUserToResizeRows = false;
+			dgvListagem.AllowUserToResizeColumns = false;
+			dgvListagem.RowHeadersWidth = 36;
+			dgvListagem.RowTemplate.Height = 30;
+			dgvListagem.StandardTab = true;
+			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+
+			// DEFINE COLUMN FONT
+			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			//--- (1) COLUNA REG
+			Padding newPadding = new Padding(5, 0, 0, 0);
+			clnID.DataPropertyName = "IDContribuicao";
+			clnID.Visible = true;
+			clnID.ReadOnly = true;
+			clnID.Resizable = DataGridViewTriState.False;
+			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnID.DefaultCellStyle.Padding = newPadding;
+			clnID.DefaultCellStyle.Format = "0000";
+			clnID.DefaultCellStyle.Font = clnFont;
+
+			//--- (2) COLUNA DATA
+			clnData.DataPropertyName = "ContribuicaoData";
+			clnData.Visible = true;
+			clnData.ReadOnly = true;
+			clnData.Resizable = DataGridViewTriState.False;
+			clnData.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnData.DefaultCellStyle.Font = clnFont;
+
+			//--- (3) COLUNA CONTA
+			clnConta.DataPropertyName = "Conta";
+			clnConta.Visible = true;
+			clnConta.ReadOnly = true;
+			clnConta.Resizable = DataGridViewTriState.False;
+			clnConta.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnConta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnConta.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnConta.DefaultCellStyle.Font = clnFont;
+
+			//--- (5) COLUNA TIPO
+			clnTipo.DataPropertyName = "ContribuicaoTipo";
+			clnTipo.Visible = true;
+			clnTipo.ReadOnly = true;
+			clnTipo.Resizable = DataGridViewTriState.False;
+			clnTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnTipo.DefaultCellStyle.Font = clnFont;
+
+			//--- (9) COLUNA VALOR RECEBIDO
+			clnValorRecebido.DataPropertyName = "ValorRecebido";
+			clnValorRecebido.Visible = true;
+			clnValorRecebido.ReadOnly = true;
+			clnValorRecebido.Resizable = DataGridViewTriState.False;
+			clnValorRecebido.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorRecebido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorRecebido.DefaultCellStyle.Format = "#,##0.00";
+			clnValorRecebido.DefaultCellStyle.Font = clnFont;
+
+			//--- Add Columns
+			dgvListagem.Columns.AddRange(
+				clnID,
+				clnData,
+				clnConta,
+				clnTipo,
+				clnValorRecebido);
+		}
+
+		// ON ENTER SELECT ITEM
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				btnVisualizar_Click(sender, new EventArgs());
+			}
+		}
+
+		// ABRIR CONTRIBUICAO ESCOLHIDA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnVisualizar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			Entradas.frmContribuicao frm = new Entradas.frmContribuicao(item);
+			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Close();
+			frm.Show();
+		}
+
+		#endregion
 
 		#region BUTTONS FUNCTION
 
@@ -145,66 +278,10 @@ namespace CamadaUI.Comissoes
 
 		private void btnEfetuar_Click(object sender, EventArgs e)
 		{
-			var resp = AbrirDialog("Tem certeza que deseja inserir um registro de cálculo de comissão para: " +
-				$"\n{Colaborador.Credor}" +
-				$"\nSETOR: {Colaborador.Setor}",
-				"Efetuar Registro de Comissão",
-				DialogType.SIM_NAO,
-				DialogIcon.Question);
 
-			if (resp != DialogResult.Yes) return;
-
-			List<objContribuicao> listFinal = list.Where(x => x.ContribuicaoData <= _DataFinal).ToList();
-			decimal soma = listFinal.Sum(x => x.ValorRecebido);
-			decimal vlComissao = soma * (decimal)Colaborador.ComissaoTaxa / 100;
-
-			var Comissao = new objComissao(null)
-			{
-				ComissaoTaxa = (decimal)Colaborador.ComissaoTaxa,
-				IDCredor = (int)Colaborador.IDCredor,
-				Credor = Colaborador.Credor,
-				DataFinal = _DataFinal,
-				DataInicial = (DateTime)_MinDate,
-				IDDespesa = null,
-				IDSetor = (int)Colaborador.IDSetor,
-				Setor = Colaborador.Setor,
-				IDSituacao = 1,
-				ValorContribuicoes = soma,
-				ValorDescontado = 0,
-				ValorComissao = vlComissao,
-			};
-
-			//--- INSERT NEW COMISSAO
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				Comissao.IDComissao = cBLL.InsertComissao(Comissao, listFinal);
-
-				//--- open form
-				//var frm = new frmCaixa(newCaixa, Application.OpenForms[0]);
-				//frm.Show();
-
-				Close();
-				MostraMenuPrincipal();
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Inserir um novo registro de Comissão..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
 		}
 
 		#endregion // BUTTONS FUNCTION --- END
-
-		#region CONTROLS
 
 		#region DESIGN FORM FUNCTIONS
 
@@ -229,46 +306,7 @@ namespace CamadaUI.Comissoes
 			}
 		}
 
-		// CONTROLA TOOLTIP
-		//------------------------------------------------------------------------------------------------------------
-		private void ShowToolTip(Control control)
-		{
-			//--- Cria a ToolTip e associa com o Form container.
-			ToolTip toolTip1 = new ToolTip();
-
-			//--- Define o delay para a ToolTip.
-			toolTip1.AutoPopDelay = 2000;
-			toolTip1.InitialDelay = 2000;
-			toolTip1.ReshowDelay = 500;
-			toolTip1.IsBalloon = true;
-			toolTip1.UseAnimation = true;
-			toolTip1.UseFading = true;
-
-			if (string.IsNullOrEmpty(control.Tag.ToString()))
-				toolTip1.Show("Clique aqui...", control, control.Width - 30, -40, 2000);
-			else
-				toolTip1.Show(control.Tag.ToString(), control, control.Width - 30, -40, 2000);
-		}
-
-		private void btnProcurar_EnabledChanged(object sender, EventArgs e)
-		{
-			Control control = (Control)sender;
-
-			if (control.Enabled == true)
-				ShowToolTip(control);
-		}
-
-
-
-
-
-
 		#endregion // DESIGN FORM FUNCTIONS --- END
-
-
-
-
-
 
 	}
 }

@@ -21,7 +21,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM qryComissao ";
+				string query = "SELECT * FROM qryComissoes ";
 				bool haveWhere = false;
 
 				// add params
@@ -55,7 +55,7 @@ namespace CamadaBLL
 				if (DataInicial != null)
 				{
 					db.AdicionarParametros("@DataInicial", (DateTime)DataInicial);
-					query += haveWhere ? " AND Vencimento >= @DataInicial" : " WHERE Vencimento >= @DataInicial";
+					query += haveWhere ? " AND DataInicial >= @DataInicial" : " WHERE DataInicial >= @DataInicial";
 					haveWhere = true;
 				}
 
@@ -63,7 +63,7 @@ namespace CamadaBLL
 				if (DataFinal != null)
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)DataFinal);
-					query += haveWhere ? " AND Vencimento <= @DataFinal" : " WHERE Vencimento <= @DataFinal";
+					query += haveWhere ? " AND DataInicial <= @DataFinal" : " WHERE DataInicial <= @DataFinal";
 					haveWhere = true;
 				}
 
@@ -98,7 +98,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM qryComissao WHERE IDComissao = @IDComissao";
+				string query = "SELECT * FROM qryComissoes WHERE IDComissao = @IDComissao";
 				db.LimparParametros();
 				db.AdicionarParametros("@IDComissao", IDComissao);
 
@@ -311,7 +311,46 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET CONTRIBUICAO LIST INSERTED CONTRIBUICAO IN COMISSAO
+		//------------------------------------------------------------------------------------------------------------
+		public List<objContribuicao> GetInsertedContribuicaoList(int IDComissao)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
 
+				db.LimparParametros();
+				db.AdicionarParametros("@IDComissao", IDComissao);
+
+				string query = "SELECT * FROM qryContribuicao WHERE " +
+				"IDContribuicao IN " +
+				"(SELECT IDContribuicao FROM tblComissoes WHERE IDComissao = @IDComissao)";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return null;
+				}
+
+				//--- convert row to Contribuicao
+				var list = new List<objContribuicao>();
+				var cBLL = new ContribuicaoBLL();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					objContribuicao contribuicao = cBLL.ConvertRowInClass(row);
+					list.Add(contribuicao);
+				}
+
+				return list;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
 	}
 }

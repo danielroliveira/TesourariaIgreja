@@ -4,51 +4,32 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Comissoes
 {
-	public partial class frmContribuicaoListagem : CamadaUI.Modals.frmModFinBorder
+	public partial class frmComissaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		ContribuicaoBLL cBLL = new ContribuicaoBLL();
-		private List<objContribuicao> listCont = new List<objContribuicao>();
+		ComissaoBLL cBLL = new ComissaoBLL();
+		private List<objComissao> listCont = new List<objComissao>();
 		private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
-
-		public struct StructPesquisa
-		{
-			public int? IDConta;
-			public string Conta;
-			public int? IDSetor;
-			public string Setor;
-			public byte? IDTipo;
-			public string Tipo;
-			public byte? IDForma;
-			public string Forma;
-			public int? IDContribuinte;
-			public string Contribuinte;
-			public int? IDCampanha;
-			public string Campanha;
-			public bool? SetorIndefinido;
-		}
-
-		public StructPesquisa Dados;
+		private objCredor _colaborador;
+		private objSetor _setor;
+		private byte _situacao = 1;
 
 		#region NEW | OPEN FUNCTIONS | PROPERTIES
 
 		// SUN NEW | CONSTRUCTOR
 		//------------------------------------------------------------------------------------------------------------
-		public frmContribuicaoListagem(Form formOrigem = null)
+		public frmComissaoListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
-
-			Dados = new StructPesquisa();
 
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
@@ -63,13 +44,15 @@ namespace CamadaUI.Entradas
 			//--- get dados
 			dgvListagem.CellDoubleClick += btnVisualizar_Click;
 
-			DefineLabelFiltro();
-
 			//--- Handlers
 			HandlerKeyDownControl(this);
 			rbtPorMes.CheckedChanged += rbt_CheckedChanged;
 			rbtPorPeriodo.CheckedChanged += rbt_CheckedChanged;
 			rbtTodas.CheckedChanged += rbt_CheckedChanged;
+
+			rbtIniciadas.CheckedChanged += (a, b) => DefineSituacao();
+			rbtConcluidas.CheckedChanged += (a, b) => DefineSituacao();
+			rbtPagas.CheckedChanged += (a, b) => DefineSituacao();
 
 		}
 
@@ -107,19 +90,14 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listCont = cBLL.GetListContribuicao(
-					Dados.IDConta,
-					Dados.IDSetor,
-					Dados.IDForma,
-					Dados.IDTipo,
-					Dados.IDContribuinte,
-					Dados.IDCampanha,
+				listCont = cBLL.GetList(
+					_colaborador == null ? null : _colaborador.IDCredor,
+					_setor == null ? null : _setor.IDSetor,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null,
-					Dados.SetorIndefinido);
+					_situacao);
 
 				dgvListagem.DataSource = listCont;
-				CalculaTotais();
 			}
 			catch (Exception ex)
 			{
@@ -134,55 +112,33 @@ namespace CamadaUI.Entradas
 
 		}
 
-		//--- CALCULA OS TOTAIS E ALTERA AS LABELS
-		//----------------------------------------------------------------------------------
-		private void CalculaTotais()
+		private void DefineSituacao()
 		{
-			decimal vlTotal = listCont.Sum(x => x.ValorBruto);
-			lblValorTotal.Text = vlTotal.ToString("C");
-
-			decimal vlRecebido = listCont.Sum(x => x.ValorRecebido);
-			lblValorRecebido.Text = vlRecebido.ToString("C");
-		}
-
-		// DEFINE O LABEL FILTRO
-		//------------------------------------------------------------------------------------------------------------
-		private void DefineLabelFiltro()
-		{
-			StringBuilder builder = new StringBuilder();
-
-			if (Dados.IDConta != null)
+			//--- Get Situacao
+			if (rbtIniciadas.Checked)
 			{
-				builder.Append("CONTA: " + Dados.Conta);
+				if (_situacao != 1)
+				{
+					_situacao = 1;
+					ObterDados();
+				}
 			}
-
-			if (Dados.IDSetor != null)
+			else if (rbtConcluidas.Checked)
 			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "SETOR: " + Dados.Setor);
+				if (_situacao != 2)
+				{
+					_situacao = 2;
+					ObterDados();
+				}
 			}
-
-			if (Dados.IDTipo != null)
+			else if (rbtPagas.Checked)
 			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "TIPO: " + Dados.Tipo);
+				if (_situacao != 3)
+				{
+					_situacao = 3;
+					ObterDados();
+				}
 			}
-
-			if (Dados.IDForma != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "FORMA: " + Dados.Forma);
-			}
-
-			if (Dados.IDContribuinte != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "CONTRIBUINTE: " + Dados.Contribuinte);
-			}
-
-			if (Dados.IDCampanha != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "CAMPANHA: " + Dados.Campanha);
-			}
-
-			lblFiltro.Text = builder.ToString();
-
 		}
 
 		#endregion
@@ -210,7 +166,7 @@ namespace CamadaUI.Entradas
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDContribuicao";
+			clnID.DataPropertyName = "IDComissao";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -219,25 +175,25 @@ namespace CamadaUI.Entradas
 			clnID.DefaultCellStyle.Format = "0000";
 			clnID.DefaultCellStyle.Font = clnFont;
 
-			//--- (2) COLUNA DATA
-			clnData.DataPropertyName = "ContribuicaoData";
-			clnData.Visible = true;
-			clnData.ReadOnly = true;
-			clnData.Resizable = DataGridViewTriState.False;
-			clnData.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnData.DefaultCellStyle.Font = clnFont;
+			//--- (2) COLUNA DATA INICIAL
+			clnDataInicial.DataPropertyName = "DataInicial";
+			clnDataInicial.Visible = true;
+			clnDataInicial.ReadOnly = true;
+			clnDataInicial.Resizable = DataGridViewTriState.False;
+			clnDataInicial.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDataInicial.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDataInicial.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDataInicial.DefaultCellStyle.Font = clnFont;
 
-			//--- (3) COLUNA CONTA
-			clnConta.DataPropertyName = "Conta";
-			clnConta.Visible = true;
-			clnConta.ReadOnly = true;
-			clnConta.Resizable = DataGridViewTriState.False;
-			clnConta.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnConta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnConta.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnConta.DefaultCellStyle.Font = clnFont;
+			//--- (3) COLUNA DATA FINAL
+			clnDataFinal.DataPropertyName = "DataFinal";
+			clnDataFinal.Visible = true;
+			clnDataFinal.ReadOnly = true;
+			clnDataFinal.Resizable = DataGridViewTriState.False;
+			clnDataFinal.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDataFinal.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDataFinal.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDataFinal.DefaultCellStyle.Font = clnFont;
 
 			//--- (4) COLUNA SETOR
 			clnSetor.DataPropertyName = "Setor";
@@ -249,69 +205,60 @@ namespace CamadaUI.Entradas
 			clnSetor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnSetor.DefaultCellStyle.Font = clnFont;
 
-			//--- (5) COLUNA TIPO
-			clnTipo.DataPropertyName = "ContribuicaoTipo";
-			clnTipo.Visible = true;
-			clnTipo.ReadOnly = true;
-			clnTipo.Resizable = DataGridViewTriState.False;
-			clnTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnTipo.DefaultCellStyle.Font = clnFont;
+			//--- (5) COLUNA COLABORADOR
+			clnCredor.DataPropertyName = "Credor";
+			clnCredor.Visible = true;
+			clnCredor.ReadOnly = true;
+			clnCredor.Resizable = DataGridViewTriState.False;
+			clnCredor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCredor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredor.DefaultCellStyle.Font = clnFont;
 
-			//--- (6) COLUNA CONTRIBUINTE
-			clnContribuinte.DataPropertyName = "Contribuinte";
-			clnContribuinte.Visible = true;
-			clnContribuinte.ReadOnly = true;
-			clnContribuinte.Resizable = DataGridViewTriState.False;
-			clnContribuinte.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnContribuinte.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnContribuinte.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnContribuinte.DefaultCellStyle.Font = clnFont;
+			//--- (6) COLUNA VALOR
+			clnValorContribuicoes.DataPropertyName = "ValorContribuicoes";
+			clnValorContribuicoes.Visible = true;
+			clnValorContribuicoes.ReadOnly = true;
+			clnValorContribuicoes.Resizable = DataGridViewTriState.False;
+			clnValorContribuicoes.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorContribuicoes.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorContribuicoes.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorContribuicoes.DefaultCellStyle.Format = "#,##0.00";
+			clnValorContribuicoes.DefaultCellStyle.Font = clnFont;
 
-			//--- (7) COLUNA FORMA
-			clnForma.DataPropertyName = "EntradaForma";
-			clnForma.Visible = true;
-			clnForma.ReadOnly = true;
-			clnForma.Resizable = DataGridViewTriState.False;
-			clnForma.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnForma.DefaultCellStyle.Font = clnFont;
+			//--- (7) COLUNA VALOR DESCONTOS
+			clnValorDescontado.DataPropertyName = "ValorDescontado";
+			clnValorDescontado.Visible = true;
+			clnValorDescontado.ReadOnly = true;
+			clnValorDescontado.Resizable = DataGridViewTriState.False;
+			clnValorDescontado.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorDescontado.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorDescontado.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorDescontado.DefaultCellStyle.Format = "#,##0.00";
+			clnValorDescontado.DefaultCellStyle.Font = clnFont;
 
-			//--- (8) COLUNA VALOR
-			clnValor.DataPropertyName = "ValorBruto";
-			clnValor.Visible = true;
-			clnValor.ReadOnly = true;
-			clnValor.Resizable = DataGridViewTriState.False;
-			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValor.DefaultCellStyle.Format = "#,##0.00";
-			clnValor.DefaultCellStyle.Font = clnFont;
-
-			//--- (9) COLUNA VALOR RECEBIDO
-			clnValorRecebido.DataPropertyName = "ValorRecebido";
-			clnValorRecebido.Visible = true;
-			clnValorRecebido.ReadOnly = true;
-			clnValorRecebido.Resizable = DataGridViewTriState.False;
-			clnValorRecebido.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValorRecebido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorRecebido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorRecebido.DefaultCellStyle.Format = "#,##0.00";
-			clnValorRecebido.DefaultCellStyle.Font = clnFont;
+			//--- (8) COLUNA VALOR COMISSAO
+			clnValorComissao.DataPropertyName = "ValorComissao";
+			clnValorComissao.Visible = true;
+			clnValorComissao.ReadOnly = true;
+			clnValorComissao.Resizable = DataGridViewTriState.False;
+			clnValorComissao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValorComissao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorComissao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValorComissao.DefaultCellStyle.Format = "#,##0.00";
+			clnValorComissao.DefaultCellStyle.Font = clnFont;
 
 			//--- Add Columns
 			dgvListagem.Columns.AddRange(
+				clnCheck,
 				clnID,
-				clnData,
-				clnConta,
+				clnDataInicial,
+				clnDataFinal,
 				clnSetor,
-				clnTipo,
-				clnContribuinte,
-				clnForma,
-				clnValor,
-				clnValorRecebido);
+				clnCredor,
+				clnValorContribuicoes,
+				clnValorDescontado,
+				clnValorComissao);
 		}
 
 		// ON ENTER SELECT ITEM
@@ -342,7 +289,7 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmContribuicao frm = new frmContribuicao(new objContribuicao(null));
+			var frm = new frmComissaoInserir(Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault());
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -362,33 +309,20 @@ namespace CamadaUI.Entradas
 			}
 
 			//--- get Selected item
-			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objComissao item = (objComissao)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			frmContribuicao frm = new frmContribuicao(item);
+			frmComissao frm = new frmComissao(item);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
 			frm.Show();
 		}
 
-		// PROCURAR
-		//------------------------------------------------------------------------------------------------------------
-		private void btnProcurar_Click(object sender, EventArgs e)
-		{
-			var frm = new frmContribuicaoListagemFiltro(this);
-			frm.ShowDialog();
-
-			if (frm.DialogResult == DialogResult.Yes)
-			{
-				ObterDados();
-				DefineLabelFiltro();
-			}
-		}
-
 		// IMPRIMIR REPORT
 		//------------------------------------------------------------------------------------------------------------
 		private void btnImprimir_Click(object sender, EventArgs e)
 		{
+			/*
 			try
 			{
 				// --- Ampulheta ON
@@ -419,12 +353,14 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+			*/
 		}
 
 		// EXCLUIR CONTRIBUICAO
 		//------------------------------------------------------------------------------------------------------------
 		private void btnExcluir_Click(object sender, EventArgs e)
 		{
+			/*
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
@@ -434,7 +370,7 @@ namespace CamadaUI.Entradas
 			}
 
 			//--- get Selected item
-			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objComissao item = (objComissao)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
@@ -470,7 +406,7 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
+			*/
 		}
 
 		#endregion
@@ -529,6 +465,150 @@ namespace CamadaUI.Entradas
 					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
 					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
 				}
+			}
+		}
+
+		// BLOCK KEY (+) FOR SOME CONTROLS
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtColaborador, txtSetor,
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add || e.KeyCode == Keys.F4)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtColaborador":
+						btnSetColaborador_Click(sender, new EventArgs());
+						break;
+					case "txtSetor":
+						btnSetSetor_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtColaborador":
+						txtColaborador.Clear();
+						_colaborador = null;
+						ObterDados();
+						break;
+					case "txtSetor":
+						txtSetor.Clear();
+						_setor = null;
+						ObterDados();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = { txtColaborador, txtSetor };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
+
+		// OPEN PROCURA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetColaborador_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var frm = new Registres.frmColaboradorListagem(true, this);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK && frm.propEscolha != _colaborador)
+				{
+					_colaborador = frm.propEscolha;
+					txtColaborador.Text = frm.propEscolha.Credor;
+					ObterDados();
+				}
+
+				//--- select
+				txtColaborador.Focus();
+				txtColaborador.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void btnSetSetor_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, _setor == null ? null : _setor.IDSetor);
+				frm.ShowDialog();
+
+				//--- check return
+				if (frm.DialogResult == DialogResult.OK && frm.propEscolha != _setor)
+				{
+					_setor = frm.propEscolha;
+					txtSetor.Text = _setor.Setor;
+					ObterDados();
+				}
+
+				//--- select
+				txtSetor.Focus();
+				txtSetor.SelectAll();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
@@ -655,122 +735,7 @@ namespace CamadaUI.Entradas
 
 		#endregion // DATE MONTH CONTROLER --- END
 
-		#region MENU SUSPENSO
 
-		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
-		{
-			// check button
-			if (e.Button != MouseButtons.Right) return;
-
-			Control c = (Control)sender;
-			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
-			dgvListagem.ClearSelection();
-
-			if (hit.Type != DataGridViewHitTestType.Cell) return;
-
-			// seleciona o ROW
-			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
-			dgvListagem.Rows[hit.RowIndex].Selected = true;
-
-			// mostra o MENU ativar e desativar
-			objContribuicao contribuicao = (objContribuicao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
-
-			// mnuDefinir Setor
-			mnuDefinirSetor.Enabled = contribuicao.IDSetor == null; ;
-
-			// revela menu
-			mnuOperacoes.Show(c.PointToScreen(e.Location));
-
-		}
-
-		private void mnuVisualizar_Click(object sender, EventArgs e)
-		{
-			btnVisualizar_Click(sender, e);
-		}
-
-		private void mnuExcluir_Click(object sender, EventArgs e)
-		{
-			btnExcluir_Click(sender, e);
-		}
-
-		private void mnuDefinirSetor_Click(object sender, EventArgs e)
-		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Definir o Setor...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
-			//--- get Selected item
-			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, item.IDSetor);
-				frm.ShowDialog();
-
-				//--- check return
-				if (frm.DialogResult != DialogResult.OK) return;
-
-				item.IDSetor = frm.propEscolha.IDSetor;
-				item.Setor = frm.propEscolha.Setor;
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura de setor..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
-			DialogResult resp;
-
-			resp = AbrirDialog("Deseja realmente DEFINIR o SETOR na contribuição selecionada?" +
-				$"\nSetor Escolhido: {item.Setor.ToUpper()}" +
-				"\nEssa ação será definitiva...",
-				"Definir Setor", DialogType.SIM_NAO,
-				DialogIcon.Question,
-				DialogDefaultButton.Second);
-
-			if (resp != DialogResult.Yes)
-			{
-				item.CancelEdit();
-				return;
-			}
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				cBLL.UpdateContribuicaoSetor(item);
-				ObterDados();
-
-				AbrirDialog("Setor Definido com sucesso!",
-					"Setor Definido", DialogType.OK, DialogIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Definir o Setor..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		#endregion // MENU SUSPENSO --- END
 
 	}
 }

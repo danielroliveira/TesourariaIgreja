@@ -35,6 +35,9 @@
 			this.mnuContribuintes = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCredores = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuColaboradores = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuColaboradorProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuComissaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuComissaoInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuFuncionarios = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,8 +103,7 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
-			this.mnuColaboradorProcurar = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuComissaoInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -180,13 +182,43 @@
 			// 
 			this.mnuColaboradores.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuColaboradorProcurar,
-            this.mnuComissaoInserir});
+            this.toolStripSeparator10,
+            this.mnuComissaoInserir,
+            this.mnuComissaoProcurar});
 			this.mnuColaboradores.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuColaboradores.Image = global::CamadaUI.Properties.Resources.Colaborador_32;
 			this.mnuColaboradores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuColaboradores.Name = "mnuColaboradores";
 			this.mnuColaboradores.Size = new System.Drawing.Size(262, 38);
 			this.mnuColaboradores.Text = "Colaboradores";
+			// 
+			// mnuColaboradorProcurar
+			// 
+			this.mnuColaboradorProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuColaboradorProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuColaboradorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuColaboradorProcurar.Name = "mnuColaboradorProcurar";
+			this.mnuColaboradorProcurar.Size = new System.Drawing.Size(251, 30);
+			this.mnuColaboradorProcurar.Text = "Procurar Colaborador";
+			// 
+			// mnuComissaoProcurar
+			// 
+			this.mnuComissaoProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuComissaoProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuComissaoProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuComissaoProcurar.Name = "mnuComissaoProcurar";
+			this.mnuComissaoProcurar.Size = new System.Drawing.Size(251, 30);
+			this.mnuComissaoProcurar.Text = "Procurar Comissão";
+			// 
+			// mnuComissaoInserir
+			// 
+			this.mnuComissaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuComissaoInserir.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.mnuComissaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuComissaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuComissaoInserir.Name = "mnuComissaoInserir";
+			this.mnuComissaoInserir.Size = new System.Drawing.Size(251, 30);
+			this.mnuComissaoInserir.Text = "Verificar Inserir Comissão";
 			// 
 			// mnuFuncionarios
 			// 
@@ -912,24 +944,10 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// mnuColaboradorProcurar
+			// toolStripSeparator10
 			// 
-			this.mnuColaboradorProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuColaboradorProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.mnuColaboradorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuColaboradorProcurar.Name = "mnuColaboradorProcurar";
-			this.mnuColaboradorProcurar.Size = new System.Drawing.Size(251, 30);
-			this.mnuColaboradorProcurar.Text = "Procurar Colaborador";
-			// 
-			// mnuComissaoInserir
-			// 
-			this.mnuComissaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuComissaoInserir.Image = global::CamadaUI.Properties.Resources.money_red_24;
-			this.mnuComissaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuComissaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuComissaoInserir.Name = "mnuComissaoInserir";
-			this.mnuComissaoInserir.Size = new System.Drawing.Size(251, 30);
-			this.mnuComissaoInserir.Text = "Verificar Inserir Comissão";
+			this.toolStripSeparator10.Name = "toolStripSeparator10";
+			this.toolStripSeparator10.Size = new System.Drawing.Size(248, 6);
 			// 
 			// frmPrincipal
 			// 
@@ -1037,6 +1055,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuFuncionarios;
 		private System.Windows.Forms.ToolStripMenuItem mnuColaboradorProcurar;
 		private System.Windows.Forms.ToolStripMenuItem mnuComissaoInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuComissaoProcurar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 	}
 }
 

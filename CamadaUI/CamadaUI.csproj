@@ -236,6 +236,12 @@
     <Compile Include="Comissoes\frmComissaoInserir.designer.cs">
       <DependentUpon>frmComissaoInserir.cs</DependentUpon>
     </Compile>
+    <Compile Include="Comissoes\frmComissaoListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comissoes\frmComissaoListagem.designer.cs">
+      <DependentUpon>frmComissaoListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -789,6 +795,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Comissoes\frmComissaoInserir.resx">
       <DependentUpon>frmComissaoInserir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comissoes\frmComissaoListagem.resx">
+      <DependentUpon>frmComissaoListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
