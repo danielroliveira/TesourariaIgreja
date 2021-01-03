@@ -200,26 +200,31 @@ namespace CamadaUI.Registres
 		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
-			//--- check formOrigem
-			if (_formOrigem.GetType() != typeof(frmPrincipal)) return;
-
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Editar...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
 			//--- get Selected item
 			objCredor item = (objCredor)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			//--- open edit form
-			frmCredor frm = new frmCredor(item, null);
-			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-			DesativaMenuPrincipal();
-			Close();
-			frm.Show();
+			if (!_isProcura) // EDITAR
+			{
+				//--- check selected item
+				if (dgvListagem.SelectedRows.Count == 0)
+				{
+					AbrirDialog("Favor selecionar um registro para Editar...",
+						"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+					return;
+				}
+
+				//--- open edit form
+				frmCredor frm = new frmCredor(item, null);
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				DesativaMenuPrincipal();
+				Close();
+				frm.Show();
+			}
+			else // ESCOLHER
+			{
+				propEscolha = item;
+				DialogResult = DialogResult.OK;
+			}
 		}
 
 		#endregion

@@ -139,7 +139,7 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertComissao(objComissao comissao)
+		public int InsertComissao(objComissao comissao, List<objContribuicao> lstContribuicao)
 		{
 			AcessoDados db = null;
 
@@ -166,11 +166,14 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateInsertSQL("tblComissao");
+				string query = db.CreateInsertSQL("tblComissoes");
 
 				//--- insert
 				int newID = (int)db.ExecutarInsertAndGetID(query);
 				comissao.IDComissao = newID;
+
+				//--- insert Contribuicao List
+				InsertComissaoContribuicaoList(newID, lstContribuicao, db);
 
 				//--- COMMIT and RETURN
 				db.CommitTransaction();
@@ -180,6 +183,35 @@ namespace CamadaBLL
 			{
 				//--- ROOLBACK
 				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// INSERT CONTRIBUICAO COMISSIONADA LIST
+		//------------------------------------------------------------------------------------------------------------
+		private void InsertComissaoContribuicaoList(int IDComissao, List<objContribuicao> lstContribuicao, AcessoDados dbTran)
+		{
+			try
+			{
+				string query = "";
+
+				foreach (var contribuicao in lstContribuicao)
+				{
+					dbTran.LimparParametros();
+					dbTran.AdicionarParametros("@IDContribuicao", contribuicao.IDContribuicao);
+					dbTran.AdicionarParametros("@IDComissao", IDComissao);
+					dbTran.AdicionarParametros("@ValorComissionado", contribuicao.ValorRecebido);
+
+					query = "INSERT INTO tblContribuicaoComissionada " +
+						"(IDContribuicao, IDComissao, ValorComissionado) " +
+						"VALUES " +
+						"(@IDContribuicao, @IDComissao, @ValorComissionado)";
+
+					dbTran.ExecutarManipulacao(CommandType.Text, query);
+				}
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}
@@ -231,5 +263,55 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// GET CONTRIBUICAO LIST BY SETOR WITH NOT IN COMISSAO COMISSIONADA
+		//------------------------------------------------------------------------------------------------------------
+		public List<objContribuicao> GetContribuicaoComissaoList(int IDSetor)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				db.LimparParametros();
+				db.AdicionarParametros("@IDSetor", IDSetor);
+
+				string query = "SELECT * FROM qryContribuicao AS C " +
+						"JOIN tblContribuicaoTipo AS T " +
+						"ON C.IDContribuicaoTipo = T.IDContribuicaoTipo " +
+						"WHERE " +
+						"IDSetor = @IDSetor " +
+						"AND Realizado = 'TRUE' " +
+						"AND T.ComComissao = 'TRUE' " +
+						"AND IDContribuicao " +
+						"NOT IN (SELECT IDContribuicao FROM tblContribuicaoComissionada)";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return null;
+				}
+
+				//--- convert row to Contribuicao
+				var list = new List<objContribuicao>();
+				var cBLL = new ContribuicaoBLL();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					objContribuicao contribuicao = cBLL.ConvertRowInClass(row);
+					list.Add(contribuicao);
+				}
+
+				return list;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
+
 	}
 }

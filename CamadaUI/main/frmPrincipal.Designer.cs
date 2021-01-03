@@ -100,6 +100,8 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuColaboradorProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuComissaoInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -176,6 +178,9 @@
 			// 
 			// mnuColaboradores
 			// 
+			this.mnuColaboradores.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuColaboradorProcurar,
+            this.mnuComissaoInserir});
 			this.mnuColaboradores.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuColaboradores.Image = global::CamadaUI.Properties.Resources.Colaborador_32;
 			this.mnuColaboradores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -907,6 +912,25 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuColaboradorProcurar
+			// 
+			this.mnuColaboradorProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuColaboradorProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuColaboradorProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuColaboradorProcurar.Name = "mnuColaboradorProcurar";
+			this.mnuColaboradorProcurar.Size = new System.Drawing.Size(251, 30);
+			this.mnuColaboradorProcurar.Text = "Procurar Colaborador";
+			// 
+			// mnuComissaoInserir
+			// 
+			this.mnuComissaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuComissaoInserir.Image = global::CamadaUI.Properties.Resources.money_red_24;
+			this.mnuComissaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuComissaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuComissaoInserir.Name = "mnuComissaoInserir";
+			this.mnuComissaoInserir.Size = new System.Drawing.Size(251, 30);
+			this.mnuComissaoInserir.Text = "Verificar Inserir Comissão";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -1011,6 +1035,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaProvisoriaProcurar;
 		private System.Windows.Forms.ToolStripMenuItem mnuColaboradores;
 		private System.Windows.Forms.ToolStripMenuItem mnuFuncionarios;
+		private System.Windows.Forms.ToolStripMenuItem mnuColaboradorProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuComissaoInserir;
 	}
 }
 
