@@ -28,11 +28,13 @@ namespace CamadaUI.Comissoes
 		{
 			InitializeComponent();
 
+			_formOrigem = formOrigem;
+
 			_comissao = comissao;
 			bind.DataSource = _comissao;
 			BindingCreator();
 
-			_formOrigem = formOrigem;
+			DefineSituacao();
 
 			list = lstContribuicao;
 			ObterDadosListagem();
@@ -40,6 +42,31 @@ namespace CamadaUI.Comissoes
 
 			// HANDLER to use TAB for ENTER
 			HandlerKeyDownControl(this);
+		}
+
+		// DEFINE SITUACAO
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineSituacao()
+		{
+			btnRecibo.Visible = _comissao.IDSituacao == 3;
+
+			switch (_comissao.IDSituacao)
+			{
+				case 1:
+					btnEfetuar.Text = "Concluir";
+					btnEfetuar.Image = Properties.Resources.accept_24;
+					break;
+				case 2:
+					btnEfetuar.Text = "Quitar";
+					btnEfetuar.Image = Properties.Resources.money_red_24;
+					break;
+				case 3:
+					btnEfetuar.Text = "Ver Pagamento";
+					btnEfetuar.Image = Properties.Resources.search_page_24;
+					break;
+				default:
+					break;
+			}
 		}
 
 		// OBTEM DADOS DA LISTAGEM
@@ -63,12 +90,6 @@ namespace CamadaUI.Comissoes
 							"Não há registros", DialogType.OK, DialogIcon.Exclamation);
 						return;
 					}
-
-					BindList.DataSource = list;
-					dgvListagem.DataSource = BindList;
-					FormataListagem();
-					CalculaTotais();
-
 				}
 				catch (Exception ex)
 				{
@@ -82,6 +103,11 @@ namespace CamadaUI.Comissoes
 					Cursor.Current = Cursors.Default;
 				}
 			}
+
+			BindList.DataSource = list;
+			dgvListagem.DataSource = BindList;
+			FormataListagem();
+			CalculaTotais();
 		}
 
 		//--- CALCULA OS TOTAIS E ALTERA AS LABELS
@@ -272,16 +298,83 @@ namespace CamadaUI.Comissoes
 
 		private void btnCancelar_Click(object sender, EventArgs e)
 		{
+			var frm = new frmComissaoListagem(_comissao.IDSituacao, null);
+			frm.MdiParent = Application.OpenForms[0];
+			frm.Show();
+
 			Close();
-			MostraMenuPrincipal();
+			//MostraMenuPrincipal();
 		}
 
 		private void btnEfetuar_Click(object sender, EventArgs e)
 		{
+			switch (_comissao.IDSituacao)
+			{
+				case 1: // CONCLUIR COMISSAO
+						// --- ask USER
+					var resp = AbrirDialog("Você deseja realmente CONCLUIR esse Registro de Comissão?",
+						"Concluir Comissões",
+						DialogType.SIM_NAO,
+						DialogIcon.Question,
+						DialogDefaultButton.Second);
 
+					if (resp != DialogResult.Yes) return;
+
+					ConcluirComissao();
+					break;
+				case 2: // PAGAR COMISSAO
+
+					break;
+				case 3: // COMISSAO PAGA --> VER PAGAMENTO
+					var frmGt = new Saidas.frmGasto((long)_comissao.IDDespesa);
+					frmGt.MdiParent = Application.OpenForms[0];
+					Close();
+					frmGt.Show();
+					break;
+				default:
+					break;
+			}
+		}
+
+		private void btnRecibo_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Não implementado...");
 		}
 
 		#endregion // BUTTONS FUNCTION --- END
+
+		#region ACTIONS
+
+		// CONCLUIR COMISSOES
+		//------------------------------------------------------------------------------------------------------------
+		private void ConcluirComissao()
+		{
+			try
+			{
+				List<objComissao> list = new List<objComissao>();
+				list.Add(_comissao);
+
+				cBLL.ComissoesSituacaoChange(list, 2);
+
+				_comissao.IDSituacao = 2;
+				lblSituacao.DataBindings["Text"].ReadValue();
+				DefineSituacao();
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Efetuar a Finalização das Comissões Selecionadas..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+		#endregion // ACTIONS --- END
 
 		#region DESIGN FORM FUNCTIONS
 
@@ -307,6 +400,5 @@ namespace CamadaUI.Comissoes
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
-
 	}
 }

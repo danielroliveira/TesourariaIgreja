@@ -47,7 +47,7 @@
 			this.txtEnderecoNumero = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtEnderecoComplemento = new System.Windows.Forms.TextBox();
-			this.lblCongregacao = new System.Windows.Forms.Label();
+			this.lblCredor = new System.Windows.Forms.Label();
 			this.txtCredor = new System.Windows.Forms.TextBox();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
@@ -87,8 +87,8 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(298, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(222, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(192, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(328, 50);
 			this.lblTitulo.TabIndex = 2;
 			this.lblTitulo.Text = "Cadastro de Credor";
 			// 
@@ -303,16 +303,16 @@
 			this.txtEnderecoComplemento.Size = new System.Drawing.Size(104, 27);
 			this.txtEnderecoComplemento.TabIndex = 15;
 			// 
-			// lblCongregacao
+			// lblCredor
 			// 
-			this.lblCongregacao.AutoSize = true;
-			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
-			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(90, 74);
-			this.lblCongregacao.Name = "lblCongregacao";
-			this.lblCongregacao.Size = new System.Drawing.Size(52, 19);
-			this.lblCongregacao.TabIndex = 1;
-			this.lblCongregacao.Text = "Credor";
+			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
+			this.lblCredor.ForeColor = System.Drawing.Color.Black;
+			this.lblCredor.Location = new System.Drawing.Point(36, 74);
+			this.lblCredor.Name = "lblCredor";
+			this.lblCredor.Size = new System.Drawing.Size(106, 19);
+			this.lblCredor.TabIndex = 1;
+			this.lblCredor.Text = "Credor";
+			this.lblCredor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// txtCredor
 			// 
@@ -703,7 +703,7 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.Label15);
 			this.Controls.Add(this.txtEmail);
-			this.Controls.Add(this.lblCongregacao);
+			this.Controls.Add(this.lblCredor);
 			this.Controls.Add(this.lblCNP);
 			this.Controls.Add(this.Label9);
 			this.Controls.Add(this.Label5);
@@ -718,7 +718,7 @@
 			this.Controls.SetChildIndex(this.Label5, 0);
 			this.Controls.SetChildIndex(this.Label9, 0);
 			this.Controls.SetChildIndex(this.lblCNP, 0);
-			this.Controls.SetChildIndex(this.lblCongregacao, 0);
+			this.Controls.SetChildIndex(this.lblCredor, 0);
 			this.Controls.SetChildIndex(this.txtEmail, 0);
 			this.Controls.SetChildIndex(this.Label15, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
@@ -780,7 +780,7 @@
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.TextBox txtEnderecoComplemento;
 		internal System.Windows.Forms.Label label2;
-		internal System.Windows.Forms.Label lblCongregacao;
+		internal System.Windows.Forms.Label lblCredor;
 		internal System.Windows.Forms.TextBox txtCredor;
 		internal System.Windows.Forms.Label lblID;
 		internal System.Windows.Forms.Label lbl_IdTexto;

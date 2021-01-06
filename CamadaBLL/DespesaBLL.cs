@@ -324,15 +324,16 @@ namespace CamadaBLL
 			objAPagar pagar,
 			objMovimentacao saida,
 			Action<int, decimal> ContaSldLocalUpdate,
-			Action<int, decimal> SetorSldLocalUpdate)
+			Action<int, decimal> SetorSldLocalUpdate,
+			object dbTran = null)
 		{
-			AcessoDados dbTran = null;
+			bool IsTran = dbTran != null;
 
 			try
 			{
 				// create transaction
-				dbTran = new AcessoDados();
-				dbTran.BeginTransaction();
+				if (!IsTran) dbTran = new AcessoDados();
+				if (!IsTran) ((AcessoDados)dbTran).BeginTransaction();
 
 				// Verifica CONTA SALDO
 				ContaBLL cBLL = new ContaBLL();
@@ -363,15 +364,17 @@ namespace CamadaBLL
 				saida.Origem = EnumMovOrigem.APagar;
 				saida.IDOrigem = (long)listPag[0].IDAPagar;
 				saida.DescricaoOrigem = $"DESPESA: {despesa.DespesaDescricao}";
+				if (saida.DescricaoOrigem.Length > 250) saida.DescricaoOrigem = saida.DescricaoOrigem.Substring(0, 250);
+
 				new MovimentacaoBLL().InsertMovimentacao(saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 
 				// commit and return
-				dbTran.CommitTransaction();
+				if (!IsTran) ((AcessoDados)dbTran).CommitTransaction();
 				return newID;
 			}
 			catch (Exception ex)
 			{
-				dbTran.RollBackTransaction();
+				if (!IsTran) ((AcessoDados)dbTran).RollBackTransaction();
 				throw ex;
 			}
 

@@ -242,6 +242,12 @@
     <Compile Include="Comissoes\frmComissaoListagem.designer.cs">
       <DependentUpon>frmComissaoListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Comissoes\frmComissaoQuitarInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comissoes\frmComissaoQuitarInfo.designer.cs">
+      <DependentUpon>frmComissaoQuitarInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -798,6 +804,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Comissoes\frmComissaoListagem.resx">
       <DependentUpon>frmComissaoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comissoes\frmComissaoQuitarInfo.resx">
+      <DependentUpon>frmComissaoQuitarInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>

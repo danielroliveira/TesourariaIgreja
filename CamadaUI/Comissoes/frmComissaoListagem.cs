@@ -22,17 +22,24 @@ namespace CamadaUI.Comissoes
 		private objCredor _colaborador;
 		private objSetor _setor;
 		private byte _situacao = 1;
+		private int nItemsSelected = 0;
 
 		#region NEW | OPEN FUNCTIONS | PROPERTIES
 
 		// SUN NEW | CONSTRUCTOR
 		//------------------------------------------------------------------------------------------------------------
-		public frmComissaoListagem(Form formOrigem = null)
+		public frmComissaoListagem(byte SituacaoPadrao, Form formOrigem = null)
 		{
 			InitializeComponent();
 
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
+
+			// define situacao inicial
+			_situacao = SituacaoPadrao;
+			rbtIniciadas.Checked = _situacao == 1;
+			rbtConcluidas.Checked = _situacao == 2;
+			rbtPagas.Checked = _situacao == 3;
 
 			// define a data inicial
 			propMes = DateTime.Parse(ObterDefault("DataPadrao"));
@@ -114,6 +121,8 @@ namespace CamadaUI.Comissoes
 
 		private void DefineSituacao()
 		{
+			btnEfetuar.Enabled = false;
+
 			//--- Get Situacao
 			if (rbtIniciadas.Checked)
 			{
@@ -121,6 +130,8 @@ namespace CamadaUI.Comissoes
 				{
 					_situacao = 1;
 					ObterDados();
+					btnEfetuar.Text = "Concluir";
+					btnEfetuar.Image = Properties.Resources.accept_24;
 				}
 			}
 			else if (rbtConcluidas.Checked)
@@ -129,6 +140,8 @@ namespace CamadaUI.Comissoes
 				{
 					_situacao = 2;
 					ObterDados();
+					btnEfetuar.Text = "Quitar";
+					btnEfetuar.Image = Properties.Resources.money_red_24;
 				}
 			}
 			else if (rbtPagas.Checked)
@@ -137,6 +150,7 @@ namespace CamadaUI.Comissoes
 				{
 					_situacao = 3;
 					ObterDados();
+					btnEfetuar.Image = Properties.Resources.block_24;
 				}
 			}
 		}
@@ -273,6 +287,51 @@ namespace CamadaUI.Comissoes
 			}
 		}
 
+		// CALC CHECKED VALUES LABELS
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+			{
+				var row = dgvListagem.Rows[e.RowIndex];
+
+				if ((bool)row.Cells[0].Value == true)
+				{
+					nItemsSelected += 1;
+				}
+				else
+				{
+					nItemsSelected -= 1;
+				}
+			}
+
+			btnEfetuar.Enabled = nItemsSelected > 0 && rbtPagas.Checked == false;
+		}
+
+		// COMMIT UPDATED VALUE
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0)
+			{
+				dgvListagem.CommitEdit(DataGridViewDataErrorContexts.Commit);
+			}
+		}
+
+		// UNCHECK ALL ITEMS IN LIST
+		//------------------------------------------------------------------------------------------------------------
+		private void unCheckListagem()
+		{
+			//--- uncheck all
+			foreach (DataGridViewRow row in dgvListagem.Rows)
+			{
+				row.Cells[0].Value = false;
+			}
+
+			nItemsSelected = 0;
+			btnEfetuar.Enabled = false;
+		}
+
 		#endregion
 
 		#region BUTTONS FUNCTION
@@ -354,6 +413,281 @@ namespace CamadaUI.Comissoes
 				Cursor.Current = Cursors.Default;
 			}
 			*/
+		}
+
+		private void btnEfetuar_Click(object sender, EventArgs e)
+		{
+			//--- verify checked itens
+			if (nItemsSelected == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para efetuar...",
+					"Selecionar Registros", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			if (_situacao == 1) // CONCLUIR
+			{
+				string mesage = nItemsSelected > 1 ? $"definitivamente as {nItemsSelected:00} Comissões selecionadas?" : "definitivamente a Comissão selecionada?";
+
+				// --- ask USER
+				var resp = AbrirDialog("Você deseja realmente CONCLUIR " + mesage,
+					"Concluir Comissões",
+					DialogType.SIM_NAO,
+					DialogIcon.Question,
+					DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes) return;
+
+				ConcluirComissoesSelected();
+			}
+			else if (_situacao == 2) // CRIAR PAGAMENTO
+			{
+				PagarComissoesSelected();
+			}
+		}
+
+		// CONCLUIR COMISSOES
+		//------------------------------------------------------------------------------------------------------------
+		private void ConcluirComissoesSelected()
+		{
+			try
+			{
+				List<objComissao> selected = new List<objComissao>();
+
+				foreach (DataGridViewRow row in dgvListagem.Rows)
+				{
+					bool marked = row.Cells[0].Value == null ? false : (bool)row.Cells[0].Value;
+
+					if (marked)
+					{
+						selected.Add((objComissao)row.DataBoundItem);
+					}
+				}
+
+				cBLL.ComissoesSituacaoChange(selected, 2);
+
+				//--- obterDados
+				ObterDados();
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Efetuar a Finalização das Comissões Selecionadas..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// CRIAR DESPESA DE PAGAMENTO | SAIDA
+		//------------------------------------------------------------------------------------------------------------
+		private void PagarComissoesSelected()
+		{
+			// create list of selected comissao
+			//---------------------------------------------------------------------
+			List<objComissao> selected = new List<objComissao>();
+
+			foreach (DataGridViewRow row in dgvListagem.Rows)
+			{
+				bool marked = row.Cells[0].Value == null ? false : (bool)row.Cells[0].Value;
+
+				if (marked)
+				{
+					selected.Add((objComissao)row.DataBoundItem);
+				}
+			}
+
+			// check same colaborador
+			//---------------------------------------------------------------------
+			if (selected.GroupBy(x => x.IDCredor).Count() > 1)
+			{
+				AbrirDialog("As Comissões selecionadas pertencem a diversos COLABORADORES diferentes..." +
+					"\nAs Comissões selecionadas devem ser de um ÚNICO Colaborador." +
+					"\nFavor selecionar comissões do mesmo colaborador."
+					, "Diversos Colaboradores", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			// check total
+			//---------------------------------------------------------------------
+			decimal total = selected.Sum(x => x.ValorComissao);
+
+			// --- ask USER
+			//---------------------------------------------------------------------
+			string mesage = nItemsSelected > 1 ? $"das {nItemsSelected:00} Comissões selecionadas?" : "da Comissão selecionada?";
+
+			var resp = AbrirDialog("Você deseja realmente REALIZAR O PAGAMENTO " + mesage +
+				$"\n\nCOLABORADOR: {selected[0].Credor}" +
+				$"\nVALOR TOTAL: {total:C}",
+				"Quitar Comissões",
+				DialogType.SIM_NAO,
+				DialogIcon.Question,
+				DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// open form to get info: CONTA and DATE
+				var frm = new frmComissaoQuitarInfo(selected[0], total, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				// create apagar and saida
+				objDespesa despesa = DefineDespesa(selected, frm.propDataEscolhida, total);
+				objAPagar pagar = DefineAPagar(selected, frm.propDataEscolhida, total);
+				objMovimentacao saida = DefineSaida(
+					frm.propDataEscolhida,
+					(int)frm.propContaEscolhida.IDConta,
+					selected[0].IDSetor,
+					total,
+					frm.propObservacao);
+
+				// create Gasto: Despesa quitada
+				long newID = cBLL.ComissoesPagamento
+					(
+					selected,
+					despesa,
+					pagar,
+					saida,
+					ContaSaldoLocalUpdate,
+					SetorSaldoLocalUpdate
+					);
+
+				ObterDados();
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- message
+				resp = AbrirDialog("Pagamento efetuado com sucesso na conta e data informados..." +
+							"\nDeseja CONFERIR a Despesa criada?",
+							"Sucesso",
+							DialogType.SIM_NAO,
+							DialogIcon.Question,
+							DialogDefaultButton.Second);
+
+				if (resp == DialogResult.Yes)
+				{
+					var frmGt = new Saidas.frmGasto(newID);
+					frmGt.MdiParent = Application.OpenForms[0];
+					Close();
+					frmGt.Show();
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Efetuar a Finalização das Comissões Selecionadas..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// DEFINE DESPESA TO SAVE
+		//------------------------------------------------------------------------------------------------------------
+		private objDespesa DefineDespesa(List<objComissao> comissoes, DateTime PagData, decimal Total)
+		{
+			// create format Identificador
+			string desc = "Pag. Comissão: " + comissoes[0].Credor;
+			if (desc.Length > 200) desc.Substring(0, 200);
+
+			// create format Doc. Numero
+			string Id = "";
+			comissoes.ForEach(x => Id += ((int)x.IDComissao).ToString("D2") + " | ");
+			Id = Id.Substring(0, Id.Length - 3);
+			if (Id.Length > 30) Id = Id.Substring(0, 30);
+
+			// get dtInicial a dtFinal
+			DateTime despDtInicial = comissoes.Min(x => x.DataInicial);
+			DateTime despDtFinal = comissoes.Max(x => x.DataFinal);
+
+			var despesa = new objDespesa(null)
+			{
+				Credor = comissoes[0].Credor,
+				DespesaData = PagData,
+				CNP = "",
+				DataFinal = despDtFinal,
+				DataInicial = despDtInicial,
+				DespesaDescricao = desc,
+				DespesaOrigem = 1,
+				DespesaTipo = "Comissão Colaborador",
+				DespesaValor = Total,
+				DocumentoNumero = Id,
+				DocumentoTipo = "Recibo Próprio", // recibo proprio
+				IDCredor = comissoes[0].IDCredor,
+				IDDespesa = null,
+				IDDespesaTipo = 1,
+				IDDocumentoTipo = 4,
+				IDSetor = comissoes[0].IDSetor,
+				IDSituacao = 2,
+				IDTitular = null,
+				Parcelas = 1,
+				Setor = comissoes[0].Setor,
+				Situacao = "Quitada",
+			};
+
+			return despesa;
+		}
+
+		// DEFINE APAGAR TO SAVE
+		//------------------------------------------------------------------------------------------------------------
+		private objAPagar DefineAPagar(List<objComissao> comissoes, DateTime PagData, decimal Total)
+		{
+			// create format Identificador
+			string Id = "comissao: ";
+			comissoes.ForEach(x => Id += ((int)x.IDComissao).ToString("D2") + " | ");
+			Id = Id.Substring(0, Id.Length - 3);
+			if (Id.Length > 40) Id = Id.Substring(0, 40);
+
+			var apagar = new objAPagar(null)
+			{
+				APagarValor = Total,
+				IDCredor = comissoes[0].IDCredor,
+				Identificador = Id,
+				IDSetor = comissoes[0].IDSetor,
+				IDSituacao = 2,
+				PagamentoData = PagData,
+				Parcela = 1,
+				Prioridade = 3,
+				Situacao = "Quitado",
+				ValorPago = Total,
+				Vencimento = PagData,
+			};
+
+			return apagar;
+		}
+
+		// DEFINE SAIDA TO SAVE
+		//------------------------------------------------------------------------------------------------------------
+		private objMovimentacao DefineSaida(DateTime PagData, int IDContaEscolhida, int IDSetorEscolhido, decimal Total, string obs)
+		{
+			var saida = new objMovimentacao(null)
+			{
+				IDConta = IDContaEscolhida,
+				IDSetor = IDSetorEscolhido,
+				MovTipo = 2,
+				AcrescimoValor = 0,
+				IDCaixa = null,
+				Origem = EnumMovOrigem.APagar,
+				Observacao = obs,
+				MovData = PagData,
+				MovValor = Total,
+				DescricaoOrigem = "COMISSAO: ",
+				Consolidado = true,
+			};
+
+			return saida;
 		}
 
 		// EXCLUIR CONTRIBUICAO
@@ -733,8 +1067,9 @@ namespace CamadaUI.Comissoes
 		}
 
 
-		#endregion // DATE MONTH CONTROLER --- END
 
+
+		#endregion // DATE MONTH CONTROLER --- END
 
 
 	}

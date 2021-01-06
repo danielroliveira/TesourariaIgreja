@@ -324,7 +324,7 @@ namespace CamadaBLL
 
 				string query = "SELECT * FROM qryContribuicao WHERE " +
 				"IDContribuicao IN " +
-				"(SELECT IDContribuicao FROM tblComissoes WHERE IDComissao = @IDComissao)";
+				"(SELECT IDContribuicao FROM tblContribuicaoComissionada WHERE IDComissao = @IDComissao)";
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
@@ -348,6 +348,87 @@ namespace CamadaBLL
 			}
 			catch (Exception ex)
 			{
+				throw ex;
+			}
+		}
+
+		// CONCLUIR COMISSAO CHANGE SITUATION
+		//------------------------------------------------------------------------------------------------------------
+		public void ComissoesSituacaoChange(List<objComissao> list, byte newSituacao)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				string query = "UPDATE tblComissoes SET IDSituacao = @IDSituacao WHERE IDComissao = @IDComissao";
+
+				foreach (var comissao in list)
+				{
+					comissao.IDSituacao = newSituacao;
+
+					dbTran.LimparParametros();
+					dbTran.AdicionarParametros("@IDSituacao", newSituacao);
+					dbTran.AdicionarParametros("@IDComissao", comissao.IDComissao);
+
+					dbTran.ExecutarManipulacao(CommandType.Text, query);
+				}
+
+				dbTran.CommitTransaction();
+
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// PAGAR LIST OF COMISSAO AND CHANGE SITUATION
+		//------------------------------------------------------------------------------------------------------------
+		public long ComissoesPagamento(
+			List<objComissao> list,
+			objDespesa despesa,
+			objAPagar pagar,
+			objMovimentacao saida,
+			Action<int, decimal> ContaSldLocalUpdate,
+			Action<int, decimal> SetorSldLocalUpdate)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// insert new Despesa Realizada | Gasto
+				var despBLL = new DespesaBLL();
+				long newID = despBLL.InsertDespesaRealizada(despesa, pagar, saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
+
+				// update all comissoes to PAGO
+				string query = "UPDATE tblComissoes SET " +
+					"IDSituacao = 3, " +
+					"IDDespesa = @IDDespesa " +
+					"WHERE IDComissao = @IDComissao";
+
+				foreach (var comissao in list)
+				{
+					dbTran.LimparParametros();
+					dbTran.AdicionarParametros("@IDDespesa", newID);
+					dbTran.AdicionarParametros("@IDComissao", comissao.IDComissao);
+
+					dbTran.ExecutarManipulacao(CommandType.Text, query);
+				}
+
+				dbTran.CommitTransaction();
+
+				return newID;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
 				throw ex;
 			}
 		}

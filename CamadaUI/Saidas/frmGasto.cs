@@ -212,6 +212,8 @@ namespace CamadaUI.Saidas
 			// block keyDown then Sit = Alterado
 			txtDocumentoNumero.KeyDown += control_KeyDown_Block;
 			txtDespesaValor.KeyDown += control_KeyDown_Block;
+			txtDesconto.KeyDown += control_KeyDown_Block;
+			txtAcrescimo.KeyDown += control_KeyDown_Block;
 			dtpDespesaData.KeyDown += control_KeyDown_Block;
 
 			// if frmListagem is ENABLED

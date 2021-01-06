@@ -18,13 +18,15 @@ namespace CamadaUI.Registres
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
 		private Dictionary<int, string> dicTipo = new Dictionary<int, string>();
+		private bool _IsColaborador = false;
+		private bool _IsFuncionario = false;
 		public objCredor propEscolha { get; set; }
 
 		#region SUB NEW | PROPERTIES
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmCredor(objCredor obj, Form formOrigem)
+		public frmCredor(objCredor obj, Form formOrigem, byte? CredorEspecialType = null)
 		{
 			InitializeComponent();
 
@@ -32,14 +34,28 @@ namespace CamadaUI.Registres
 			_credor = obj;
 			bind.DataSource = _credor;
 			BindingCreator();
-			CheckCredorTipo();
 			PreencheDictionary();
+			CheckCredorTipo();
 
-			_credor.PropertyChanged += RegistroAlterado;
+			_IsColaborador = CredorEspecialType != null && CredorEspecialType == 6;
+			_IsFuncionario = CredorEspecialType != null && CredorEspecialType == 5;
+
+			if (_IsColaborador)
+			{
+				lblTitulo.Text = "Cadastro de Colaboradores";
+				lblCredor.Text = "Colaborador";
+			}
 
 			if (_credor.IDCredor == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
+				if (_IsColaborador)
+				{
+					_credor.IDCredorTipo = 6;
+					_credor.CredorTipo = "Colaborador";
+					CheckCredorTipo();
+				};
+
 			}
 			else
 			{
@@ -49,6 +65,7 @@ namespace CamadaUI.Registres
 			AtivoButtonImage();
 
 			// ADD HANDLERS
+			_credor.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
 			chkWhatsapp.GotFocus += chkWathsapp_ControleFocus;
 			chkWhatsapp.LostFocus += chkWathsapp_ControleFocus;

@@ -186,10 +186,10 @@ namespace CamadaUI.Comissoes
 
 		private void btnEfetuar_Click(object sender, EventArgs e)
 		{
-			var resp = AbrirDialog("Tem certeza que deseja inserir um registro de cálculo de comissão para: " +
+			var resp = AbrirDialog("Tem certeza que deseja inicializar um registro de cálculo de comissão para: " +
 				$"\n{Colaborador.Credor}" +
 				$"\nSETOR: {Colaborador.Setor}",
-				"Efetuar Registro de Comissão",
+				"Inicializar Registro de Comissão",
 				DialogType.SIM_NAO,
 				DialogIcon.Question);
 
@@ -224,11 +224,10 @@ namespace CamadaUI.Comissoes
 				Comissao.IDComissao = cBLL.InsertComissao(Comissao, listFinal);
 
 				//--- open form
-				//var frm = new frmCaixa(newCaixa, Application.OpenForms[0]);
-				//frm.Show();
+				var frm = new frmComissao(Comissao, listFinal, this);
+				frm.Show();
 
 				Close();
-				MostraMenuPrincipal();
 
 			}
 			catch (Exception ex)

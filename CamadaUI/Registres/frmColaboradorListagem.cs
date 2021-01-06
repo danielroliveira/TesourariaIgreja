@@ -184,7 +184,7 @@ namespace CamadaUI.Registres
 		{
 			if (_formOrigem.GetType() == typeof(frmPrincipal))
 			{
-				frmCredor frm = new frmCredor(new objCredor(null), null);
+				frmCredor frm = new frmCredor(new objCredor(null), null, 6);
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
@@ -214,7 +214,7 @@ namespace CamadaUI.Registres
 				}
 
 				//--- open edit form
-				frmCredor frm = new frmCredor(item, null);
+				frmCredor frm = new frmCredor(item, null, 6);
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();

@@ -159,11 +159,11 @@
 			this.btnEfetuar.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.btnEfetuar.Enabled = false;
 			this.btnEfetuar.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEfetuar.Location = new System.Drawing.Point(168, 7);
+			this.btnEfetuar.Location = new System.Drawing.Point(156, 7);
 			this.btnEfetuar.Name = "btnEfetuar";
-			this.btnEfetuar.Size = new System.Drawing.Size(120, 48);
+			this.btnEfetuar.Size = new System.Drawing.Size(132, 48);
 			this.btnEfetuar.TabIndex = 17;
-			this.btnEfetuar.Text = "&Efetuar";
+			this.btnEfetuar.Text = "&Inicializar";
 			this.btnEfetuar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEfetuar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnEfetuar.UseVisualStyleBackColor = true;
@@ -173,9 +173,9 @@
 			// 
 			this.btnCancelar.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.fechar_24;
-			this.btnCancelar.Location = new System.Drawing.Point(298, 7);
+			this.btnCancelar.Location = new System.Drawing.Point(295, 7);
 			this.btnCancelar.Name = "btnCancelar";
-			this.btnCancelar.Size = new System.Drawing.Size(120, 48);
+			this.btnCancelar.Size = new System.Drawing.Size(132, 48);
 			this.btnCancelar.TabIndex = 18;
 			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

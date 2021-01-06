@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -59,16 +59,17 @@
 			this.rbtPagas = new System.Windows.Forms.RadioButton();
 			this.rbtConcluidas = new System.Windows.Forms.RadioButton();
 			this.rbtIniciadas = new System.Windows.Forms.RadioButton();
-			this.clnValorComissao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorDescontado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorContribuicoes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDataFinal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDataInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.btnEfetuar = new System.Windows.Forms.Button();
+			this.clnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDataInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDataFinal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorContribuicoes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorDescontado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValorComissao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			this.pnlPorMes.SuspendLayout();
 			this.pnlPorPeriodo.SuspendLayout();
@@ -115,7 +116,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(603, 632);
+			this.btnAdicionar.Location = new System.Drawing.Point(529, 632);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
 			this.btnAdicionar.TabIndex = 11;
@@ -129,7 +130,7 @@
 			// 
 			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.btnVisualizar.Location = new System.Drawing.Point(471, 632);
+			this.btnVisualizar.Location = new System.Drawing.Point(397, 632);
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
 			this.btnVisualizar.TabIndex = 10;
@@ -143,7 +144,7 @@
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(735, 632);
+			this.btnImprimir.Location = new System.Drawing.Point(661, 632);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 12;
@@ -353,7 +354,7 @@
 			// 
 			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.btnExcluir.Location = new System.Drawing.Point(867, 632);
+			this.btnExcluir.Location = new System.Drawing.Point(925, 632);
 			this.btnExcluir.Name = "btnExcluir";
 			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
 			this.btnExcluir.TabIndex = 13;
@@ -496,95 +497,30 @@
 			this.rbtIniciadas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtIniciadas.UseVisualStyleBackColor = true;
 			// 
-			// clnValorComissao
-			// 
-			this.clnValorComissao.HeaderText = "Vl. Comissão";
-			this.clnValorComissao.Name = "clnValorComissao";
-			this.clnValorComissao.ReadOnly = true;
-			this.clnValorComissao.Width = 120;
-			// 
-			// clnValorDescontado
-			// 
-			this.clnValorDescontado.HeaderText = "Descontos";
-			this.clnValorDescontado.Name = "clnValorDescontado";
-			this.clnValorDescontado.ReadOnly = true;
-			this.clnValorDescontado.Width = 120;
-			// 
-			// clnValorContribuicoes
-			// 
-			this.clnValorContribuicoes.HeaderText = "Contribuições";
-			this.clnValorContribuicoes.Name = "clnValorContribuicoes";
-			this.clnValorContribuicoes.ReadOnly = true;
-			this.clnValorContribuicoes.Width = 120;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Colaborador";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 300;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor de Recursos";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 220;
-			// 
-			// clnDataFinal
-			// 
-			this.clnDataFinal.HeaderText = "Dt. Final";
-			this.clnDataFinal.Name = "clnDataFinal";
-			this.clnDataFinal.ReadOnly = true;
-			this.clnDataFinal.Width = 85;
-			// 
-			// clnDataInicial
-			// 
-			this.clnDataInicial.HeaderText = "Dt Inicial";
-			this.clnDataInicial.Name = "clnDataInicial";
-			this.clnDataInicial.ReadOnly = true;
-			this.clnDataInicial.Width = 85;
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 60;
-			// 
-			// clnCheck
-			// 
-			this.clnCheck.HeaderText = "";
-			this.clnCheck.Name = "clnCheck";
-			this.clnCheck.ReadOnly = true;
-			this.clnCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.clnCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.clnCheck.Width = 40;
-			// 
 			// dgvListagem
 			// 
 			this.dgvListagem.AllowUserToAddRows = false;
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle7.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle8.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -603,7 +539,6 @@
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
-			this.dgvListagem.ReadOnly = true;
 			this.dgvListagem.RowHeadersVisible = false;
 			this.dgvListagem.RowHeadersWidth = 45;
 			this.dgvListagem.RowTemplate.Height = 30;
@@ -612,7 +547,81 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1199, 482);
 			this.dgvListagem.TabIndex = 8;
+			this.dgvListagem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentClick);
+			this.dgvListagem.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellValueChanged);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
+			// 
+			// btnEfetuar
+			// 
+			this.btnEfetuar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnEfetuar.Enabled = false;
+			this.btnEfetuar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnEfetuar.Location = new System.Drawing.Point(793, 632);
+			this.btnEfetuar.Name = "btnEfetuar";
+			this.btnEfetuar.Size = new System.Drawing.Size(126, 42);
+			this.btnEfetuar.TabIndex = 12;
+			this.btnEfetuar.Text = "&Concluir";
+			this.btnEfetuar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnEfetuar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnEfetuar.UseVisualStyleBackColor = true;
+			this.btnEfetuar.Click += new System.EventHandler(this.btnEfetuar_Click);
+			// 
+			// clnCheck
+			// 
+			this.clnCheck.HeaderText = "";
+			this.clnCheck.IndeterminateValue = "";
+			this.clnCheck.Name = "clnCheck";
+			this.clnCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.clnCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.clnCheck.Width = 40;
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.Width = 60;
+			// 
+			// clnDataInicial
+			// 
+			this.clnDataInicial.HeaderText = "Dt Inicial";
+			this.clnDataInicial.Name = "clnDataInicial";
+			this.clnDataInicial.Width = 85;
+			// 
+			// clnDataFinal
+			// 
+			this.clnDataFinal.HeaderText = "Dt. Final";
+			this.clnDataFinal.Name = "clnDataFinal";
+			this.clnDataFinal.Width = 85;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor de Recursos";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.Width = 220;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Colaborador";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.Width = 300;
+			// 
+			// clnValorContribuicoes
+			// 
+			this.clnValorContribuicoes.HeaderText = "Contribuições";
+			this.clnValorContribuicoes.Name = "clnValorContribuicoes";
+			this.clnValorContribuicoes.Width = 120;
+			// 
+			// clnValorDescontado
+			// 
+			this.clnValorDescontado.HeaderText = "Descontos";
+			this.clnValorDescontado.Name = "clnValorDescontado";
+			this.clnValorDescontado.Width = 120;
+			// 
+			// clnValorComissao
+			// 
+			this.clnValorComissao.HeaderText = "Vl. Comissão";
+			this.clnValorComissao.Name = "clnValorComissao";
+			this.clnValorComissao.Width = 120;
 			// 
 			// frmComissaoListagem
 			// 
@@ -629,6 +638,7 @@
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnExcluir);
+			this.Controls.Add(this.btnEfetuar);
 			this.Controls.Add(this.btnImprimir);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnVisualizar);
@@ -639,6 +649,7 @@
 			this.Controls.SetChildIndex(this.btnVisualizar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
+			this.Controls.SetChildIndex(this.btnEfetuar, 0);
 			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
@@ -693,15 +704,16 @@
 		private System.Windows.Forms.RadioButton rbtPagas;
 		private System.Windows.Forms.RadioButton rbtConcluidas;
 		private System.Windows.Forms.RadioButton rbtIniciadas;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorComissao;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorDescontado;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorContribuicoes;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnDataFinal;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnDataInicial;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn clnCheck;
 		internal System.Windows.Forms.DataGridView dgvListagem;
+		internal System.Windows.Forms.Button btnEfetuar;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn clnCheck;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDataInicial;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDataFinal;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorContribuicoes;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorDescontado;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorComissao;
 	}
 }

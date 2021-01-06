@@ -190,10 +190,14 @@ namespace CamadaUI.Entradas
 					DefineConta(contaSelected);
 					DefineSetor(setorSelected);
 
-
 					btnSetEntradaForma.Image = null;
 					btnSetEntradaForma.Text = "n";
 					btnSetEntradaForma.Enabled = true;
+
+					numEntradaAno.Maximum = DateTime.Today.Year;
+					numEntradaAno.Minimum = DateTime.Today.Year - 30;
+					numEntradaDia.Maximum = 31;
+					numEntradaDia.Minimum = 1;
 				}
 				else
 				{
