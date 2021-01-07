@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
 			this.btnDtFinal = new VIBlend.WinForms.Controls.vButton();
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
-			this.btnExcluir = new System.Windows.Forms.Button();
 			this.btnSetColaborador = new VIBlend.WinForms.Controls.vButton();
 			this.txtColaborador = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
@@ -60,7 +60,6 @@
 			this.rbtConcluidas = new System.Windows.Forms.RadioButton();
 			this.rbtIniciadas = new System.Windows.Forms.RadioButton();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.btnEfetuar = new System.Windows.Forms.Button();
 			this.clnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnDataInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,12 +69,19 @@
 			this.clnValorContribuicoes = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValorDescontado = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValorComissao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.btnEfetuar = new System.Windows.Forms.Button();
+			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImprimirRecibo = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.pnlPorMes.SuspendLayout();
 			this.pnlPorPeriodo.SuspendLayout();
 			this.Panel2.SuspendLayout();
 			this.pnlSituacao.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
+			this.mnuOperacoes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -350,20 +356,6 @@
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
 			this.Panel2.TabIndex = 7;
 			// 
-			// btnExcluir
-			// 
-			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.btnExcluir.Location = new System.Drawing.Point(925, 632);
-			this.btnExcluir.Name = "btnExcluir";
-			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
-			this.btnExcluir.TabIndex = 13;
-			this.btnExcluir.Text = "&Excluir";
-			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnExcluir.UseVisualStyleBackColor = true;
-			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
-			// 
 			// btnSetColaborador
 			// 
 			this.btnSetColaborador.AllowAnimations = true;
@@ -551,21 +543,6 @@
 			this.dgvListagem.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellValueChanged);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			// 
-			// btnEfetuar
-			// 
-			this.btnEfetuar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnEfetuar.Enabled = false;
-			this.btnEfetuar.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEfetuar.Location = new System.Drawing.Point(793, 632);
-			this.btnEfetuar.Name = "btnEfetuar";
-			this.btnEfetuar.Size = new System.Drawing.Size(126, 42);
-			this.btnEfetuar.TabIndex = 12;
-			this.btnEfetuar.Text = "&Concluir";
-			this.btnEfetuar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnEfetuar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnEfetuar.UseVisualStyleBackColor = true;
-			this.btnEfetuar.Click += new System.EventHandler(this.btnEfetuar_Click);
-			// 
 			// clnCheck
 			// 
 			this.clnCheck.HeaderText = "";
@@ -623,6 +600,61 @@
 			this.clnValorComissao.Name = "clnValorComissao";
 			this.clnValorComissao.Width = 120;
 			// 
+			// btnEfetuar
+			// 
+			this.btnEfetuar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnEfetuar.Enabled = false;
+			this.btnEfetuar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnEfetuar.Location = new System.Drawing.Point(816, 632);
+			this.btnEfetuar.Name = "btnEfetuar";
+			this.btnEfetuar.Size = new System.Drawing.Size(208, 42);
+			this.btnEfetuar.TabIndex = 12;
+			this.btnEfetuar.Text = "&Concluir Selecionadas";
+			this.btnEfetuar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnEfetuar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnEfetuar.UseVisualStyleBackColor = true;
+			this.btnEfetuar.Click += new System.EventHandler(this.btnEfetuar_Click);
+			// 
+			// mnuOperacoes
+			// 
+			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuVisualizar,
+            this.mnuImprimirRecibo,
+            this.toolStripSeparator2,
+            this.mnuExcluir});
+			this.mnuOperacoes.Name = "mnuOperacoes";
+			this.mnuOperacoes.Size = new System.Drawing.Size(220, 110);
+			// 
+			// mnuVisualizar
+			// 
+			this.mnuVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuVisualizar.Name = "mnuVisualizar";
+			this.mnuVisualizar.Size = new System.Drawing.Size(219, 26);
+			this.mnuVisualizar.Text = "Visualizar Comissão";
+			this.mnuVisualizar.Click += new System.EventHandler(this.mnuVisualizar_Click);
+			// 
+			// mnuImprimirRecibo
+			// 
+			this.mnuImprimirRecibo.Image = global::CamadaUI.Properties.Resources.print_24;
+			this.mnuImprimirRecibo.Name = "mnuImprimirRecibo";
+			this.mnuImprimirRecibo.Size = new System.Drawing.Size(219, 26);
+			this.mnuImprimirRecibo.Text = "Imprimir Recibo";
+			this.mnuImprimirRecibo.Click += new System.EventHandler(this.mnuImprimirRecibo_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(216, 6);
+			// 
+			// mnuExcluir
+			// 
+			this.mnuExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuExcluir.Name = "mnuExcluir";
+			this.mnuExcluir.Size = new System.Drawing.Size(219, 26);
+			this.mnuExcluir.Text = "Excluir Comissão";
+			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
+			// 
 			// frmComissaoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -637,7 +669,6 @@
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
-			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.btnEfetuar);
 			this.Controls.Add(this.btnImprimir);
 			this.Controls.Add(this.btnAdicionar);
@@ -650,7 +681,6 @@
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
 			this.Controls.SetChildIndex(this.btnEfetuar, 0);
-			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
@@ -668,6 +698,7 @@
 			this.Panel2.ResumeLayout(false);
 			this.pnlSituacao.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
+			this.mnuOperacoes.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -693,7 +724,6 @@
 		internal VIBlend.WinForms.Controls.vButton btnDtFinal;
 		internal VIBlend.WinForms.Controls.vButton btnDtInicial;
 		internal System.Windows.Forms.Panel Panel2;
-		internal System.Windows.Forms.Button btnExcluir;
 		internal VIBlend.WinForms.Controls.vButton btnSetColaborador;
 		internal System.Windows.Forms.TextBox txtColaborador;
 		internal System.Windows.Forms.Label label19;
@@ -715,5 +745,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorContribuicoes;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorDescontado;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorComissao;
+		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
+		private System.Windows.Forms.ToolStripMenuItem mnuVisualizar;
+		private System.Windows.Forms.ToolStripMenuItem mnuImprimirRecibo;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem mnuExcluir;
 	}
 }

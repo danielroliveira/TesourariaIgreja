@@ -677,7 +677,7 @@ namespace CamadaUI.Entradas
 			objContribuicao contribuicao = (objContribuicao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 			// mnuDefinir Setor
-			mnuDefinirSetor.Enabled = contribuicao.IDSetor == null; ;
+			mnuDefinirSetor.Enabled = contribuicao.IDSetor == null;
 
 			// revela menu
 			mnuOperacoes.Show(c.PointToScreen(e.Location));

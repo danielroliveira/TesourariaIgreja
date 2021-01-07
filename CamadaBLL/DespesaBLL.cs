@@ -147,6 +147,11 @@ namespace CamadaBLL
 
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
+				if (dt.Rows.Count == 0)
+				{
+					throw new AppException("Não existe registro de Despesa com esse número de Registro...");
+				}
+
 				return ConvertRowInClass(dt.Rows[0]);
 			}
 			catch (Exception ex)
@@ -468,7 +473,22 @@ namespace CamadaBLL
 				//--- DELETE
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
 
-				// 5 - COMMIT AND RETURN
+				// 6 - UPDATE REMOVE DESPESA COMISSAO reference
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				query = "UPDATE tblComissao SET IDDespesa = null WHERE IDDespesa = @IDDespesa";
+
+				//--- UPDATE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+
+				// 7 - COMMIT AND RETURN
 				//------------------------------------------------------------------------------------------------------------
 				dbTran.CommitTransaction();
 				return true;

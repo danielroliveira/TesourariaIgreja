@@ -72,85 +72,125 @@
         <rd:ObjectDataSourceType>CamadaDTO.objDadosIgreja, CamadaDTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
-    <DataSet Name="dstProvisorio">
+    <DataSet Name="dstPrincipal">
       <Query>
         <DataSourceName>CamadaDTO</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Autorizante">
-          <DataField>Autorizante</DataField>
+        <Field Name="CNP">
+          <DataField>CNP</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="BloqueioData">
-          <DataField>BloqueioData</DataField>
+        <Field Name="Credor">
+          <DataField>Credor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DataFinal">
+          <DataField>DataFinal</DataField>
           <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="Comprador">
-          <DataField>Comprador</DataField>
+        <Field Name="DataInicial">
+          <DataField>DataInicial</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="DespesaData">
+          <DataField>DespesaData</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DespesaDescricao">
+          <DataField>DespesaDescricao</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Concluida">
-          <DataField>Concluida</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
+        <Field Name="DespesaOrigem">
+          <DataField>DespesaOrigem</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
         </Field>
-        <Field Name="Conta">
-          <DataField>Conta</DataField>
+        <Field Name="DespesaTipo">
+          <DataField>DespesaTipo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ContaSaldo">
-          <DataField>ContaSaldo</DataField>
+        <Field Name="DespesaValor">
+          <DataField>DespesaValor</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="DevolucaoData">
-          <DataField>DevolucaoData</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="Finalidade">
-          <DataField>Finalidade</DataField>
+        <Field Name="DocumentoNumero">
+          <DataField>DocumentoNumero</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="IDConta">
-          <DataField>IDConta</DataField>
+        <Field Name="DocumentoTipo">
+          <DataField>DocumentoTipo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="IDCredor">
+          <DataField>IDCredor</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="IDProvisorio">
-          <DataField>IDProvisorio</DataField>
+        <Field Name="IDDespesa">
+          <DataField>IDDespesa</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="IDDespesaTipo">
+          <DataField>IDDespesaTipo</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IDDocumentoTipo">
+          <DataField>IDDocumentoTipo</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
         </Field>
         <Field Name="IDSetor">
           <DataField>IDSetor</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="ReciboTexto">
-          <DataField>ReciboTexto</DataField>
+        <Field Name="IDSituacao">
+          <DataField>IDSituacao</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="IDTitular">
+          <DataField>IDTitular</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="Imagem">
+          <DataField>Imagem</DataField>
+          <rd:TypeName>CamadaDTO.objImagem</rd:TypeName>
+        </Field>
+        <Field Name="Parcelas">
+          <DataField>Parcelas</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="PeriodoData">
+          <DataField>PeriodoData</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Prioridade">
+          <DataField>Prioridade</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="PrioridadeDescricao">
+          <DataField>PrioridadeDescricao</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RegistroAlterado">
           <DataField>RegistroAlterado</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
-        <Field Name="RetiradaData">
-          <DataField>RetiradaData</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
         <Field Name="Setor">
           <DataField>Setor</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ValorProvisorio">
-          <DataField>ValorProvisorio</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="Situacao">
+          <DataField>Situacao</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ValorRealizado">
-          <DataField>ValorRealizado</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        <Field Name="Titular">
+          <DataField>Titular</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>CamadaDTO</rd:DataSetName>
-        <rd:TableName>objDespesaProvisoria</rd:TableName>
-        <rd:ObjectDataSourceType>CamadaDTO.objDespesaProvisoria, CamadaDTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>objDespesa</rd:TableName>
+        <rd:ObjectDataSourceType>CamadaDTO.objDespesa, CamadaDTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -173,28 +213,39 @@
                       <CellContents>
                         <Rectangle Name="Rectangle2">
                           <ReportItems>
+                            <Line Name="Line2">
+                              <Top>1.08431cm</Top>
+                              <Left>6.29558cm</Left>
+                              <Height>0cm</Height>
+                              <Width>6.4cm</Width>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                  <Width>1.5pt</Width>
+                                </Border>
+                              </Style>
+                            </Line>
                             <Rectangle Name="Rectangle1">
                               <KeepTogether>true</KeepTogether>
                               <Top>1.57427cm</Top>
                               <Left>0.00848cm</Left>
                               <Height>4.21509cm</Height>
                               <Width>19.38169cm</Width>
+                              <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
-                                  <Style>Dashed</Style>
+                                  <Style>None</Style>
                                   <Width>0.5pt</Width>
                                 </Border>
                               </Style>
                             </Rectangle>
                             <Textbox Name="ReciboTexto">
-                              <CanGrow>true</CanGrow>
-                              <CanShrink>true</CanShrink>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!ReciboTexto.Value</Value>
+                                      <Value>=Parameters!ReciboTexto.Value</Value>
                                       <Style>
                                         <FontFamily>tahoma</FontFamily>
                                         <FontSize>12pt</FontSize>
@@ -204,24 +255,23 @@
                                   <Style />
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>ReciboTexto</rd:DefaultName>
                               <Top>1.72332cm</Top>
                               <Left>0.29687cm</Left>
-                              <Height>2.75635cm</Height>
+                              <Height>3.03152cm</Height>
                               <Width>18.73959cm</Width>
-                              <ZIndex>1</ZIndex>
+                              <ZIndex>2</ZIndex>
                               <Style>
                                 <Border />
                               </Style>
                             </Textbox>
-                            <Textbox Name="Comprador">
+                            <Textbox Name="Credor">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!Comprador.Value</Value>
+                                      <Value>=Fields!Credor.Value</Value>
                                       <Style />
                                     </TextRun>
                                   </TextRuns>
@@ -230,12 +280,12 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Comprador</rd:DefaultName>
-                              <Top>6.93208cm</Top>
-                              <Left>5.81766cm</Left>
+                              <rd:DefaultName>Credor</rd:DefaultName>
+                              <Top>6.76804cm</Top>
+                              <Left>6.121cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.57458cm</Width>
-                              <ZIndex>2</ZIndex>
+                              <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -247,11 +297,11 @@
                               </Style>
                             </Textbox>
                             <Line Name="Line1">
-                              <Top>6.96383cm</Top>
-                              <Left>5.81766cm</Left>
+                              <Top>6.76804cm</Top>
+                              <Left>6.121cm</Left>
                               <Height>0cm</Height>
                               <Width>6.57458cm</Width>
-                              <ZIndex>3</ZIndex>
+                              <ZIndex>4</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -259,16 +309,11 @@
                               </Style>
                             </Line>
                             <Textbox Name="RetiradaData">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Parameters!Cidade.Value &amp; ", " 
-&amp; Day(Fields!RetiradaData.Value)
-&amp; " de " &amp; MonthName(Month(Fields!RetiradaData.Value))
-&amp; " de " &amp; Year(Fields!RetiradaData.Value)</Value>
+                                      <Value>=Parameters!DataTexto.Value</Value>
                                       <Style>
                                         <FontFamily>Tahoma</FontFamily>
                                         <FontSize>12pt</FontSize>
@@ -282,11 +327,11 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>RetiradaData</rd:DefaultName>
-                              <Top>4.93123cm</Top>
+                              <Top>4.96298cm</Top>
                               <Left>11.40354cm</Left>
                               <Height>0.6cm</Height>
                               <Width>7.63292cm</Width>
-                              <ZIndex>4</ZIndex>
+                              <ZIndex>5</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -300,7 +345,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!ValorProvisorio.Value</Value>
+                                      <Value>=Parameters!ComissaoValor.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                         <FontSize>18pt</FontSize>
@@ -319,7 +364,7 @@
                               <Left>13.95676cm</Left>
                               <Height>0.76681cm</Height>
                               <Width>5.0797cm</Width>
-                              <ZIndex>5</ZIndex>
+                              <ZIndex>6</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -334,7 +379,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!RetiradaData.Value</Value>
+                                      <Value>=Fields!DespesaData.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                         <FontSize>18pt</FontSize>
@@ -352,7 +397,39 @@
                               <Left>0.29687cm</Left>
                               <Height>0.76681cm</Height>
                               <Width>3.82292cm</Width>
-                              <ZIndex>6</ZIndex>
+                              <ZIndex>7</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Titulo">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>RECIBO DE PREBENDA</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontSize>18pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                        <TextDecoration>None</TextDecoration>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Top>0.3175cm</Top>
+                              <Left>6.11324cm</Left>
+                              <Height>0.83031cm</Height>
+                              <Width>6.87792cm</Width>
+                              <ZIndex>8</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -363,10 +440,11 @@
                           <KeepTogether>true</KeepTogether>
                           <Style>
                             <Border>
-                              <Style>None</Style>
+                              <Style>Dotted</Style>
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -385,7 +463,7 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>dstProvisorio</DataSetName>
+            <DataSetName>dstPrincipal</DataSetName>
             <Top>2.181cm</Top>
             <Left>0.15874cm</Left>
             <Height>7.62649cm</Height>
@@ -548,25 +626,12 @@
               </Border>
             </Style>
           </Tablix>
-          <Line Name="Line2">
-            <Top>3.26531cm</Top>
-            <Left>5.5675cm</Left>
-            <Height>0cm</Height>
-            <Width>8.09241cm</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>Solid</Style>
-                <Width>1.5pt</Width>
-              </Border>
-            </Style>
-          </Line>
           <Line Name="Line3">
             <Top>1.91289cm</Top>
             <Left>0.16722cm</Left>
             <Height>0cm</Height>
             <Width>19.38169cm</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -578,45 +643,13 @@
             <Left>0.16722cm</Left>
             <Height>0cm</Height>
             <Width>19.38169cm</Width>
-            <ZIndex>5</ZIndex>
+            <ZIndex>4</ZIndex>
             <Style>
               <Border>
                 <Style>Solid</Style>
               </Border>
             </Style>
           </Line>
-          <Textbox Name="txtTitulo2">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>RECIBO DESPESA PROVISÓRIA</Value>
-                    <Style>
-                      <FontFamily>Calibri</FontFamily>
-                      <FontSize>18pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <Top>2.4985cm</Top>
-            <Left>5.5675cm</Left>
-            <Height>0.83031cm</Height>
-            <Width>8.08976cm</Width>
-            <ZIndex>6</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Textbox>
         </ReportItems>
         <Height>10.03239cm</Height>
         <Style />
@@ -639,7 +672,7 @@
     </ReportSection>
   </ReportSections>
   <ReportParameters>
-    <ReportParameter Name="Cidade">
+    <ReportParameter Name="DataTexto">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -651,6 +684,14 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="ReciboTexto">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ComissaoValor">
+      <DataType>Float</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -660,12 +701,22 @@
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>Cidade</ParameterName>
+          <ParameterName>DataTexto</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>LogoPath</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>ReciboTexto</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>ComissaoValor</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

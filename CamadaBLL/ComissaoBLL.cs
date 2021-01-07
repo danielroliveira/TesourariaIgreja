@@ -433,5 +433,52 @@ namespace CamadaBLL
 			}
 		}
 
+		// EXCLUIR COMISSAO
+		//------------------------------------------------------------------------------------------------------------
+		public void ComissaoExcluir(objComissao comissao)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				//--- VERIFICA SE EXISTE DESPESA ANEXADA
+				if (comissao.IDDespesa != null)
+				{
+					string message = "Não é possível excluir essa Comissão porque ainda existe uma despesa vinculada..." +
+						$"O registro da despesa é {comissao.IDDespesa:D4}" +
+						$"É necessário Excluir a Despesa anexada para remover a comissão.";
+					throw new AppException(message);
+				}
+
+				//--- INIT DB
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				//--- remove Contribuicao <=> Comissao associate
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDComissao", comissao.IDComissao);
+
+				string query = "DELETE tblContribuicaoComissionada WHERE IDComissao = @IDComissao";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- delete Comissao
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDComissao", comissao.IDComissao);
+
+				query = "DELETE tblComissoes WHERE IDComissao = @IDComissao";
+
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				//--- COMMIT
+				dbTran.CommitTransaction();
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+		}
+
 	}
 }

@@ -808,6 +808,7 @@
     <EmbeddedResource Include="Comissoes\frmComissaoQuitarInfo.resx">
       <DependentUpon>frmComissaoQuitarInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Comissoes\Reports\rptComissaoRecibo.rdlc" />
     <EmbeddedResource Include="Config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1059,8 +1060,10 @@
     <None Include="Properties\DataSources\CamadaDTO.objAPagar.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCaixa.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCampanha.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objComissao.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objContribuicao.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDadosIgreja.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDespesa.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaProvisoria.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipo.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipoGrupo.datasource" />
@@ -1269,6 +1272,7 @@
     <Content Include="ConfigFiles\LogoMono.png" />
     <None Include="Resources\Colaborador_32.png" />
     <None Include="Resources\Funcionarios_32.png" />
+    <None Include="Resources\print_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -61,6 +61,8 @@ namespace CamadaUI.Comissoes
 			rbtConcluidas.CheckedChanged += (a, b) => DefineSituacao();
 			rbtPagas.CheckedChanged += (a, b) => DefineSituacao();
 
+			dgvListagem.MouseDown += dgvListagem_MouseDown;
+
 		}
 
 		// CONTROLA O MES
@@ -690,59 +692,6 @@ namespace CamadaUI.Comissoes
 			return saida;
 		}
 
-		// EXCLUIR CONTRIBUICAO
-		//------------------------------------------------------------------------------------------------------------
-		private void btnExcluir_Click(object sender, EventArgs e)
-		{
-			/*
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Excluir...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
-			//--- get Selected item
-			objComissao item = (objComissao)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				// --- ask USER
-				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Contribuição abaixo?\n" +
-					$"\nREG: {item.IDContribuicao:D4}\nDATA: {item.ContribuicaoData.ToShortDateString()}\nVALOR: {item.ValorBruto:c}",
-					"Excluir Contribuição", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
-
-				if (resp != DialogResult.Yes) return;
-
-				//--- EXECUTE DELETE
-				cBLL.DeleteContribuicao((long)item.IDContribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
-
-				//--- REQUERY LIST
-				ObterDados();
-
-			}
-			catch (AppException ex)
-			{
-				AbrirDialog("A contribuição está protegida de exclusão porque:\n" +
-							ex.Message, "Bloqueio de Exclusão", DialogType.OK, DialogIcon.Exclamation);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Excluir Contribuição..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-			*/
-		}
-
 		#endregion
 
 		#region CONTROL FUNCTIONS
@@ -1071,6 +1020,211 @@ namespace CamadaUI.Comissoes
 
 		#endregion // DATE MONTH CONTROLER --- END
 
+		#region MENU SUSPENSO
 
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
+		{
+			// check button
+			if (e.Button != MouseButtons.Right) return;
+
+			Control c = (Control)sender;
+			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+			dgvListagem.ClearSelection();
+
+			if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+			// seleciona o ROW
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
+			dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+			// mostra o MENU ativar e desativar
+			objComissao comissao = (objComissao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+			// mnuDefinir Setor
+			mnuImprimirRecibo.Enabled = comissao.IDSituacao == 3;
+
+			// revela menu
+			mnuOperacoes.Show(c.PointToScreen(e.Location));
+
+		}
+
+		private void mnuVisualizar_Click(object sender, EventArgs e)
+		{
+			btnVisualizar_Click(sender, e);
+		}
+
+		private void mnuExcluir_Click(object sender, EventArgs e)
+		{
+			ExcluirComissao();
+		}
+
+		private void mnuImprimirRecibo_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Imprimir o Recibo de Comissão...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objComissao comissao = (objComissao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				if (comissao.IDDespesa == null) throw new AppException("A Despesa anexada à essa Comissão foi Excluída...");
+
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- Get created Despesa and Convert to List
+				var dadosIgreja = ObterDadosIgreja();
+				var despesa = ObterDespesa(comissao);
+				var listDespesa = new List<objDespesa>() { despesa };
+
+				//--- Create Data Text
+				string DataTexto = $"{dadosIgreja.Cidade}, {despesa.DespesaData.Day} de {despesa.DespesaData:MMMM} de {despesa.DespesaData:yyyy}";
+
+				//--- convert list
+				List<object> dstPrimario = listDespesa.Cast<object>().ToList();
+
+				//--- create and ADD params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("ReciboTexto", CreateReciboTexto(comissao, dadosIgreja)));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("DataTexto", DataTexto));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("ComissaoValor", comissao.ValorComissao.ToString()));
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Comissoes.Reports.rptComissaoRecibo.rdlc",
+					"Recibo de Auxílio Colaborador",
+					dstPrimario, null, param);
+				frm.ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// CREATE DESCRICAO TEXTO PARA RECIBO
+		//------------------------------------------------------------------------------------------------------------
+		private string CreateReciboTexto(objComissao comissao, objDadosIgreja dadosIgreja)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				string Extenso = EscreverExtenso(comissao.ValorComissao);
+
+				string texto = $"Eu, {comissao.Credor} recebi da " +
+					$"{(dadosIgreja.RazaoSocial.Trim().Length == 0 ? "Instituição " : dadosIgreja.RazaoSocial)} " +
+					$"o valor de {comissao.ValorComissao:C} ({Extenso}) a título de PREBENDA. ";
+
+				return texto;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// OBTER DESPESA REFERENTE PARA RECIBO
+		//------------------------------------------------------------------------------------------------------------
+		private objDespesa ObterDespesa(objComissao comissao)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				return new DespesaBLL().GetDespesa((long)comissao.IDDespesa);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// EXCLUIR COMISSAO
+		//------------------------------------------------------------------------------------------------------------
+		private void ExcluirComissao()
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Excluir...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objComissao comissao = (objComissao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//--- VERIFICA SE EXISTE DESPESA ANEXADA
+			if (comissao.IDDespesa != null)
+			{
+				AbrirDialog("Não é possível excluir essa Comissão porque ainda existe uma despesa vinculada..." +
+					$"O registro da despesa é {comissao.IDDespesa:D4}" +
+					$"É necessário Excluir a Despesa anexada para remover a comissão.",
+					"Despesa Anexada",
+					DialogType.OK,
+					DialogIcon.Exclamation);
+				return;
+			}
+
+			// --- ask USER
+			var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Comissão abaixo?\n" +
+				$"\nREG: {comissao.IDComissao:D4}\nVALOR: {comissao.ValorComissao:c}",
+				"Excluir Comissão",
+				DialogType.SIM_NAO,
+				DialogIcon.Question,
+				DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- execute
+				cBLL.ComissaoExcluir(comissao);
+
+				//--- REQUERY LIST
+				ObterDados();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir a Comissao..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // MENU SUSPENSO --- END
 	}
 }

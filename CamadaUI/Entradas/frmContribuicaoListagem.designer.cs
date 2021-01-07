@@ -68,9 +68,9 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDefinirSetor = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuDefinirSetor = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -574,7 +574,7 @@
             this.toolStripSeparator2,
             this.mnuExcluir});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(310, 88);
+			this.mnuOperacoes.Size = new System.Drawing.Size(310, 110);
 			// 
 			// mnuVisualizar
 			// 
@@ -583,6 +583,14 @@
 			this.mnuVisualizar.Size = new System.Drawing.Size(309, 26);
 			this.mnuVisualizar.Text = "Visualizar Contribuição";
 			this.mnuVisualizar.Click += new System.EventHandler(this.mnuVisualizar_Click);
+			// 
+			// mnuDefinirSetor
+			// 
+			this.mnuDefinirSetor.Image = global::CamadaUI.Properties.Resources.edit_page_24;
+			this.mnuDefinirSetor.Name = "mnuDefinirSetor";
+			this.mnuDefinirSetor.Size = new System.Drawing.Size(309, 26);
+			this.mnuDefinirSetor.Text = "Definir o Setor de Movimentação";
+			this.mnuDefinirSetor.Click += new System.EventHandler(this.mnuDefinirSetor_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -596,14 +604,6 @@
 			this.mnuExcluir.Size = new System.Drawing.Size(309, 26);
 			this.mnuExcluir.Text = "Excluir Contribuição";
 			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
-			// 
-			// mnuDefinirSetor
-			// 
-			this.mnuDefinirSetor.Image = global::CamadaUI.Properties.Resources.edit_page_24;
-			this.mnuDefinirSetor.Name = "mnuDefinirSetor";
-			this.mnuDefinirSetor.Size = new System.Drawing.Size(309, 26);
-			this.mnuDefinirSetor.Text = "Definir o Setor de Movimentação";
-			this.mnuDefinirSetor.Click += new System.EventHandler(this.mnuDefinirSetor_Click);
 			// 
 			// frmContribuicaoListagem
 			// 
