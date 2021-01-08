@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
+﻿using CamadaDTO;
 using CamadaUI.Contas;
 using CamadaUI.Setores;
-using System.Xml;
+using System;
 using System.Drawing;
-using CamadaDTO;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Config
 {
@@ -122,7 +122,6 @@ namespace CamadaUI.Config
 			if (frm.DialogResult == DialogResult.Yes)
 			{
 				frmConta frmC = new frmConta(frm.propEscolha);
-				DesativaMenuPrincipal();
 				frmC.ShowDialog();
 			}
 

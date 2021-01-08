@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -33,6 +34,15 @@ namespace CamadaUI.Config
 			if (!string.IsNullOrEmpty(SourceXMLFile))
 			{
 				LoadXMLSettings();
+
+				if (txtLogoRemota.Text.Length > 0)
+				{
+					var result = GetImageAsync(txtLogoRemota.Text);
+					result.ContinueWith(task =>
+					{
+						picLogo.Image = task.Result;
+					});
+				}
 
 				//--- add Handler Change
 				HandlerChangedControles();
@@ -304,6 +314,5 @@ namespace CamadaUI.Config
 		}
 
 		#endregion // SAVE --- END
-
 	}
 }

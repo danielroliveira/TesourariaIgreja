@@ -532,6 +532,19 @@ namespace CamadaUI.Contas
 			}
 		}
 
+		private void frmConta_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtCongregacao
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
 		// OPEN CONGREGACAO PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
 		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
@@ -580,17 +593,5 @@ namespace CamadaUI.Contas
 
 		#endregion // CONTROL FUNCTIONS --- END
 
-		private void frmConta_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (e.KeyChar == 43)
-			{
-				//--- cria uma lista de controles que serao impedidos de receber '+'
-				Control[] controlesBloqueados = {
-					txtCongregacao
-				};
-
-				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
-			}
-		}
 	}
 }

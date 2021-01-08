@@ -190,6 +190,7 @@
 			this.mnuColaboradores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuColaboradores.Name = "mnuColaboradores";
 			this.mnuColaboradores.Size = new System.Drawing.Size(262, 38);
+			this.mnuColaboradores.Tag = "1";
 			this.mnuColaboradores.Text = "Colaboradores";
 			// 
 			// mnuColaboradorProcurar
@@ -232,6 +233,7 @@
 			this.mnuFuncionarios.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuFuncionarios.Name = "mnuFuncionarios";
 			this.mnuFuncionarios.Size = new System.Drawing.Size(262, 38);
+			this.mnuFuncionarios.Tag = "1";
 			this.mnuFuncionarios.Text = "Funcionarios";
 			// 
 			// toolStripSeparator1
@@ -322,6 +324,7 @@
 			this.mnuAReceberProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.mnuAReceberProcurar.Name = "mnuAReceberProcurar";
 			this.mnuAReceberProcurar.Size = new System.Drawing.Size(240, 30);
+			this.mnuAReceberProcurar.Tag = "1";
 			this.mnuAReceberProcurar.Text = "Procurar AReceber";
 			// 
 			// toolStripSeparator3
@@ -336,6 +339,7 @@
 			this.mnuCampanhas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCampanhas.Name = "mnuCampanhas";
 			this.mnuCampanhas.Size = new System.Drawing.Size(240, 30);
+			this.mnuCampanhas.Tag = "1";
 			this.mnuCampanhas.Text = "Controle de Campanhas";
 			// 
 			// btnSaidas
@@ -484,6 +488,7 @@
 			this.mnuDespesaTipo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaTipo.Name = "mnuDespesaTipo";
 			this.mnuDespesaTipo.Size = new System.Drawing.Size(253, 30);
+			this.mnuDespesaTipo.Tag = "1";
 			this.mnuDespesaTipo.Text = "Tipos de Despesa";
 			// 
 			// mnuDespesaGrupo
@@ -493,6 +498,7 @@
 			this.mnuDespesaGrupo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuDespesaGrupo.Name = "mnuDespesaGrupo";
 			this.mnuDespesaGrupo.Size = new System.Drawing.Size(253, 30);
+			this.mnuDespesaGrupo.Tag = "1";
 			this.mnuDespesaGrupo.Text = "Grupos de Despesa";
 			// 
 			// mnuCobrancaForma
@@ -502,6 +508,7 @@
 			this.mnuCobrancaForma.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
 			this.mnuCobrancaForma.Size = new System.Drawing.Size(253, 30);
+			this.mnuCobrancaForma.Tag = "1";
 			this.mnuCobrancaForma.Text = "Formas de Cobrança";
 			// 
 			// btnMovimentação
@@ -531,6 +538,7 @@
 			this.mnuCaixaFechamento.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCaixaFechamento.Name = "mnuCaixaFechamento";
 			this.mnuCaixaFechamento.Size = new System.Drawing.Size(278, 30);
+			this.mnuCaixaFechamento.Tag = "1";
 			this.mnuCaixaFechamento.Text = "Caixa Fechamento";
 			// 
 			// mnuCaixaProcurar
@@ -559,6 +567,7 @@
 			this.mnuTransferencia.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuTransferencia.Name = "mnuTransferencia";
 			this.mnuTransferencia.Size = new System.Drawing.Size(278, 30);
+			this.mnuTransferencia.Tag = "1";
 			this.mnuTransferencia.Text = "Transferências";
 			// 
 			// mnuTranferenciaContaEfetuar

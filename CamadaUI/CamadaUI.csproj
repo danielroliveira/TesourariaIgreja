@@ -374,6 +374,12 @@
     <Compile Include="Contas\frmContaProcura.designer.cs">
       <DependentUpon>frmContaProcura.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contas\frmContaSaldoInicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contas\frmContaSaldoInicial.designer.cs">
+      <DependentUpon>frmContaSaldoInicial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entradas\frmCampanha.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -872,6 +878,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmContaProcura.resx">
       <DependentUpon>frmContaProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contas\frmContaSaldoInicial.resx">
+      <DependentUpon>frmContaSaldoInicial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmCampanha.resx">
       <DependentUpon>frmCampanha.cs</DependentUpon>

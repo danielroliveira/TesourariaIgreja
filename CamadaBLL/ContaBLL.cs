@@ -386,5 +386,48 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// INSERT SALDO INICIAL DA CONTA
+		//------------------------------------------------------------------------------------------------------------
+		public void InsertSaldoInicialConta(objCaixaAjuste ajuste,
+			DateTime DataBloqueio,
+			Action<int, decimal> ContaSldUpdate = null,
+			Action<int, decimal> SetorSldUpdate = null)
+		{
+			AcessoDados dbTran = null;
+
+			try
+			{
+				// create transaction
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// check exists movs in conta
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDConta", ajuste.IDConta);
+
+				string query = "SELECT * FROM tblMovimentacao WHERE IDConta = @IDConta";
+				DataTable dt = dbTran.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count > 0)
+				{
+					throw new AppException("Não é possível alterar o Saldo Inicial porque a Conta Selecionada já possui movimentações de entradas e/ou saídas...");
+				}
+
+				// update Data de Bloqueio inicial da Conta
+				UpdateContaBloqueioData(ajuste.IDConta, DataBloqueio, dbTran);
+
+				// update Valor Inicial da Conta
+				new AjusteBLL().InsertAjuste(ajuste, ContaSldUpdate, SetorSldUpdate, null, dbTran);
+
+				// Commit transactiom
+				dbTran.CommitTransaction();
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+		}
 	}
 }

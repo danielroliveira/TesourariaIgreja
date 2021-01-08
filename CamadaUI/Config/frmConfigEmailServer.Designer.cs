@@ -46,10 +46,12 @@
 			this.txtPassword = new System.Windows.Forms.TextBox();
 			this.txtUser = new System.Windows.Forms.TextBox();
 			this.pnlPastas = new System.Windows.Forms.Panel();
+			this.picLogo = new System.Windows.Forms.PictureBox();
 			this.lblCaminho = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -252,6 +254,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.pnlPastas.Controls.Add(this.picLogo);
 			this.pnlPastas.Controls.Add(this.lblCaminho);
 			this.pnlPastas.Controls.Add(this.Label1);
 			this.pnlPastas.Controls.Add(this.txtUser);
@@ -270,6 +273,15 @@
 			this.pnlPastas.Name = "pnlPastas";
 			this.pnlPastas.Size = new System.Drawing.Size(720, 409);
 			this.pnlPastas.TabIndex = 29;
+			// 
+			// picLogo
+			// 
+			this.picLogo.Location = new System.Drawing.Point(463, 208);
+			this.picLogo.Name = "picLogo";
+			this.picLogo.Size = new System.Drawing.Size(229, 120);
+			this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picLogo.TabIndex = 29;
+			this.picLogo.TabStop = false;
 			// 
 			// lblCaminho
 			// 
@@ -298,6 +310,7 @@
 			this.tspMenu.PerformLayout();
 			this.pnlPastas.ResumeLayout(false);
 			this.pnlPastas.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -322,5 +335,6 @@
 		internal System.Windows.Forms.TextBox txtUser;
 		private System.Windows.Forms.Panel pnlPastas;
 		private System.Windows.Forms.Label lblCaminho;
+		private System.Windows.Forms.PictureBox picLogo;
 	}
 }

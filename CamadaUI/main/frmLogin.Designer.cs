@@ -91,7 +91,6 @@
 			this.txtSenha.PasswordChar = '*';
 			this.txtSenha.Size = new System.Drawing.Size(118, 23);
 			this.txtSenha.TabIndex = 3;
-			this.txtSenha.Text = "12345678";
 			this.txtSenha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenha_KeyDown);
 			// 
 			// txtApelido
@@ -102,7 +101,6 @@
 			this.txtApelido.Name = "txtApelido";
 			this.txtApelido.Size = new System.Drawing.Size(156, 23);
 			this.txtApelido.TabIndex = 1;
-			this.txtApelido.Text = "Daniel";
 			this.txtApelido.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);
 			// 
 			// lblSenha
@@ -127,7 +125,7 @@
 			// 
 			// btnOK
 			// 
-			this.btnOK.BackColor = System.Drawing.Color.AliceBlue;
+			this.btnOK.BackColor = System.Drawing.Color.Honeydew;
 			this.btnOK.FlatAppearance.BorderColor = System.Drawing.Color.SlateGray;
 			this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnOK.Location = new System.Drawing.Point(176, 358);
@@ -136,12 +134,12 @@
 			this.btnOK.Size = new System.Drawing.Size(99, 42);
 			this.btnOK.TabIndex = 9;
 			this.btnOK.Text = "&OK";
-			this.btnOK.UseVisualStyleBackColor = false;
+			this.btnOK.UseVisualStyleBackColor = true;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.BackColor = System.Drawing.Color.AliceBlue;
+			this.btnCancel.BackColor = System.Drawing.Color.OldLace;
 			this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.SlateGray;
 			this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnCancel.Location = new System.Drawing.Point(287, 358);
@@ -161,6 +159,7 @@
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
+			this.KeyPreview = true;
 			this.Name = "frmLogin";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmLogin_KeyDown);

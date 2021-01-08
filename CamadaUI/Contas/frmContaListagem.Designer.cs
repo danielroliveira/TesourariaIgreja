@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnEditar = new System.Windows.Forms.Button();
@@ -49,6 +49,7 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSaldo = new System.Windows.Forms.Button();
+			this.btnSaldoInicial = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -81,7 +82,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(819, 495);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
-			this.btnFechar.TabIndex = 8;
+			this.btnFechar.TabIndex = 10;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -158,24 +159,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -200,6 +201,7 @@
 			this.dgvListagem.Size = new System.Drawing.Size(923, 371);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
+			this.dgvListagem.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_RowEnter);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
@@ -276,12 +278,26 @@
 			this.btnSaldo.Location = new System.Drawing.Point(286, 495);
 			this.btnSaldo.Name = "btnSaldo";
 			this.btnSaldo.Size = new System.Drawing.Size(181, 42);
-			this.btnSaldo.TabIndex = 7;
+			this.btnSaldo.TabIndex = 8;
 			this.btnSaldo.Text = "&Recalcular Saldo";
 			this.btnSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnSaldo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnSaldo.UseVisualStyleBackColor = true;
 			this.btnSaldo.Click += new System.EventHandler(this.btnSaldo_Click);
+			// 
+			// btnSaldoInicial
+			// 
+			this.btnSaldoInicial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnSaldoInicial.Image = global::CamadaUI.Properties.Resources.money_green_32;
+			this.btnSaldoInicial.Location = new System.Drawing.Point(473, 495);
+			this.btnSaldoInicial.Name = "btnSaldoInicial";
+			this.btnSaldoInicial.Size = new System.Drawing.Size(181, 42);
+			this.btnSaldoInicial.TabIndex = 9;
+			this.btnSaldoInicial.Text = "&Saldo Inicial";
+			this.btnSaldoInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSaldoInicial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSaldoInicial.UseVisualStyleBackColor = true;
+			this.btnSaldoInicial.Click += new System.EventHandler(this.btnSaldoInicial_Click);
 			// 
 			// frmContaListagem
 			// 
@@ -290,6 +306,7 @@
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnSaldoInicial);
 			this.Controls.Add(this.btnSaldo);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnEditar);
@@ -306,6 +323,7 @@
 			this.Controls.SetChildIndex(this.btnEditar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.btnSaldo, 0);
+			this.Controls.SetChildIndex(this.btnSaldoInicial, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
@@ -337,5 +355,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSaldo;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
 		internal System.Windows.Forms.Button btnSaldo;
+		internal System.Windows.Forms.Button btnSaldoInicial;
 	}
 }

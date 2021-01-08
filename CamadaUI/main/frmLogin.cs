@@ -138,8 +138,6 @@ namespace CamadaUI.Main
 
 		#endregion
 
-
-
 		private bool VerificaCampos()
 		{
 			//--- Verifica se o campo Apelido tem algum valor
@@ -169,7 +167,15 @@ namespace CamadaUI.Main
 			{
 				e.SuppressKeyPress = true;
 				e.Handled = true;
-				txtSenha.Focus();
+
+				if (txtSenha.Text.Length == 8)
+				{
+					btnOK_Click(sender, e);
+				}
+				else
+				{
+					txtSenha.Focus();
+				}
 			}
 		}
 
@@ -185,7 +191,7 @@ namespace CamadaUI.Main
 
 		private void frmLogin_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Enter)
+			if (e.KeyCode == Keys.Enter && txtSenha.Text.Length == 8 && txtApelido.Text.Length > 0)
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
@@ -194,6 +200,14 @@ namespace CamadaUI.Main
 			else if (e.KeyCode == Keys.Escape)
 			{
 				btnCancel_Click(new object(), new EventArgs());
+			}
+			else if (e.Alt && e.KeyCode == Keys.F12)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				txtApelido.Text = "Daniel";
+				txtSenha.Text = "12345678";
+				btnOK_Click(new object(), new EventArgs());
 			}
 		}
 

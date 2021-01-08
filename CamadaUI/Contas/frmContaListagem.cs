@@ -28,11 +28,11 @@ namespace CamadaUI.Contas
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
 			CarregaCmbAtivo();
-			ObterDados(this, new EventArgs());
+			ObterDados();
 			FormataListagem();
 
 			//--- get dados
-			cmbAtivo.SelectedValueChanged += ObterDados;
+			cmbAtivo.SelectedValueChanged += (a, b) => ObterDados();
 			dgvListagem.CellDoubleClick += btnEditar_Click;
 			txtProcura.TextChanged += FiltrarListagem;
 			HandlerKeyDownControl(this);
@@ -43,7 +43,7 @@ namespace CamadaUI.Contas
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
-		private void ObterDados(object sender, EventArgs e)
+		private void ObterDados()
 		{
 			try
 			{
@@ -262,6 +262,50 @@ namespace CamadaUI.Contas
 			}
 		}
 
+		// RECALCULAR O SALDO DA CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSaldo_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Recalcular o Saldo da Conta...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				cBLL.ContaSaldoRecalcular(conta);
+
+				AbrirDialog($"Não houve qualquer alteração no Saldo da Conta:\n" +
+					$"{conta.Conta.ToUpper()}\n" +
+					$"Valor: {conta.ContaSaldo:c}", "Saldo Correto");
+
+			}
+			catch (AppException ex)
+			{
+				dgvListagem.SelectedRows[0].Cells[4].Value = conta.ContaSaldo;
+				AbrirDialog(ex.Message, "Saldo Alterado", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Recalcular o Saldo..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region FILTRAGEM PROCURA
@@ -369,7 +413,7 @@ namespace CamadaUI.Contas
 				cBLL.UpdateConta(conta);
 
 				//--- altera a imagem
-				ObterDados(null, null);
+				ObterDados();
 				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
@@ -445,41 +489,43 @@ namespace CamadaUI.Contas
 
 		#endregion // CONTROLS FUNCTION --- END
 
-		// RECALCULAR O SALDO DA CONTA
-		//------------------------------------------------------------------------------------------------------------
-		private void btnSaldo_Click(object sender, EventArgs e)
+		#region SALDO INICIAL
+
+		private void dgvListagem_RowEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
+			try
 			{
-				AbrirDialog("Favor selecionar um registro para Recalcular o Saldo da Conta...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
+				objConta conta = (objConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				btnSaldoInicial.Visible = conta.Ativa == true && conta.ContaSaldo == 0;
 			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
 
-			//--- get Selected item
-			objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
-
+		private void btnSaldoInicial_Click(object sender, EventArgs e)
+		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				cBLL.ContaSaldoRecalcular(conta);
+				objConta conta = (objConta)dgvListagem.SelectedRows[0].DataBoundItem;
 
-				AbrirDialog($"Não houve qualquer alteração no Saldo da Conta:\n" +
-					$"{conta.Conta.ToUpper()}\n" +
-					$"Valor: {conta.ContaSaldo:c}", "Saldo Correto");
+				var frm = new frmContaSaldoInicial(conta, this);
+				frm.ShowDialog();
 
-			}
-			catch (AppException ex)
-			{
-				dgvListagem.SelectedRows[0].Cells[4].Value = conta.ContaSaldo;
-				AbrirDialog(ex.Message, "Saldo Alterado", DialogType.OK, DialogIcon.Information);
+				// get result
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				// get new saldo and Data inicial
+				ObterDados();
+
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Recalcular o Saldo..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Inserir o saldo inicial da conta..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -487,6 +533,9 @@ namespace CamadaUI.Contas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+
 		}
+
+		#endregion // SALDO INICIAL --- END
 	}
 }

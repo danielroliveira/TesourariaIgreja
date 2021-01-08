@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -337,6 +338,66 @@ namespace CamadaUI
 				return montagem;
 			}
 		}
+
+		// GET IMAGE FROM WEB URL ASYNC
+		// =============================================================================
+		public static async System.Threading.Tasks.Task<Image> GetImageAsync(string url)
+		{
+			var tcs = new System.Threading.Tasks.TaskCompletionSource<Image>();
+			Image webImage = null;
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "GET";
+
+			await System.Threading.Tasks.Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null)
+				.ContinueWith(task =>
+				{
+					var webResponse = (HttpWebResponse)task.Result;
+					System.IO.Stream responseStream = webResponse.GetResponseStream();
+
+					/*
+					if (webResponse.ContentEncoding.ToLower().Contains("gzip"))
+						responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+					else if (webResponse.ContentEncoding.ToLower().Contains("deflate"))
+						responseStream = new DeflateStream(responseStream, CompressionMode.Decompress);
+					*/
+
+					if (responseStream != null) webImage = Image.FromStream(responseStream);
+					tcs.TrySetResult(webImage);
+					webResponse.Close();
+					responseStream.Close();
+				});
+
+			return tcs.Task.Result;
+		}
+
+		// GET IMAGE FROM WEB URL NOT ASYNC
+		// =============================================================================
+		public static Image DownloadImageFromUrl(string imageUrl)
+		{
+			Image image = null;
+
+			try
+			{
+				HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(imageUrl);
+				webRequest.AllowWriteStreamBuffering = true;
+				webRequest.Timeout = 30000;
+
+				WebResponse webResponse = webRequest.GetResponse();
+
+				System.IO.Stream stream = webResponse.GetResponseStream();
+
+				image = Image.FromStream(stream);
+
+				webResponse.Close();
+			}
+			catch
+			{
+				return null;
+			}
+
+			return image;
+		}
+
 	}
 
 	//=================================================================================================
