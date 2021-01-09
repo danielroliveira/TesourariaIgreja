@@ -708,6 +708,7 @@
 			this.dtpUltimaFeriasData.Name = "dtpUltimaFeriasData";
 			this.dtpUltimaFeriasData.Size = new System.Drawing.Size(126, 27);
 			this.dtpUltimaFeriasData.TabIndex = 8;
+			this.dtpUltimaFeriasData.Value = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// dtpAdmissaoData
 			// 
@@ -716,6 +717,7 @@
 			this.dtpAdmissaoData.Name = "dtpAdmissaoData";
 			this.dtpAdmissaoData.Size = new System.Drawing.Size(126, 27);
 			this.dtpAdmissaoData.TabIndex = 6;
+			this.dtpAdmissaoData.Value = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// txtSalarioBruto
 			// 

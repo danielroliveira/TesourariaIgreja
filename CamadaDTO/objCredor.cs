@@ -64,6 +64,8 @@ namespace CamadaDTO
 				_PessoaTipo = null,
 				_ComissaoTaxa = null,
 				_IDSetor = null,
+				_AdmissaoData = DateTime.Today,
+				_UltimaFeriasData = DateTime.Today,
 			};
 		}
 
