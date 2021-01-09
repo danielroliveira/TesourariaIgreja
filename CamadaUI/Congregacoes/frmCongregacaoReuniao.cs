@@ -16,7 +16,6 @@ namespace CamadaUI.Congregacoes
 		private objReuniao _reuniao;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
-		private int? _IDCongregacao;
 
 		private int _RecorrenciaTipo; // property TIPO of recorrencia, change textboxes and labels
 
@@ -31,7 +30,6 @@ namespace CamadaUI.Congregacoes
 			_reuniao = obj;
 			bind.DataSource = _reuniao;
 			BindingCreator();
-			_IDCongregacao = _reuniao.IDCongregacao;
 
 			_reuniao.PropertyChanged += RegistroAlterado;
 
@@ -68,24 +66,28 @@ namespace CamadaUI.Congregacoes
 						btnSalvar.Enabled = false;
 						btnCancelar.Enabled = false;
 						btnAtivo.Enabled = true;
+						chkTodasCongregacoes.Enabled = false;
 						break;
 					case EnumFlagEstado.Alterado:
 						btnNovo.Enabled = false;
 						btnSalvar.Enabled = true;
 						btnCancelar.Enabled = true;
 						btnAtivo.Enabled = true;
+						chkTodasCongregacoes.Enabled = false;
 						break;
 					case EnumFlagEstado.NovoRegistro:
 						btnNovo.Enabled = false;
 						btnSalvar.Enabled = true;
 						btnCancelar.Enabled = true;
 						btnAtivo.Enabled = false;
+						chkTodasCongregacoes.Enabled = true;
 						break;
 					case EnumFlagEstado.RegistroBloqueado:
 						btnNovo.Enabled = true;
 						btnSalvar.Enabled = false;
 						btnCancelar.Enabled = false;
 						btnAtivo.Enabled = false;
+						chkTodasCongregacoes.Enabled = false;
 						break;
 					default:
 						break;
@@ -347,6 +349,7 @@ namespace CamadaUI.Congregacoes
 			AtivoButtonImage();
 			bind.DataSource = _reuniao;
 			txtReuniao.Focus();
+			chkTodasCongregacoes.Checked = false;
 		}
 
 		private void btnAtivo_Click(object sender, EventArgs e)
@@ -424,7 +427,18 @@ namespace CamadaUI.Congregacoes
 				//--- SAVE: INSERT OR UPDATE
 				if (_reuniao.IDReuniao == null) //--- save | Insert
 				{
-					int ID = sBLL.InsertReuniao(_reuniao);
+					int ID;
+
+					if (!chkTodasCongregacoes.Checked)
+					{
+						ID = sBLL.InsertReuniao(_reuniao);
+					}
+					else
+					{
+						ID = sBLL.InsertReuniaoAllCongregacoes(_reuniao);
+						txtCongregacao.Text = _reuniao.Congregacao;
+					}
+
 					//--- define newID
 					_reuniao.IDReuniao = ID;
 				}
@@ -435,6 +449,7 @@ namespace CamadaUI.Congregacoes
 
 				//--- change Sit
 				Sit = EnumFlagEstado.RegistroSalvo;
+
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
@@ -455,6 +470,12 @@ namespace CamadaUI.Congregacoes
 		private bool CheckSaveData()
 		{
 			if (!VerificaDadosClasse(txtReuniao, "Reuniao", _reuniao)) return false;
+
+			if (!chkTodasCongregacoes.Checked)
+			{
+				if (!VerificaDadosClasse(txtCongregacao, "Congregação", _reuniao)) return false;
+			}
+
 			if (_reuniao.RecorrenciaMes == 0) _reuniao.RecorrenciaMes = null;
 			if (_reuniao.RecorrenciaSemana == 0) _reuniao.RecorrenciaSemana = null;
 
@@ -556,6 +577,25 @@ namespace CamadaUI.Congregacoes
 			ResizeFontLabel(lblRecorrenciaTexto);
 		}
 
+		// CONTROL TODAS CONGREGACOES CHECKED
+		//------------------------------------------------------------------------------------------------------------
+		private void chkTodasCongregacoes_CheckedChanged(object sender, EventArgs e)
+		{
+			if (chkTodasCongregacoes.Checked)
+			{
+				txtCongregacao.Enabled = false;
+				txtCongregacao.Text = "Todas Congregações";
+				_reuniao.IDCongregacao = null;
+				btnCongEscolher.Enabled = false;
+			}
+			else
+			{
+				txtCongregacao.Enabled = true;
+				txtCongregacao.Text = string.Empty;
+				btnCongEscolher.Enabled = true;
+			}
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region RECORRENCIA CONTROL
@@ -652,5 +692,7 @@ namespace CamadaUI.Congregacoes
 		}
 
 		#endregion // RECORRENCIA CONTROL --- END
+
+
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
@@ -31,9 +32,17 @@ namespace CamadaDTO
 			internal bool _Ativo;
 			internal byte? _PessoaTipo;
 			internal string _PessoaTipoDescricao;
+
+			// credor COLABORADOR
 			internal decimal? _ComissaoTaxa;
 			internal int? _IDSetor;
 			internal string _Setor;
+
+			// credor FUNCIONARIO
+			internal string _Funcao;
+			internal DateTime? _AdmissaoData;
+			internal DateTime? _UltimaFeriasData;
+			internal decimal? _SalarioBruto;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -462,6 +471,69 @@ namespace CamadaDTO
 			}
 		}
 
+		// CREDOR FUNCIONARIO
+		// =================================
+
+		// Property Funcao
+		//---------------------------------------------------------------
+		public string Funcao
+		{
+			get => EditData._Funcao;
+			set
+			{
+				if (value != EditData._Funcao)
+				{
+					EditData._Funcao = value;
+					NotifyPropertyChanged("Funcao");
+				}
+			}
+		}
+
+		// Property AdmissaoData
+		//---------------------------------------------------------------
+		public DateTime? AdmissaoData
+		{
+			get => EditData._AdmissaoData;
+			set
+			{
+				if (value != EditData._AdmissaoData)
+				{
+					EditData._AdmissaoData = value;
+					NotifyPropertyChanged("AdmissaoData");
+				}
+			}
+		}
+
+
+		// Property UltimaFeriasData
+		//---------------------------------------------------------------
+		public DateTime? UltimaFeriasData
+		{
+			get => EditData._UltimaFeriasData;
+			set
+			{
+				if (value != EditData._UltimaFeriasData)
+				{
+					EditData._UltimaFeriasData = value;
+					NotifyPropertyChanged("UltimaFeriasData");
+				}
+			}
+		}
+
+		// Property SalarioBruto
+		//---------------------------------------------------------------
+		public decimal? SalarioBruto
+		{
+			get => EditData._SalarioBruto;
+			set
+			{
+				if (value != EditData._SalarioBruto)
+				{
+					EditData._SalarioBruto = value;
+					NotifyPropertyChanged("SalarioBruto");
+				}
+			}
+		}
 	}
 
 }

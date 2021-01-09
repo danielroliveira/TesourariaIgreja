@@ -60,6 +60,7 @@
 			this.cmbRecorrenciaSemana = new CamadaUC.ucComboLimitedValues();
 			this.cmbRecorrenciaDia = new CamadaUC.ucComboLimitedValues();
 			this.cmbRecorrenciaTipo = new CamadaUC.ucComboLimitedValues();
+			this.chkTodasCongregacoes = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -154,10 +155,10 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 504);
+			this.tspMenu.Location = new System.Drawing.Point(2, 534);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
-			this.tspMenu.TabIndex = 21;
+			this.tspMenu.TabIndex = 23;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -239,11 +240,11 @@
 			this.line1.EndPoint = new System.Drawing.Point(495, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(20, 241);
+			this.line1.Location = new System.Drawing.Point(20, 275);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(500, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 9;
+			this.line1.TabIndex = 11;
 			this.line1.TabStop = false;
 			// 
 			// btnCongEscolher
@@ -291,10 +292,10 @@
 			this.label1.AutoSize = true;
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(227, 303);
+			this.label1.Location = new System.Drawing.Point(227, 337);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(37, 19);
-			this.label1.TabIndex = 13;
+			this.label1.TabIndex = 15;
 			this.label1.Text = "Tipo";
 			// 
 			// lblDia
@@ -302,10 +303,10 @@
 			this.lblDia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblDia.BackColor = System.Drawing.Color.Transparent;
 			this.lblDia.ForeColor = System.Drawing.Color.Black;
-			this.lblDia.Location = new System.Drawing.Point(43, 357);
+			this.lblDia.Location = new System.Drawing.Point(43, 391);
 			this.lblDia.Name = "lblDia";
 			this.lblDia.Size = new System.Drawing.Size(135, 19);
-			this.lblDia.TabIndex = 15;
+			this.lblDia.TabIndex = 17;
 			this.lblDia.Text = "Dia";
 			this.lblDia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -314,10 +315,10 @@
 			this.lblSemana.AutoSize = true;
 			this.lblSemana.BackColor = System.Drawing.Color.Transparent;
 			this.lblSemana.ForeColor = System.Drawing.Color.Black;
-			this.lblSemana.Location = new System.Drawing.Point(118, 404);
+			this.lblSemana.Location = new System.Drawing.Point(118, 438);
 			this.lblSemana.Name = "lblSemana";
 			this.lblSemana.Size = new System.Drawing.Size(60, 19);
-			this.lblSemana.TabIndex = 17;
+			this.lblSemana.TabIndex = 19;
 			this.lblSemana.Text = "Semana";
 			// 
 			// lblMes
@@ -325,10 +326,10 @@
 			this.lblMes.AutoSize = true;
 			this.lblMes.BackColor = System.Drawing.Color.Transparent;
 			this.lblMes.ForeColor = System.Drawing.Color.Black;
-			this.lblMes.Location = new System.Drawing.Point(141, 450);
+			this.lblMes.Location = new System.Drawing.Point(141, 484);
 			this.lblMes.Name = "lblMes";
 			this.lblMes.Size = new System.Drawing.Size(37, 19);
-			this.lblMes.TabIndex = 19;
+			this.lblMes.TabIndex = 21;
 			this.lblMes.Text = "Mês";
 			// 
 			// label5
@@ -336,30 +337,30 @@
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(53, 303);
+			this.label5.Location = new System.Drawing.Point(53, 337);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
-			this.label5.TabIndex = 11;
+			this.label5.TabIndex = 13;
 			this.label5.Text = "Repetir a Cada";
 			// 
 			// dtpIniciarData
 			// 
 			this.dtpIniciarData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpIniciarData.Location = new System.Drawing.Point(185, 172);
+			this.dtpIniciarData.Location = new System.Drawing.Point(185, 199);
 			this.dtpIniciarData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpIniciarData.Name = "dtpIniciarData";
 			this.dtpIniciarData.Size = new System.Drawing.Size(143, 27);
-			this.dtpIniciarData.TabIndex = 7;
+			this.dtpIniciarData.TabIndex = 8;
 			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.ForeColor = System.Drawing.Color.Black;
-			this.label7.Location = new System.Drawing.Point(105, 178);
+			this.label7.Location = new System.Drawing.Point(105, 205);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(73, 19);
-			this.label7.TabIndex = 6;
+			this.label7.TabIndex = 7;
 			this.label7.Text = "Iniciar Em";
 			// 
 			// lblRecorrenciaTexto
@@ -367,10 +368,10 @@
 			this.lblRecorrenciaTexto.BackColor = System.Drawing.Color.Transparent;
 			this.lblRecorrenciaTexto.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblRecorrenciaTexto.ForeColor = System.Drawing.Color.Black;
-			this.lblRecorrenciaTexto.Location = new System.Drawing.Point(9, 252);
+			this.lblRecorrenciaTexto.Location = new System.Drawing.Point(9, 286);
 			this.lblRecorrenciaTexto.Name = "lblRecorrenciaTexto";
 			this.lblRecorrenciaTexto.Size = new System.Drawing.Size(533, 26);
-			this.lblRecorrenciaTexto.TabIndex = 10;
+			this.lblRecorrenciaTexto.TabIndex = 12;
 			this.lblRecorrenciaTexto.Text = "Repetição...";
 			this.lblRecorrenciaTexto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lblRecorrenciaTexto.TextChanged += new System.EventHandler(this.lblRecorrenciaTexto_TextChanged);
@@ -381,10 +382,10 @@
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.Color.SlateGray;
-			this.label2.Location = new System.Drawing.Point(29, 215);
+			this.label2.Location = new System.Drawing.Point(29, 249);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(115, 26);
-			this.label2.TabIndex = 8;
+			this.label2.TabIndex = 10;
 			this.label2.Text = "Recorrência";
 			// 
 			// lblIniciarEmDiaDaSemana
@@ -392,22 +393,23 @@
 			this.lblIniciarEmDiaDaSemana.BackColor = System.Drawing.Color.Transparent;
 			this.lblIniciarEmDiaDaSemana.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblIniciarEmDiaDaSemana.ForeColor = System.Drawing.Color.Black;
-			this.lblIniciarEmDiaDaSemana.Location = new System.Drawing.Point(334, 172);
+			this.lblIniciarEmDiaDaSemana.Location = new System.Drawing.Point(334, 199);
 			this.lblIniciarEmDiaDaSemana.Name = "lblIniciarEmDiaDaSemana";
 			this.lblIniciarEmDiaDaSemana.Size = new System.Drawing.Size(171, 26);
-			this.lblIniciarEmDiaDaSemana.TabIndex = 10;
+			this.lblIniciarEmDiaDaSemana.TabIndex = 9;
 			this.lblIniciarEmDiaDaSemana.Text = "Repetição...";
 			this.lblIniciarEmDiaDaSemana.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// txtRecorrenciaRepeticao
 			// 
 			this.txtRecorrenciaRepeticao.Inteiro = true;
-			this.txtRecorrenciaRepeticao.Location = new System.Drawing.Point(164, 300);
+			this.txtRecorrenciaRepeticao.Location = new System.Drawing.Point(164, 334);
 			this.txtRecorrenciaRepeticao.MaxLength = 2;
+			this.txtRecorrenciaRepeticao.Moeda = false;
 			this.txtRecorrenciaRepeticao.Name = "txtRecorrenciaRepeticao";
 			this.txtRecorrenciaRepeticao.Positivo = true;
 			this.txtRecorrenciaRepeticao.Size = new System.Drawing.Size(57, 27);
-			this.txtRecorrenciaRepeticao.TabIndex = 12;
+			this.txtRecorrenciaRepeticao.TabIndex = 14;
 			this.txtRecorrenciaRepeticao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// cmbRecorrenciaMes
@@ -415,50 +417,63 @@
 			this.cmbRecorrenciaMes.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaMes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaMes.FormattingEnabled = true;
-			this.cmbRecorrenciaMes.Location = new System.Drawing.Point(185, 447);
+			this.cmbRecorrenciaMes.Location = new System.Drawing.Point(185, 481);
 			this.cmbRecorrenciaMes.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaMes.Name = "cmbRecorrenciaMes";
 			this.cmbRecorrenciaMes.Size = new System.Drawing.Size(234, 27);
-			this.cmbRecorrenciaMes.TabIndex = 20;
+			this.cmbRecorrenciaMes.TabIndex = 22;
 			// 
 			// cmbRecorrenciaSemana
 			// 
 			this.cmbRecorrenciaSemana.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaSemana.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaSemana.FormattingEnabled = true;
-			this.cmbRecorrenciaSemana.Location = new System.Drawing.Point(185, 401);
+			this.cmbRecorrenciaSemana.Location = new System.Drawing.Point(185, 435);
 			this.cmbRecorrenciaSemana.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaSemana.Name = "cmbRecorrenciaSemana";
 			this.cmbRecorrenciaSemana.Size = new System.Drawing.Size(234, 27);
-			this.cmbRecorrenciaSemana.TabIndex = 18;
+			this.cmbRecorrenciaSemana.TabIndex = 20;
 			// 
 			// cmbRecorrenciaDia
 			// 
 			this.cmbRecorrenciaDia.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaDia.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaDia.FormattingEnabled = true;
-			this.cmbRecorrenciaDia.Location = new System.Drawing.Point(185, 354);
+			this.cmbRecorrenciaDia.Location = new System.Drawing.Point(185, 388);
 			this.cmbRecorrenciaDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaDia.Name = "cmbRecorrenciaDia";
 			this.cmbRecorrenciaDia.Size = new System.Drawing.Size(88, 27);
-			this.cmbRecorrenciaDia.TabIndex = 16;
+			this.cmbRecorrenciaDia.TabIndex = 18;
 			// 
 			// cmbRecorrenciaTipo
 			// 
 			this.cmbRecorrenciaTipo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaTipo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaTipo.FormattingEnabled = true;
-			this.cmbRecorrenciaTipo.Location = new System.Drawing.Point(271, 300);
+			this.cmbRecorrenciaTipo.Location = new System.Drawing.Point(271, 334);
 			this.cmbRecorrenciaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaTipo.Name = "cmbRecorrenciaTipo";
 			this.cmbRecorrenciaTipo.Size = new System.Drawing.Size(234, 27);
-			this.cmbRecorrenciaTipo.TabIndex = 14;
+			this.cmbRecorrenciaTipo.TabIndex = 16;
 			this.cmbRecorrenciaTipo.SelectionChangeCommitted += new System.EventHandler(this.cmbRecorrenciaTipo_SelectionChangeCommitted);
+			// 
+			// chkTodasCongregacoes
+			// 
+			this.chkTodasCongregacoes.AutoSize = true;
+			this.chkTodasCongregacoes.Enabled = false;
+			this.chkTodasCongregacoes.Location = new System.Drawing.Point(186, 169);
+			this.chkTodasCongregacoes.Name = "chkTodasCongregacoes";
+			this.chkTodasCongregacoes.Size = new System.Drawing.Size(324, 23);
+			this.chkTodasCongregacoes.TabIndex = 6;
+			this.chkTodasCongregacoes.Text = "Inserir reunião em todas congregações Ativas";
+			this.chkTodasCongregacoes.UseVisualStyleBackColor = true;
+			this.chkTodasCongregacoes.CheckedChanged += new System.EventHandler(this.chkTodasCongregacoes_CheckedChanged);
 			// 
 			// frmCongregacaoReuniao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 550);
+			this.ClientSize = new System.Drawing.Size(560, 580);
+			this.Controls.Add(this.chkTodasCongregacoes);
 			this.Controls.Add(this.txtRecorrenciaRepeticao);
 			this.Controls.Add(this.dtpIniciarData);
 			this.Controls.Add(this.cmbRecorrenciaMes);
@@ -483,6 +498,8 @@
 			this.Controls.Add(this.lblReuniao);
 			this.KeyPreview = true;
 			this.Name = "frmCongregacaoReuniao";
+			this.Text = " vbbbbbbbbbbbbbbgggggggggnjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj" +
+    "jjjjjjjjjjjjjjjjjj ";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCongregacaoReuniao_KeyDown);
 			this.Controls.SetChildIndex(this.lblReuniao, 0);
 			this.Controls.SetChildIndex(this.txtReuniao, 0);
@@ -507,6 +524,7 @@
 			this.Controls.SetChildIndex(this.cmbRecorrenciaMes, 0);
 			this.Controls.SetChildIndex(this.dtpIniciarData, 0);
 			this.Controls.SetChildIndex(this.txtRecorrenciaRepeticao, 0);
+			this.Controls.SetChildIndex(this.chkTodasCongregacoes, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -548,5 +566,6 @@
 		internal System.Windows.Forms.Label label2;
 		internal System.Windows.Forms.Label lblIniciarEmDiaDaSemana;
 		private CamadaUC.ucOnlyNumbers txtRecorrenciaRepeticao;
+		private System.Windows.Forms.CheckBox chkTodasCongregacoes;
 	}
 }

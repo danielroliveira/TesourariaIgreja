@@ -78,18 +78,29 @@
 			this.label12 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
+			this.pnlFuncionario = new System.Windows.Forms.Panel();
+			this.dtpUltimaFeriasData = new System.Windows.Forms.DateTimePicker();
+			this.dtpAdmissaoData = new System.Windows.Forms.DateTimePicker();
+			this.txtSalarioBruto = new System.Windows.Forms.TextBox();
+			this.txtFuncao = new System.Windows.Forms.TextBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlChk.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picWathsapp)).BeginInit();
 			this.pnlColaborador.SuspendLayout();
+			this.pnlFuncionario.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(192, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(328, 50);
-			this.lblTitulo.TabIndex = 2;
+			this.lblTitulo.TabIndex = 3;
 			this.lblTitulo.Text = "Cadastro de Credor";
 			// 
 			// btnClose
@@ -98,7 +109,6 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(520, 0);
-			this.btnClose.TabIndex = 3;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -333,7 +343,7 @@
 			this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblID.Name = "lblID";
 			this.lblID.Size = new System.Drawing.Size(94, 30);
-			this.lblID.TabIndex = 0;
+			this.lblID.TabIndex = 1;
 			this.lblID.Text = "0001";
 			this.lblID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -347,7 +357,7 @@
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
 			this.lbl_IdTexto.Size = new System.Drawing.Size(35, 13);
-			this.lbl_IdTexto.TabIndex = 1;
+			this.lbl_IdTexto.TabIndex = 2;
 			this.lbl_IdTexto.Text = "Reg.";
 			this.lbl_IdTexto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -378,10 +388,10 @@
             this.toolStripSeparator2,
             this.btnAtivo,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(3, 541);
+			this.tspMenu.Location = new System.Drawing.Point(3, 657);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(555, 44);
-			this.tspMenu.TabIndex = 33;
+			this.tspMenu.TabIndex = 34;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -601,6 +611,7 @@
 			this.pnlColaborador.Name = "pnlColaborador";
 			this.pnlColaborador.Size = new System.Drawing.Size(536, 69);
 			this.pnlColaborador.TabIndex = 32;
+			this.pnlColaborador.Visible = false;
 			// 
 			// btnSetSetor
 			// 
@@ -672,10 +683,118 @@
 			this.label6.TabIndex = 4;
 			this.label6.Text = "Taxa";
 			// 
+			// pnlFuncionario
+			// 
+			this.pnlFuncionario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(212)))), ((int)(((byte)(218)))));
+			this.pnlFuncionario.Controls.Add(this.dtpUltimaFeriasData);
+			this.pnlFuncionario.Controls.Add(this.dtpAdmissaoData);
+			this.pnlFuncionario.Controls.Add(this.txtSalarioBruto);
+			this.pnlFuncionario.Controls.Add(this.txtFuncao);
+			this.pnlFuncionario.Controls.Add(this.label19);
+			this.pnlFuncionario.Controls.Add(this.label18);
+			this.pnlFuncionario.Controls.Add(this.label13);
+			this.pnlFuncionario.Controls.Add(this.label14);
+			this.pnlFuncionario.Controls.Add(this.label17);
+			this.pnlFuncionario.Location = new System.Drawing.Point(12, 536);
+			this.pnlFuncionario.Name = "pnlFuncionario";
+			this.pnlFuncionario.Size = new System.Drawing.Size(536, 110);
+			this.pnlFuncionario.TabIndex = 33;
+			this.pnlFuncionario.Visible = false;
+			// 
+			// dtpUltimaFeriasData
+			// 
+			this.dtpUltimaFeriasData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpUltimaFeriasData.Location = new System.Drawing.Point(381, 65);
+			this.dtpUltimaFeriasData.Name = "dtpUltimaFeriasData";
+			this.dtpUltimaFeriasData.Size = new System.Drawing.Size(126, 27);
+			this.dtpUltimaFeriasData.TabIndex = 8;
+			// 
+			// dtpAdmissaoData
+			// 
+			this.dtpAdmissaoData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpAdmissaoData.Location = new System.Drawing.Point(119, 65);
+			this.dtpAdmissaoData.Name = "dtpAdmissaoData";
+			this.dtpAdmissaoData.Size = new System.Drawing.Size(126, 27);
+			this.dtpAdmissaoData.TabIndex = 6;
+			// 
+			// txtSalarioBruto
+			// 
+			this.txtSalarioBruto.Location = new System.Drawing.Point(410, 32);
+			this.txtSalarioBruto.Name = "txtSalarioBruto";
+			this.txtSalarioBruto.Size = new System.Drawing.Size(98, 27);
+			this.txtSalarioBruto.TabIndex = 4;
+			this.txtSalarioBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.txtSalarioBruto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtComissaoTaxa_KeyPress);
+			this.txtSalarioBruto.Leave += new System.EventHandler(this.txtComissaoTaxa_Leave);
+			// 
+			// txtFuncao
+			// 
+			this.txtFuncao.Location = new System.Drawing.Point(119, 32);
+			this.txtFuncao.MaxLength = 30;
+			this.txtFuncao.Name = "txtFuncao";
+			this.txtFuncao.Size = new System.Drawing.Size(215, 27);
+			this.txtFuncao.TabIndex = 2;
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.BackColor = System.Drawing.Color.Transparent;
+			this.label19.ForeColor = System.Drawing.Color.Black;
+			this.label19.Location = new System.Drawing.Point(273, 71);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(102, 19);
+			this.label19.TabIndex = 7;
+			this.label19.Text = "Últimas Férias";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.BackColor = System.Drawing.Color.Transparent;
+			this.label18.ForeColor = System.Drawing.Color.Black;
+			this.label18.Location = new System.Drawing.Point(18, 71);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(95, 19);
+			this.label18.TabIndex = 5;
+			this.label18.Text = "Admissão Dt.";
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.BackColor = System.Drawing.Color.Transparent;
+			this.label13.ForeColor = System.Drawing.Color.Black;
+			this.label13.Location = new System.Drawing.Point(58, 32);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(55, 19);
+			this.label13.TabIndex = 1;
+			this.label13.Text = "Função";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.BackColor = System.Drawing.Color.Transparent;
+			this.label14.ForeColor = System.Drawing.Color.Black;
+			this.label14.Location = new System.Drawing.Point(7, 7);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(103, 19);
+			this.label14.TabIndex = 0;
+			this.label14.Text = "FUNCIONARIO";
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.BackColor = System.Drawing.Color.Transparent;
+			this.label17.ForeColor = System.Drawing.Color.Black;
+			this.label17.Location = new System.Drawing.Point(351, 35);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(53, 19);
+			this.label17.TabIndex = 3;
+			this.label17.Text = "Salário";
+			// 
 			// frmCredor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 588);
+			this.ClientSize = new System.Drawing.Size(560, 704);
+			this.Controls.Add(this.pnlFuncionario);
 			this.Controls.Add(this.pnlColaborador);
 			this.Controls.Add(this.btnSetCredor);
 			this.Controls.Add(this.txtCredorTipo);
@@ -746,6 +865,7 @@
 			this.Controls.SetChildIndex(this.txtCredorTipo, 0);
 			this.Controls.SetChildIndex(this.btnSetCredor, 0);
 			this.Controls.SetChildIndex(this.pnlColaborador, 0);
+			this.Controls.SetChildIndex(this.pnlFuncionario, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
@@ -756,6 +876,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.picWathsapp)).EndInit();
 			this.pnlColaborador.ResumeLayout(false);
 			this.pnlColaborador.PerformLayout();
+			this.pnlFuncionario.ResumeLayout(false);
+			this.pnlFuncionario.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -811,5 +933,15 @@
 		internal VIBlend.WinForms.Controls.vButton btnSetSetor;
 		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Panel pnlFuncionario;
+		private System.Windows.Forms.TextBox txtSalarioBruto;
+		internal System.Windows.Forms.TextBox txtFuncao;
+		internal System.Windows.Forms.Label label13;
+		internal System.Windows.Forms.Label label14;
+		internal System.Windows.Forms.Label label17;
+		private System.Windows.Forms.DateTimePicker dtpUltimaFeriasData;
+		private System.Windows.Forms.DateTimePicker dtpAdmissaoData;
+		internal System.Windows.Forms.Label label19;
+		internal System.Windows.Forms.Label label18;
 	}
 }

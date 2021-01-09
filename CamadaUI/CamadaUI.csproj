@@ -571,6 +571,12 @@
     <Compile Include="Registres\frmCredorListagem.designer.cs">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Registres\frmFuncionarioListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registres\frmFuncionarioListagem.designer.cs">
+      <DependentUpon>frmFuncionarioListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmCobrancaForma.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -977,6 +983,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registres\frmCredorListagem.resx">
       <DependentUpon>frmCredorListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registres\frmFuncionarioListagem.resx">
+      <DependentUpon>frmFuncionarioListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmCobrancaForma.resx">
       <DependentUpon>frmCobrancaForma.cs</DependentUpon>

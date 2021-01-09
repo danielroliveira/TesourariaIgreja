@@ -686,6 +686,8 @@ namespace CamadaUI
 			mnuColaboradorProcurar.Click += (a, b) => MenuClickOpenForm(new Registres.frmColaboradorListagem(false, this));
 			mnuComissaoInserir.Click += (a, b) => MenuClickOpenForm(new Comissoes.frmComissaoInserir(this));
 			mnuComissaoProcurar.Click += (a, b) => MenuClickOpenForm(new Comissoes.frmComissaoListagem(1, this));
+			mnuColaboradorProcurar.Click += (a, b) => MenuClickOpenForm(new Registres.frmColaboradorListagem(false, this));
+			mnuFuncionarios.Click += (a, b) => MenuClickOpenForm(new Registres.frmFuncionarioListagem(false, this));
 
 			// MENU ENTRADAS
 			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());

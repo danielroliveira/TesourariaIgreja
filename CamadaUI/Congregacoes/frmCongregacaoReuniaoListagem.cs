@@ -1,21 +1,19 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Congregacoes;
 using System.Linq;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Congregacoes
 {
 	public partial class frmCongregacaoReuniaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
+		private ReuniaoBLL rBLL = new ReuniaoBLL();
 		private List<objReuniao> listReuniao = new List<objReuniao>();
 		private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
@@ -30,14 +28,14 @@ namespace CamadaUI.Congregacoes
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
 			CarregaCmbAtivo();
-			ObterDados(this, new EventArgs());
+			ObterDados();
 			FormataListagem();
 
 			//--- get dados
-			cmbAtivo.SelectedValueChanged += ObterDados;
+			cmbAtivo.SelectedValueChanged += (a, b) => ObterDados();
 			dgvListagem.CellDoubleClick += btnEditar_Click;
-			txtProcura.TextChanged += FiltrarListagem;
-			txtProcuraCongregacao.TextChanged += FiltrarListagem;
+			txtProcura.TextChanged += (a, b) => FiltrarListagem();
+			txtProcuraCongregacao.TextChanged += (a, b) => FiltrarListagem();
 			HandlerKeyDownControl(this);
 		}
 
@@ -46,14 +44,13 @@ namespace CamadaUI.Congregacoes
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
-		private void ObterDados(object sender, EventArgs e)
+		private void ObterDados()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				ReuniaoBLL sBLL = new ReuniaoBLL();
-				listReuniao = sBLL.GetListReuniao("", Convert.ToBoolean(cmbAtivo.SelectedValue));
+				listReuniao = rBLL.GetListReuniao("", Convert.ToBoolean(cmbAtivo.SelectedValue));
 				dgvListagem.DataSource = listReuniao;
 			}
 			catch (Exception ex)
@@ -235,7 +232,7 @@ namespace CamadaUI.Congregacoes
 
 		#region FILTRAGEM PROCURA
 
-		private void FiltrarListagem(object sender, EventArgs e)
+		private void FiltrarListagem()
 		{
 			if (txtProcura.TextLength > 0)
 			{
@@ -294,25 +291,22 @@ namespace CamadaUI.Congregacoes
 				dgvListagem.Rows[hit.RowIndex].Cells[0].Selected = true;
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
-				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativa")
+				// mostra o MENU ativar e desativar 
+				objReuniao Reuniao = (objReuniao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+				if (Reuniao.Ativa == true)
 				{
-					objReuniao Reuniao = (objReuniao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
-
-					if (Reuniao.Ativa == true)
-					{
-						AtivarToolStripMenuItem.Enabled = false;
-						DesativarToolStripMenuItem.Enabled = true;
-					}
-					else
-					{
-						AtivarToolStripMenuItem.Enabled = true;
-						DesativarToolStripMenuItem.Enabled = false;
-					}
-
-					// revela menu
-					MenuListagem.Show(c.PointToScreen(e.Location));
+					AtivarToolStripMenuItem.Enabled = false;
+					DesativarToolStripMenuItem.Enabled = true;
 				}
+				else
+				{
+					AtivarToolStripMenuItem.Enabled = true;
+					DesativarToolStripMenuItem.Enabled = false;
+				}
+
+				// revela menu
+				MenuListagem.Show(c.PointToScreen(e.Location));
 			}
 		}
 
@@ -339,11 +333,10 @@ namespace CamadaUI.Congregacoes
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				ReuniaoBLL cBLL = new ReuniaoBLL();
-				cBLL.UpdateReuniao(setor);
+				rBLL.UpdateReuniao(setor);
 
 				//--- altera a imagem
-				FiltrarListagem(sender, e);
+				FiltrarListagem();
 			}
 			catch (Exception ex)
 			{
@@ -355,6 +348,53 @@ namespace CamadaUI.Congregacoes
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
+
+		// DELETE REUNIAO
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuExcluir_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedRows.Count == 0) return;
+
+			//--- Verifica o item
+			objReuniao reuniao = (objReuniao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//---pergunta ao usuário
+			var reponse = AbrirDialog($"Deseja realmente REMOVER definitavamente essa Reuniao?" +
+									  $"\n{reuniao.Reuniao.ToUpper()} " +
+									  $"\n{reuniao.Congregacao.ToUpper()}",
+									  "Excluir Reunião",
+									  DialogType.SIM_NAO, DialogIcon.Question);
+			if (reponse == DialogResult.No) return;
+
+			//--- Salvar o Registro
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				rBLL.DeleteReuniao(reuniao);
+
+				//--- altera a imagem
+				ObterDados();
+				FiltrarListagem();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Alterar Reuniao..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuEditar_Click(object sender, EventArgs e)
+		{
+			btnEditar_Click(sender, e);
 		}
 
 		#endregion // ATIVAR DESATIVAR MENU --- END
@@ -417,6 +457,7 @@ namespace CamadaUI.Congregacoes
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
+
 
 	}
 }

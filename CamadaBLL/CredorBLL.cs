@@ -125,6 +125,11 @@ namespace CamadaBLL
 				ComissaoTaxa = row["ComissaoTaxa"] == DBNull.Value ? null : (decimal?)row["ComissaoTaxa"],
 				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
 				Setor = row["Setor"] == DBNull.Value ? string.Empty : (string)row["Setor"],
+				Funcao = row["Funcao"] == DBNull.Value ? string.Empty : (string)row["Funcao"],
+				AdmissaoData = row["AdmissaoData"] == DBNull.Value ? null : (DateTime?)row["AdmissaoData"],
+				UltimaFeriasData = row["UltimaFeriasData"] == DBNull.Value ? null : (DateTime?)row["UltimaFeriasData"],
+				SalarioBruto = row["SalarioBruto"] == DBNull.Value ? null : (decimal?)row["SalarioBruto"],
+
 			};
 
 			return credor;
@@ -215,6 +220,10 @@ namespace CamadaBLL
 				//--- SAVE | UPDATE | INSERT --> COLABORADOR
 				//------------------------------------------------------------------------------------------------------------
 				ColaboradorCheckAndSave(credor, db);
+
+				//--- SAVE | UPDATE | INSERT --> FUNCIONARIO
+				//------------------------------------------------------------------------------------------------------------
+				FuncionarioCheckAndSave(credor, db);
 
 				//--- COMMIT and RETURN
 				db.CommitTransaction();
@@ -328,6 +337,10 @@ namespace CamadaBLL
 				//------------------------------------------------------------------------------------------------------------
 				ColaboradorCheckAndSave(credor, db);
 
+				//--- SAVE | UPDATE | INSERT --> FUNCIONARIO
+				//------------------------------------------------------------------------------------------------------------
+				FuncionarioCheckAndSave(credor, db);
+
 				//--- COMMIT
 				db.CommitTransaction();
 				return true;
@@ -363,6 +376,44 @@ namespace CamadaBLL
 
 						query = "INSERT INTO tblCredorColaborador (IDCredor, IDSetor, ComissaoTaxa) " +
 							"VALUES (@IDCredor, @IDSetor, @ComissaoTaxa)";
+
+						dbTran.ExecutarManipulacao(CommandType.Text, query);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// SAVE CREDOR FUNCIONARIO: INSERT | UPDATE | DELETE
+		//------------------------------------------------------------------------------------------------------------
+		private void FuncionarioCheckAndSave(objCredor credor, AcessoDados dbTran)
+		{
+			try
+			{
+				// delete
+				dbTran.LimparParametros();
+				string query = $"DELETE tblCredorFuncionario WHERE IDCredor = {credor.IDCredor}";
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				if (credor.IDCredorTipo == 5) // credor funcionario
+				{
+					// insert
+					if (credor.SalarioBruto != null && !string.IsNullOrEmpty(credor.Funcao))
+					{
+						dbTran.LimparParametros();
+						dbTran.AdicionarParametros("@IDCredor", credor.IDCredor);
+						dbTran.AdicionarParametros("@Funcao", credor.Funcao);
+						dbTran.AdicionarParametros("@AdmissaoData", credor.AdmissaoData);
+						dbTran.AdicionarParametros("@UltimaFeriasData", credor.UltimaFeriasData);
+						dbTran.AdicionarParametros("@SalarioBruto", credor.SalarioBruto);
+
+						dbTran.ConvertNullParams();
+
+						query = "INSERT INTO tblCredorFuncionario (IDCredor, Funcao, AdmissaoData, UltimaFeriasData, SalarioBruto) " +
+							"VALUES (@IDCredor, @Funcao, @AdmissaoData, @UltimaFeriasData, @SalarioBruto)";
 
 						dbTran.ExecutarManipulacao(CommandType.Text, query);
 					}

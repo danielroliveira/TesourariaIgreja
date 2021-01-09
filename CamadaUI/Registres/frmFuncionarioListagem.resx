@@ -117,45 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="tspMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="clnID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="clnCadastro.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="clnFuncao.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="clnImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="MenuListagem.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnAtivo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        28MAAAAASUVORK5CYII=
-</value>
-  </data>
 </root>
