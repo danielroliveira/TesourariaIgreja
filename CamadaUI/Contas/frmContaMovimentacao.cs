@@ -15,7 +15,7 @@ namespace CamadaUI.Contas
 		private List<objMovimentacao> listMov = new List<objMovimentacao>();
 		private BindingSource bindMov = new BindingSource();
 		private MovimentacaoBLL mBLL = new MovimentacaoBLL();
-		private Form _formOrigem;
+		//private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
 		private DateTime _dtFinal;
@@ -32,7 +32,7 @@ namespace CamadaUI.Contas
 			InitializeComponent();
 
 			//--- Add any initialization after the InitializeComponent() call.
-			_formOrigem = formOrigem;
+			//_formOrigem = formOrigem;
 
 			// define a data inicial
 			propMes = DateTime.Parse(ObterDefault("DataPadrao"));
@@ -95,6 +95,9 @@ namespace CamadaUI.Contas
 
 				// recalc totais labels
 				CalculaTotais();
+
+				// recalc provisorias
+				CalculaProvisoriaValorAtual();
 			}
 			catch (Exception ex)
 			{
@@ -109,6 +112,44 @@ namespace CamadaUI.Contas
 
 		}
 
+		// GET DATA TO CALC PROVISORIA OF CONTA
+		//------------------------------------------------------------------------------------------------------------
+		private void CalculaProvisoriaValorAtual()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				if (ContaSelected.Bancaria == true || ContaSelected.OperadoraCartao == true)
+				{
+					lblValorProvisorias.Text = 0.ToString("C");
+				}
+				else
+				{
+					var pBLL = new DespesaProvisoriaBLL();
+					var lstProvisoria = new List<objDespesaProvisoria>();
+
+					lstProvisoria = pBLL.GetListDespesaProvisoria(ContaSelected.IDConta, null, null, null, false);
+
+					decimal vlProvisoria = lstProvisoria.Sum(x => x.ValorProvisorio);
+
+					lblValorProvisorias.Text = vlProvisoria.ToString("C");
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter o valor da Provisórias..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		//--- CALCULA OS TOTAIS E ALTERA AS LABELS
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
@@ -121,6 +162,10 @@ namespace CamadaUI.Contas
 
 			decimal vlTransf = listMov.Where(x => x.MovTipoDescricao == "TRANSFERENCIA").Sum(x => x.MovValor);
 			lblValorTransferido.Text = vlTransf.ToString("C");
+
+			decimal vlNaoRealizadas = listMov.Where(x => x.Consolidado == false).Sum(x => x.MovValor);
+			lblValorNaoRealizadas.Text = vlNaoRealizadas.ToString("C");
+
 		}
 
 		// DFEFINE CONTA SELECTED

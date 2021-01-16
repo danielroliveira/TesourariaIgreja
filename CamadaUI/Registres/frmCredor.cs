@@ -424,7 +424,7 @@ namespace CamadaUI.Registres
 			if (!VerificaDadosClasse(txtCredor, "Credor", _credor)) return false;
 			if (!VerificaDadosClasse(txtCredorTipo, "IDCredorTipo", _credor)) return false;
 
-			if (_credor.IDCredorTipo != 3 || _credor.IDCredorTipo != 4) // check CNP if Credor PJ or PF
+			if (_credor.IDCredorTipo != 3 && _credor.IDCredorTipo != 4) // check CNP if Credor PJ or PF
 			{
 				if (!VerificaDadosClasse(txtCNP, "CNP", _credor)) return false;
 

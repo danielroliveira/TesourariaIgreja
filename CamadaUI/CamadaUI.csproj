@@ -1291,6 +1291,8 @@
     <None Include="Resources\Colaborador_32.png" />
     <None Include="Resources\Funcionarios_32.png" />
     <None Include="Resources\print_24.png" />
+    <None Include="Resources\mensagens_nocolor_32.png" />
+    <None Include="Resources\mensagens_color_32.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

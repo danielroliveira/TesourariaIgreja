@@ -443,6 +443,26 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mensagens_color_32 {
+            get {
+                object obj = ResourceManager.GetObject("mensagens_color_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mensagens_nocolor_32 {
+            get {
+                object obj = ResourceManager.GetObject("mensagens_nocolor_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap money_green_24 {
             get {
                 object obj = ResourceManager.GetObject("money_green_24", resourceCulture);

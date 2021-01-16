@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,6 +72,10 @@
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
+			this.lblValorProvisorias = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.lblValorNaoRealizadas = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -104,7 +108,7 @@
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(154, 633);
+			this.btnFechar.Location = new System.Drawing.Point(1088, 632);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 10;
@@ -120,20 +124,20 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -216,7 +220,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1131, 626);
+			this.label1.Location = new System.Drawing.Point(639, 628);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(90, 15);
 			this.label1.TabIndex = 8;
@@ -228,7 +232,7 @@
 			this.lblValorTransferido.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTransferido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblValorTransferido.ForeColor = System.Drawing.Color.DarkGreen;
-			this.lblValorTransferido.Location = new System.Drawing.Point(1086, 643);
+			this.lblValorTransferido.Location = new System.Drawing.Point(594, 645);
 			this.lblValorTransferido.Name = "lblValorTransferido";
 			this.lblValorTransferido.Size = new System.Drawing.Size(137, 32);
 			this.lblValorTransferido.TabIndex = 9;
@@ -239,7 +243,7 @@
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(22, 633);
+			this.btnImprimir.Location = new System.Drawing.Point(956, 632);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 9;
@@ -443,7 +447,7 @@
 			this.Panel2.Controls.Add(this.rbtPorMes);
 			this.Panel2.Controls.Add(this.pnlPorPeriodo);
 			this.Panel2.Controls.Add(this.pnlPorMes);
-			this.Panel2.Location = new System.Drawing.Point(414, 60);
+			this.Panel2.Location = new System.Drawing.Point(549, 60);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
 			this.Panel2.TabIndex = 4;
@@ -454,7 +458,7 @@
 			this.lblValorEntradas.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorEntradas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblValorEntradas.ForeColor = System.Drawing.Color.DarkBlue;
-			this.lblValorEntradas.Location = new System.Drawing.Point(800, 643);
+			this.lblValorEntradas.Location = new System.Drawing.Point(308, 645);
 			this.lblValorEntradas.Name = "lblValorEntradas";
 			this.lblValorEntradas.Size = new System.Drawing.Size(137, 32);
 			this.lblValorEntradas.TabIndex = 9;
@@ -467,7 +471,7 @@
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(861, 626);
+			this.label3.Location = new System.Drawing.Point(369, 628);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(76, 15);
 			this.label3.TabIndex = 8;
@@ -542,7 +546,7 @@
 			this.lblValorSaidas.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorSaidas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblValorSaidas.ForeColor = System.Drawing.Color.DarkRed;
-			this.lblValorSaidas.Location = new System.Drawing.Point(943, 643);
+			this.lblValorSaidas.Location = new System.Drawing.Point(451, 645);
 			this.lblValorSaidas.Name = "lblValorSaidas";
 			this.lblValorSaidas.Size = new System.Drawing.Size(137, 32);
 			this.lblValorSaidas.TabIndex = 9;
@@ -555,7 +559,7 @@
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.DimGray;
-			this.label4.Location = new System.Drawing.Point(1017, 626);
+			this.label4.Location = new System.Drawing.Point(525, 628);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(63, 15);
 			this.label4.TabIndex = 8;
@@ -603,41 +607,99 @@
 			this.label19.TabIndex = 1;
 			this.label19.Text = "Escolher Conta";
 			// 
+			// lblValorProvisorias
+			// 
+			this.lblValorProvisorias.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorProvisorias.BackColor = System.Drawing.Color.LightGray;
+			this.lblValorProvisorias.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValorProvisorias.ForeColor = System.Drawing.Color.DimGray;
+			this.lblValorProvisorias.Location = new System.Drawing.Point(22, 645);
+			this.lblValorProvisorias.Name = "lblValorProvisorias";
+			this.lblValorProvisorias.Size = new System.Drawing.Size(137, 32);
+			this.lblValorProvisorias.TabIndex = 9;
+			this.lblValorProvisorias.Text = "R$ 0,00";
+			this.lblValorProvisorias.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.Color.DimGray;
+			this.label5.Location = new System.Drawing.Point(65, 628);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(91, 15);
+			this.label5.TabIndex = 8;
+			this.label5.Text = "Vl. Provisórias:";
+			// 
+			// lblValorNaoRealizadas
+			// 
+			this.lblValorNaoRealizadas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorNaoRealizadas.BackColor = System.Drawing.Color.LightGray;
+			this.lblValorNaoRealizadas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValorNaoRealizadas.ForeColor = System.Drawing.Color.DimGray;
+			this.lblValorNaoRealizadas.Location = new System.Drawing.Point(165, 645);
+			this.lblValorNaoRealizadas.Name = "lblValorNaoRealizadas";
+			this.lblValorNaoRealizadas.Size = new System.Drawing.Size(137, 32);
+			this.lblValorNaoRealizadas.TabIndex = 9;
+			this.lblValorNaoRealizadas.Text = "R$ 0,00";
+			this.lblValorNaoRealizadas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label6
+			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.ForeColor = System.Drawing.Color.DimGray;
+			this.label6.Location = new System.Drawing.Point(226, 628);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(73, 15);
+			this.label6.TabIndex = 8;
+			this.label6.Text = "Vl. Cheques:";
+			// 
 			// frmContaMovimentacao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1245, 686);
+			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnImprimir);
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.txtConta);
 			this.Controls.Add(this.label19);
 			this.Controls.Add(this.label4);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblValorSaidas);
+			this.Controls.Add(this.lblValorNaoRealizadas);
+			this.Controls.Add(this.lblValorProvisorias);
 			this.Controls.Add(this.lblValorEntradas);
 			this.Controls.Add(this.lblValorTransferido);
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
-			this.Controls.Add(this.btnFechar);
-			this.Controls.Add(this.btnImprimir);
 			this.KeyPreview = true;
 			this.Name = "frmContaMovimentacao";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
-			this.Controls.SetChildIndex(this.btnImprimir, 0);
-			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
 			this.Controls.SetChildIndex(this.lblValorTransferido, 0);
 			this.Controls.SetChildIndex(this.lblValorEntradas, 0);
+			this.Controls.SetChildIndex(this.lblValorProvisorias, 0);
+			this.Controls.SetChildIndex(this.lblValorNaoRealizadas, 0);
 			this.Controls.SetChildIndex(this.lblValorSaidas, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
+			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.label19, 0);
 			this.Controls.SetChildIndex(this.txtConta, 0);
 			this.Controls.SetChildIndex(this.btnSetConta, 0);
+			this.Controls.SetChildIndex(this.btnImprimir, 0);
+			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlPorMes.ResumeLayout(false);
@@ -693,5 +755,9 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
+		internal System.Windows.Forms.Label lblValorProvisorias;
+		internal System.Windows.Forms.Label label5;
+		internal System.Windows.Forms.Label lblValorNaoRealizadas;
+		internal System.Windows.Forms.Label label6;
 	}
 }

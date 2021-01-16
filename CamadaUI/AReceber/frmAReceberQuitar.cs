@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.AReceber
 {
@@ -257,6 +257,39 @@ namespace CamadaUI.AReceber
 				txtConta.Focus();
 				eP.SetError(txtConta, "Conta Inválida");
 				return false;
+			}
+
+			// CHECK CONTA IS BANCARIA
+			if ((_recList.First().IDEntradaForma == 3) && !ContaSelected.Bancaria)
+			{
+				AbrirDialog($"O recebimento de CARTÃO de crédito ou débito só pode acontecer em uma CONTA BANCÁRIA\n" +
+							"Favor informar uma conta válida!", "Conta Inválida",
+							DialogType.OK, DialogIcon.Exclamation);
+				txtConta.Focus();
+				eP.SetError(txtConta, "Conta Inválida");
+				return false;
+			}
+
+			// CHECK ENTRADA => CHEQUE AND CONTA NOT BANCARIA
+			if ((_recList.First().IDEntradaForma == 2) && !ContaSelected.Bancaria)
+			{
+				var resp = AbrirDialog($"CUIDADO:\n" +
+							$"O recebimento de CHEQUE normalmente acontece em uma CONTA BANCÁRIA\n" +
+							$"Porém a conta escolhida:\n" +
+							$"{ContaSelected.Conta} \n" +
+							$"não é uma conta bancária...\n" +
+							"Deseja efetuar o recebimento assim mesmo?",
+							"Recebimento de Cheque",
+							DialogType.SIM_NAO,
+							DialogIcon.Question,
+							DialogDefaultButton.Second);
+
+				if (resp == DialogResult.No)
+				{
+					txtConta.Focus();
+					eP.SetError(txtConta, "Conta Inválida");
+					return false;
+				}
 			}
 
 			return true;

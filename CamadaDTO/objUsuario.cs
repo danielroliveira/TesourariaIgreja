@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -195,6 +196,10 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property ListUsuarioMensagem
+		//---------------------------------------------------------------
+		public List<objMensagem> ListUsuarioMensagem { get; set; }
 	}
 
 	//=================================================================================================
@@ -358,5 +363,33 @@ namespace CamadaDTO
 				}
 			}
 		}
+	}
+
+	//=================================================================================================
+	// USUARIO MENSAGEM
+	//=================================================================================================
+	public class objMensagem
+	{
+		public objMensagem()
+		{
+			IDMensagem = null;
+			MensagemData = DateTime.Today;
+			Recebida = false;
+			RecebidaData = null;
+			Suporte = false;
+			IsResposta = false;
+		}
+
+		public int? IDMensagem { get; set; }
+		public string Mensagem { get; set; }
+		public DateTime MensagemData { get; set; }
+		public int IDUsuarioOrigem { get; set; }
+		public string UsuarioOrigem { get; set; }
+		public int IDUsuarioDestino { get; set; }
+		public string UsuarioDestino { get; set; }
+		public bool Recebida { get; set; }
+		public DateTime? RecebidaData { get; set; }
+		public bool Suporte { get; set; }
+		public bool IsResposta { get; set; }
 	}
 }

@@ -87,6 +87,8 @@
 			this.mnuSetorMov = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCartao = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuBanco = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnMensagem = new System.Windows.Forms.ToolStripLabel();
 			this.pnlTop = new System.Windows.Forms.Panel();
 			this.lblTitulo = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
@@ -113,11 +115,13 @@
 			// 
 			this.mnuPrincipal.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnSair,
-            this.btnCadastros,
-            this.btnEntradas,
-            this.btnSaidas,
-            this.btnMovimentação});
+			this.btnSair,
+			this.btnCadastros,
+			this.btnEntradas,
+			this.btnSaidas,
+			this.btnMovimentação,
+			this.toolStripSeparator11,
+			this.btnMensagem});
 			this.mnuPrincipal.Location = new System.Drawing.Point(0, 39);
 			this.mnuPrincipal.Name = "mnuPrincipal";
 			this.mnuPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -144,14 +148,14 @@
 			// btnCadastros
 			// 
 			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuContribuintes,
-            this.mnuCredores,
-            this.mnuColaboradores,
-            this.mnuFuncionarios,
-            this.toolStripSeparator1,
-            this.mnuCongregacoes,
-            this.mnuSetoresCongregacao,
-            this.mnuReunioes});
+			this.mnuContribuintes,
+			this.mnuCredores,
+			this.mnuColaboradores,
+			this.mnuFuncionarios,
+			this.toolStripSeparator1,
+			this.mnuCongregacoes,
+			this.mnuSetoresCongregacao,
+			this.mnuReunioes});
 			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.adicionar_30;
 			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -181,10 +185,10 @@
 			// mnuColaboradores
 			// 
 			this.mnuColaboradores.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuColaboradorProcurar,
-            this.toolStripSeparator10,
-            this.mnuComissaoInserir,
-            this.mnuComissaoProcurar});
+			this.mnuColaboradorProcurar,
+			this.toolStripSeparator10,
+			this.mnuComissaoInserir,
+			this.mnuComissaoProcurar});
 			this.mnuColaboradores.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuColaboradores.Image = global::CamadaUI.Properties.Resources.Colaborador_32;
 			this.mnuColaboradores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -273,12 +277,12 @@
 			// btnEntradas
 			// 
 			this.btnEntradas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuContribuicaoInserir,
-            this.mnuContribuicaoProcurar,
-            this.toolStripSeparator6,
-            this.mnuAReceberProcurar,
-            this.toolStripSeparator3,
-            this.mnuCampanhas});
+			this.mnuContribuicaoInserir,
+			this.mnuContribuicaoProcurar,
+			this.toolStripSeparator6,
+			this.mnuAReceberProcurar,
+			this.toolStripSeparator3,
+			this.mnuCampanhas});
 			this.btnEntradas.Image = global::CamadaUI.Properties.Resources.Entradas_32;
 			this.btnEntradas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnEntradas.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -345,18 +349,18 @@
 			// btnSaidas
 			// 
 			this.btnSaidas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuAPagarProcurar,
-            this.toolStripSeparator5,
-            this.mnuDespesaInserir,
-            this.mnuDespesaRealizada,
-            this.mnuDespesaProcurar,
-            this.toolStripSeparator7,
-            this.mnuSubDespesaProvisoria,
-            this.mnuSubDespesaPeriodica,
-            this.toolStripSeparator4,
-            this.mnuDespesaTipo,
-            this.mnuDespesaGrupo,
-            this.mnuCobrancaForma});
+			this.mnuAPagarProcurar,
+			this.toolStripSeparator5,
+			this.mnuDespesaInserir,
+			this.mnuDespesaRealizada,
+			this.mnuDespesaProcurar,
+			this.toolStripSeparator7,
+			this.mnuSubDespesaProvisoria,
+			this.mnuSubDespesaPeriodica,
+			this.toolStripSeparator4,
+			this.mnuDespesaTipo,
+			this.mnuDespesaGrupo,
+			this.mnuCobrancaForma});
 			this.btnSaidas.Image = global::CamadaUI.Properties.Resources.Saidas;
 			this.btnSaidas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnSaidas.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -417,8 +421,8 @@
 			// mnuSubDespesaProvisoria
 			// 
 			this.mnuSubDespesaProvisoria.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuDespesaProvisoriaInserir,
-            this.mnuDespesaProvisoriaProcurar});
+			this.mnuDespesaProvisoriaInserir,
+			this.mnuDespesaProvisoriaProcurar});
 			this.mnuSubDespesaProvisoria.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuSubDespesaProvisoria.Image = global::CamadaUI.Properties.Resources.provisoria_24;
 			this.mnuSubDespesaProvisoria.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -448,8 +452,8 @@
 			// mnuSubDespesaPeriodica
 			// 
 			this.mnuSubDespesaPeriodica.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuDespesaPeriodicaInserir,
-            this.mnuDespesaPeriodicaProcurar});
+			this.mnuDespesaPeriodicaInserir,
+			this.mnuDespesaPeriodicaProcurar});
 			this.mnuSubDespesaPeriodica.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuSubDespesaPeriodica.Image = global::CamadaUI.Properties.Resources.periodica_24;
 			this.mnuSubDespesaPeriodica.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -514,15 +518,15 @@
 			// btnMovimentação
 			// 
 			this.btnMovimentação.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuCaixaFechamento,
-            this.mnuCaixaProcurar,
-            this.toolStripSeparator2,
-            this.mnuTransferencia,
-            this.toolStripSeparator9,
-            this.mnuContas,
-            this.mnuSetores,
-            this.mnuCartao,
-            this.mnuBanco});
+			this.mnuCaixaFechamento,
+			this.mnuCaixaProcurar,
+			this.toolStripSeparator2,
+			this.mnuTransferencia,
+			this.toolStripSeparator9,
+			this.mnuContas,
+			this.mnuSetores,
+			this.mnuCartao,
+			this.mnuBanco});
 			this.btnMovimentação.Image = global::CamadaUI.Properties.Resources.Caixa_32;
 			this.btnMovimentação.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnMovimentação.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -558,11 +562,11 @@
 			// mnuTransferencia
 			// 
 			this.mnuTransferencia.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuTranferenciaContaEfetuar,
-            this.mnuTransfProcurar,
-            this.toolStripSeparator8,
-            this.mnuTranferenciaSetorEfetuar,
-            this.mnuTransfSetorProcurar});
+			this.mnuTranferenciaContaEfetuar,
+			this.mnuTransfProcurar,
+			this.toolStripSeparator8,
+			this.mnuTranferenciaSetorEfetuar,
+			this.mnuTransfSetorProcurar});
 			this.mnuTransferencia.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuTransferencia.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuTransferencia.Name = "mnuTransferencia";
@@ -615,8 +619,8 @@
 			// mnuContas
 			// 
 			this.mnuContas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuContaProcurar,
-            this.mnuContaMov});
+			this.mnuContaProcurar,
+			this.mnuContaMov});
 			this.mnuContas.Font = new System.Drawing.Font("Calibri", 12F);
 			this.mnuContas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContas.ImageTransparentColor = System.Drawing.Color.Fuchsia;
@@ -644,8 +648,8 @@
 			// mnuSetores
 			// 
 			this.mnuSetores.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuSetorProcurar,
-            this.mnuSetorMov});
+			this.mnuSetorProcurar,
+			this.mnuSetorMov});
 			this.mnuSetores.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuSetores.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuSetores.Name = "mnuSetores";
@@ -688,6 +692,29 @@
 			this.mnuBanco.Size = new System.Drawing.Size(278, 30);
 			this.mnuBanco.Tag = "1";
 			this.mnuBanco.Text = "Controle de Banco";
+			// 
+			// toolStripSeparator11
+			// 
+			this.toolStripSeparator11.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStripSeparator11.ForeColor = System.Drawing.Color.Maroon;
+			this.toolStripSeparator11.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.toolStripSeparator11.Name = "toolStripSeparator11";
+			this.toolStripSeparator11.Size = new System.Drawing.Size(6, 56);
+			// 
+			// btnMensagem
+			// 
+			this.btnMensagem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.btnMensagem.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnMensagem.Image = global::CamadaUI.Properties.Resources.mensagens_color_32;
+			this.btnMensagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnMensagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnMensagem.IsLink = true;
+			this.btnMensagem.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+			this.btnMensagem.LinkColor = System.Drawing.Color.Black;
+			this.btnMensagem.Name = "btnMensagem";
+			this.btnMensagem.Size = new System.Drawing.Size(226, 53);
+			this.btnMensagem.Text = " Há mensagens para você...";
+			this.btnMensagem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// pnlTop
 			// 
@@ -1066,6 +1093,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuComissaoInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuComissaoProcurar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+		private System.Windows.Forms.ToolStripLabel btnMensagem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
 	}
 }
-
