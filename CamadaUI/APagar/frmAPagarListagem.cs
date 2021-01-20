@@ -411,12 +411,23 @@ namespace CamadaUI.APagar
 				//--- check selected item
 				if (pagItem.IDAPagar == null)
 				{
-					AbrirDialog("Este APAGAR selecionado é PERIÓDICO, para quitar é necessário " +
-						"transformá-lo em REAL...",
+					var resp = AbrirDialog("Este APAGAR selecionado é PERIÓDICO, para quitar é necessário " +
+						"transformá-lo em REAL.\n\n" +
+						"Deseja realmente realizar a conversão em REAL e o pagamento?",
 						"APagar Periódico",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					return;
+						DialogType.SIM_NAO,
+						DialogIcon.Question,
+						DialogDefaultButton.Second);
+
+					// if NO return
+					if (resp != DialogResult.Yes) return;
+
+					//if YES Convert
+					TornarReal(pagItem);
+
+					// GET new APagar 
+					pagItem = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
 				}
 
 				frmAPagarSaidas frm = new frmAPagarSaidas(pagItem, this);
@@ -434,6 +445,43 @@ namespace CamadaUI.APagar
 				Cursor.Current = Cursors.Default;
 			}
 
+		}
+
+		// CONVERT APAGAR FROM PERIODICO TO REAL
+		//------------------------------------------------------------------------------------------------------------
+		private void TornarReal(objAPagar pagar)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- execute convertion
+				var desp = new DespesaPeriodicaBLL().GetDespesaPeriodica(pagar.IDDespesa);
+				objAPagar newPag = pBLL.ConvertPeriodicoInReal(desp, pagar.Vencimento);
+
+				//--- get data
+				ObterDados();
+
+				//--- select new APagar
+				foreach (DataGridViewRow row in dgvListagem.Rows)
+				{
+					if (((objAPagar)row.DataBoundItem).IDAPagar == newPag.IDAPagar)
+					{
+						row.Selected = true;
+						break;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		// IMPRIMIR LISTAGEM
@@ -1078,7 +1126,7 @@ namespace CamadaUI.APagar
 							"no APagar.", "Despesa Periódica");
 					}
 
-					Saidas.frmDespesaPeriodica frm = new Saidas.frmDespesaPeriodica(item.IDDespesa);
+					Saidas.frmDespesaPeriodica frm = new Saidas.frmDespesaPeriodica(item.IDDespesa, this);
 					Visible = false;
 					frm.ShowDialog();
 					DesativaMenuPrincipal();
@@ -1154,24 +1202,13 @@ namespace CamadaUI.APagar
 
 				try
 				{
-					// --- Ampulheta ON
-					Cursor.Current = Cursors.WaitCursor;
-
-					var desp = new DespesaPeriodicaBLL().GetDespesaPeriodica(item.IDDespesa);
-					pBLL.ConvertPeriodicoInReal(desp, item.Vencimento);
-
-					ObterDados();
-
+					//--- execute
+					TornarReal(item);
 				}
 				catch (Exception ex)
 				{
-					AbrirDialog("Uma exceção ocorreu ao Tornar Despesa Real..." + "\n" +
+					AbrirDialog("Uma exceção ocorreu ao Tornar a Despesa Real..." + "\n" +
 								ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				}
-				finally
-				{
-					// --- Ampulheta OFF
-					Cursor.Current = Cursors.Default;
 				}
 			}
 		}
@@ -1358,5 +1395,6 @@ namespace CamadaUI.APagar
 		}
 
 		#endregion
+
 	}
 }

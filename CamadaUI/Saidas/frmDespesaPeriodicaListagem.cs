@@ -279,7 +279,7 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmDespesaPeriodica frm = new frmDespesaPeriodica(new objDespesaPeriodica(null));
+			frmDespesaPeriodica frm = new frmDespesaPeriodica(new objDespesaPeriodica(null), this);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -301,7 +301,7 @@ namespace CamadaUI.Saidas
 			//--- get Selected item
 			objDespesaPeriodica item = (objDespesaPeriodica)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			frmDespesaPeriodica frm = new frmDespesaPeriodica(item);
+			frmDespesaPeriodica frm = new frmDespesaPeriodica(item, this);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -329,6 +329,59 @@ namespace CamadaUI.Saidas
 				txtDespesaTipo.Clear();
 				IDTipo = null;
 				ObterDados();
+			}
+		}
+
+		// EXCLUIR DESPESA PERIODICA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExcluir_Click(object sender, EventArgs e)
+		{
+
+			var resp = AbrirDialog("Deseja realmente excluir essa Despesa Periódica permanentemente?",
+				"Excluir Despesa Periódica", DialogType.SIM_NAO,
+				DialogIcon.Question,
+				DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Excluir...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesaPeriodica item = (objDespesaPeriodica)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				dBLL.DeleteDespesaPeriodica(item);
+
+				//--- obter listagem
+				ObterDados();
+
+			}
+			catch (AppException ex)
+			{
+				AbrirDialog("Não é possível realizar a exclusão do registro de Despesa Periódica\n" +
+						ex.Message, "Bloqueio de Exclusão",
+						DialogType.OK,
+						DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir Despesa Periódica..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
@@ -687,7 +740,7 @@ namespace CamadaUI.Saidas
 
 				dBLL.UpdateDespesaPeriodicaAtiva((long)desp.IDDespesa, desp.Ativa);
 
-				//--- altera a imagem
+				//--- obter listagem
 				ObterDados();
 			}
 			catch (Exception ex)
@@ -740,9 +793,6 @@ namespace CamadaUI.Saidas
 
 		#endregion
 
-		private void btnExcluir_Click(object sender, EventArgs e)
-		{
-			AbrirDialog("Em Implementação, fale com o administrador do sistema...", "Implementando");
-		}
+
 	}
 }

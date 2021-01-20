@@ -23,6 +23,7 @@ namespace CamadaUI.Saidas
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private List<objCobrancaForma> listFormas;
+		private Form _formOrigem;
 
 		private objSetor setorSelected;
 
@@ -32,17 +33,25 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR WITH DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesaPeriodica(objDespesaPeriodica despesa)
+		public frmDespesaPeriodica(objDespesaPeriodica despesa, Form formOrigem)
 		{
 			InitializeComponent();
+
+			//--- get formOrigem
+			_formOrigem = formOrigem;
+
 			ConstructorContinue(despesa);
 		}
 
 		// CONSTRUCTOR WITH ID
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesaPeriodica(long IDDespesa)
+		public frmDespesaPeriodica(long IDDespesa, Form formOrigem)
 		{
 			InitializeComponent();
+
+			//--- get formOrigem
+			_formOrigem = formOrigem;
+
 			var desp = GetDespesaByID(IDDespesa);
 
 			if (desp == null) return;
@@ -95,7 +104,7 @@ namespace CamadaUI.Saidas
 		{
 			if (_despesa == null)
 			{
-				Close();
+				Fechar();
 				return;
 			}
 
@@ -534,8 +543,22 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			Close();
-			MostraMenuPrincipal();
+			Fechar();
+		}
+
+		private void Fechar()
+		{
+			if (_formOrigem.Name == "frmDespesaPeriodicaListagem")
+			{
+				Close();
+				var frm = new frmDespesaPeriodicaListagem();
+				frm.Show();
+			}
+			else
+			{
+				Close();
+				MostraMenuPrincipal();
+			}
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
@@ -547,14 +570,14 @@ namespace CamadaUI.Saidas
 
 				if (response == DialogResult.Yes)
 				{
-					Close();
-					MostraMenuPrincipal();
+					Fechar();
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
 				bind.CancelEdit();
 				Sit = EnumFlagEstado.RegistroSalvo;
+				AtivoButtonImage();
 			}
 			else
 			{
@@ -1116,6 +1139,11 @@ namespace CamadaUI.Saidas
 				EP.SetError(txtDespesaValor, "Valor necessário...");
 				txtDespesaValor.Focus();
 				return false;
+			}
+
+			if (_despesa.RecorrenciaTipo != 1 && _despesa.RecorrenciaDia == 1)
+			{
+				cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
 			}
 
 			if (_despesa.RecorrenciaMes == 0) _despesa.RecorrenciaMes = null;

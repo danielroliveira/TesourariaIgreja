@@ -73,8 +73,6 @@ namespace CamadaUI
 				//--- ABRE E VERIFICA O LOGIN DO USUARIO
 				//------------------------------------------------------------------------------------------------------------
 				Main.frmLogin frmLog = new Main.frmLogin();
-				objConta contaInicial = new objConta(null);
-
 				frmLog.ShowDialog();
 
 				if (frmLog.DialogResult == DialogResult.No)
@@ -93,6 +91,7 @@ namespace CamadaUI
 
 				// VERIFICA AND GET CONTA PADRAO
 				//------------------------------------------------------------------------------------------------------------
+				objConta contaInicial = new objConta(null);
 				contaInicial = VerificaAndGet_ContaAndCongregacao();
 
 				if (contaInicial == null || contaInicial.IDConta == null)
@@ -702,11 +701,11 @@ namespace CamadaUI
 			mnuCobrancaForma.Click += (a, b) => MenuClickOpenForm(new frmCobrancaForma());
 			mnuDespesaProcurar.Click += (a, b) => MenuClickOpenForm(new frmDespesaListagem());
 			mnuAPagarProcurar.Click += (a, b) => MenuClickOpenForm(new frmAPagarListagem());
-			mnuDespesaPeriodicaInserir.Click += (a, b) => MenuClickOpenForm(new frmDespesaPeriodica(new objDespesaPeriodica(null)));
+			mnuDespesaPeriodicaInserir.Click += (a, b) => MenuClickOpenForm(new frmDespesaPeriodica(new objDespesaPeriodica(null), this));
 			mnuDespesaPeriodicaProcurar.Click += (a, b) => MenuClickOpenForm(new frmDespesaPeriodicaListagem());
 			mnuDespesaRealizada.Click += (a, b) => MenuClickOpenForm(new frmGasto(new objDespesa(null)));
 
-			mnuDespesaProvisoriaInserir.Click += (a, b) => MenuClickOpenForm(new frmProvisorio(new objDespesaProvisoria(null)));
+			mnuDespesaProvisoriaInserir.Click += (a, b) => MenuClickOpenForm(new frmProvisorio(new objDespesaProvisoria(null), this));
 			mnuDespesaProvisoriaProcurar.Click += (a, b) => MenuClickOpenForm(new frmProvisoriaListagem());
 
 			// MENU MOVIMENTACAO

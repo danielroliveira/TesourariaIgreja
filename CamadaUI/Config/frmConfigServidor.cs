@@ -26,7 +26,7 @@ namespace CamadaUI.Config
 
 			if (!string.IsNullOrEmpty(txtStringConexao.Text))
 			{
-				if (txtStringConexao.Text.Contains("Server = tcp:"))
+				if (txtStringConexao.Text.Contains("Server=tcp:") || txtStringConexao.Text.Contains("Server = tcp:"))
 					lblServidorTipo.Text = "Servidor REMOTO";
 				else
 					lblServidorTipo.Text = "Servidor LOCAL";

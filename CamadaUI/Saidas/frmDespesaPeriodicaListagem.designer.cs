@@ -569,7 +569,7 @@
             this.visualizarToolStripMenuItem,
             this.excluirToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(275, 114);
+			this.MenuListagem.Size = new System.Drawing.Size(275, 136);
 			// 
 			// AtivarToolStripMenuItem
 			// 

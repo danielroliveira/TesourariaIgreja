@@ -165,8 +165,8 @@
 			this.btnSalvar.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnSalvar.Name = "btnSalvar";
 			this.btnSalvar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnSalvar.Size = new System.Drawing.Size(92, 41);
-			this.btnSalvar.Text = "&Salvar";
+			this.btnSalvar.Size = new System.Drawing.Size(192, 41);
+			this.btnSalvar.Text = "&Efetuar Transferência";
 			this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
 			// 

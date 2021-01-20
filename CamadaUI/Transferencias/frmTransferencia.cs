@@ -336,7 +336,8 @@ namespace CamadaUI.Transferencias
 
 				//--- INFORM SUCESS ask user NEW REGISTRY
 				var resp = AbrirDialog("Transferência Efetuada com sucesso!\n" +
-					"Deseja Realizar outra Transferência entre contas?", "Tranferência Efetuada",
+					"Deseja Realizar outra Transferência entre contas?",
+					"Tranferência Efetuada",
 					DialogType.SIM_NAO, DialogIcon.Question);
 
 				btnFechar_Click(sender, e);

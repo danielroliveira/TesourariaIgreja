@@ -430,9 +430,107 @@ namespace CamadaBLL
 
 		// DELETE
 		//------------------------------------------------------------------------------------------------------------
-		public bool DeleteDespesaPeriodica(int IDDespesa)
+		public bool DeleteDespesaPeriodica(objDespesaPeriodica periodica)
 		{
-			throw new NotImplementedException("Em implementação");
+			AcessoDados dbTran = null;
+
+			//--- get despesa from periodica
+			objDespesa despesa = new objDespesa(periodica.IDDespesa)
+			{
+				DespesaDescricao = periodica.DespesaDescricao,
+				DespesaOrigem = periodica.DespesaOrigem,
+				DespesaValor = periodica.DespesaValor,
+				DespesaData = periodica.DespesaData,
+				IDCredor = periodica.IDCredor,
+				IDSetor = periodica.IDSetor,
+				IDDespesaTipo = periodica.IDDespesaTipo,
+			};
+
+			try
+			{
+				dbTran = new AcessoDados();
+				dbTran.BeginTransaction();
+
+				// 1 - CHECK APagar and Movimentacao Saida
+				//------------------------------------------------------------------------------------------------------------
+				List<objAPagar> listAPagar = new List<objAPagar>();
+				List<objMovimentacao> listMovSaidas = new List<objMovimentacao>();
+
+				DespesaBLL dBLL = new DespesaBLL();
+
+				if (!dBLL.VerifyBeforeDelete(despesa, ref listAPagar, ref listMovSaidas, dbTran)) return false;
+
+				// 2 - delete ALL APAGAR 
+				//------------------------------------------------------------------------------------------------------------
+				if (listAPagar.Count > 0)
+				{
+					APagarBLL pBLL = new APagarBLL();
+
+					foreach (objAPagar pagar in listAPagar)
+					{
+						pBLL.DeleteAPagar(pagar, dbTran);
+					}
+				}
+
+				// 3 - delete DESPESA COMUM
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				string query = "DELETE tblDespesaPeriodica WHERE IDDespesa = @IDDespesa";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// 4 - delete DESPESA DATA PERIODO
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				query = "DELETE tblDespesaDataPeriodo WHERE IDDespesa = @IDDespesa";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// 5 - delete DESPESA
+				//------------------------------------------------------------------------------------------------------------
+
+				//--- define Params
+				dbTran.LimparParametros();
+				dbTran.AdicionarParametros("@IDDespesa", despesa.IDDespesa);
+				dbTran.ConvertNullParams();
+
+				//--- create query
+				query = "DELETE tblDespesa WHERE IDDespesa = @IDDespesa";
+
+				//--- DELETE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+				// 7 - COMMIT AND RETURN
+				//------------------------------------------------------------------------------------------------------------
+				dbTran.CommitTransaction();
+				return true;
+			}
+			catch (AppException ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
+			catch (Exception ex)
+			{
+				dbTran.RollBackTransaction();
+				throw ex;
+			}
 		}
+
+
 	}
 }

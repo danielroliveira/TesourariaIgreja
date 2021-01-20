@@ -22,6 +22,7 @@ namespace CamadaUI.Saidas
 		private BindingSource bindDespesa = new BindingSource();
 		private EnumFlagEstado _Sit;
 
+		private Form _formOrigem;
 		private objSetor SetorSelected;
 		private objConta ContaSelected;
 
@@ -31,9 +32,12 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR WITH OBJECT DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmProvisorio(objDespesaProvisoria provisoria)
+		public frmProvisorio(objDespesaProvisoria provisoria, Form formOrigem)
 		{
 			InitializeComponent();
+
+			// get formOrigem
+			_formOrigem = formOrigem;
 
 			// create acesso dados
 			AcessoControlBLL acesso = new AcessoControlBLL();
@@ -100,7 +104,7 @@ namespace CamadaUI.Saidas
 		{
 			if (_provisoria == null)
 			{
-				Close();
+				Fechar();
 				return;
 			}
 
@@ -390,8 +394,22 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
+			Fechar();
+		}
+
+		private void Fechar()
+		{
 			Close();
-			MostraMenuPrincipal();
+
+			if (_formOrigem.Name == "frmProvisoriaListagem")
+			{
+				var frm = new frmProvisoriaListagem();
+				frm.Show();
+			}
+			else
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		// CANCELAR
@@ -405,8 +423,7 @@ namespace CamadaUI.Saidas
 
 				if (response == DialogResult.Yes)
 				{
-					Close();
-					MostraMenuPrincipal();
+					Fechar();
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)

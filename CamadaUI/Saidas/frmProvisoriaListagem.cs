@@ -219,7 +219,7 @@ namespace CamadaUI.Saidas
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			frmProvisorio frm = new frmProvisorio(new objDespesaProvisoria(null));
+			frmProvisorio frm = new frmProvisorio(new objDespesaProvisoria(null), this);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -240,7 +240,7 @@ namespace CamadaUI.Saidas
 			objDespesaProvisoria item = (objDespesaProvisoria)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			frmProvisorio frm = new frmProvisorio(item);
+			frmProvisorio frm = new frmProvisorio(item, this);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();

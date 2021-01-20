@@ -200,7 +200,7 @@ namespace CamadaBLL
 				};
 
 				//--- execute INSERT SAIDA MOVIMENTACAO
-				mBLL.InsertMovimentacao(entrada, ContaSdlUpdate, null, db);
+				mBLL.InsertMovimentacao(saida, ContaSdlUpdate, null, db);
 
 				//--- COMMIT and RETURN
 				db.CommitTransaction();

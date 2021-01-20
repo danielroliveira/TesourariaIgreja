@@ -391,7 +391,6 @@ namespace CamadaBLL
 		{
 			try
 			{
-
 				throw new NotImplementedException("Ainda não foi implementada essa função");
 
 			}
@@ -482,7 +481,7 @@ namespace CamadaBLL
 				dbTran.ConvertNullParams();
 
 				//--- create query
-				query = "UPDATE tblComissao SET IDDespesa = null WHERE IDDespesa = @IDDespesa";
+				query = "UPDATE tblComissoes SET IDDespesa = null WHERE IDDespesa = @IDDespesa";
 
 				//--- UPDATE
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
@@ -507,7 +506,7 @@ namespace CamadaBLL
 
 		// VERIFY DESPESA BEFORE DELETE
 		//------------------------------------------------------------------------------------------------------------
-		private bool VerifyBeforeDelete(objDespesa despesa,
+		public bool VerifyBeforeDelete(objDespesa despesa,
 			ref List<objAPagar> listAPagar,
 			ref List<objMovimentacao> listMovSaidas,
 			AcessoDados dbTran)
@@ -540,17 +539,6 @@ namespace CamadaBLL
 
 				listAPagar.Where(x => x.IDSituacao == 2).ToList().ForEach(addMessage);
 
-				/*
-				foreach (objAPagar pagar in listAPagar)
-				{
-					if (pagar.IDSituacao == 2)
-					{
-						errMessage += $"Reg.: {pagar.IDAPagar:D4}    {pagar.Vencimento.ToShortDateString()}\n";
-						err = true;
-					}
-				}
-				*/
-
 				if (err == true)
 				{
 					errMessage += "Favor estornar antes os pagamentos se deseja EXCLUIR a despesa.";
@@ -559,7 +547,7 @@ namespace CamadaBLL
 
 				// VERIFY APAGAR IMAGES
 				//------------------------------------------------------------------------------------------------------------
-				errMessage = "Os APagar abaixo possuem IMEGEM associada\n";
+				errMessage = "Os APagar abaixo possuem IMAGEM associada\n";
 
 				listAPagar.Where(x => x.Imagem != null && !string.IsNullOrEmpty(x.Imagem.ImagemFileName)).ToList().ForEach(addMessage);
 
@@ -593,17 +581,6 @@ namespace CamadaBLL
 				};
 
 				listMovSaidas.Where(x => x.IDCaixa != null).ToList().ForEach(addMessageMov);
-
-				/*
-				foreach (objMovimentacao saida in listMovSaidas)
-				{
-					if (saida.IDCaixa != null)
-					{
-						errMessage += $"Reg.: {saida.IDMovimentacao:D4} | {saida.MovData.ToShortDateString()} | Caixa: {saida.IDCaixa:D4}\n";
-						err = true;
-					}
-				}
-				*/
 
 				if (err == true)
 				{
