@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.pnlMenu = new System.Windows.Forms.Panel();
+			this.btnEmail = new System.Windows.Forms.Button();
 			this.btnUsuarios = new System.Windows.Forms.Button();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.label1 = new System.Windows.Forms.Label();
@@ -38,7 +39,8 @@
 			this.btnImagem = new System.Windows.Forms.Button();
 			this.btnDados = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
-			this.btnEmail = new System.Windows.Forms.Button();
+			this.btnSaveConfig = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.pnlMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -63,6 +65,8 @@
 			// pnlMenu
 			// 
 			this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.pnlMenu.Controls.Add(this.btnSaveConfig);
+			this.pnlMenu.Controls.Add(this.button1);
 			this.pnlMenu.Controls.Add(this.btnEmail);
 			this.pnlMenu.Controls.Add(this.btnUsuarios);
 			this.pnlMenu.Controls.Add(this.line1);
@@ -77,6 +81,24 @@
 			this.pnlMenu.Name = "pnlMenu";
 			this.pnlMenu.Size = new System.Drawing.Size(200, 579);
 			this.pnlMenu.TabIndex = 1;
+			// 
+			// btnEmail
+			// 
+			this.btnEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnEmail.FlatAppearance.BorderSize = 0;
+			this.btnEmail.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnEmail.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnEmail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnEmail.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnEmail.ForeColor = System.Drawing.Color.White;
+			this.btnEmail.Location = new System.Drawing.Point(1, 306);
+			this.btnEmail.Name = "btnEmail";
+			this.btnEmail.Size = new System.Drawing.Size(198, 55);
+			this.btnEmail.TabIndex = 6;
+			this.btnEmail.TabStop = false;
+			this.btnEmail.Text = "Servidor Email";
+			this.btnEmail.UseVisualStyleBackColor = false;
+			this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
 			// 
 			// btnUsuarios
 			// 
@@ -217,23 +239,33 @@
 			this.pnlCorpo.Size = new System.Drawing.Size(744, 579);
 			this.pnlCorpo.TabIndex = 2;
 			// 
-			// btnEmail
+			// btnSaveConfig
 			// 
-			this.btnEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnEmail.FlatAppearance.BorderSize = 0;
-			this.btnEmail.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnEmail.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnEmail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnEmail.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnEmail.ForeColor = System.Drawing.Color.White;
-			this.btnEmail.Location = new System.Drawing.Point(1, 306);
-			this.btnEmail.Name = "btnEmail";
-			this.btnEmail.Size = new System.Drawing.Size(198, 55);
-			this.btnEmail.TabIndex = 6;
-			this.btnEmail.TabStop = false;
-			this.btnEmail.Text = "Servidor Email";
-			this.btnEmail.UseVisualStyleBackColor = false;
-			this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
+			this.btnSaveConfig.FlatAppearance.BorderSize = 0;
+			this.btnSaveConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSaveConfig.Image = global::CamadaUI.Properties.Resources.save_nocolor_24;
+			this.btnSaveConfig.Location = new System.Drawing.Point(10, 539);
+			this.btnSaveConfig.Name = "btnSaveConfig";
+			this.btnSaveConfig.Size = new System.Drawing.Size(91, 29);
+			this.btnSaveConfig.TabIndex = 2;
+			this.btnSaveConfig.Text = "SALVAR";
+			this.btnSaveConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSaveConfig.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Image = global::CamadaUI.Properties.Resources.open_24;
+			this.button1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+			this.button1.Location = new System.Drawing.Point(102, 538);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(83, 29);
+			this.button1.TabIndex = 3;
+			this.button1.Text = "ABRIR";
+			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// frmConfig
 			// 
@@ -265,5 +297,7 @@
 		private System.Windows.Forms.Button btnUsuarios;
 		private System.Windows.Forms.Button btnDados;
 		private System.Windows.Forms.Button btnEmail;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnSaveConfig;
 	}
 }

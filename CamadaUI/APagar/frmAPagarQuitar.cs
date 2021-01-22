@@ -415,7 +415,7 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void txtAcrescimo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			decimal newValor = decimal.Parse(txtAcrescimo.Text, NumberStyles.Currency);
+			decimal newValor = decimal.Parse(string.IsNullOrEmpty(txtAcrescimo.Text) ? "0" : txtAcrescimo.Text, NumberStyles.Currency);
 			propSaida.AcrescimoValor = newValor;
 		}
 

@@ -398,7 +398,7 @@ namespace CamadaUI.Saidas
 
 			System.Globalization.CultureInfo enBr = new System.Globalization.CultureInfo("pt-BR");
 
-			int i = 0;
+			int i = 1;
 
 			foreach (string monthName in enBr.DateTimeFormat.MonthNames)
 			{
@@ -1141,9 +1141,152 @@ namespace CamadaUI.Saidas
 				return false;
 			}
 
-			if (_despesa.RecorrenciaTipo != 1 && _despesa.RecorrenciaDia == 1)
+			// VERIFICA OS VALORES
+			switch (_despesa.RecorrenciaTipo)
 			{
-				cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
+				case 1: // DIARIO
+
+					_despesa.RecorrenciaDia = null;
+					_despesa.RecorrenciaSemana = null;
+					_despesa.RecorrenciaMes = null;
+					break;
+
+				case 2: // SEMANAL
+
+					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaDia == null)
+					{
+						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaDia, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					_despesa.RecorrenciaSemana = null;
+					_despesa.RecorrenciaMes = null;
+					break;
+
+				case 3: // MENSAL POR DIA
+
+					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaDia == null)
+					{
+						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaDia, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					_despesa.RecorrenciaSemana = null;
+					_despesa.RecorrenciaMes = null;
+					break;
+
+				case 4: // MENSAL POR SEMANA
+
+					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaDia == null)
+					{
+						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaDia, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					cmbRecorrenciaSemana.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaSemana == null)
+					{
+						AbrirDialog("A Semana da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Semana da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaSemana, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					_despesa.RecorrenciaMes = null;
+					break;
+
+				case 5: // ANUAL POR MES E DIA
+
+					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaDia == null)
+					{
+						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaDia, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					cmbRecorrenciaMes.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaMes == null)
+					{
+						AbrirDialog("O Mês da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Mês da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaSemana, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					_despesa.RecorrenciaSemana = null;
+					break;
+
+				case 6: // ANUAL POR MES E SEMANA
+
+					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaDia == null)
+					{
+						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaDia, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					cmbRecorrenciaSemana.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaSemana == null)
+					{
+						AbrirDialog("A Semana da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Semana da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaSemana, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					cmbRecorrenciaMes.DataBindings["SelectedValue"].WriteValue();
+
+					if (_despesa.RecorrenciaMes == null)
+					{
+						AbrirDialog("O Mês da Recorrência precisa de uma seleção\n" +
+									"Favor inserir o valor deste dado corretamente.", "Mês da Recorrência",
+									DialogType.OK, DialogIcon.Exclamation);
+						EP.SetError(cmbRecorrenciaSemana, "Valor necessário...");
+						cmbRecorrenciaDia.Focus();
+						return false;
+					}
+
+					break;
+
+				default:
+					break;
 			}
 
 			if (_despesa.RecorrenciaMes == 0) _despesa.RecorrenciaMes = null;
