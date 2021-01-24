@@ -420,6 +420,8 @@ namespace CamadaUI.Config
 
 		#endregion // SAVE CONFIG --- END
 
+		#region IMAGE FOLDER
+
 		private void btnProcImageFolder_Click(object sender, EventArgs e)
 		{
 			try
@@ -460,7 +462,13 @@ namespace CamadaUI.Config
 				{
 					if (!Directory.Exists(oldPath))
 					{
-						oldPath = "";
+						AbrirDialog("A pasta de Imagens de Documentos não é válida..." +
+							"\nFavor indicar uma pasta válida.",
+							"Pasta Não Existe",
+							DialogType.OK,
+							DialogIcon.Exclamation);
+
+						txtImageFolder.Text = "";
 						btnProcImageFolder_Click(sender, e);
 						return;
 					}
@@ -499,5 +507,7 @@ namespace CamadaUI.Config
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}
+
+		#endregion // IMAGE FOLDER --- END
 	}
 }

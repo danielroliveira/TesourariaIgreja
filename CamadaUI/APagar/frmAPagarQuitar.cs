@@ -370,6 +370,16 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void txtDoValor_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			if (string.IsNullOrEmpty(txtDoValor.Text) || decimal.Parse(txtDoValor.Text, NumberStyles.Currency) == 0)
+			{
+				AbrirDialog($"O valor do pagamento não pode ser nulo ou igual a zero",
+					"Valor Inválido...",
+					DialogType.OK,
+					DialogIcon.Exclamation);
+				e.Cancel = true;
+				return;
+			}
+
 			decimal newValor = decimal.Parse(txtDoValor.Text, NumberStyles.Currency);
 
 			if (newValor > maxValue)
@@ -415,7 +425,18 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void txtAcrescimo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			decimal newValor = decimal.Parse(string.IsNullOrEmpty(txtAcrescimo.Text) ? "0" : txtAcrescimo.Text, NumberStyles.Currency);
+			if (string.IsNullOrEmpty(txtAcrescimo.Text))
+			{
+				AbrirDialog($"O valor do acrescimo não pode ser nulo..." +
+					$"\nSe não houver acrescimo digite '0' (zero)",
+					"Valor Inválido...",
+					DialogType.OK,
+					DialogIcon.Exclamation);
+				e.Cancel = true;
+				return;
+			}
+
+			decimal newValor = decimal.Parse(txtAcrescimo.Text, NumberStyles.Currency);
 			propSaida.AcrescimoValor = newValor;
 		}
 

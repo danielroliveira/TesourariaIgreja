@@ -29,6 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.pnlMenu = new System.Windows.Forms.Panel();
+			this.line2 = new AwesomeShapeControl.Line();
+			this.btnSalvarConfig = new System.Windows.Forms.Button();
+			this.btnAbrirConfig = new System.Windows.Forms.Button();
 			this.btnEmail = new System.Windows.Forms.Button();
 			this.btnUsuarios = new System.Windows.Forms.Button();
 			this.line1 = new AwesomeShapeControl.Line();
@@ -39,8 +42,6 @@
 			this.btnImagem = new System.Windows.Forms.Button();
 			this.btnDados = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
-			this.btnSaveConfig = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.pnlMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -65,8 +66,9 @@
 			// pnlMenu
 			// 
 			this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.pnlMenu.Controls.Add(this.btnSaveConfig);
-			this.pnlMenu.Controls.Add(this.button1);
+			this.pnlMenu.Controls.Add(this.line2);
+			this.pnlMenu.Controls.Add(this.btnSalvarConfig);
+			this.pnlMenu.Controls.Add(this.btnAbrirConfig);
 			this.pnlMenu.Controls.Add(this.btnEmail);
 			this.pnlMenu.Controls.Add(this.btnUsuarios);
 			this.pnlMenu.Controls.Add(this.line1);
@@ -81,6 +83,53 @@
 			this.pnlMenu.Name = "pnlMenu";
 			this.pnlMenu.Size = new System.Drawing.Size(200, 579);
 			this.pnlMenu.TabIndex = 1;
+			// 
+			// line2
+			// 
+			this.line2.EndPoint = new System.Drawing.Point(166, 5);
+			this.line2.LineColor = System.Drawing.Color.DarkGray;
+			this.line2.LineWidth = 3F;
+			this.line2.Location = new System.Drawing.Point(12, 519);
+			this.line2.Name = "line2";
+			this.line2.Size = new System.Drawing.Size(171, 10);
+			this.line2.StartPoint = new System.Drawing.Point(5, 5);
+			this.line2.TabIndex = 9;
+			// 
+			// btnSalvarConfig
+			// 
+			this.btnSalvarConfig.FlatAppearance.BorderSize = 0;
+			this.btnSalvarConfig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSteelBlue;
+			this.btnSalvarConfig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSlateGray;
+			this.btnSalvarConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSalvarConfig.ForeColor = System.Drawing.Color.DimGray;
+			this.btnSalvarConfig.Image = global::CamadaUI.Properties.Resources.save_nocolor_24;
+			this.btnSalvarConfig.Location = new System.Drawing.Point(9, 533);
+			this.btnSalvarConfig.Name = "btnSalvarConfig";
+			this.btnSalvarConfig.Size = new System.Drawing.Size(91, 39);
+			this.btnSalvarConfig.TabIndex = 2;
+			this.btnSalvarConfig.Text = "SALVAR";
+			this.btnSalvarConfig.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSalvarConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSalvarConfig.UseVisualStyleBackColor = true;
+			this.btnSalvarConfig.Click += new System.EventHandler(this.btnSalvarConfig_Click);
+			// 
+			// btnAbrirConfig
+			// 
+			this.btnAbrirConfig.FlatAppearance.BorderSize = 0;
+			this.btnAbrirConfig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSteelBlue;
+			this.btnAbrirConfig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSlateGray;
+			this.btnAbrirConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnAbrirConfig.ForeColor = System.Drawing.Color.DimGray;
+			this.btnAbrirConfig.Image = global::CamadaUI.Properties.Resources.open_24;
+			this.btnAbrirConfig.Location = new System.Drawing.Point(101, 533);
+			this.btnAbrirConfig.Name = "btnAbrirConfig";
+			this.btnAbrirConfig.Size = new System.Drawing.Size(91, 39);
+			this.btnAbrirConfig.TabIndex = 3;
+			this.btnAbrirConfig.Text = "ABRIR";
+			this.btnAbrirConfig.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAbrirConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnAbrirConfig.UseVisualStyleBackColor = true;
+			this.btnAbrirConfig.Click += new System.EventHandler(this.btnAbrirConfig_Click);
 			// 
 			// btnEmail
 			// 
@@ -239,34 +288,6 @@
 			this.pnlCorpo.Size = new System.Drawing.Size(744, 579);
 			this.pnlCorpo.TabIndex = 2;
 			// 
-			// btnSaveConfig
-			// 
-			this.btnSaveConfig.FlatAppearance.BorderSize = 0;
-			this.btnSaveConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSaveConfig.Image = global::CamadaUI.Properties.Resources.save_nocolor_24;
-			this.btnSaveConfig.Location = new System.Drawing.Point(10, 539);
-			this.btnSaveConfig.Name = "btnSaveConfig";
-			this.btnSaveConfig.Size = new System.Drawing.Size(91, 29);
-			this.btnSaveConfig.TabIndex = 2;
-			this.btnSaveConfig.Text = "SALVAR";
-			this.btnSaveConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnSaveConfig.UseVisualStyleBackColor = true;
-			// 
-			// button1
-			// 
-			this.button1.FlatAppearance.BorderSize = 0;
-			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button1.Image = global::CamadaUI.Properties.Resources.open_24;
-			this.button1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-			this.button1.Location = new System.Drawing.Point(102, 538);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(83, 29);
-			this.button1.TabIndex = 3;
-			this.button1.Text = "ABRIR";
-			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.button1.UseVisualStyleBackColor = true;
-			// 
 			// frmConfig
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -297,7 +318,8 @@
 		private System.Windows.Forms.Button btnUsuarios;
 		private System.Windows.Forms.Button btnDados;
 		private System.Windows.Forms.Button btnEmail;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button btnSaveConfig;
+		private System.Windows.Forms.Button btnAbrirConfig;
+		private System.Windows.Forms.Button btnSalvarConfig;
+		private AwesomeShapeControl.Line line2;
 	}
 }

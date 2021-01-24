@@ -35,15 +35,6 @@
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnRecorrencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnAtivo = new System.Windows.Forms.DataGridViewImageColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
@@ -72,6 +63,15 @@
 			this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnExcluir = new System.Windows.Forms.Button();
 			this.line1 = new AwesomeShapeControl.Line();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnRecorrencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnAtivo = new System.Windows.Forms.DataGridViewImageColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlSituacao.SuspendLayout();
@@ -195,73 +195,6 @@
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnID
-			// 
-			this.clnID.Frozen = true;
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 60;
-			// 
-			// clnData
-			// 
-			this.clnData.Frozen = true;
-			this.clnData.HeaderText = "Data";
-			this.clnData.Name = "clnData";
-			this.clnData.ReadOnly = true;
-			this.clnData.Width = 85;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.Frozen = true;
-			this.clnSetor.HeaderText = "Setor de Recursos";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 200;
-			// 
-			// clnTipo
-			// 
-			this.clnTipo.Frozen = true;
-			this.clnTipo.HeaderText = "Tipo de Despesa";
-			this.clnTipo.Name = "clnTipo";
-			this.clnTipo.ReadOnly = true;
-			this.clnTipo.Width = 170;
-			// 
-			// clnDescricao
-			// 
-			this.clnDescricao.Frozen = true;
-			this.clnDescricao.HeaderText = "Descrição";
-			this.clnDescricao.Name = "clnDescricao";
-			this.clnDescricao.ReadOnly = true;
-			this.clnDescricao.Width = 230;
-			// 
-			// clnCredor
-			// 
-			this.clnCredor.HeaderText = "Credor";
-			this.clnCredor.Name = "clnCredor";
-			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 200;
-			// 
-			// clnRecorrencia
-			// 
-			this.clnRecorrencia.HeaderText = "Recorrência";
-			this.clnRecorrencia.Name = "clnRecorrencia";
-			this.clnRecorrencia.ReadOnly = true;
-			this.clnRecorrencia.Width = 120;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			// 
-			// clnAtivo
-			// 
-			this.clnAtivo.HeaderText = "Ativa";
-			this.clnAtivo.Name = "clnAtivo";
-			this.clnAtivo.ReadOnly = true;
-			this.clnAtivo.Width = 70;
 			// 
 			// label1
 			// 
@@ -569,7 +502,7 @@
             this.visualizarToolStripMenuItem,
             this.excluirToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(275, 136);
+			this.MenuListagem.Size = new System.Drawing.Size(275, 114);
 			// 
 			// AtivarToolStripMenuItem
 			// 
@@ -630,6 +563,73 @@
 			this.line1.Size = new System.Drawing.Size(10, 47);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
 			this.line1.TabIndex = 16;
+			// 
+			// clnID
+			// 
+			this.clnID.Frozen = true;
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 60;
+			// 
+			// clnData
+			// 
+			this.clnData.Frozen = true;
+			this.clnData.HeaderText = "Ponteiro";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
+			this.clnData.Width = 85;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.Frozen = true;
+			this.clnSetor.HeaderText = "Setor de Recursos";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 200;
+			// 
+			// clnTipo
+			// 
+			this.clnTipo.Frozen = true;
+			this.clnTipo.HeaderText = "Tipo de Despesa";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.ReadOnly = true;
+			this.clnTipo.Width = 170;
+			// 
+			// clnDescricao
+			// 
+			this.clnDescricao.Frozen = true;
+			this.clnDescricao.HeaderText = "Descrição";
+			this.clnDescricao.Name = "clnDescricao";
+			this.clnDescricao.ReadOnly = true;
+			this.clnDescricao.Width = 230;
+			// 
+			// clnCredor
+			// 
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 200;
+			// 
+			// clnRecorrencia
+			// 
+			this.clnRecorrencia.HeaderText = "Recorrência";
+			this.clnRecorrencia.Name = "clnRecorrencia";
+			this.clnRecorrencia.ReadOnly = true;
+			this.clnRecorrencia.Width = 120;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
+			// 
+			// clnAtivo
+			// 
+			this.clnAtivo.HeaderText = "Ativa";
+			this.clnAtivo.Name = "clnAtivo";
+			this.clnAtivo.ReadOnly = true;
+			this.clnAtivo.Width = 70;
 			// 
 			// frmDespesaPeriodicaListagem
 			// 

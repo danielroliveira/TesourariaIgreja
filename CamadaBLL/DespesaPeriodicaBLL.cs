@@ -98,14 +98,6 @@ namespace CamadaBLL
 					myWhere = true;
 				}
 
-				/*// add DataFinal
-				if (dataFinal != null)
-				{
-					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
-					query += myWhere ? " AND DespesaData <= @DataFinal" : " WHERE DespesaData <= @DataFinal";
-					myWhere = true;
-				}*/
-
 				// add IDCredor
 				if (IDCredor != null)
 				{
@@ -122,7 +114,7 @@ namespace CamadaBLL
 					myWhere = true;
 				}
 
-				query += " ORDER BY DespesaData";
+				query += " ORDER BY IniciarData";
 
 				List<objDespesaPeriodica> listagem = new List<objDespesaPeriodica>();
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);

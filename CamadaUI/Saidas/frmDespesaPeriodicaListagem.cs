@@ -14,7 +14,7 @@ namespace CamadaUI.Saidas
 	{
 		private DespesaPeriodicaBLL dBLL = new DespesaPeriodicaBLL();
 		private List<objDespesaPeriodica> listCont = new List<objDespesaPeriodica>();
-		private Form _formOrigem;
+		//private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 		private Image ImgAccept = Properties.Resources.accept_16;
@@ -34,7 +34,7 @@ namespace CamadaUI.Saidas
 			InitializeComponent();
 
 			//--- Add any initialization after the InitializeComponent() call.
-			_formOrigem = formOrigem;
+			//_formOrigem = formOrigem;
 
 			// obter dados e preenche a listagem
 			ObterDados();
@@ -146,7 +146,7 @@ namespace CamadaUI.Saidas
 			colList.Add(clnID);
 
 			//--- (2) COLUNA DATA
-			clnData.DataPropertyName = "DespesaData";
+			clnData.DataPropertyName = "IniciarData";
 			clnData.Visible = true;
 			clnData.ReadOnly = true;
 			clnData.Resizable = DataGridViewTriState.False;
@@ -166,19 +166,6 @@ namespace CamadaUI.Saidas
 			clnSetor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnSetor.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnSetor);
-
-			/*
-			//--- (4) COLUNA TIPO
-			clnTipo.DataPropertyName = "DespesaTipo";
-			clnTipo.Visible = true;
-			clnTipo.ReadOnly = true;
-			clnTipo.Resizable = DataGridViewTriState.False;
-			clnTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnTipo.DefaultCellStyle.Font = clnFont;
-			colList.Add(clnTipo);
-			*/
 
 			//--- (5) COLUNA DESCRICAO
 			clnDescricao.DataPropertyName = "DespesaDescricao";

@@ -216,7 +216,8 @@ namespace CamadaUI
 		{
 			try
 			{
-				objDadosIgreja DadosEmpresa = new objDadosIgreja() {
+				objDadosIgreja DadosEmpresa = new objDadosIgreja()
+				{
 					RazaoSocial = ObterConfigValorNode("RazaoSocial"),
 					TelefoneFinanceiro = ObterConfigValorNode("TelefoneFinanceiro"),
 					TelefonePrincipal = ObterConfigValorNode("TelefonePrincipal"),

@@ -1074,6 +1074,10 @@
     <EmbeddedResource Include="Transferencias\frmTransfSetorListagem.resx">
       <DependentUpon>frmTransfSetorListagem.cs</DependentUpon>
     </EmbeddedResource>
+    <AdditionalFiles Include="ConfigFiles\ConfigSchema.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CamadaDTO.objAPagar.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCaixa.datasource" />

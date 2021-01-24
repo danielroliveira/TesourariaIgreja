@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Configuracao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultValues">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IgrejaTitulo" type="xs:string" />
+              <xs:element name="DataPadrao" type="xs:string" />
+              <xs:element name="CongregacaoPadrao" type="xs:unsignedByte" />
+              <xs:element name="CongregacaoDescricao" type="xs:string" />
+              <xs:element name="ContaPadrao" type="xs:unsignedByte" />
+              <xs:element name="ContaDescricao" type="xs:string" />
+              <xs:element name="SetorPadrao" type="xs:unsignedByte" />
+              <xs:element name="SetorDescricao" type="xs:string" />
+              <xs:element name="DataBloqueada" type="xs:string" />
+              <xs:element name="CidadePadrao" type="xs:string" />
+              <xs:element name="UFPadrao" type="xs:string" />
+              <xs:element name="DocumentsImageFolder" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ArquivoLogo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ArquivoLogoMono" type="xs:string" />
+              <xs:element name="ArquivoLogoColor" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ServidorDados">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StringConexao" type="xs:string" />
+              <xs:element name="ServidorLocal" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DadosIgreja">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RazaoSocial" type="xs:string" />
+              <xs:element name="CNPJ" type="xs:string" />
+              <xs:element name="TelefonePrincipal" type="xs:string" />
+              <xs:element name="TelefoneFinanceiro" type="xs:string" />
+              <xs:element name="ContatoFinanceiro" type="xs:string" />
+              <xs:element name="Endereco" type="xs:string" />
+              <xs:element name="Bairro" type="xs:string" />
+              <xs:element name="Cidade" type="xs:string" />
+              <xs:element name="UF" type="xs:string" />
+              <xs:element name="CEP" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

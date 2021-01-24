@@ -43,16 +43,7 @@ namespace CamadaBLL
 					db.AdicionarParametros("@IDSituacao", IDSituacao);
 					query += myWhere ? " AND IDSituacao = @IDSituacao" : " WHERE IDSituacao = @IDSituacao";
 					myWhere = true;
-					//if (IDSituacao == 0) // VENCIDAS
-					//{
-					//	db.AdicionarParametros("@DataInicial", DateTime.Today);
-					//	query += myWhere ? " AND Vencimento <= @DataInicial" : " WHERE Vencimento <= @DataInicial";
-					//	query += " AND IDSituacao = 1";
-					//	myWhere = true;
-					//}
-					//else
-					//{
-					//}
+
 				}
 
 				// add IDDespesaTipo
@@ -203,7 +194,9 @@ namespace CamadaBLL
 						list.Add(CreateAPagarByDespesa(desp, dtAtual));
 						dtAtual = dtAtual.AddDays((int)desp.RecorrenciaRepeticao);
 					}
+
 					break;
+
 				case 2: // SEMANAL
 
 					//--- discover the first date
@@ -218,7 +211,9 @@ namespace CamadaBLL
 						list.Add(CreateAPagarByDespesa(desp, dtAtual));
 						dtAtual = dtAtual.AddDays(7 * (int)desp.RecorrenciaRepeticao);
 					}
+
 					break;
+
 				case 3: // MENSAL POR DIA
 
 					//--- discover the first date
@@ -232,11 +227,15 @@ namespace CamadaBLL
 						// create string of date
 						string strDate = $"{(int)desp.RecorrenciaDia}/{dtAtual.Month}/{dtAtual.Year}";
 
-						// try to convert in date
-						if (!DateTime.TryParse(strDate, out dtAtual))
+						// try to convert in date (IF ReferenciaDia > 29 in FEBRUARY)
+						if (!DateTime.TryParse(strDate, out DateTime new_dtAtual)) // se nao for data
 						{
-							int maxDays = DateTime.DaysInMonth(dtAtual.Month, dtAtual.Year);
+							int maxDays = DateTime.DaysInMonth(dtAtual.Year, dtAtual.Month);
 							dtAtual = new DateTime(dtAtual.Year, dtAtual.Month, maxDays);
+						}
+						else // se for data possivel
+						{
+							dtAtual = new_dtAtual;
 						}
 					}
 
@@ -246,7 +245,9 @@ namespace CamadaBLL
 						list.Add(CreateAPagarByDespesa(desp, dtAtual));
 						dtAtual = dtAtual.AddMonths((int)desp.RecorrenciaRepeticao);
 					}
+
 					break;
+
 				case 4: // MENSAL POR SEMANA
 
 					//--- discover the first date
@@ -270,7 +271,9 @@ namespace CamadaBLL
 						list.Add(CreateAPagarByDespesa(desp, dtAtual));
 						dtAtual = dtAtual.AddMonths((int)desp.RecorrenciaRepeticao);
 					}
+
 					break;
+
 				case 5: // ANUAL POR MES E DIA
 
 					//--- discover the first date
@@ -298,10 +301,14 @@ namespace CamadaBLL
 					string strDate2 = $"{(int)desp.RecorrenciaDia}/{(int)desp.RecorrenciaMes}/{dtAtual.Year}";
 
 					// try to convert in date
-					if (!DateTime.TryParse(strDate2, out dtAtual))
+					if (!DateTime.TryParse(strDate2, out DateTime new_dtAtual2))
 					{
 						int maxDays = DateTime.DaysInMonth((int)desp.RecorrenciaMes, dtAtual.Year);
 						dtAtual = new DateTime(dtAtual.Year, (int)desp.RecorrenciaMes, maxDays);
+					}
+					else
+					{
+						dtAtual = new_dtAtual2;
 					}
 
 					//--- creating Vencimentos

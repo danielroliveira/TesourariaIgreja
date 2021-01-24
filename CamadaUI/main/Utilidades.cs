@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace CamadaUI
 {
@@ -398,6 +400,50 @@ namespace CamadaUI
 			return image;
 		}
 
+		//=================================================================================================
+		// VALIDATE XML FILE FROM XSD FILE
+		//=================================================================================================
+		public static bool ValidatedXML(string XmlPath, string XsdPath)
+		{
+			bool _Valid = true;
+
+			//--- create READERS
+			var XsdReader = new XmlTextReader(XsdPath);
+			var XmlDoc = new XmlTextReader(XmlPath);
+
+			//--- try load xmlDocument
+			XmlDocument xDoc = new XmlDocument();
+
+			try
+			{
+				xDoc.Load(XmlDoc);
+			}
+			catch
+			{
+				return false;
+			}
+
+			//--- try VALIDATE with XSD SCHEMA
+			Action<object, ValidationEventArgs> ValidationCallBack = (a, b) => { _Valid = false; };
+
+			var MySchema = XmlSchema.Read(XsdReader, new ValidationEventHandler(ValidationCallBack));
+			var MySettings = new XmlReaderSettings();
+
+			MySettings.IgnoreComments = true;
+			MySettings.IgnoreProcessingInstructions = true;
+			MySettings.IgnoreWhitespace = true;
+			MySettings.Schemas.Add(MySchema);
+			MySettings.ValidationType = ValidationType.Schema;
+			MySettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
+			MySettings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
+			MySettings.ValidationEventHandler += (a, b) => ValidationCallBack(a, b);
+
+			var MyXml = XmlReader.Create(XmlPath, MySettings);
+
+			while (MyXml.Read()) { }
+
+			return _Valid;
+		}
 	}
 
 	//=================================================================================================
