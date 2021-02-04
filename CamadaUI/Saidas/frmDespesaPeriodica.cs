@@ -1173,7 +1173,7 @@ namespace CamadaUI.Saidas
 
 					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
 
-					if (_despesa.RecorrenciaDia == null)
+					if (_despesa.RecorrenciaDia == null || string.IsNullOrEmpty(cmbRecorrenciaDia.SelectedText))
 					{
 						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
 									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
@@ -1191,7 +1191,7 @@ namespace CamadaUI.Saidas
 
 					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
 
-					if (_despesa.RecorrenciaDia == null)
+					if (_despesa.RecorrenciaDia == null || string.IsNullOrEmpty(cmbRecorrenciaDia.SelectedText))
 					{
 						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
 									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",

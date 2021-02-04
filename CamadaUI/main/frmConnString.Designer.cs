@@ -47,8 +47,9 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(408, 0);
-			this.lblTitulo.Text = "Definir Banco de Dados";
+			this.lblTitulo.Location = new System.Drawing.Point(290, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(377, 50);
+			this.lblTitulo.Text = "Definir Servidor do Banco de Dados";
 			// 
 			// btnClose
 			// 

@@ -40,6 +40,19 @@ namespace CamadaUI
 			}
 		}
 
+
+		/*
+		
+		1. Check Server ==> TRANSFERED TO PROGRAM
+		2. Get Login
+		3. Check Config File
+		4. Get Conta Default AND Congregacao Default FROM Conta
+		5. Get Setor Default AND Define Active Setor
+		6. Define Active Conta & Active Congregacao & Date Default 
+				 
+		*/
+
+
 		// LOAD
 		// =============================================================================
 		private void frmPrincipal_Load(object sender, EventArgs e)
@@ -47,28 +60,10 @@ namespace CamadaUI
 			//--- INICIA APLICACAO COM O MENU DESABILITADO
 			mnuPrincipal.Enabled = false;
 
-			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
-			//------------------------------------------------------------------------------------------------------------
 			try
 			{
 				//--- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-
-				AcessoControlBLL acessoBLL = new AcessoControlBLL();
-				string TestAcesso = acessoBLL.GetConnString();
-
-				//--- open FRMCONNSTRING: to define the string de conexao
-				if (string.IsNullOrEmpty(TestAcesso))
-				{
-					Main.frmConnString fcString = new Main.frmConnString();
-					fcString.ShowDialog();
-
-					if (fcString.DialogResult != DialogResult.OK)
-					{
-						Application.Exit();
-						return;
-					}
-				}
 
 				//--- ABRE E VERIFICA O LOGIN DO USUARIO
 				//------------------------------------------------------------------------------------------------------------
@@ -89,7 +84,7 @@ namespace CamadaUI
 					return;
 				}
 
-				// VERIFICA AND GET CONTA PADRAO
+				// VERIFICA AND GET CONTA PADRAO AND CONGREGACAO
 				//------------------------------------------------------------------------------------------------------------
 				objConta contaInicial = new objConta(null);
 				contaInicial = VerificaAndGet_ContaAndCongregacao();
