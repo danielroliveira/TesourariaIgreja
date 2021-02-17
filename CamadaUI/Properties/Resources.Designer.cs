@@ -303,6 +303,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap email_32 {
+            get {
+                object obj = ResourceManager.GetObject("email_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Entradas_32 {
             get {
                 object obj = ResourceManager.GetObject("Entradas_32", resourceCulture);
@@ -506,6 +516,16 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap moneybag_24 {
             get {
                 object obj = ResourceManager.GetObject("moneybag_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NewMessageGIF_32 {
+            get {
+                object obj = ResourceManager.GetObject("NewMessageGIF_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

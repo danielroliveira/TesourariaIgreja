@@ -5,6 +5,7 @@ using CamadaUI.AReceber;
 using CamadaUI.Main;
 using CamadaUI.Saidas;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
@@ -48,7 +49,8 @@ namespace CamadaUI
 		3. Check Config File
 		4. Get Conta Default AND Congregacao Default FROM Conta
 		5. Get Setor Default AND Define Active Setor
-		6. Define Active Conta & Active Congregacao & Date Default 
+		6. Define Active Conta & Active Congregacao & Date Default
+		7. Check for new User Messages
 				 
 		*/
 
@@ -175,7 +177,7 @@ namespace CamadaUI
 
 			//---- INICIALIZA O TIMER DA HORA
 			//----------------------------------------------------------------
-			//lblHora.Text = DateTime.Now.ToShortTimeString;
+			IniciaHorario();
 
 			//--- HABILITA O HANDLER DE ABERTURA DO MENU
 			//----------------------------------------------------------------
@@ -187,7 +189,24 @@ namespace CamadaUI
 			//----------------------------------------------------------------
 			HandlersMenuClickToOpenForm();
 
+			// CHECK FOR NEW USER MESSAGES
+			//------------------------------------------------------------------------------------------------------------
+			CheckUserNewMessages();
 
+		}
+
+		private void IniciaHorario()
+		{
+			lblHora.Text = DateTime.Now.ToShortTimeString();
+
+			var timer = new Timer();
+			timer.Enabled = true;
+			timer.Interval = 60000;
+			timer.Tick += (a, b) =>
+			{
+				lblHora.Text = DateTime.Now.ToShortTimeString();
+			};
+			timer.Start();
 		}
 
 		#endregion
@@ -459,6 +478,46 @@ namespace CamadaUI
 			}
 		}
 
+		// CHCEK USER NEW MESSAGES
+		//------------------------------------------------------------------------------------------------------------
+		public void CheckUserNewMessages()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- check total new messages for user
+				int newMensages = new MensagemBLL().UserHasNewMessage((int)Program.usuarioAtual.IDUsuario);
+
+				//--- change controls design
+				if (newMensages > 0)
+				{
+					btnMensagem.Text = " Há novas mensagens para você";
+					btnMensagem.LinkColor = Color.DarkBlue;
+					btnMensagem.Image = Properties.Resources.NewMessageGIF_32;
+				}
+				else
+				{
+					btnMensagem.Text = " Não há novas mensagens...";
+					btnMensagem.LinkColor = Color.Gray;
+					btnMensagem.Image = Properties.Resources.mensagens_nocolor_32;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter Quantidade de Novas Mensagens..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
 		#endregion
 
 		#region BUTTONS
@@ -716,6 +775,10 @@ namespace CamadaUI
 			mnuSetorMov.Click += (a, b) => MenuClickOpenForm(new Setores.frmSetorMovimentacao());
 			mnuCaixaFechamento.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCaixaInserir(this));
 			mnuCaixaProcurar.Click += (a, b) => MenuClickOpenForm(new Caixa.frmCaixaListagem(this));
+
+			// MESAGENS
+			btnMensagem.Click += (a, b) => MenuClickOpenForm(new Mensagens.frmMensagens());
+
 		}
 
 		private void MenuClickOpenForm(Form form)

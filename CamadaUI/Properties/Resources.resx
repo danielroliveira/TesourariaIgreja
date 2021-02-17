@@ -157,8 +157,8 @@
   <data name="Funcionarios_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Funcionarios_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_exclamation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_exclamation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ImagesFolder_30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImagesFolder_30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="save_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,8 +169,8 @@
   <data name="deletepage_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\deletepage_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sair_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sair_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="search_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mensagens_color_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mensagens_color_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -186,6 +186,9 @@
   </data>
   <data name="icon_question" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_question.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Colaborador_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Colaborador_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DropdownIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DropdownIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -217,6 +220,9 @@
   <data name="like_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\like_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="money_red_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\money_red_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="refresh_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -226,11 +232,8 @@
   <data name="Caixa_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Caixa_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="open_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\open_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ImagesFolder_30" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImagesFolder_30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="sair_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sair_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="print_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\print_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,8 +241,8 @@
   <data name="whatsapp_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\whatsapp_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Colaborador_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Colaborador_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_exclamation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_exclamation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SwitchOFF_30" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SwitchOFF_30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,17 +250,14 @@
   <data name="lixeira_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lixeira_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="money_red_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\money_red_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="open_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\open_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DownArrow_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DownArrow_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="salvar_30" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\salvar_30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="search_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\search_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="block_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\block_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -313,10 +313,16 @@
   <data name="money_green_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\money_green_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="save_nocolor_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save_nocolor_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon_warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="save_nocolor_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\save_nocolor_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="email_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\email_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NewMessageGIF_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NewMessageGIF_32.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -330,25 +330,70 @@ namespace CamadaBLL
 	//=================================================================================================
 	public class MensagemBLL
 	{
+		// GET MENSAGEM BY ID RECURSIVE
+		//------------------------------------------------------------------------------------------------------------
+		public objMensagem GetMensagemByID(int IDMensagem, object dbTran)
+		{
+			try
+			{
+				AcessoDados db = (AcessoDados)dbTran;
+
+				// define paramns
+				db.LimparParametros();
+				db.AdicionarParametros("@IDMensagem", IDMensagem);
+
+				// define query
+				string query = "SELECT * FROM qryUsuarioMensagem " +
+					"WHERE IDMensagem = @IDMensagem";
+
+				var mensagem = new objMensagem();
+
+				// execute query
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count > 0)
+				{
+					mensagem = ConvertRowInClass(dt.Rows[0]);
+
+					if (mensagem.IDOrigem != null)
+					{
+						mensagem.MensagemOrigem = GetMensagemByID((int)mensagem.IDOrigem, db);
+					}
+				}
+
+				return mensagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
 		// OBTER MENSAGENS RECEBIDAS PELO DESTINATARIO
 		//------------------------------------------------------------------------------------------------------------
-		public List<objMensagem> Recebidas(int IDUsuarioDestino, bool MensagemRecebidas = false, object dbTran = null)
+		public List<objMensagem> Recebidas(int IDUsuarioDestino, bool? MensagemRecebidas = null, object dbTran = null)
 		{
 			try
 			{
 				// new acessso dados
 				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
+				// define query
+				string query = "SELECT * FROM qryUsuarioMensagem " +
+					"WHERE IDUsuarioDestino = @IDUsuarioDestino ";
+
 				// define paramns
 				db.LimparParametros();
 				db.AdicionarParametros("@IDUsuarioDestino", IDUsuarioDestino);
-				db.AdicionarParametros("@Recebida", MensagemRecebidas);
 
-				// define query
-				string query = "SELECT * FROM qryUsuarioMensagem " +
-					"WHERE IDUsuarioDestino = @IDUsuarioDestino" +
-					"AND Recebida = @Recebida";
+				if (MensagemRecebidas != null)
+				{
+					db.AdicionarParametros("@Recebida", MensagemRecebidas);
+					query += "AND Recebida = @Recebida";
+				}
+
+				query += " ORDER BY Recebida";
 
 				var mensagens = new List<objMensagem>();
 
@@ -387,7 +432,7 @@ namespace CamadaBLL
 
 				// define query
 				string query = "SELECT * FROM qryUsuarioMensagem " +
-					"WHERE IDUsuarioOrigem = @IDUsuarioOrigem" +
+					"WHERE IDUsuarioOrigem = @IDUsuarioOrigem " +
 					"AND Recebida = @Recebida";
 
 				var mensagens = new List<objMensagem>();
@@ -428,6 +473,7 @@ namespace CamadaBLL
 				Mensagem = (string)row["Mensagem"],
 				MensagemData = (DateTime)row["MensagemData"],
 				RecebidaData = row["RecebidaData"] == DBNull.Value ? null : (DateTime?)row["RecebidaData"],
+				IDOrigem = row["IDOrigem"] == DBNull.Value ? null : (int?)row["IDOrigem"],
 			};
 
 			return mensagem;
@@ -435,11 +481,13 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertMensagem(objMensagem mensagem)
+		public int InsertMensagem(objMensagem mensagem, object dbTran = null)
 		{
+			AcessoDados db = null;
+
 			try
 			{
-				AcessoDados db = new AcessoDados();
+				db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				//--- clear Params
 				db.LimparParametros();
@@ -499,6 +547,128 @@ namespace CamadaBLL
 				//--- UPDATE
 				db.ExecutarManipulacao(CommandType.Text, query);
 				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// REMOVE DELETE MESSAGE
+		//------------------------------------------------------------------------------------------------------------
+		public bool DeleteMensagem(int IDMensagem)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDMensagem", IDMensagem);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				////--- create query
+				string query = "DELETE tblUsuarioMensagem WHERE IDMensagem = @IDMensagem";
+
+				//--- DELETE
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// SEND MESSAGE TO ALL ACTIVE USERS
+		//------------------------------------------------------------------------------------------------------------
+		public int SendToAllActiveUsers(objMensagem mensagem)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				//--- get users list
+				List<objUsuario> listUser = new UsuarioBLL().GetListUsuario("", true);
+
+				foreach (var user in listUser)
+				{
+					//--- check if user is the sender user
+					if (user.IDUsuario == mensagem.IDUsuarioOrigem)
+					{
+						continue;
+					}
+
+					//--- crete new message
+					var newMensage = new objMensagem()
+					{
+						IDUsuarioDestino = (int)user.IDUsuario,
+						IDUsuarioOrigem = mensagem.IDUsuarioOrigem,
+						IsResposta = false,
+						IDMensagem = null,
+						IDOrigem = null,
+						Mensagem = mensagem.Mensagem,
+						MensagemData = mensagem.MensagemData,
+						MensagemOrigem = null,
+						Recebida = false,
+						RecebidaData = null,
+						Suporte = false,
+						UsuarioOrigem = mensagem.UsuarioOrigem,
+						UsuarioDestino = user.UsuarioApelido
+					};
+
+					//--- insert new message
+					InsertMensagem(newMensage);
+				}
+
+				//--- COMMIT
+				db.CommitTransaction();
+
+				//--- RETURN WITH NUMBER OF SENDED MESSAGES
+				return listUser.Count;
+			}
+			catch (Exception ex)
+			{
+				//--- ROOLBACK
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// CHECK FOR NEW USER MESSAGES
+		//------------------------------------------------------------------------------------------------------------
+		public int UserHasNewMessage(int IDUser, object dbTran = null)
+		{
+			try
+			{
+				// new acessso dados
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				// define query
+				string query = "SELECT COUNT(*) AS TOTAL FROM qryUsuarioMensagem " +
+					"WHERE IDUsuarioDestino = @IDUser AND Recebida = 'False'";
+
+				// define paramns
+				db.LimparParametros();
+				db.AdicionarParametros("@IDUser", IDUser);
+
+				// execute query
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+				int MensagensTotal = 0;
+
+				if (dt.Rows.Count > 0)
+				{
+					MensagensTotal = (int)dt.Rows[0][0];
+				}
+
+				return MensagensTotal;
 			}
 			catch (Exception ex)
 			{

@@ -1077,6 +1077,8 @@ namespace CamadaUI.Saidas
 
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
+			Validate();
+
 			if (!VerificaRegistro()) return;
 
 			try
@@ -1153,8 +1155,6 @@ namespace CamadaUI.Saidas
 
 				case 2: // SEMANAL
 
-					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
-
 					if (_despesa.RecorrenciaDia == null)
 					{
 						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
@@ -1171,9 +1171,7 @@ namespace CamadaUI.Saidas
 
 				case 3: // MENSAL POR DIA
 
-					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
-
-					if (_despesa.RecorrenciaDia == null || string.IsNullOrEmpty(cmbRecorrenciaDia.SelectedText))
+					if (_despesa.RecorrenciaDia == null || string.IsNullOrEmpty(cmbRecorrenciaDia.Text))
 					{
 						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
 									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
@@ -1189,9 +1187,7 @@ namespace CamadaUI.Saidas
 
 				case 4: // MENSAL POR SEMANA
 
-					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
-
-					if (_despesa.RecorrenciaDia == null || string.IsNullOrEmpty(cmbRecorrenciaDia.SelectedText))
+					if (_despesa.RecorrenciaDia == null || string.IsNullOrEmpty(cmbRecorrenciaDia.Text))
 					{
 						AbrirDialog("O Dia da Recorrência precisa de uma seleção\n" +
 									"Favor inserir o valor deste dado corretamente.", "Dia da Recorrência",
@@ -1217,8 +1213,6 @@ namespace CamadaUI.Saidas
 					break;
 
 				case 5: // ANUAL POR MES E DIA
-
-					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
 
 					if (_despesa.RecorrenciaDia == null)
 					{
@@ -1246,8 +1240,6 @@ namespace CamadaUI.Saidas
 					break;
 
 				case 6: // ANUAL POR MES E SEMANA
-
-					cmbRecorrenciaDia.DataBindings["SelectedValue"].WriteValue();
 
 					if (_despesa.RecorrenciaDia == null)
 					{

@@ -301,7 +301,6 @@ namespace CamadaUI.Congregacoes
 
 		#endregion
 
-
 		#region DATABINDING
 
 		// ADD DATA BINDIGNS

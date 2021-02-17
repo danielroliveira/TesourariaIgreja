@@ -504,6 +504,24 @@
     <Compile Include="Imagem\ImagemUtil.cs" />
     <Compile Include="Main\InputBox.cs" />
     <Compile Include="Main\Utilidades.cs" />
+    <Compile Include="Mensagens\frmMensagemEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mensagens\frmMensagemEditar.Designer.cs">
+      <DependentUpon>frmMensagemEditar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mensagens\frmMensagens.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mensagens\frmMensagens.Designer.cs">
+      <DependentUpon>frmMensagens.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mensagens\frmUsuarioProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mensagens\frmUsuarioProcura.designer.cs">
+      <DependentUpon>frmUsuarioProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modals\frmModConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -949,6 +967,15 @@
     <EmbeddedResource Include="Main\frmUsuarioContaAcesso.resx">
       <DependentUpon>frmUsuarioContaAcesso.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Mensagens\frmMensagemEditar.resx">
+      <DependentUpon>frmMensagemEditar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mensagens\frmMensagens.resx">
+      <DependentUpon>frmMensagens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mensagens\frmUsuarioProcura.resx">
+      <DependentUpon>frmUsuarioProcura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modals\frmModConfig.resx">
       <DependentUpon>frmModConfig.cs</DependentUpon>
     </EmbeddedResource>
@@ -1299,6 +1326,8 @@
     <None Include="Resources\mensagens_color_32.png" />
     <None Include="Resources\open_24.png" />
     <None Include="Resources\save_nocolor_24.png" />
+    <None Include="Resources\email_32.png" />
+    <None Include="Resources\NewMessageGIF_32.gif" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

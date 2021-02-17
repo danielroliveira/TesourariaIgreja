@@ -378,6 +378,8 @@ namespace CamadaDTO
 			RecebidaData = null;
 			Suporte = false;
 			IsResposta = false;
+			IDOrigem = null;
+			MensagemOrigem = null;
 		}
 
 		public int? IDMensagem { get; set; }
@@ -391,5 +393,7 @@ namespace CamadaDTO
 		public DateTime? RecebidaData { get; set; }
 		public bool Suporte { get; set; }
 		public bool IsResposta { get; set; }
+		public int? IDOrigem { get; set; }
+		public objMensagem MensagemOrigem { get; set; }
 	}
 }

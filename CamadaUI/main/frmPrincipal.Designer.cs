@@ -705,12 +705,13 @@
 			// 
 			this.btnMensagem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.btnMensagem.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnMensagem.ForeColor = System.Drawing.Color.Black;
 			this.btnMensagem.Image = global::CamadaUI.Properties.Resources.mensagens_nocolor_32;
 			this.btnMensagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnMensagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnMensagem.IsLink = true;
 			this.btnMensagem.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-			this.btnMensagem.LinkColor = System.Drawing.Color.Black;
+			this.btnMensagem.LinkColor = System.Drawing.Color.Gray;
 			this.btnMensagem.Name = "btnMensagem";
 			this.btnMensagem.Size = new System.Drawing.Size(228, 53);
 			this.btnMensagem.Text = " Não há novas mensagens...";
