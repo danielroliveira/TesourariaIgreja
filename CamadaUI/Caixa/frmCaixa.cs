@@ -180,7 +180,7 @@ namespace CamadaUI.Caixa
 			lblTSaidas.Text = (_TSaidas * -1).ToString("c");
 			lblTTransf.Text = _TTransf.ToString("c");
 
-			decimal SaldoFinal = _TEntradas + _TSaidas + _TTransf;
+			decimal SaldoFinal = _caixa.SaldoAnterior + _TEntradas + _TSaidas + _TTransf;
 
 			lblSaldoFinal.Text = SaldoFinal.ToString("c");
 			return SaldoFinal;

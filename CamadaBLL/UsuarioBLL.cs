@@ -370,6 +370,39 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET MESSAGES RELATED AND RETURN A LIST OF OBJ MENSAGEM
+		//------------------------------------------------------------------------------------------------------------
+		public List<objMensagem> GetListMensagensRelacionadas(int IDMensagem)
+		{
+			AcessoDados db = null;
+
+			try
+			{
+				db = new AcessoDados();
+				db.BeginTransaction();
+
+				objMensagem mensagem = GetMensagemByID(IDMensagem, db);
+
+				List<objMensagem> list = new List<objMensagem>();
+
+				while (mensagem.MensagemOrigem != null)
+				{
+					list.Add(mensagem.MensagemOrigem);
+
+					mensagem = mensagem.MensagemOrigem;
+				}
+
+				db.CommitTransaction();
+				return list;
+
+			}
+			catch (Exception ex)
+			{
+				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
 		// OBTER MENSAGENS RECEBIDAS PELO DESTINATARIO
 		//------------------------------------------------------------------------------------------------------------
 		public List<objMensagem> Recebidas(int IDUsuarioDestino, bool? MensagemRecebidas = null, object dbTran = null)

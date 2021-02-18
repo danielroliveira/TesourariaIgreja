@@ -1,5 +1,7 @@
-﻿using CamadaDTO;
+﻿using CamadaBLL;
+using CamadaDTO;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace CamadaUI.Mensagens
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
 		private objUsuario _DestinoUser;
+		private MensagemBLL mBLL;
 
 		#region SUB NEW | LOAD
 
@@ -35,6 +38,13 @@ namespace CamadaUI.Mensagens
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+			}
+
+			// CHECK IF IS RESPOSTA
+			if (_mensagem.IsResposta && mensagem.IDOrigem != null)
+			{
+				mBLL = new MensagemBLL();
+				ObterAnteriores((int)mensagem.IDOrigem);
 			}
 
 			// ADD HANDLERS
@@ -63,6 +73,31 @@ namespace CamadaUI.Mensagens
 					default:
 						break;
 				}
+			}
+		}
+
+		// GET LIST OF MENSAGENS ANTERIORES
+		//------------------------------------------------------------------------------------------------------------
+		private List<objMensagem> ObterAnteriores(int IDMensagemAnterior)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				return mBLL.GetListMensagensRelacionadas(IDMensagemAnterior);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter Mensagens Anteriores..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return null;
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 

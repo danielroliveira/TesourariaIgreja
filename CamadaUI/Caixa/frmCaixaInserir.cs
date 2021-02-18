@@ -4,8 +4,8 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Caixa
 {
@@ -210,6 +210,7 @@ namespace CamadaUI.Caixa
 
 				//--- open form
 				var frm = new frmCaixa(newCaixa, Application.OpenForms[0]);
+				frm.MdiParent = Application.OpenForms[0];
 				frm.Show();
 
 				Close();

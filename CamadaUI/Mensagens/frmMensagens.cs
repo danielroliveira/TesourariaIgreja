@@ -302,7 +302,6 @@ namespace CamadaUI.Mensagens
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		// ENVIAR MENSAGEM
@@ -367,6 +366,8 @@ namespace CamadaUI.Mensagens
 
 		#region MENU SUSPENSO
 
+		// LISTAGEM AO CLICAR
+		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
 		{
 			// check button
@@ -525,12 +526,77 @@ namespace CamadaUI.Mensagens
 		//------------------------------------------------------------------------------------------------------------
 		private void ResponderMensagem()
 		{
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Selecione uma mensagem para Responder...", "Selecionar");
+				return;
+			}
 
+			//--- get selected message
+			objMensagem mensagem = (objMensagem)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			//--- check if mensagem is RECEBIDA
+			if (!mensagem.Recebida)
+			{
+				AbrirDialog("Para responder uma mensagem, a mesma deve estar marcada como mensagem LIDA..." +
+					"Favor marcar essa mensagem com LIDA.",
+					"Responder Mensagem", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- Define Destination User message
+				objUsuario userDestino = new objUsuario(mensagem.IDUsuarioOrigem)
+				{
+					UsuarioApelido = mensagem.UsuarioOrigem
+				};
+
+				//--- create new mensagem
+				var novaMensagem = new objMensagem()
+				{
+					IDMensagem = null,
+					IDUsuarioDestino = (int)userDestino.IDUsuario,
+					IDUsuarioOrigem = (int)Program.usuarioAtual.IDUsuario,
+					IsResposta = true,
+					IDOrigem = mensagem.IDMensagem,
+					Mensagem = "",
+					MensagemData = DateTime.Today,
+					MensagemOrigem = mensagem,
+					Recebida = false,
+					RecebidaData = null,
+					Suporte = false,
+					UsuarioOrigem = Program.usuarioAtual.UsuarioApelido,
+					UsuarioDestino = userDestino.UsuarioApelido
+				};
+
+				//--- open form mensagem
+				var frmM = new frmMensagemEditar(novaMensagem, userDestino, this);
+
+				frmM.ShowDialog();
+
+				if (frmM.DialogResult != DialogResult.OK) return;
+
+				EnviarMensagem(novaMensagem);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Enviar a Resposta da Mensagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
+
+
 		#endregion // MENU SUSPENSO --- END
-
-
-
 	}
 }
