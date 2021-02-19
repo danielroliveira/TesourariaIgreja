@@ -31,7 +31,7 @@ namespace CamadaUI.Mensagens
 		{
 			this.lblUsuarioOrigem = new System.Windows.Forms.Label();
 			this.txtMensagem = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.lblMensagens = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtUsuarioDestino = new System.Windows.Forms.TextBox();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
@@ -42,13 +42,9 @@ namespace CamadaUI.Mensagens
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
 			this.label4 = new System.Windows.Forms.Label();
 			this.pnlAnteriores = new System.Windows.Forms.FlowLayoutPanel();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.lblAnteriores = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
-			this.pnlAnteriores.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -83,6 +79,7 @@ namespace CamadaUI.Mensagens
 			// 
 			// txtMensagem
 			// 
+			this.txtMensagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtMensagem.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtMensagem.Location = new System.Drawing.Point(18, 387);
 			this.txtMensagem.Multiline = true;
@@ -90,16 +87,17 @@ namespace CamadaUI.Mensagens
 			this.txtMensagem.Size = new System.Drawing.Size(710, 158);
 			this.txtMensagem.TabIndex = 6;
 			// 
-			// label1
+			// lblMensagens
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
-			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(13, 350);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(124, 29);
-			this.label1.TabIndex = 5;
-			this.label1.Text = "Mensagem";
+			this.lblMensagens.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblMensagens.AutoSize = true;
+			this.lblMensagens.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
+			this.lblMensagens.ForeColor = System.Drawing.Color.Black;
+			this.lblMensagens.Location = new System.Drawing.Point(13, 354);
+			this.lblMensagens.Name = "lblMensagens";
+			this.lblMensagens.Size = new System.Drawing.Size(124, 29);
+			this.lblMensagens.TabIndex = 5;
+			this.lblMensagens.Text = "Mensagem";
 			// 
 			// label2
 			// 
@@ -173,7 +171,7 @@ namespace CamadaUI.Mensagens
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnEnviar,
             this.btnCancelar});
-			this.tspMenu.Location = new System.Drawing.Point(6, 566);
+			this.tspMenu.Location = new System.Drawing.Point(6, 567);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(738, 44);
 			this.tspMenu.TabIndex = 7;
@@ -219,45 +217,26 @@ namespace CamadaUI.Mensagens
 			// pnlAnteriores
 			// 
 			this.pnlAnteriores.AutoScroll = true;
-			this.pnlAnteriores.Controls.Add(this.textBox1);
-			this.pnlAnteriores.Controls.Add(this.textBox2);
-			this.pnlAnteriores.Controls.Add(this.textBox3);
-			this.pnlAnteriores.Controls.Add(this.textBox4);
 			this.pnlAnteriores.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.pnlAnteriores.Location = new System.Drawing.Point(18, 224);
+			this.pnlAnteriores.Location = new System.Drawing.Point(18, 236);
 			this.pnlAnteriores.Name = "pnlAnteriores";
+			this.pnlAnteriores.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlAnteriores.Size = new System.Drawing.Size(710, 104);
 			this.pnlAnteriores.TabIndex = 11;
 			this.pnlAnteriores.Visible = false;
 			this.pnlAnteriores.WrapContents = false;
 			// 
-			// textBox1
+			// lblAnteriores
 			// 
-			this.textBox1.Location = new System.Drawing.Point(3, 3);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(677, 27);
-			this.textBox1.TabIndex = 0;
-			// 
-			// textBox2
-			// 
-			this.textBox2.Location = new System.Drawing.Point(3, 36);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(677, 27);
-			this.textBox2.TabIndex = 1;
-			// 
-			// textBox3
-			// 
-			this.textBox3.Location = new System.Drawing.Point(3, 69);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(677, 27);
-			this.textBox3.TabIndex = 2;
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(3, 102);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(8, 27);
-			this.textBox4.TabIndex = 3;
+			this.lblAnteriores.AutoSize = true;
+			this.lblAnteriores.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
+			this.lblAnteriores.ForeColor = System.Drawing.Color.Black;
+			this.lblAnteriores.Location = new System.Drawing.Point(19, 204);
+			this.lblAnteriores.Name = "lblAnteriores";
+			this.lblAnteriores.Size = new System.Drawing.Size(239, 29);
+			this.lblAnteriores.TabIndex = 5;
+			this.lblAnteriores.Text = "Mensagens Anteriores";
+			this.lblAnteriores.Visible = false;
 			// 
 			// frmMensagemEditar
 			// 
@@ -272,13 +251,15 @@ namespace CamadaUI.Mensagens
 			this.Controls.Add(this.txtUsuarioDestino);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.lblAnteriores);
+			this.Controls.Add(this.lblMensagens);
 			this.Controls.Add(this.txtMensagem);
 			this.Name = "frmMensagemEditar";
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
 			this.Controls.SetChildIndex(this.txtMensagem, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.lblMensagens, 0);
+			this.Controls.SetChildIndex(this.lblAnteriores, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.txtUsuarioDestino, 0);
@@ -292,8 +273,6 @@ namespace CamadaUI.Mensagens
 			this.panel1.ResumeLayout(false);
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
-			this.pnlAnteriores.ResumeLayout(false);
-			this.pnlAnteriores.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -303,7 +282,7 @@ namespace CamadaUI.Mensagens
 
 		private System.Windows.Forms.Label lblUsuarioOrigem;
 		private System.Windows.Forms.TextBox txtMensagem;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblMensagens;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox txtUsuarioDestino;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;
@@ -314,9 +293,6 @@ namespace CamadaUI.Mensagens
 		private System.Windows.Forms.ToolStripButton btnCancelar;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.FlowLayoutPanel pnlAnteriores;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.Label lblAnteriores;
 	}
 }

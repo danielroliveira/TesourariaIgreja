@@ -426,7 +426,7 @@ namespace CamadaBLL
 					query += "AND Recebida = @Recebida";
 				}
 
-				query += " ORDER BY Recebida";
+				query += " ORDER BY Recebida, MensagemData DESC";
 
 				var mensagens = new List<objMensagem>();
 
@@ -532,6 +532,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IsResposta", mensagem.IsResposta);
 				db.AdicionarParametros("@Mensagem", mensagem.Mensagem);
 				db.AdicionarParametros("@MensagemData", mensagem.MensagemData);
+				db.AdicionarParametros("@IDOrigem", mensagem.IDOrigem);
 
 				//--- convert null parameters
 				db.ConvertNullParams();

@@ -18,6 +18,7 @@ namespace CamadaUI.Mensagens
 		private Form _formOrigem;
 		private objUsuario _DestinoUser;
 		private MensagemBLL mBLL;
+		private List<objMensagem> lstAntigas;
 
 		#region SUB NEW | LOAD
 
@@ -44,8 +45,13 @@ namespace CamadaUI.Mensagens
 			if (_mensagem.IsResposta && mensagem.IDOrigem != null)
 			{
 				mBLL = new MensagemBLL();
-				ObterAnteriores((int)mensagem.IDOrigem);
+				lstAntigas = ObterAnteriores((int)mensagem.IDOrigem);
+
+				if (lstAntigas != null && lstAntigas.Count > 0) PreencheControleAntigas();
 			}
+
+			// CHECK FORM SIZE
+			WithAnteriores();
 
 			// ADD HANDLERS
 			HandlerKeyDownControl(this);
@@ -100,6 +106,56 @@ namespace CamadaUI.Mensagens
 				Cursor.Current = Cursors.Default;
 			}
 		}
+
+		private void PreencheControleAntigas()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- create new label with mensagem
+				foreach (var item in lstAntigas.OrderBy(x => x.IDMensagem))
+				{
+					Label label = new Label()
+					{
+						Text = $"{item.MensagemData.ToShortDateString()} - {item.Mensagem}",
+						Name = $"Mensagem {item.IDMensagem}",
+						AutoSize = true,
+					};
+
+					pnlAnteriores.Controls.Add(label);
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Preecher as Mensagens Relacionadas Anteriores..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void WithAnteriores()
+		{
+			if (lstAntigas != null && lstAntigas.Count > 0)
+			{
+				pnlAnteriores.Visible = true;
+				lblAnteriores.Visible = true;
+			}
+			else
+			{
+				pnlAnteriores.Visible = false;
+				lblAnteriores.Visible = false;
+				//lblMensagens.Location = new Point(19, 204);
+				//txtMensagem.Location = new Point(18, 236);
+				Size = new Size(749, 464);
+			}
+		}
+
 
 		#endregion // SUB NEW | LOAD --- END
 

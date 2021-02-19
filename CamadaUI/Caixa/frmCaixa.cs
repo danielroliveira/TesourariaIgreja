@@ -146,7 +146,7 @@ namespace CamadaUI.Caixa
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				lstMov = new MovimentacaoBLL().GetMovimentacaoCaixaList(_caixa, dbTran);
+				lstMov = new MovimentacaoBLL().GetMovimentacaoCaixaList(_caixa, Program.usuarioAtual, dbTran);
 				bindMovs.DataSource = lstMov;
 				dgvListagem.DataSource = bindMovs;
 

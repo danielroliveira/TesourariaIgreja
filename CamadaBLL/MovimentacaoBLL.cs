@@ -341,6 +341,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public List<objMovimentacao> GetMovimentacaoCaixaList(
 			objCaixa caixa,
+			objUsuario user,
 			object dbTran = null)
 		{
 			try
@@ -348,7 +349,7 @@ namespace CamadaBLL
 				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 				//--- update MOVIMENTACAO
-				if (caixa.IDUsuario == 1)
+				if (user.UsuarioAcesso == 1)
 				{
 					InsertCaixaMovs(caixa, db);
 				}
