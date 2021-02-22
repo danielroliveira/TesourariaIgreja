@@ -137,6 +137,8 @@ namespace CamadaDTO
 			{
 				switch (UsuarioAcesso)
 				{
+					case 0:
+						return "Suporte";
 					case 1:
 						return "Administrador";
 					case 2:
@@ -146,7 +148,7 @@ namespace CamadaDTO
 					case 4:
 						return "Usuário Local";
 					default:
-						return "Manutenção";
+						return "Indefinido";
 				}
 			}
 		}

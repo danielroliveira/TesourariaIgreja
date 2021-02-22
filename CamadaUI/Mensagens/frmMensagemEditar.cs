@@ -39,6 +39,16 @@ namespace CamadaUI.Mensagens
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+
+				if (mensagem.IDUsuarioOrigem != Program.usuarioAtual.IDUsuario)
+				{
+					txtUsuarioDestino.ReadOnly = true;
+					txtMensagem.ReadOnly = true;
+					btnSetConta.Enabled = false;
+					btnEnviar.Visible = false;
+					btnCancelar.Text = "&Fechar";
+				}
+
 			}
 
 			// CHECK IF IS RESPOSTA
@@ -225,6 +235,8 @@ namespace CamadaUI.Mensagens
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
 		{
+			if (!btnSetConta.Enabled) return;
+
 			Control ctr = (Control)sender;
 
 			if (e.KeyCode == Keys.Add || e.KeyCode == Keys.F4)

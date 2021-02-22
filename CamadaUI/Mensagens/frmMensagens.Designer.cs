@@ -125,6 +125,7 @@ namespace CamadaUI.Mensagens
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.Size = new System.Drawing.Size(922, 453);
 			this.dgvListagem.TabIndex = 3;
+			this.dgvListagem.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellContentDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellMouseEnter);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);

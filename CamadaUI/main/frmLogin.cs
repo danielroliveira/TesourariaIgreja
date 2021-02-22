@@ -205,6 +205,14 @@ namespace CamadaUI.Main
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
+				txtApelido.Text = "Suporte";
+				txtSenha.Text = "12345678";
+				btnOK_Click(new object(), new EventArgs());
+			}
+			else if (e.Alt && e.KeyCode == Keys.D)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
 				txtApelido.Text = "Daniel";
 				txtSenha.Text = "12345678";
 				btnOK_Click(new object(), new EventArgs());

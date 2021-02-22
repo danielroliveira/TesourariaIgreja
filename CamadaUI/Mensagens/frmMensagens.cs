@@ -599,5 +599,17 @@ namespace CamadaUI.Mensagens
 
 		#endregion // MENU SUSPENSO --- END
 
+		private void dgvListagem_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar uma mensagem para Visualizar...",
+					"Selecionar Mensagem", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			EditarMensagem();
+		}
 	}
 }

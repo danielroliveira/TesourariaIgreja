@@ -65,6 +65,7 @@
 			this.btnAjuste = new System.Windows.Forms.Button();
 			this.pnlObservacao = new System.Windows.Forms.Panel();
 			this.lblContaDetalhe = new System.Windows.Forms.Label();
+			this.btnImprimir = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlObservacao.SuspendLayout();
@@ -538,6 +539,27 @@
 			this.lblContaDetalhe.TabIndex = 27;
 			this.lblContaDetalhe.Text = "Saldo da Conta: R$ 0,00\r\nData de Bloqueio até: 01/01/2000";
 			// 
+			// btnImprimir
+			// 
+			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnImprimir.BackColor = System.Drawing.SystemColors.ButtonFace;
+			this.btnImprimir.Enabled = false;
+			this.btnImprimir.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+			this.btnImprimir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral;
+			this.btnImprimir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+			this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
+			this.btnImprimir.Location = new System.Drawing.Point(978, 578);
+			this.btnImprimir.Name = "btnImprimir";
+			this.btnImprimir.Size = new System.Drawing.Size(159, 45);
+			this.btnImprimir.TabIndex = 25;
+			this.btnImprimir.TabStop = false;
+			this.btnImprimir.Text = "Im&primir";
+			this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnImprimir.UseVisualStyleBackColor = false;
+			this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
+			// 
 			// frmCaixa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -546,6 +568,7 @@
 			this.Controls.Add(this.pnlObservacao);
 			this.Controls.Add(this.btnAjuste);
 			this.Controls.Add(this.btnExcluirCaixa);
+			this.Controls.Add(this.btnImprimir);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnFinalizar);
 			this.Controls.Add(this.btnAlterar);
@@ -586,6 +609,7 @@
 			this.Controls.SetChildIndex(this.btnAlterar, 0);
 			this.Controls.SetChildIndex(this.btnFinalizar, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
+			this.Controls.SetChildIndex(this.btnImprimir, 0);
 			this.Controls.SetChildIndex(this.btnExcluirCaixa, 0);
 			this.Controls.SetChildIndex(this.btnAjuste, 0);
 			this.Controls.SetChildIndex(this.pnlObservacao, 0);
@@ -638,5 +662,6 @@
 		internal System.Windows.Forms.Button btnAjuste;
 		private System.Windows.Forms.Panel pnlObservacao;
 		internal System.Windows.Forms.Label lblContaDetalhe;
+		internal System.Windows.Forms.Button btnImprimir;
 	}
 }

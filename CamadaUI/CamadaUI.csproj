@@ -1116,6 +1116,7 @@
     <None Include="Properties\DataSources\CamadaDTO.objDespesaProvisoria.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipo.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipoGrupo.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objMovimentacao.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

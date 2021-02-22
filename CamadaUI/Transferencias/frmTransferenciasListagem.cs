@@ -190,7 +190,7 @@ namespace CamadaUI.Transferencias
 			clnTipo.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnTipo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnTipo.DefaultCellStyle.Font = clnFont;
+			//clnTipo.DefaultCellStyle.Font = clnFont;
 			colList.Add(clnTipo);
 
 			//--- (3) COLUNA ORIGEM

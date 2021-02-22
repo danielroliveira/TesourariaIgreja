@@ -101,7 +101,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(1026, 633);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 10;
+			this.btnFechar.TabIndex = 6;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -151,7 +151,7 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1139, 495);
-			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.TabIndex = 4;
 			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
@@ -397,7 +397,7 @@
 			this.Panel2.Location = new System.Drawing.Point(487, 59);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
-			this.Panel2.TabIndex = 4;
+			this.Panel2.TabIndex = 7;
 			// 
 			// mnuOperacoes
 			// 
@@ -516,7 +516,7 @@
 			this.btnNovo.Location = new System.Drawing.Point(22, 632);
 			this.btnNovo.Name = "btnNovo";
 			this.btnNovo.Size = new System.Drawing.Size(200, 42);
-			this.btnNovo.TabIndex = 10;
+			this.btnNovo.TabIndex = 5;
 			this.btnNovo.Text = "&Efetuar Novo Caixa";
 			this.btnNovo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnNovo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
