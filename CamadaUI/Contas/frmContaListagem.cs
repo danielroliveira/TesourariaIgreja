@@ -496,7 +496,7 @@ namespace CamadaUI.Contas
 			try
 			{
 				objConta conta = (objConta)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				btnSaldoInicial.Visible = conta.Ativa == true && conta.ContaSaldo == 0;
+				btnSaldoInicial.Visible = conta.Ativa == true && conta.ContaSaldo == 0 && conta.BloqueioData == null;
 			}
 			catch (Exception ex)
 			{

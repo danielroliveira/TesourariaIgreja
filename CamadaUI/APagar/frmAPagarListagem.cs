@@ -64,6 +64,7 @@ namespace CamadaUI.APagar
 			rbtPorPeriodo.CheckedChanged += rbt_CheckedChanged;
 			rbtTodas.CheckedChanged += rbt_CheckedChanged;
 			AddHandlersRadioButSituacao();
+			txtProcura.TextChanged += FiltrarListagem;
 		}
 
 		// CONTROLA O MES
@@ -1395,6 +1396,38 @@ namespace CamadaUI.APagar
 		}
 
 		#endregion
+
+		#region FILTRAGEM PROCURA
+
+		private void FiltrarListagem(object sender, EventArgs e)
+		{
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objAPagar, bool> FiltroItem = c => c.DespesaDescricao.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					dgvListagem.DataSource = listPag.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objAPagar, bool> FiltroID = c => c.IDAPagar == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listPag.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listPag;
+			}
+		}
+
+		#endregion // FILTRAGEM PROCURA --- END
 
 	}
 }

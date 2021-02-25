@@ -411,6 +411,14 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnImprimir_Click(object sender, EventArgs e)
 		{
+			//--- check list quantity
+			if (list == null || list.Count == 0)
+			{
+				AbrirDialog("Não existe nenhum item na listagem para ser impresso...",
+					"Listagem Vazia", DialogType.OK, DialogIcon.Warning);
+				return;
+			}
+
 			try
 			{
 				// --- Ampulheta ON

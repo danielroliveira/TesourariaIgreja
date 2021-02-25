@@ -13,13 +13,13 @@ namespace CamadaUI.Saidas
 	public partial class frmDespesaPeriodicaListagem : CamadaUI.Modals.frmModFinBorder
 	{
 		private DespesaPeriodicaBLL dBLL = new DespesaPeriodicaBLL();
-		private List<objDespesaPeriodica> listCont = new List<objDespesaPeriodica>();
+		private List<objDespesaPeriodica> listPer = new List<objDespesaPeriodica>();
 		//private Form _formOrigem;
 		private Image ImgInativo = Properties.Resources.block_24;
 		private Image ImgAtivo = Properties.Resources.accept_24;
 		private Image ImgAccept = Properties.Resources.accept_16;
 
-		private bool _Alterado = false;
+		private bool _Alterado = true;
 		private int? IDSetor;
 		private int? IDCredor;
 		private int? IDTipo;
@@ -46,6 +46,8 @@ namespace CamadaUI.Saidas
 			//--- Handlers
 			HandlerKeyDownControl(this);
 			AddHandlersRadioButSituacao();
+			txtProcura.TextChanged += FiltrarListagem;
+
 		}
 
 
@@ -58,15 +60,21 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				//--- check alterado
+				if (!_Alterado) return;
+
 				// define list
-				listCont = dBLL.GetListDespesaPeriodica(
+				listPer = dBLL.GetListDespesaPeriodica(
 					Ativa,
 					IDSetor,
 					IDTipo,
 					IDCredor);
 
-				dgvListagem.DataSource = listCont;
+				dgvListagem.DataSource = listPer;
 				CalculaTotais();
+
+				//--- define alterado
+				_Alterado = false;
 			}
 			catch (Exception ex)
 			{
@@ -81,29 +89,14 @@ namespace CamadaUI.Saidas
 
 		}
 
-		public bool propAlterado
-		{
-			get => _Alterado;
-			set
-			{
-				if (value != _Alterado && value == true)
-				{
-					ShowToolTip(btnProcurar);
-				}
-
-				_Alterado = value;
-				btnProcurar.Enabled = value;
-			}
-		}
-
 		//--- CALCULA OS TOTAIS E ALTERA AS LABELS
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			decimal vlTotal = listCont.Sum(x => x.DespesaValor);
+			decimal vlTotal = listPer.Sum(x => x.DespesaValor);
 			lblValorTotal.Text = vlTotal.ToString("C");
 
-			decimal vlMensal = listCont.Sum(x => x.DespesaValorMensal);
+			decimal vlMensal = listPer.Sum(x => x.DespesaValorMensal);
 			lblValorMensal.Text = vlMensal.ToString("C");
 		}
 
@@ -295,30 +288,6 @@ namespace CamadaUI.Saidas
 			frm.Show();
 		}
 
-		// PROCURAR
-		//------------------------------------------------------------------------------------------------------------
-		private void btnProcurar_Click(object sender, EventArgs e)
-		{
-			ObterDados();
-			propAlterado = false;
-		}
-
-		// LIMPAR
-		//------------------------------------------------------------------------------------------------------------
-		private void btnLimpar_Click(object sender, EventArgs e)
-		{
-			if (IDSetor != null || IDCredor != null || IDTipo != null)
-			{
-				txtSetor.Clear();
-				IDSetor = null;
-				txtCredor.Clear();
-				IDCredor = null;
-				txtDespesaTipo.Clear();
-				IDTipo = null;
-				ObterDados();
-			}
-		}
-
 		// EXCLUIR DESPESA PERIODICA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnExcluir_Click(object sender, EventArgs e)
@@ -363,6 +332,58 @@ namespace CamadaUI.Saidas
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Excluir Despesa Periódica..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// IMPRIMIR LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			//--- check list quantity
+			if (listPer == null || listPer.Count == 0)
+			{
+				AbrirDialog("Não existe nenhum item na listagem para ser impresso...",
+					"Listagem Vazia", DialogType.OK, DialogIcon.Warning);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> dstPrimario = listPer.Cast<object>().ToList();
+
+				//--- create Params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+
+				if (IDSetor != null)
+				{
+					param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmSetorDefinido", txtSetor.Text));
+				}
+
+				if (IDCredor != null)
+				{
+					param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmCredorDefinido", txtCredor.Text));
+				}
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Saidas.Reports.rptDespesaPeriodicaList.rdlc",
+					"Relatório de Conclusão de Caixa",
+					dstPrimario, null, param);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -480,19 +501,22 @@ namespace CamadaUI.Saidas
 				switch (ctr.Name)
 				{
 					case "txtDespesaTipo":
-						if (IDTipo != null) propAlterado = true;
+						if (IDTipo != null) _Alterado = true;
 						txtDespesaTipo.Clear();
 						IDTipo = null;
+						ObterDados();
 						break;
 					case "txtSetor":
-						if (IDSetor != null) propAlterado = true;
+						if (IDSetor != null) _Alterado = true;
 						txtSetor.Clear();
 						IDSetor = null;
+						ObterDados();
 						break;
 					case "txtCredor":
-						if (IDCredor != null) propAlterado = true;
+						if (IDCredor != null) _Alterado = true;
 						txtCredor.Clear();
 						IDCredor = null;
+						ObterDados();
 						break;
 					default:
 						break;
@@ -569,10 +593,12 @@ namespace CamadaUI.Saidas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (IDTipo != (int)frm.propEscolha.IDDespesaTipo) propAlterado = true;
+					if (IDTipo != (int)frm.propEscolha.IDDespesaTipo) _Alterado = true;
 
 					IDTipo = (int)frm.propEscolha.IDDespesaTipo;
 					txtDespesaTipo.Text = frm.propEscolha.DespesaTipo;
+
+					ObterDados();
 				}
 
 				//--- select
@@ -604,10 +630,12 @@ namespace CamadaUI.Saidas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (IDSetor != (int)frm.propEscolha.IDSetor) propAlterado = true;
+					if (IDSetor != (int)frm.propEscolha.IDSetor) _Alterado = true;
 
 					IDSetor = (int)frm.propEscolha.IDSetor;
 					txtSetor.Text = frm.propEscolha.Setor;
+
+					ObterDados();
 				}
 
 				//--- select
@@ -639,10 +667,12 @@ namespace CamadaUI.Saidas
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK) // SEARCH CONTRIBUINTE
 				{
-					if (IDCredor != (int)frm.propEscolha.IDCredor) propAlterado = true;
+					if (IDCredor != (int)frm.propEscolha.IDCredor) _Alterado = true;
 
 					IDCredor = (int)frm.propEscolha.IDCredor;
 					txtCredor.Text = frm.propEscolha.Credor;
+
+					ObterDados();
 				}
 
 				//--- select
@@ -658,6 +688,34 @@ namespace CamadaUI.Saidas
 			{
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void FiltrarListagem(object sender, EventArgs e)
+		{
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objDespesaPeriodica, bool> FiltroItem = c => c.DespesaDescricao.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					dgvListagem.DataSource = listPer.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objDespesaPeriodica, bool> FiltroID = c => c.IDDespesa == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listPer.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listPer;
 			}
 		}
 
@@ -778,8 +836,8 @@ namespace CamadaUI.Saidas
 		}
 
 
-		#endregion
 
+		#endregion
 
 	}
 }

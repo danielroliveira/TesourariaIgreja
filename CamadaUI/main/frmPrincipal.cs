@@ -611,6 +611,7 @@ namespace CamadaUI
 						{
 							switch (Program.usuarioAtual.UsuarioAcesso)
 							{
+								case 0: // Suporte
 								case 1: // Administrador
 									itm.Enabled = true; // somente adminsitrador acesso ao config
 									btnConfig.Visible = true;

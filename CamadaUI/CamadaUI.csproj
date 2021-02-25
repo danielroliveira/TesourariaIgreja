@@ -1075,6 +1075,7 @@
       <DependentUpon>frmProvisorioReciboReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\Reports\rptDespesaGrupoList.rdlc" />
+    <EmbeddedResource Include="Saidas\Reports\rptDespesaPeriodicaList.rdlc" />
     <EmbeddedResource Include="Saidas\Reports\rptDespesaTipoList.rdlc" />
     <EmbeddedResource Include="Saidas\Reports\rptProvisorioRecibo.rdlc" />
     <EmbeddedResource Include="Setores\frmSetor.resx">
@@ -1113,6 +1114,7 @@
     <None Include="Properties\DataSources\CamadaDTO.objContribuicao.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDadosIgreja.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesa.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDespesaPeriodica.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaProvisoria.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipo.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objDespesaTipoGrupo.datasource" />
