@@ -133,18 +133,21 @@ namespace CamadaUI.Saidas
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
+					btnPagamentos.Enabled = false;
 				}
 				else if (value == EnumFlagEstado.Alterado)
 				{
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
+					btnPagamentos.Enabled = true;
 				}
 				else if (value == EnumFlagEstado.RegistroSalvo)
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
+					btnPagamentos.Enabled = true;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -226,6 +229,7 @@ namespace CamadaUI.Saidas
 			txtRecorrenciaRepeticao.DataBindings.Add("Text", bind, "RecorrenciaRepeticao", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblRecorrenciaTexto.DataBindings.Add("Text", bind, "RecorrenciaTexto", true, DataSourceUpdateMode.OnValidation);
 			txtTitular.DataBindings.Add("Text", bind, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtInstalacao.DataBindings.Add("Text", bind, "Instalacao", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -552,6 +556,7 @@ namespace CamadaUI.Saidas
 			{
 				Close();
 				var frm = new frmDespesaPeriodicaListagem();
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				frm.Show();
 			}
 			else
@@ -584,6 +589,12 @@ namespace CamadaUI.Saidas
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+		}
+
+		private void btnPagamentos_Click(object sender, EventArgs e)
+		{
+			var frm = new APagar.frmAPagarDespesaPeriodica(_despesa, this);
+			frm.ShowDialog();
 		}
 
 		#endregion // BUTTONS --- END

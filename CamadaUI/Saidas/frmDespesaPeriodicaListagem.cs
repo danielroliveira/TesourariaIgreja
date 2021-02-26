@@ -541,6 +541,7 @@ namespace CamadaUI.Saidas
 				}
 			}
 		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region CONTROL SITUACAO
@@ -721,7 +722,7 @@ namespace CamadaUI.Saidas
 
 		#endregion // BUTTONS PROCURA --- END
 
-		#region ATIVAR DESATIVAR MENU
+		#region MENU ITEMS
 
 		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
 		{
@@ -739,24 +740,21 @@ namespace CamadaUI.Saidas
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "clnAtivo")
+				objDespesaPeriodica desp = (objDespesaPeriodica)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+				if (desp.Ativa == true)
 				{
-					objDespesaPeriodica desp = (objDespesaPeriodica)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
-
-					if (desp.Ativa == true)
-					{
-						AtivarToolStripMenuItem.Enabled = false;
-						DesativarToolStripMenuItem.Enabled = true;
-					}
-					else
-					{
-						AtivarToolStripMenuItem.Enabled = true;
-						DesativarToolStripMenuItem.Enabled = false;
-					}
-
-					// revela menu
-					MenuListagem.Show(c.PointToScreen(e.Location));
+					mnuAtivar.Enabled = false;
+					mnuDesativar.Enabled = true;
 				}
+				else
+				{
+					mnuAtivar.Enabled = true;
+					mnuDesativar.Enabled = false;
+				}
+
+				// revela menu
+				MenuListagem.Show(c.PointToScreen(e.Location));
 			}
 		}
 
@@ -800,6 +798,40 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// VISUALIZAR
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuVisualizar_Click(object sender, EventArgs e)
+		{
+			btnVisualizar_Click(sender, e);
+		}
+
+		// VER LISTA PAGAMENTOS
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuListaPagamentos_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar os Pagamentos...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesaPeriodica item = (objDespesaPeriodica)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			var frm = new APagar.frmAPagarDespesaPeriodica(item, this);
+			//frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+			frm.ShowDialog();
+		}
+
+		// EXCLUIR
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuExcluir_Click(object sender, EventArgs e)
+		{
+			btnExcluir_Click(sender, e);
+		}
+
 		#endregion // ATIVAR DESATIVAR MENU --- END
 
 		#region TOOLTIP
@@ -838,6 +870,7 @@ namespace CamadaUI.Saidas
 
 
 		#endregion
+
 
 	}
 }

@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -59,11 +59,13 @@
 			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuAtivar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDesativar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.visualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuListaPagamentos = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnExcluir = new System.Windows.Forms.Button();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.pnlSituacao = new System.Windows.Forms.Panel();
@@ -145,24 +147,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -447,48 +449,70 @@
 			// 
 			this.MenuListagem.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem,
+            this.mnuAtivar,
+            this.mnuDesativar,
             this.toolStripSeparator1,
-            this.visualizarToolStripMenuItem,
-            this.excluirToolStripMenuItem});
+            this.mnuVisualizar,
+            this.mnuListaPagamentos,
+            this.toolStripSeparator2,
+            this.mnuExcluir});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(275, 114);
+			this.MenuListagem.Size = new System.Drawing.Size(283, 188);
 			// 
-			// AtivarToolStripMenuItem
+			// mnuAtivar
 			// 
-			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
-			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
-			this.AtivarToolStripMenuItem.Text = "Ativar Despesa Periódica";
-			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			this.mnuAtivar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.mnuAtivar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuAtivar.Name = "mnuAtivar";
+			this.mnuAtivar.Size = new System.Drawing.Size(282, 30);
+			this.mnuAtivar.Text = "Ativar Despesa Periódica";
+			this.mnuAtivar.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
-			// DesativarToolStripMenuItem
+			// mnuDesativar
 			// 
-			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
-			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
-			this.DesativarToolStripMenuItem.Text = "Desativar Despesa Periódica";
-			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			this.mnuDesativar.Image = global::CamadaUI.Properties.Resources.block_24;
+			this.mnuDesativar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDesativar.Name = "mnuDesativar";
+			this.mnuDesativar.Size = new System.Drawing.Size(282, 30);
+			this.mnuDesativar.Text = "Desativar Despesa Periódica";
+			this.mnuDesativar.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(279, 6);
 			// 
-			// visualizarToolStripMenuItem
+			// mnuVisualizar
 			// 
-			this.visualizarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.visualizarToolStripMenuItem.Name = "visualizarToolStripMenuItem";
-			this.visualizarToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
-			this.visualizarToolStripMenuItem.Text = "Visualizar";
+			this.mnuVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuVisualizar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuVisualizar.Name = "mnuVisualizar";
+			this.mnuVisualizar.Size = new System.Drawing.Size(282, 30);
+			this.mnuVisualizar.Text = "Visualizar";
+			this.mnuVisualizar.Click += new System.EventHandler(this.mnuVisualizar_Click);
 			// 
-			// excluirToolStripMenuItem
+			// mnuListaPagamentos
 			// 
-			this.excluirToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.excluirToolStripMenuItem.Name = "excluirToolStripMenuItem";
-			this.excluirToolStripMenuItem.Size = new System.Drawing.Size(274, 26);
-			this.excluirToolStripMenuItem.Text = "Excluir";
+			this.mnuListaPagamentos.Image = global::CamadaUI.Properties.Resources.download_24;
+			this.mnuListaPagamentos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuListaPagamentos.Name = "mnuListaPagamentos";
+			this.mnuListaPagamentos.Size = new System.Drawing.Size(282, 30);
+			this.mnuListaPagamentos.Text = "Ver Lista de Pagamentos";
+			this.mnuListaPagamentos.Click += new System.EventHandler(this.mnuListaPagamentos_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(279, 6);
+			// 
+			// mnuExcluir
+			// 
+			this.mnuExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuExcluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuExcluir.Name = "mnuExcluir";
+			this.mnuExcluir.Size = new System.Drawing.Size(282, 30);
+			this.mnuExcluir.Text = "Excluir";
+			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
 			// 
 			// btnExcluir
 			// 
@@ -660,13 +684,13 @@
 		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label2;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
-		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
-		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		internal System.Windows.Forms.ToolStripMenuItem mnuAtivar;
+		internal System.Windows.Forms.ToolStripMenuItem mnuDesativar;
 		internal System.Windows.Forms.Button btnExcluir;
 		private AwesomeShapeControl.Line line1;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem visualizarToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem excluirToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuVisualizar;
+		private System.Windows.Forms.ToolStripMenuItem mnuExcluir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
@@ -681,5 +705,7 @@
 		private System.Windows.Forms.RadioButton rbtAtivas;
 		internal System.Windows.Forms.TextBox txtProcura;
 		internal System.Windows.Forms.Label label5;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem mnuListaPagamentos;
 	}
 }

@@ -42,6 +42,7 @@ namespace CamadaDTO
 			internal byte? _RecorrenciaSemana; // Semana do vencimento
 			internal byte? _RecorrenciaMes; // Mes do vencimento
 			internal bool _Ativa;
+			internal string _Instalacao;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -436,6 +437,21 @@ namespace CamadaDTO
 				{
 					EditData._Ativa = value;
 					NotifyPropertyChanged("Ativa");
+				}
+			}
+		}
+
+		// Property Instalacao
+		//---------------------------------------------------------------
+		public string Instalacao
+		{
+			get => EditData._Instalacao;
+			set
+			{
+				if (value != EditData._Instalacao)
+				{
+					EditData._Instalacao = value;
+					NotifyPropertyChanged("Instalacao");
 				}
 			}
 		}

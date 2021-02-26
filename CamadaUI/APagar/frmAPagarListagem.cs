@@ -1214,6 +1214,8 @@ namespace CamadaUI.APagar
 			}
 		}
 
+		// IMAGEM MENU
+		//------------------------------------------------------------------------------------------------------------
 		private void mnuImagemInserir_Click(object sender, EventArgs e)
 		{
 			//--- check selected item

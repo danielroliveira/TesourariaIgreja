@@ -116,6 +116,12 @@
     <Compile Include="APagar\frmAPagarAlterar.designer.cs">
       <DependentUpon>frmAPagarAlterar.cs</DependentUpon>
     </Compile>
+    <Compile Include="APagar\frmAPagarDespesaPeriodica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmAPagarDespesaPeriodica.Designer.cs">
+      <DependentUpon>frmAPagarDespesaPeriodica.cs</DependentUpon>
+    </Compile>
     <Compile Include="APagar\frmAPagarDetalhe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -769,6 +775,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="APagar\frmAPagarAlterar.resx">
       <DependentUpon>frmAPagarAlterar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="APagar\frmAPagarDespesaPeriodica.resx">
+      <DependentUpon>frmAPagarDespesaPeriodica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="APagar\frmAPagarDetalhe.resx">
       <DependentUpon>frmAPagarDetalhe.cs</DependentUpon>

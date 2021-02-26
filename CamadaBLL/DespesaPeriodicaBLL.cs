@@ -186,6 +186,7 @@ namespace CamadaBLL
 				RecorrenciaRepeticao = row["RecorrenciaRepeticao"] == DBNull.Value ? null : (short?)row["RecorrenciaRepeticao"],
 				RecorrenciaSemana = row["RecorrenciaSemana"] == DBNull.Value ? null : (byte?)row["RecorrenciaSemana"],
 				Ativa = (bool)row["Ativa"],
+				Instalacao = row["Instalacao"] == DBNull.Value ? string.Empty : (string)row["Instalacao"],
 			};
 
 			return despesa;
@@ -255,6 +256,7 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@RecorrenciaMes", desp.RecorrenciaMes);
 				dbTran.AdicionarParametros("@RecorrenciaRepeticao", desp.RecorrenciaRepeticao);
 				dbTran.AdicionarParametros("@RecorrenciaSemana", desp.RecorrenciaSemana);
+				dbTran.AdicionarParametros("@Instalacao", desp.Instalacao);
 				dbTran.AdicionarParametros("@Ativa", desp.Ativa);
 
 				//--- convert null parameters
@@ -340,6 +342,7 @@ namespace CamadaBLL
 				dbTran.AdicionarParametros("@RecorrenciaRepeticao", desp.RecorrenciaRepeticao);
 				dbTran.AdicionarParametros("@RecorrenciaSemana", desp.RecorrenciaSemana);
 				dbTran.AdicionarParametros("@Ativa", desp.Ativa);
+				dbTran.AdicionarParametros("@Instalacao", desp.Instalacao);
 
 				//--- convert null parameters
 				dbTran.ConvertNullParams();

@@ -39,6 +39,8 @@
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnAtivo = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.btnPagamentos = new System.Windows.Forms.ToolStripButton();
 			this.txtDespesaDescricao = new System.Windows.Forms.TextBox();
 			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.txtDespesaValor = new CamadaUC.ucOnlyNumbers();
@@ -81,6 +83,8 @@
 			this.txtTitular = new System.Windows.Forms.TextBox();
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnInsertTitular = new VIBlend.WinForms.Controls.vButton();
+			this.label1 = new System.Windows.Forms.Label();
+			this.txtInstalacao = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -90,7 +94,7 @@
 			// 
 			this.lblTitulo.Location = new System.Drawing.Point(431, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(237, 50);
-			this.lblTitulo.TabIndex = 5;
+			this.lblTitulo.TabIndex = 4;
 			this.lblTitulo.Text = "Despesa Periódica";
 			// 
 			// btnClose
@@ -99,6 +103,7 @@
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
 			this.btnClose.Location = new System.Drawing.Point(668, 0);
+			this.btnClose.TabIndex = 5;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
@@ -124,7 +129,7 @@
 			this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblID.Name = "lblID";
 			this.lblID.Size = new System.Drawing.Size(94, 30);
-			this.lblID.TabIndex = 1;
+			this.lblID.TabIndex = 0;
 			this.lblID.Text = "0001";
 			this.lblID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -138,7 +143,7 @@
 			this.lbl_IdTexto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbl_IdTexto.Name = "lbl_IdTexto";
 			this.lbl_IdTexto.Size = new System.Drawing.Size(35, 13);
-			this.lbl_IdTexto.TabIndex = 2;
+			this.lbl_IdTexto.TabIndex = 1;
 			this.lbl_IdTexto.Text = "Reg.";
 			this.lbl_IdTexto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -157,11 +162,13 @@
             this.btnCancelar,
             this.btnFechar,
             this.toolStripSeparator2,
-            this.btnAtivo});
+            this.btnAtivo,
+            this.toolStripSeparator3,
+            this.btnPagamentos});
 			this.tspMenu.Location = new System.Drawing.Point(2, 631);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(704, 44);
-			this.tspMenu.TabIndex = 28;
+			this.tspMenu.TabIndex = 30;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -239,6 +246,22 @@
 			this.btnAtivo.ToolTipText = "Ativa";
 			this.btnAtivo.Click += new System.EventHandler(this.btnAtivo_Click);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 44);
+			// 
+			// btnPagamentos
+			// 
+			this.btnPagamentos.Enabled = false;
+			this.btnPagamentos.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnPagamentos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnPagamentos.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnPagamentos.Name = "btnPagamentos";
+			this.btnPagamentos.Size = new System.Drawing.Size(142, 41);
+			this.btnPagamentos.Text = "Ver Pagamentos";
+			this.btnPagamentos.Click += new System.EventHandler(this.btnPagamentos_Click);
+			// 
 			// txtDespesaDescricao
 			// 
 			this.txtDespesaDescricao.BackColor = System.Drawing.Color.White;
@@ -266,13 +289,13 @@
 			// 
 			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDespesaValor.Inteiro = false;
-			this.txtDespesaValor.Location = new System.Drawing.Point(485, 352);
+			this.txtDespesaValor.Location = new System.Drawing.Point(485, 390);
 			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDespesaValor.Moeda = false;
 			this.txtDespesaValor.Name = "txtDespesaValor";
 			this.txtDespesaValor.Positivo = true;
 			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 26;
+			this.txtDespesaValor.TabIndex = 28;
 			this.txtDespesaValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label8
@@ -280,10 +303,10 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(357, 358);
+			this.label8.Location = new System.Drawing.Point(357, 396);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 25;
+			this.label8.TabIndex = 27;
 			this.label8.Text = "Valor da Despesa";
 			// 
 			// btnSetCredor
@@ -413,12 +436,12 @@
 			this.line1.EndPoint = new System.Drawing.Point(645, 5);
 			this.line1.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(27, 332);
+			this.line1.Location = new System.Drawing.Point(27, 371);
 			this.line1.Name = "line1";
 			this.line1.Opacity = 0.5F;
 			this.line1.Size = new System.Drawing.Size(650, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 22;
+			this.line1.TabIndex = 24;
 			this.line1.TabStop = false;
 			// 
 			// label6
@@ -426,21 +449,21 @@
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.ForeColor = System.Drawing.Color.Black;
-			this.label6.Location = new System.Drawing.Point(58, 358);
+			this.label6.Location = new System.Drawing.Point(58, 396);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(99, 19);
-			this.label6.TabIndex = 23;
+			this.label6.TabIndex = 25;
 			this.label6.Text = "Data do Início";
 			// 
 			// dtpIniciarData
 			// 
 			this.dtpIniciarData.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dtpIniciarData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpIniciarData.Location = new System.Drawing.Point(163, 352);
+			this.dtpIniciarData.Location = new System.Drawing.Point(163, 390);
 			this.dtpIniciarData.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.dtpIniciarData.Name = "dtpIniciarData";
 			this.dtpIniciarData.Size = new System.Drawing.Size(145, 31);
-			this.dtpIniciarData.TabIndex = 24;
+			this.dtpIniciarData.TabIndex = 26;
 			// 
 			// btnSetForma
 			// 
@@ -542,10 +565,10 @@
 			this.cmbRecorrenciaMes.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbRecorrenciaMes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRecorrenciaMes.FormattingEnabled = true;
-			this.cmbRecorrenciaMes.Location = new System.Drawing.Point(231, 179);
+			this.cmbRecorrenciaMes.Location = new System.Drawing.Point(446, 140);
 			this.cmbRecorrenciaMes.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaMes.Name = "cmbRecorrenciaMes";
-			this.cmbRecorrenciaMes.Size = new System.Drawing.Size(234, 27);
+			this.cmbRecorrenciaMes.Size = new System.Drawing.Size(125, 27);
 			this.cmbRecorrenciaMes.TabIndex = 12;
 			// 
 			// cmbRecorrenciaSemana
@@ -556,7 +579,7 @@
 			this.cmbRecorrenciaSemana.Location = new System.Drawing.Point(231, 140);
 			this.cmbRecorrenciaSemana.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbRecorrenciaSemana.Name = "cmbRecorrenciaSemana";
-			this.cmbRecorrenciaSemana.Size = new System.Drawing.Size(234, 27);
+			this.cmbRecorrenciaSemana.Size = new System.Drawing.Size(125, 27);
 			this.cmbRecorrenciaSemana.TabIndex = 10;
 			// 
 			// cmbRecorrenciaDia
@@ -599,7 +622,7 @@
 			this.lblMes.AutoSize = true;
 			this.lblMes.BackColor = System.Drawing.Color.Transparent;
 			this.lblMes.ForeColor = System.Drawing.Color.Black;
-			this.lblMes.Location = new System.Drawing.Point(187, 182);
+			this.lblMes.Location = new System.Drawing.Point(402, 143);
 			this.lblMes.Name = "lblMes";
 			this.lblMes.Size = new System.Drawing.Size(37, 19);
 			this.lblMes.TabIndex = 11;
@@ -625,7 +648,7 @@
 			this.lblDia.Name = "lblDia";
 			this.lblDia.Size = new System.Drawing.Size(207, 19);
 			this.lblDia.TabIndex = 7;
-			this.lblDia.Text = "Dia";
+			this.lblDia.Text = "Vencimento - Dia do Mês";
 			this.lblDia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label10
@@ -691,10 +714,10 @@
 			this.panel2.Controls.Add(this.lblDia);
 			this.panel2.Controls.Add(this.lblMes);
 			this.panel2.Controls.Add(this.lblSemana);
-			this.panel2.Location = new System.Drawing.Point(19, 395);
+			this.panel2.Location = new System.Drawing.Point(19, 435);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(671, 222);
-			this.panel2.TabIndex = 27;
+			this.panel2.Size = new System.Drawing.Size(671, 182);
+			this.panel2.TabIndex = 29;
 			// 
 			// lblDespesaData
 			// 
@@ -705,7 +728,7 @@
 			this.lblDespesaData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblDespesaData.Name = "lblDespesaData";
 			this.lblDespesaData.Size = new System.Drawing.Size(174, 30);
-			this.lblDespesaData.TabIndex = 3;
+			this.lblDespesaData.TabIndex = 2;
 			this.lblDespesaData.Text = "01/01/2000";
 			this.lblDespesaData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lblDespesaData.Click += new System.EventHandler(this.lblDespesaData_Click);
@@ -720,7 +743,7 @@
 			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(37, 13);
-			this.label2.TabIndex = 4;
+			this.label2.TabIndex = 3;
 			this.label2.Text = "Data";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -786,6 +809,28 @@
 			this.btnInsertTitular.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnInsertTitular.Click += new System.EventHandler(this.btnInsertTitular_Click);
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.BackColor = System.Drawing.Color.Transparent;
+			this.label1.ForeColor = System.Drawing.Color.Black;
+			this.label1.Location = new System.Drawing.Point(38, 338);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(153, 19);
+			this.label1.TabIndex = 22;
+			this.label1.Text = "Matrícula | Instalação";
+			// 
+			// txtInstalacao
+			// 
+			this.txtInstalacao.BackColor = System.Drawing.Color.White;
+			this.txtInstalacao.Location = new System.Drawing.Point(197, 335);
+			this.txtInstalacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtInstalacao.MaxLength = 100;
+			this.txtInstalacao.Name = "txtInstalacao";
+			this.txtInstalacao.Size = new System.Drawing.Size(145, 27);
+			this.txtInstalacao.TabIndex = 23;
+			this.txtInstalacao.Tag = "";
+			// 
 			// frmDespesaPeriodica
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -813,7 +858,9 @@
 			this.Controls.Add(this.txtDespesaValor);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.dtpIniciarData);
+			this.Controls.Add(this.txtInstalacao);
 			this.Controls.Add(this.txtDespesaDescricao);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.lblCongregacao);
 			this.Controls.Add(this.tspMenu);
@@ -827,7 +874,9 @@
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
 			this.Controls.SetChildIndex(this.label6, 0);
+			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.txtDespesaDescricao, 0);
+			this.Controls.SetChildIndex(this.txtInstalacao, 0);
 			this.Controls.SetChildIndex(this.dtpIniciarData, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
 			this.Controls.SetChildIndex(this.txtDespesaValor, 0);
@@ -917,5 +966,9 @@
 		internal System.Windows.Forms.TextBox txtTitular;
 		internal System.Windows.Forms.Label label14;
 		internal VIBlend.WinForms.Controls.vButton btnInsertTitular;
+		internal System.Windows.Forms.Label label1;
+		internal System.Windows.Forms.TextBox txtInstalacao;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripButton btnPagamentos;
 	}
 }
