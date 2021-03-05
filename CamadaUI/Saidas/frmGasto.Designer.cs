@@ -401,7 +401,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(407, 135);
+			this.btnSetSetor.Location = new System.Drawing.Point(519, 135);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -420,7 +420,7 @@
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
-			this.txtSetor.Size = new System.Drawing.Size(228, 27);
+			this.txtSetor.Size = new System.Drawing.Size(340, 27);
 			this.txtSetor.TabIndex = 6;
 			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -581,7 +581,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(407, 66);
+			this.btnSetConta.Location = new System.Drawing.Point(519, 66);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
@@ -600,7 +600,7 @@
 			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtConta.MaxLength = 30;
 			this.txtConta.Name = "txtConta";
-			this.txtConta.Size = new System.Drawing.Size(228, 27);
+			this.txtConta.Size = new System.Drawing.Size(340, 27);
 			this.txtConta.TabIndex = 2;
 			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -611,7 +611,7 @@
 			this.lblContaDetalhe.ForeColor = System.Drawing.Color.Black;
 			this.lblContaDetalhe.Location = new System.Drawing.Point(173, 96);
 			this.lblContaDetalhe.Name = "lblContaDetalhe";
-			this.lblContaDetalhe.Size = new System.Drawing.Size(228, 35);
+			this.lblContaDetalhe.Size = new System.Drawing.Size(340, 35);
 			this.lblContaDetalhe.TabIndex = 4;
 			this.lblContaDetalhe.Text = "Saldo da Conta: R$ 0,00\r\nData de Bloqueio até: 01/01/2000";
 			// 

@@ -510,6 +510,27 @@ namespace CamadaBLL
 			}
 		}
 
+		// REACTIVE DESPESA PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		public void ReactiveProvisoria(objDespesaProvisoria Provisorio)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- execute Update Desepesa Provisoria
+				Provisorio.Concluida = false;
+				Provisorio.DevolucaoData = null;
+				Provisorio.EndEdit();
+
+				UpdateDespesaProvisoria(Provisorio, db);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// DELETE DESPESA PROVISORIA
 		//------------------------------------------------------------------------------------------------------------
 		public void DeleteProvisoria(long IDProvisorio)

@@ -106,7 +106,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET LIST OF
+		// GET LIST OF APAGAR FROM ID DESPESA
 		//------------------------------------------------------------------------------------------------------------
 		public List<objAPagar> GetListAPagarByDespesa(long IDDespesa, object dbTran = null)
 		{
@@ -143,7 +143,7 @@ namespace CamadaBLL
 			}
 		}
 
-		// GET LIST OF DESPESA PERIODICA
+		// GET LIST OF APAGAR FROM DESPESA PERIODICA
 		//------------------------------------------------------------------------------------------------------------
 		public List<objAPagar> GetListAPagarPeriodica(
 			int? IDCobrancaForma = null,
@@ -165,7 +165,7 @@ namespace CamadaBLL
 			return APagarList;
 		}
 
-		// CREATE LIST OF DESPESA PERIODICA
+		// CREATE LIST OF APAGAR FROM DESPESA PERIODICA
 		//------------------------------------------------------------------------------------------------------------
 		private List<objAPagar> CreateListAPagarPeriodica(
 			objDespesaPeriodica desp,
@@ -689,6 +689,13 @@ namespace CamadaBLL
 				if (!cBLL.ContaDateBlockPermit((int)saida.IDConta, saida.MovData, dbTran))
 				{
 					throw new AppException("A Data da Conta está BLOQUEADA nesta Data proposta...", 2);
+				}
+
+				// CHECK SOURCE DESPESA IS DESPESA COMUM AND CHANGE SITUACAO
+				if (apagar.DespesaOrigem == 1)
+				{
+					var dBLL = new DespesaBLL();
+					dBLL.ChangeSituacaoDespesa(apagar.IDDespesa, 1, dbTran);
 				}
 
 				// DELETE REMOVE SAIDA

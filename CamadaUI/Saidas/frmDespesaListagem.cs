@@ -253,15 +253,15 @@ namespace CamadaUI.Saidas
 			clnDespesaDescricao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnDespesaDescricao.DefaultCellStyle.Font = clnFont;
 
-			//--- (7) COLUNA PERIODO DATA
-			clnPeriodo.DataPropertyName = "PeriodoData";
-			clnPeriodo.Visible = true;
-			clnPeriodo.ReadOnly = true;
-			clnPeriodo.Resizable = DataGridViewTriState.False;
-			clnPeriodo.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnPeriodo.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnPeriodo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnPeriodo.DefaultCellStyle.Font = clnFont;
+			//--- (7) COLUNA PARCELAS
+			clnParcelas.DataPropertyName = "Parcelas";
+			clnParcelas.Visible = true;
+			clnParcelas.ReadOnly = true;
+			clnParcelas.Resizable = DataGridViewTriState.False;
+			clnParcelas.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnParcelas.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnParcelas.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnParcelas.DefaultCellStyle.Font = clnFont;
 
 			//--- (8) COLUNA SITUACAO
 			clnSituacao.DataPropertyName = "Situacao";
@@ -291,7 +291,7 @@ namespace CamadaUI.Saidas
 				clnTipo,
 				clnDespesaDescricao,
 				clnCredor,
-				clnPeriodo,
+				clnParcelas,
 				clnSituacao,
 				clnValor);
 		}
@@ -305,6 +305,25 @@ namespace CamadaUI.Saidas
 				e.Handled = true;
 				e.SuppressKeyPress = true;
 				btnVisualizar_Click(sender, new EventArgs());
+			}
+		}
+
+		// CONTROLA AS CORES DA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.ColumnIndex == clnParcelas.Index)
+			{
+				if((byte)e.Value == 1)
+				{
+					e.Value = "única";
+					e.CellStyle.ForeColor = Color.Black;
+				}
+				else
+				{
+					e.Value = $"{e.Value:D2} Parcelas";
+					e.CellStyle.ForeColor = Color.Red;
+				}
 			}
 		}
 
@@ -675,6 +694,57 @@ namespace CamadaUI.Saidas
 			btnExcluir_Click(sender, e);
 		}
 
+		// VERIFICA A SITUACAO DA DESPESA BY SITUACAO APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuVerificaSituacao_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Verificar a Situação...",
+					"Selecionar Registro",
+					DialogType.OK,
+					DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var result = dBLL.CheckSituacaoDespesa(item);
+
+				if (result)
+				{
+					ObterDados();
+					AbrirDialog("Situação da Despesa foi verificada." +
+						"\nA Situação da Despesa foi corrigida.", "Situação Corrigida");
+				}
+				else
+				{
+					AbrirDialog("Situação da Despesa verificada..." +
+						"\nNão foi encontrado nenhum erro.", "Situação Verificada");
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Verificar a situação da despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// INSERT IMAGE
+		//------------------------------------------------------------------------------------------------------------
 		private void mnuImagemInserir_Click(object sender, EventArgs e)
 		{
 			//--- check selected item

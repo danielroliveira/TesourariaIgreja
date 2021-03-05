@@ -91,7 +91,7 @@
             this.btnCancelar,
             this.toolStripSeparator2,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 468);
+			this.tspMenu.Location = new System.Drawing.Point(2, 610);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(674, 44);
 			this.tspMenu.TabIndex = 2;
@@ -225,7 +225,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(654, 391);
+			this.dgvListagem.Size = new System.Drawing.Size(654, 533);
 			this.dgvListagem.StandardTab = true;
 			this.dgvListagem.TabIndex = 1;
 			this.dgvListagem.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvListagem_CellBeginEdit);
@@ -280,7 +280,7 @@
 			// frmTitularControle
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(678, 514);
+			this.ClientSize = new System.Drawing.Size(678, 656);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.tspMenu);
 			this.Name = "frmTitularControle";

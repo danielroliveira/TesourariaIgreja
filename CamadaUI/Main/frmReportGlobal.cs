@@ -41,7 +41,18 @@ namespace CamadaUI.Main
 			rptvPadrao.LocalReport.DataSources.Add(dstPrincipal);
 			rptvPadrao.LocalReport.DataSources.Add(dstDados);
 			addLogoParameters();
-			addParameters(parameters);
+
+			try
+			{
+				addParameters(parameters);
+
+			}
+			catch (Exception ex)
+			{
+
+				throw ex;
+			}
+
 
 			if (DtSourceSecundario != null)
 			{
@@ -71,11 +82,18 @@ namespace CamadaUI.Main
 
 		private void addParameters(List<ReportParameter> parameters)
 		{
-			if (parameters != null)
+			try
 			{
-				//--- add Parameters
-				rptvPadrao.LocalReport.SetParameters(parameters);
-				rptvPadrao.LocalReport.Refresh();
+				if (parameters != null)
+				{
+					//--- add Parameters
+					rptvPadrao.LocalReport.SetParameters(parameters);
+					rptvPadrao.LocalReport.Refresh();
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
 			}
 		}
 

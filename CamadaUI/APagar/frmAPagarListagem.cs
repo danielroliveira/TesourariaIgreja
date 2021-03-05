@@ -24,6 +24,7 @@ namespace CamadaUI.APagar
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
 		private int? _Situacao = 1; // 1: Em Aberto | 2: Quitadas | 3: Canceladas | 4:Negociadas | 5:Negativadas | null :Todas
+		private bool _disableProcura = false;
 
 		public struct StructPesquisa
 		{
@@ -112,6 +113,12 @@ namespace CamadaUI.APagar
 				bindPag.DataSource = listPag;
 				dgvListagem.DataSource = bindPag;
 				CalculaTotais();
+
+				// disable procura text => Filtar Listagem
+				_disableProcura = true;
+				txtProcura.Clear();
+				_disableProcura = false;
+
 			}
 			catch (Exception ex)
 			{
@@ -1049,7 +1056,7 @@ namespace CamadaUI.APagar
 			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- check if ORIGEM is Periodica
-			if (item.DespesaOrigem != 1)
+			if (item.DespesaOrigem != 1 && item.IDAPagar == null)
 			{
 				AbrirDialog($"Esse A Pagar é uma DEPESA PERIÓDICA.\n" +
 					$"Não é possível {acao} uma Despesa Periódica.",
@@ -1403,6 +1410,9 @@ namespace CamadaUI.APagar
 
 		private void FiltrarListagem(object sender, EventArgs e)
 		{
+			// if obterDados exit
+			if (_disableProcura) return;
+
 			if (txtProcura.TextLength > 0)
 			{
 				// filter

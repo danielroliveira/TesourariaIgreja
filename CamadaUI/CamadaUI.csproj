@@ -798,6 +798,7 @@
       <DependentUpon>frmAPagarReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="APagar\Reports\rptAPagarList.rdlc" />
+    <EmbeddedResource Include="APagar\Reports\rptPagamentos.rdlc" />
     <EmbeddedResource Include="AReceber\frmAReceberAlterar.resx">
       <DependentUpon>frmAReceberAlterar.cs</DependentUpon>
     </EmbeddedResource>

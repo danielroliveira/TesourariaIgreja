@@ -133,7 +133,8 @@ namespace CamadaUI.Saidas
 					btnCancelar.Enabled = true;
 					btnAnexarDespesa.Enabled = false;
 					btnInserirDespesa.Enabled = false;
-					btnFinalizar.Enabled = false;
+					btnFinalizar.Text = "&Finalizar Provisória";
+					btnFinalizar.Image = Properties.Resources.accept_24;
 					btnRecibo.Enabled = false;
 					lblConcluida.Visible = false;
 					btnExcluir.Enabled = false;
@@ -147,13 +148,24 @@ namespace CamadaUI.Saidas
 					btnCancelar.Enabled = false;
 					btnAnexarDespesa.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					btnInserirDespesa.Enabled = value != EnumFlagEstado.RegistroBloqueado;
-					btnFinalizar.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					btnRecibo.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					btnExcluir.Enabled = value != EnumFlagEstado.RegistroBloqueado;
 					lblConcluida.Visible = value == EnumFlagEstado.RegistroBloqueado;
 					// define MaxDate of Data da Despesa
 					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
 					dtpRetiradaData.MinDate = _provisoria.RetiradaData;
+
+					if(value == EnumFlagEstado.RegistroBloqueado)
+					{
+						btnFinalizar.Text = "&Reativar Provisória";
+						btnFinalizar.Image = Properties.Resources.refresh_24;
+					}
+					else
+					{
+						btnFinalizar.Text = "&Finalizar Provisória";
+						btnFinalizar.Image = Properties.Resources.accept_24;
+					}
+
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -617,21 +629,35 @@ namespace CamadaUI.Saidas
 
 		// FINALIZAR CONCLUIR DESPESA PROVISORIA
 		//------------------------------------------------------------------------------------------------------------
-		private void btnFinalizar_Click(object sender, EventArgs e)
+		private void btnFinalizarReativar_Click(object sender, EventArgs e)
+		{
+			if (_provisoria.IDProvisorio == null || Sit == EnumFlagEstado.NovoRegistro)
+			{
+				throw new Exception("Essa despesa provisória ainda não foi salva...");
+			}
+
+			if (!_provisoria.Concluida)
+			{
+				FinalizarProvisoria();
+			}
+			else
+			{
+				ReativarProvisoria();
+			}
+		}
+
+		// FINALIZAR DESPESA PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		private void FinalizarProvisoria()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				if (_provisoria.IDProvisorio == null || Sit == EnumFlagEstado.NovoRegistro)
-				{
-					throw new Exception("Essa despesa provisória ainda não foi salva...");
-				}
-
 				var resp = AbrirDialog("A Despesa Provisória será FINALIZADA..." +
 					"\nIsso significa que o recurso restante foi devolvido à CONTA." +
-					"\nDeseja realmente FINALIZAR esta despesa provisória?", "Finalizar Provisório",
+					"\n\nDeseja realmente FINALIZAR esta despesa provisória?", "Finalizar Provisório",
 					DialogType.SIM_NAO, DialogIcon.Question);
 
 				if (resp != DialogResult.Yes) return;
@@ -654,6 +680,43 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
+
+		// REATIVAR A DESPESA PROVISORIA
+		//------------------------------------------------------------------------------------------------------------
+		private void ReativarProvisoria()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var resp = AbrirDialog("A Despesa Provisória será REATIVADA..." +
+					"\nEssa Despesa retornará à listagem de Despesas Provisórias ATIVAS." +
+					"\n\nDeseja realmente REATIVAR esta despesa provisória?", "Reativar Provisória",
+					DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp != DialogResult.Yes) return;
+
+				// finalize
+				_provisoria.Concluida = false;
+				_provisoria.DevolucaoData = null;
+
+				provBLL.ReactiveProvisoria(_provisoria);
+				_provisoria.EndEdit();
+				Sit = EnumFlagEstado.RegistroSalvo;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Reativar a Despesa Provisória..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
 		}
 
 		#endregion // ANEXAR DESPESA --- END

@@ -45,13 +45,9 @@ namespace CamadaUI.APagar
 			this.btnImprimir = new System.Windows.Forms.Button();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
-			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.txtDespesaTipo = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtCredor = new System.Windows.Forms.TextBox();
 			this.lblContribuinte = new System.Windows.Forms.Label();
-			this.txtDespesaDescricao = new System.Windows.Forms.TextBox();
 			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuItemVerPagamentos = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +60,10 @@ namespace CamadaUI.APagar
 			this.lblDespesaValor = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lblIniciarData = new System.Windows.Forms.Label();
+			this.lblSetor = new System.Windows.Forms.Label();
+			this.lblCredor = new System.Windows.Forms.Label();
+			this.lblDespesaTipo = new System.Windows.Forms.Label();
+			this.lblDespesaDescricao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.mnuOperacoes.SuspendLayout();
@@ -252,17 +252,6 @@ namespace CamadaUI.APagar
 			this.lbl_IdTexto.Text = "Reg.";
 			this.lbl_IdTexto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
-			// txtSetor
-			// 
-			this.txtSetor.Location = new System.Drawing.Point(160, 66);
-			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtSetor.MaxLength = 30;
-			this.txtSetor.Name = "txtSetor";
-			this.txtSetor.Size = new System.Drawing.Size(228, 27);
-			this.txtSetor.TabIndex = 23;
-			this.txtSetor.TabStop = false;
-			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
-			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
@@ -270,21 +259,9 @@ namespace CamadaUI.APagar
 			this.label5.ForeColor = System.Drawing.Color.Black;
 			this.label5.Location = new System.Drawing.Point(49, 69);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(105, 19);
+			this.label5.Size = new System.Drawing.Size(109, 19);
 			this.label5.TabIndex = 22;
-			this.label5.Text = "Setor Debitado";
-			// 
-			// txtDespesaTipo
-			// 
-			this.txtDespesaTipo.Location = new System.Drawing.Point(160, 144);
-			this.txtDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDespesaTipo.MaxLength = 30;
-			this.txtDespesaTipo.Name = "txtDespesaTipo";
-			this.txtDespesaTipo.Size = new System.Drawing.Size(433, 27);
-			this.txtDespesaTipo.TabIndex = 27;
-			this.txtDespesaTipo.TabStop = false;
-			this.txtDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
-			this.txtDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.label5.Text = "Setor Debitado:";
 			// 
 			// label4
 			// 
@@ -293,21 +270,9 @@ namespace CamadaUI.APagar
 			this.label4.ForeColor = System.Drawing.Color.Black;
 			this.label4.Location = new System.Drawing.Point(37, 147);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(117, 19);
+			this.label4.Size = new System.Drawing.Size(121, 19);
 			this.label4.TabIndex = 26;
-			this.label4.Text = "Tipo de Despesa";
-			// 
-			// txtCredor
-			// 
-			this.txtCredor.Location = new System.Drawing.Point(160, 105);
-			this.txtCredor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCredor.MaxLength = 30;
-			this.txtCredor.Name = "txtCredor";
-			this.txtCredor.Size = new System.Drawing.Size(433, 27);
-			this.txtCredor.TabIndex = 25;
-			this.txtCredor.TabStop = false;
-			this.txtCredor.Tag = "Pressione a tecla (+) para procurar";
-			this.txtCredor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.label4.Text = "Tipo de Despesa:";
 			// 
 			// lblContribuinte
 			// 
@@ -316,22 +281,9 @@ namespace CamadaUI.APagar
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
 			this.lblContribuinte.Location = new System.Drawing.Point(16, 108);
 			this.lblContribuinte.Name = "lblContribuinte";
-			this.lblContribuinte.Size = new System.Drawing.Size(138, 19);
+			this.lblContribuinte.Size = new System.Drawing.Size(142, 19);
 			this.lblContribuinte.TabIndex = 24;
-			this.lblContribuinte.Text = "Credor / Fornecedor";
-			// 
-			// txtDespesaDescricao
-			// 
-			this.txtDespesaDescricao.BackColor = System.Drawing.Color.White;
-			this.txtDespesaDescricao.Location = new System.Drawing.Point(160, 183);
-			this.txtDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDespesaDescricao.MaxLength = 100;
-			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
-			this.txtDespesaDescricao.Size = new System.Drawing.Size(433, 27);
-			this.txtDespesaDescricao.TabIndex = 29;
-			this.txtDespesaDescricao.TabStop = false;
-			this.txtDespesaDescricao.Tag = "";
-			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.lblContribuinte.Text = "Credor / Fornecedor:";
 			// 
 			// lblCongregacao
 			// 
@@ -340,9 +292,9 @@ namespace CamadaUI.APagar
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
 			this.lblCongregacao.Location = new System.Drawing.Point(81, 186);
 			this.lblCongregacao.Name = "lblCongregacao";
-			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
+			this.lblCongregacao.Size = new System.Drawing.Size(77, 19);
 			this.lblCongregacao.TabIndex = 28;
-			this.lblCongregacao.Text = "Descrição";
+			this.lblCongregacao.Text = "Descrição:";
 			// 
 			// mnuOperacoes
 			// 
@@ -448,21 +400,70 @@ namespace CamadaUI.APagar
 			this.lblIniciarData.Text = "00/00/0000";
 			this.lblIniciarData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// lblSetor
+			// 
+			this.lblSetor.BackColor = System.Drawing.Color.Transparent;
+			this.lblSetor.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSetor.ForeColor = System.Drawing.Color.Black;
+			this.lblSetor.Location = new System.Drawing.Point(160, 66);
+			this.lblSetor.Name = "lblSetor";
+			this.lblSetor.Size = new System.Drawing.Size(228, 27);
+			this.lblSetor.TabIndex = 34;
+			this.lblSetor.Text = "Setor Debitado";
+			this.lblSetor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lblCredor
+			// 
+			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
+			this.lblCredor.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblCredor.ForeColor = System.Drawing.Color.Black;
+			this.lblCredor.Location = new System.Drawing.Point(160, 105);
+			this.lblCredor.Name = "lblCredor";
+			this.lblCredor.Size = new System.Drawing.Size(459, 27);
+			this.lblCredor.TabIndex = 34;
+			this.lblCredor.Text = "Credor / Fornecedor";
+			this.lblCredor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lblDespesaTipo
+			// 
+			this.lblDespesaTipo.BackColor = System.Drawing.Color.Transparent;
+			this.lblDespesaTipo.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDespesaTipo.ForeColor = System.Drawing.Color.Black;
+			this.lblDespesaTipo.Location = new System.Drawing.Point(160, 144);
+			this.lblDespesaTipo.Name = "lblDespesaTipo";
+			this.lblDespesaTipo.Size = new System.Drawing.Size(459, 27);
+			this.lblDespesaTipo.TabIndex = 34;
+			this.lblDespesaTipo.Text = "Tipo de Despesa";
+			this.lblDespesaTipo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lblDespesaDescricao
+			// 
+			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
+			this.lblDespesaDescricao.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDespesaDescricao.ForeColor = System.Drawing.Color.Black;
+			this.lblDespesaDescricao.Location = new System.Drawing.Point(160, 183);
+			this.lblDespesaDescricao.Name = "lblDespesaDescricao";
+			this.lblDespesaDescricao.Size = new System.Drawing.Size(482, 27);
+			this.lblDespesaDescricao.TabIndex = 34;
+			this.lblDespesaDescricao.Text = "Descrição";
+			this.lblDespesaDescricao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblDespesaDescricao.TextChanged += new System.EventHandler(this.lbl_TextChanged);
+			// 
 			// frmAPagarDespesaPeriodica
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(866, 658);
+			this.Controls.Add(this.lblDespesaDescricao);
+			this.Controls.Add(this.lblDespesaTipo);
+			this.Controls.Add(this.lblCredor);
+			this.Controls.Add(this.lblSetor);
 			this.Controls.Add(this.lblIniciarData);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblDespesaValor);
 			this.Controls.Add(this.label8);
-			this.Controls.Add(this.txtSetor);
 			this.Controls.Add(this.label5);
-			this.Controls.Add(this.txtDespesaTipo);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.txtCredor);
 			this.Controls.Add(this.lblContribuinte);
-			this.Controls.Add(this.txtDespesaDescricao);
 			this.Controls.Add(this.lblCongregacao);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.btnImprimir);
@@ -475,17 +476,17 @@ namespace CamadaUI.APagar
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
-			this.Controls.SetChildIndex(this.txtDespesaDescricao, 0);
 			this.Controls.SetChildIndex(this.lblContribuinte, 0);
-			this.Controls.SetChildIndex(this.txtCredor, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
-			this.Controls.SetChildIndex(this.txtDespesaTipo, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
-			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
 			this.Controls.SetChildIndex(this.lblDespesaValor, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.lblIniciarData, 0);
+			this.Controls.SetChildIndex(this.lblSetor, 0);
+			this.Controls.SetChildIndex(this.lblCredor, 0);
+			this.Controls.SetChildIndex(this.lblDespesaTipo, 0);
+			this.Controls.SetChildIndex(this.lblDespesaDescricao, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
@@ -502,13 +503,9 @@ namespace CamadaUI.APagar
 		internal System.Windows.Forms.Button btnImprimir;
 		internal System.Windows.Forms.Label lblID;
 		internal System.Windows.Forms.Label lbl_IdTexto;
-		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label5;
-		internal System.Windows.Forms.TextBox txtDespesaTipo;
 		internal System.Windows.Forms.Label label4;
-		internal System.Windows.Forms.TextBox txtCredor;
 		internal System.Windows.Forms.Label lblContribuinte;
-		internal System.Windows.Forms.TextBox txtDespesaDescricao;
 		internal System.Windows.Forms.Label lblCongregacao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
@@ -529,5 +526,9 @@ namespace CamadaUI.APagar
 		internal System.Windows.Forms.Label lblDespesaValor;
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label lblIniciarData;
+		internal System.Windows.Forms.Label lblSetor;
+		internal System.Windows.Forms.Label lblCredor;
+		internal System.Windows.Forms.Label lblDespesaTipo;
+		internal System.Windows.Forms.Label lblDespesaDescricao;
 	}
 }

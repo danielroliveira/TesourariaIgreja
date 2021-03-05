@@ -73,10 +73,6 @@
 			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label7 = new System.Windows.Forms.Label();
 			this.txtTitular = new System.Windows.Forms.TextBox();
 			this.btnSetTitular = new VIBlend.WinForms.Controls.vButton();
@@ -90,6 +86,11 @@
 			this.chkReferencia = new System.Windows.Forms.CheckBox();
 			this.pnlReferencia = new System.Windows.Forms.Panel();
 			this.lblReferencia = new System.Windows.Forms.Label();
+			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlParcelas.SuspendLayout();
@@ -472,7 +473,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(450, 63);
+			this.btnSetSetor.Location = new System.Drawing.Point(551, 63);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -491,7 +492,7 @@
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
-			this.txtSetor.Size = new System.Drawing.Size(228, 27);
+			this.txtSetor.Size = new System.Drawing.Size(329, 27);
 			this.txtSetor.TabIndex = 2;
 			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
@@ -669,6 +670,7 @@
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnForma,
+            this.clnSituacao,
             this.clnIdentificador,
             this.clnVencimento,
             this.clnValor});
@@ -687,32 +689,6 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(608, 168);
 			this.dgvListagem.TabIndex = 27;
-			// 
-			// clnForma
-			// 
-			this.clnForma.HeaderText = "Forma";
-			this.clnForma.Name = "clnForma";
-			this.clnForma.ReadOnly = true;
-			this.clnForma.Width = 250;
-			// 
-			// clnIdentificador
-			// 
-			this.clnIdentificador.HeaderText = "No. Reg.:";
-			this.clnIdentificador.Name = "clnIdentificador";
-			this.clnIdentificador.ReadOnly = true;
-			this.clnIdentificador.Width = 115;
-			// 
-			// clnVencimento
-			// 
-			this.clnVencimento.HeaderText = "Vencimento";
-			this.clnVencimento.Name = "clnVencimento";
-			this.clnVencimento.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
 			// 
 			// label7
 			// 
@@ -883,6 +859,41 @@
 			this.lblReferencia.TabIndex = 0;
 			this.lblReferencia.Text = "REFERÊNCIA";
 			// 
+			// clnForma
+			// 
+			this.clnForma.HeaderText = "Forma";
+			this.clnForma.Name = "clnForma";
+			this.clnForma.ReadOnly = true;
+			this.clnForma.Width = 200;
+			// 
+			// clnSituacao
+			// 
+			this.clnSituacao.HeaderText = "Situação";
+			this.clnSituacao.Name = "clnSituacao";
+			this.clnSituacao.ReadOnly = true;
+			this.clnSituacao.Width = 90;
+			// 
+			// clnIdentificador
+			// 
+			this.clnIdentificador.HeaderText = "No. Reg.:";
+			this.clnIdentificador.Name = "clnIdentificador";
+			this.clnIdentificador.ReadOnly = true;
+			this.clnIdentificador.Width = 115;
+			// 
+			// clnVencimento
+			// 
+			this.clnVencimento.HeaderText = "Venc.";
+			this.clnVencimento.Name = "clnVencimento";
+			this.clnVencimento.ReadOnly = true;
+			this.clnVencimento.Width = 80;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
+			this.clnValor.Width = 80;
+			// 
 			// frmDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -1005,10 +1016,6 @@
 		private AwesomeShapeControl.Line line2;
 		internal System.Windows.Forms.Label label6;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		internal System.Windows.Forms.Label label7;
 		internal System.Windows.Forms.TextBox txtTitular;
 		internal VIBlend.WinForms.Controls.vButton btnSetTitular;
@@ -1027,5 +1034,10 @@
 		private System.Windows.Forms.CheckBox chkReferencia;
 		private System.Windows.Forms.Panel pnlReferencia;
 		internal System.Windows.Forms.Label lblReferencia;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 	}
 }

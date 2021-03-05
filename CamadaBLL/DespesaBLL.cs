@@ -609,6 +609,95 @@ namespace CamadaBLL
 			}
 		}
 
+		// VERIFY DESPESA SITUACAO BY LIST OF APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		public bool CheckSituacaoDespesa(objDespesa despesa)
+		{
+			// return TRUE when IDSitucao is Changed | FALSE when nothing changed
+			try
+			{
+				var dbTran = new AcessoDados();
+
+				var lstAPagar = new APagarBLL().GetListAPagarByDespesa((long)despesa.IDDespesa, dbTran);
+
+				if (lstAPagar.Count == 0)
+				{
+					throw new Exception("Não foram encontrados registros de APagar referentes a essa Despesa...");
+				}
+
+				byte? newSituacao = null;
+
+				foreach (objAPagar item in lstAPagar)
+				{
+					switch (item.IDSituacao)
+					{
+						case 1: // EM ABERTO
+							if (newSituacao == null || newSituacao == 2) newSituacao = 1;
+							break;
+						case 2: // QUITADA
+							if (newSituacao == null) newSituacao = 2;
+							break;
+						case 3: // CANCELADA
+							if (newSituacao == null || newSituacao < 3) newSituacao = 3;
+							break;
+						case 4: // NEGOCIADA
+							if (newSituacao == null || newSituacao < 4) newSituacao = 4;
+							break;
+						case 5: // NEGATIVADA
+							if (newSituacao == null || newSituacao < 5) newSituacao = 5;
+							break;
+						default:
+							break;
+					}
+				}
+
+				if ((byte)newSituacao != despesa.IDSituacao)
+				{
+					despesa.IDSituacao = (byte)newSituacao;
+
+					// change situacao 
+					ChangeSituacaoDespesa((long)despesa.IDDespesa, (byte)newSituacao, dbTran);
+
+					// return
+					return true;
+				}
+				else
+				{
+					// return nothing changed
+					return false;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// CHANGE DESPESA SITUACAO
+		//------------------------------------------------------------------------------------------------------------
+		public bool ChangeSituacaoDespesa(long IDDespesa, byte newIDSituacao, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "UPDATE tblDespesaComum SET IDSituacao = @IDSituacao WHERE IDDespesa = @IDDespesa";
+
+				db.LimparParametros();
+				db.AdicionarParametros("@IDSituacao", newIDSituacao);
+				db.AdicionarParametros("@IDDespesa", IDDespesa);
+
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		//=============================================================================
 		// DESPESA TIPO
 		//=============================================================================

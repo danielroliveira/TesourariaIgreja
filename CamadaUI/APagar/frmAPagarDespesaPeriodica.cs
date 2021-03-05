@@ -77,16 +77,17 @@ namespace CamadaUI.APagar
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDDespesa", true);
-			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblIniciarData.DataBindings.Add("Text", bind, "IniciarData", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			lblDespesaValor.DataBindings["Text"].Format += FormatCurrency;
+			lblDespesaDescricao.DataBindings["Text"].Format += FormatDescricao;
 
 		}
 
@@ -105,6 +106,14 @@ namespace CamadaUI.APagar
 		private void FormatCurrency(object sender, ConvertEventArgs e)
 		{
 			e.Value = string.Format("{0:c}", e.Value);
+		}
+
+		private void FormatDescricao(object sender, ConvertEventArgs e)
+		{
+			if (_periodica.Instalacao != null && !string.IsNullOrEmpty(_periodica.Instalacao))
+			{
+				e.Value = $"{e.Value} ({_periodica.Instalacao})";
+			}
 		}
 
 		#endregion // DATABINDING --- END
@@ -314,6 +323,13 @@ namespace CamadaUI.APagar
 			e.SuppressKeyPress = true;
 		}
 
+		// CONTROLLING LABEL FONT SIZE
+		//------------------------------------------------------------------------------------------------------------
+		private void lbl_TextChanged(object sender, EventArgs e)
+		{
+			ResizeFontLabel(lblDespesaDescricao);
+		}
+
 		#endregion // CONTROL FUNCTIONS --- END
 
 		#region BUTTONS FUNCTION
@@ -327,6 +343,54 @@ namespace CamadaUI.APagar
 		//-------------------------------------------------------------------------------------------------------
 		private void btnImprimir_Click(object sender, EventArgs e)
 		{
+			//--- check list quantity
+			if (listPag == null || listPag.Count == 0)
+			{
+				AbrirDialog("Não existe nenhum item na listagem para ser impresso...",
+					"Listagem Vazia", DialogType.OK, DialogIcon.Warning);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> dstPrimario = listPag.Cast<object>().ToList();
+
+				//--- create Params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+
+				DateTime dtInicial = listPag.Min(x => x.Vencimento);
+				DateTime dtFinal = listPag.Max(x => x.Vencimento);
+
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmDataInicial", dtInicial.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmDataFinal", dtFinal.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmHideGroupMes", "true"));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmTitulo", "Listagem de Despesas Periódicas Pagas"));
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.APagar.Reports.rptPagamentos.rdlc",
+					"Relatório de Pagamentos",
+					dstPrimario, null, param);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+
+
+			/*
 			if (listPag == null || listPag.Count == 0)
 			{
 				AbrirDialog("Não há nenhum registro de A Pagar na listagem para ser impresso...",
@@ -339,6 +403,7 @@ namespace CamadaUI.APagar
 
 			Reports.frmAPagarReport frm = new Reports.frmAPagarReport(listPag, dtInicial, dtFinal);
 			frm.ShowDialog();
+			*/
 		}
 
 		#endregion // BUTTONS FUNCTION --- END
@@ -607,14 +672,11 @@ namespace CamadaUI.APagar
 
 		#region DESIGN FORM FUNCTIONS
 
-		private Color formOrigemPanelColor; // backup panel color
-
 		private void frm_Activated(object sender, EventArgs e)
 		{
 			if (_formOrigem != null)
 			{
 				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				formOrigemPanelColor = pnl.BackColor;
 				pnl.BackColor = Color.Silver;
 			}
 		}
@@ -624,7 +686,7 @@ namespace CamadaUI.APagar
 			if (_formOrigem != null)
 			{
 				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = formOrigemPanelColor;
+				pnl.BackColor = Color.SlateGray;
 			}
 		}
 

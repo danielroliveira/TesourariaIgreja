@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
@@ -41,7 +41,7 @@
 			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnDespesaDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnPeriodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnParcelas = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
@@ -66,6 +66,7 @@
 			this.btnExcluir = new System.Windows.Forms.Button();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuVerificaSituacao = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +75,8 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
 			this.line1 = new AwesomeShapeControl.Line();
-			this.line2 = new AwesomeShapeControl.Line();
+			this.txtProcura = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -110,7 +112,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(1189, 634);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(104, 42);
-			this.btnFechar.TabIndex = 11;
+			this.btnFechar.TabIndex = 14;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -121,10 +123,10 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(183, 634);
+			this.btnAdicionar.Location = new System.Drawing.Point(435, 634);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 5;
+			this.btnAdicionar.TabIndex = 7;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -135,10 +137,10 @@
 			// 
 			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.btnVisualizar.Location = new System.Drawing.Point(315, 634);
+			this.btnVisualizar.Location = new System.Drawing.Point(567, 634);
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
-			this.btnVisualizar.TabIndex = 6;
+			this.btnVisualizar.TabIndex = 8;
 			this.btnVisualizar.Text = "&Visualizar";
 			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -151,24 +153,24 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -178,7 +180,7 @@
             this.clnTipo,
             this.clnDespesaDescricao,
             this.clnCredor,
-            this.clnPeriodo,
+            this.clnParcelas,
             this.clnSituacao,
             this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
@@ -195,7 +197,8 @@
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1282, 492);
-			this.dgvListagem.TabIndex = 3;
+			this.dgvListagem.TabIndex = 4;
+			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
@@ -218,7 +221,7 @@
 			this.clnSetor.HeaderText = "Setor";
 			this.clnSetor.Name = "clnSetor";
 			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 120;
+			this.clnSetor.Width = 170;
 			// 
 			// clnTipo
 			// 
@@ -241,12 +244,12 @@
 			this.clnCredor.ReadOnly = true;
 			this.clnCredor.Width = 225;
 			// 
-			// clnPeriodo
+			// clnParcelas
 			// 
-			this.clnPeriodo.HeaderText = "Ref. Período";
-			this.clnPeriodo.Name = "clnPeriodo";
-			this.clnPeriodo.ReadOnly = true;
-			this.clnPeriodo.Width = 170;
+			this.clnParcelas.HeaderText = "Parcelas";
+			this.clnParcelas.Name = "clnParcelas";
+			this.clnParcelas.ReadOnly = true;
+			this.clnParcelas.Width = 120;
 			// 
 			// clnSituacao
 			// 
@@ -267,10 +270,10 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1092, 623);
+			this.label1.Location = new System.Drawing.Point(1110, 623);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(69, 15);
-			this.label1.TabIndex = 9;
+			this.label1.TabIndex = 12;
 			this.label1.Text = "Valor Total:";
 			// 
 			// lblValorTotal
@@ -278,10 +281,10 @@
 			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTotal.Location = new System.Drawing.Point(1024, 642);
+			this.lblValorTotal.Location = new System.Drawing.Point(1042, 642);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
-			this.lblValorTotal.TabIndex = 10;
+			this.lblValorTotal.TabIndex = 13;
 			this.lblValorTotal.Text = "R$ 0,00";
 			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -302,7 +305,7 @@
 			this.btnProcurar.RoundedCornersMask = ((byte)(15));
 			this.btnProcurar.RoundedCornersRadius = 2;
 			this.btnProcurar.Size = new System.Drawing.Size(138, 41);
-			this.btnProcurar.TabIndex = 4;
+			this.btnProcurar.TabIndex = 5;
 			this.btnProcurar.TabStop = false;
 			this.btnProcurar.Text = "Filtrar";
 			this.btnProcurar.TextAbsolutePosition = new System.Drawing.Point(25, 5);
@@ -318,10 +321,10 @@
 			// 
 			this.btnImprimirListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimirListagem.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimirListagem.Location = new System.Drawing.Point(606, 634);
+			this.btnImprimirListagem.Location = new System.Drawing.Point(847, 634);
 			this.btnImprimirListagem.Name = "btnImprimirListagem";
 			this.btnImprimirListagem.Size = new System.Drawing.Size(185, 42);
-			this.btnImprimirListagem.TabIndex = 8;
+			this.btnImprimirListagem.TabIndex = 11;
 			this.btnImprimirListagem.Text = "&Imprimir Listagem";
 			this.btnImprimirListagem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnImprimirListagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -518,28 +521,28 @@
 			this.Panel2.Controls.Add(this.rbtPorMes);
 			this.Panel2.Controls.Add(this.pnlPorPeriodo);
 			this.Panel2.Controls.Add(this.pnlPorMes);
-			this.Panel2.Location = new System.Drawing.Point(11, 61);
+			this.Panel2.Location = new System.Drawing.Point(619, 60);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
-			this.Panel2.TabIndex = 1;
+			this.Panel2.TabIndex = 15;
 			// 
 			// lblFiltro
 			// 
 			this.lblFiltro.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblFiltro.Location = new System.Drawing.Point(706, 61);
+			this.lblFiltro.Location = new System.Drawing.Point(155, 630);
 			this.lblFiltro.Name = "lblFiltro";
-			this.lblFiltro.Size = new System.Drawing.Size(587, 58);
-			this.lblFiltro.TabIndex = 2;
+			this.lblFiltro.Size = new System.Drawing.Size(274, 48);
+			this.lblFiltro.TabIndex = 6;
 			this.lblFiltro.Text = "Filtro";
 			// 
 			// btnExcluir
 			// 
 			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.btnExcluir.Location = new System.Drawing.Point(447, 634);
+			this.btnExcluir.Location = new System.Drawing.Point(699, 634);
 			this.btnExcluir.Name = "btnExcluir";
 			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
-			this.btnExcluir.TabIndex = 7;
+			this.btnExcluir.TabIndex = 9;
 			this.btnExcluir.Text = "&Excluir";
 			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -551,19 +554,30 @@
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuVisualizar,
+            this.mnuVerificaSituacao,
             this.mnuImagem,
             this.toolStripSeparator2,
             this.mnuExcluir});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(210, 110);
+			this.mnuOperacoes.Size = new System.Drawing.Size(224, 154);
 			// 
 			// mnuVisualizar
 			// 
 			this.mnuVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuVisualizar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuVisualizar.Name = "mnuVisualizar";
-			this.mnuVisualizar.Size = new System.Drawing.Size(209, 26);
+			this.mnuVisualizar.Size = new System.Drawing.Size(223, 36);
 			this.mnuVisualizar.Text = "Visualizar Despesa";
 			this.mnuVisualizar.Click += new System.EventHandler(this.mnuVisualizar_Click);
+			// 
+			// mnuVerificaSituacao
+			// 
+			this.mnuVerificaSituacao.Image = global::CamadaUI.Properties.Resources.refresh_24;
+			this.mnuVerificaSituacao.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuVerificaSituacao.Name = "mnuVerificaSituacao";
+			this.mnuVerificaSituacao.Size = new System.Drawing.Size(223, 36);
+			this.mnuVerificaSituacao.Text = "Verifica Situação";
+			this.mnuVerificaSituacao.Click += new System.EventHandler(this.mnuVerificaSituacao_Click);
 			// 
 			// mnuImagem
 			// 
@@ -573,8 +587,9 @@
             this.toolStripSeparator1,
             this.mnuImagemRemover});
 			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagem.Name = "mnuImagem";
-			this.mnuImagem.Size = new System.Drawing.Size(209, 26);
+			this.mnuImagem.Size = new System.Drawing.Size(223, 36);
 			this.mnuImagem.Text = "Imagem";
 			// 
 			// mnuImagemInserir
@@ -609,13 +624,14 @@
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(206, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
 			// 
 			// mnuExcluir
 			// 
 			this.mnuExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuExcluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuExcluir.Name = "mnuExcluir";
-			this.mnuExcluir.Size = new System.Drawing.Size(209, 26);
+			this.mnuExcluir.Size = new System.Drawing.Size(223, 36);
 			this.mnuExcluir.Text = "Excluir Despesa";
 			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
 			// 
@@ -624,28 +640,36 @@
 			this.line1.EndPoint = new System.Drawing.Point(5, 42);
 			this.line1.LineColor = System.Drawing.Color.Silver;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(583, 631);
+			this.line1.Location = new System.Drawing.Point(831, 631);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(10, 47);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
-			this.line1.TabIndex = 12;
+			this.line1.TabIndex = 10;
 			// 
-			// line2
+			// txtProcura
 			// 
-			this.line2.EndPoint = new System.Drawing.Point(5, 42);
-			this.line2.LineColor = System.Drawing.Color.Silver;
-			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(161, 630);
-			this.line2.Name = "line2";
-			this.line2.Size = new System.Drawing.Size(10, 47);
-			this.line2.StartPoint = new System.Drawing.Point(5, 5);
-			this.line2.TabIndex = 13;
+			this.txtProcura.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtProcura.Location = new System.Drawing.Point(15, 81);
+			this.txtProcura.Margin = new System.Windows.Forms.Padding(6);
+			this.txtProcura.Name = "txtProcura";
+			this.txtProcura.Size = new System.Drawing.Size(428, 31);
+			this.txtProcura.TabIndex = 2;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(11, 58);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(126, 19);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Procura Descrição";
 			// 
 			// frmDespesaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1305, 686);
-			this.Controls.Add(this.line2);
+			this.Controls.Add(this.txtProcura);
+			this.Controls.Add(this.label2);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.lblFiltro);
@@ -674,7 +698,8 @@
 			this.Controls.SetChildIndex(this.lblFiltro, 0);
 			this.Controls.SetChildIndex(this.btnExcluir, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
-			this.Controls.SetChildIndex(this.line2, 0);
+			this.Controls.SetChildIndex(this.label2, 0);
+			this.Controls.SetChildIndex(this.txtProcura, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlPorMes.ResumeLayout(false);
@@ -722,15 +747,17 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
 		private AwesomeShapeControl.Line line1;
-		private AwesomeShapeControl.Line line2;
+		private System.Windows.Forms.ToolStripMenuItem mnuVerificaSituacao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnDespesaDescricao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnPeriodo;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnParcelas;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
+		internal System.Windows.Forms.TextBox txtProcura;
+		internal System.Windows.Forms.Label label2;
 	}
 }

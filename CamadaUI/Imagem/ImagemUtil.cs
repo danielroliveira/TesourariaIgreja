@@ -189,18 +189,32 @@ namespace CamadaUI.Imagem
 				// GEt fileInfo
 				FileInfo file = new FileInfo($"{ImageFolder}\\{image.ImagemPath}");
 
-				DateTime refDate = (DateTime)image.ReferenceDate;
-				string folderDate = $"{refDate:yyyy}{refDate:MM}";
-				string removedFolder = $"{ImageFolder}\\Removidas\\{folderDate}";
+				bool _fileExist = file.Exists;
 
-				// check directory
-				if (!Directory.Exists(removedFolder))
+				if (!_fileExist)
 				{
-					Directory.CreateDirectory(removedFolder);
-				}
+					var resp = AbrirDialog("A imagem relacinada e anexada ao registro não foi encontrada...\n" +
+						"Não será possível fazer a movimentação para Backup da imagem.\n" +
+						"Deseja DESASSOCIAR a imagem do registro assim mesmo?", "Imagem não encontrada",
+						DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 
-				// backup file
-				file.MoveTo($"{ImageFolder}\\Removidas\\{folderDate}\\{image.ImagemFileName}");
+					if (resp == DialogResult.No) return null;
+				}
+				else
+				{
+					DateTime refDate = (DateTime)image.ReferenceDate;
+					string folderDate = $"{refDate:yyyy}{refDate:MM}";
+					string removedFolder = $"{ImageFolder}\\Removidas\\{folderDate}";
+
+					// check directory
+					if (!Directory.Exists(removedFolder))
+					{
+						Directory.CreateDirectory(removedFolder);
+					}
+
+					// backup file
+					file.MoveTo($"{ImageFolder}\\Removidas\\{folderDate}\\{image.ImagemFileName}");
+				}
 
 				// define new Image Path
 				image.ImagemPath = "";
@@ -318,6 +332,12 @@ namespace CamadaUI.Imagem
 
 				// --- move to Removed folder
 				imagem = RemoveImageToDefaultFolder(imagem, imageFolder);
+
+				//--- check return
+				if(imagem == null)
+				{
+					throw new AppException("Operação cancelada...");
+				}
 
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;

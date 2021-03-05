@@ -1080,7 +1080,17 @@ namespace CamadaUI.Saidas
 			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnForma.DefaultCellStyle.Font = clnFont;
 
-			//--- (2) COLUNA ID
+			//--- (2) COLUNA SITUACAO
+			clnSituacao.DataPropertyName = "Situacao";
+			clnSituacao.Visible = true;
+			clnSituacao.ReadOnly = true;
+			clnSituacao.Resizable = DataGridViewTriState.False;
+			clnSituacao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnSituacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnSituacao.DefaultCellStyle.Font = clnFont;
+
+			//--- (3) COLUNA ID
 			clnIdentificador.DataPropertyName = "Identificador";
 			clnIdentificador.Visible = true;
 			clnIdentificador.ReadOnly = true;
@@ -1090,7 +1100,7 @@ namespace CamadaUI.Saidas
 			clnIdentificador.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnIdentificador.DefaultCellStyle.Font = clnFont;
 
-			//--- (3) COLUNA VENCIMENTO
+			//--- (4) COLUNA VENCIMENTO
 			clnVencimento.DataPropertyName = "Vencimento";
 			clnVencimento.Visible = true;
 			clnVencimento.ReadOnly = true;
@@ -1098,8 +1108,9 @@ namespace CamadaUI.Saidas
 			clnVencimento.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnVencimento.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnVencimento.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnVencimento.DefaultCellStyle.Font = clnFont;
 
-			//--- (4) COLUNA VALOR
+			//--- (5) COLUNA VALOR
 			clnValor.DataPropertyName = "APagarValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -1108,9 +1119,10 @@ namespace CamadaUI.Saidas
 			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 			clnValor.DefaultCellStyle.Format = "#,##0.00";
+			clnValor.DefaultCellStyle.Font = clnFont;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnForma, clnIdentificador, clnVencimento, clnValor);
+			dgvListagem.Columns.AddRange(clnForma, clnSituacao, clnIdentificador, clnVencimento, clnValor);
 
 			dgvListagem.CellDoubleClick += (a, b) => ParcelaEditar();
 		}
