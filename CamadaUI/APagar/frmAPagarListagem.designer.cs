@@ -672,7 +672,7 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(263, 272);
+			this.mnuOperacoes.Size = new System.Drawing.Size(263, 250);
 			// 
 			// mnuItemQuitar
 			// 
@@ -803,9 +803,9 @@
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(7, 59);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(126, 19);
+			this.label2.Size = new System.Drawing.Size(232, 19);
 			this.label2.TabIndex = 12;
-			this.label2.Text = "Procura Descrição";
+			this.label2.Text = "Filtra por Descrição ou nº Registro";
 			// 
 			// frmAPagarListagem
 			// 

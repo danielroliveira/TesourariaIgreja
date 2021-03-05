@@ -660,9 +660,9 @@
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(11, 58);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(126, 19);
+			this.label2.Size = new System.Drawing.Size(232, 19);
 			this.label2.TabIndex = 1;
-			this.label2.Text = "Procura Descrição";
+			this.label2.Text = "Filtra por Descrição ou nº Registro";
 			// 
 			// frmDespesaListagem
 			// 

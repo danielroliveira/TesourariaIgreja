@@ -22,6 +22,7 @@ namespace CamadaUI.Saidas
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
 		public objDespesa propEscolha = null;
+		private bool _disableProcura = false;
 
 		public struct StructPesquisa
 		{
@@ -75,6 +76,7 @@ namespace CamadaUI.Saidas
 			rbtPorMes.CheckedChanged += rbt_CheckedChanged;
 			rbtPorPeriodo.CheckedChanged += rbt_CheckedChanged;
 			rbtTodas.CheckedChanged += rbt_CheckedChanged;
+			txtProcura.TextChanged += FiltrarListagem;
 
 		}
 
@@ -122,6 +124,11 @@ namespace CamadaUI.Saidas
 
 				dgvListagem.DataSource = listCont;
 				CalculaTotais();
+
+				// disable procura text => Filtar Listagem
+				_disableProcura = true;
+				txtProcura.Clear();
+				_disableProcura = false;
 			}
 			catch (Exception ex)
 			{
@@ -890,5 +897,39 @@ namespace CamadaUI.Saidas
 
 		#endregion // MENU SUSPENSO --- END
 
+		#region FILTRAGEM PROCURA
+
+		private void FiltrarListagem(object sender, EventArgs e)
+		{
+			// if obterDados exit
+			if (_disableProcura) return;
+
+			if (txtProcura.TextLength > 0)
+			{
+				// filter
+				if (!int.TryParse(txtProcura.Text, out int i))
+				{
+					// declare function
+					Func<objDespesa, bool> FiltroItem = c => c.DespesaDescricao.ToLower().Contains(txtProcura.Text.ToLower());
+
+					// aply filter using function
+					dgvListagem.DataSource = listCont.FindAll(c => FiltroItem(c));
+				}
+				else
+				{
+					// declare function
+					Func<objDespesa, bool> FiltroID = c => c.IDDespesa == i;
+
+					// aply filter using function
+					dgvListagem.DataSource = listCont.FindAll(c => FiltroID(c));
+				}
+			}
+			else
+			{
+				dgvListagem.DataSource = listCont;
+			}
+		}
+
+		#endregion // FILTRAGEM PROCURA --- END
 	}
 }
