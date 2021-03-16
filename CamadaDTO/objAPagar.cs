@@ -482,7 +482,7 @@ namespace CamadaDTO
 	//=================================================================================================
 	// FORMAS DE COBRANCA
 	//=================================================================================================
-	public class objCobrancaForma : IEditableObject, INotifyPropertyChanged
+	public class objAPagarForma : IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
@@ -503,7 +503,7 @@ namespace CamadaDTO
 		private StructCobranca BackupData;
 		private bool inTxn = false;
 
-		public objCobrancaForma()
+		public objAPagarForma()
 		{
 			EditData = new StructCobranca()
 			{
@@ -514,7 +514,7 @@ namespace CamadaDTO
 			};
 		}
 
-		public objCobrancaForma(int? IDCobrancaForma) : base()
+		public objAPagarForma(int? IDCobrancaForma) : base()
 		{
 			EditData._IDCobrancaForma = IDCobrancaForma;
 		}

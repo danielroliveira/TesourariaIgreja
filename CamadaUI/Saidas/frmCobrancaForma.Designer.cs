@@ -57,10 +57,10 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(640, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(231, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(506, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(365, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Formas de Cobrança";
+			this.lblTitulo.Text = "Formas de Pagamento | Cobrança";
 			// 
 			// btnClose
 			// 

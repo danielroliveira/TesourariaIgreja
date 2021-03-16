@@ -12,7 +12,7 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmDespesaParcelamento : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<objCobrancaForma> listFormas;
+		private List<objAPagarForma> listFormas;
 		private Form _formOrigem;
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
@@ -48,7 +48,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
+				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{

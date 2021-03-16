@@ -22,7 +22,7 @@ namespace CamadaUI.Saidas
 		private objDespesaPeriodica _despesa;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
-		private List<objCobrancaForma> listFormas;
+		private List<objAPagarForma> listFormas;
 		private Form _formOrigem;
 
 		private objSetor setorSelected;
@@ -193,7 +193,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
+				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{

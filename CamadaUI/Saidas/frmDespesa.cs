@@ -346,7 +346,9 @@ namespace CamadaUI.Saidas
 
 			if (_formOrigem != null && _formOrigem.Name == "frmDespesaListagem")
 			{
-				new frmDespesaListagem().Show();
+				var frm = new frmDespesaListagem();
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				frm.Show();
 			}
 			else
 			{

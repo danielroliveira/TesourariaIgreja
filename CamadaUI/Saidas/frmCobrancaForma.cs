@@ -17,8 +17,8 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmCobrancaForma : CamadaUI.Modals.frmModFinBorder
 	{
-		private objCobrancaForma _forma;
-		private List<objCobrancaForma> list;
+		private objAPagarForma _forma;
+		private List<objAPagarForma> list;
 		private List<objCartaoBandeira> listBandeiras;
 		private CobrancaFormaBLL fBLL = new CobrancaFormaBLL();
 		private BindingSource bind = new BindingSource();
@@ -34,7 +34,7 @@ namespace CamadaUI.Saidas
 
 			ObterDados();
 			GetBandeirasList();
-			bind.DataSource = typeof(objCobrancaForma);
+			bind.DataSource = typeof(objAPagarForma);
 			bind.DataSource = list;
 			PreencheListagem();
 			BindingCreator();
@@ -55,7 +55,7 @@ namespace CamadaUI.Saidas
 		//------------------------------------------------------------------------------------------------------------
 		private void ChangeCurrent()
 		{
-			_forma = (objCobrancaForma)bind.CurrencyManager.Current;
+			_forma = (objAPagarForma)bind.CurrencyManager.Current;
 
 			if (_forma != null)
 			{
@@ -130,7 +130,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				list = fBLL.GetListCobrancaForma();
+				list = fBLL.GetListAPagarForma();
 			}
 			catch (Exception ex)
 			{
@@ -358,9 +358,9 @@ namespace CamadaUI.Saidas
 				//--- SAVE: INSERT OR UPDATE
 				if (_forma.IDCobrancaForma == null) //--- save | Insert
 				{
-					int ID = fBLL.InsertCobrancaForma(_forma);
+					int ID = fBLL.InsertAPagarForma(_forma);
 					//--- define newID
-					((objCobrancaForma)bind.Current).IDCobrancaForma = ID;
+					((objAPagarForma)bind.Current).IDCobrancaForma = ID;
 					bind.EndEdit();
 					bind.ResetBindings(false);
 				}

@@ -16,7 +16,7 @@ namespace CamadaUI.APagar
 	{
 		objAPagar _apagar;
 		BindingSource bind = new BindingSource();
-		List<objCobrancaForma> listFormas = new List<objCobrancaForma>();
+		List<objAPagarForma> listFormas = new List<objAPagarForma>();
 		Form _formOrigem;
 		decimal ValorAnterior;
 
@@ -49,7 +49,7 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
+				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{

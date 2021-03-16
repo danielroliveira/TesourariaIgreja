@@ -14,7 +14,7 @@ namespace CamadaUI.APagar
 	{
 		private bool _Alterado = false;
 		private frmAPagarListagem _formOrigem;
-		private List<objCobrancaForma> listFormas;
+		private List<objAPagarForma> listFormas;
 
 		private frmAPagarListagem.StructPesquisa DadosNovos = new frmAPagarListagem.StructPesquisa();
 
@@ -66,7 +66,7 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true);
+				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{

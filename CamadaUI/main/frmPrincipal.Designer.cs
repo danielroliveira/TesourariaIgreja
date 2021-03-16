@@ -513,7 +513,7 @@
 			this.mnuCobrancaForma.Name = "mnuCobrancaForma";
 			this.mnuCobrancaForma.Size = new System.Drawing.Size(253, 30);
 			this.mnuCobrancaForma.Tag = "1";
-			this.mnuCobrancaForma.Text = "Formas de Cobrança";
+			this.mnuCobrancaForma.Text = "Formas de Pagamento";
 			// 
 			// btnMovimentação
 			// 

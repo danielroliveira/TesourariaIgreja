@@ -24,7 +24,7 @@ namespace CamadaUI.Saidas
 		private BindingSource bindPagar = new BindingSource();
 		private EnumFlagEstado _Sit;
 
-		private List<objCobrancaForma> listFormas;
+		private List<objAPagarForma> listFormas;
 		private List<objDespesaDocumentoTipo> listDocTipos;
 
 		private objSetor SetorSelected;
@@ -202,12 +202,12 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			txtSetor.Enter += text_Enter;
-			txtCredor.Enter += text_Enter;
-			txtDespesaTipo.Enter += text_Enter;
-			txtDocumentoTipo.Enter += text_Enter;
-			txtBanco.Enter += text_Enter;
-			txtCobrancaForma.Enter += text_Enter;
+			txtSetor.Enter += Text_Enter;
+			txtCredor.Enter += Text_Enter;
+			txtDespesaTipo.Enter += Text_Enter;
+			txtDocumentoTipo.Enter += Text_Enter;
+			txtBanco.Enter += Text_Enter;
+			txtCobrancaForma.Enter += Text_Enter;
 
 			// block keyDown then Sit = Alterado
 			txtDocumentoNumero.KeyDown += control_KeyDown_Block;
@@ -349,7 +349,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListCobrancaForma(true, dbTran);
+				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true, dbTran);
 			}
 			catch (Exception ex)
 			{
@@ -1058,10 +1058,10 @@ namespace CamadaUI.Saidas
 
 		// EMITE TOOLTIP ON ENTER E DESABILITA
 		//------------------------------------------------------------------------------------------------------------
-		private void text_Enter(object sender, EventArgs e)
+		private void Text_Enter(object sender, EventArgs e)
 		{
 			ShowToolTip(sender as Control);
-			((TextBox)sender).Enter -= text_Enter;
+			((TextBox)sender).Enter -= Text_Enter;
 		}
 
 		// DEFINE CRIA UM TEXTO AUTOMATICA PARA DESCRICAO

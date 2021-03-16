@@ -856,13 +856,13 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objCobrancaForma> GetListCobrancaForma(bool? Ativo = null, object dbTran = null)
+		public List<objAPagarForma> GetListAPagarForma(bool? Ativo = null, object dbTran = null)
 		{
 			try
 			{
 				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
-				string query = "SELECT * FROM qryCobrancaForma";
+				string query = "SELECT * FROM qryAPagarForma";
 				bool haveWhere = false;
 
 				// add params
@@ -883,7 +883,7 @@ namespace CamadaBLL
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				// create list
-				List<objCobrancaForma> listagem = new List<objCobrancaForma>();
+				List<objAPagarForma> listagem = new List<objAPagarForma>();
 
 				if (dt.Rows.Count == 0)
 				{
@@ -892,7 +892,7 @@ namespace CamadaBLL
 
 				foreach (DataRow row in dt.Rows)
 				{
-					objCobrancaForma cob = new objCobrancaForma((int)row["IDCobrancaForma"])
+					objAPagarForma cob = new objAPagarForma((int)row["IDCobrancaForma"])
 					{
 						CobrancaForma = (string)row["CobrancaForma"],
 						IDBanco = row["IDBanco"] == DBNull.Value ? null : (int?)row["IDBanco"],
@@ -916,7 +916,7 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public int InsertCobrancaForma(objCobrancaForma forma)
+		public int InsertAPagarForma(objAPagarForma forma)
 		{
 			try
 			{
@@ -935,7 +935,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateInsertSQL("tblCobrancaForma");
+				string query = db.CreateInsertSQL("tblAPagarForma");
 
 				//--- insert
 				return (int)db.ExecutarInsertAndGetID(query);
@@ -948,7 +948,7 @@ namespace CamadaBLL
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateCobrancaForma(objCobrancaForma forma)
+		public bool UpdateCobrancaForma(objAPagarForma forma)
 		{
 			try
 			{
@@ -968,7 +968,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateUpdateSQL("tblCobrancaForma", "IDCobrancaForma");
+				string query = db.CreateUpdateSQL("tblAPagarForma", "IDCobrancaForma");
 
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
