@@ -60,7 +60,7 @@
 			this.line2 = new AwesomeShapeControl.Line();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
 			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
-			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
+			this.txtAPagarForma = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.txtBanco = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
@@ -530,17 +530,17 @@
 			this.btnSetBanco.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetBanco.Click += new System.EventHandler(this.btnSetBanco_Click);
 			// 
-			// txtCobrancaForma
+			// txtAPagarForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(173, 252);
-			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCobrancaForma.MaxLength = 30;
-			this.txtCobrancaForma.Name = "txtCobrancaForma";
-			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 16;
-			this.txtCobrancaForma.Tag = "Pressione a tecla (+) para procurar";
-			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
-			this.txtCobrancaForma.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
+			this.txtAPagarForma.Location = new System.Drawing.Point(173, 252);
+			this.txtAPagarForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarForma.MaxLength = 30;
+			this.txtAPagarForma.Name = "txtAPagarForma";
+			this.txtAPagarForma.Size = new System.Drawing.Size(267, 27);
+			this.txtAPagarForma.TabIndex = 16;
+			this.txtAPagarForma.Tag = "Pressione a tecla (+) para procurar";
+			this.txtAPagarForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtAPagarForma.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// label6
 			// 
@@ -842,7 +842,7 @@
 			this.Controls.Add(this.label19);
 			this.Controls.Add(this.btnSetForma);
 			this.Controls.Add(this.btnSetBanco);
-			this.Controls.Add(this.txtCobrancaForma);
+			this.Controls.Add(this.txtAPagarForma);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.txtBanco);
 			this.Controls.Add(this.label7);
@@ -901,7 +901,7 @@
 			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.txtBanco, 0);
 			this.Controls.SetChildIndex(this.label6, 0);
-			this.Controls.SetChildIndex(this.txtCobrancaForma, 0);
+			this.Controls.SetChildIndex(this.txtAPagarForma, 0);
 			this.Controls.SetChildIndex(this.btnSetBanco, 0);
 			this.Controls.SetChildIndex(this.btnSetForma, 0);
 			this.Controls.SetChildIndex(this.label19, 0);
@@ -967,7 +967,7 @@
 		private AwesomeShapeControl.Line line2;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
 		internal VIBlend.WinForms.Controls.vButton btnSetBanco;
-		internal System.Windows.Forms.TextBox txtCobrancaForma;
+		internal System.Windows.Forms.TextBox txtAPagarForma;
 		internal System.Windows.Forms.Label label6;
 		internal System.Windows.Forms.TextBox txtBanco;
 		internal System.Windows.Forms.Label label7;

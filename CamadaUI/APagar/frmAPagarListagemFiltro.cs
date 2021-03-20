@@ -29,14 +29,14 @@ namespace CamadaUI.APagar
 			GetFormasList();
 
 			// LOAD VALUES
-			txtCobrancaForma.Text = DadosNovos.Forma;
+			txtAPagarForma.Text = DadosNovos.Forma;
 			txtCredor.Text = DadosNovos.Credor;
 
 			// ADD HANDLERS
-			txtCobrancaForma.KeyDown += Control_KeyDown;
+			txtAPagarForma.KeyDown += Control_KeyDown;
 			txtCredor.KeyDown += Control_KeyDown;
 
-			txtCobrancaForma.Enter += Control_Enter;
+			txtAPagarForma.Enter += Control_Enter;
 			txtCredor.Enter += Control_Enter;
 
 			HandlerKeyDownControl(this);
@@ -66,7 +66,7 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
+				listFormas = new APagarFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{
@@ -92,7 +92,7 @@ namespace CamadaUI.APagar
 		private void btnLimpar_Click(object sender, EventArgs e)
 		{
 
-			txtCobrancaForma.Clear();
+			txtAPagarForma.Clear();
 			DadosNovos.IDForma = null;
 			DadosNovos.Forma = null;
 
@@ -162,8 +162,8 @@ namespace CamadaUI.APagar
 				return;
 			}
 
-			var dic = listFormas.ToDictionary(x => (int)x.IDCobrancaForma, x => x.CobrancaForma);
-			var textBox = txtCobrancaForma;
+			var dic = listFormas.ToDictionary(x => (int)x.IDAPagarForma, x => x.APagarForma);
+			var textBox = txtAPagarForma;
 			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, DadosNovos.IDForma);
 
 			// show form
@@ -193,7 +193,7 @@ namespace CamadaUI.APagar
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtCobrancaForma,
+					txtAPagarForma,
 					txtCredor
 				};
 
@@ -216,7 +216,7 @@ namespace CamadaUI.APagar
 					case "txtCredor":
 						btnSetCredor_Click(sender, new EventArgs());
 						break;
-					case "txtCobrancaForma":
+					case "txtAPagarForma":
 						btnSetForma_Click(sender, new EventArgs());
 						break;
 					default:
@@ -234,10 +234,10 @@ namespace CamadaUI.APagar
 						DadosNovos.Credor = string.Empty;
 						txtCredor.Clear();
 						break;
-					case "txtCobrancaForma":
+					case "txtAPagarForma":
 						DadosNovos.IDForma = null;
 						DadosNovos.Forma = string.Empty;
-						txtCobrancaForma.Clear();
+						txtAPagarForma.Clear();
 						break;
 					default:
 						break;
@@ -251,7 +251,7 @@ namespace CamadaUI.APagar
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
-					txtCredor, txtCobrancaForma
+					txtCredor, txtAPagarForma
 				};
 
 				if (controlesBloqueados.Contains(ctr))

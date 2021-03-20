@@ -166,7 +166,7 @@ namespace CamadaUI.APagar
 			colList.Add(clnVencimento);
 
 			//--- (3) COLUNA SETOR
-			clnForma.DataPropertyName = "CobrancaForma";
+			clnForma.DataPropertyName = "APagarForma";
 			clnForma.Visible = true;
 			clnForma.ReadOnly = true;
 			clnForma.Resizable = DataGridViewTriState.False;

@@ -39,7 +39,7 @@
 			this.lblParcelas = new System.Windows.Forms.Label();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
 			this.label3 = new System.Windows.Forms.Label();
-			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
+			this.txtAPagarForma = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numVencimentoDia)).BeginInit();
@@ -225,15 +225,15 @@
 			this.label3.TabIndex = 1;
 			this.label3.Text = "Forma de Cobrança";
 			// 
-			// txtCobrancaForma
+			// txtAPagarForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(169, 85);
-			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCobrancaForma.MaxLength = 30;
-			this.txtCobrancaForma.Name = "txtCobrancaForma";
-			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 2;
-			this.txtCobrancaForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtAPagarForma.Location = new System.Drawing.Point(169, 85);
+			this.txtAPagarForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarForma.MaxLength = 30;
+			this.txtAPagarForma.Name = "txtAPagarForma";
+			this.txtAPagarForma.Size = new System.Drawing.Size(267, 27);
+			this.txtAPagarForma.TabIndex = 2;
+			this.txtAPagarForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// frmDespesaParcelamento
 			// 
@@ -243,7 +243,7 @@
 			this.Controls.Add(this.numVencimentoDia);
 			this.Controls.Add(this.btnSetForma);
 			this.Controls.Add(this.btnSetBanco);
-			this.Controls.Add(this.txtCobrancaForma);
+			this.Controls.Add(this.txtAPagarForma);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.txtBanco);
 			this.Controls.Add(this.label2);
@@ -260,7 +260,7 @@
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.txtBanco, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.txtCobrancaForma, 0);
+			this.Controls.SetChildIndex(this.txtAPagarForma, 0);
 			this.Controls.SetChildIndex(this.btnSetBanco, 0);
 			this.Controls.SetChildIndex(this.btnSetForma, 0);
 			this.Controls.SetChildIndex(this.numVencimentoDia, 0);
@@ -287,6 +287,6 @@
 		private System.Windows.Forms.Label lblParcelas;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
 		internal System.Windows.Forms.Label label3;
-		internal System.Windows.Forms.TextBox txtCobrancaForma;
+		internal System.Windows.Forms.TextBox txtAPagarForma;
 	}
 }

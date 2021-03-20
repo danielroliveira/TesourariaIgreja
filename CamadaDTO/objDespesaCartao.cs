@@ -420,7 +420,6 @@ namespace CamadaDTO
 		public int IDCartaoCredito { get; set; }
 		public string CartaoDescricao { get; set; }
 		public byte VencimentoDia { get; set; }
-		public long IDDespesaDestino { get; set; }
 		public int? IDCartaoBandeira { get; set; }
 		public string CartaoBandeira { get; set; }
 		public string CartaoNumeracao { get; set; }
@@ -428,6 +427,7 @@ namespace CamadaDTO
 		public string Credor { get; set; }
 		public int IDSetor { get; set; }
 		public string Setor { get; set; }
+		public bool Ativo { get; set; }
 
 	}
 }

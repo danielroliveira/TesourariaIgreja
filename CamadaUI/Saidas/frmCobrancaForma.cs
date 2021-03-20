@@ -1,17 +1,17 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Caixa;
 using ComponentOwl.BetterListView;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
-using System.Data;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
-using CamadaUI.Caixa;
 
 namespace CamadaUI.Saidas
 {
@@ -19,8 +19,9 @@ namespace CamadaUI.Saidas
 	{
 		private objAPagarForma _forma;
 		private List<objAPagarForma> list;
-		private List<objCartaoBandeira> listBandeiras;
-		private CobrancaFormaBLL fBLL = new CobrancaFormaBLL();
+		private List<objCartaoCreditoDespesa> listCartao;
+		private Dictionary<int, string> dicModo;
+		private APagarFormaBLL fBLL = new APagarFormaBLL();
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 
@@ -33,7 +34,7 @@ namespace CamadaUI.Saidas
 			InitializeComponent();
 
 			ObterDados();
-			GetBandeirasList();
+			GetCartaoList();
 			bind.DataSource = typeof(objAPagarForma);
 			bind.DataSource = list;
 			PreencheListagem();
@@ -46,7 +47,7 @@ namespace CamadaUI.Saidas
 
 			// add handler
 			bind.CurrentChanged += (a, b) => ChangeCurrent();
-			txtCobrancaForma.Validating += (a, b) => PrimeiraLetraMaiuscula(txtCobrancaForma);
+			txtAPagarForma.Validating += (a, b) => PrimeiraLetraMaiuscula(txtAPagarForma);
 			ChangeCurrent();
 		}
 
@@ -61,7 +62,7 @@ namespace CamadaUI.Saidas
 			{
 				_forma.PropertyChanged += RegistroAlterado;
 
-				if (_forma.IDCobrancaForma == null)
+				if (_forma.IDAPagarForma == null)
 				{
 					Sit = EnumFlagEstado.NovoRegistro;
 				}
@@ -75,6 +76,7 @@ namespace CamadaUI.Saidas
 				bind.AddNew();
 			}
 
+			ChangePagFormaModo();
 		}
 
 		// PROPERTY SITUACAO
@@ -145,26 +147,52 @@ namespace CamadaUI.Saidas
 
 		}
 
-		// GET BANDEIRAS LIST
+		// GET CARTAO LIST
 		//------------------------------------------------------------------------------------------------------------
-		private void GetBandeirasList()
+		private void GetCartaoList()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listBandeiras = new CartaoBLL().GetCartaoBandeiras();
+				listCartao = new DespesaCartaoBLL().GetCartaoCreditoDespesaList();
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de bandeiras de cartão..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de cartão de crédito..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
 			{
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// CHANGE MODO
+		//------------------------------------------------------------------------------------------------------------
+		private void ChangePagFormaModo()
+		{
+			switch (_forma.IDPagFormaModo)
+			{
+				case 1: // documento
+				case 2: // cheque
+					txtBanco.Enabled = true;
+					btnSetBanco.Enabled = true;
+					txtCartaoCredito.Visible = false;
+					btnSetCartao.Visible = false;
+					lblCartao.Visible = false;
+					break;
+				case 3: // cartao
+					txtBanco.Enabled = false;
+					btnSetBanco.Enabled = false;
+					txtCartaoCredito.Visible = true;
+					btnSetCartao.Visible = true;
+					lblCartao.Visible = true;
+					break;
+				default:
+					break;
 			}
 		}
 
@@ -177,10 +205,11 @@ namespace CamadaUI.Saidas
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDCobrancaForma", true);
-			txtCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblID.DataBindings.Add("Text", bind, "IDAPagarForma", true);
+			txtAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtBanco.DataBindings.Add("Text", bind, "BancoNome", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCartaoBandeira.DataBindings.Add("Text", bind, "CartaoBandeira", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtPagFormaModo.DataBindings.Add("Text", bind, "PagFormaModo", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtCartaoCredito.DataBindings.Add("Text", bind, "CartaoCredito.CartaoDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -236,13 +265,13 @@ namespace CamadaUI.Saidas
 
 			// column 0
 			clnID.Width = 50;
-			clnID.DisplayMember = "IDCobrancaForma";
-			clnID.ValueMember = "IDCobrancaForma";
+			clnID.DisplayMember = "IDAPagarForma";
+			clnID.ValueMember = "IDAPagarForma";
 
 			// column 1
 			clnCadastro.Width = 275;
-			clnCadastro.DisplayMember = "CobrancaForma";
-			clnCadastro.ValueMember = "CobrancaForma";
+			clnCadastro.DisplayMember = "APagarForma";
+			clnCadastro.ValueMember = "APagarForma";
 		}
 
 		// DRAW COLUMN HEADER
@@ -336,7 +365,7 @@ namespace CamadaUI.Saidas
 
 			bind.AddNew();
 			Sit = EnumFlagEstado.NovoRegistro;
-			txtCobrancaForma.Focus();
+			txtAPagarForma.Focus();
 		}
 
 		#endregion
@@ -356,17 +385,17 @@ namespace CamadaUI.Saidas
 				if (!CheckSaveData()) return;
 
 				//--- SAVE: INSERT OR UPDATE
-				if (_forma.IDCobrancaForma == null) //--- save | Insert
+				if (_forma.IDAPagarForma == null) //--- save | Insert
 				{
 					int ID = fBLL.InsertAPagarForma(_forma);
 					//--- define newID
-					((objAPagarForma)bind.Current).IDCobrancaForma = ID;
+					((objAPagarForma)bind.Current).IDAPagarForma = ID;
 					bind.EndEdit();
 					bind.ResetBindings(false);
 				}
 				else //--- update
 				{
-					fBLL.UpdateCobrancaForma(_forma);
+					fBLL.UpdateAPagarForma(_forma);
 					bind.EndEdit();
 				}
 
@@ -392,7 +421,7 @@ namespace CamadaUI.Saidas
 
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtCobrancaForma, "CobrancaForma", _forma)) return false;
+			if (!VerificaDadosClasse(txtAPagarForma, "APagarForma", _forma)) return false;
 			return true;
 		}
 
@@ -409,7 +438,7 @@ namespace CamadaUI.Saidas
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
 					txtBanco,
-					txtCartaoBandeira,
+					txtCartaoCredito,
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -433,7 +462,7 @@ namespace CamadaUI.Saidas
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
-			if (Sit == EnumFlagEstado.RegistroSalvo)
+			if (Sit == EnumFlagEstado.RegistroSalvo && Program.usuarioAtual.UsuarioAcesso != 0)
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
@@ -452,8 +481,11 @@ namespace CamadaUI.Saidas
 					case "txtBanco":
 						btnSetBanco_Click(sender, new EventArgs());
 						break;
-					case "txtCartaoBandeira":
-						btnSetBandeira_Click(sender, new EventArgs());
+					case "txtCartaoCredito":
+						btnSetCartao_Click(sender, new EventArgs());
+						break;
+					case "txtPagFormaModo":
+						btnSetModo_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -473,12 +505,12 @@ namespace CamadaUI.Saidas
 							txtBanco.Clear();
 						}
 						break;
-					case "txtCartaoBandeira":
-						if (_forma.IDCartaoBandeira != null)
+					case "txtCartaoCredito":
+						if (_forma.IDCartaoCredito != null)
 						{
 							if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
-							_forma.IDCartaoBandeira = null;
-							txtCartaoBandeira.Clear();
+							_forma.IDCartaoCredito = null;
+							txtCartaoCredito.Clear();
 						}
 						break;
 					default:
@@ -489,7 +521,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
-					txtCartaoBandeira,
+					txtCartaoCredito, txtPagFormaModo
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -510,8 +542,9 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
-					txtCartaoBandeira,
+					txtCartaoCredito,
 					txtBanco,
+					txtPagFormaModo
 				 };
 
 				if (controlesBloqueados.Contains(ctr))
@@ -533,23 +566,49 @@ namespace CamadaUI.Saidas
 
 				switch (ctr.Name)
 				{
-					case "txtCartaoBandeira":
+					case "txtCartaoCredito":
 
-						if (listBandeiras.Count > 0)
+						if (listCartao.Count > 0)
 						{
-							var tipo = listBandeiras.FirstOrDefault(x => x.IDCartaoBandeira == int.Parse(e.KeyChar.ToString()));
+							var tipo = listCartao.FirstOrDefault(x => x.IDCartaoBandeira == int.Parse(e.KeyChar.ToString()));
 
 							if (tipo == null) return;
 
-							if (tipo.IDCartaoBandeira != _forma.IDCartaoBandeira)
+							if (tipo.IDCartaoBandeira != _forma.IDCartaoCredito)
 							{
 								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
-								_forma.IDCartaoBandeira = (int)tipo.IDCartaoBandeira;
-								txtCartaoBandeira.Text = tipo.CartaoBandeira;
+								_forma.IDCartaoCredito = (int)tipo.IDCartaoBandeira;
+								txtCartaoCredito.Text = tipo.CartaoBandeira;
 							}
 						}
 						break;
+
+					case "txtPagFormaModo":
+
+						// create dic
+						if (dicModo == null || dicModo.Count == 0)
+						{
+							dicModo = new Dictionary<int, string>()
+							{
+								{1, "Documento" }, {2, "Cheque"}, {3, "Cartao"}
+							};
+						}
+
+						if (!dicModo.ContainsKey(int.Parse(e.KeyChar.ToString()))) return;
+
+						KeyValuePair<int, string> modo = dicModo.First(x => x.Key == int.Parse(e.KeyChar.ToString()));
+
+						if (modo.Key != _forma.IDPagFormaModo)
+						{
+							if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+							_forma.IDPagFormaModo = (byte)modo.Key;
+							txtPagFormaModo.Text = modo.Value;
+						}
+
+						break;
+
 					default:
 						break;
 				}
@@ -604,21 +663,21 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		private void btnSetBandeira_Click(object sender, EventArgs e)
+		private void btnSetCartao_Click(object sender, EventArgs e)
 		{
-			if (listBandeiras.Count == 0)
+			if (listCartao.Count == 0)
 			{
-				AbrirDialog("Não há Bandeiras de Cartão cadastradas...", "Bandeiras",
+				AbrirDialog("Não há registro de Cartão de Crédito cadastrados...", "Cartão de Crédito",
 					DialogType.OK, DialogIcon.Exclamation);
 				return;
 			}
 
 			// seleciona o TextBox
-			TextBox textBox = txtCartaoBandeira;
+			TextBox textBox = txtCartaoCredito;
 
-			var dic = listBandeiras.ToDictionary(x => (int)x.IDCartaoBandeira, x => x.CartaoBandeira);
+			var dic = listCartao.ToDictionary(x => (int)x.IDCartaoCredito, x => x.CartaoDescricao);
 
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _forma.IDCartaoBandeira);
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _forma.IDCartaoCredito);
 
 			// show form
 			frm.ShowDialog();
@@ -626,7 +685,38 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_forma.IDCartaoBandeira = (byte)frm.propEscolha.Key;
+				_forma.IDCartaoCredito = (byte)frm.propEscolha.Key;
+				textBox.Text = frm.propEscolha.Value;
+			}
+
+			//--- select
+			textBox.Focus();
+			textBox.SelectAll();
+		}
+
+		private void btnSetModo_Click(object sender, EventArgs e)
+		{
+			// create dic
+			if (dicModo == null)
+			{
+				dicModo = new Dictionary<int, string>()
+				{
+					{1, "Documento" }, {2, "Cheque"}, {3, "Cartao"}
+				};
+			}
+
+			// seleciona o TextBox
+			TextBox textBox = txtPagFormaModo;
+
+			Main.frmComboLista frm = new Main.frmComboLista(dicModo, textBox, _forma.IDCartaoCredito);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				_forma.IDPagFormaModo = (byte)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 
@@ -664,6 +754,7 @@ namespace CamadaUI.Saidas
 
 
 		#endregion
+
 
 	}
 }

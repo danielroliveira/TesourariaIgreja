@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace CamadaBLL
 {
-	class DespesaCartaoBLL
+	public class DespesaCartaoBLL
 	{
 		// GET LIST OF WITH DETAILS
 		//------------------------------------------------------------------------------------------------------------
@@ -214,11 +214,53 @@ namespace CamadaBLL
 					Credor = (string)row["Credor"],
 					IDSetor = (int)row["IDSetor"],
 					Setor = (string)row["Setor"],
-					IDDespesaDestino = (long)row["IDDespesaDestino"],
 					VencimentoDia = (byte)row["VencimentoDia"],
 				};
 
 				return cartao;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET CARTAO CREDITO DE DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		public List<objCartaoCreditoDespesa> GetCartaoCreditoDespesaList(object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT * FROM qryCartaoCreditoDespesa";
+				db.LimparParametros();
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				var list = new List<objCartaoCreditoDespesa>();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					var cartao = new objCartaoCreditoDespesa()
+					{
+						IDCartaoCredito = (int)row["IDCartaoCredito"],
+						CartaoDescricao = (string)row["CartaoDescricao"],
+						IDCartaoBandeira = row["IDCartaoBandeira"] == DBNull.Value ? null : (int?)row["IDCartaoBandeira"],
+						CartaoBandeira = row["CartaoBandeira"] == DBNull.Value ? string.Empty : (string)row["CartaoBandeira"],
+						CartaoNumeracao = row["CartaoNumeracao"] == DBNull.Value ? string.Empty : (string)row["CartaoNumeracao"],
+						IDCredor = (int)row["IDCredor"],
+						Credor = (string)row["Credor"],
+						IDSetor = (int)row["IDSetor"],
+						Setor = (string)row["Setor"],
+						VencimentoDia = (byte)row["VencimentoDia"],
+					};
+
+					list.Add(cartao);
+				}
+
+				return list;
 
 			}
 			catch (Exception ex)
@@ -244,7 +286,6 @@ namespace CamadaBLL
 				//--- define Params
 				db.AdicionarParametros("@CartaoDescricao", cartao.CartaoDescricao);
 				db.AdicionarParametros("@VencimentoDia", cartao.VencimentoDia);
-				db.AdicionarParametros("@IDDespesaDestino", cartao.IDDespesaDestino);
 				db.AdicionarParametros("@IDCartaoBandeira", cartao.IDCartaoBandeira);
 				db.AdicionarParametros("@CartaoNumeracao", cartao.CartaoNumeracao);
 				db.AdicionarParametros("@IDSetor", cartao.IDSetor);
@@ -287,7 +328,6 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDCartaoCredito", cartao.IDCartaoCredito);
 				db.AdicionarParametros("@CartaoDescricao", cartao.CartaoDescricao);
 				db.AdicionarParametros("@VencimentoDia", cartao.VencimentoDia);
-				db.AdicionarParametros("@IDDespesaDestino", cartao.IDDespesaDestino);
 				db.AdicionarParametros("@IDCartaoBandeira", cartao.IDCartaoBandeira);
 				db.AdicionarParametros("@CartaoNumeracao", cartao.CartaoNumeracao);
 				db.AdicionarParametros("@IDSetor", cartao.IDSetor);

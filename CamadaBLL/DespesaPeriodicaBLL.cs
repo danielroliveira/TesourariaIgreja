@@ -56,7 +56,7 @@ namespace CamadaBLL
 			int? IDSetor = null,
 			int? IDDespesaTipo = null,
 			int? IDCredor = null,
-			int? IDCobrancaForma = null,
+			int? IDAPagarForma = null,
 			DateTime? IniciarData = null)
 		{
 			try
@@ -106,11 +106,11 @@ namespace CamadaBLL
 					myWhere = true;
 				}
 
-				// add IDCobrancaForma
-				if (IDCobrancaForma != null)
+				// add IDAPagarForma
+				if (IDAPagarForma != null)
 				{
-					db.AdicionarParametros("@IDCobrancaForma", IDCobrancaForma);
-					query += myWhere ? " AND IDCobrancaForma = @IDCobrancaForma" : " WHERE IDCobrancaForma = @IDCobrancaForma";
+					db.AdicionarParametros("@IDAPagarForma", IDAPagarForma);
+					query += myWhere ? " AND IDAPagarForma = @IDAPagarForma" : " WHERE IDAPagarForma = @IDAPagarForma";
 					myWhere = true;
 				}
 
@@ -176,8 +176,8 @@ namespace CamadaBLL
 				DespesaTipo = (string)row["DespesaTipo"],
 				IDSetor = (int)row["IDSetor"],
 				Setor = (string)row["Setor"],
-				IDCobrancaForma = (int)row["IDCobrancaForma"],
-				CobrancaForma = (string)row["CobrancaForma"],
+				IDAPagarForma = (int)row["IDAPagarForma"],
+				APagarForma = (string)row["APagarForma"],
 				IniciarData = (DateTime)row["IniciarData"],
 				RecorrenciaTipo = (byte)row["RecorrenciaTipo"],
 				RecorrenciaTipoDescricao = (string)row["RecorrenciaTipoDescricao"],
@@ -249,7 +249,7 @@ namespace CamadaBLL
 
 				//--- define Params
 				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
-				dbTran.AdicionarParametros("@IDCobrancaForma", desp.IDCobrancaForma);
+				dbTran.AdicionarParametros("@IDAPagarForma", desp.IDAPagarForma);
 				dbTran.AdicionarParametros("@IniciarData", desp.IniciarData);
 				dbTran.AdicionarParametros("@RecorrenciaTipo", desp.RecorrenciaTipo);
 				dbTran.AdicionarParametros("@RecorrenciaDia", desp.RecorrenciaDia);
@@ -334,7 +334,7 @@ namespace CamadaBLL
 
 				//--- define Params
 				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
-				dbTran.AdicionarParametros("@IDCobrancaForma", desp.IDCobrancaForma);
+				dbTran.AdicionarParametros("@IDAPagarForma", desp.IDAPagarForma);
 				dbTran.AdicionarParametros("@IniciarData", desp.IniciarData);
 				dbTran.AdicionarParametros("@RecorrenciaTipo", desp.RecorrenciaTipo);
 				dbTran.AdicionarParametros("@RecorrenciaDia", desp.RecorrenciaDia);

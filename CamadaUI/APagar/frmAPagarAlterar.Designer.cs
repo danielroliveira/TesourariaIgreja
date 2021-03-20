@@ -34,7 +34,7 @@
 			this.txtIdentificador = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
-			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
+			this.txtAPagarForma = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
 			this.txtBanco = new System.Windows.Forms.TextBox();
@@ -175,14 +175,14 @@
 			this.btnSetForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetForma.Click += new System.EventHandler(this.btnSetForma_Click);
 			// 
-			// txtCobrancaForma
+			// txtAPagarForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(164, 54);
-			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCobrancaForma.MaxLength = 30;
-			this.txtCobrancaForma.Name = "txtCobrancaForma";
-			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 3;
+			this.txtAPagarForma.Location = new System.Drawing.Point(164, 54);
+			this.txtAPagarForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarForma.MaxLength = 30;
+			this.txtAPagarForma.Name = "txtAPagarForma";
+			this.txtAPagarForma.Size = new System.Drawing.Size(267, 27);
+			this.txtAPagarForma.TabIndex = 3;
 			// 
 			// label3
 			// 
@@ -406,7 +406,7 @@
 			this.pnlEditar.Controls.Add(this.cmbReferenciaMes);
 			this.pnlEditar.Controls.Add(this.label3);
 			this.pnlEditar.Controls.Add(this.txtValorDesconto);
-			this.pnlEditar.Controls.Add(this.txtCobrancaForma);
+			this.pnlEditar.Controls.Add(this.txtAPagarForma);
 			this.pnlEditar.Controls.Add(this.label8);
 			this.pnlEditar.Controls.Add(this.btnSetForma);
 			this.pnlEditar.Controls.Add(this.dtpVencimento);
@@ -556,7 +556,7 @@
 		internal System.Windows.Forms.TextBox txtIdentificador;
 		internal System.Windows.Forms.Label label2;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
-		internal System.Windows.Forms.TextBox txtCobrancaForma;
+		internal System.Windows.Forms.TextBox txtAPagarForma;
 		internal System.Windows.Forms.Label label3;
 		internal VIBlend.WinForms.Controls.vButton btnSetBanco;
 		internal System.Windows.Forms.TextBox txtBanco;

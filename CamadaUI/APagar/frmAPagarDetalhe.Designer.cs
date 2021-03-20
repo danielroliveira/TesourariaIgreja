@@ -37,7 +37,7 @@
 			this.numParcela = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
-			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
+			this.txtAPagarForma = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
 			this.txtBanco = new System.Windows.Forms.TextBox();
@@ -64,7 +64,7 @@
 			this.label18 = new System.Windows.Forms.Label();
 			this.lblIdentificador = new System.Windows.Forms.Label();
 			this.lblParcela = new System.Windows.Forms.Label();
-			this.lblCobrancaForma = new System.Windows.Forms.Label();
+			this.lblAPagarForma = new System.Windows.Forms.Label();
 			this.lblBanco = new System.Windows.Forms.Label();
 			this.lblVencimento = new System.Windows.Forms.Label();
 			this.lblAPagarValor = new System.Windows.Forms.Label();
@@ -232,14 +232,14 @@
 			this.btnSetForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetForma.Click += new System.EventHandler(this.btnSetForma_Click);
 			// 
-			// txtCobrancaForma
+			// txtAPagarForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(164, 97);
-			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCobrancaForma.MaxLength = 30;
-			this.txtCobrancaForma.Name = "txtCobrancaForma";
-			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 7;
+			this.txtAPagarForma.Location = new System.Drawing.Point(164, 97);
+			this.txtAPagarForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarForma.MaxLength = 30;
+			this.txtAPagarForma.Name = "txtAPagarForma";
+			this.txtAPagarForma.Size = new System.Drawing.Size(267, 27);
+			this.txtAPagarForma.TabIndex = 7;
 			// 
 			// label3
 			// 
@@ -551,16 +551,16 @@
 			this.lblParcela.Text = "00";
 			this.lblParcela.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblCobrancaForma
+			// lblAPagarForma
 			// 
-			this.lblCobrancaForma.BackColor = System.Drawing.Color.White;
-			this.lblCobrancaForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCobrancaForma.Location = new System.Drawing.Point(161, 70);
-			this.lblCobrancaForma.Name = "lblCobrancaForma";
-			this.lblCobrancaForma.Size = new System.Drawing.Size(325, 27);
-			this.lblCobrancaForma.TabIndex = 1;
-			this.lblCobrancaForma.Text = "Forma de Cobrança";
-			this.lblCobrancaForma.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblAPagarForma.BackColor = System.Drawing.Color.White;
+			this.lblAPagarForma.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAPagarForma.Location = new System.Drawing.Point(161, 70);
+			this.lblAPagarForma.Name = "lblAPagarForma";
+			this.lblAPagarForma.Size = new System.Drawing.Size(325, 27);
+			this.lblAPagarForma.TabIndex = 1;
+			this.lblAPagarForma.Text = "Forma de Cobrança";
+			this.lblAPagarForma.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lblBanco
 			// 
@@ -621,7 +621,7 @@
 			this.pnlVisualizar.Controls.Add(this.label17);
 			this.pnlVisualizar.Controls.Add(this.lblBanco);
 			this.pnlVisualizar.Controls.Add(this.label18);
-			this.pnlVisualizar.Controls.Add(this.lblCobrancaForma);
+			this.pnlVisualizar.Controls.Add(this.lblAPagarForma);
 			this.pnlVisualizar.Controls.Add(this.lblParcela);
 			this.pnlVisualizar.Location = new System.Drawing.Point(544, 132);
 			this.pnlVisualizar.Name = "pnlVisualizar";
@@ -639,7 +639,7 @@
 			this.pnlEditar.Controls.Add(this.cmbReferenciaMes);
 			this.pnlEditar.Controls.Add(this.label3);
 			this.pnlEditar.Controls.Add(this.txtAPagarValor);
-			this.pnlEditar.Controls.Add(this.txtCobrancaForma);
+			this.pnlEditar.Controls.Add(this.txtAPagarForma);
 			this.pnlEditar.Controls.Add(this.label8);
 			this.pnlEditar.Controls.Add(this.btnSetForma);
 			this.pnlEditar.Controls.Add(this.dtpVencimento);
@@ -789,7 +789,7 @@
 		private System.Windows.Forms.NumericUpDown numParcela;
 		internal System.Windows.Forms.Label label1;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
-		internal System.Windows.Forms.TextBox txtCobrancaForma;
+		internal System.Windows.Forms.TextBox txtAPagarForma;
 		internal System.Windows.Forms.Label label3;
 		internal VIBlend.WinForms.Controls.vButton btnSetBanco;
 		internal System.Windows.Forms.TextBox txtBanco;
@@ -816,7 +816,7 @@
 		internal System.Windows.Forms.Label label18;
 		private System.Windows.Forms.Label lblIdentificador;
 		private System.Windows.Forms.Label lblParcela;
-		private System.Windows.Forms.Label lblCobrancaForma;
+		private System.Windows.Forms.Label lblAPagarForma;
 		private System.Windows.Forms.Label lblBanco;
 		private System.Windows.Forms.Label lblVencimento;
 		private System.Windows.Forms.Label lblAPagarValor;

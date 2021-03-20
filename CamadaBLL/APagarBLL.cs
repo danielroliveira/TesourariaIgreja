@@ -22,7 +22,7 @@ namespace CamadaBLL
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
 		public List<objAPagar> GetListAPagar(int? IDSituacao,
-			int? IDCobrancaForma = null,
+			int? IDAPagarForma = null,
 			int? IDCredor = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
@@ -47,10 +47,10 @@ namespace CamadaBLL
 				}
 
 				// add IDDespesaTipo
-				if (IDCobrancaForma != null)
+				if (IDAPagarForma != null)
 				{
-					db.AdicionarParametros("@IDCobrancaForma", IDCobrancaForma);
-					query += myWhere ? " AND IDCobrancaForma = @IDCobrancaForma" : " WHERE IDCobrancaForma = @IDCobrancaForma";
+					db.AdicionarParametros("@IDAPagarForma", IDAPagarForma);
+					query += myWhere ? " AND IDAPagarForma = @IDAPagarForma" : " WHERE IDAPagarForma = @IDAPagarForma";
 					myWhere = true;
 				}
 
@@ -92,7 +92,7 @@ namespace CamadaBLL
 				//-------------------------------------------------------------------------------------------------
 				if (IDSituacao == 1) // EM ABERTO
 				{
-					var periodica = GetListAPagarPeriodica(IDCobrancaForma, IDCredor, dataInicial, dataFinal);
+					var periodica = GetListAPagarPeriodica(IDAPagarForma, IDCredor, dataInicial, dataFinal);
 					listagem.AddRange(periodica);
 				}
 
@@ -146,14 +146,14 @@ namespace CamadaBLL
 		// GET LIST OF APAGAR FROM DESPESA PERIODICA
 		//------------------------------------------------------------------------------------------------------------
 		public List<objAPagar> GetListAPagarPeriodica(
-			int? IDCobrancaForma = null,
+			int? IDAPagarForma = null,
 			int? IDCredor = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
 		{
 			// get Despesa Periodica List
 			List<objDespesaPeriodica> listPer = new DespesaPeriodicaBLL()
-				.GetListDespesaPeriodica(true, null, null, IDCredor, IDCobrancaForma, dataInicial);
+				.GetListDespesaPeriodica(true, null, null, IDCredor, IDAPagarForma, dataInicial);
 
 			List<objAPagar> APagarList = new List<objAPagar>();
 
@@ -365,12 +365,12 @@ namespace CamadaBLL
 			{
 				APagarValor = desp.DespesaValor,
 				Banco = desp.BancoNome,
-				CobrancaForma = desp.CobrancaForma,
+				APagarForma = desp.APagarForma,
 				Credor = desp.Credor,
 				DespesaDescricao = desp.DespesaDescricao,
 				DespesaOrigem = 2,
 				IDBanco = desp.IDBanco,
-				IDCobrancaForma = desp.IDCobrancaForma,
+				IDAPagarForma = desp.IDAPagarForma,
 				IDCredor = desp.IDCredor,
 				IDDespesa = (long)desp.IDDespesa,
 				IDSituacao = 1,
@@ -427,8 +427,8 @@ namespace CamadaBLL
 				DespesaOrigem = (byte)row["DespesaOrigem"],
 				Identificador = (string)row["Identificador"],
 				Parcela = row["Parcela"] == DBNull.Value ? null : (byte?)row["Parcela"],
-				IDCobrancaForma = (int)row["IDCobrancaForma"],
-				CobrancaForma = (string)row["CobrancaForma"],
+				IDAPagarForma = (int)row["IDAPagarForma"],
+				APagarForma = (string)row["APagarForma"],
 				APagarValor = (decimal)row["APagarValor"],
 				IDSituacao = (byte)row["IDSituacao"],
 				Situacao = (string)row["Situacao"],
@@ -470,7 +470,7 @@ namespace CamadaBLL
 				//--- define Params
 				dbTran.AdicionarParametros("@APagarValor", pag.APagarValor);
 				dbTran.AdicionarParametros("@IDBanco", pag.IDBanco);
-				dbTran.AdicionarParametros("@IDCobrancaForma", pag.IDCobrancaForma);
+				dbTran.AdicionarParametros("@IDAPagarForma", pag.IDAPagarForma);
 				dbTran.AdicionarParametros("@IDDespesa", pag.IDDespesa);
 				dbTran.AdicionarParametros("@Identificador", pag.Identificador);
 				dbTran.AdicionarParametros("@IDSituacao", pag.IDSituacao);
@@ -537,7 +537,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDAPagar", pag.IDAPagar);
 				db.AdicionarParametros("@APagarValor", pag.APagarValor);
 				db.AdicionarParametros("@IDBanco", pag.IDBanco);
-				db.AdicionarParametros("@IDCobrancaForma", pag.IDCobrancaForma);
+				db.AdicionarParametros("@IDAPagarForma", pag.IDAPagarForma);
 				db.AdicionarParametros("@IDDespesa", pag.IDDespesa);
 				db.AdicionarParametros("@Identificador", pag.Identificador);
 				db.AdicionarParametros("@IDSituacao", pag.IDSituacao);
@@ -852,7 +852,7 @@ namespace CamadaBLL
 	//=================================================================================================
 	// COBRANCA FORMA
 	//=================================================================================================
-	public class CobrancaFormaBLL
+	public class APagarFormaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
@@ -877,7 +877,7 @@ namespace CamadaBLL
 						query += " WHERE Ativo = @Ativo";
 				}
 
-				query += " ORDER BY IDCobrancaForma";
+				query += " ORDER BY IDAPagarForma";
 
 				// execute datatable
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
@@ -892,15 +892,27 @@ namespace CamadaBLL
 
 				foreach (DataRow row in dt.Rows)
 				{
-					objAPagarForma cob = new objAPagarForma((int)row["IDCobrancaForma"])
+					objAPagarForma cob = new objAPagarForma((int)row["IDAPagarForma"])
 					{
-						CobrancaForma = (string)row["CobrancaForma"],
+						APagarForma = (string)row["APagarForma"],
+						IDPagFormaModo = (byte)row["IDPagFormaModo"],
+						PagFormaModo = (string)row["PagFormaModo"],
 						IDBanco = row["IDBanco"] == DBNull.Value ? null : (int?)row["IDBanco"],
 						BancoNome = row["BancoNome"] == DBNull.Value ? string.Empty : (string)row["BancoNome"],
-						IDCartaoBandeira = row["IDCartaoBandeira"] == DBNull.Value ? null : (int?)row["IDCartaoBandeira"],
-						CartaoBandeira = row["CartaoBandeira"] == DBNull.Value ? string.Empty : (string)row["CartaoBandeira"],
+						IDCartaoCredito = row["IDCartaoCredito"] == DBNull.Value ? null : (int?)row["IDCartaoCredito"],
 						Ativo = (bool)row["Ativo"],
 					};
+
+					if(cob.IDCartaoCredito != null)
+					{
+						cob.CartaoCredito.CartaoDescricao = (string)row["CartaoDescricao"];
+						cob.CartaoCredito.IDCartaoBandeira = (int)row["IDCartaoBandeira"];
+						cob.CartaoCredito.CartaoBandeira = (string)row["CartaoBandeira"];
+						cob.CartaoCredito.CartaoNumeracao = (string)row["CartaoNumeracao"];
+						cob.CartaoCredito.VencimentoDia = (byte)row["VencimentoDia"];
+						cob.CartaoCredito.IDSetor = (int)row["IDSetorCartao"];
+						cob.CartaoCredito.IDCredor = (int)row["IDCredorCartao"];
+					}
 
 					listagem.Add(cob);
 				}
@@ -926,9 +938,10 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@CobrancaForma", forma.CobrancaForma);
+				db.AdicionarParametros("@APagarForma", forma.APagarForma);
+				db.AdicionarParametros("@IDPagFormaModo", forma.IDPagFormaModo);
 				db.AdicionarParametros("@IDBanco", forma.IDBanco);
-				db.AdicionarParametros("@IDCartaoBandeira", forma.IDCartaoBandeira);
+				db.AdicionarParametros("@IDCartaoCredito", forma.IDCartaoCredito);
 				db.AdicionarParametros("@Ativo", true);
 
 				//--- convert null parameters
@@ -948,7 +961,7 @@ namespace CamadaBLL
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateCobrancaForma(objAPagarForma forma)
+		public bool UpdateAPagarForma(objAPagarForma forma)
 		{
 			try
 			{
@@ -958,17 +971,18 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDCobrancaForma", forma.IDCobrancaForma);
-				db.AdicionarParametros("@CobrancaForma", forma.CobrancaForma);
+				db.AdicionarParametros("@IDAPagarForma", forma.IDAPagarForma);
+				db.AdicionarParametros("@APagarForma", forma.APagarForma);
+				db.AdicionarParametros("@IDPagFormaModo", forma.IDPagFormaModo);
 				db.AdicionarParametros("@IDBanco", forma.IDBanco);
-				db.AdicionarParametros("@IDCartaoBandeira", forma.IDCartaoBandeira);
+				db.AdicionarParametros("@IDCartaoCredito", forma.IDCartaoCredito);
 				db.AdicionarParametros("@Ativo", forma.Ativo);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
 
 				//--- create query
-				string query = db.CreateUpdateSQL("tblAPagarForma", "IDCobrancaForma");
+				string query = db.CreateUpdateSQL("tblAPagarForma", "IDAPagarForma");
 
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);

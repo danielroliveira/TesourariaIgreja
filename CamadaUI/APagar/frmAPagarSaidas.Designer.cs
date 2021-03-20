@@ -48,7 +48,7 @@
 			this.label17 = new System.Windows.Forms.Label();
 			this.label18 = new System.Windows.Forms.Label();
 			this.lblIdentificador = new System.Windows.Forms.Label();
-			this.lblCobrancaForma = new System.Windows.Forms.Label();
+			this.lblAPagarForma = new System.Windows.Forms.Label();
 			this.lblBanco = new System.Windows.Forms.Label();
 			this.lblAPagarValor = new System.Windows.Forms.Label();
 			this.lblReferencia = new System.Windows.Forms.Label();
@@ -306,16 +306,16 @@
 			this.lblIdentificador.Text = "Identificador";
 			this.lblIdentificador.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblCobrancaForma
+			// lblAPagarForma
 			// 
-			this.lblCobrancaForma.BackColor = System.Drawing.Color.Transparent;
-			this.lblCobrancaForma.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCobrancaForma.Location = new System.Drawing.Point(17, 4);
-			this.lblCobrancaForma.Name = "lblCobrancaForma";
-			this.lblCobrancaForma.Size = new System.Drawing.Size(186, 27);
-			this.lblCobrancaForma.TabIndex = 1;
-			this.lblCobrancaForma.Text = "Forma de Cobrança";
-			this.lblCobrancaForma.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblAPagarForma.BackColor = System.Drawing.Color.Transparent;
+			this.lblAPagarForma.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAPagarForma.Location = new System.Drawing.Point(17, 4);
+			this.lblAPagarForma.Name = "lblAPagarForma";
+			this.lblAPagarForma.Size = new System.Drawing.Size(186, 27);
+			this.lblAPagarForma.TabIndex = 1;
+			this.lblAPagarForma.Text = "Forma de Cobrança";
+			this.lblAPagarForma.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lblBanco
 			// 
@@ -473,7 +473,7 @@
 			// 
 			this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
 			this.panel3.Controls.Add(this.lblIdentificador);
-			this.panel3.Controls.Add(this.lblCobrancaForma);
+			this.panel3.Controls.Add(this.lblAPagarForma);
 			this.panel3.Controls.Add(this.lblBanco);
 			this.panel3.Location = new System.Drawing.Point(2, 140);
 			this.panel3.Name = "panel3";
@@ -833,7 +833,7 @@
 		internal System.Windows.Forms.Label label18;
 		private System.Windows.Forms.Label lblIdentificador;
 		private System.Windows.Forms.Label lblAtrasoDias;
-		private System.Windows.Forms.Label lblCobrancaForma;
+		private System.Windows.Forms.Label lblAPagarForma;
 		private System.Windows.Forms.Label lblBanco;
 		private System.Windows.Forms.Label lblVencimento;
 		private System.Windows.Forms.Label lblAPagarValor;

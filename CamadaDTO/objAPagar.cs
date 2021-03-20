@@ -19,8 +19,8 @@ namespace CamadaDTO
 			internal string _DespesaDescricao;
 			internal string _Identificador;
 			internal byte? _Parcela;
-			internal int _IDCobrancaForma;
-			internal string _CobrancaForma;
+			internal int _IDAPagarForma;
+			internal string _APagarForma;
 			internal decimal _APagarValor;
 			internal byte _IDSituacao; // 1: Em Aberto | 2: Quitadas | 3: Canceladas | 4:Negociadas | 5:Negativadas
 			internal string _Situacao;
@@ -54,7 +54,8 @@ namespace CamadaDTO
 			{
 				_IDAPagar = IDAPagar,
 				_Parcela = 1,
-				_IDCobrancaForma = 1,
+				_IDAPagarForma = 1,
+				_APagarForma = "Em Carteira",
 				_APagarValor = 0,
 				_IDSituacao = 1,
 				_IDBanco = null,
@@ -187,27 +188,27 @@ namespace CamadaDTO
 			}
 		}
 
-		// Property IDCobrancaForma
+		// Property IDAPagarForma
 		//---------------------------------------------------------------
-		public int IDCobrancaForma
+		public int IDAPagarForma
 		{
-			get => EditData._IDCobrancaForma;
+			get => EditData._IDAPagarForma;
 			set
 			{
-				if (value != EditData._IDCobrancaForma)
+				if (value != EditData._IDAPagarForma)
 				{
-					EditData._IDCobrancaForma = value;
-					NotifyPropertyChanged("IDCobrancaForma");
+					EditData._IDAPagarForma = value;
+					NotifyPropertyChanged("IDAPagarForma");
 				}
 			}
 		}
 
-		// Property CobrancaForma
+		// Property APagarForma
 		//---------------------------------------------------------------
-		public string CobrancaForma
+		public string APagarForma
 		{
-			get => EditData._CobrancaForma;
-			set => EditData._CobrancaForma = value;
+			get => EditData._APagarForma;
+			set => EditData._APagarForma = value;
 		}
 
 		// Property APagarValor
@@ -488,13 +489,15 @@ namespace CamadaDTO
 		//-------------------------------------------------------------------------------------------------
 		struct StructCobranca
 		{
-			internal int? _IDCobrancaForma;
-			internal string _CobrancaForma;
+			internal int? _IDAPagarForma;
+			internal string _APagarForma;
+			internal byte _IDPagFormaModo;
+			internal string _PagFormaModo;
 			internal int? _IDBanco;
 			internal string _BancoNome;
-			internal int? _IDCartaoBandeira;
-			internal string _CartaoBandeira;
+			internal int? _IDCartaoCredito;
 			internal bool _Ativo;
+			internal objCartaoCreditoDespesa _CartaoCredito;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -507,16 +510,19 @@ namespace CamadaDTO
 		{
 			EditData = new StructCobranca()
 			{
-				_IDCobrancaForma = null,
+				_IDAPagarForma = null,
 				_IDBanco = null,
-				_IDCartaoBandeira = null,
-				_Ativo = true
+				_IDCartaoCredito = null,
+				_IDPagFormaModo = 1,
+				_PagFormaModo = "Documento",
+				_Ativo = true,
+				_CartaoCredito = new objCartaoCreditoDespesa(),
 			};
 		}
 
-		public objAPagarForma(int? IDCobrancaForma) : base()
+		public objAPagarForma(int? IDAPagarForma) : base()
 		{
-			EditData._IDCobrancaForma = IDCobrancaForma;
+			EditData._IDAPagarForma = IDAPagarForma;
 		}
 
 		// IEDITABLE OBJECT IMPLEMENTATION
@@ -559,7 +565,7 @@ namespace CamadaDTO
 
 		public override string ToString()
 		{
-			return EditData._IDCobrancaForma.ToString();
+			return EditData._IDAPagarForma.ToString();
 		}
 
 		public bool RegistroAlterado
@@ -570,23 +576,53 @@ namespace CamadaDTO
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public int? IDCobrancaForma
+		public int? IDAPagarForma
 		{
-			get => EditData._IDCobrancaForma;
-			set => EditData._IDCobrancaForma = value;
+			get => EditData._IDAPagarForma;
+			set => EditData._IDAPagarForma = value;
 		}
 
-		// Property CobrancaForma
+		// Property APagarForma
 		//---------------------------------------------------------------
-		public string CobrancaForma
+		public string APagarForma
 		{
-			get => EditData._CobrancaForma;
+			get => EditData._APagarForma;
 			set
 			{
-				if (value != EditData._CobrancaForma)
+				if (value != EditData._APagarForma)
 				{
-					EditData._CobrancaForma = value;
-					NotifyPropertyChanged("CobrancaForma");
+					EditData._APagarForma = value;
+					NotifyPropertyChanged("APagarForma");
+				}
+			}
+		}
+
+		// Property IDPagFormaModo
+		//---------------------------------------------------------------
+		public byte IDPagFormaModo
+		{
+			get => EditData._IDPagFormaModo;
+			set
+			{
+				if (value != EditData._IDPagFormaModo)
+				{
+					EditData._IDPagFormaModo = value;
+					NotifyPropertyChanged("IDPagFormaModo");
+				}
+			}
+		}
+
+		// Property PagFormaModo
+		//---------------------------------------------------------------
+		public string PagFormaModo
+		{
+			get => EditData._PagFormaModo;
+			set
+			{
+				if (value != EditData._PagFormaModo)
+				{
+					EditData._PagFormaModo = value;
+					NotifyPropertyChanged("PagFormaModo");
 				}
 			}
 		}
@@ -614,29 +650,6 @@ namespace CamadaDTO
 			set => EditData._BancoNome = value;
 		}
 
-		// Property IDCartaoBandeira
-		//---------------------------------------------------------------
-		public int? IDCartaoBandeira
-		{
-			get => EditData._IDCartaoBandeira;
-			set
-			{
-				if (value != EditData._IDCartaoBandeira)
-				{
-					EditData._IDCartaoBandeira = value;
-					NotifyPropertyChanged("IDCartaoBandeira");
-				}
-			}
-		}
-
-		// Property CartaoBandeira
-		//---------------------------------------------------------------
-		public string CartaoBandeira
-		{
-			get => EditData._CartaoBandeira;
-			set => EditData._CartaoBandeira = value;
-		}
-
 		// Property Ativo
 		//---------------------------------------------------------------
 		public bool Ativo
@@ -651,6 +664,51 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property IDCartaoCredito
+		//---------------------------------------------------------------
+		public int? IDCartaoCredito
+		{
+			get => EditData._IDCartaoCredito;
+			set
+			{
+				if (value != EditData._IDCartaoCredito)
+				{
+					EditData._IDCartaoCredito = value;
+					NotifyPropertyChanged("IDCartaoCredito");
+				}
+			}
+		}
+
+		// Property CartaoCredito
+		//---------------------------------------------------------------
+		public objCartaoCreditoDespesa CartaoCredito
+		{
+			get
+			{
+				if (EditData._IDCartaoCredito == null)
+				{
+					return null;
+				}
+				else
+				{
+					if (EditData._CartaoCredito == null)
+					{
+						EditData._CartaoCredito = new objCartaoCreditoDespesa();
+					}
+
+					return EditData._CartaoCredito;
+				}
+			}
+
+			set
+			{
+				EditData._CartaoCredito = value;
+			}
+		}
+
+
+
 	}
 
 	//=================================================================================================

@@ -1012,8 +1012,8 @@ namespace CamadaUI.Saidas
 				{
 					IDAPagar = null,
 					APagarValor = parcValor,
-					IDCobrancaForma = (int)frm.IDCobrancaForma,
-					CobrancaForma = frm.CobrancaForma,
+					IDAPagarForma = (int)frm.IDAPagarForma,
+					APagarForma = frm.APagarForma,
 					IDBanco = frm.IDBanco,
 					Banco = frm.BancoNome,
 					DespesaDescricao = _despesa.DespesaDescricao,
@@ -1073,7 +1073,7 @@ namespace CamadaUI.Saidas
 			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
 			//--- (1) COLUNA FORMA
-			clnForma.DataPropertyName = "CobrancaForma";
+			clnForma.DataPropertyName = "APagarForma";
 			clnForma.Visible = true;
 			clnForma.ReadOnly = true;
 			clnForma.Resizable = DataGridViewTriState.False;

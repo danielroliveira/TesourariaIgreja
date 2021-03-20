@@ -1341,6 +1341,7 @@
     <None Include="Resources\save_nocolor_24.png" />
     <None Include="Resources\email_32.png" />
     <None Include="Resources\NewMessageGIF_32.gif" />
+    <None Include="Resources\credit_card_32.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

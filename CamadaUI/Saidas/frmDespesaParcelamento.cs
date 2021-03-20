@@ -18,8 +18,8 @@ namespace CamadaUI.Saidas
 
 		public int? IDBanco { get; set; }
 		public string BancoNome { get; set; }
-		public int? IDCobrancaForma { get; set; }
-		public string CobrancaForma { get; set; }
+		public int? IDAPagarForma { get; set; }
+		public string APagarForma { get; set; }
 		public int? VencimentoDia { get; set; }
 
 		#region SUB NEW | PROPERTIES
@@ -48,7 +48,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
+				listFormas = new APagarFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{
@@ -71,16 +71,16 @@ namespace CamadaUI.Saidas
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			//--- check data
-			if (IDCobrancaForma == null)
+			if (IDAPagarForma == null)
 			{
 				AbrirDialog("Favor preencher a informação da Forma de Cobrança",
 					"Forma de Corbança", DialogType.OK, DialogIcon.Exclamation);
-				txtCobrancaForma.Focus();
+				txtAPagarForma.Focus();
 				return;
 			}
 
 			VencimentoDia = (int)numVencimentoDia.Value;
-			CobrancaForma = txtCobrancaForma.Text;
+			APagarForma = txtAPagarForma.Text;
 			BancoNome = txtBanco.Text;
 
 			DialogResult = DialogResult.OK;
@@ -105,7 +105,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtBanco, txtCobrancaForma
+					txtBanco, txtAPagarForma
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -138,7 +138,7 @@ namespace CamadaUI.Saidas
 					case "txtBanco":
 						btnSetBanco_Click(sender, new EventArgs());
 						break;
-					case "txtCobrancaForma":
+					case "txtAPagarForma":
 						btnSetForma_Click(sender, new EventArgs());
 						break;
 					default:
@@ -167,7 +167,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
-					txtBanco, txtCobrancaForma
+					txtBanco, txtAPagarForma
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -236,9 +236,9 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			var dic = listFormas.ToDictionary(x => (int)x.IDCobrancaForma, x => x.CobrancaForma);
-			var textBox = txtCobrancaForma;
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, IDCobrancaForma);
+			var dic = listFormas.ToDictionary(x => (int)x.IDAPagarForma, x => x.APagarForma);
+			var textBox = txtAPagarForma;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, IDAPagarForma);
 
 			// show form
 			frm.ShowDialog();
@@ -246,7 +246,7 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				IDCobrancaForma = (int)frm.propEscolha.Key;
+				IDAPagarForma = (int)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 

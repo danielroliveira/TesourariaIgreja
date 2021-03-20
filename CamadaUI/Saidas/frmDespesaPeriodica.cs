@@ -111,7 +111,7 @@ namespace CamadaUI.Saidas
 			txtSetor.Enter += text_Enter;
 			txtCredor.Enter += text_Enter;
 			txtDespesaTipo.Enter += text_Enter;
-			txtCobrancaForma.Enter += text_Enter;
+			txtAPagarForma.Enter += text_Enter;
 			txtBanco.Enter += text_Enter;
 
 			// block keyDown then Sit = Alterado
@@ -193,7 +193,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
+				listFormas = new APagarFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{
@@ -221,7 +221,7 @@ namespace CamadaUI.Saidas
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtBanco.DataBindings.Add("Text", bind, "BancoNome", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpIniciarData.DataBindings.Add("Value", bind, "IniciarData", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -736,9 +736,9 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			var dic = listFormas.ToDictionary(x => (int)x.IDCobrancaForma, x => x.CobrancaForma);
-			var textBox = txtCobrancaForma;
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _despesa.IDCobrancaForma);
+			var dic = listFormas.ToDictionary(x => (int)x.IDAPagarForma, x => x.APagarForma);
+			var textBox = txtAPagarForma;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _despesa.IDAPagarForma);
 
 			// show form
 			frm.ShowDialog();
@@ -746,10 +746,10 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDCobrancaForma != frm.propEscolha.Key)
+				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDAPagarForma != frm.propEscolha.Key)
 					Sit = EnumFlagEstado.Alterado;
 
-				_despesa.IDCobrancaForma = (int)frm.propEscolha.Key;
+				_despesa.IDAPagarForma = (int)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 
@@ -817,7 +817,7 @@ namespace CamadaUI.Saidas
 					txtSetor,
 					txtCredor,
 					txtDespesaTipo,
-					txtCobrancaForma,
+					txtAPagarForma,
 					txtBanco,
 					txtDespesaDescricao,
 					txtTitular,
@@ -869,7 +869,7 @@ namespace CamadaUI.Saidas
 					case "txtDespesaTipo":
 						btnSetDespesaTipo_Click(sender, new EventArgs());
 						break;
-					case "txtCobrancaForma":
+					case "txtAPagarForma":
 						btnSetForma_Click(sender, new EventArgs());
 						break;
 					case "txtBanco":
@@ -918,7 +918,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
-					txtCobrancaForma, //txtDespesaDescricao,
+					txtAPagarForma, //txtDespesaDescricao,
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -942,7 +942,7 @@ namespace CamadaUI.Saidas
 					txtSetor,
 					txtCredor,
 					txtDespesaTipo,
-					txtCobrancaForma,
+					txtAPagarForma,
 					txtBanco,
 					txtTitular,
 				 };
@@ -966,20 +966,20 @@ namespace CamadaUI.Saidas
 
 				switch (ctr.Name)
 				{
-					case "txtCobrancaForma":
+					case "txtAPagarForma":
 
 						if (listFormas.Count > 0)
 						{
-							var tipo = listFormas.FirstOrDefault(x => x.IDCobrancaForma == int.Parse(e.KeyChar.ToString()));
+							var tipo = listFormas.FirstOrDefault(x => x.IDAPagarForma == int.Parse(e.KeyChar.ToString()));
 
 							if (tipo == null) return;
 
-							if (tipo.IDCobrancaForma != _despesa.IDCobrancaForma)
+							if (tipo.IDAPagarForma != _despesa.IDAPagarForma)
 							{
 								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
-								_despesa.IDCobrancaForma = (int)tipo.IDCobrancaForma;
-								txtCobrancaForma.Text = tipo.CobrancaForma;
+								_despesa.IDAPagarForma = (int)tipo.IDAPagarForma;
+								txtAPagarForma.Text = tipo.APagarForma;
 							}
 						}
 						break;
@@ -1139,7 +1139,7 @@ namespace CamadaUI.Saidas
 			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(txtCredor, "Credor/Fornecedor", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(txtDespesaTipo, "Tipo de Despesa", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtCobrancaForma, "Forma de Cobrança", _despesa, EP)) return false;
+			if (!VerificaDadosClasse(txtAPagarForma, "Forma de Cobrança", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(cmbRecorrenciaTipo, "Tipo de Recorrência", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(txtDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
 

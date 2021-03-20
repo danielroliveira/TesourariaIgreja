@@ -65,7 +65,7 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new CobrancaFormaBLL().GetListAPagarForma(true);
+				listFormas = new APagarFormaBLL().GetListAPagarForma(true);
 			}
 			catch (Exception ex)
 			{
@@ -93,7 +93,7 @@ namespace CamadaUI.APagar
 			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
 			txtIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
 			numParcela.DataBindings.Add("Value", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpVencimento.DataBindings.Add("Value", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -119,7 +119,7 @@ namespace CamadaUI.APagar
 			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
 			lblIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblParcela.DataBindings.Add("Text", bind, "Parcela", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblCobrancaForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblVencimento.DataBindings.Add("Text", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -202,9 +202,9 @@ namespace CamadaUI.APagar
 				return;
 			}
 
-			var dic = listFormas.ToDictionary(x => (int)x.IDCobrancaForma, x => x.CobrancaForma);
-			var textBox = txtCobrancaForma;
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _apagar.IDCobrancaForma);
+			var dic = listFormas.ToDictionary(x => (int)x.IDAPagarForma, x => x.APagarForma);
+			var textBox = txtAPagarForma;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _apagar.IDAPagarForma);
 
 			// show form
 			frm.ShowDialog();
@@ -212,7 +212,7 @@ namespace CamadaUI.APagar
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				_apagar.IDCobrancaForma = (int)frm.propEscolha.Key;
+				_apagar.IDAPagarForma = (int)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}
 

@@ -30,8 +30,8 @@ namespace CamadaDTO
 			internal string _Titular;
 			internal string _CNP;
 			// TBL DEPESA PERIODICA
-			internal int _IDCobrancaForma;
-			internal string _CobrancaForma;
+			internal int _IDAPagarForma;
+			internal string _APagarForma;
 			internal int? _IDBanco;
 			internal string _BancoNome;
 			internal DateTime _IniciarData; // data do inicio da despesa
@@ -282,27 +282,27 @@ namespace CamadaDTO
 			set => EditData._Setor = value;
 		}
 
-		// Property IDCobrancaForma
+		// Property IDAPagarForma
 		//---------------------------------------------------------------
-		public int IDCobrancaForma
+		public int IDAPagarForma
 		{
-			get => EditData._IDCobrancaForma;
+			get => EditData._IDAPagarForma;
 			set
 			{
-				if (value != EditData._IDCobrancaForma)
+				if (value != EditData._IDAPagarForma)
 				{
-					EditData._IDCobrancaForma = value;
-					NotifyPropertyChanged("IDCobrancaForma");
+					EditData._IDAPagarForma = value;
+					NotifyPropertyChanged("IDAPagarForma");
 				}
 			}
 		}
 
-		// Property CobrancaForma
+		// Property APagarForma
 		//---------------------------------------------------------------
-		public string CobrancaForma
+		public string APagarForma
 		{
-			get => EditData._CobrancaForma;
-			set => EditData._CobrancaForma = value;
+			get => EditData._APagarForma;
+			set => EditData._APagarForma = value;
 		}
 
 		// Property IniciarData

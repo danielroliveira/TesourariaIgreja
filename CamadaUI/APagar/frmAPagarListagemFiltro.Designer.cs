@@ -36,7 +36,7 @@
 			this.btnCancelar = new VIBlend.WinForms.Controls.vButton();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
-			this.txtCobrancaForma = new System.Windows.Forms.TextBox();
+			this.txtAPagarForma = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -214,14 +214,14 @@
 			this.btnSetForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetForma.Click += new System.EventHandler(this.btnSetForma_Click);
 			// 
-			// txtCobrancaForma
+			// txtAPagarForma
 			// 
-			this.txtCobrancaForma.Location = new System.Drawing.Point(178, 127);
-			this.txtCobrancaForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtCobrancaForma.MaxLength = 30;
-			this.txtCobrancaForma.Name = "txtCobrancaForma";
-			this.txtCobrancaForma.Size = new System.Drawing.Size(267, 27);
-			this.txtCobrancaForma.TabIndex = 5;
+			this.txtAPagarForma.Location = new System.Drawing.Point(178, 127);
+			this.txtAPagarForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarForma.MaxLength = 30;
+			this.txtAPagarForma.Name = "txtAPagarForma";
+			this.txtAPagarForma.Size = new System.Drawing.Size(267, 27);
+			this.txtAPagarForma.TabIndex = 5;
 			// 
 			// label3
 			// 
@@ -239,7 +239,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(650, 263);
 			this.Controls.Add(this.btnSetForma);
-			this.Controls.Add(this.txtCobrancaForma);
+			this.Controls.Add(this.txtAPagarForma);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.btnSetContribuinte);
@@ -256,7 +256,7 @@
 			this.Controls.SetChildIndex(this.btnSetContribuinte, 0);
 			this.Controls.SetChildIndex(this.panel2, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.txtCobrancaForma, 0);
+			this.Controls.SetChildIndex(this.txtAPagarForma, 0);
 			this.Controls.SetChildIndex(this.btnSetForma, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
@@ -274,7 +274,7 @@
 		internal VIBlend.WinForms.Controls.vButton btnCancelar;
 		private System.Windows.Forms.Panel panel2;
 		internal VIBlend.WinForms.Controls.vButton btnSetForma;
-		internal System.Windows.Forms.TextBox txtCobrancaForma;
+		internal System.Windows.Forms.TextBox txtAPagarForma;
 		internal System.Windows.Forms.Label label3;
 	}
 }
