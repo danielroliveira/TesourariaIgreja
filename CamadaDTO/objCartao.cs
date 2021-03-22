@@ -421,7 +421,7 @@ namespace CamadaDTO
 	//=================================================================================================
 	public class objCartaoBandeira
 	{
-		public int IDCartaoBandeira { get; set; }
+		public int? IDCartaoBandeira { get; set; }
 		public string CartaoBandeira { get; set; }
 		public bool Ativa { get; set; }
 	}

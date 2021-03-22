@@ -850,7 +850,7 @@ namespace CamadaBLL
 	}
 
 	//=================================================================================================
-	// COBRANCA FORMA
+	// APAGAR FORMA
 	//=================================================================================================
 	public class APagarFormaBLL
 	{
@@ -903,15 +903,15 @@ namespace CamadaBLL
 						Ativo = (bool)row["Ativo"],
 					};
 
-					if(cob.IDCartaoCredito != null)
+					if (cob.IDCartaoCredito != null)
 					{
 						cob.CartaoCredito.CartaoDescricao = (string)row["CartaoDescricao"];
 						cob.CartaoCredito.IDCartaoBandeira = (int)row["IDCartaoBandeira"];
 						cob.CartaoCredito.CartaoBandeira = (string)row["CartaoBandeira"];
 						cob.CartaoCredito.CartaoNumeracao = (string)row["CartaoNumeracao"];
 						cob.CartaoCredito.VencimentoDia = (byte)row["VencimentoDia"];
-						cob.CartaoCredito.IDSetor = (int)row["IDSetorCartao"];
-						cob.CartaoCredito.IDCredor = (int)row["IDCredorCartao"];
+						cob.CartaoCredito.IDSetorCartao = (int)row["IDSetorCartao"];
+						cob.CartaoCredito.IDCredorCartao = (int)row["IDCredorCartao"];
 					}
 
 					listagem.Add(cob);
@@ -996,4 +996,178 @@ namespace CamadaBLL
 		}
 	}
 
+	//=================================================================================================
+	// APAGAR CARTAO
+	//=================================================================================================
+	public class APagarCartaoBLL
+	{
+		// GET CARTAO CREDITO DE DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		public objAPagarCartao GetCartaoCreditoDespesa(long IDCartaoCredito, object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT * FROM qryCartaoCreditoDespesa WHERE IDCartaoCredito = @IDCartaoCredito";
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCartaoCredito", IDCartaoCredito);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new AppException("Não existe registro de Cartão de Crédito com esse número de Registro...");
+				}
+
+				var row = dt.Rows[0];
+
+				var cartao = new objAPagarCartao(null)
+				{
+					IDCartaoCredito = (int)row["IDCartaoCredito"],
+					CartaoDescricao = (string)row["CartaoDescricao"],
+					IDCartaoBandeira = row["IDCartaoBandeira"] == DBNull.Value ? null : (int?)row["IDCartaoBandeira"],
+					CartaoBandeira = row["CartaoBandeira"] == DBNull.Value ? string.Empty : (string)row["CartaoBandeira"],
+					CartaoNumeracao = row["CartaoNumeracao"] == DBNull.Value ? string.Empty : (string)row["CartaoNumeracao"],
+					IDCredorCartao = (int)row["IDCredor"],
+					CredorCartao = (string)row["Credor"],
+					IDSetorCartao = (int)row["IDSetor"],
+					SetorCartao = (string)row["Setor"],
+					VencimentoDia = (byte)row["VencimentoDia"],
+				};
+
+				return cartao;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET CARTAO CREDITO DE DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAPagarCartao> GetCartaoCreditoDespesaList(object dbTran = null)
+		{
+			try
+			{
+				AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+				string query = "SELECT * FROM qryCartaoCreditoDespesa";
+				db.LimparParametros();
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				var list = new List<objAPagarCartao>();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					var cartao = new objAPagarCartao(null)
+					{
+						IDCartaoCredito = (int)row["IDCartaoCredito"],
+						CartaoDescricao = (string)row["CartaoDescricao"],
+						IDCartaoBandeira = row["IDCartaoBandeira"] == DBNull.Value ? null : (int?)row["IDCartaoBandeira"],
+						CartaoBandeira = row["CartaoBandeira"] == DBNull.Value ? string.Empty : (string)row["CartaoBandeira"],
+						CartaoNumeracao = row["CartaoNumeracao"] == DBNull.Value ? string.Empty : (string)row["CartaoNumeracao"],
+						IDCredorCartao = (int)row["IDCredor"],
+						CredorCartao = (string)row["Credor"],
+						IDSetorCartao = (int)row["IDSetor"],
+						SetorCartao = (string)row["Setor"],
+						VencimentoDia = (byte)row["VencimentoDia"],
+					};
+
+					list.Add(cartao);
+				}
+
+				return list;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// INSERT CARTAO CREDITO DE DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		public int InsertCartaoCreditoDespesa(objAPagarCartao cartao, object dbTran = null)
+		{
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+			try
+			{
+				db = new AcessoDados();
+				if (dbTran == null) db.BeginTransaction();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@CartaoDescricao", cartao.CartaoDescricao);
+				db.AdicionarParametros("@VencimentoDia", cartao.VencimentoDia);
+				db.AdicionarParametros("@IDCartaoBandeira", cartao.IDCartaoBandeira);
+				db.AdicionarParametros("@CartaoNumeracao", cartao.CartaoNumeracao);
+				db.AdicionarParametros("@IDSetor", cartao.IDSetorCartao);
+				db.AdicionarParametros("@IDCredor", cartao.IDCredorCartao);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateInsertSQL("tblCartaoCredito");
+
+				//--- insert and Get new ID
+				long newID = db.ExecutarInsertAndGetID(query);
+
+				if (dbTran == null) db.CommitTransaction();
+				return (int)newID;
+
+			}
+			catch (Exception ex)
+			{
+				if (dbTran == null) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// UPDATE CARTAO CREDITO DE DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		public void UpdateCartaoCreditoDespesa(objAPagarCartao cartao, object dbTran = null)
+		{
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
+
+			try
+			{
+				db = new AcessoDados();
+				if (dbTran == null) db.BeginTransaction();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDCartaoCredito", cartao.IDCartaoCredito);
+				db.AdicionarParametros("@CartaoDescricao", cartao.CartaoDescricao);
+				db.AdicionarParametros("@VencimentoDia", cartao.VencimentoDia);
+				db.AdicionarParametros("@IDCartaoBandeira", cartao.IDCartaoBandeira);
+				db.AdicionarParametros("@CartaoNumeracao", cartao.CartaoNumeracao);
+				db.AdicionarParametros("@IDSetor", cartao.IDSetorCartao);
+				db.AdicionarParametros("@IDCredor", cartao.IDCredorCartao);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateUpdateSQL("tblCartaoCredito", "IDCartaoCredito");
+
+				//--- insert and Get new ID
+				db.ExecutarManipulacao(CommandType.Text, query);
+
+				if (dbTran == null) db.CommitTransaction();
+
+			}
+			catch (Exception ex)
+			{
+				if (dbTran == null) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+	}
 }

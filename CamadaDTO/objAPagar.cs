@@ -497,7 +497,7 @@ namespace CamadaDTO
 			internal string _BancoNome;
 			internal int? _IDCartaoCredito;
 			internal bool _Ativo;
-			internal objCartaoCreditoDespesa _CartaoCredito;
+			internal objAPagarCartao _CartaoCredito;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -516,7 +516,7 @@ namespace CamadaDTO
 				_IDPagFormaModo = 1,
 				_PagFormaModo = "Documento",
 				_Ativo = true,
-				_CartaoCredito = new objCartaoCreditoDespesa(),
+				_CartaoCredito = new objAPagarCartao(null),
 			};
 		}
 
@@ -682,7 +682,7 @@ namespace CamadaDTO
 
 		// Property CartaoCredito
 		//---------------------------------------------------------------
-		public objCartaoCreditoDespesa CartaoCredito
+		public objAPagarCartao CartaoCredito
 		{
 			get
 			{
@@ -694,7 +694,7 @@ namespace CamadaDTO
 				{
 					if (EditData._CartaoCredito == null)
 					{
-						EditData._CartaoCredito = new objCartaoCreditoDespesa();
+						EditData._CartaoCredito = new objAPagarCartao(null);
 					}
 
 					return EditData._CartaoCredito;
@@ -829,4 +829,251 @@ namespace CamadaDTO
 		}
 	}
 
+	//=================================================================================================
+	// DESPESA CARTAO DE CREDITO
+	//=================================================================================================
+	public class objAPagarCartao : IEditableObject, INotifyPropertyChanged
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructCartao
+		{
+			internal int? _IDCartaoCredito;
+			internal string _CartaoDescricao;
+			internal byte _VencimentoDia;
+			internal int? _IDCartaoBandeira;
+			internal string _CartaoBandeira;
+			internal string _CartaoNumeracao;
+			internal int _IDCredor;
+			internal string _Credor;
+			internal int _IDSetor;
+			internal string _Setor;
+			internal bool _Ativo;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructCartao EditData;
+		private StructCartao BackupData;
+		private bool inTxn = false;
+
+		public objAPagarCartao(int? IDCartaoCredito) : base()
+		{
+			EditData = new StructCartao()
+			{
+				_IDCartaoCredito = IDCartaoCredito,
+				_CartaoDescricao = "",
+				_VencimentoDia = 1,
+				_Ativo = true,
+			};
+		}
+
+		public objAPagarCartao()
+		{
+			EditData = new StructCartao()
+			{
+				_IDCartaoCredito = IDCartaoCredito,
+				_CartaoDescricao = "",
+				_VencimentoDia = 1,
+				_Ativo = true,
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructCartao();
+				inTxn = false;
+			}
+		}
+
+		// PROPERTY CHANGED
+		//------------------------------------------------------------------------------------------------------------
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public override string ToString()
+		{
+			return EditData._CartaoDescricao;
+		}
+
+		public bool RegistroAlterado
+		{
+			get => inTxn;
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+
+		// Property IDCartaoCredito
+		//---------------------------------------------------------------
+		public int? IDCartaoCredito
+		{
+			get => EditData._IDCartaoCredito;
+			set
+			{
+				if (value != EditData._IDCartaoCredito)
+				{
+					EditData._IDCartaoCredito = value;
+					NotifyPropertyChanged("IDCartaoCredito");
+				}
+			}
+		}
+
+		// Property CartaoDescricao
+		//---------------------------------------------------------------
+		public string CartaoDescricao
+		{
+			get => EditData._CartaoDescricao;
+			set
+			{
+				if (value != EditData._CartaoDescricao)
+				{
+					EditData._CartaoDescricao = value;
+					NotifyPropertyChanged("CartaoDescricao");
+				}
+			}
+		}
+
+		// Property VencimentoDia
+		//---------------------------------------------------------------
+		public byte VencimentoDia
+		{
+			get => EditData._VencimentoDia;
+			set
+			{
+				if (value != EditData._VencimentoDia)
+				{
+					EditData._VencimentoDia = value;
+					NotifyPropertyChanged("VencimentoDia");
+				}
+			}
+		}
+
+		// Property IDCartaoBandeira
+		//---------------------------------------------------------------
+		public int? IDCartaoBandeira
+		{
+			get => EditData._IDCartaoBandeira;
+			set
+			{
+				if (value != EditData._IDCartaoBandeira)
+				{
+					EditData._IDCartaoBandeira = value;
+					NotifyPropertyChanged("IDCartaoBandeira");
+				}
+			}
+		}
+
+		// Property CartaoBandeira
+		//---------------------------------------------------------------
+		public string CartaoBandeira
+		{
+			get => EditData._CartaoBandeira;
+			set => EditData._CartaoBandeira = value;
+		}
+
+		// Property CartaoNumeracao
+		//---------------------------------------------------------------
+		public string CartaoNumeracao
+		{
+			get => EditData._CartaoNumeracao;
+			set
+			{
+				if (value != EditData._CartaoNumeracao)
+				{
+					EditData._CartaoNumeracao = value;
+					NotifyPropertyChanged("CartaoNumeracao");
+				}
+			}
+		}
+
+		// Property IDCredor
+		//---------------------------------------------------------------
+		public int IDCredorCartao
+		{
+			get => EditData._IDCredor;
+			set
+			{
+				if (value != EditData._IDCredor)
+				{
+					EditData._IDCredor = value;
+					NotifyPropertyChanged("IDCredor");
+				}
+			}
+		}
+
+		// Property Credor
+		//---------------------------------------------------------------
+		public string CredorCartao
+		{
+			get => EditData._Credor;
+			set => EditData._Credor = value;
+		}
+
+		// Property IDSetorCartao
+		//---------------------------------------------------------------
+		public int IDSetorCartao
+		{
+			get => EditData._IDSetor;
+			set
+			{
+				if (value != EditData._IDSetor)
+				{
+					EditData._IDSetor = value;
+					NotifyPropertyChanged("IDSetor");
+				}
+			}
+		}
+
+		// Property SetorCartao
+		//---------------------------------------------------------------
+		public string SetorCartao
+		{
+			get => EditData._Setor;
+			set => EditData._Setor = value;
+		}
+
+		// Property Ativo
+		//---------------------------------------------------------------
+		public bool Ativo
+		{
+			get => EditData._Ativo;
+			set
+			{
+				if (value != EditData._Ativo)
+				{
+					EditData._Ativo = value;
+					NotifyPropertyChanged("Ativo");
+				}
+			}
+		}
+
+	}
 }

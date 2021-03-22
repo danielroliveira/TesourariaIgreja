@@ -1,6 +1,6 @@
-﻿namespace CamadaUI.Saidas
+﻿namespace CamadaUI.APagar
 {
-	partial class frmCobrancaForma
+	partial class frmAPagarForma
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -37,6 +37,7 @@
 			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
+			this.btnCartoesCredito = new System.Windows.Forms.ToolStripButton();
 			this.btnSetBanco = new VIBlend.WinForms.Controls.vButton();
 			this.txtBanco = new System.Windows.Forms.TextBox();
 			this.Label6 = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtPagFormaModo = new System.Windows.Forms.TextBox();
 			this.btnSetModo = new VIBlend.WinForms.Controls.vButton();
-			this.btnCartoesCredito = new System.Windows.Forms.ToolStripButton();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstListagem)).BeginInit();
@@ -182,6 +182,18 @@
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+			// 
+			// btnCartoesCredito
+			// 
+			this.btnCartoesCredito.Image = global::CamadaUI.Properties.Resources.credit_card_32;
+			this.btnCartoesCredito.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnCartoesCredito.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnCartoesCredito.Name = "btnCartoesCredito";
+			this.btnCartoesCredito.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnCartoesCredito.Size = new System.Drawing.Size(180, 41);
+			this.btnCartoesCredito.Text = " Car&tões de Crédito";
+			this.btnCartoesCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnCartoesCredito.Click += new System.EventHandler(this.btnCartoesCredito_Click);
 			// 
 			// btnSetBanco
 			// 
@@ -377,18 +389,7 @@
 			this.btnSetModo.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
 			this.btnSetModo.Click += new System.EventHandler(this.btnSetModo_Click);
 			// 
-			// btnCartoesCredito
-			// 
-			this.btnCartoesCredito.Image = global::CamadaUI.Properties.Resources.credit_card_32;
-			this.btnCartoesCredito.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnCartoesCredito.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnCartoesCredito.Name = "btnCartoesCredito";
-			this.btnCartoesCredito.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnCartoesCredito.Size = new System.Drawing.Size(180, 41);
-			this.btnCartoesCredito.Text = " Car&tões de Crédito";
-			this.btnCartoesCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// frmCobrancaForma
+			// frmAPagarForma
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(911, 449);
@@ -410,7 +411,7 @@
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.lblCongregacao);
 			this.KeyPreview = true;
-			this.Name = "frmCobrancaForma";
+			this.Name = "frmAPagarForma";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);

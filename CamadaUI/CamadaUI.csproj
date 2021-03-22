@@ -152,6 +152,12 @@
     <Compile Include="APagar\frmAPagarSaidas.designer.cs">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </Compile>
+    <Compile Include="APagar\frmCartaoCreditoDespesa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APagar\frmCartaoCreditoDespesa.designer.cs">
+      <DependentUpon>frmCartaoCreditoDespesa.cs</DependentUpon>
+    </Compile>
     <Compile Include="APagar\Reports\frmAPagarReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +217,12 @@
     </Compile>
     <Compile Include="Caixa\frmCaixaListagem.designer.cs">
       <DependentUpon>frmCaixaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Caixa\frmCartaoBandeirasControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Caixa\frmCartaoBandeirasControle.designer.cs">
+      <DependentUpon>frmCartaoBandeirasControle.cs</DependentUpon>
     </Compile>
     <Compile Include="Caixa\frmCartaoControle.cs">
       <SubType>Form</SubType>
@@ -601,11 +613,11 @@
     <Compile Include="Registres\frmFuncionarioListagem.designer.cs">
       <DependentUpon>frmFuncionarioListagem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Saidas\frmCobrancaForma.cs">
+    <Compile Include="APagar\frmAPagarForma.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Saidas\frmCobrancaForma.designer.cs">
-      <DependentUpon>frmCobrancaForma.cs</DependentUpon>
+    <Compile Include="APagar\frmAPagarForma.designer.cs">
+      <DependentUpon>frmAPagarForma.cs</DependentUpon>
     </Compile>
     <Compile Include="Saidas\frmDespesa.cs">
       <SubType>Form</SubType>
@@ -794,6 +806,9 @@
     <EmbeddedResource Include="APagar\frmAPagarSaidas.resx">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="APagar\frmCartaoCreditoDespesa.resx">
+      <DependentUpon>frmCartaoCreditoDespesa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="APagar\Reports\frmAPagarReport.resx">
       <DependentUpon>frmAPagarReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -825,6 +840,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmCaixaListagem.resx">
       <DependentUpon>frmCaixaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Caixa\frmCartaoBandeirasControle.resx">
+      <DependentUpon>frmCartaoBandeirasControle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Caixa\frmCartaoControle.resx">
       <DependentUpon>frmCartaoControle.cs</DependentUpon>
@@ -1024,8 +1042,8 @@
     <EmbeddedResource Include="Registres\frmFuncionarioListagem.resx">
       <DependentUpon>frmFuncionarioListagem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Saidas\frmCobrancaForma.resx">
-      <DependentUpon>frmCobrancaForma.cs</DependentUpon>
+    <EmbeddedResource Include="APagar\frmAPagarForma.resx">
+      <DependentUpon>frmAPagarForma.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesa.resx">
       <DependentUpon>frmDespesa.cs</DependentUpon>

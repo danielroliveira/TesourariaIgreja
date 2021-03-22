@@ -11,7 +11,7 @@ namespace CamadaDTO
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
-		struct StructDespesa
+		struct StructCartao
 		{
 			internal long? _IDDespesaCartao;
 			internal long _IDDespesaDestino;
@@ -43,13 +43,13 @@ namespace CamadaDTO
 
 		// VARIABLES | CONSTRUCTOR
 		//-------------------------------------------------------------------------------------------------
-		private StructDespesa EditData;
-		private StructDespesa BackupData;
+		private StructCartao EditData;
+		private StructCartao BackupData;
 		private bool inTxn = false;
 
 		public objDespesaCartao(long? IDDespesaCartao) : base()
 		{
-			EditData = new StructDespesa()
+			EditData = new StructCartao()
 			{
 				_IDDespesaCartao = IDDespesaCartao,
 				_DespesaDescricao = "",
@@ -90,7 +90,7 @@ namespace CamadaDTO
 		{
 			if (inTxn)
 			{
-				BackupData = new StructDespesa();
+				BackupData = new StructCartao();
 				inTxn = false;
 			}
 		}
@@ -414,20 +414,4 @@ namespace CamadaDTO
 
 	}
 
-
-	public class objCartaoCreditoDespesa
-	{
-		public int IDCartaoCredito { get; set; }
-		public string CartaoDescricao { get; set; }
-		public byte VencimentoDia { get; set; }
-		public int? IDCartaoBandeira { get; set; }
-		public string CartaoBandeira { get; set; }
-		public string CartaoNumeracao { get; set; }
-		public int IDCredor { get; set; }
-		public string Credor { get; set; }
-		public int IDSetor { get; set; }
-		public string Setor { get; set; }
-		public bool Ativo { get; set; }
-
-	}
 }

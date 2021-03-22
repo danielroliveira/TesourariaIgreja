@@ -13,13 +13,13 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Saidas
+namespace CamadaUI.APagar
 {
-	public partial class frmCobrancaForma : CamadaUI.Modals.frmModFinBorder
+	public partial class frmAPagarForma : CamadaUI.Modals.frmModFinBorder
 	{
 		private objAPagarForma _forma;
 		private List<objAPagarForma> list;
-		private List<objCartaoCreditoDespesa> listCartao;
+		private List<objAPagarCartao> listCartao;
 		private Dictionary<int, string> dicModo;
 		private APagarFormaBLL fBLL = new APagarFormaBLL();
 		private BindingSource bind = new BindingSource();
@@ -29,7 +29,7 @@ namespace CamadaUI.Saidas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmCobrancaForma()
+		public frmAPagarForma()
 		{
 			InitializeComponent();
 
@@ -156,7 +156,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listCartao = new DespesaCartaoBLL().GetCartaoCreditoDespesaList();
+				listCartao = new APagarCartaoBLL().GetCartaoCreditoDespesaList();
 			}
 			catch (Exception ex)
 			{
@@ -304,7 +304,6 @@ namespace CamadaUI.Saidas
 
 		#endregion // LIST CONTROL --- END
 
-
 		#region BUTTONS
 
 		// FECHAR FORM
@@ -388,6 +387,7 @@ namespace CamadaUI.Saidas
 				if (_forma.IDAPagarForma == null) //--- save | Insert
 				{
 					int ID = fBLL.InsertAPagarForma(_forma);
+
 					//--- define newID
 					((objAPagarForma)bind.Current).IDAPagarForma = ID;
 					bind.EndEdit();
@@ -419,9 +419,23 @@ namespace CamadaUI.Saidas
 
 		}
 
+		// CHECK DATA BEFORE SAVE
+		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtAPagarForma, "APagarForma", _forma)) return false;
+			if (!VerificaDadosClasse(txtAPagarForma, "Descrição da Forma", _forma)) return false;
+			if (!VerificaDadosClasse(txtPagFormaModo, "Modo de Pagamento", _forma)) return false;
+
+			if (_forma.IDPagFormaModo == 3) // if cartao de credito
+			{
+				if (!VerificaDadosClasse(txtCartaoCredito, "Cartão de Crédito", _forma)) return false;
+				_forma.IDBanco = null;
+			}
+			else
+			{
+				_forma.IDCartaoCredito = null;
+			}
+
 			return true;
 		}
 
@@ -725,6 +739,34 @@ namespace CamadaUI.Saidas
 			textBox.SelectAll();
 		}
 
+		// OPEN CARTAO FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnCartoesCredito_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var frm = new frmCartaoCreditoDespesa(this);
+
+				Visible = false;
+				frm.ShowDialog();
+				Visible = true;
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir Formulário de Cartão de Crédito..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion // BUTTONS PROCURA --- END
 
 		#region TOOLTIP
@@ -751,6 +793,7 @@ namespace CamadaUI.Saidas
 				toolTip1.Show(controle.Tag.ToString(), controle, controle.Width - 30, -40, 2000);
 			}
 		}
+
 
 
 		#endregion

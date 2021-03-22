@@ -330,5 +330,69 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// INSERT CARTAO BANDEIRAS
+		//------------------------------------------------------------------------------------------------------------
+		public int InsertCartaoBandeira(objCartaoBandeira bandeira)
+		{
+			AcessoDados db = new AcessoDados();
+
+			try
+			{
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@CartaoBandeira", bandeira.CartaoBandeira);
+				db.AdicionarParametros("@Ativa", bandeira.Ativa);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateInsertSQL("tblCartaoBandeira");
+
+				//--- insert and Get new ID
+				int newID = (int)db.ExecutarInsertAndGetID(query);
+				return newID;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE CARTAO BANDEIRAS
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateCartaoBandeira(objCartaoBandeira bandeira)
+		{
+			AcessoDados db = new AcessoDados();
+
+			try
+			{
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDCartaoBandeira", bandeira.IDCartaoBandeira);
+				db.AdicionarParametros("@CartaoBandeira", bandeira.CartaoBandeira);
+				db.AdicionarParametros("@Ativa", bandeira.Ativa);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblCartaoBandeira", "@IDCartaoBandeira");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }
