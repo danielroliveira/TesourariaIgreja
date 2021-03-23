@@ -74,13 +74,15 @@ namespace CamadaUI.Saidas
 			// check Periodo Referencia
 			CheckPeriodoReferencia();
 
+			// check Max Despesa Data to previne future date
+			dtpDespesaData.MaxDate = DateTime.Today;
+
 			if (_despesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				_despesa.IDSetor = (int)setorSelected.IDSetor;
 				_despesa.Setor = setorSelected.Setor;
 				_despesa.DespesaData = DataPadrao();
-
 			}
 			else
 			{
@@ -973,7 +975,7 @@ namespace CamadaUI.Saidas
 			bindParcelas.Clear();
 
 			// Open Form Parcelamento
-			var frm = new frmDespesaParcelamento((int)numParcelas.Value, this);
+			var frm = new frmDespesaParcelamento((int)numParcelas.Value, _despesa.DespesaData, this);
 			frm.ShowDialog();
 
 			// check RESPONSE
@@ -981,8 +983,11 @@ namespace CamadaUI.Saidas
 
 			// Define Values and Vencimento Dates
 			decimal parcValor = _despesa.DespesaValor / numParcelas.Value;
-			DateTime dtVencimento = _despesa.DespesaData;
 
+			//DateTime dtVencimento = _despesa.DespesaData;
+			DateTime dtVencimento = frm.Vencimento;
+
+			/*
 			if (frm.VencimentoDia >= dtVencimento.Day)
 			{
 				if (!DateTime.TryParse($"{frm.VencimentoDia}/{dtVencimento.Month}/{dtVencimento.Year}", out dtVencimento))
@@ -1001,6 +1006,7 @@ namespace CamadaUI.Saidas
 					dtVencimento = new DateTime(dtVencimento.Year, dtVencimento.Month, maxDays);
 				};
 			}
+			*/
 
 			// create List
 			List<objAPagar> pagList = new List<objAPagar>();
@@ -1012,8 +1018,8 @@ namespace CamadaUI.Saidas
 				{
 					IDAPagar = null,
 					APagarValor = parcValor,
-					IDAPagarForma = (int)frm.IDAPagarForma,
-					APagarForma = frm.APagarForma,
+					IDAPagarForma = (int)frm.SelPagForma.IDAPagarForma,
+					APagarForma = frm.SelPagForma.APagarForma,
 					IDBanco = frm.IDBanco,
 					Banco = frm.BancoNome,
 					DespesaDescricao = _despesa.DespesaDescricao,
@@ -1050,6 +1056,188 @@ namespace CamadaUI.Saidas
 		}
 
 		#endregion // PARCELAS --- END
+
+		#region MENU A PAGAR
+
+		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
+		{
+			// check button
+			if (e.Button != MouseButtons.Right) return;
+
+			Control c = (Control)sender;
+			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
+			dgvListagem.ClearSelection();
+
+			if (hit.Type != DataGridViewHitTestType.Cell) return;
+
+			// seleciona o ROW
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
+			dgvListagem.Rows[hit.RowIndex].Selected = true;
+
+			// mostra o MENU ativar e desativar
+			objDespesa desp = (objDespesa)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+
+			// mnuImagem
+			bool IsThereImagem = desp.Imagem != null && !string.IsNullOrEmpty(desp.Imagem.ImagemFileName);
+
+			mnuImagemRemover.Enabled = IsThereImagem;
+			mnuImagemInserir.Text = IsThereImagem ? "Alterar Imagem" : "Inserir Imagem";
+			mnuImagemVisualizar.Enabled = IsThereImagem;
+
+			// revela menu
+			mnuOperacoes.Show(c.PointToScreen(e.Location));
+
+		}
+
+		// INSERT IMAGE
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuImagemInserir_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Inserir Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objImagem imagem = new objImagem()
+				{
+					IDOrigem = (long)item.IDDespesa,
+					Origem = EnumImagemOrigem.Despesa,
+					ImagemFileName = item.Imagem == null ? string.Empty : item.Imagem.ImagemFileName,
+					ImagemPath = item.Imagem == null ? string.Empty : item.Imagem.ImagemPath,
+					ReferenceDate = item.DespesaData,
+				};
+
+				// open form to edit or save image
+				bool IsNew = item.Imagem == null || string.IsNullOrEmpty(item.Imagem.ImagemPath);
+				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
+
+				// check if isUpdated
+				bool IsUpdated = false;
+				if (item.Imagem != null && imagem != null)
+				{
+					IsUpdated = (item.Imagem.ImagemFileName != imagem.ImagemFileName) || (item.Imagem.ImagemPath != imagem.ImagemPath);
+				}
+
+				// update imagem object
+				item.Imagem = imagem;
+
+				// emit message
+				if (IsNew && imagem != null)
+				{
+					AbrirDialog("Imagem associada e salva com sucesso!" +
+								"\nPor segurança a imagem foi transferida para a pasta padrão.",
+								"Imagem Salva", DialogType.OK, DialogIcon.Information);
+				}
+				else if (IsUpdated)
+				{
+					AbrirDialog("Imagem alterada com sucesso!" +
+								"\nPor segurança a imagem anterior foi transferida para a pasta de imagens removidas.",
+								"Imagem Alterada", DialogType.OK, DialogIcon.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuImagemVisualizar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				ImagemUtil.ImagemVisualizar(item.Imagem);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Visualizar a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuImagemRemover_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			DialogResult resp;
+
+			resp = AbrirDialog("Deseja realmente REMOVER ou DESASSOCIAR a imagem da despesa selecionada?" +
+				"\nA imagem não será excluída mas movida para pasta de Imagens Removidas...",
+				"Remover Imagem", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//_despesa.Imagem.ReferenceDate = _despesa.DespesaData;
+				item.Imagem = ImagemUtil.ImagemRemover(item.Imagem);
+
+				AbrirDialog("Imagem desassociada com sucesso!" +
+					"\nPor segurança a imagem foi guardada na pasta de Imagens Removidas.",
+					"Imagem Removida", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+
+
+		#endregion // MENU A PAGAR --- END
 
 		#region DATAGRID LIST FUNCTIONS
 
@@ -1185,7 +1373,7 @@ namespace CamadaUI.Saidas
 			if (!VerificaDadosClasse(txtDocumentoNumero, "Número do Documento", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(txtDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
 
-			// CHECK VALUE
+			// CHECK DESPESA VALUE
 			if (_despesa.DespesaValor <= 0)
 			{
 				AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using CamadaUI.Caixa;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using CamadaBLL;
-using CamadaDTO;
-using CamadaUI.Caixa;
 using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Saidas
@@ -14,26 +14,31 @@ namespace CamadaUI.Saidas
 	{
 		private List<objAPagarForma> listFormas;
 		private Form _formOrigem;
+		private DateTime _DataInicial;
 		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
 		public int? IDBanco { get; set; }
 		public string BancoNome { get; set; }
-		public int? IDAPagarForma { get; set; }
-		public string APagarForma { get; set; }
-		public int? VencimentoDia { get; set; }
+		public objAPagarForma SelPagForma { get; set; }
+		public DateTime Vencimento { get; set; }
 
 		#region SUB NEW | PROPERTIES
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesaParcelamento(int Parcelas, Form formOrigem)
+		public frmDespesaParcelamento(int Parcelas, DateTime DataInicial, Form formOrigem)
 		{
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
 			GetFormasList();
 
+
 			lblParcelas.Text = Parcelas.ToString("D2") + " Parcelas";
+			lblVencimento.Text = Parcelas == 1 ? "Data do Vencimento" : "Primeiro Vencimento";
+			_DataInicial = DataInicial;
+			dtpDataVencimento.MinDate = _DataInicial;
+			dtpDataVencimento.Value = _DataInicial;
 
 			// handlers
 			HandlerKeyDownControl(this);
@@ -49,6 +54,21 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.WaitCursor;
 
 				listFormas = new APagarFormaBLL().GetListAPagarForma(true);
+
+				if (listFormas.Count == 0)
+				{
+					AbrirDialog("Não há Formas de Cobrança cadastradas ou ativas...",
+						"Formas de Cobrança",
+						DialogType.OK,
+						DialogIcon.Exclamation);
+					return;
+				}
+				else
+				{
+					SelPagForma = listFormas[0];
+					txtAPagarForma.Text = SelPagForma.APagarForma;
+				}
+
 			}
 			catch (Exception ex)
 			{
@@ -71,16 +91,31 @@ namespace CamadaUI.Saidas
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			//--- check data
-			if (IDAPagarForma == null)
+			if (SelPagForma == null || SelPagForma.IDAPagarForma == null)
 			{
-				AbrirDialog("Favor preencher a informação da Forma de Cobrança",
-					"Forma de Corbança", DialogType.OK, DialogIcon.Exclamation);
+				AbrirDialog("Favor preencher a informação da Forma de Pagamento",
+					"Forma de Pagamento", DialogType.OK, DialogIcon.Exclamation);
 				txtAPagarForma.Focus();
 				return;
 			}
 
-			VencimentoDia = (int)numVencimentoDia.Value;
-			APagarForma = txtAPagarForma.Text;
+			if (SelPagForma.IDPagFormaModo == 3) // caso cartão
+			{
+				// check vencimento day
+				if (dtpDataVencimento.Value.Day != SelPagForma.CartaoCredito.VencimentoDia)
+				{
+					AbrirDialog("O Dia da data de vencimento precisa ser igual o dia de Vencimento do Cartão selecionado:" +
+						$"\n\nO Dia de Vencimento do cartão é: {SelPagForma.CartaoCredito.VencimentoDia:D2}" +
+						$"\n\nFavor alterar o dia do primeiro vencimento...",
+						"Dia do Vencimento",
+						DialogType.OK,
+						DialogIcon.Exclamation);
+					dtpDataVencimento.Focus();
+					return;
+				}
+			}
+
+			Vencimento = dtpDataVencimento.Value;
 			BancoNome = txtBanco.Text;
 
 			DialogResult = DialogResult.OK;
@@ -231,14 +266,16 @@ namespace CamadaUI.Saidas
 		{
 			if (listFormas.Count == 0)
 			{
-				AbrirDialog("Não há Formas de Cobrança cadastradas ou ativas...", "Formas de Cobrança",
-					DialogType.OK, DialogIcon.Exclamation);
+				AbrirDialog("Não há Formas de Cobrança cadastradas ou ativas...",
+					"Formas de Cobrança",
+					DialogType.OK,
+					DialogIcon.Exclamation);
 				return;
 			}
 
 			var dic = listFormas.ToDictionary(x => (int)x.IDAPagarForma, x => x.APagarForma);
 			var textBox = txtAPagarForma;
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, IDAPagarForma);
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, SelPagForma.IDAPagarForma);
 
 			// show form
 			frm.ShowDialog();
@@ -246,7 +283,7 @@ namespace CamadaUI.Saidas
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
-				IDAPagarForma = (int)frm.propEscolha.Key;
+				SelPagForma = listFormas.First(x => x.IDAPagarForma == (int)frm.propEscolha.Key);
 				textBox.Text = frm.propEscolha.Value;
 			}
 

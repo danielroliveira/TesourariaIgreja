@@ -51,16 +51,17 @@
 			this.txtCartaoBandeira = new System.Windows.Forms.TextBox();
 			this.btnSetBandeira = new VIBlend.WinForms.Controls.vButton();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtVencimentoDia = new CamadaUC.ucOnlyNumbers();
 			this.btnSetSetor = new VIBlend.WinForms.Controls.vButton();
 			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.btnSetCredor = new VIBlend.WinForms.Controls.vButton();
 			this.txtCredor = new System.Windows.Forms.TextBox();
 			this.lblContribuinte = new System.Windows.Forms.Label();
+			this.numVencimentoDia = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstListagem)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numVencimentoDia)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -105,20 +106,20 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.toolStripSeparator2,
-            this.btnFechar,
-            this.btnCartoesCredito});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.toolStripSeparator2,
+			this.btnFechar,
+			this.btnCartoesCredito});
 			this.tspMenu.Location = new System.Drawing.Point(2, 403);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(1001, 44);
@@ -197,7 +198,7 @@
 			this.btnCartoesCredito.Size = new System.Drawing.Size(191, 41);
 			this.btnCartoesCredito.Text = " &Bandeiras de Cartão";
 			this.btnCartoesCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnCartoesCredito.Click += new System.EventHandler(this.btnCartoesCredito_Click);
+			this.btnCartoesCredito.Click += new System.EventHandler(this.btnCartoesBandeira_Click);
 			// 
 			// txtCartaoNumeracao
 			// 
@@ -205,9 +206,8 @@
 			this.txtCartaoNumeracao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCartaoNumeracao.MaxLength = 30;
 			this.txtCartaoNumeracao.Name = "txtCartaoNumeracao";
-			this.txtCartaoNumeracao.Size = new System.Drawing.Size(150, 27);
+			this.txtCartaoNumeracao.Size = new System.Drawing.Size(140, 27);
 			this.txtCartaoNumeracao.TabIndex = 9;
-			this.txtCartaoNumeracao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtCartaoNumeracao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCartaoNumeracao_KeyPress);
 			// 
 			// Label6
@@ -278,7 +278,7 @@
 			this.cmbAtivo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbAtivo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbAtivo.FormattingEnabled = true;
-			this.cmbAtivo.Location = new System.Drawing.Point(526, 339);
+			this.cmbAtivo.Location = new System.Drawing.Point(526, 300);
 			this.cmbAtivo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbAtivo.Name = "cmbAtivo";
 			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
@@ -287,7 +287,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(478, 342);
+			this.label3.Location = new System.Drawing.Point(478, 303);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(42, 19);
 			this.label3.TabIndex = 18;
@@ -339,24 +339,11 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(389, 303);
+			this.label4.Location = new System.Drawing.Point(676, 186);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(131, 19);
-			this.label4.TabIndex = 16;
+			this.label4.TabIndex = 10;
 			this.label4.Text = "Dia do Vencimento";
-			// 
-			// txtVencimentoDia
-			// 
-			this.txtVencimentoDia.Inteiro = true;
-			this.txtVencimentoDia.Location = new System.Drawing.Point(526, 300);
-			this.txtVencimentoDia.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtVencimentoDia.MaxLength = 30;
-			this.txtVencimentoDia.Moeda = false;
-			this.txtVencimentoDia.Name = "txtVencimentoDia";
-			this.txtVencimentoDia.Positivo = true;
-			this.txtVencimentoDia.Size = new System.Drawing.Size(61, 27);
-			this.txtVencimentoDia.TabIndex = 17;
-			this.txtVencimentoDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// btnSetSetor
 			// 
@@ -369,7 +356,7 @@
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
 			this.btnSetSetor.Size = new System.Drawing.Size(34, 27);
-			this.btnSetSetor.TabIndex = 12;
+			this.btnSetSetor.TabIndex = 14;
 			this.btnSetSetor.TabStop = false;
 			this.btnSetSetor.Text = "...";
 			this.btnSetSetor.UseCompatibleTextRendering = true;
@@ -384,7 +371,7 @@
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
 			this.txtSetor.Size = new System.Drawing.Size(340, 27);
-			this.txtSetor.TabIndex = 11;
+			this.txtSetor.TabIndex = 13;
 			this.txtSetor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtSetor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
@@ -396,7 +383,7 @@
 			this.label5.Location = new System.Drawing.Point(415, 225);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
-			this.label5.TabIndex = 10;
+			this.label5.TabIndex = 12;
 			this.label5.Text = "Setor Debitado";
 			// 
 			// btnSetCredor
@@ -410,7 +397,7 @@
 			this.btnSetCredor.RoundedCornersMask = ((byte)(15));
 			this.btnSetCredor.RoundedCornersRadius = 0;
 			this.btnSetCredor.Size = new System.Drawing.Size(34, 27);
-			this.btnSetCredor.TabIndex = 15;
+			this.btnSetCredor.TabIndex = 17;
 			this.btnSetCredor.TabStop = false;
 			this.btnSetCredor.Text = "...";
 			this.btnSetCredor.UseCompatibleTextRendering = true;
@@ -425,7 +412,7 @@
 			this.txtCredor.MaxLength = 30;
 			this.txtCredor.Name = "txtCredor";
 			this.txtCredor.Size = new System.Drawing.Size(411, 27);
-			this.txtCredor.TabIndex = 14;
+			this.txtCredor.TabIndex = 16;
 			this.txtCredor.Tag = "Pressione a tecla (+) para procurar";
 			this.txtCredor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtCredor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
@@ -438,13 +425,36 @@
 			this.lblContribuinte.Location = new System.Drawing.Point(382, 264);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(138, 19);
-			this.lblContribuinte.TabIndex = 13;
+			this.lblContribuinte.TabIndex = 15;
 			this.lblContribuinte.Text = "Credor / Fornecedor";
+			// 
+			// numVencimentoDia
+			// 
+			this.numVencimentoDia.Location = new System.Drawing.Point(813, 183);
+			this.numVencimentoDia.Maximum = new decimal(new int[] {
+			28,
+			0,
+			0,
+			0});
+			this.numVencimentoDia.Minimum = new decimal(new int[] {
+			1,
+			0,
+			0,
+			0});
+			this.numVencimentoDia.Name = "numVencimentoDia";
+			this.numVencimentoDia.Size = new System.Drawing.Size(53, 27);
+			this.numVencimentoDia.TabIndex = 11;
+			this.numVencimentoDia.Value = new decimal(new int[] {
+			1,
+			0,
+			0,
+			0});
 			// 
 			// frmCartaoCreditoDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1006, 449);
+			this.Controls.Add(this.numVencimentoDia);
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.txtSetor);
 			this.Controls.Add(this.label5);
@@ -454,7 +464,6 @@
 			this.Controls.Add(this.btnSetBandeira);
 			this.Controls.Add(this.txtCartaoBandeira);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.txtVencimentoDia);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.label3);
@@ -484,7 +493,6 @@
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
-			this.Controls.SetChildIndex(this.txtVencimentoDia, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.txtCartaoBandeira, 0);
 			this.Controls.SetChildIndex(this.btnSetBandeira, 0);
@@ -494,10 +502,12 @@
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
+			this.Controls.SetChildIndex(this.numVencimentoDia, 0);
 			this.panel1.ResumeLayout(false);
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstListagem)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numVencimentoDia)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -527,12 +537,12 @@
 		internal VIBlend.WinForms.Controls.vButton btnSetBandeira;
 		private System.Windows.Forms.ToolStripButton btnCartoesCredito;
 		internal System.Windows.Forms.Label label4;
-		internal CamadaUC.ucOnlyNumbers txtVencimentoDia;
 		internal VIBlend.WinForms.Controls.vButton btnSetSetor;
 		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label5;
 		internal VIBlend.WinForms.Controls.vButton btnSetCredor;
 		internal System.Windows.Forms.TextBox txtCredor;
 		internal System.Windows.Forms.Label lblContribuinte;
+		private System.Windows.Forms.NumericUpDown numVencimentoDia;
 	}
 }

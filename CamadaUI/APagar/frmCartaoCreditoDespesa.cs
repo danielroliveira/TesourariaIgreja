@@ -183,11 +183,10 @@ namespace CamadaUI.APagar
 			txtCartaoNumeracao.DataBindings.Add("Text", bind, "CartaoNumeracao", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtSetor.DataBindings.Add("Text", bind, "SetorCartao", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCredor.DataBindings.Add("Text", bind, "CredorCartao", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtVencimentoDia.DataBindings.Add("Text", bind, "VencimentoDia", true, DataSourceUpdateMode.OnPropertyChanged);
+			numVencimentoDia.DataBindings.Add("Value", bind, "VencimentoDia", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
-			txtVencimentoDia.DataBindings["Text"].Format += FormatD2;
 
 			// FILL COMBO
 			CarregaCmbAtivo();
@@ -196,11 +195,6 @@ namespace CamadaUI.APagar
 		private void FormatID(object sender, ConvertEventArgs e)
 		{
 			e.Value = e.Value == null ? "NOVA" : $"{e.Value: 0000}";
-		}
-
-		private void FormatD2(object sender, ConvertEventArgs e)
-		{
-			e.Value = $"{e.Value: 00}";
 		}
 
 		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
@@ -356,6 +350,35 @@ namespace CamadaUI.APagar
 			txtCartaoDescricao.Focus();
 		}
 
+		// OPEN CARTOES BANDEIRA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnCartoesBandeira_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- show form
+				var frm = new Caixa.frmCartaoBandeirasControle(this);
+				frm.ShowDialog();
+
+				//--- requery bnadeira list
+				GetBandeiraList();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region SAVE REGISTRY
@@ -416,23 +439,15 @@ namespace CamadaUI.APagar
 			if (!VerificaDadosClasse(txtCartaoNumeracao, "Numeração do Cartão", _cartao)) return false;
 			if (!VerificaDadosClasse(txtSetor, "Setor do Cartão", _cartao)) return false;
 			if (!VerificaDadosClasse(txtCredor, "Credor do Cartão", _cartao)) return false;
-			if (!VerificaDadosClasse(txtVencimentoDia, "Dia do Vencimento do Cartão", _cartao)) return false;
+			if (!VerificaDadosClasse(numVencimentoDia, "Dia do Vencimento do Cartão", _cartao)) return false;
 
-			if (byte.TryParse(txtVencimentoDia.Text, out byte num))
-			{
-				if (num > 28 || num < 1)
-				{
-					AbrirDialog("O vencimento deve ser um número entre 1 e 28", "Vencimento",
-						DialogType.OK, DialogIcon.Exclamation);
-					txtVencimentoDia.Focus();
-					return false;
-				}
-			}
-			else
+			byte num = (byte)numVencimentoDia.Value;
+
+			if (num > 28 || num < 1)
 			{
 				AbrirDialog("O vencimento deve ser um número entre 1 e 28", "Vencimento",
 					DialogType.OK, DialogIcon.Exclamation);
-				txtVencimentoDia.Focus();
+				numVencimentoDia.Focus();
 				return false;
 			}
 
@@ -580,6 +595,16 @@ namespace CamadaUI.APagar
 					default:
 						break;
 				}
+			}
+		}
+
+		// ONLY NUMBERS IN CARTAO NUMERACAO
+		//------------------------------------------------------------------------------------------------------------
+		private void txtCartaoNumeracao_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+			{
+				e.Handled = true;
 			}
 		}
 
@@ -744,36 +769,5 @@ namespace CamadaUI.APagar
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
 
-		private void btnCartoesCredito_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				var frm = new Caixa.frmCartaoBandeirasControle(this);
-
-				frm.ShowDialog();
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		private void txtCartaoNumeracao_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-			{
-				e.Handled = true;
-			}
-		}
 	}
 }
