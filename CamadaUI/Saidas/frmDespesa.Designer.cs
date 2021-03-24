@@ -95,13 +95,13 @@
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuAdicionarAPagar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuEditarAPagar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuExcluirAPagar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuImagemAPagar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuExcluirAPagar = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.pnlParcelas.SuspendLayout();
@@ -167,20 +167,20 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.btnFechar,
-            this.toolStripSeparator2,
-            this.mnuImagem});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.btnFechar,
+			this.toolStripSeparator2,
+			this.mnuImagem});
 			this.tspMenu.Location = new System.Drawing.Point(2, 600);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(772, 44);
@@ -252,18 +252,18 @@
 			// mnuImagem
 			// 
 			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnInserirImagem,
-            this.btnVerImagem,
-            this.toolStripSeparator3,
-            this.btnRemoverImagem});
+			this.btnInserirImagem,
+			this.btnVerImagem,
+			this.toolStripSeparator3,
+			this.btnRemoverImagem});
 			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
 			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.mnuImagem.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
 			this.mnuImagem.Name = "mnuImagem";
 			this.mnuImagem.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.mnuImagem.Size = new System.Drawing.Size(114, 41);
-			this.mnuImagem.Text = "Imagem";
+			this.mnuImagem.Size = new System.Drawing.Size(174, 41);
+			this.mnuImagem.Text = "Imagem Despesa";
 			this.mnuImagem.Click += new System.EventHandler(this.mnuImagem_Click);
 			// 
 			// btnInserirImagem
@@ -551,23 +551,23 @@
 			this.numParcelas.Location = new System.Drawing.Point(31, 71);
 			this.numParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numParcelas.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
+			255,
+			0,
+			0,
+			0});
 			this.numParcelas.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numParcelas.Name = "numParcelas";
 			this.numParcelas.Size = new System.Drawing.Size(65, 31);
 			this.numParcelas.TabIndex = 2;
 			this.numParcelas.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numParcelas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numParcelas_KeyDown);
 			// 
 			// lblParcelas
@@ -681,11 +681,11 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnForma,
-            this.clnSituacao,
-            this.clnIdentificador,
-            this.clnVencimento,
-            this.clnValor});
+			this.clnForma,
+			this.clnSituacao,
+			this.clnIdentificador,
+			this.clnVencimento,
+			this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(153, 419);
@@ -820,7 +820,7 @@
 			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
-			this.lblSitBlock.Location = new System.Drawing.Point(487, 607);
+			this.lblSitBlock.Location = new System.Drawing.Point(505, 607);
 			this.lblSitBlock.Name = "lblSitBlock";
 			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
 			this.lblSitBlock.TabIndex = 0;
@@ -911,11 +911,11 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuAdicionarAPagar,
-            this.mnuEditarAPagar,
-            this.mnuExcluirAPagar,
-            this.toolStripSeparator5,
-            this.toolStripMenuItem1});
+			this.mnuAdicionarAPagar,
+			this.mnuEditarAPagar,
+			this.mnuExcluirAPagar,
+			this.toolStripSeparator5,
+			this.mnuImagemAPagar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(214, 154);
 			// 
@@ -926,6 +926,7 @@
 			this.mnuAdicionarAPagar.Name = "mnuAdicionarAPagar";
 			this.mnuAdicionarAPagar.Size = new System.Drawing.Size(213, 36);
 			this.mnuAdicionarAPagar.Text = "Adicionar APagar";
+			this.mnuAdicionarAPagar.Click += new System.EventHandler(this.mnuAdicionarAPagar_Click);
 			// 
 			// mnuEditarAPagar
 			// 
@@ -934,19 +935,34 @@
 			this.mnuEditarAPagar.Name = "mnuEditarAPagar";
 			this.mnuEditarAPagar.Size = new System.Drawing.Size(213, 36);
 			this.mnuEditarAPagar.Text = "Editar APagar";
+			this.mnuEditarAPagar.Click += new System.EventHandler(this.mnuEditarAPagar_Click);
 			// 
-			// toolStripMenuItem1
+			// mnuExcluirAPagar
 			// 
-			this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuImagemInserir,
-            this.mnuImagemVisualizar,
-            this.toolStripSeparator4,
-            this.mnuImagemRemover});
-			this.toolStripMenuItem1.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
-			this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(213, 36);
-			this.toolStripMenuItem1.Text = "Imagem";
+			this.mnuExcluirAPagar.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuExcluirAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuExcluirAPagar.Name = "mnuExcluirAPagar";
+			this.mnuExcluirAPagar.Size = new System.Drawing.Size(213, 36);
+			this.mnuExcluirAPagar.Text = "Excluir APagar";
+			this.mnuExcluirAPagar.Click += new System.EventHandler(this.mnuExcluirAPagar_Click);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(210, 6);
+			// 
+			// mnuImagemAPagar
+			// 
+			this.mnuImagemAPagar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.mnuImagemInserir,
+			this.mnuImagemVisualizar,
+			this.toolStripSeparator4,
+			this.mnuImagemRemover});
+			this.mnuImagemAPagar.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.mnuImagemAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuImagemAPagar.Name = "mnuImagemAPagar";
+			this.mnuImagemAPagar.Size = new System.Drawing.Size(213, 36);
+			this.mnuImagemAPagar.Text = "Imagem APagar";
 			// 
 			// mnuImagemInserir
 			// 
@@ -973,19 +989,6 @@
 			this.mnuImagemRemover.Name = "mnuImagemRemover";
 			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemRemover.Text = "Remover Imagem";
-			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(210, 6);
-			// 
-			// mnuExcluirAPagar
-			// 
-			this.mnuExcluirAPagar.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.mnuExcluirAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuExcluirAPagar.Name = "mnuExcluirAPagar";
-			this.mnuExcluirAPagar.Size = new System.Drawing.Size(213, 36);
-			this.mnuExcluirAPagar.Text = "Excluir APagar";
 			// 
 			// frmDespesa
 			// 
@@ -1138,7 +1141,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuEditarAPagar;
 		private System.Windows.Forms.ToolStripMenuItem mnuExcluirAPagar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem mnuImagemAPagar;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

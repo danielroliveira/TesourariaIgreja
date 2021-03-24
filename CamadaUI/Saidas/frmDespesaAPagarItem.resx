@@ -120,45 +120,4 @@
   <metadata name="tspMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="mnuImagem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAObSURBVEhL7ZRLbBNHGMcHVUio5XnooRJSueSCIBXKA7Oh
-        BU4gwZkjR44ceqoqVYYSqlYVj0rtsQd6oogSCI8kdpINEnk0tXfz2PgVrx1sr2IXx06c2M7OrP11Zj1r
-        x7EbIsc3+Et/jbzyfL/5/vPtog9iyi0Fu3LpIGxt1VyDE78+VUT7Xr51Z8omAzYLkF9WYX0lXLaeCdNn
-        oTJYHb8LXvH751MDP3/CtzeubDZry6f9ZuFM0gep+CykE7Pmmlqcoc+85oFK4F/AN3wDvCM/PPe+/mkf
-        L9GYsPebttxqinYYgqQmgeoZKntecYAWGqPQeRNugf0j3XS91RuYsO/nZbYn7EQdxIEu4mfoSzzack1V
-        /QaLcy0VMLtmXVrr6pKvEvXYPfANXQe/eBN81AGx+6+waD/Iy75bRj+aSTiRvvwS5dLjrfmQVzFyy28o
-        2A8rbz2mM8nSuhEcHL0NnsHvaLfXy/YO2R+orocHeOmtpTtRwnAiMF4iIOOtwMD6agzexlwQnHOaVj1O
-        CMwOQDQ4ClkeddzfCzHlAWhzf27wI9D8fXd46a1Fo9YscFRsLVgds7tkHVpmcbP4GZRZX40CXouZZgdl
-        v9fXEoCTLpUMonO4H3UWB9D/T3x98IJZnA1ZtUsxbzZ7zcxXjR54Qek1EoNIzzpQhta9yjG1qgdmp/83
-        6jYn+V32z/RD2DdsDt96hnatPQHaMRgOenV96EeOqVU1+Fip48wirCSDkFyc25aX4h5YS4chl4lDWPq9
-        yOpRKOAR9C3H1KoK3PNFkYFDHrHwRpkwIh7Xtr2gTBohxU3XO0ZERAVaF8jYgd+K0xcO5+WTRziuoo3g
-        iHimEFYGDWP6PBDpBBC5q0ELZUf7hCIzx1VkgVk0kb+PGlrYjom7hW6y7cAVsGnJpnJcRWVwP7vjjwqa
-        cgkTub12804sCbVDZoFjf6BilN3N9Nn6mxv0sizksGzr5LiKTDAdfRPe81mRTJ2uW6BR6/IpB7jadnNc
-        RRY4OowKEelzsnk4dmo8JXzNUdWyoo68RoRMfVV3c6POT7an9GnbcY6qFn5RAifET/Vmx4wl4THH1Ip+
-        zGNYpFFLR41mxhwVhYIh2a5wTK1Y1GR0D/1zc++WyJ1BmDl9iGNqRYZQiPxzHJoesyzc54j6wq92LRB3
-        Z1PBmixgQ+66zBH1lZ9sSRHpJN3QxKhdNoW+ux9zRH1ht9CD5Q6tqZYEOy//3guh/wCLAxHFOtcXagAA
-        AABJRU5ErkJggg==
-</value>
-  </data>
-  <metadata name="clnForma.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clnSituacao.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clnIdentificador.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clnVencimento.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clnValor.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mnuOperacoes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>151, 17</value>
-  </metadata>
 </root>

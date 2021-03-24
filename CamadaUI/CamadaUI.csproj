@@ -625,6 +625,12 @@
     <Compile Include="Saidas\frmDespesa.Designer.cs">
       <DependentUpon>frmDespesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Saidas\frmDespesaAPagarItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saidas\frmDespesaAPagarItem.designer.cs">
+      <DependentUpon>frmDespesaAPagarItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saidas\frmDespesaGrupoProcura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1047,6 +1053,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesa.resx">
       <DependentUpon>frmDespesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saidas\frmDespesaAPagarItem.resx">
+      <DependentUpon>frmDespesaAPagarItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaGrupoProcura.resx">
       <DependentUpon>frmDespesaGrupoProcura.cs</DependentUpon>

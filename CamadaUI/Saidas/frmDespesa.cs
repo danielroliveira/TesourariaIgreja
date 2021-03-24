@@ -809,6 +809,17 @@ namespace CamadaUI.Saidas
 			ChangeParcelado(chkParcelado.Checked);
 		}
 
+		// VERIFY PARCELAS NUMBER TO CHANGE PARCELADO
+		//------------------------------------------------------------------------------------------------------------
+		private void VerifyNumberOfParcelas()
+		{
+			int countParc = listAPagar.Count;
+			chkParcelado.CheckedChanged -= chkParcelado_CheckedChanged;
+			chkParcelado.Checked = countParc > 1;
+			chkParcelado.CheckedChanged += chkParcelado_CheckedChanged;
+			numParcelas.Value = countParc == 0 ? 1 : countParc;
+		}
+
 		// CHANGE PARCELADO PROPERTY
 		//------------------------------------------------------------------------------------------------------------
 		private void ChangeParcelado(bool parcelado)
@@ -1068,22 +1079,33 @@ namespace CamadaUI.Saidas
 			DataGridView.HitTestInfo hit = dgvListagem.HitTest(e.X, e.Y);
 			dgvListagem.ClearSelection();
 
-			if (hit.Type != DataGridViewHitTestType.Cell) return;
+			if (hit.Type == DataGridViewHitTestType.Cell)
+			{
+				// seleciona o ROW
+				dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+				dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
+				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
-			// seleciona o ROW
-			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
-			dgvListagem.Rows[hit.RowIndex].Selected = true;
+				// mostra o MENU ativar e desativar
+				objAPagar desp = (objAPagar)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-			// mostra o MENU ativar e desativar
-			objDespesa desp = (objDespesa)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+				// mnuImagem
+				bool IsThereImagem = desp.Imagem != null && !string.IsNullOrEmpty(desp.Imagem.ImagemFileName);
 
-			// mnuImagem
-			bool IsThereImagem = desp.Imagem != null && !string.IsNullOrEmpty(desp.Imagem.ImagemFileName);
+				mnuImagemRemover.Enabled = IsThereImagem;
+				mnuImagemInserir.Text = IsThereImagem ? "Alterar Imagem" : "Inserir Imagem";
+				mnuImagemVisualizar.Enabled = IsThereImagem;
 
-			mnuImagemRemover.Enabled = IsThereImagem;
-			mnuImagemInserir.Text = IsThereImagem ? "Alterar Imagem" : "Inserir Imagem";
-			mnuImagemVisualizar.Enabled = IsThereImagem;
+				mnuEditarAPagar.Enabled = true;
+				mnuExcluirAPagar.Enabled = true;
+				mnuImagemAPagar.Enabled = true;
+			}
+			else
+			{
+				mnuEditarAPagar.Enabled = false;
+				mnuExcluirAPagar.Enabled = false;
+				mnuImagemAPagar.Enabled = false;
+			}
 
 			// revela menu
 			mnuOperacoes.Show(c.PointToScreen(e.Location));
@@ -1103,7 +1125,15 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			if (item.IDAPagar == null)
+			{
+				AbrirDialog("Não é possível inserir imagem de uma Parcela de APagar num Despesa que ainda não foi salva..." +
+					"\nSalvar a Despesa antes de Inserir a imagem.",
+					"Inserir Imagem", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
 
 			try
 			{
@@ -1112,11 +1142,11 @@ namespace CamadaUI.Saidas
 
 				objImagem imagem = new objImagem()
 				{
-					IDOrigem = (long)item.IDDespesa,
-					Origem = EnumImagemOrigem.Despesa,
+					IDOrigem = (long)item.IDAPagar,
+					Origem = EnumImagemOrigem.APagar,
 					ImagemFileName = item.Imagem == null ? string.Empty : item.Imagem.ImagemFileName,
 					ImagemPath = item.Imagem == null ? string.Empty : item.Imagem.ImagemPath,
-					ReferenceDate = item.DespesaData,
+					ReferenceDate = item.Vencimento,
 				};
 
 				// open form to edit or save image
@@ -1170,7 +1200,15 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			if (item.IDAPagar == null)
+			{
+				AbrirDialog("Não é possível visualizar imagem de uma Parcela de APagar numa Despesa que ainda não foi salva..." +
+					"\nSalvar a Despesa antes de Visualizar a imagem.",
+					"Inserir Imagem", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
 
 			try
 			{
@@ -1201,7 +1239,15 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			if (item.IDAPagar == null)
+			{
+				AbrirDialog("Não é possível REMOVER imagem de uma Parcela de APagar numa Despesa que ainda não foi salva..." +
+					"\nSalvar a Despesa antes de REMOVER a imagem.",
+					"Inserir Imagem", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
 
 			DialogResult resp;
 
@@ -1235,7 +1281,206 @@ namespace CamadaUI.Saidas
 			}
 		}
 
+		// ADICIONAR APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuAdicionarAPagar_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				//--- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
+				//--- CHECK DESPESA VALUE
+				if (_despesa.DespesaValor <= 0)
+				{
+					AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +
+						"Favor inserir o valor desta despesa corretamente.",
+						"Valor da Despesa",
+						DialogType.OK,
+						DialogIcon.Exclamation);
+					EP.SetError(txtDespesaValor, "Valor necessário...");
+					txtDespesaValor.Focus();
+					return;
+				}
+
+				//--- define value
+				decimal vlMaximo = _despesa.DespesaValor - listAPagar.Sum(x => x.APagarValor);
+
+				if (vlMaximo <= 0)
+				{
+					AbrirDialog("O Valor Total das Parcelas APagar já alcançou o valor da Despesa..." +
+						"\nNão há possibilidade de criar Novas Parcelas.",
+						"Valor Alcançado", DialogType.OK, DialogIcon.Exclamation);
+					return;
+				}
+
+				//--- define date
+				DateTime newDate = _despesa.DespesaData;
+
+				//--- define LAST APagar
+				objAPagar LastPag = null;
+
+				if (listAPagar.Count > 0)
+				{
+					LastPag = listAPagar.OrderBy(x => x.Vencimento).Last();
+				}
+
+				//--- define new apagar
+				var newParcela = new objAPagar(null)
+				{
+					APagarValor = vlMaximo,
+					Vencimento = LastPag != null ? LastPag.Vencimento.AddMonths(1) : newDate,
+					IDBanco = LastPag != null ? LastPag.IDBanco : null,
+					Banco = LastPag != null ? LastPag.Banco : "",
+					IDAPagarForma = LastPag != null ? LastPag.IDAPagarForma : 1,
+					APagarForma = LastPag != null ? LastPag.APagarForma : "Em Carteira"
+				};
+
+				//--- open Form
+				var frm = new frmDespesaAPagarItem(newParcela, vlMaximo, _despesa.DespesaData, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				bindParcelas.Add(newParcela);
+				bindParcelas.ResetBindings(false);
+				VerifyNumberOfParcelas();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Adicionar parcela de APagar..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// EDITAR A PAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuEditarAPagar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Editar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			if (item.IDAPagar != null)
+			{
+				AbrirDialog("Não é possível editar uma parcela de APagar que já está salva.",
+					"Registro Bloqueado",
+					DialogType.OK,
+					DialogIcon.Exclamation);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- CHECK DESPESA VALUE
+				if (_despesa.DespesaValor <= 0)
+				{
+					AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +
+						"Favor inserir o valor desta despesa corretamente.",
+						"Valor da Despesa",
+						DialogType.OK,
+						DialogIcon.Exclamation);
+					EP.SetError(txtDespesaValor, "Valor necessário...");
+					txtDespesaValor.Focus();
+					return;
+				}
+
+				//--- define value
+				decimal vlMaximo = _despesa.DespesaValor - listAPagar.Sum(x => x.APagarValor) + item.APagarValor;
+
+				//--- define date
+				DateTime newDate = item.Vencimento;
+
+				if (listAPagar.Count > 0)
+				{
+					newDate = listAPagar.OrderBy(x => x.Vencimento).Last().Vencimento.AddMonths(1);
+				}
+
+				//--- define new apagar
+				var Parcela = item;
+
+				//--- open Form
+				var frm = new frmDespesaAPagarItem(Parcela, vlMaximo, _despesa.DespesaData, this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				bindParcelas.ResetBindings(false);
+				VerifyNumberOfParcelas();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Editar a Parcela..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// EXCLUIR APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void mnuExcluirAPagar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para EXCLUIR...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			if (item.IDAPagar != null)
+			{
+				AbrirDialog("Não é possível EXCLUIR uma parcela de APagar que já está salva.",
+					"Registro Bloqueado",
+					DialogType.OK,
+					DialogIcon.Exclamation);
+				return;
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				bindParcelas.Remove(item);
+				bindParcelas.ResetBindings(false);
+				VerifyNumberOfParcelas();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir registro de APagar..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 
 		#endregion // MENU A PAGAR --- END
 
@@ -1396,7 +1641,12 @@ namespace CamadaUI.Saidas
 				}
 				else
 				{
-					if (!ParcelasGerar()) return false;
+					AbrirDialog("Informe as Parcelas de APagar dessa Despesa\n" +
+						"Use o segundo botão do mouse na listagem e adicione uma ou mais parcelas.",
+						"Informar Parcelamento",
+						DialogType.OK,
+						DialogIcon.Information);
+					return false;
 				}
 			}
 
@@ -1762,6 +2012,8 @@ namespace CamadaUI.Saidas
 
 
 		}
+
+
 
 		#endregion // PERIODO REFERENCIA --- END
 
