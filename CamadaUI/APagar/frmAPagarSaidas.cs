@@ -1,13 +1,13 @@
-﻿using System;
+﻿using CamadaBLL;
+using CamadaDTO;
+using CamadaUI.Imagem;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using CamadaDTO;
-using CamadaBLL;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Imagem;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.APagar
 {
@@ -88,7 +88,7 @@ namespace CamadaUI.APagar
 			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true);
 			lblCredor.DataBindings.Add("Text", bind, "Credor", true);
 			lblIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblAPagarForma.DataBindings.Add("Text", bind, "CobrancaForma", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblVencimento.DataBindings.Add("Text", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblAPagarValor.DataBindings.Add("Text", bind, "APagarValor", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -197,6 +197,14 @@ namespace CamadaUI.APagar
 		// QUITAR
 		private void btnQuitar_Click(object sender, EventArgs e)
 		{
+			if (_apagar.IDPagFormaModo == 3) // cartao de credito
+			{
+				AbrirDialog("Não há possibilidade de quitar um APagar feito através de Cartão de Crédito de maneira separada...\n" +
+					"Esse pagamento deve ser realizado através do menu Quitar Cartão de Crédito",
+					"Quitar APagar", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			try
 			{
 				// --- Ampulheta ON

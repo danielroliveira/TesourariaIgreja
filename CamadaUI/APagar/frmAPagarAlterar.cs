@@ -157,6 +157,25 @@ namespace CamadaUI.APagar
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAlterar_Click(object sender, EventArgs e)
 		{
+			//--- check forma if is CARTAO check DAY of vencimento
+			objAPagarForma forma = listFormas.First(x => x.IDAPagarForma == _apagar.IDAPagarForma);
+
+			if (forma.IDPagFormaModo == 3) // caso cartão
+			{
+				// check vencimento day
+				if (dtpVencimento.Value.Day != forma.CartaoCredito.VencimentoDia)
+				{
+					AbrirDialog("O Dia da data de vencimento precisa ser igual o dia de Vencimento do Cartão selecionado:" +
+						$"\n\nO Dia de Vencimento do cartão é: {forma.CartaoCredito.VencimentoDia:D2}" +
+						$"\n\nFavor alterar o dia do primeiro vencimento...",
+						"Dia do Vencimento",
+						DialogType.OK,
+						DialogIcon.Exclamation);
+					dtpVencimento.Focus();
+					return;
+				}
+			}
+
 			DialogResult = DialogResult.OK;
 		}
 
@@ -308,7 +327,6 @@ namespace CamadaUI.APagar
 			txtAPagarValor.SelectAll();
 
 			ShowToolTip(txtAPagarValor as Control);
-
 		}
 
 		private void txtAPagarValor_KeyDown(object sender, KeyEventArgs e)

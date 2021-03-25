@@ -193,7 +193,9 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listFormas = new APagarFormaBLL().GetListAPagarForma(true);
+				listFormas = new APagarFormaBLL()
+					.GetListAPagarForma(true)
+					.FindAll(x => x.IDPagFormaModo == 1);
 			}
 			catch (Exception ex)
 			{

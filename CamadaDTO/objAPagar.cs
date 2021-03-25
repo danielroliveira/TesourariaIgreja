@@ -21,6 +21,8 @@ namespace CamadaDTO
 			internal byte? _Parcela;
 			internal int _IDAPagarForma;
 			internal string _APagarForma;
+			internal byte _IDPagFormaModo;
+			internal int? _IDCartaoCredito;
 			internal decimal _APagarValor;
 			internal byte _IDSituacao; // 1: Em Aberto | 2: Quitadas | 3: Canceladas | 4:Negociadas | 5:Negativadas
 			internal string _Situacao;
@@ -216,6 +218,36 @@ namespace CamadaDTO
 		{
 			get => EditData._APagarForma;
 			set => EditData._APagarForma = value;
+		}
+
+		// Property IDAPagarFormaModo
+		//---------------------------------------------------------------
+		public byte IDPagFormaModo
+		{
+			get => EditData._IDPagFormaModo;
+			set
+			{
+				if (value != EditData._IDPagFormaModo)
+				{
+					EditData._IDPagFormaModo = value;
+					NotifyPropertyChanged("IDAPagarFormaModo");
+				}
+			}
+		}
+
+		// Property IDCartaoCredito
+		//---------------------------------------------------------------
+		public int? IDCartaoCredito
+		{
+			get => EditData._IDCartaoCredito;
+			set
+			{
+				if (value != EditData._IDCartaoCredito)
+				{
+					EditData._IDCartaoCredito = value;
+					NotifyPropertyChanged("IDCartaoCredito");
+				}
+			}
 		}
 
 		// Property APagarValor

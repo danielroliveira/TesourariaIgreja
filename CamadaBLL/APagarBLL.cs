@@ -429,6 +429,8 @@ namespace CamadaBLL
 				Parcela = row["Parcela"] == DBNull.Value ? null : (byte?)row["Parcela"],
 				IDAPagarForma = (int)row["IDAPagarForma"],
 				APagarForma = (string)row["APagarForma"],
+				IDPagFormaModo = (byte)row["IDPagFormaModo"],
+				IDCartaoCredito = row["IDCartaoCredito"] == DBNull.Value ? null : (int?)row["IDCartaoCredito"],
 				APagarValor = (decimal)row["APagarValor"],
 				IDSituacao = (byte)row["IDSituacao"],
 				Situacao = (string)row["Situacao"],

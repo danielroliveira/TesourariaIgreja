@@ -469,7 +469,7 @@
 			this.btnAlterarValor.Size = new System.Drawing.Size(156, 27);
 			this.btnAlterarValor.TabIndex = 7;
 			this.btnAlterarValor.TabStop = false;
-			this.btnAlterarValor.Text = "Alterar Valor da Despesa";
+			this.btnAlterarValor.Text = "Alterar Valor da Parcela";
 			this.btnAlterarValor.UseCompatibleTextRendering = true;
 			this.btnAlterarValor.UseVisualStyleBackColor = false;
 			this.btnAlterarValor.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
