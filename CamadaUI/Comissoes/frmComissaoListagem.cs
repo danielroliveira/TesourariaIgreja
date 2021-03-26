@@ -542,7 +542,7 @@ namespace CamadaUI.Comissoes
 				if (frm.DialogResult != DialogResult.OK) return;
 
 				// create apagar and saida
-				objDespesa despesa = DefineDespesa(selected, frm.propDataEscolhida, total);
+				objDespesaComum despesa = DefineDespesa(selected, frm.propDataEscolhida, total);
 				objAPagar pagar = DefineAPagar(selected, frm.propDataEscolhida, total);
 				objMovimentacao saida = DefineSaida(
 					frm.propDataEscolhida,
@@ -598,7 +598,7 @@ namespace CamadaUI.Comissoes
 
 		// DEFINE DESPESA TO SAVE
 		//------------------------------------------------------------------------------------------------------------
-		private objDespesa DefineDespesa(List<objComissao> comissoes, DateTime PagData, decimal Total)
+		private objDespesaComum DefineDespesa(List<objComissao> comissoes, DateTime PagData, decimal Total)
 		{
 			// create format Identificador
 			string desc = "Pag. Comissão: " + comissoes[0].Credor;
@@ -614,7 +614,7 @@ namespace CamadaUI.Comissoes
 			DateTime despDtInicial = comissoes.Min(x => x.DataInicial);
 			DateTime despDtFinal = comissoes.Max(x => x.DataFinal);
 
-			var despesa = new objDespesa(null)
+			var despesa = new objDespesaComum(null)
 			{
 				Credor = comissoes[0].Credor,
 				DespesaData = PagData,
@@ -1152,7 +1152,7 @@ namespace CamadaUI.Comissoes
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				return new DespesaBLL().GetDespesa((long)comissao.IDDespesa);
+				return new DespesaComumBLL().GetDespesa((long)comissao.IDDespesa);
 			}
 			catch (Exception ex)
 			{

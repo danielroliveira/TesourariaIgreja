@@ -390,7 +390,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public long ComissoesPagamento(
 			List<objComissao> list,
-			objDespesa despesa,
+			objDespesaComum despesa,
 			objAPagar pagar,
 			objMovimentacao saida,
 			Action<int, decimal> ContaSldLocalUpdate,
@@ -404,7 +404,7 @@ namespace CamadaBLL
 				dbTran.BeginTransaction();
 
 				// insert new Despesa Realizada | Gasto
-				var despBLL = new DespesaBLL();
+				var despBLL = new DespesaComumBLL();
 				long newID = despBLL.InsertDespesaRealizada(despesa, pagar, saida, ContaSldLocalUpdate, SetorSldLocalUpdate, dbTran);
 
 				// update all comissoes to PAGO

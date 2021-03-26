@@ -16,10 +16,10 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmGasto : CamadaUI.Modals.frmModFinBorder
 	{
-		public objDespesa propDespesa;
+		public objDespesaComum propDespesa;
 		private objAPagar _pagar;
 		private objMovimentacao _saida;
-		private DespesaBLL despBLL = new DespesaBLL();
+		private DespesaComumBLL despBLL = new DespesaComumBLL();
 		private BindingSource bindDespesa = new BindingSource();
 		private BindingSource bindPagar = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -39,7 +39,7 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR WITH OBJECT DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmGasto(objDespesa despesa, int? IDContaFromProvisoria = null, DateTime? MinDateFromProvisoria = null)
+		public frmGasto(objDespesaComum despesa, int? IDContaFromProvisoria = null, DateTime? MinDateFromProvisoria = null)
 		{
 			InitializeComponent();
 
@@ -296,7 +296,7 @@ namespace CamadaUI.Saidas
 
 		// GET DESPESA BY ID
 		//------------------------------------------------------------------------------------------------------------
-		private objDespesa GetDespesaByID(long ID, object dbTran)
+		private objDespesaComum GetDespesaByID(long ID, object dbTran)
 		{
 			try
 			{
@@ -515,7 +515,7 @@ namespace CamadaUI.Saidas
 
 			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
-			propDespesa = new objDespesa(null);
+			propDespesa = new objDespesaComum(null);
 			_pagar = new objAPagar(null);
 			_saida = new objMovimentacao(null);
 

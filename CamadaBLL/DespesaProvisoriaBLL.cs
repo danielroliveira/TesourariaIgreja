@@ -261,7 +261,7 @@ namespace CamadaBLL
 					return listagem;
 				}
 
-				DespesaBLL dBLL = new DespesaBLL();
+				DespesaComumBLL dBLL = new DespesaComumBLL();
 
 				foreach (DataRow row in dt.Rows)
 				{

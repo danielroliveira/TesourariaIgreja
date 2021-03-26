@@ -750,7 +750,7 @@ namespace CamadaUI
 			mnuAReceberProcurar.Click += (a, b) => MenuClickOpenForm(new frmAReceberListagem());
 
 			// MENU SAIDAS
-			mnuDespesaInserir.Click += (a, b) => MenuClickOpenForm(new frmDespesa(new objDespesa(null)));
+			mnuDespesaInserir.Click += (a, b) => MenuClickOpenForm(new frmDespesa(new objDespesaComum(null)));
 			mnuDespesaTipo.Click += (a, b) => MenuClickOpenForm(new frmDespesaTipoListagem());
 			mnuDespesaGrupo.Click += (a, b) => MenuClickOpenForm(new frmDespesaTipoGrupoControle());
 			mnuCobrancaForma.Click += (a, b) => MenuClickOpenForm(new frmAPagarForma());
@@ -758,7 +758,7 @@ namespace CamadaUI
 			mnuAPagarProcurar.Click += (a, b) => MenuClickOpenForm(new frmAPagarListagem());
 			mnuDespesaPeriodicaInserir.Click += (a, b) => MenuClickOpenForm(new frmDespesaPeriodica(new objDespesaPeriodica(null), this));
 			mnuDespesaPeriodicaProcurar.Click += (a, b) => MenuClickOpenForm(new frmDespesaPeriodicaListagem());
-			mnuDespesaRealizada.Click += (a, b) => MenuClickOpenForm(new frmGasto(new objDespesa(null)));
+			mnuDespesaRealizada.Click += (a, b) => MenuClickOpenForm(new frmGasto(new objDespesaComum(null)));
 
 			mnuDespesaProvisoriaInserir.Click += (a, b) => MenuClickOpenForm(new frmProvisorio(new objDespesaProvisoria(null), this));
 			mnuDespesaProvisoriaProcurar.Click += (a, b) => MenuClickOpenForm(new frmProvisoriaListagem());

@@ -14,14 +14,14 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmDespesaListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		DespesaBLL dBLL = new DespesaBLL();
-		private List<objDespesa> listCont = new List<objDespesa>();
+		DespesaComumBLL dBLL = new DespesaComumBLL();
+		private List<objDespesaComum> listCont = new List<objDespesaComum>();
 		private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
-		public objDespesa propEscolha = null;
+		public objDespesaComum propEscolha = null;
 		private bool _disableProcura = false;
 
 		public struct StructPesquisa
@@ -321,7 +321,7 @@ namespace CamadaUI.Saidas
 		{
 			if (e.ColumnIndex == clnParcelas.Index)
 			{
-				if((byte)e.Value == 1)
+				if ((byte)e.Value == 1)
 				{
 					e.Value = "única";
 					e.CellStyle.ForeColor = Color.Black;
@@ -365,7 +365,7 @@ namespace CamadaUI.Saidas
 
 		private void Adicionar()
 		{
-			frmDespesa frm = new frmDespesa(new objDespesa(null));
+			frmDespesa frm = new frmDespesa(new objDespesaComum(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -375,7 +375,7 @@ namespace CamadaUI.Saidas
 		private void Escolher()
 		{
 			//--- get Selected item
-			propEscolha = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			propEscolha = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 			DialogResult = DialogResult.OK;
 		}
 
@@ -398,7 +398,7 @@ namespace CamadaUI.Saidas
 				}
 
 				//--- get Selected item
-				objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+				objDespesaComum item = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 
 				frmDespesa frm = new frmDespesa(item, this);
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
@@ -435,7 +435,7 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaComum item = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
@@ -677,7 +677,7 @@ namespace CamadaUI.Saidas
 			dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 			// mostra o MENU ativar e desativar
-			objDespesa desp = (objDespesa)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+			objDespesaComum desp = (objDespesaComum)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 			// mnuImagem
 			bool IsThereImagem = desp.Imagem != null && !string.IsNullOrEmpty(desp.Imagem.ImagemFileName);
@@ -716,7 +716,7 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaComum item = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
@@ -763,7 +763,7 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaComum item = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
@@ -830,7 +830,7 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaComum item = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
@@ -861,7 +861,7 @@ namespace CamadaUI.Saidas
 			}
 
 			//--- get Selected item
-			objDespesa item = (objDespesa)dgvListagem.SelectedRows[0].DataBoundItem;
+			objDespesaComum item = (objDespesaComum)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			DialogResult resp;
 

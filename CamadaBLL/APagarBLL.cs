@@ -696,7 +696,7 @@ namespace CamadaBLL
 				// CHECK SOURCE DESPESA IS DESPESA COMUM AND CHANGE SITUACAO
 				if (apagar.DespesaOrigem == 1)
 				{
-					var dBLL = new DespesaBLL();
+					var dBLL = new DespesaComumBLL();
 					dBLL.ChangeSituacaoDespesa(apagar.IDDespesa, 1, dbTran);
 				}
 

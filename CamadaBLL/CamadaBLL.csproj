@@ -51,6 +51,7 @@
     <Compile Include="CartaoBLL.cs" />
     <Compile Include="ComissaoBLL.cs" />
     <Compile Include="DespesaCartaoBLL.cs" />
+    <Compile Include="DespesaComumBLL.cs" />
     <Compile Include="DespesaPeriodicaBLL.cs" />
     <Compile Include="DespesaBLL.cs" />
     <Compile Include="DespesaProvisoriaBLL.cs" />

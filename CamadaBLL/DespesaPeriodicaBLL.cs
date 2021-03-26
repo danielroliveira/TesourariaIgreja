@@ -430,7 +430,7 @@ namespace CamadaBLL
 			AcessoDados dbTran = null;
 
 			//--- get despesa from periodica
-			objDespesa despesa = new objDespesa(periodica.IDDespesa)
+			objDespesaComum despesa = new objDespesaComum(periodica.IDDespesa)
 			{
 				DespesaDescricao = periodica.DespesaDescricao,
 				DespesaOrigem = periodica.DespesaOrigem,
@@ -451,7 +451,7 @@ namespace CamadaBLL
 				List<objAPagar> listAPagar = new List<objAPagar>();
 				List<objMovimentacao> listMovSaidas = new List<objMovimentacao>();
 
-				DespesaBLL dBLL = new DespesaBLL();
+				DespesaComumBLL dBLL = new DespesaComumBLL();
 
 				if (!dBLL.VerifyBeforeDelete(despesa, ref listAPagar, ref listMovSaidas, dbTran)) return false;
 

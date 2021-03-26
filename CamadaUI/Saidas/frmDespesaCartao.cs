@@ -15,8 +15,8 @@ namespace CamadaUI.Saidas
 {
 	public partial class frmDespesaCartao : CamadaUI.Modals.frmModFinBorder
 	{
-		private objDespesa _despesa;
-		private DespesaBLL despBLL = new DespesaBLL();
+		private objDespesaComum _despesa;
+		private DespesaComumBLL despBLL = new DespesaComumBLL();
 		private BindingSource bind = new BindingSource();
 		private BindingSource bindParcelas = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -32,7 +32,7 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR WITH DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesaCartao(objDespesa despesa, Form formOrigem = null)
+		public frmDespesaCartao(objDespesaComum despesa, Form formOrigem = null)
 		{
 			InitializeComponent();
 			_formOrigem = formOrigem;
@@ -53,7 +53,7 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR CONTINUE AFTER GET DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		private void ConstructorContinue(objDespesa despesa)
+		private void ConstructorContinue(objDespesaComum despesa)
 		{
 			_despesa = despesa;
 
@@ -148,7 +148,7 @@ namespace CamadaUI.Saidas
 
 		// GET DESPESA BY ID
 		//------------------------------------------------------------------------------------------------------------
-		private objDespesa GetDespesaByID(long ID)
+		private objDespesaComum GetDespesaByID(long ID)
 		{
 			try
 			{
@@ -293,7 +293,7 @@ namespace CamadaUI.Saidas
 
 			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
-			_despesa = new objDespesa(null);
+			_despesa = new objDespesaComum(null);
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _despesa;
 			listAPagar = new List<objAPagar>();
@@ -1096,7 +1096,7 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- INSERT Desepesa
-				long newID = despBLL.InsertDespesa(_despesa, ref listAPagar);
+				long newID = despBLL.InsertDespesaComum(_despesa, ref listAPagar);
 				_despesa.IDDespesa = newID;
 				bind.EndEdit();
 				bind.ResetBindings(false);

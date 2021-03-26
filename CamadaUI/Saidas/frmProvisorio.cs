@@ -155,7 +155,7 @@ namespace CamadaUI.Saidas
 					dtpRetiradaData.MaxDate = _provisoria.RetiradaData;
 					dtpRetiradaData.MinDate = _provisoria.RetiradaData;
 
-					if(value == EnumFlagEstado.RegistroBloqueado)
+					if (value == EnumFlagEstado.RegistroBloqueado)
 					{
 						btnFinalizar.Text = "&Reativar Provisória";
 						btnFinalizar.Image = Properties.Resources.refresh_24;
@@ -485,7 +485,7 @@ namespace CamadaUI.Saidas
 
 			if (frm.DialogResult != DialogResult.OK) return;
 
-			objDespesa newDesp = frm.propEscolha;
+			objDespesaComum newDesp = frm.propEscolha;
 			if (VerificaDespesaAnexada(newDesp) == false) return;
 
 			//--- save
@@ -496,7 +496,7 @@ namespace CamadaUI.Saidas
 
 		// CHECK DESPESA REALIZADA BEFORE ANEXAR
 		//------------------------------------------------------------------------------------------------------------
-		private bool VerificaDespesaAnexada(objDespesa newDesp)
+		private bool VerificaDespesaAnexada(objDespesaComum newDesp)
 		{
 			// check data
 			if (newDesp.DespesaData < _provisoria.RetiradaData)
@@ -554,14 +554,14 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				frmGasto frm = new frmGasto(new objDespesa(null), _provisoria.IDConta, _provisoria.RetiradaData);
+				frmGasto frm = new frmGasto(new objDespesaComum(null), _provisoria.IDConta, _provisoria.RetiradaData);
 				frm.ShowDialog();
 
 				//--- check inserted Despesa
 				if (frm.DialogResult != DialogResult.OK) return;
 
 				//--- check Despesa Realizada
-				objDespesa newDesp = frm.propDespesa;
+				objDespesaComum newDesp = frm.propDespesa;
 				if (VerificaDespesaAnexada(newDesp) == false) return;
 
 				//--- save

@@ -7,50 +7,33 @@ namespace CamadaDTO
 	//=================================================================================================
 	// DESPESA
 	//=================================================================================================
-	public class objDespesa : IEditableObject, INotifyPropertyChanged
+	public class objDespesa //: IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
-		struct StructDespesa
+		internal struct StructDespesa
 		{
 			internal long? _IDDespesa;
+			internal byte _DespesaOrigem;
 			internal string _DespesaDescricao;
-			internal byte _DespesaOrigem; // 1:DespesaComum
 			internal DateTime _DespesaData;
-			internal decimal _DespesaValor;
-			internal string _DocumentoNumero;
+			internal int _IDSetor;
+			internal string _Setor;
 			internal int _IDCredor;
 			internal string _Credor;
-
-			// from Despesa Titular
+			internal int _IDDespesaTipo;
+			internal string _DespesaTipo;
+			internal decimal _DespesaValor;
 			internal int? _IDTitular;
 			internal string _Titular;
 			internal string _CNP;
-
-			internal int _IDDespesaTipo;
-			internal string _DespesaTipo;
-			internal byte _IDDocumentoTipo;
-			internal string _DocumentoTipo;
-			internal int _IDSetor;
-			internal string _Setor;
-			internal byte _IDSituacao;
-			internal string _Situacao;
-			internal byte _Parcelas;
-			internal byte _Prioridade;  // 1: Imediata | 2: Alta Prioridade | 3: Normal | 4: Baixa | 5: Suspender
-
-			// from tblDespesaDataPeriodo
-			internal DateTime? _DataInicial;
-			internal DateTime? _DataFinal;
-
-			// from tblImagem
-			internal objImagem _Imagem;
 		}
 
 		// VARIABLES | CONSTRUCTOR
 		//-------------------------------------------------------------------------------------------------
-		private StructDespesa EditData;
-		private StructDespesa BackupData;
-		private bool inTxn = false;
+		internal StructDespesa EditData;
+		internal StructDespesa BackupData;
+		internal bool inTxn = false;
 
 		public objDespesa(long? IDDespesa) : base()
 		{
@@ -58,56 +41,17 @@ namespace CamadaDTO
 			{
 				_IDDespesa = IDDespesa,
 				_DespesaDescricao = "",
-				_DespesaOrigem = 1,
 				_DespesaData = DateTime.Today,
 				_DespesaValor = 0,
-				_IDSituacao = 1,
-				_Parcelas = 1,
-				_Prioridade = 3, // prioridade NORMAL
 				_IDTitular = null,
-				_Imagem = new objImagem()
-				{
-					Origem = EnumImagemOrigem.Despesa,
-				},
-				_DataFinal = null,
-				_DataInicial = null,
 			};
-		}
-
-		// IEDITABLE OBJECT IMPLEMENTATION
-		//-------------------------------------------------------------------------------------------------
-		public void BeginEdit()
-		{
-			if (!inTxn)
-			{
-				BackupData = EditData;
-				inTxn = true;
-			}
-		}
-
-		public void CancelEdit()
-		{
-			if (inTxn)
-			{
-				EditData = BackupData;
-				inTxn = false;
-			}
-		}
-
-		public void EndEdit()
-		{
-			if (inTxn)
-			{
-				BackupData = new StructDespesa();
-				inTxn = false;
-			}
 		}
 
 		// PROPERTY CHANGED
 		//------------------------------------------------------------------------------------------------------------
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		internal void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -121,6 +65,7 @@ namespace CamadaDTO
 		{
 			get => inTxn;
 		}
+
 
 		//=================================================================================================
 		// PROPERTIES
@@ -180,21 +125,6 @@ namespace CamadaDTO
 				{
 					EditData._DespesaValor = value;
 					NotifyPropertyChanged("DespesaValor");
-				}
-			}
-		}
-
-		// Property DocumentoNumero
-		//---------------------------------------------------------------
-		public string DocumentoNumero
-		{
-			get => EditData._DocumentoNumero;
-			set
-			{
-				if (value != EditData._DocumentoNumero)
-				{
-					EditData._DocumentoNumero = value;
-					NotifyPropertyChanged("DocumentoNumero");
 				}
 			}
 		}
@@ -279,29 +209,6 @@ namespace CamadaDTO
 			set => EditData._DespesaTipo = value;
 		}
 
-		// Property IDDocumentoTipo
-		//---------------------------------------------------------------
-		public byte IDDocumentoTipo
-		{
-			get => EditData._IDDocumentoTipo;
-			set
-			{
-				if (value != EditData._IDDocumentoTipo)
-				{
-					EditData._IDDocumentoTipo = value;
-					NotifyPropertyChanged("IDDocumentoTipo");
-				}
-			}
-		}
-
-		// Property DocumentoTipo
-		//---------------------------------------------------------------
-		public string DocumentoTipo
-		{
-			get => EditData._DocumentoTipo;
-			set => EditData._DocumentoTipo = value;
-		}
-
 		// Property Setor
 		//----------------------------------------------------------------
 		public int IDSetor
@@ -325,16 +232,138 @@ namespace CamadaDTO
 			set => EditData._Setor = value;
 		}
 
+	}
+
+	//=================================================================================================
+	// DESPESA COMUM
+	//=================================================================================================
+	public class objDespesaComum : objDespesa, IEditableObject, INotifyPropertyChanged
+	{
+		// STRUCTURE
+		//-------------------------------------------------------------------------------------------------
+		struct StructDespesaComum
+		{
+			internal string _DocumentoNumero;
+			internal byte _IDDocumentoTipo;
+			internal string _DocumentoTipo;
+			internal byte _IDSituacao;
+			internal string _Situacao;
+			internal byte _Parcelas;
+			internal byte _Prioridade;  // 1: Imediata | 2: Alta Prioridade | 3: Normal | 4: Baixa | 5: Suspender
+
+			// from tblDespesaDataPeriodo
+			internal DateTime? _DataInicial;
+			internal DateTime? _DataFinal;
+
+			// from tblImagem
+			internal objImagem _Imagem;
+		}
+
+		// VARIABLES | CONSTRUCTOR
+		//-------------------------------------------------------------------------------------------------
+		private StructDespesaComum EditDataComum;
+		private StructDespesaComum BackupDataComum;
+
+		public objDespesaComum(long? IDDespesa) : base(IDDespesa)
+		{
+			EditDataComum = new StructDespesaComum()
+			{
+				_IDSituacao = 1,
+				_Parcelas = 1,
+				_Prioridade = 3, // prioridade NORMAL
+				_Imagem = new objImagem()
+				{
+					Origem = EnumImagemOrigem.Despesa,
+				},
+				_DataFinal = null,
+				_DataInicial = null,
+			};
+		}
+
+		// IEDITABLE OBJECT IMPLEMENTATION
+		//-------------------------------------------------------------------------------------------------
+		public void BeginEdit()
+		{
+			if (!inTxn)
+			{
+				BackupData = EditData;
+				BackupDataComum = EditDataComum;
+				inTxn = true;
+			}
+		}
+
+		public void CancelEdit()
+		{
+			if (inTxn)
+			{
+				EditData = BackupData;
+				EditDataComum = BackupDataComum;
+				inTxn = false;
+			}
+		}
+
+		public void EndEdit()
+		{
+			if (inTxn)
+			{
+				BackupData = new StructDespesa();
+				BackupDataComum = new StructDespesaComum();
+				inTxn = false;
+			}
+		}
+
+		//=================================================================================================
+		// PROPERTIES
+		//=================================================================================================
+
+		// Property DocumentoNumero
+		//---------------------------------------------------------------
+		public string DocumentoNumero
+		{
+			get => EditDataComum._DocumentoNumero;
+			set
+			{
+				if (value != EditDataComum._DocumentoNumero)
+				{
+					EditDataComum._DocumentoNumero = value;
+					NotifyPropertyChanged("DocumentoNumero");
+				}
+			}
+		}
+
+		// Property IDDocumentoTipo
+		//---------------------------------------------------------------
+		public byte IDDocumentoTipo
+		{
+			get => EditDataComum._IDDocumentoTipo;
+			set
+			{
+				if (value != EditDataComum._IDDocumentoTipo)
+				{
+					EditDataComum._IDDocumentoTipo = value;
+					NotifyPropertyChanged("IDDocumentoTipo");
+				}
+			}
+		}
+
+		// Property DocumentoTipo
+		//---------------------------------------------------------------
+		public string DocumentoTipo
+		{
+			get => EditDataComum._DocumentoTipo;
+			set => EditDataComum._DocumentoTipo = value;
+		}
+
 		// Property IDSituacao
 		//---------------------------------------------------------------
 		public byte IDSituacao
 		{
-			get => EditData._IDSituacao;
+			get => EditDataComum._IDSituacao;
 			set
 			{
-				if (value != EditData._IDSituacao)
+				if (value != EditDataComum._IDSituacao)
 				{
-					EditData._IDSituacao = value;
+					EditDataComum._IDSituacao = value;
 					NotifyPropertyChanged("IDSituacao");
 				}
 			}
@@ -344,20 +373,20 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Situacao
 		{
-			get => EditData._Situacao;
-			set => EditData._Situacao = value;
+			get => EditDataComum._Situacao;
+			set => EditDataComum._Situacao = value;
 		}
 
 		// Property Parcelas
 		//---------------------------------------------------------------
 		public byte Parcelas
 		{
-			get => EditData._Parcelas;
+			get => EditDataComum._Parcelas;
 			set
 			{
-				if (value != EditData._Parcelas)
+				if (value != EditDataComum._Parcelas)
 				{
-					EditData._Parcelas = value;
+					EditDataComum._Parcelas = value;
 					NotifyPropertyChanged("Parcelas");
 				}
 			}
@@ -367,12 +396,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public byte Prioridade
 		{
-			get => EditData._Prioridade;
+			get => EditDataComum._Prioridade;
 			set
 			{
-				if (value != EditData._Prioridade)
+				if (value != EditDataComum._Prioridade)
 				{
-					EditData._Prioridade = value;
+					EditDataComum._Prioridade = value;
 					NotifyPropertyChanged("Prioridade");
 				}
 			}
@@ -406,20 +435,20 @@ namespace CamadaDTO
 		{
 			get
 			{
-				if (EditData._Imagem == null)
+				if (EditDataComum._Imagem == null)
 				{
-					EditData._Imagem = new objImagem();
+					EditDataComum._Imagem = new objImagem();
 				}
 
-				EditData._Imagem.Origem = EnumImagemOrigem.Despesa;
-				EditData._Imagem.ReferenceDate = DespesaData;
-				if (IDDespesa != null) EditData._Imagem.IDOrigem = (long)IDDespesa;
-				return EditData._Imagem;
+				EditDataComum._Imagem.Origem = EnumImagemOrigem.Despesa;
+				EditDataComum._Imagem.ReferenceDate = DespesaData;
+				if (IDDespesa != null) EditDataComum._Imagem.IDOrigem = (long)IDDespesa;
+				return EditDataComum._Imagem;
 			}
 
 			set
 			{
-				EditData._Imagem = value;
+				EditDataComum._Imagem = value;
 			}
 		}
 
@@ -427,12 +456,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public DateTime? DataInicial
 		{
-			get => EditData._DataInicial;
+			get => EditDataComum._DataInicial;
 			set
 			{
-				if (value != EditData._DataInicial)
+				if (value != EditDataComum._DataInicial)
 				{
-					EditData._DataInicial = value;
+					EditDataComum._DataInicial = value;
 					NotifyPropertyChanged("DataInicial");
 				}
 			}
@@ -442,12 +471,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public DateTime? DataFinal
 		{
-			get => EditData._DataFinal;
+			get => EditDataComum._DataFinal;
 			set
 			{
-				if (value != EditData._DataFinal)
+				if (value != EditDataComum._DataFinal)
 				{
-					EditData._DataFinal = value;
+					EditDataComum._DataFinal = value;
 					NotifyPropertyChanged("DataFinal");
 				}
 			}
@@ -703,4 +732,5 @@ namespace CamadaDTO
 		public string CNP { get; set; }
 		public bool Ativo { get; set; }
 	}
+
 }
