@@ -123,7 +123,7 @@ namespace CamadaBLL
 
 			// SET IMAGEM
 			despesa.Imagem.IDOrigem = (long)despesa.IDDespesaCartao;
-			despesa.Imagem.Origem = EnumImagemOrigem.DespesaCartao;
+			despesa.Imagem.Origem = EnumImagemOrigem.Despesa;
 			despesa.Imagem.ImagemFileName = row["ImagemFileName"] == DBNull.Value ? string.Empty : (string)row["ImagemFileName"];
 			despesa.Imagem.ImagemPath = row["ImagemPath"] == DBNull.Value ? string.Empty : (string)row["ImagemPath"];
 

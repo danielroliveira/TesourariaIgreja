@@ -68,9 +68,6 @@ namespace CamadaUI.Saidas
 			bind.Add(_despesa);
 			BindingCreator();
 
-			// check Max Despesa Data to previne future date
-			dtpDespesaData.MaxDate = DateTime.Today;
-
 			if (_despesa.IDDespesa == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
@@ -105,13 +102,12 @@ namespace CamadaUI.Saidas
 			}
 
 			txtSetor.Enter += text_Enter;
-			txtDespesaTipo.Enter += text_Enter;
-			txtDocumentoTipo.Enter += text_Enter;
+			lblDespesaTipo.Enter += text_Enter;
+			lblDocumentoTipo.Enter += text_Enter;
 
 			// block keyDown then Sit = Alterado
 			txtDocumentoNumero.KeyDown += control_KeyDown_Block;
 			txtDespesaValor.KeyDown += control_KeyDown_Block;
-			dtpDespesaData.KeyDown += control_KeyDown_Block;
 
 			// if frmListagem is ENABLED
 			if (Modal)
@@ -135,31 +131,18 @@ namespace CamadaUI.Saidas
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
-
-					// define MaxDate of Data da Despesa
-					dtpDespesaData.MaxDate = DateTime.Today;
-					dtpDespesaData.MinDate = DateTime.Today.AddMonths(-12);
 					lblSitBlock.Visible = false;
-
 				}
 				else
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
-
-					// define MaxDate of Data da Despesa
-					dtpDespesaData.MaxDate = _despesa.DespesaData;
-					dtpDespesaData.MinDate = _despesa.DespesaData;
-
 					lblSitBlock.Visible = true;
-
 				}
 
 				// btnSET ENABLE | DISABLE
-				btnSetDespesaTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetDocumentoTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
@@ -246,11 +229,11 @@ namespace CamadaUI.Saidas
 			lblID.DataBindings.Add("Text", bind, "IDDespesa", true);
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
 			//txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDocumentoTipo.DataBindings.Add("Text", bind, "DocumentoTipo", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDocumentoTipo.DataBindings.Add("Text", bind, "DocumentoTipo", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDocumentoNumero.DataBindings.Add("Text", bind, "DocumentoNumero", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
-			dtpDespesaData.DataBindings.Add("Value", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaData.DataBindings.Add("Text", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			//txtTitular.DataBindings.Add("Text", bind, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -407,57 +390,6 @@ namespace CamadaUI.Saidas
 			}
 		}
 
-		private void btnSetDespesaTipo_Click(object sender, EventArgs e)
-		{
-			frmDespesaTipoProcura frm = new frmDespesaTipoProcura(this, _despesa.IDDespesaTipo == 0 ? null : (int?)_despesa.IDDespesaTipo);
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK) // SEARCH CREDOR
-			{
-				if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDDespesaTipo != frm.propEscolha.IDDespesaTipo)
-					Sit = EnumFlagEstado.Alterado;
-
-				_despesa.IDDespesaTipo = (int)frm.propEscolha.IDDespesaTipo;
-				txtDespesaTipo.Text = frm.propEscolha.DespesaTipo;
-			}
-
-			//--- select
-			txtDespesaTipo.Focus();
-			txtDespesaTipo.SelectAll();
-		}
-
-		private void btnSetDocumentoTipo_Click(object sender, EventArgs e)
-		{
-			if (listDocTipos.Count == 0)
-			{
-				AbrirDialog("Não há Tipos de Documento inseridos...", "Tipos de Documento",
-					DialogType.OK, DialogIcon.Exclamation);
-				return;
-			}
-
-			// seleciona o TextBox
-			TextBox textBox = txtDocumentoTipo;
-
-			var dic = listDocTipos.ToDictionary(x => (int)x.IDDocumentoTipo, x => x.DocumentoTipo);
-
-			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _despesa.IDDocumentoTipo);
-
-			// show form
-			frm.ShowDialog();
-
-			//--- check return
-			if (frm.DialogResult == DialogResult.OK)
-			{
-				_despesa.IDDocumentoTipo = (byte)frm.propEscolha.Key;
-				textBox.Text = frm.propEscolha.Value;
-			}
-
-			//--- select
-			textBox.Focus();
-			textBox.SelectAll();
-		}
-
 		#endregion // BUTTONS PROCURA --- END
 
 		#region CONTROL FUNCTIONS
@@ -470,8 +402,8 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtDespesaTipo,
-					txtDocumentoTipo,
+					lblDespesaTipo,
+					lblDocumentoTipo,
 					txtSetor,
 					txtDespesaDescricao,
 				};
@@ -513,17 +445,8 @@ namespace CamadaUI.Saidas
 
 				switch (ctr.Name)
 				{
-					case "txtDespesaTipo":
-						btnSetDespesaTipo_Click(sender, new EventArgs());
-						break;
 					case "txtSetor":
 						btnSetSetor_Click(sender, new EventArgs());
-						break;
-					case "txtDocumentoTipo":
-						btnSetDocumentoTipo_Click(sender, new EventArgs());
-						break;
-					case "txtDespesaDescricao":
-						defineDescricao();
 						break;
 					default:
 						break;
@@ -545,7 +468,7 @@ namespace CamadaUI.Saidas
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
-					txtDocumentoTipo, txtDespesaDescricao,
+					lblDocumentoTipo, txtDespesaDescricao,
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -567,8 +490,8 @@ namespace CamadaUI.Saidas
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
 					txtSetor,
-					txtDespesaTipo,
-					txtDocumentoTipo,
+					lblDespesaTipo,
+					lblDocumentoTipo,
 				 };
 
 				if (controlesBloqueados.Contains(ctr))
@@ -603,7 +526,7 @@ namespace CamadaUI.Saidas
 								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
 
 								_despesa.IDDocumentoTipo = (byte)tipo.IDDocumentoTipo;
-								txtDocumentoTipo.Text = tipo.DocumentoTipo;
+								lblDocumentoTipo.Text = tipo.DocumentoTipo;
 							}
 						}
 						break;
@@ -619,36 +542,6 @@ namespace CamadaUI.Saidas
 		{
 			ShowToolTip(sender as Control);
 			((TextBox)sender).Enter -= text_Enter;
-		}
-
-		// DEFINE CRIA UM TEXTO AUTOMATICA PARA DESCRICAO
-		//------------------------------------------------------------------------------------------------------------
-		private void defineDescricao()
-		{
-			// Oferta: TIPO de DESPESA + CREDOR
-
-			if (string.IsNullOrEmpty(_despesa.DespesaTipo))
-			{
-				AbrirDialog("Favor definir o Tipo de Despesa...", "Tipo de Despesa");
-				txtDespesaTipo.Focus();
-				return;
-			}
-
-			string descricao = _despesa.DespesaTipo;
-
-			if (!string.IsNullOrEmpty(_despesa.Credor))
-			{
-				descricao += " - " + _despesa.Credor;
-
-				// define text
-				txtDespesaDescricao.Text = descricao;
-			}
-			else
-			{
-				AbrirDialog("Favor definir o Credor / Fornecedor...", "Credor / Fornecedor Despesa");
-				txtDespesaDescricao.Focus();
-				return;
-			}
 		}
 
 		// PREVINE CHANGES IN SIT => REGISTRO SALVO
@@ -1233,8 +1126,8 @@ namespace CamadaUI.Saidas
 		{
 			// CHECK FIELDS
 			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDespesaTipo, "Tipo de Despesa", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDocumentoTipo, "Tipo de Documento", _despesa, EP)) return false;
+			if (!VerificaDadosClasse(lblDespesaTipo, "Tipo de Despesa", _despesa, EP)) return false;
+			if (!VerificaDadosClasse(lblDocumentoTipo, "Tipo de Documento", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(txtDocumentoNumero, "Número do Documento", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(txtDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
 
@@ -1294,17 +1187,6 @@ namespace CamadaUI.Saidas
 						return false;
 					}
 				}
-			}
-
-			//--- check DATA FUTURA
-			if (_despesa.DespesaData > DateTime.Today)
-			{
-				AbrirDialog("A Data da Despesa não pode ser maior que a Data de hoje\n" +
-						"Favor reinserir a Data da Despesa anterior.", "Data da Despesa",
-						DialogType.OK, DialogIcon.Exclamation);
-				EP.SetError(dtpDespesaData, "Valor incorreto...");
-				dtpDespesaData.Focus();
-				return false;
 			}
 
 			_despesa.DataInicial = null;

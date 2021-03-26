@@ -37,8 +37,7 @@ namespace CamadaDTO
 	{
 		Despesa = 1,
 		APagar = 2,
-		Movimentacao = 3,
-		DespesaCartao = 4
+		Movimentacao = 3
 	}
 
 	public static class EnumUtil
