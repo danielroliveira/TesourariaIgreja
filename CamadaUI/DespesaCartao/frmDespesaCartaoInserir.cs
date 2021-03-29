@@ -1,33 +1,37 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Caixa
+namespace CamadaUI.DespesaCartao
 {
-	public partial class frmCaixaInserir : CamadaUI.Modals.frmModFinBorder
+	public partial class frmDespesaCartaoInserir : CamadaUI.Modals.frmModFinBorder
 	{
-		private objCaixa lastCaixa;
-		private objConta ContaSelected;
+		private objAPagarCartao _CartaoSelected;
+		private List<objAPagarCartao> ListCartao;
 		private Form _formOrigem;
-		private CaixaBLL cBLL = new CaixaBLL();
+		private APagarCartaoBLL cBLL = new APagarCartaoBLL();
 
 		#region SUB NEW | CONSTRUCTOR
 
-		public frmCaixaInserir(Form formOrigem)
+		public frmDespesaCartaoInserir(Form formOrigem)
 		{
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
+			ObterDadosCartao();
 
 			// HANDLER to use TAB for ENTER
 			HandlerKeyDownControl(this);
-
-			lblDataFinalText.Location = new Point(134, 286);
+			numRefDia.KeyDown += Numeric_KeyDown;
+			numRefAno.KeyDown += Numeric_KeyDown;
+			numRefDia.Enter += Numeric_Enter;
+			numRefAno.Enter += Numeric_Enter;
 		}
 
 		private void ObterDados()
@@ -38,55 +42,17 @@ namespace CamadaUI.Caixa
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- Check Conta
-				if (ContaSelected == null)
+				if (_CartaoSelected == null)
 				{
-					AbrirDialog("Favor selecionar uma conta...", "Conta");
-					txtConta.Focus();
+					AbrirDialog("Favor selecionar o Cartao de Crédito...", "Cartão Selecionado");
+					txtCartaoDescricao.Focus();
 				}
 
-				//--- Get LAST CAIXA
-				lastCaixa = cBLL.GetLastCaixa((int)ContaSelected.IDConta);
-
-				//--- check if is situacao = iniciado
-				if (lastCaixa.IDSituacao == 1)
-				{
-					AbrirDialog("Essa conta possui um caixa que ainda não foi finalizado...",
-						"Caixa Não Finalizado");
-
-					//--- OPEN FORM CAIXA
-					try
-					{
-						//--- open form
-						var frm = new frmCaixa(lastCaixa, Application.OpenForms[0]);
-						frm.Show();
-
-						Close();
-					}
-					catch (Exception ex)
-					{
-						AbrirDialog("Uma exceção ocorreu ao Inserir o novo Caixa..." + "\n" +
-									ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-					}
-					finally
-					{
-						// --- Ampulheta OFF
-						Cursor.Current = Cursors.Default;
-					}
-
-					return;
-				}
-
-				PreecheCampos();
 				btnEfetuar.Enabled = true;
-			}
-			catch (AppException ex)
-			{
-				AbrirDialog(ex.Message, "Aviso", DialogType.OK, DialogIcon.Exclamation);
-				btnEfetuar.Enabled = false;
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Obter as informações do caixa anterior..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Obter as informações de Cartão de Crédito..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				btnEfetuar.Enabled = false;
 			}
@@ -97,31 +63,33 @@ namespace CamadaUI.Caixa
 			}
 		}
 
-		private void PreecheCampos()
+		private void ObterDadosCartao()
 		{
-			if (lastCaixa == null)
+			try
 			{
-				AbrirDialog("É necessário escolher a conta bancária para finalização", "Escolha a conta");
-				return;
-			}
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
-			if (rbtPeriodo.Checked)
-			{
-				dtpDataFinal.MaxDate = lastCaixa.DataFinal;
-				dtpDataFinal.MinDate = lastCaixa.DataInicial;
-				dtpDataFinal.Value = lastCaixa.DataFinal;
-				lblDataInicial.Text = lastCaixa.DataInicial.ToShortDateString();
-				lblDataFinalText.Text = lastCaixa.DataFinal.ToShortDateString();
-				lblMaxDate.Text = "máx.: " + lastCaixa.DataFinal.ToShortDateString();
+				ListCartao = cBLL.GetCartaoCreditoDespesaList();
+
+				if (ListCartao.Count == 0)
+				{
+					AbrirDialog("Não há Cartões de Crédito Cadastrados para realização de Despesas...\n" +
+						"Favor Comunicar com o adminstrador do sistema.", "Não há Cartões",
+						DialogType.OK, DialogIcon.Exclamation);
+					btnEfetuar.Enabled = false;
+				}
+
 			}
-			else // diario
+			catch (Exception ex)
 			{
-				dtpDataFinal.MaxDate = lastCaixa.DataInicial;
-				dtpDataFinal.MinDate = lastCaixa.DataInicial;
-				dtpDataFinal.Value = lastCaixa.DataInicial;
-				lblDataInicial.Text = lastCaixa.DataInicial.ToShortDateString();
-				lblDataFinalText.Text = lastCaixa.DataInicial.ToShortDateString();
-				lblMaxDate.Text = "máx.: " + lastCaixa.DataInicial.ToShortDateString();
+				AbrirDialog("Uma exceção ocorreu ao Obter Lista de Cartõe de Crédito..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
@@ -131,30 +99,38 @@ namespace CamadaUI.Caixa
 
 		// OPEN PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
-		private void btnSetConta_Click(object sender, EventArgs e)
+		private void btnSetCartao_Click(object sender, EventArgs e)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				Contas.frmContaProcura frm = new Contas.frmContaProcura(this, ContaSelected?.IDConta);
+				if (ListCartao.Count == 0)
+				{
+					AbrirDialog("Não há Cartão de Crédito cadastrados ou ativos...", "Cartão de Crédito",
+						DialogType.OK, DialogIcon.Exclamation);
+					return;
+				}
+
+				var dic = ListCartao.ToDictionary(x => (int)x.IDCartaoCredito, x => x.CartaoDescricao);
+				var textBox = txtCartaoDescricao;
+				Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _CartaoSelected?.IDCartaoCredito);
+
+				// show form
 				frm.ShowDialog();
 
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					ContaSelected = frm.propEscolha;
-					txtConta.Text = frm.propEscolha.Conta;
-					lblContaDetalhe.Text = $"Saldo da Conta: {frm.propEscolha.ContaSaldo.ToString("c")} \n" +
-						$"Data de Bloqueio até: {frm.propEscolha.BloqueioData?.ToString() ?? ""}";
-
-					ObterDados();
+					_CartaoSelected = ListCartao.First(x => x.IDCartaoCredito == (int)frm.propEscolha.Key);
+					textBox.Text = frm.propEscolha.Value;
 				}
 
 				//--- select
-				txtConta.Focus();
-				txtConta.SelectAll();
+				textBox.Focus();
+				textBox.SelectAll();
+
 			}
 			catch (Exception ex)
 			{
@@ -180,37 +156,29 @@ namespace CamadaUI.Caixa
 
 		private void btnEfetuar_Click(object sender, EventArgs e)
 		{
-			var newCaixa = new objCaixa(null)
+			//--- GET REF DATE
+			if (!DateTime.TryParse($"{numRefDia.Value}/{cmbRefMes.SelectedValue}/{numRefAno.Value}", out DateTime _RefDate))
 			{
-				DataFinal = dtpDataFinal.Value,
-				DataInicial = lastCaixa.DataInicial,
-				IDConta = (int)ContaSelected.IDConta,
-				CaixaFinalDoDia = false,
-				Conta = ContaSelected.Conta,
-				ContaBloqueioData = ContaSelected.BloqueioData,
-				ContaSaldo = ContaSelected.ContaSaldo,
-				FechamentoData = DateTime.Today,
-				IDSituacao = 1,
-				SaldoAnterior = lastCaixa.SaldoFinal,
-				SaldoFinal = 0,
-				Situacao = "Iniciado",
-				IDUsuario = (int)Program.usuarioAtual.IDUsuario,
-				UsuarioApelido = Program.usuarioAtual.UsuarioApelido,
-				Observacao = ""
-			};
+				AbrirDialog("Data escolhida é inválida...\n" +
+					"Favor selecionar uma data válida", "Data de Referência",
+					DialogType.OK, DialogIcon.Exclamation);
+				numRefDia.Focus();
+			}
 
-			//--- INSERT NEW CAIXA
+			//--- INSERT NEW DESPESA CARTAO
 			try
 			{
+				/*
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				newCaixa.IDCaixa = cBLL.InsertCaixa(newCaixa);
+				var dBLL = new DespesaCartaoBLL();
+				var newDespCartao = dBLL.InsertDespesaCartao(_CartaoSelected, _RefDate);
 
 				//--- open form
-				var frm = new frmCaixa(newCaixa, Application.OpenForms[0]);
-				frm.MdiParent = Application.OpenForms[0];
+				var frm = new frmDespesaCartao(newDespCartao);
 				frm.Show();
+				*/
 
 				Close();
 
@@ -232,6 +200,22 @@ namespace CamadaUI.Caixa
 
 		#region CONTROLS
 
+		// CONTROLING NUMERIC UP/DOWN
+		//------------------------------------------------------------------------------------------------------------
+		private void Numeric_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SendKeys.Send("{Tab}");
+			};
+		}
+
+		private void Numeric_Enter(object sender, EventArgs e)
+		{
+			((NumericUpDown)sender).Select(0, 4);
+		}
+
 		// BLOCK KEY (+) FOR SOME CONTROLS
 		//------------------------------------------------------------------------------------------------------------
 		private void frm_KeyPress(object sender, KeyPressEventArgs e)
@@ -240,7 +224,7 @@ namespace CamadaUI.Caixa
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtConta,
+					txtCartaoDescricao,
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -259,11 +243,26 @@ namespace CamadaUI.Caixa
 
 				switch (ctr.Name)
 				{
-					case "txtConta":
-						btnSetConta_Click(sender, new EventArgs());
+					case "txtCartaoDescricao":
+						btnSetCartao_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
+				}
+			}
+			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serao liberados ao KEYPRESS
+				Control[] controlesBloqueados = { txtCartaoDescricao };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
 				}
 			}
 			else if (e.Alt)
@@ -273,7 +272,7 @@ namespace CamadaUI.Caixa
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtConta, };
+				Control[] controlesBloqueados = { txtCartaoDescricao, };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -283,19 +282,38 @@ namespace CamadaUI.Caixa
 			}
 		}
 
-		private void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (rbtPeriodo.Checked)
+			if (char.IsDigit(e.KeyChar))
 			{
-				dtpDataFinal.Visible = true;
-				lblDataFinalText.Visible = false;
+				Control ctr = (Control)sender;
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCartaoDescricao":
+
+						if (ListCartao.Count > 0)
+						{
+							var cartao = ListCartao.FirstOrDefault(x => x.IDCartaoCredito == int.Parse(e.KeyChar.ToString()));
+
+							if (cartao == null) return;
+
+							if (cartao.IDCartaoCredito != _CartaoSelected?.IDCartaoCredito)
+							{
+								_CartaoSelected = ListCartao.First(x => x.IDCartaoCredito == (int)cartao.IDCartaoCredito);
+								txtCartaoDescricao.Text = cartao.CartaoDescricao;
+							}
+						}
+
+						break;
+
+					default:
+						break;
+				}
 			}
-			else
-			{
-				dtpDataFinal.Visible = false;
-				lblDataFinalText.Visible = true;
-			}
-			PreecheCampos();
 		}
 
 		#endregion // CONTROLS --- END

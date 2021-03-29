@@ -194,7 +194,7 @@ namespace CamadaBLL
 
 		// INSERT
 		//------------------------------------------------------------------------------------------------------------
-		public long InsertDespesa(objDespesaPeriodica desp)
+		public long InsertDespesaPeriodica(objDespesaPeriodica desp)
 		{
 			AcessoDados dbTran = null;
 
@@ -203,25 +203,8 @@ namespace CamadaBLL
 				dbTran = new AcessoDados();
 				dbTran.BeginTransaction();
 
-				//--- clear Params
-				dbTran.LimparParametros();
-
-				//--- define Params
-				dbTran.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
-				dbTran.AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
-				dbTran.AdicionarParametros("@DespesaValor", desp.DespesaValor);
-				dbTran.AdicionarParametros("@DespesaData", desp.DespesaData);
-				dbTran.AdicionarParametros("@IDCredor", desp.IDCredor);
-				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
-				dbTran.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
-
-				//--- convert null parameters
-				dbTran.ConvertNullParams();
-
-				string query = dbTran.CreateInsertSQL("tblDespesa");
-
 				//--- insert and Get new ID
-				long newID = dbTran.ExecutarInsertAndGetID(query);
+				long newID = new DespesaBLL().InsertDespesa(desp, dbTran);
 
 				//--- insert Despesa Periodica
 				desp.IDDespesa = newID;
@@ -276,49 +259,27 @@ namespace CamadaBLL
 
 		// UPDATE
 		//------------------------------------------------------------------------------------------------------------
-		public bool UpdateDespesa(objDespesaPeriodica desp, object dbTran = null)
+		public bool UpdateDespesaPeriodica(objDespesaPeriodica desp, object dbTran = null)
 		{
-			bool isLocal = dbTran == null;
+			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
 			try
 			{
-				if (isLocal)
-				{
-					dbTran = new AcessoDados();
-					((AcessoDados)dbTran).BeginTransaction();
-				}
+				if (dbTran == null) db.BeginTransaction();
 
-				//--- clear Params
-				((AcessoDados)dbTran).LimparParametros();
-
-				//--- define Params
-				((AcessoDados)dbTran).AdicionarParametros("@IDDespesa", desp.IDDespesa);
-				((AcessoDados)dbTran).AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
-				((AcessoDados)dbTran).AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
-				((AcessoDados)dbTran).AdicionarParametros("@DespesaValor", desp.DespesaValor);
-				((AcessoDados)dbTran).AdicionarParametros("@DespesaData", desp.DespesaData);
-				((AcessoDados)dbTran).AdicionarParametros("@IDCredor", desp.IDCredor);
-				((AcessoDados)dbTran).AdicionarParametros("@IDSetor", desp.IDSetor);
-				((AcessoDados)dbTran).AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
-
-				//--- convert null parameters
-				((AcessoDados)dbTran).ConvertNullParams();
-
-				string query = ((AcessoDados)dbTran).CreateUpdateSQL("tblDespesa", "@IDDespesa");
-
-				//--- UPDATE
-				((AcessoDados)dbTran).ExecutarManipulacao(CommandType.Text, query);
+				//--- UPDATE Despesa
+				new DespesaBLL().UpdateDespesa(desp, db);
 
 				//--- UPDATE Despesa Periodica
-				UpdateDespesaPeriodica(desp, (AcessoDados)dbTran);
+				UpdateDespesaPeriodica(desp, db);
 
-				if (isLocal) ((AcessoDados)dbTran).CommitTransaction();
+				if (dbTran == null) db.CommitTransaction();
 				return true;
 
 			}
 			catch (Exception ex)
 			{
-				if (isLocal) ((AcessoDados)dbTran).RollBackTransaction();
+				if (dbTran == null) db.RollBackTransaction();
 				throw ex;
 			}
 		}

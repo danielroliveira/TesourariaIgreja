@@ -152,10 +152,10 @@
     <Compile Include="APagar\frmAPagarSaidas.designer.cs">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </Compile>
-    <Compile Include="APagar\frmCartaoCreditoDespesa.cs">
+    <Compile Include="DespesaCartao\frmCartaoCreditoDespesa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="APagar\frmCartaoCreditoDespesa.designer.cs">
+    <Compile Include="DespesaCartao\frmCartaoCreditoDespesa.designer.cs">
       <DependentUpon>frmCartaoCreditoDespesa.cs</DependentUpon>
     </Compile>
     <Compile Include="APagar\Reports\frmAPagarReport.cs">
@@ -631,11 +631,17 @@
     <Compile Include="Saidas\frmDespesaAPagarItem.designer.cs">
       <DependentUpon>frmDespesaAPagarItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Saidas\frmDespesaCartao.cs">
+    <Compile Include="DespesaCartao\frmDespesaCartao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Saidas\frmDespesaCartao.designer.cs">
+    <Compile Include="DespesaCartao\frmDespesaCartao.designer.cs">
       <DependentUpon>frmDespesaCartao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DespesaCartao\frmDespesaCartaoInserir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DespesaCartao\frmDespesaCartaoInserir.designer.cs">
+      <DependentUpon>frmDespesaCartaoInserir.cs</DependentUpon>
     </Compile>
     <Compile Include="Saidas\frmDespesaGrupoProcura.cs">
       <SubType>Form</SubType>
@@ -727,16 +733,16 @@
     <Compile Include="Saidas\frmProvisorioComprador.designer.cs">
       <DependentUpon>frmProvisorioComprador.cs</DependentUpon>
     </Compile>
-    <Compile Include="Saidas\frmTitularControle.cs">
+    <Compile Include="Registres\frmTitularControle.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Saidas\frmTitularControle.designer.cs">
+    <Compile Include="Registres\frmTitularControle.designer.cs">
       <DependentUpon>frmTitularControle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Saidas\frmTitularProcura.cs">
+    <Compile Include="Registres\frmTitularProcura.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Saidas\frmTitularProcura.designer.cs">
+    <Compile Include="Registres\frmTitularProcura.designer.cs">
       <DependentUpon>frmTitularProcura.cs</DependentUpon>
     </Compile>
     <Compile Include="Saidas\Reports\frmProvisorioReciboReport.cs">
@@ -818,7 +824,7 @@
     <EmbeddedResource Include="APagar\frmAPagarSaidas.resx">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="APagar\frmCartaoCreditoDespesa.resx">
+    <EmbeddedResource Include="DespesaCartao\frmCartaoCreditoDespesa.resx">
       <DependentUpon>frmCartaoCreditoDespesa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="APagar\Reports\frmAPagarReport.resx">
@@ -1063,8 +1069,11 @@
     <EmbeddedResource Include="Saidas\frmDespesaAPagarItem.resx">
       <DependentUpon>frmDespesaAPagarItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Saidas\frmDespesaCartao.resx">
+    <EmbeddedResource Include="DespesaCartao\frmDespesaCartao.resx">
       <DependentUpon>frmDespesaCartao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DespesaCartao\frmDespesaCartaoInserir.resx">
+      <DependentUpon>frmDespesaCartaoInserir.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\frmDespesaGrupoProcura.resx">
       <DependentUpon>frmDespesaGrupoProcura.cs</DependentUpon>
@@ -1111,10 +1120,10 @@
     <EmbeddedResource Include="Saidas\frmProvisorioComprador.resx">
       <DependentUpon>frmProvisorioComprador.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Saidas\frmTitularControle.resx">
+    <EmbeddedResource Include="Registres\frmTitularControle.resx">
       <DependentUpon>frmTitularControle.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Saidas\frmTitularProcura.resx">
+    <EmbeddedResource Include="Registres\frmTitularProcura.resx">
       <DependentUpon>frmTitularProcura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Saidas\Reports\frmProvisorioReciboReport.resx">
@@ -1378,6 +1387,7 @@
     <None Include="Resources\email_32.png" />
     <None Include="Resources\NewMessageGIF_32.gif" />
     <None Include="Resources\credit_card_32.png" />
+    <None Include="Resources\credit_card_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

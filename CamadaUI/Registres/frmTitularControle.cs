@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Saidas
+namespace CamadaUI.Registres
 {
 	public partial class frmTitularControle : CamadaUI.Modals.frmModFinBorder
 	{

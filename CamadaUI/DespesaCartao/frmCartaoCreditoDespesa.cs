@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.APagar
+namespace CamadaUI.DespesaCartao
 {
 	public partial class frmCartaoCreditoDespesa : CamadaUI.Modals.frmModFinBorder
 	{

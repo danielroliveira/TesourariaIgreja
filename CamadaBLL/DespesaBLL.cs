@@ -49,6 +49,42 @@ namespace CamadaBLL
 
 		}
 
+		// UPDATE
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateDespesa(objDespesa desp, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
+				dbTran.AdicionarParametros("@DespesaDescricao", desp.DespesaDescricao);
+				dbTran.AdicionarParametros("@DespesaOrigem", desp.DespesaOrigem);
+				dbTran.AdicionarParametros("@DespesaValor", desp.DespesaValor);
+				dbTran.AdicionarParametros("@DespesaData", desp.DespesaData);
+				dbTran.AdicionarParametros("@IDCredor", desp.IDCredor);
+				dbTran.AdicionarParametros("@IDSetor", desp.IDSetor);
+				dbTran.AdicionarParametros("@IDDespesaTipo", desp.IDDespesaTipo);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateUpdateSQL("tblDespesa", "@IDDespesa");
+
+				//--- UPDATE
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+		}
+
 		//=============================================================================
 		// DESPESA TIPO
 		//=============================================================================

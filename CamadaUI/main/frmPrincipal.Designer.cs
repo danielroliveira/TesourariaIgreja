@@ -64,6 +64,7 @@
 			this.mnuSubDespesaPeriodica = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaPeriodicaInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaPeriodicaProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSubDespesaCartao = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuDespesaTipo = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDespesaGrupo = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +107,8 @@
 			this.lblDataSis = new System.Windows.Forms.Label();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.lblHora = new System.Windows.Forms.Label();
+			this.mnuDespesaCartaoInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDespesaCartaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuPrincipal.SuspendLayout();
 			this.pnlTop.SuspendLayout();
 			this.PainelInferior.SuspendLayout();
@@ -357,6 +360,7 @@
             this.toolStripSeparator7,
             this.mnuSubDespesaProvisoria,
             this.mnuSubDespesaPeriodica,
+            this.mnuSubDespesaCartao,
             this.toolStripSeparator4,
             this.mnuDespesaTipo,
             this.mnuDespesaGrupo,
@@ -479,6 +483,20 @@
 			this.mnuDespesaPeriodicaProcurar.Name = "mnuDespesaPeriodicaProcurar";
 			this.mnuDespesaPeriodicaProcurar.Size = new System.Drawing.Size(264, 30);
 			this.mnuDespesaPeriodicaProcurar.Text = "Procurar Despesa Periódica";
+			// 
+			// mnuSubDespesaCartao
+			// 
+			this.mnuSubDespesaCartao.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDespesaCartaoInserir,
+            this.mnuDespesaCartaoProcurar});
+			this.mnuSubDespesaCartao.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuSubDespesaCartao.Image = global::CamadaUI.Properties.Resources.credit_card_24;
+			this.mnuSubDespesaCartao.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.mnuSubDespesaCartao.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuSubDespesaCartao.Name = "mnuSubDespesaCartao";
+			this.mnuSubDespesaCartao.Size = new System.Drawing.Size(253, 30);
+			this.mnuSubDespesaCartao.Tag = "1";
+			this.mnuSubDespesaCartao.Text = "Despesas em Cartão";
 			// 
 			// toolStripSeparator4
 			// 
@@ -986,6 +1004,25 @@
 			this.lblHora.Text = "Hora";
 			this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// mnuDespesaCartaoInserir
+			// 
+			this.mnuDespesaCartaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaCartaoInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuDespesaCartaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaCartaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuDespesaCartaoInserir.Name = "mnuDespesaCartaoInserir";
+			this.mnuDespesaCartaoInserir.Size = new System.Drawing.Size(274, 30);
+			this.mnuDespesaCartaoInserir.Text = "Reunir Despesas de Cartão";
+			// 
+			// mnuDespesaCartaoProcurar
+			// 
+			this.mnuDespesaCartaoProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuDespesaCartaoProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuDespesaCartaoProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDespesaCartaoProcurar.Name = "mnuDespesaCartaoProcurar";
+			this.mnuDespesaCartaoProcurar.Size = new System.Drawing.Size(274, 30);
+			this.mnuDespesaCartaoProcurar.Text = "Procurar Despesas de Cartão";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -1096,5 +1133,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 		private System.Windows.Forms.ToolStripLabel btnMensagem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+		private System.Windows.Forms.ToolStripMenuItem mnuSubDespesaCartao;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaCartaoInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuDespesaCartaoProcurar;
 	}
 }

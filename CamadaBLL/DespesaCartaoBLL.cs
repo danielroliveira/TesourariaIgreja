@@ -8,12 +8,39 @@ namespace CamadaBLL
 {
 	public class DespesaCartaoBLL
 	{
+		// GET DESPESA CARTAO BY ID
+		//------------------------------------------------------------------------------------------------------------
+		public objDespesaCartao GetDespesaCartaoByID(long IDDespesa)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryDespesaCartao WHERE IDDespesa = @IDDespesa";
+				bool myWhere = false;
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDDespesa", IDDespesa);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("Registro de Despesa não encontrado...");
+				}
+
+				return ConvertRowInClass(dt.Rows[0]);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// GET LIST OF WITH DETAILS
 		//------------------------------------------------------------------------------------------------------------
 		public List<objDespesaCartao> GetListDespesaCartao(
-			int? IDSetor = null,
-			int? IDDespesaTipo = null,
-			int? IDCredor = null,
 			DateTime? dataInicial = null,
 			DateTime? dataFinal = null)
 		{
@@ -26,22 +53,6 @@ namespace CamadaBLL
 
 				// add params
 				db.LimparParametros();
-
-				// add IDSetor
-				if (IDSetor != null)
-				{
-					db.AdicionarParametros("@IDSetor", IDSetor);
-					query += myWhere ? " AND IDSetor = @IDSetor" : " WHERE IDSetor = @IDSetor";
-					myWhere = true;
-				}
-
-				// add IDDespesaTipo
-				if (IDDespesaTipo != null)
-				{
-					db.AdicionarParametros("@IDDespesaTipo", IDDespesaTipo);
-					query += myWhere ? " AND IDDespesaTipo = @IDDespesaTipo" : " WHERE IDDespesaTipo = @IDDespesaTipo";
-					myWhere = true;
-				}
 
 				// add DataInicial
 				if (dataInicial != null)
@@ -56,14 +67,6 @@ namespace CamadaBLL
 				{
 					db.AdicionarParametros("@DataFinal", (DateTime)dataFinal);
 					query += myWhere ? " AND DespesaData <= @DataFinal" : " WHERE DespesaData <= @DataFinal";
-					myWhere = true;
-				}
-
-				// add IDCredor
-				if (IDCredor != null)
-				{
-					db.AdicionarParametros("@IDCredor", IDCredor);
-					query += myWhere ? " AND IDCredor = @IDCredor" : " WHERE IDCredor = @IDCredor";
 					myWhere = true;
 				}
 
@@ -95,7 +98,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public objDespesaCartao ConvertRowInClass(DataRow row)
 		{
-			var despesa = new objDespesaCartao((long)row["IDDespesaCartao"])
+			var despesa = new objDespesaCartao((long)row["IDDespesa"])
 			{
 				DespesaDescricao = (string)row["DespesaDescricao"],
 				IDCredor = (int)row["IDCredor"],
@@ -103,26 +106,19 @@ namespace CamadaBLL
 				DespesaData = (DateTime)row["DespesaData"],
 				IDDespesaTipo = (int)row["IDDespesaTipo"],
 				DespesaTipo = (string)row["DespesaTipo"],
-				IDDocumentoTipo = (byte)row["IDDocumentoTipo"],
-				DocumentoTipo = (string)row["DocumentoTipo"],
 				DespesaValor = (decimal)row["DespesaValor"],
-				DocumentoNumero = (string)row["DocumentoNumero"],
 				IDSetor = (int)row["IDSetor"],
 				Setor = (string)row["Setor"],
 				IDSituacao = (byte)row["IDSituacao"],
 				Situacao = (string)row["Situacao"],
-				Parcelas = (byte)row["Parcelas"],
-				ParcelaDataFinal = row["ParcelaDataFinal"] == DBNull.Value ? null : (DateTime?)row["ParcelaDataFinal"],
-				ParcelaDataInicial = row["ParcelaDataInicial"] == DBNull.Value ? null : (DateTime?)row["ParcelaDataInicial"],
 				IDCartaoCredito = (int)row["IDCartaoCredito"],
 				CartaoDescricao = (string)row["CartaoDescricao"],
-				IDDespesaDestino = (long)row["IDDespesaDestino"],
 				VencimentoDia = (byte)row["VencimentoDia"],
-
+				ReferenciaData = (DateTime)row["ReferenciaData"],
 			};
 
 			// SET IMAGEM
-			despesa.Imagem.IDOrigem = (long)despesa.IDDespesaCartao;
+			despesa.Imagem.IDOrigem = (long)despesa.IDDespesa;
 			despesa.Imagem.Origem = EnumImagemOrigem.Despesa;
 			despesa.Imagem.ImagemFileName = row["ImagemFileName"] == DBNull.Value ? string.Empty : (string)row["ImagemFileName"];
 			despesa.Imagem.ImagemPath = row["ImagemPath"] == DBNull.Value ? string.Empty : (string)row["ImagemPath"];
@@ -133,7 +129,7 @@ namespace CamadaBLL
 
 		// INSERT DESPESA DESTINO CARTAO
 		//------------------------------------------------------------------------------------------------------------
-		public long InsertDespesaCartaoDestino(objAPagarCartao cartao, object dbTran = null)
+		public objDespesaCartao InsertDespesaCartao(objAPagarCartao cartao, DateTime ReferenciaData, object dbTran = null)
 		{
 			AcessoDados db = dbTran == null ? new AcessoDados() : (AcessoDados)dbTran;
 
@@ -142,34 +138,73 @@ namespace CamadaBLL
 				db = new AcessoDados();
 				if (dbTran == null) db.BeginTransaction();
 
-				//--- clear Params
-				db.LimparParametros();
 
-				//--- define Params
-				db.AdicionarParametros("@DespesaDescricao", ("Despesa Destino Cartão: " + cartao.CartaoDescricao).Substring(0, 199));
-				db.AdicionarParametros("@DespesaOrigem", 3);
-				db.AdicionarParametros("@DespesaValor", 0);
-				db.AdicionarParametros("@DespesaData", DateTime.Today);
-				db.AdicionarParametros("@IDCredor", cartao.IDCredorCartao);
-				db.AdicionarParametros("@IDSetor", cartao.IDSetorCartao);
-				db.AdicionarParametros("@IDDespesaTipo", 0);
-				db.AdicionarParametros("@IDTitular", null);
+				var despesa = new objDespesa(null)
+				{
+					IDCredor = cartao.IDCredorCartao,
+					Credor = cartao.CredorCartao,
+					DespesaDescricao = ("Despesa Destino Cartão: " + cartao.CartaoDescricao).Substring(0, 199),
+					DespesaOrigem = 3,
+					DespesaValor = 0,
+					DespesaData = ReferenciaData,
+					IDSetor = cartao.IDSetorCartao,
+					Setor = cartao.SetorCartao,
+					IDDespesaTipo = 0,
+					IDTitular = null,
+				};
 
-				//--- convert null parameters
-				db.ConvertNullParams();
+				//--- insert DESPESA and Get new ID
+				long newID = new DespesaBLL().InsertDespesa(despesa, db);
 
-				string query = db.CreateInsertSQL("tblDespesa");
+				//--- insert DESPESA CARTAO
+				var despCartao = new objDespesaCartao(newID)
+				{
+					IDCartaoCredito = (int)cartao.IDCartaoCredito,
+					CartaoDescricao = cartao.CartaoDescricao,
+					ReferenciaData = ReferenciaData,
+					IDSituacao = 1,
+					Situacao = "Em Aberto",
+				};
 
-				//--- insert and Get new ID
-				long newID = db.ExecutarInsertAndGetID(query);
+				InsertDespesaCartao(despCartao, db);
 
 				if (dbTran == null) db.CommitTransaction();
-				return newID;
+				return despCartao;
 
 			}
 			catch (Exception ex)
 			{
 				if (dbTran == null) db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// INSERT DESPESA CARTAO
+		//------------------------------------------------------------------------------------------------------------
+		private void InsertDespesaCartao(objDespesaCartao desp, AcessoDados dbTran)
+		{
+			try
+			{
+				//--- clear Params
+				dbTran.LimparParametros();
+
+				//--- define Params
+				dbTran.AdicionarParametros("@DespesaOrigem", desp.IDDespesa);
+				dbTran.AdicionarParametros("@IDCartaoCredito", desp.IDCartaoCredito);
+				dbTran.AdicionarParametros("@DespesaValor", desp.ReferenciaData);
+				dbTran.AdicionarParametros("@DespesaData", desp.IDSituacao);
+
+				//--- convert null parameters
+				dbTran.ConvertNullParams();
+
+				string query = dbTran.CreateInsertSQL("tblDespesaCartao");
+
+				//--- insert
+				dbTran.ExecutarManipulacao(CommandType.Text, query);
+
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}

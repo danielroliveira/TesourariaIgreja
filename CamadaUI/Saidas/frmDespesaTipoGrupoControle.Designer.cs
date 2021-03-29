@@ -43,11 +43,12 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvListagem = new CamadaUC.ucDataGridView();
-			this.lblAcao = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnQuant = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.lblAcao = new System.Windows.Forms.Label();
+			this.MenuTipos = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.MenuListagem.SuspendLayout();
@@ -175,17 +176,18 @@
 			// 
 			// MenuListagem
 			// 
+			this.MenuListagem.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AtivarToolStripMenuItem,
             this.DesativarToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(194, 48);
+			this.MenuListagem.Size = new System.Drawing.Size(230, 52);
 			// 
 			// AtivarToolStripMenuItem
 			// 
 			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
 			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(229, 24);
 			this.AtivarToolStripMenuItem.Text = "Ativar Classificação";
 			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
@@ -193,7 +195,7 @@
 			// 
 			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
 			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(229, 24);
 			this.DesativarToolStripMenuItem.Text = "Desativar Classificação";
 			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
@@ -248,18 +250,6 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// lblAcao
-			// 
-			this.lblAcao.AutoSize = true;
-			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
-			this.lblAcao.Location = new System.Drawing.Point(15, 14);
-			this.lblAcao.Name = "lblAcao";
-			this.lblAcao.Size = new System.Drawing.Size(210, 22);
-			this.lblAcao.TabIndex = 3;
-			this.lblAcao.Text = "Adicionando Novo Registro";
-			this.lblAcao.Visible = false;
-			// 
 			// clnID
 			// 
 			this.clnID.Frozen = true;
@@ -290,6 +280,24 @@
 			this.clnImage.Name = "clnImage";
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
+			// 
+			// lblAcao
+			// 
+			this.lblAcao.AutoSize = true;
+			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
+			this.lblAcao.Location = new System.Drawing.Point(15, 14);
+			this.lblAcao.Name = "lblAcao";
+			this.lblAcao.Size = new System.Drawing.Size(210, 22);
+			this.lblAcao.TabIndex = 3;
+			this.lblAcao.Text = "Adicionando Novo Registro";
+			this.lblAcao.Visible = false;
+			// 
+			// MenuTipos
+			// 
+			this.MenuTipos.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MenuTipos.Name = "MenuFab";
+			this.MenuTipos.Size = new System.Drawing.Size(61, 4);
 			// 
 			// frmDespesaTipoGrupoControle
 			// 
@@ -333,5 +341,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnQuant;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
+		internal System.Windows.Forms.ContextMenuStrip MenuTipos;
 	}
 }

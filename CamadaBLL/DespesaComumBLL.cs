@@ -299,6 +299,7 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
 		// INSERT DESPESA REALIZADA | GASTO | DESPESA QUITADA
 		//------------------------------------------------------------------------------------------------------------
 		public long InsertDespesaRealizada(

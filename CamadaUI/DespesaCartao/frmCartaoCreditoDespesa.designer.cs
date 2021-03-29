@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.APagar
+﻿namespace CamadaUI.DespesaCartao
 {
 	partial class frmCartaoCreditoDespesa
 	{

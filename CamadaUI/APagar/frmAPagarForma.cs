@@ -748,7 +748,7 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				var frm = new frmCartaoCreditoDespesa(this);
+				var frm = new DespesaCartao.frmCartaoCreditoDespesa(this);
 
 				Visible = false;
 				frm.ShowDialog();

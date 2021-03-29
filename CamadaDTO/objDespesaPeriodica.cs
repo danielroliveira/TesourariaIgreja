@@ -1,34 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
 {
 	//=================================================================================================
 	// DESPESA
 	//=================================================================================================
-	public class objDespesaPeriodica : IEditableObject, INotifyPropertyChanged
+	public class objDespesaPeriodica : objDespesa, IEditableObject, INotifyPropertyChanged
 	{
 		// STRUCTURE
 		//-------------------------------------------------------------------------------------------------
-		struct StructDespesa
+		struct StructDespesaPeriodica
 		{
-			// TBL DESPESA
-			internal long? _IDDespesa;
-			internal byte _DespesaOrigem; // 2:DespesaPeriodica
-			internal string _DespesaDescricao;
-			internal DateTime _DespesaData;
-			internal decimal _DespesaValor;
-			internal int _IDCredor;
-			internal string _Credor;
-			internal int _IDDespesaTipo;
-			internal string _DespesaTipo;
-			internal int _IDSetor;
-			internal string _Setor;
-			// from Despesa Titular
-			internal int? _IDTitular;
-			internal string _Titular;
-			internal string _CNP;
 			// TBL DEPESA PERIODICA
 			internal int _IDAPagarForma;
 			internal string _APagarForma;
@@ -47,20 +30,14 @@ namespace CamadaDTO
 
 		// VARIABLES | CONSTRUCTOR
 		//-------------------------------------------------------------------------------------------------
-		private StructDespesa EditData;
-		private StructDespesa BackupData;
-		private bool inTxn = false;
+		private StructDespesaPeriodica EditDataPeriodica;
+		private StructDespesaPeriodica BackupDataPeriodica;
 
-		public objDespesaPeriodica(long? IDDespesa) : base()
+		public objDespesaPeriodica(long? IDDespesa) : base(IDDespesa)
 		{
-			EditData = new StructDespesa()
+			EditDataPeriodica = new StructDespesaPeriodica()
 			{
-				_IDDespesa = IDDespesa,
-				_DespesaDescricao = "",
-				_DespesaOrigem = 2,
-				_DespesaData = DateTime.Today,
 				_IniciarData = DateTime.Today,
-				_DespesaValor = 0,
 				_RecorrenciaTipo = 3, // DEFAULT: MENSAL POR DIA
 				_RecorrenciaDia = 1,
 				_RecorrenciaRepeticao = 1,
@@ -76,6 +53,7 @@ namespace CamadaDTO
 			if (!inTxn)
 			{
 				BackupData = EditData;
+				BackupDataPeriodica = EditDataPeriodica;
 				inTxn = true;
 			}
 		}
@@ -85,6 +63,7 @@ namespace CamadaDTO
 			if (inTxn)
 			{
 				EditData = BackupData;
+				EditDataPeriodica = BackupDataPeriodica;
 				inTxn = false;
 			}
 		}
@@ -94,204 +73,25 @@ namespace CamadaDTO
 			if (inTxn)
 			{
 				BackupData = new StructDespesa();
+				BackupDataPeriodica = new StructDespesaPeriodica();
 				inTxn = false;
 			}
-		}
-
-		// PROPERTY CHANGED
-		//------------------------------------------------------------------------------------------------------------
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		public override string ToString()
-		{
-			return EditData._DespesaDescricao;
-		}
-
-		public bool RegistroAlterado
-		{
-			get => inTxn;
 		}
 
 		//=================================================================================================
 		// PROPERTIES
 		//=================================================================================================
-		public long? IDDespesa
-		{
-			get => EditData._IDDespesa;
-			set => EditData._IDDespesa = value;
-		}
-
-		// Property DespesaDescricao
-		//---------------------------------------------------------------
-		public string DespesaDescricao
-		{
-			get => EditData._DespesaDescricao;
-			set
-			{
-				if (value != EditData._DespesaDescricao)
-				{
-					EditData._DespesaDescricao = value;
-					NotifyPropertyChanged("DespesaDescricao");
-				}
-			}
-		}
-
-		// Property DespesaOrigem
-		//---------------------------------------------------------------
-		public byte DespesaOrigem
-		{
-			get => EditData._DespesaOrigem;
-			set => EditData._DespesaOrigem = value;
-		}
-
-		// Property DespesaData
-		//---------------------------------------------------------------
-		public DateTime DespesaData
-		{
-			get => EditData._DespesaData;
-			set
-			{
-				if (value != EditData._DespesaData)
-				{
-					EditData._DespesaData = value;
-					NotifyPropertyChanged("DespesaData");
-				}
-			}
-		}
-
-		// Property DespesaValor
-		//---------------------------------------------------------------
-		public decimal DespesaValor
-		{
-			get => EditData._DespesaValor;
-			set
-			{
-				if (value != EditData._DespesaValor)
-				{
-					EditData._DespesaValor = value;
-					NotifyPropertyChanged("DespesaValor");
-				}
-			}
-		}
-
-		// Property IDCredor
-		//---------------------------------------------------------------
-		public int IDCredor
-		{
-			get => EditData._IDCredor;
-			set
-			{
-				if (value != EditData._IDCredor)
-				{
-					EditData._IDCredor = value;
-					NotifyPropertyChanged("IDCredor");
-				}
-			}
-		}
-
-		// Property Credor
-		//---------------------------------------------------------------
-		public string Credor
-		{
-			get => EditData._Credor;
-			set => EditData._Credor = value;
-		}
-
-		// Property IDTitular
-		//---------------------------------------------------------------
-		public int? IDTitular
-		{
-			get => EditData._IDTitular;
-			set
-			{
-				if (value != EditData._IDTitular)
-				{
-					EditData._IDTitular = value;
-					NotifyPropertyChanged("IDTitular");
-				}
-			}
-		}
-
-		// Property Titular
-		//---------------------------------------------------------------
-		public string Titular
-		{
-			get
-			{
-				return string.IsNullOrEmpty(EditData._Titular) ? "O PRÓPRIO" : EditData._Titular;
-			}
-			set => EditData._Titular = value;
-		}
-
-		// Property CNP
-		//---------------------------------------------------------------
-		public string CNP
-		{
-			get => EditData._CNP;
-			set => EditData._CNP = value;
-		}
-
-		// Property IDDespesaTipo
-		//---------------------------------------------------------------
-		public int IDDespesaTipo
-		{
-			get => EditData._IDDespesaTipo;
-			set
-			{
-				if (value != EditData._IDDespesaTipo)
-				{
-					EditData._IDDespesaTipo = value;
-					NotifyPropertyChanged("IDDespesaTipo");
-				}
-			}
-		}
-
-		// Property DespesaTipo
-		//---------------------------------------------------------------
-		public string DespesaTipo
-		{
-			get => EditData._DespesaTipo;
-			set => EditData._DespesaTipo = value;
-		}
-
-		// Property Setor
-		//----------------------------------------------------------------
-		public int IDSetor
-		{
-			get => EditData._IDSetor;
-			set
-			{
-				if (value != EditData._IDSetor)
-				{
-					EditData._IDSetor = value;
-					NotifyPropertyChanged("IDSetor");
-				}
-			}
-		}
-
-		// Property Setor
-		//---------------------------------------------------------------
-		public string Setor
-		{
-			get => EditData._Setor;
-			set => EditData._Setor = value;
-		}
 
 		// Property IDAPagarForma
 		//---------------------------------------------------------------
 		public int IDAPagarForma
 		{
-			get => EditData._IDAPagarForma;
+			get => EditDataPeriodica._IDAPagarForma;
 			set
 			{
-				if (value != EditData._IDAPagarForma)
+				if (value != EditDataPeriodica._IDAPagarForma)
 				{
-					EditData._IDAPagarForma = value;
+					EditDataPeriodica._IDAPagarForma = value;
 					NotifyPropertyChanged("IDAPagarForma");
 				}
 			}
@@ -301,20 +101,20 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string APagarForma
 		{
-			get => EditData._APagarForma;
-			set => EditData._APagarForma = value;
+			get => EditDataPeriodica._APagarForma;
+			set => EditDataPeriodica._APagarForma = value;
 		}
 
 		// Property IniciarData
 		//---------------------------------------------------------------
 		public DateTime IniciarData
 		{
-			get => EditData._IniciarData;
+			get => EditDataPeriodica._IniciarData;
 			set
 			{
-				if (value != EditData._IniciarData)
+				if (value != EditDataPeriodica._IniciarData)
 				{
-					EditData._IniciarData = value;
+					EditDataPeriodica._IniciarData = value;
 					NotifyPropertyChanged("IniciarData");
 				}
 			}
@@ -324,12 +124,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public byte RecorrenciaTipo
 		{
-			get => EditData._RecorrenciaTipo;
+			get => EditDataPeriodica._RecorrenciaTipo;
 			set
 			{
-				if (value != EditData._RecorrenciaTipo)
+				if (value != EditDataPeriodica._RecorrenciaTipo)
 				{
-					EditData._RecorrenciaTipo = value;
+					EditDataPeriodica._RecorrenciaTipo = value;
 					NotifyPropertyChanged("RecorrenciaTipo");
 				}
 			}
@@ -339,20 +139,20 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string RecorrenciaTipoDescricao
 		{
-			get => EditData._RecorrenciaTipoDescricao;
-			set => EditData._RecorrenciaTipoDescricao = value;
+			get => EditDataPeriodica._RecorrenciaTipoDescricao;
+			set => EditDataPeriodica._RecorrenciaTipoDescricao = value;
 		}
 
 		// Property RecorrenciaDia
 		//---------------------------------------------------------------
 		public byte? RecorrenciaDia
 		{
-			get => EditData._RecorrenciaDia;
+			get => EditDataPeriodica._RecorrenciaDia;
 			set
 			{
-				if (value != EditData._RecorrenciaDia)
+				if (value != EditDataPeriodica._RecorrenciaDia)
 				{
-					EditData._RecorrenciaDia = value;
+					EditDataPeriodica._RecorrenciaDia = value;
 					NotifyPropertyChanged("RecorrenciaDia");
 				}
 			}
@@ -362,12 +162,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public byte? RecorrenciaMes
 		{
-			get => EditData._RecorrenciaMes;
+			get => EditDataPeriodica._RecorrenciaMes;
 			set
 			{
-				if (value != EditData._RecorrenciaMes)
+				if (value != EditDataPeriodica._RecorrenciaMes)
 				{
-					EditData._RecorrenciaMes = value;
+					EditDataPeriodica._RecorrenciaMes = value;
 					NotifyPropertyChanged("RecorrenciaMes");
 				}
 			}
@@ -377,12 +177,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public short? RecorrenciaRepeticao
 		{
-			get => EditData._RecorrenciaRepeticao;
+			get => EditDataPeriodica._RecorrenciaRepeticao;
 			set
 			{
-				if (value != EditData._RecorrenciaRepeticao)
+				if (value != EditDataPeriodica._RecorrenciaRepeticao)
 				{
-					EditData._RecorrenciaRepeticao = value;
+					EditDataPeriodica._RecorrenciaRepeticao = value;
 					NotifyPropertyChanged("RecorrenciaRepeticao");
 				}
 			}
@@ -392,12 +192,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public byte? RecorrenciaSemana
 		{
-			get => EditData._RecorrenciaSemana;
+			get => EditDataPeriodica._RecorrenciaSemana;
 			set
 			{
-				if (value != EditData._RecorrenciaSemana)
+				if (value != EditDataPeriodica._RecorrenciaSemana)
 				{
-					EditData._RecorrenciaSemana = value;
+					EditDataPeriodica._RecorrenciaSemana = value;
 					NotifyPropertyChanged("RecorrenciaSemana");
 				}
 			}
@@ -407,12 +207,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public int? IDBanco
 		{
-			get => EditData._IDBanco;
+			get => EditDataPeriodica._IDBanco;
 			set
 			{
-				if (value != EditData._IDBanco)
+				if (value != EditDataPeriodica._IDBanco)
 				{
-					EditData._IDBanco = value;
+					EditDataPeriodica._IDBanco = value;
 					NotifyPropertyChanged("IDBanco");
 				}
 			}
@@ -422,20 +222,20 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string BancoNome
 		{
-			get => EditData._BancoNome;
-			set => EditData._BancoNome = value;
+			get => EditDataPeriodica._BancoNome;
+			set => EditDataPeriodica._BancoNome = value;
 		}
 
 		// Property Ativa
 		//---------------------------------------------------------------
 		public bool Ativa
 		{
-			get => EditData._Ativa;
+			get => EditDataPeriodica._Ativa;
 			set
 			{
-				if (value != EditData._Ativa)
+				if (value != EditDataPeriodica._Ativa)
 				{
-					EditData._Ativa = value;
+					EditDataPeriodica._Ativa = value;
 					NotifyPropertyChanged("Ativa");
 				}
 			}
@@ -445,12 +245,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Instalacao
 		{
-			get => EditData._Instalacao;
+			get => EditDataPeriodica._Instalacao;
 			set
 			{
-				if (value != EditData._Instalacao)
+				if (value != EditDataPeriodica._Instalacao)
 				{
-					EditData._Instalacao = value;
+					EditDataPeriodica._Instalacao = value;
 					NotifyPropertyChanged("Instalacao");
 				}
 			}

@@ -13,6 +13,7 @@ namespace CamadaUI.Saidas
 	public partial class frmDespesaTipoGrupoControle : CamadaUI.Modals.frmModFinBorder
 	{
 		private List<classGrupo> list;
+		private List<objDespesaTipo> listTipos;
 		private BindingSource bindList = new BindingSource();
 		DespesaBLL dBLL = new DespesaBLL();
 
@@ -42,6 +43,7 @@ namespace CamadaUI.Saidas
 			bindList.DataSource = typeof(classGrupo);
 			ObterDados();
 			FormataListagem();
+			ObterDespesaTipos();
 
 			if (dgvListagem.RowCount > 0)
 				Sit = EnumFlagEstado.RegistroSalvo;
@@ -154,7 +156,28 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
 
+		// GET DATA
+		//------------------------------------------------------------------------------------------------------------
+		private void ObterDespesaTipos()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				listTipos = dBLL.GetDespesaTiposList();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter os Dados da listagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion // CONSTRUCTOR | SUB NEW --- END
@@ -608,19 +631,26 @@ namespace CamadaUI.Saidas
 				// mostra o MENU ativar e desativar
 				objDespesaTipoGrupo grupo = (objDespesaTipoGrupo)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-				if (grupo.Ativo == true)
+				if (hit.ColumnIndex == 3)
 				{
-					AtivarToolStripMenuItem.Enabled = false;
-					DesativarToolStripMenuItem.Enabled = true;
-				}
-				else
-				{
-					AtivarToolStripMenuItem.Enabled = true;
-					DesativarToolStripMenuItem.Enabled = false;
-				}
+					if (grupo.Ativo == true)
+					{
+						AtivarToolStripMenuItem.Enabled = false;
+						DesativarToolStripMenuItem.Enabled = true;
+					}
+					else
+					{
+						AtivarToolStripMenuItem.Enabled = true;
+						DesativarToolStripMenuItem.Enabled = false;
+					}
 
-				// revela menu
-				MenuListagem.Show(c.PointToScreen(e.Location));
+					// revela menu
+					MenuListagem.Show(c.PointToScreen(e.Location));
+				}
+				else if (hit.ColumnIndex == 2)
+				{
+					ShowDespesaTipoMenu(grupo, c.PointToScreen(e.Location));
+				}
 
 			}
 		}
@@ -696,6 +726,54 @@ namespace CamadaUI.Saidas
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
 
+		// SHOW MENU WITH DESPESA TIPOS
+		//------------------------------------------------------------------------------------------------------------
+		private void ShowDespesaTipoMenu(objDespesaTipoGrupo grupo, Point Location)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- check quant
+				if (listTipos.Count == 0 || grupo.Quant == 0) return;
+
+				//--- create menu
+				MenuTipos.Items.Clear();
+
+				foreach (var item in listTipos.Where(x => x.IDDespesaTipoGrupo == grupo.IDDespesaTipoGrupo))
+				{
+					var menuitem = MenuTipos.Items.Add(item.DespesaTipo);
+					menuitem.Tag = item.IDDespesaTipo;
+					menuitem.Click += TipoMenuClick;
+				}
+
+				//--- show menu
+				MenuTipos.Show(Location);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Mostrar Itens dos Tipos de Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		private void TipoMenuClick(object sender, EventArgs e)
+		{
+			//--- get Selected item
+			objDespesaTipo item = listTipos.First(x => x.IDDespesaTipo == (int)((ToolStripItem)sender).Tag);
+
+			//--- open edit form
+			frmDespesaTipo frm = new frmDespesaTipo(item, this);
+			frm.ShowDialog();
+		}
 
 	}
 }

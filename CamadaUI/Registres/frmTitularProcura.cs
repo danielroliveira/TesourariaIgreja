@@ -9,7 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Saidas
+namespace CamadaUI.Registres
 {
 	public partial class frmTitularProcura : CamadaUI.Modals.frmModFinBorder
 	{

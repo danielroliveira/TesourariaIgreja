@@ -1102,13 +1102,13 @@ namespace CamadaUI.Saidas
 				if (Sit == EnumFlagEstado.NovoRegistro)
 				{
 					//--- INSERT Desepesa
-					long newID = despBLL.InsertDespesa(_despesa);
+					long newID = despBLL.InsertDespesaPeriodica(_despesa);
 					_despesa.IDDespesa = newID;
 				}
 				else if (Sit == EnumFlagEstado.Alterado)
 				{
 					//--- UPDATE Desepesa
-					despBLL.UpdateDespesa(_despesa);
+					despBLL.UpdateDespesaPeriodica(_despesa);
 				}
 
 				bind.EndEdit();

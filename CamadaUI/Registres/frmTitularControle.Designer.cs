@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.Saidas
+﻿namespace CamadaUI.Registres
 {
 	partial class frmTitularControle
 	{
@@ -85,12 +85,12 @@
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.toolStripSeparator2,
-            this.btnFechar});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.toolStripSeparator2,
+			this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 610);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(674, 44);
@@ -162,8 +162,8 @@
 			// MenuListagem
 			// 
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem});
+			this.AtivarToolStripMenuItem,
+			this.DesativarToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
 			this.MenuListagem.Size = new System.Drawing.Size(159, 48);
 			// 
@@ -194,9 +194,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -210,10 +210,10 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnCadastro,
-            this.clnCNP,
-            this.clnImage});
+			this.clnID,
+			this.clnCadastro,
+			this.clnCNP,
+			this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(12, 63);

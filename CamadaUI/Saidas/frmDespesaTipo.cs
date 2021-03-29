@@ -165,8 +165,7 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			new frmDespesaTipoListagem().Show();
-			Close();
+			FecharForm();
 		}
 
 		// CANCELAR ALTERACAO
@@ -194,6 +193,21 @@ namespace CamadaUI.Saidas
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
+
+		}
+
+		private void FecharForm()
+		{
+			if (_formOrigem == null || _formOrigem.GetType() == typeof(frmDespesaTipoListagem))
+			{
+				new frmDespesaTipoListagem().Show();
+			}
+			else if (_formOrigem.GetType() == typeof(frmDespesaTipoGrupoControle))
+			{
+				//new frmDespesaTipoGrupoControle().Show();
+			}
+
+			Close();
 
 		}
 

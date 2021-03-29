@@ -160,7 +160,7 @@ namespace CamadaUI.Saidas
 			}
 
 			// binding
-			bindDespesa.DataSource = typeof(objDespesa);
+			bindDespesa.DataSource = typeof(objDespesaComum);
 			bindDespesa.Add(propDespesa);
 			bindPagar.DataSource = typeof(objAPagar);
 			bindPagar.Add(_pagar);

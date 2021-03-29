@@ -11,12 +11,12 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Saidas
+namespace CamadaUI.DespesaCartao
 {
 	public partial class frmDespesaCartao : CamadaUI.Modals.frmModFinBorder
 	{
-		private objDespesaComum _despesa;
-		private DespesaComumBLL despBLL = new DespesaComumBLL();
+		private objDespesaCartao _despesa;
+		private DespesaCartaoBLL despBLL = new DespesaCartaoBLL();
 		private BindingSource bind = new BindingSource();
 		private BindingSource bindParcelas = new BindingSource();
 		private EnumFlagEstado _Sit;
@@ -32,7 +32,7 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR WITH DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesaCartao(objDespesaComum despesa, Form formOrigem = null)
+		public frmDespesaCartao(objDespesaCartao despesa, Form formOrigem = null)
 		{
 			InitializeComponent();
 			_formOrigem = formOrigem;
@@ -53,11 +53,9 @@ namespace CamadaUI.Saidas
 
 		// CONSTRUCTOR CONTINUE AFTER GET DESPESA
 		//------------------------------------------------------------------------------------------------------------
-		private void ConstructorContinue(objDespesaComum despesa)
+		private void ConstructorContinue(objDespesaCartao despesa)
 		{
 			_despesa = despesa;
-
-			GetDocTipos();
 
 			// Define Conta and Setor padrao
 			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
@@ -148,13 +146,13 @@ namespace CamadaUI.Saidas
 
 		// GET DESPESA BY ID
 		//------------------------------------------------------------------------------------------------------------
-		private objDespesaComum GetDespesaByID(long ID)
+		private objDespesaCartao GetDespesaByID(long ID)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				return despBLL.GetDespesa(ID);
+				return despBLL.GetDespesaCartaoByID(ID);
 			}
 			catch (Exception ex)
 			{
@@ -192,30 +190,6 @@ namespace CamadaUI.Saidas
 				Cursor.Current = Cursors.Default;
 			}
 		}
-
-		// GET LIST OF DOCUMENTO TIPOS
-		//------------------------------------------------------------------------------------------------------------
-		private void GetDocTipos()
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				listDocTipos = despBLL.GetDespesaDocumentoTipos();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de Tipos de Documento..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
 
 		#endregion // SUB NEW | CONSTRUCTOR --- END
 
@@ -293,7 +267,7 @@ namespace CamadaUI.Saidas
 
 			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
 
-			_despesa = new objDespesaComum(null);
+			_despesa = new objDespesaCartao(null);
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _despesa;
 			listAPagar = new List<objAPagar>();
@@ -315,7 +289,7 @@ namespace CamadaUI.Saidas
 
 			if (_formOrigem != null && _formOrigem.Name == "frmDespesaCartaoListagem")
 			{
-				var frm = new frmDespesaListagem();
+				var frm = new Saidas.frmDespesaListagem();
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				frm.Show();
 			}
@@ -498,40 +472,6 @@ namespace CamadaUI.Saidas
 				{
 					e.Handled = true;
 					e.SuppressKeyPress = true;
-				}
-			}
-		}
-
-		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
-		//------------------------------------------------------------------------------------------------------------
-		private void Control_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (char.IsDigit(e.KeyChar))
-			{
-				Control ctr = (Control)sender;
-				e.Handled = true;
-
-				switch (ctr.Name)
-				{
-					case "txtDocumentoTipo":
-
-						if (listDocTipos.Count > 0)
-						{
-							var tipo = listDocTipos.FirstOrDefault(x => x.IDDocumentoTipo == int.Parse(e.KeyChar.ToString()));
-
-							if (tipo == null) return;
-
-							if (tipo.IDDocumentoTipo != _despesa.IDDocumentoTipo)
-							{
-								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
-
-								_despesa.IDDocumentoTipo = (byte)tipo.IDDocumentoTipo;
-								lblDocumentoTipo.Text = tipo.DocumentoTipo;
-							}
-						}
-						break;
-					default:
-						break;
 				}
 			}
 		}
@@ -856,7 +796,7 @@ namespace CamadaUI.Saidas
 				};
 
 				//--- open Form
-				var frm = new frmDespesaAPagarItem(newParcela, vlMaximo, _despesa.DespesaData, this);
+				var frm = new Saidas.frmDespesaAPagarItem(newParcela, vlMaximo, _despesa.DespesaData, this);
 				frm.ShowDialog();
 
 				if (frm.DialogResult != DialogResult.OK) return;
@@ -933,7 +873,7 @@ namespace CamadaUI.Saidas
 				var Parcela = item;
 
 				//--- open Form
-				var frm = new frmDespesaAPagarItem(Parcela, vlMaximo, _despesa.DespesaData, this);
+				var frm = new Saidas.frmDespesaAPagarItem(Parcela, vlMaximo, _despesa.DespesaData, this);
 				frm.ShowDialog();
 
 				if (frm.DialogResult != DialogResult.OK) return;
@@ -1095,16 +1035,7 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- INSERT Desepesa
-				long newID = despBLL.InsertDespesaComum(_despesa, ref listAPagar);
-				_despesa.IDDespesa = newID;
-				bind.EndEdit();
-				bind.ResetBindings(false);
 
-				Sit = EnumFlagEstado.RegistroSalvo;
-
-				AbrirDialog("Registro de despesa salvo com sucesso!",
-					"Salvamento Efetuado");
 
 			}
 			catch (Exception ex)
@@ -1168,29 +1099,7 @@ namespace CamadaUI.Saidas
 					return false;
 				}
 
-				// check quantity
-				if (listAPagar.Count != _despesa.Parcelas)
-				{
-					var resp = AbrirDialog($"A quantidade de parcelas deve ser igual ao número de items " +
-										   $"na listagem de parcelamento\n" +
-										   "Deseja alterar a quantidade de parcelas para conferir com a quantidade de items?",
-										   "Quantidade de Parcelas",
-										   DialogType.SIM_NAO,
-										   DialogIcon.Question);
-
-					if (resp == DialogResult.Yes)
-					{
-						_despesa.Parcelas = (byte)listAPagar.Count;
-					}
-					else
-					{
-						return false;
-					}
-				}
 			}
-
-			_despesa.DataInicial = null;
-			_despesa.DataFinal = null;
 
 			return true;
 		}

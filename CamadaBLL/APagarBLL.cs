@@ -398,7 +398,7 @@ namespace CamadaBLL
 
 				// 1. update Despesa Periodica (IniciarData, DespesaValor)
 				desp.IniciarData = Vencimento.AddDays(1);
-				new DespesaPeriodicaBLL().UpdateDespesa(desp, dbTran);
+				new DespesaPeriodicaBLL().UpdateDespesaPeriodica(desp, dbTran);
 
 				// 2. create and save APagar
 				objAPagar newPag = CreateAPagarByDespesa(desp, Vencimento);

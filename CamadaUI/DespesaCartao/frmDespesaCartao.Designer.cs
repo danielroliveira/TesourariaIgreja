@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.Saidas
+﻿namespace CamadaUI.DespesaCartao
 {
 	partial class frmDespesaCartao
 	{
@@ -461,8 +461,6 @@
 			this.lblDocumentoTipo.Tag = "Pressione a tecla (+) para procurar ou use atalho numérico";
 			this.lblDocumentoTipo.Text = "Tipo de Documento";
 			this.lblDocumentoTipo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lblDocumentoTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
-			this.lblDocumentoTipo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// line2
 			// 

@@ -763,6 +763,9 @@ namespace CamadaUI
 			mnuDespesaProvisoriaInserir.Click += (a, b) => MenuClickOpenForm(new frmProvisorio(new objDespesaProvisoria(null), this));
 			mnuDespesaProvisoriaProcurar.Click += (a, b) => MenuClickOpenForm(new frmProvisoriaListagem());
 
+			mnuDespesaCartaoInserir.Click += (a, b) => MenuClickOpenForm(new DespesaCartao.frmDespesaCartaoInserir(null));
+			//mnuDespesaCartaoProcurar.Click += (a, b) => MenuClickOpenForm(new frmProvisoriaListagem());
+
 			// MENU MOVIMENTACAO
 			mnuContaProcurar.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());
 			mnuContaMov.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaMovimentacao());
