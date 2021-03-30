@@ -46,13 +46,8 @@
 			this.btnVerImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnRemoverImagem = new System.Windows.Forms.ToolStripMenuItem();
-			this.txtDespesaDescricao = new System.Windows.Forms.Label();
+			this.lblDespesaDescricao = new System.Windows.Forms.Label();
 			this.lblCongregacao = new System.Windows.Forms.Label();
-			this.txtDespesaValor = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.txtDocumentoNumero = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
 			this.lblCredor = new System.Windows.Forms.Label();
 			this.lblContribuinte = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
@@ -60,7 +55,6 @@
 			this.btnSetSetor = new VIBlend.WinForms.Controls.vButton();
 			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.lblDocumentoTipo = new System.Windows.Forms.Label();
 			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
@@ -69,7 +63,6 @@
 			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.lblSitBlock = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuAdicionarAPagar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuEditarAPagar = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,6 +75,8 @@
 			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
 			this.lblDespesaData = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.txtDespesaValor = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
@@ -147,20 +142,20 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnNovo,
-			this.toolStripSeparator1,
-			this.btnSalvar,
-			this.btnCancelar,
-			this.btnFechar,
-			this.toolStripSeparator2,
-			this.mnuImagem});
+            this.btnNovo,
+            this.toolStripSeparator1,
+            this.btnSalvar,
+            this.btnCancelar,
+            this.btnFechar,
+            this.toolStripSeparator2,
+            this.mnuImagem});
 			this.tspMenu.Location = new System.Drawing.Point(2, 600);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(772, 44);
@@ -232,10 +227,11 @@
 			// mnuImagem
 			// 
 			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnInserirImagem,
-			this.btnVerImagem,
-			this.toolStripSeparator3,
-			this.btnRemoverImagem});
+            this.btnInserirImagem,
+            this.btnVerImagem,
+            this.toolStripSeparator3,
+            this.btnRemoverImagem});
+			this.mnuImagem.Enabled = false;
 			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
 			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -275,19 +271,19 @@
 			this.btnRemoverImagem.Text = "Remover Imagem";
 			this.btnRemoverImagem.Click += new System.EventHandler(this.btnRemoverImagem_Click);
 			// 
-			// txtDespesaDescricao
+			// lblDespesaDescricao
 			// 
-			this.txtDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
-			this.txtDespesaDescricao.ForeColor = System.Drawing.Color.Black;
-			this.txtDespesaDescricao.Location = new System.Drawing.Point(216, 214);
-			this.txtDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDespesaDescricao.Name = "txtDespesaDescricao";
-			this.txtDespesaDescricao.Size = new System.Drawing.Size(507, 27);
-			this.txtDespesaDescricao.TabIndex = 20;
-			this.txtDespesaDescricao.Tag = "";
-			this.txtDespesaDescricao.Text = "Descrição da Despesa";
-			this.txtDespesaDescricao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.txtDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
+			this.lblDespesaDescricao.ForeColor = System.Drawing.Color.Black;
+			this.lblDespesaDescricao.Location = new System.Drawing.Point(216, 214);
+			this.lblDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.lblDespesaDescricao.Name = "lblDespesaDescricao";
+			this.lblDespesaDescricao.Size = new System.Drawing.Size(507, 27);
+			this.lblDespesaDescricao.TabIndex = 20;
+			this.lblDespesaDescricao.Tag = "";
+			this.lblDespesaDescricao.Text = "Descrição da Despesa";
+			this.lblDespesaDescricao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblDespesaDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// lblCongregacao
 			// 
@@ -299,65 +295,6 @@
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 19;
 			this.lblCongregacao.Text = "Descrição";
-			// 
-			// txtDespesaValor
-			// 
-			this.txtDespesaValor.BackColor = System.Drawing.Color.Transparent;
-			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtDespesaValor.ForeColor = System.Drawing.Color.Black;
-			this.txtDespesaValor.Location = new System.Drawing.Point(616, 546);
-			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDespesaValor.Name = "txtDespesaValor";
-			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 2;
-			this.txtDespesaValor.Text = "R$ 0,00";
-			this.txtDespesaValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.BackColor = System.Drawing.Color.Transparent;
-			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(488, 552);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(122, 19);
-			this.label8.TabIndex = 1;
-			this.label8.Text = "Valor da Despesa";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.BackColor = System.Drawing.Color.Transparent;
-			this.label2.ForeColor = System.Drawing.Color.Black;
-			this.label2.Location = new System.Drawing.Point(503, 178);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(57, 19);
-			this.label2.TabIndex = 17;
-			this.label2.Text = "Doc. nº";
-			// 
-			// txtDocumentoNumero
-			// 
-			this.txtDocumentoNumero.BackColor = System.Drawing.Color.Transparent;
-			this.txtDocumentoNumero.ForeColor = System.Drawing.Color.Black;
-			this.txtDocumentoNumero.Location = new System.Drawing.Point(566, 175);
-			this.txtDocumentoNumero.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDocumentoNumero.Name = "txtDocumentoNumero";
-			this.txtDocumentoNumero.Size = new System.Drawing.Size(157, 27);
-			this.txtDocumentoNumero.TabIndex = 18;
-			this.txtDocumentoNumero.Tag = "";
-			this.txtDocumentoNumero.Text = "Doc. Número";
-			this.txtDocumentoNumero.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.BackColor = System.Drawing.Color.Transparent;
-			this.label3.ForeColor = System.Drawing.Color.Black;
-			this.label3.Location = new System.Drawing.Point(75, 178);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(135, 19);
-			this.label3.TabIndex = 14;
-			this.label3.Text = "Tipo de Documento";
 			// 
 			// lblCredor
 			// 
@@ -449,19 +386,6 @@
 			this.label5.TabIndex = 1;
 			this.label5.Text = "Setor Debitado";
 			// 
-			// lblDocumentoTipo
-			// 
-			this.lblDocumentoTipo.BackColor = System.Drawing.Color.Transparent;
-			this.lblDocumentoTipo.ForeColor = System.Drawing.Color.Black;
-			this.lblDocumentoTipo.Location = new System.Drawing.Point(216, 175);
-			this.lblDocumentoTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.lblDocumentoTipo.Name = "lblDocumentoTipo";
-			this.lblDocumentoTipo.Size = new System.Drawing.Size(266, 27);
-			this.lblDocumentoTipo.TabIndex = 15;
-			this.lblDocumentoTipo.Tag = "Pressione a tecla (+) para procurar ou use atalho numérico";
-			this.lblDocumentoTipo.Text = "Tipo de Documento";
-			this.lblDocumentoTipo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// line2
 			// 
 			this.line2.EndPoint = new System.Drawing.Point(591, 5);
@@ -513,11 +437,11 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnForma,
-			this.clnSituacao,
-			this.clnIdentificador,
-			this.clnVencimento,
-			this.clnValor});
+            this.clnForma,
+            this.clnSituacao,
+            this.clnIdentificador,
+            this.clnVencimento,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(16, 289);
@@ -570,28 +494,15 @@
 			this.clnValor.ReadOnly = true;
 			this.clnValor.Width = 80;
 			// 
-			// lblSitBlock
-			// 
-			this.lblSitBlock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblSitBlock.AutoSize = true;
-			this.lblSitBlock.BackColor = System.Drawing.Color.AntiqueWhite;
-			this.lblSitBlock.Font = new System.Drawing.Font("Pathway Gothic One", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblSitBlock.ForeColor = System.Drawing.Color.Maroon;
-			this.lblSitBlock.Location = new System.Drawing.Point(505, 607);
-			this.lblSitBlock.Name = "lblSitBlock";
-			this.lblSitBlock.Size = new System.Drawing.Size(157, 24);
-			this.lblSitBlock.TabIndex = 0;
-			this.lblSitBlock.Text = "- Apenas Visualização -";
-			// 
 			// mnuOperacoes
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuAdicionarAPagar,
-			this.mnuEditarAPagar,
-			this.mnuExcluirAPagar,
-			this.toolStripSeparator5,
-			this.mnuImagemAPagar});
+            this.mnuAdicionarAPagar,
+            this.mnuEditarAPagar,
+            this.mnuExcluirAPagar,
+            this.toolStripSeparator5,
+            this.mnuImagemAPagar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(214, 154);
 			// 
@@ -630,10 +541,10 @@
 			// mnuImagemAPagar
 			// 
 			this.mnuImagemAPagar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuImagemInserir,
-			this.mnuImagemVisualizar,
-			this.toolStripSeparator4,
-			this.mnuImagemRemover});
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator4,
+            this.mnuImagemRemover});
 			this.mnuImagemAPagar.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
 			this.mnuImagemAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagemAPagar.Name = "mnuImagemAPagar";
@@ -669,7 +580,7 @@
 			// lblDespesaData
 			// 
 			this.lblDespesaData.BackColor = System.Drawing.Color.Transparent;
-			this.lblDespesaData.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDespesaData.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaData.ForeColor = System.Drawing.Color.AliceBlue;
 			this.lblDespesaData.Location = new System.Drawing.Point(148, 17);
 			this.lblDespesaData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -693,11 +604,34 @@
 			this.label7.Text = "Data";
 			this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.BackColor = System.Drawing.Color.Transparent;
+			this.label8.ForeColor = System.Drawing.Color.Black;
+			this.label8.Location = new System.Drawing.Point(488, 552);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(122, 19);
+			this.label8.TabIndex = 1;
+			this.label8.Text = "Valor da Despesa";
+			// 
+			// txtDespesaValor
+			// 
+			this.txtDespesaValor.BackColor = System.Drawing.Color.Transparent;
+			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtDespesaValor.ForeColor = System.Drawing.Color.Black;
+			this.txtDespesaValor.Location = new System.Drawing.Point(616, 546);
+			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtDespesaValor.Name = "txtDespesaValor";
+			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
+			this.txtDespesaValor.TabIndex = 2;
+			this.txtDespesaValor.Text = "R$ 0,00";
+			this.txtDespesaValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// frmDespesaCartao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(776, 644);
-			this.Controls.Add(this.lblSitBlock);
 			this.Controls.Add(this.txtDespesaValor);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.dgvListagem);
@@ -705,16 +639,12 @@
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.txtSetor);
 			this.Controls.Add(this.label5);
-			this.Controls.Add(this.lblDocumentoTipo);
 			this.Controls.Add(this.lblDespesaTipo);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.lblCredor);
 			this.Controls.Add(this.lblContribuinte);
 			this.Controls.Add(this.label6);
-			this.Controls.Add(this.txtDocumentoNumero);
-			this.Controls.Add(this.txtDespesaDescricao);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label2);
+			this.Controls.Add(this.lblDespesaDescricao);
 			this.Controls.Add(this.lblCongregacao);
 			this.Controls.Add(this.tspMenu);
 			this.KeyPreview = true;
@@ -722,19 +652,14 @@
 			this.Shown += new System.EventHandler(this.frmDespesaCartao_Shown);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
-			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
-			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.txtDespesaDescricao, 0);
-			this.Controls.SetChildIndex(this.txtDocumentoNumero, 0);
+			this.Controls.SetChildIndex(this.lblDespesaDescricao, 0);
 			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.lblContribuinte, 0);
 			this.Controls.SetChildIndex(this.lblCredor, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.lblDespesaTipo, 0);
-			this.Controls.SetChildIndex(this.lblDocumentoTipo, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
@@ -742,7 +667,7 @@
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
 			this.Controls.SetChildIndex(this.txtDespesaValor, 0);
-			this.Controls.SetChildIndex(this.lblSitBlock, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -765,13 +690,8 @@
 		private System.Windows.Forms.ToolStripButton btnCancelar;
 		private System.Windows.Forms.ToolStripButton btnFechar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		internal System.Windows.Forms.Label txtDespesaDescricao;
+		internal System.Windows.Forms.Label lblDespesaDescricao;
 		internal System.Windows.Forms.Label lblCongregacao;
-		private System.Windows.Forms.Label txtDespesaValor;
-		internal System.Windows.Forms.Label label8;
-		internal System.Windows.Forms.Label label2;
-		internal System.Windows.Forms.Label txtDocumentoNumero;
-		internal System.Windows.Forms.Label label3;
 		internal System.Windows.Forms.Label lblCredor;
 		internal System.Windows.Forms.Label lblContribuinte;
 		internal System.Windows.Forms.Label label4;
@@ -779,11 +699,9 @@
 		internal VIBlend.WinForms.Controls.vButton btnSetSetor;
 		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label5;
-		internal System.Windows.Forms.Label lblDocumentoTipo;
 		private AwesomeShapeControl.Line line2;
 		internal System.Windows.Forms.Label label6;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		private System.Windows.Forms.Label lblSitBlock;
 		private System.Windows.Forms.ToolStripDropDownButton mnuImagem;
 		private System.Windows.Forms.ToolStripMenuItem btnInserirImagem;
 		private System.Windows.Forms.ToolStripMenuItem btnVerImagem;
@@ -806,5 +724,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
 		internal System.Windows.Forms.Label lblDespesaData;
 		internal System.Windows.Forms.Label label7;
+		internal System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label txtDespesaValor;
 	}
 }

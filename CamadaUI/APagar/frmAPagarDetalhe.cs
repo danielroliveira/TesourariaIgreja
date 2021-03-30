@@ -1,16 +1,14 @@
-﻿using CamadaDTO;
+﻿using CamadaBLL;
+using CamadaDTO;
+using CamadaUI.Caixa;
+using CamadaUI.Imagem;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
-using CamadaBLL;
-using CamadaUI.Caixa;
-using CamadaUI.Imagem;
 
 namespace CamadaUI.APagar
 {

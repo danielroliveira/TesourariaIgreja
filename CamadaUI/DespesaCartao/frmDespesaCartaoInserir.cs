@@ -2,6 +2,7 @@
 using CamadaDTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,7 +16,8 @@ namespace CamadaUI.DespesaCartao
 		private objAPagarCartao _CartaoSelected;
 		private List<objAPagarCartao> ListCartao;
 		private Form _formOrigem;
-		private APagarCartaoBLL cBLL = new APagarCartaoBLL();
+		private DespesaCartaoBLL dBLL = new DespesaCartaoBLL();
+		private objDespesaCartao _LastDespesa;
 
 		#region SUB NEW | CONSTRUCTOR
 
@@ -24,6 +26,7 @@ namespace CamadaUI.DespesaCartao
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
+			CarregaComboMes();
 			ObterDadosCartao();
 
 			// HANDLER to use TAB for ENTER
@@ -34,7 +37,7 @@ namespace CamadaUI.DespesaCartao
 			numRefAno.Enter += Numeric_Enter;
 		}
 
-		private void ObterDados()
+		private void ObterDadosLastDespesa()
 		{
 			try
 			{
@@ -46,6 +49,19 @@ namespace CamadaUI.DespesaCartao
 				{
 					AbrirDialog("Favor selecionar o Cartao de Crédito...", "Cartão Selecionado");
 					txtCartaoDescricao.Focus();
+				}
+
+				_LastDespesa = dBLL.GetLastDespesaCartaoByCartao((int)_CartaoSelected.IDCartaoCredito);
+
+				if (_LastDespesa == null)
+				{
+					cmbRefMes.SelectedValue = DateTime.Today.Month;
+					numRefAno.Value = DateTime.Today.Year;
+				}
+				else
+				{
+					cmbRefMes.SelectedValue = _LastDespesa.ReferenciaData.AddMonths(1).Month;
+					numRefAno.Value = _LastDespesa.ReferenciaData.AddMonths(1).Year;
 				}
 
 				btnEfetuar.Enabled = true;
@@ -70,7 +86,7 @@ namespace CamadaUI.DespesaCartao
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				ListCartao = cBLL.GetCartaoCreditoDespesaList();
+				ListCartao = new APagarCartaoBLL().GetCartaoCreditoDespesaList();
 
 				if (ListCartao.Count == 0)
 				{
@@ -93,9 +109,122 @@ namespace CamadaUI.DespesaCartao
 			}
 		}
 
+		private void SetSelectedCartao(int IDCartao)
+		{
+			try
+			{
+				if (IDCartao == _CartaoSelected?.IDCartaoCredito) return;
+
+				//--- define values
+				_CartaoSelected = ListCartao.First(x => x.IDCartaoCredito == IDCartao);
+				txtCartaoDescricao.Text = _CartaoSelected.CartaoDescricao;
+				numRefDia.Value = _CartaoSelected.VencimentoDia;
+
+				//--- get last despesa
+				ObterDadosLastDespesa();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Selecionar o Cartão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
+
+		// CARREGA COMBO
+		//------------------------------------------------------------------------------------------------------------
+		private void CarregaComboMes()
+		{
+			//--- Create DataTable
+			DataTable dtMeses = new DataTable();
+			dtMeses.Columns.Add("ID", typeof(int));
+			dtMeses.Columns.Add("Mes");
+
+			// get values of EnumAgendaRecorrencia
+			string[] EnumValues = new System.Globalization.CultureInfo("pt-BR").DateTimeFormat.MonthNames;
+			int i = 1;
+
+			// insert all item of EnumAgendaRecorrencia in datatable
+			foreach (var mes in EnumValues)
+			{
+				if (string.IsNullOrEmpty(mes)) continue;
+				dtMeses.Rows.Add(new object[] { i, mes });
+				i++;
+			}
+
+			//--- Set DataTable
+			cmbRefMes.DataSource = dtMeses;
+			cmbRefMes.ValueMember = "ID";
+			cmbRefMes.DisplayMember = "Mes";
+		}
+
 		#endregion // SUB NEW | CONSTRUCTOR --- END
 
-		#region BUTTON FUNCTIONS
+		#region BUTTONS FUNCTION
+
+		private void btnCancelar_Click(object sender, EventArgs e)
+		{
+			Close();
+			MostraMenuPrincipal();
+		}
+
+		private void btnEfetuar_Click(object sender, EventArgs e)
+		{
+			//--- CHECK LAST DESPESA
+			if (_LastDespesa.IDSituacao != 2)
+			{
+				var resp = AbrirDialog("A última Despesa Reunida desse Cartão de Crédito ainda não foi Quitada...\n" +
+					"Há necessidade de Quitar a ultima despesa antes de Criar uma nova Despesa.\n" +
+					"Deseja abrir a última despesa de Cartão?",
+					"Despesa não Quitada",
+					DialogType.SIM_NAO,
+					DialogIcon.Exclamation);
+
+				if (resp != DialogResult.Yes) return;
+
+				var frm = new frmDespesaCartao(_LastDespesa);
+				frm.MdiParent = Application.OpenForms[0];
+				Close();
+				frm.Show();
+				return;
+			}
+
+			//--- GET REF DATE
+			if (!DateTime.TryParse($"{numRefDia.Value}/{cmbRefMes.SelectedValue}/{numRefAno.Value}", out DateTime _RefDate))
+			{
+				AbrirDialog("Data escolhida é inválida...\n" +
+					"Favor selecionar uma data válida", "Data de Referência",
+					DialogType.OK, DialogIcon.Exclamation);
+				numRefDia.Focus();
+			}
+
+			//--- INSERT NEW DESPESA CARTAO
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var dBLL = new DespesaCartaoBLL();
+				var newDespCartao = dBLL.InsertDespesaCartao(_CartaoSelected, _RefDate);
+
+				//--- open form
+				var frm = new frmDespesaCartao(newDespCartao);
+				frm.Show();
+
+				Close();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Inserir o novo Caixa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
 
 		// OPEN PROCURA FORM
 		//------------------------------------------------------------------------------------------------------------
@@ -123,8 +252,7 @@ namespace CamadaUI.DespesaCartao
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					_CartaoSelected = ListCartao.First(x => x.IDCartaoCredito == (int)frm.propEscolha.Key);
-					textBox.Text = frm.propEscolha.Value;
+					SetSelectedCartao(frm.propEscolha.Key);
 				}
 
 				//--- select
@@ -142,58 +270,6 @@ namespace CamadaUI.DespesaCartao
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-		}
-
-		#endregion // BUTTON FUNCTIONS --- END
-
-		#region BUTTONS FUNCTION
-
-		private void btnCancelar_Click(object sender, EventArgs e)
-		{
-			Close();
-			MostraMenuPrincipal();
-		}
-
-		private void btnEfetuar_Click(object sender, EventArgs e)
-		{
-			//--- GET REF DATE
-			if (!DateTime.TryParse($"{numRefDia.Value}/{cmbRefMes.SelectedValue}/{numRefAno.Value}", out DateTime _RefDate))
-			{
-				AbrirDialog("Data escolhida é inválida...\n" +
-					"Favor selecionar uma data válida", "Data de Referência",
-					DialogType.OK, DialogIcon.Exclamation);
-				numRefDia.Focus();
-			}
-
-			//--- INSERT NEW DESPESA CARTAO
-			try
-			{
-				/*
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				var dBLL = new DespesaCartaoBLL();
-				var newDespCartao = dBLL.InsertDespesaCartao(_CartaoSelected, _RefDate);
-
-				//--- open form
-				var frm = new frmDespesaCartao(newDespCartao);
-				frm.Show();
-				*/
-
-				Close();
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Inserir o novo Caixa..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
 		}
 
 		#endregion // BUTTONS FUNCTION --- END
@@ -300,12 +376,7 @@ namespace CamadaUI.DespesaCartao
 							var cartao = ListCartao.FirstOrDefault(x => x.IDCartaoCredito == int.Parse(e.KeyChar.ToString()));
 
 							if (cartao == null) return;
-
-							if (cartao.IDCartaoCredito != _CartaoSelected?.IDCartaoCredito)
-							{
-								_CartaoSelected = ListCartao.First(x => x.IDCartaoCredito == (int)cartao.IDCartaoCredito);
-								txtCartaoDescricao.Text = cartao.CartaoDescricao;
-							}
+							SetSelectedCartao((int)cartao.IDCartaoCredito);
 						}
 
 						break;

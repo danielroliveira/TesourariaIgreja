@@ -17,7 +17,6 @@ namespace CamadaBLL
 				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM qryDespesaCartao WHERE IDDespesa = @IDDespesa";
-				bool myWhere = false;
 
 				// add params
 				db.LimparParametros();
@@ -127,7 +126,7 @@ namespace CamadaBLL
 			return despesa;
 		}
 
-		// INSERT DESPESA DESTINO CARTAO
+		// INSERT DESPESA AND DESPESA CARTAO
 		//------------------------------------------------------------------------------------------------------------
 		public objDespesaCartao InsertDespesaCartao(objAPagarCartao cartao, DateTime ReferenciaData, object dbTran = null)
 		{
@@ -138,38 +137,42 @@ namespace CamadaBLL
 				db = new AcessoDados();
 				if (dbTran == null) db.BeginTransaction();
 
+				var descricao = $"Despesa Destino Cartão: {cartao.CartaoDescricao}";
+				if (descricao.Length > 200) descricao = descricao.Substring(0, 199);
 
-				var despesa = new objDespesa(null)
+				var despesa = new objDespesaCartao(null)
 				{
 					IDCredor = cartao.IDCredorCartao,
 					Credor = cartao.CredorCartao,
-					DespesaDescricao = ("Despesa Destino Cartão: " + cartao.CartaoDescricao).Substring(0, 199),
-					DespesaOrigem = 3,
+					DespesaDescricao = descricao,
+					DespesaOrigem = 3, // CARTAO
 					DespesaValor = 0,
 					DespesaData = ReferenciaData,
 					IDSetor = cartao.IDSetorCartao,
 					Setor = cartao.SetorCartao,
 					IDDespesaTipo = 0,
 					IDTitular = null,
+					DespesaTipo = "Outras",
+					CartaoDescricao = cartao.CartaoDescricao,
+					IDCartaoCredito = (int)cartao.IDCartaoCredito,
+					VencimentoDia = cartao.VencimentoDia,
+					IDSituacao = 1,
+					Situacao = "Em Aberto",
+					Imagem = null,
+					ReferenciaData = ReferenciaData,
+
 				};
 
 				//--- insert DESPESA and Get new ID
 				long newID = new DespesaBLL().InsertDespesa(despesa, db);
 
-				//--- insert DESPESA CARTAO
-				var despCartao = new objDespesaCartao(newID)
-				{
-					IDCartaoCredito = (int)cartao.IDCartaoCredito,
-					CartaoDescricao = cartao.CartaoDescricao,
-					ReferenciaData = ReferenciaData,
-					IDSituacao = 1,
-					Situacao = "Em Aberto",
-				};
+				despesa.IDDespesa = newID;
 
-				InsertDespesaCartao(despCartao, db);
+				//--- insert DESPESA CARTAO
+				InsertDespesaCartao(despesa, db);
 
 				if (dbTran == null) db.CommitTransaction();
-				return despCartao;
+				return despesa;
 
 			}
 			catch (Exception ex)
@@ -189,10 +192,10 @@ namespace CamadaBLL
 				dbTran.LimparParametros();
 
 				//--- define Params
-				dbTran.AdicionarParametros("@DespesaOrigem", desp.IDDespesa);
+				dbTran.AdicionarParametros("@IDDespesa", desp.IDDespesa);
 				dbTran.AdicionarParametros("@IDCartaoCredito", desp.IDCartaoCredito);
-				dbTran.AdicionarParametros("@DespesaValor", desp.ReferenciaData);
-				dbTran.AdicionarParametros("@DespesaData", desp.IDSituacao);
+				dbTran.AdicionarParametros("@ReferenciaData", desp.ReferenciaData);
+				dbTran.AdicionarParametros("@IDSituacao", desp.IDSituacao);
 
 				//--- convert null parameters
 				dbTran.ConvertNullParams();
@@ -202,6 +205,74 @@ namespace CamadaBLL
 				//--- insert
 				dbTran.ExecutarManipulacao(CommandType.Text, query);
 
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET LAST DESPESA CARTAO BY IDCARTAO
+		//------------------------------------------------------------------------------------------------------------
+		public objDespesaCartao GetLastDespesaCartaoByCartao(int IDCartaoCredito)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT TOP 1 * FROM qryDespesaCartao " +
+					"WHERE IDCartaoCredito = @IDCartaoCredito " +
+					"ORDER BY DespesaData DESC";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCartaoCredito", IDCartaoCredito);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return null;
+				}
+
+				return ConvertRowInClass(dt.Rows[0]);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET LIST APAGAR OF CARTAO CREDITO
+		//------------------------------------------------------------------------------------------------------------
+		public List<objAPagar> ListAPagarCartaoEmAberto(int IDCartaoCredito)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryAPagar WHERE IDCartaoCredito = @IDCartaoCredito AND IDSituacao = 1";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDCartaoCredito", IDCartaoCredito);
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return null;
+				}
+
+				var pBLL = new APagarBLL();
+				var list = new List<objAPagar>();
+
+				foreach (DataRow row in dt.Rows)
+				{
+					list.Add(pBLL.ConvertRowInClass(row));
+				}
+
+				return list;
 			}
 			catch (Exception ex)
 			{

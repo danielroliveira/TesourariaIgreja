@@ -74,9 +74,9 @@
 			this.line2 = new AwesomeShapeControl.Line();
 			this.label6 = new System.Windows.Forms.Label();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label7 = new System.Windows.Forms.Label();
@@ -167,20 +167,20 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnNovo,
-			this.toolStripSeparator1,
-			this.btnSalvar,
-			this.btnCancelar,
-			this.btnFechar,
-			this.toolStripSeparator2,
-			this.mnuImagem});
+            this.btnNovo,
+            this.toolStripSeparator1,
+            this.btnSalvar,
+            this.btnCancelar,
+            this.btnFechar,
+            this.toolStripSeparator2,
+            this.mnuImagem});
 			this.tspMenu.Location = new System.Drawing.Point(2, 600);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(772, 44);
@@ -252,10 +252,10 @@
 			// mnuImagem
 			// 
 			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnInserirImagem,
-			this.btnVerImagem,
-			this.toolStripSeparator3,
-			this.btnRemoverImagem});
+            this.btnInserirImagem,
+            this.btnVerImagem,
+            this.toolStripSeparator3,
+            this.btnRemoverImagem});
 			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
 			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagem.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -551,23 +551,23 @@
 			this.numParcelas.Location = new System.Drawing.Point(31, 71);
 			this.numParcelas.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.numParcelas.Maximum = new decimal(new int[] {
-			255,
-			0,
-			0,
-			0});
+            255,
+            0,
+            0,
+            0});
 			this.numParcelas.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numParcelas.Name = "numParcelas";
 			this.numParcelas.Size = new System.Drawing.Size(65, 31);
 			this.numParcelas.TabIndex = 2;
 			this.numParcelas.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numParcelas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numParcelas_KeyDown);
 			// 
 			// lblParcelas
@@ -681,11 +681,11 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnForma,
-			this.clnSituacao,
-			this.clnIdentificador,
-			this.clnVencimento,
-			this.clnValor});
+            this.clnIdentificador,
+            this.clnForma,
+            this.clnSituacao,
+            this.clnVencimento,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(153, 419);
@@ -703,6 +703,13 @@
 			this.dgvListagem.TabIndex = 27;
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
+			// clnIdentificador
+			// 
+			this.clnIdentificador.HeaderText = "No. Reg.:";
+			this.clnIdentificador.Name = "clnIdentificador";
+			this.clnIdentificador.ReadOnly = true;
+			this.clnIdentificador.Width = 115;
+			// 
 			// clnForma
 			// 
 			this.clnForma.HeaderText = "Forma";
@@ -716,13 +723,6 @@
 			this.clnSituacao.Name = "clnSituacao";
 			this.clnSituacao.ReadOnly = true;
 			this.clnSituacao.Width = 90;
-			// 
-			// clnIdentificador
-			// 
-			this.clnIdentificador.HeaderText = "No. Reg.:";
-			this.clnIdentificador.Name = "clnIdentificador";
-			this.clnIdentificador.ReadOnly = true;
-			this.clnIdentificador.Width = 115;
 			// 
 			// clnVencimento
 			// 
@@ -911,11 +911,11 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuAdicionarAPagar,
-			this.mnuEditarAPagar,
-			this.mnuExcluirAPagar,
-			this.toolStripSeparator5,
-			this.mnuImagemAPagar});
+            this.mnuAdicionarAPagar,
+            this.mnuEditarAPagar,
+            this.mnuExcluirAPagar,
+            this.toolStripSeparator5,
+            this.mnuImagemAPagar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(214, 154);
 			// 
@@ -954,10 +954,10 @@
 			// mnuImagemAPagar
 			// 
 			this.mnuImagemAPagar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuImagemInserir,
-			this.mnuImagemVisualizar,
-			this.toolStripSeparator4,
-			this.mnuImagemRemover});
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator4,
+            this.mnuImagemRemover});
 			this.mnuImagemAPagar.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
 			this.mnuImagemAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagemAPagar.Name = "mnuImagemAPagar";
@@ -1131,11 +1131,6 @@
 		private System.Windows.Forms.CheckBox chkReferencia;
 		private System.Windows.Forms.Panel pnlReferencia;
 		internal System.Windows.Forms.Label lblReferencia;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
 		private System.Windows.Forms.ToolStripMenuItem mnuAdicionarAPagar;
 		private System.Windows.Forms.ToolStripMenuItem mnuEditarAPagar;
@@ -1146,5 +1141,10 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 	}
 }

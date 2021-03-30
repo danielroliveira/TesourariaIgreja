@@ -100,6 +100,7 @@ namespace CamadaUI.Saidas
 			_despesa.PropertyChanged += RegistroAlterado;
 			HandlerKeyDownControl(this);
 			btnParcelasGerar.Click += (a, b) => ParcelasGerar();
+			dgvListagem.CellDoubleClick += mnuEditarAPagar_Click;
 		}
 
 		// SHOW
@@ -1054,18 +1055,6 @@ namespace CamadaUI.Saidas
 			return pagList;
 		}
 
-		// EDITAR A PARCELA
-		//------------------------------------------------------------------------------------------------------------
-		private void ParcelaEditar()
-		{
-			if (dgvListagem.SelectedRows.Count == 0) return;
-
-			objAPagar pag = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			var frm = new APagar.frmAPagarDetalhe(pag, this);
-			frm.ShowDialog();
-		}
-
 		#endregion // PARCELAS --- END
 
 		#region MENU A PAGAR
@@ -1290,6 +1279,19 @@ namespace CamadaUI.Saidas
 				//--- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				//--- CHECK IDENTIFICADOR
+				if (string.IsNullOrEmpty(_despesa.DocumentoNumero))
+				{
+					AbrirDialog("O Número do Documento da Despesa precisa estar preenchido...\n" +
+						"Favor inserir o valor deste item corretamente.",
+						"Número do Documento",
+						DialogType.OK,
+						DialogIcon.Exclamation);
+					EP.SetError(txtDocumentoNumero, "Valor necessário...");
+					txtDocumentoNumero.Focus();
+					return;
+				}
+
 				//--- CHECK DESPESA VALUE
 				if (_despesa.DespesaValor <= 0)
 				{
@@ -1328,6 +1330,8 @@ namespace CamadaUI.Saidas
 				//--- define new apagar
 				var newParcela = new objAPagar(null)
 				{
+					Identificador = $"{_despesa.DocumentoNumero} | {(listAPagar.Count + 1).ToString("D2")}",
+					Parcela = (byte)(listAPagar.Count + 1),
 					APagarValor = vlMaximo,
 					Vencimento = LastPag != null ? LastPag.Vencimento.AddMonths(1) : newDate,
 					IDBanco = LastPag != null ? LastPag.IDBanco : null,
@@ -1375,10 +1379,7 @@ namespace CamadaUI.Saidas
 
 			if (item.IDAPagar != null)
 			{
-				AbrirDialog("Não é possível editar uma parcela de APagar que já está salva.",
-					"Registro Bloqueado",
-					DialogType.OK,
-					DialogIcon.Exclamation);
+				VerDetalheAPagar(item);
 				return;
 			}
 
@@ -1427,6 +1428,31 @@ namespace CamadaUI.Saidas
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Editar a Parcela..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// DETALHE APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void VerDetalheAPagar(objAPagar pag)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				var frm = new APagar.frmAPagarDetalhe(pag, this);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir Formulário de Detalhamento..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -1505,6 +1531,16 @@ namespace CamadaUI.Saidas
 			// DEFINE COLUMN FONT
 			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
+			//--- (0) COLUNA ID
+			clnIdentificador.DataPropertyName = "Identificador";
+			clnIdentificador.Visible = true;
+			clnIdentificador.ReadOnly = true;
+			clnIdentificador.Resizable = DataGridViewTriState.False;
+			clnIdentificador.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnIdentificador.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnIdentificador.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnIdentificador.DefaultCellStyle.Font = clnFont;
+
 			//--- (1) COLUNA FORMA
 			clnForma.DataPropertyName = "APagarForma";
 			clnForma.Visible = true;
@@ -1525,17 +1561,7 @@ namespace CamadaUI.Saidas
 			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnSituacao.DefaultCellStyle.Font = clnFont;
 
-			//--- (3) COLUNA ID
-			clnIdentificador.DataPropertyName = "Identificador";
-			clnIdentificador.Visible = true;
-			clnIdentificador.ReadOnly = true;
-			clnIdentificador.Resizable = DataGridViewTriState.False;
-			clnIdentificador.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnIdentificador.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnIdentificador.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnIdentificador.DefaultCellStyle.Font = clnFont;
-
-			//--- (4) COLUNA VENCIMENTO
+			//--- (3) COLUNA VENCIMENTO
 			clnVencimento.DataPropertyName = "Vencimento";
 			clnVencimento.Visible = true;
 			clnVencimento.ReadOnly = true;
@@ -1545,7 +1571,7 @@ namespace CamadaUI.Saidas
 			clnVencimento.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnVencimento.DefaultCellStyle.Font = clnFont;
 
-			//--- (5) COLUNA VALOR
+			//--- (4) COLUNA VALOR
 			clnValor.DataPropertyName = "APagarValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -1557,9 +1583,7 @@ namespace CamadaUI.Saidas
 			clnValor.DefaultCellStyle.Font = clnFont;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnForma, clnSituacao, clnIdentificador, clnVencimento, clnValor);
-
-			dgvListagem.CellDoubleClick += (a, b) => ParcelaEditar();
+			dgvListagem.Columns.AddRange(clnIdentificador, clnForma, clnSituacao, clnVencimento, clnValor);
 		}
 
 		#endregion

@@ -84,6 +84,7 @@ namespace CamadaUI.Saidas
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
+			txtIdentificador.DataBindings.Add("Text", bind, "Identificador", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtBanco.DataBindings.Add("Text", bind, "Banco", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpVencimento.DataBindings.Add("Value", bind, "Vencimento", true, DataSourceUpdateMode.OnPropertyChanged);

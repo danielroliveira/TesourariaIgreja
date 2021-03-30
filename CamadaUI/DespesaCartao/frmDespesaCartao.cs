@@ -18,7 +18,7 @@ namespace CamadaUI.DespesaCartao
 		private objDespesaCartao _despesa;
 		private DespesaCartaoBLL despBLL = new DespesaCartaoBLL();
 		private BindingSource bind = new BindingSource();
-		private BindingSource bindParcelas = new BindingSource();
+		private BindingSource bindPag = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private List<objAPagar> listAPagar = new List<objAPagar>();
 
@@ -35,6 +35,7 @@ namespace CamadaUI.DespesaCartao
 		public frmDespesaCartao(objDespesaCartao despesa, Form formOrigem = null)
 		{
 			InitializeComponent();
+
 			_formOrigem = formOrigem;
 			ConstructorContinue(despesa);
 		}
@@ -62,7 +63,7 @@ namespace CamadaUI.DespesaCartao
 			setorSelected = principal.propSetorPadrao;
 
 			// binding
-			bind.DataSource = typeof(objDespesa);
+			bind.DataSource = typeof(objDespesaCartao);
 			bind.Add(_despesa);
 			BindingCreator();
 
@@ -78,11 +79,6 @@ namespace CamadaUI.DespesaCartao
 				Sit = EnumFlagEstado.RegistroSalvo;
 				GetAPagar();
 			}
-
-			// format Datagridview
-			FormataListagem();
-			bindParcelas.DataSource = listAPagar;
-			dgvListagem.DataSource = bindParcelas;
 
 			// handlers
 			_despesa.PropertyChanged += RegistroAlterado;
@@ -100,12 +96,6 @@ namespace CamadaUI.DespesaCartao
 			}
 
 			txtSetor.Enter += text_Enter;
-			lblDespesaTipo.Enter += text_Enter;
-			lblDocumentoTipo.Enter += text_Enter;
-
-			// block keyDown then Sit = Alterado
-			txtDocumentoNumero.KeyDown += control_KeyDown_Block;
-			txtDespesaValor.KeyDown += control_KeyDown_Block;
 
 			// if frmListagem is ENABLED
 			if (Modal)
@@ -129,14 +119,12 @@ namespace CamadaUI.DespesaCartao
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
-					lblSitBlock.Visible = false;
 				}
 				else
 				{
 					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
-					lblSitBlock.Visible = true;
 				}
 
 				// btnSET ENABLE | DISABLE
@@ -176,7 +164,12 @@ namespace CamadaUI.DespesaCartao
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listAPagar = new APagarBLL().GetListAPagarByDespesa((long)_despesa.IDDespesa);
+				listAPagar = despBLL.ListAPagarCartaoEmAberto(_despesa.IDCartaoCredito);
+
+				// format Datagridview
+				bindPag.DataSource = listAPagar;
+				dgvListagem.DataSource = bindPag;
+				FormataListagem();
 
 			}
 			catch (Exception ex)
@@ -202,22 +195,15 @@ namespace CamadaUI.DespesaCartao
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDDespesa", true);
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
-			//txtCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblDocumentoTipo.DataBindings.Add("Text", bind, "DocumentoTipo", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDocumentoNumero.DataBindings.Add("Text", bind, "DocumentoNumero", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
 			lblDespesaData.DataBindings.Add("Text", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
-			//txtTitular.DataBindings.Add("Text", bind, "Titular", true, DataSourceUpdateMode.OnPropertyChanged);
-
-			//dtpDataInicial.DataBindings.Add("Value", bind, "DataInicial", true, DataSourceUpdateMode.OnPropertyChanged);
-			//dtpDataFinal.DataBindings.Add("Value", bind, "DataFinal", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
 			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
-			//txtTitular.DataBindings["Text"].Format += FormatNomeCNP;
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -230,11 +216,6 @@ namespace CamadaUI.DespesaCartao
 			{
 				e.Value = $"{e.Value: 0000}";
 			}
-		}
-
-		private void FormatNomeCNP(object sender, ConvertEventArgs e)
-		{
-			e.Value = string.IsNullOrEmpty(_despesa.CNP) ? e.Value : $"{e.Value} ({_despesa.CNP})";
 		}
 
 		private void FormatCurrency(object sender, ConvertEventArgs e)
@@ -254,6 +235,84 @@ namespace CamadaUI.DespesaCartao
 
 		#endregion // DATABINDING --- END
 
+		#region DATAGRID LIST FUNCTIONS
+
+		// FORMATA LISTAGEM
+		//------------------------------------------------------------------------------------------------------------
+		private void FormataListagem()
+		{
+			dgvListagem.Columns.Clear();
+			dgvListagem.AutoGenerateColumns = false;
+			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dgvListagem.MultiSelect = false;
+			dgvListagem.ColumnHeadersVisible = true;
+			dgvListagem.AllowUserToResizeRows = false;
+			dgvListagem.AllowUserToResizeColumns = false;
+			dgvListagem.RowHeadersWidth = 36;
+			dgvListagem.RowTemplate.Height = 30;
+			dgvListagem.StandardTab = true;
+			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+
+			// DEFINE COLUMN FONT
+			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			//--- (1) COLUNA FORMA
+			clnForma.DataPropertyName = "APagarForma";
+			clnForma.Visible = true;
+			clnForma.ReadOnly = true;
+			clnForma.Resizable = DataGridViewTriState.False;
+			clnForma.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnForma.DefaultCellStyle.Font = clnFont;
+
+			//--- (2) COLUNA SITUACAO
+			clnSituacao.DataPropertyName = "Situacao";
+			clnSituacao.Visible = true;
+			clnSituacao.ReadOnly = true;
+			clnSituacao.Resizable = DataGridViewTriState.False;
+			clnSituacao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnSituacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnSituacao.DefaultCellStyle.Font = clnFont;
+
+			//--- (3) COLUNA ID
+			clnIdentificador.DataPropertyName = "Identificador";
+			clnIdentificador.Visible = true;
+			clnIdentificador.ReadOnly = true;
+			clnIdentificador.Resizable = DataGridViewTriState.False;
+			clnIdentificador.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnIdentificador.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnIdentificador.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnIdentificador.DefaultCellStyle.Font = clnFont;
+
+			//--- (4) COLUNA VENCIMENTO
+			clnVencimento.DataPropertyName = "Vencimento";
+			clnVencimento.Visible = true;
+			clnVencimento.ReadOnly = true;
+			clnVencimento.Resizable = DataGridViewTriState.False;
+			clnVencimento.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnVencimento.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnVencimento.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			clnVencimento.DefaultCellStyle.Font = clnFont;
+
+			//--- (5) COLUNA VALOR
+			clnValor.DataPropertyName = "APagarValor";
+			clnValor.Visible = true;
+			clnValor.ReadOnly = true;
+			clnValor.Resizable = DataGridViewTriState.False;
+			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+			clnValor.DefaultCellStyle.Format = "#,##0.00";
+			clnValor.DefaultCellStyle.Font = clnFont;
+
+			//--- Add Columns
+			dgvListagem.Columns.AddRange(clnForma, clnSituacao, clnIdentificador, clnVencimento, clnValor);
+		}
+
+		#endregion
+
 		#region BUTTONS
 
 		private void btnNovo_Click(object sender, EventArgs e)
@@ -271,7 +330,7 @@ namespace CamadaUI.DespesaCartao
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _despesa;
 			listAPagar = new List<objAPagar>();
-			bindParcelas.DataSource = listAPagar;
+			bindPag.DataSource = listAPagar;
 			txtSetor.Focus();
 		}
 
@@ -376,10 +435,7 @@ namespace CamadaUI.DespesaCartao
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					lblDespesaTipo,
-					lblDocumentoTipo,
 					txtSetor,
-					txtDespesaDescricao,
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -426,35 +482,6 @@ namespace CamadaUI.DespesaCartao
 						break;
 				}
 			}
-			else if (e.KeyCode == Keys.Delete)
-			{
-				switch (ctr.Name)
-				{
-					case "txtDespesaDescricao":
-						e.Handled = false;
-						break;
-					default:
-						e.Handled = true;
-						break;
-				}
-			}
-			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
-			{
-				//--- cria um array de controles que serao liberados ao KEYPRESS
-				Control[] controlesBloqueados = {
-					lblDocumentoTipo, txtDespesaDescricao,
-				};
-
-				if (controlesBloqueados.Contains(ctr))
-				{
-					e.Handled = false;
-				}
-				else
-				{
-					e.Handled = true;
-					e.SuppressKeyPress = true;
-				}
-			}
 			else if (e.Alt) // permite O 'ALT'
 			{
 				e.Handled = false;
@@ -464,8 +491,6 @@ namespace CamadaUI.DespesaCartao
 				//--- cria um array de controles que serão bloqueados de alteracao
 				Control[] controlesBloqueados = {
 					txtSetor,
-					lblDespesaTipo,
-					lblDocumentoTipo,
 				 };
 
 				if (controlesBloqueados.Contains(ctr))
@@ -482,20 +507,6 @@ namespace CamadaUI.DespesaCartao
 		{
 			ShowToolTip(sender as Control);
 			((TextBox)sender).Enter -= text_Enter;
-		}
-
-		// PREVINE CHANGES IN SIT => REGISTRO SALVO
-		private void control_KeyDown_Block(object sender, KeyEventArgs e)
-		{
-			// previne to accepts changes if SIT = RegistroSalvo
-			//---------------------------------------------------
-			if (Sit == EnumFlagEstado.RegistroSalvo)
-			{
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-				return;
-			}
-			//---------------------------------------------------
 		}
 
 		#endregion // CONTROL FUNCTIONS --- END
@@ -801,8 +812,8 @@ namespace CamadaUI.DespesaCartao
 
 				if (frm.DialogResult != DialogResult.OK) return;
 
-				bindParcelas.Add(newParcela);
-				bindParcelas.ResetBindings(false);
+				bindPag.Add(newParcela);
+				bindPag.ResetBindings(false);
 			}
 			catch (Exception ex)
 			{
@@ -878,7 +889,7 @@ namespace CamadaUI.DespesaCartao
 
 				if (frm.DialogResult != DialogResult.OK) return;
 
-				bindParcelas.ResetBindings(false);
+				bindPag.ResetBindings(false);
 
 			}
 			catch (Exception ex)
@@ -922,8 +933,8 @@ namespace CamadaUI.DespesaCartao
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				bindParcelas.Remove(item);
-				bindParcelas.ResetBindings(false);
+				bindPag.Remove(item);
+				bindPag.ResetBindings(false);
 
 			}
 			catch (Exception ex)
@@ -939,84 +950,6 @@ namespace CamadaUI.DespesaCartao
 		}
 
 		#endregion // MENU A PAGAR --- END
-
-		#region DATAGRID LIST FUNCTIONS
-
-		// FORMATA LISTAGEM
-		//------------------------------------------------------------------------------------------------------------
-		private void FormataListagem()
-		{
-			dgvListagem.Columns.Clear();
-			dgvListagem.AutoGenerateColumns = false;
-			dgvListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dgvListagem.MultiSelect = false;
-			dgvListagem.ColumnHeadersVisible = true;
-			dgvListagem.AllowUserToResizeRows = false;
-			dgvListagem.AllowUserToResizeColumns = false;
-			dgvListagem.RowHeadersWidth = 36;
-			dgvListagem.RowTemplate.Height = 30;
-			dgvListagem.StandardTab = true;
-			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
-
-			// DEFINE COLUMN FONT
-			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-
-			//--- (1) COLUNA FORMA
-			clnForma.DataPropertyName = "APagarForma";
-			clnForma.Visible = true;
-			clnForma.ReadOnly = true;
-			clnForma.Resizable = DataGridViewTriState.False;
-			clnForma.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnForma.DefaultCellStyle.Font = clnFont;
-
-			//--- (2) COLUNA SITUACAO
-			clnSituacao.DataPropertyName = "Situacao";
-			clnSituacao.Visible = true;
-			clnSituacao.ReadOnly = true;
-			clnSituacao.Resizable = DataGridViewTriState.False;
-			clnSituacao.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSituacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnSituacao.DefaultCellStyle.Font = clnFont;
-
-			//--- (3) COLUNA ID
-			clnIdentificador.DataPropertyName = "Identificador";
-			clnIdentificador.Visible = true;
-			clnIdentificador.ReadOnly = true;
-			clnIdentificador.Resizable = DataGridViewTriState.False;
-			clnIdentificador.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnIdentificador.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnIdentificador.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnIdentificador.DefaultCellStyle.Font = clnFont;
-
-			//--- (4) COLUNA VENCIMENTO
-			clnVencimento.DataPropertyName = "Vencimento";
-			clnVencimento.Visible = true;
-			clnVencimento.ReadOnly = true;
-			clnVencimento.Resizable = DataGridViewTriState.False;
-			clnVencimento.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnVencimento.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnVencimento.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnVencimento.DefaultCellStyle.Font = clnFont;
-
-			//--- (5) COLUNA VALOR
-			clnValor.DataPropertyName = "APagarValor";
-			clnValor.Visible = true;
-			clnValor.ReadOnly = true;
-			clnValor.Resizable = DataGridViewTriState.False;
-			clnValor.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValor.DefaultCellStyle.Format = "#,##0.00";
-			clnValor.DefaultCellStyle.Font = clnFont;
-
-			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnForma, clnSituacao, clnIdentificador, clnVencimento, clnValor);
-		}
-
-		#endregion
 
 		#region SALVAR REGISTRO
 
@@ -1058,9 +991,7 @@ namespace CamadaUI.DespesaCartao
 			// CHECK FIELDS
 			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", _despesa, EP)) return false;
 			if (!VerificaDadosClasse(lblDespesaTipo, "Tipo de Despesa", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(lblDocumentoTipo, "Tipo de Documento", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDocumentoNumero, "Número do Documento", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(txtDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
+			if (!VerificaDadosClasse(lblDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
 
 			// CHECK DESPESA VALUE
 			if (_despesa.DespesaValor <= 0)

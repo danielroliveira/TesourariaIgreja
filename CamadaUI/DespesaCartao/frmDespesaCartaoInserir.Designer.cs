@@ -200,7 +200,7 @@
 			this.numRefAno.TabIndex = 8;
 			this.numRefAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numRefAno.Value = new decimal(new int[] {
-            2000,
+            2020,
             0,
             0,
             0});

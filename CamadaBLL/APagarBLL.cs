@@ -418,7 +418,7 @@ namespace CamadaBLL
 
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
-		private objAPagar ConvertRowInClass(DataRow row)
+		public objAPagar ConvertRowInClass(DataRow row)
 		{
 			objAPagar pagar = new objAPagar((long)row["IDAPagar"])
 			{
