@@ -30,6 +30,8 @@ namespace CamadaDTO
 
 		public objDespesaCartao(long? IDDespesaCartao) : base(IDDespesaCartao)
 		{
+			DespesaOrigem = 3;
+
 			EditDataCartao = new StructCartao()
 			{
 				_IDSituacao = 1,

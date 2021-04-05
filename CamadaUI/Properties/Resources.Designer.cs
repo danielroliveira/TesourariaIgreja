@@ -103,6 +103,26 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddSimple_24 {
+            get {
+                object obj = ResourceManager.GetObject("AddSimple_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddSimple_32 {
+            get {
+                object obj = ResourceManager.GetObject("AddSimple_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap adicionar_30 {
             get {
                 object obj = ResourceManager.GetObject("adicionar_30", resourceCulture);
@@ -486,6 +506,26 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap mensagens_nocolor_32 {
             get {
                 object obj = ResourceManager.GetObject("mensagens_nocolor_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MinusSimples_24 {
+            get {
+                object obj = ResourceManager.GetObject("MinusSimples_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MinusSimples_32 {
+            get {
+                object obj = ResourceManager.GetObject("MinusSimples_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

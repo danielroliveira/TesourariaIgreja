@@ -124,6 +124,9 @@
   <data name="add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="AddSimple_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddSimple_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="credor_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\credor_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -144,6 +147,9 @@
   </data>
   <data name="icon_information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MinusSimples_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MinusSimples_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="search_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\search_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -232,6 +238,9 @@
   <data name="Caixa_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Caixa_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="credit_card_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\credit_card_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="sair_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sair_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -249,6 +258,9 @@
   </data>
   <data name="SwitchOFF_30" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SwitchOFF_30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AddSimple_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddSimple_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lixeira_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lixeira_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -328,7 +340,7 @@
   <data name="email_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\email_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="credit_card_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\credit_card_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MinusSimples_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MinusSimples_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

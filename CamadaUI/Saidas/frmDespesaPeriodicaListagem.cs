@@ -38,7 +38,6 @@ namespace CamadaUI.Saidas
 
 			// obter dados e preenche a listagem
 			ObterDados();
-			FormataListagem();
 
 			//--- get dados
 			dgvListagem.CellDoubleClick += btnVisualizar_Click;
@@ -71,6 +70,7 @@ namespace CamadaUI.Saidas
 					IDCredor);
 
 				dgvListagem.DataSource = listPer;
+				FormataListagem();
 				CalculaTotais();
 
 				//--- define alterado
@@ -318,7 +318,12 @@ namespace CamadaUI.Saidas
 
 				dBLL.DeleteDespesaPeriodica(item);
 
+				//--- message
+				AbrirDialog("Despesa Periódica excluída com sucesso!", "Despesa Excluída",
+					DialogType.OK, DialogIcon.Information);
+
 				//--- obter listagem
+				_Alterado = true;
 				ObterDados();
 
 			}

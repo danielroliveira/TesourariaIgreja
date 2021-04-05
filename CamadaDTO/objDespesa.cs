@@ -266,6 +266,8 @@ namespace CamadaDTO
 
 		public objDespesaComum(long? IDDespesa) : base(IDDespesa)
 		{
+			DespesaOrigem = 1;
+
 			EditDataComum = new StructDespesaComum()
 			{
 				_IDSituacao = 1,

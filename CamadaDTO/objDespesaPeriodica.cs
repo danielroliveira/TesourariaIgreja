@@ -35,6 +35,8 @@ namespace CamadaDTO
 
 		public objDespesaPeriodica(long? IDDespesa) : base(IDDespesa)
 		{
+			DespesaOrigem = 2;
+
 			EditDataPeriodica = new StructDespesaPeriodica()
 			{
 				_IniciarData = DateTime.Today,

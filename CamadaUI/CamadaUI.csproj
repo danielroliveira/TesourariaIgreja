@@ -398,6 +398,12 @@
     <Compile Include="Contas\frmContaSaldoInicial.designer.cs">
       <DependentUpon>frmContaSaldoInicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="DespesaCartao\frmDespesaCartaoProcurar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DespesaCartao\frmDespesaCartaoProcurar.Designer.cs">
+      <DependentUpon>frmDespesaCartaoProcurar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entradas\frmCampanha.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -952,6 +958,9 @@
     <EmbeddedResource Include="Contas\frmContaSaldoInicial.resx">
       <DependentUpon>frmContaSaldoInicial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DespesaCartao\frmDespesaCartaoProcurar.resx">
+      <DependentUpon>frmDespesaCartaoProcurar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Entradas\frmCampanha.resx">
       <DependentUpon>frmCampanha.cs</DependentUpon>
     </EmbeddedResource>
@@ -1388,6 +1397,10 @@
     <None Include="Resources\NewMessageGIF_32.gif" />
     <None Include="Resources\credit_card_32.png" />
     <None Include="Resources\credit_card_24.png" />
+    <None Include="Resources\AddSimple_32.png" />
+    <None Include="Resources\MinusSimples_32.png" />
+    <None Include="Resources\AddSimple_24.png" />
+    <None Include="Resources\MinusSimples_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

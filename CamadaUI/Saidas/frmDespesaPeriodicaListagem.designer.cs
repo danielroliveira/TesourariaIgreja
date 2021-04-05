@@ -457,7 +457,7 @@
             this.toolStripSeparator2,
             this.mnuExcluir});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(283, 188);
+			this.MenuListagem.Size = new System.Drawing.Size(283, 166);
 			// 
 			// mnuAtivar
 			// 

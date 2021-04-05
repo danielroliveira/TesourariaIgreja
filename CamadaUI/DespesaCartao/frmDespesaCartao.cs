@@ -20,9 +20,9 @@ namespace CamadaUI.DespesaCartao
 		private BindingSource bind = new BindingSource();
 		private BindingSource bindPag = new BindingSource();
 		private EnumFlagEstado _Sit;
-		private List<objAPagar> listAPagar = new List<objAPagar>();
+		private List<objAPagar> listAPagarVinculado = new List<objAPagar>();
+		private List<objAPagar> listAPagarEmAberto = new List<objAPagar>();
 
-		private List<objDespesaDocumentoTipo> listDocTipos;
 		private objSetor setorSelected;
 		private Form _formOrigem;
 
@@ -67,17 +67,18 @@ namespace CamadaUI.DespesaCartao
 			bind.Add(_despesa);
 			BindingCreator();
 
-			if (_despesa.IDDespesa == null)
+			if (_despesa.IDSituacao == 1)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				_despesa.IDSetor = (int)setorSelected.IDSetor;
 				_despesa.Setor = setorSelected.Setor;
 				_despesa.DespesaData = DataPadrao();
+				GetAPagarEmAberto();
 			}
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
-				GetAPagar();
+
 			}
 
 			// handlers
@@ -97,12 +98,6 @@ namespace CamadaUI.DespesaCartao
 
 			txtSetor.Enter += text_Enter;
 
-			// if frmListagem is ENABLED
-			if (Modal)
-			{
-				btnNovo.Enabled = false;
-				return;
-			}
 		}
 
 		// PROPERTY SITUACAO
@@ -116,13 +111,11 @@ namespace CamadaUI.DespesaCartao
 
 				if (value == EnumFlagEstado.NovoRegistro)
 				{
-					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
 				}
 				else
 				{
-					btnNovo.Enabled = true;
 					btnSalvar.Enabled = false;
 					btnCancelar.Enabled = false;
 				}
@@ -155,21 +148,45 @@ namespace CamadaUI.DespesaCartao
 			}
 		}
 
-		// GET PARCELAMENTO | APAGAR
+		// GET PARCELAMENTO | APAGAR VINCULADOS ADICIONADOS
 		//------------------------------------------------------------------------------------------------------------
-		private void GetAPagar()
+		private void GetAPagarVinculado()
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listAPagar = despBLL.ListAPagarCartaoEmAberto(_despesa.IDCartaoCredito);
+				listAPagarEmAberto = despBLL.ListAPagarCartaoEmAberto(_despesa.IDCartaoCredito);
 
 				// format Datagridview
-				bindPag.DataSource = listAPagar;
+				bindPag.DataSource = listAPagarEmAberto;
 				dgvListagem.DataSource = bindPag;
 				FormataListagem();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de Parcelamento..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// GET PARCELAMENTO | APAGAR
+		//------------------------------------------------------------------------------------------------------------
+		private void GetAPagarEmAberto()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				listAPagarEmAberto = despBLL.ListAPagarCartaoEmAberto(_despesa.IDCartaoCredito);
 
 			}
 			catch (Exception ex)
@@ -257,26 +274,16 @@ namespace CamadaUI.DespesaCartao
 			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
 			//--- (1) COLUNA FORMA
-			clnForma.DataPropertyName = "APagarForma";
-			clnForma.Visible = true;
-			clnForma.ReadOnly = true;
-			clnForma.Resizable = DataGridViewTriState.False;
-			clnForma.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnForma.DefaultCellStyle.Font = clnFont;
+			clnCredor.DataPropertyName = "Credor";
+			clnCredor.Visible = true;
+			clnCredor.ReadOnly = true;
+			clnCredor.Resizable = DataGridViewTriState.False;
+			clnCredor.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnCredor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnCredor.DefaultCellStyle.Font = clnFont;
 
-			//--- (2) COLUNA SITUACAO
-			clnSituacao.DataPropertyName = "Situacao";
-			clnSituacao.Visible = true;
-			clnSituacao.ReadOnly = true;
-			clnSituacao.Resizable = DataGridViewTriState.False;
-			clnSituacao.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSituacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnSituacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnSituacao.DefaultCellStyle.Font = clnFont;
-
-			//--- (3) COLUNA ID
+			//--- (2) COLUNA ID
 			clnIdentificador.DataPropertyName = "Identificador";
 			clnIdentificador.Visible = true;
 			clnIdentificador.ReadOnly = true;
@@ -286,7 +293,7 @@ namespace CamadaUI.DespesaCartao
 			clnIdentificador.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnIdentificador.DefaultCellStyle.Font = clnFont;
 
-			//--- (4) COLUNA VENCIMENTO
+			//--- (3) COLUNA VENCIMENTO
 			clnVencimento.DataPropertyName = "Vencimento";
 			clnVencimento.Visible = true;
 			clnVencimento.ReadOnly = true;
@@ -296,7 +303,7 @@ namespace CamadaUI.DespesaCartao
 			clnVencimento.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 			clnVencimento.DefaultCellStyle.Font = clnFont;
 
-			//--- (5) COLUNA VALOR
+			//--- (4) COLUNA VALOR
 			clnValor.DataPropertyName = "APagarValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
@@ -308,31 +315,12 @@ namespace CamadaUI.DespesaCartao
 			clnValor.DefaultCellStyle.Font = clnFont;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnForma, clnSituacao, clnIdentificador, clnVencimento, clnValor);
+			dgvListagem.Columns.AddRange(clnCredor, clnIdentificador, clnVencimento, clnValor);
 		}
 
 		#endregion
 
 		#region BUTTONS
-
-		private void btnNovo_Click(object sender, EventArgs e)
-		{
-			// if frmAPagarListagem is ENABLED then exit
-			if (Modal)
-			{
-				btnNovo.Enabled = false;
-				return;
-			}
-
-			if (Sit == EnumFlagEstado.NovoRegistro || Sit == EnumFlagEstado.RegistroBloqueado) return;
-
-			_despesa = new objDespesaCartao(null);
-			Sit = EnumFlagEstado.NovoRegistro;
-			bind.DataSource = _despesa;
-			listAPagar = new List<objAPagar>();
-			bindPag.DataSource = listAPagar;
-			txtSetor.Focus();
-		}
 
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
@@ -760,60 +748,6 @@ namespace CamadaUI.DespesaCartao
 				//--- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- CHECK DESPESA VALUE
-				if (_despesa.DespesaValor <= 0)
-				{
-					AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +
-						"Favor inserir o valor desta despesa corretamente.",
-						"Valor da Despesa",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					EP.SetError(txtDespesaValor, "Valor necessário...");
-					txtDespesaValor.Focus();
-					return;
-				}
-
-				//--- define value
-				decimal vlMaximo = _despesa.DespesaValor - listAPagar.Sum(x => x.APagarValor);
-
-				if (vlMaximo <= 0)
-				{
-					AbrirDialog("O Valor Total das Parcelas APagar já alcançou o valor da Despesa..." +
-						"\nNão há possibilidade de criar Novas Parcelas.",
-						"Valor Alcançado", DialogType.OK, DialogIcon.Exclamation);
-					return;
-				}
-
-				//--- define date
-				DateTime newDate = _despesa.DespesaData;
-
-				//--- define LAST APagar
-				objAPagar LastPag = null;
-
-				if (listAPagar.Count > 0)
-				{
-					LastPag = listAPagar.OrderBy(x => x.Vencimento).Last();
-				}
-
-				//--- define new apagar
-				var newParcela = new objAPagar(null)
-				{
-					APagarValor = vlMaximo,
-					Vencimento = LastPag != null ? LastPag.Vencimento.AddMonths(1) : newDate,
-					IDBanco = LastPag != null ? LastPag.IDBanco : null,
-					Banco = LastPag != null ? LastPag.Banco : "",
-					IDAPagarForma = LastPag != null ? LastPag.IDAPagarForma : 1,
-					APagarForma = LastPag != null ? LastPag.APagarForma : "Em Carteira"
-				};
-
-				//--- open Form
-				var frm = new Saidas.frmDespesaAPagarItem(newParcela, vlMaximo, _despesa.DespesaData, this);
-				frm.ShowDialog();
-
-				if (frm.DialogResult != DialogResult.OK) return;
-
-				bindPag.Add(newParcela);
-				bindPag.ResetBindings(false);
 			}
 			catch (Exception ex)
 			{
@@ -842,54 +776,11 @@ namespace CamadaUI.DespesaCartao
 			//--- get Selected item
 			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			if (item.IDAPagar != null)
-			{
-				AbrirDialog("Não é possível editar uma parcela de APagar que já está salva.",
-					"Registro Bloqueado",
-					DialogType.OK,
-					DialogIcon.Exclamation);
-				return;
-			}
-
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- CHECK DESPESA VALUE
-				if (_despesa.DespesaValor <= 0)
-				{
-					AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +
-						"Favor inserir o valor desta despesa corretamente.",
-						"Valor da Despesa",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					EP.SetError(txtDespesaValor, "Valor necessário...");
-					txtDespesaValor.Focus();
-					return;
-				}
-
-				//--- define value
-				decimal vlMaximo = _despesa.DespesaValor - listAPagar.Sum(x => x.APagarValor) + item.APagarValor;
-
-				//--- define date
-				DateTime newDate = item.Vencimento;
-
-				if (listAPagar.Count > 0)
-				{
-					newDate = listAPagar.OrderBy(x => x.Vencimento).Last().Vencimento.AddMonths(1);
-				}
-
-				//--- define new apagar
-				var Parcela = item;
-
-				//--- open Form
-				var frm = new Saidas.frmDespesaAPagarItem(Parcela, vlMaximo, _despesa.DespesaData, this);
-				frm.ShowDialog();
-
-				if (frm.DialogResult != DialogResult.OK) return;
-
-				bindPag.ResetBindings(false);
 
 			}
 			catch (Exception ex)
@@ -906,27 +797,18 @@ namespace CamadaUI.DespesaCartao
 
 		// EXCLUIR APAGAR
 		//------------------------------------------------------------------------------------------------------------
-		private void mnuExcluirAPagar_Click(object sender, EventArgs e)
+		private void mnuRemoverAPagar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
 			{
-				AbrirDialog("Favor selecionar um registro para EXCLUIR...",
+				AbrirDialog("Favor selecionar um registro para REMOVER...",
 					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
 				return;
 			}
 
 			//--- get Selected item
 			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			if (item.IDAPagar != null)
-			{
-				AbrirDialog("Não é possível EXCLUIR uma parcela de APagar que já está salva.",
-					"Registro Bloqueado",
-					DialogType.OK,
-					DialogIcon.Exclamation);
-				return;
-			}
 
 			try
 			{
@@ -1005,7 +887,7 @@ namespace CamadaUI.DespesaCartao
 			}
 
 			//--- Check and Create APagar
-			if (listAPagar.Count == 0)
+			if (listAPagarVinculado.Count == 0)
 			{
 				AbrirDialog("Informe as Parcelas de APagar dessa Despesa\n" +
 					"Use o segundo botão do mouse na listagem e adicione uma ou mais parcelas.",
@@ -1013,23 +895,6 @@ namespace CamadaUI.DespesaCartao
 					DialogType.OK,
 					DialogIcon.Information);
 				return false;
-			}
-
-			// CHECK PARCELAS VALUE AND PARCELAS QUANTITY
-			if (listAPagar.Count > 0)
-			{
-				// check VALUE
-				decimal parcTotal = listAPagar.Sum(x => x.APagarValor);
-
-				if (Math.Abs(_despesa.DespesaValor - parcTotal) > 1)
-				{
-					AbrirDialog($"O valor do somatório das parcelas: {parcTotal:c} não pode ser maior que o valor da Despesa:{_despesa.DespesaValor:c}\n" +
-								"Favor verificar se o valor das parcelas está correto.", "Valor das Parcelas",
-								DialogType.OK, DialogIcon.Exclamation);
-					txtDespesaValor.Focus();
-					return false;
-				}
-
 			}
 
 			return true;
@@ -1199,9 +1064,33 @@ namespace CamadaUI.DespesaCartao
 			}
 		}
 
+
+
 		#endregion // IMAGE CONTROL --- END
 
+		private void btnIncluirItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
 
+				var frm = new frmDespesaCartaoProcurar(listAPagarEmAberto, this);
 
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir Formulário de Procura..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
 	}
 }
