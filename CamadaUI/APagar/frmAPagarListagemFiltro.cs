@@ -172,6 +172,8 @@ namespace CamadaUI.APagar
 			//--- check return
 			if (frm.DialogResult == DialogResult.OK)
 			{
+				if (DadosNovos.IDForma != (int)frm.propEscolha.Key) propAlterado = true;
+
 				DadosNovos.IDForma = (int)frm.propEscolha.Key;
 				textBox.Text = frm.propEscolha.Value;
 			}

@@ -20,6 +20,7 @@ namespace CamadaUI.DespesaCartao
 		private objAPagarCartao _cartao;
 		private List<objAPagarCartao> list;
 		private List<objCartaoBandeira> listBandeira;
+		private List<objAPagarForma> listFormas;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
@@ -36,6 +37,8 @@ namespace CamadaUI.DespesaCartao
 
 			ObterDados();
 			GetBandeiraList();
+			GetFormasList();
+
 			bind.DataSource = typeof(objAPagarCartao);
 			bind.DataSource = list;
 			PreencheListagem();
@@ -168,6 +171,29 @@ namespace CamadaUI.DespesaCartao
 			}
 		}
 
+		// GET LIST OF FORMAS DE COBRANCA
+		//------------------------------------------------------------------------------------------------------------
+		private void GetFormasList()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				listFormas = new APagarFormaBLL().GetListAPagarForma(true, null).FindAll(x => x.IDPagFormaModo == 1);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de Formas de Cobrança..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region DATABINDING
@@ -184,6 +210,7 @@ namespace CamadaUI.DespesaCartao
 			txtSetor.DataBindings.Add("Text", bind, "SetorCartao", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCredor.DataBindings.Add("Text", bind, "CredorCartao", true, DataSourceUpdateMode.OnPropertyChanged);
 			numVencimentoDia.DataBindings.Add("Value", bind, "VencimentoDia", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtAPagarForma.DataBindings.Add("Text", bind, "APagarForma", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
@@ -469,6 +496,7 @@ namespace CamadaUI.DespesaCartao
 					txtCartaoBandeira,
 					txtCredor,
 					txtSetor,
+					txtAPagarForma,
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -511,6 +539,9 @@ namespace CamadaUI.DespesaCartao
 					case "txtCartaoBandeira":
 						btnSetBandeira_Click(sender, new EventArgs());
 						break;
+					case "txtAPagarForma":
+						btnSetForma_Click(sender, new EventArgs());
+						break;
 					case "txtCredor":
 						btnSetCredor_Click(sender, new EventArgs());
 						break;
@@ -529,7 +560,7 @@ namespace CamadaUI.DespesaCartao
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
 				Control[] controlesBloqueados = {
-					txtCartaoBandeira
+					txtCartaoBandeira, txtAPagarForma
 				};
 
 				if (controlesBloqueados.Contains(ctr))
@@ -552,7 +583,8 @@ namespace CamadaUI.DespesaCartao
 				Control[] controlesBloqueados = {
 					txtCredor,
 					txtSetor,
-					txtCartaoBandeira
+					txtCartaoBandeira,
+					txtAPagarForma,
 				 };
 
 				if (controlesBloqueados.Contains(ctr))
@@ -592,6 +624,23 @@ namespace CamadaUI.DespesaCartao
 						}
 						break;
 
+					case "txtAPagarForma":
+
+						if (listFormas.Count > 0)
+						{
+							var forma = listFormas.FirstOrDefault(x => x.IDAPagarForma == int.Parse(e.KeyChar.ToString()));
+
+							if (forma == null) return;
+
+							if (txtAPagarForma.Text == string.Empty || forma.IDAPagarForma != _cartao.IDAPagarForma)
+							{
+								if (Sit == EnumFlagEstado.RegistroSalvo) Sit = EnumFlagEstado.Alterado;
+
+								_cartao.IDAPagarForma = (byte)forma.IDAPagarForma;
+								txtAPagarForma.Text = forma.APagarForma;
+							}
+						}
+						break;
 					default:
 						break;
 				}
@@ -648,6 +697,34 @@ namespace CamadaUI.DespesaCartao
 			textBox.SelectAll();
 		}
 
+		private void btnSetForma_Click(object sender, EventArgs e)
+		{
+			if (listFormas.Count == 0)
+			{
+				AbrirDialog("Não há Formas de Cobrança cadastradas ou ativas...", "Formas de Cobrança",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			var dic = listFormas.ToDictionary(x => (int)x.IDAPagarForma, x => x.APagarForma);
+			var textBox = txtAPagarForma;
+			Main.frmComboLista frm = new Main.frmComboLista(dic, textBox, _cartao.IDAPagarForma);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				_cartao.IDAPagarForma = (int)frm.propEscolha.Key;
+				textBox.Text = frm.propEscolha.Value;
+			}
+
+			//--- select
+			textBox.Focus();
+			textBox.SelectAll();
+		}
+
 		private void btnSetSetor_Click(object sender, EventArgs e)
 		{
 			try
@@ -665,7 +742,7 @@ namespace CamadaUI.DespesaCartao
 						Sit = EnumFlagEstado.Alterado;
 
 					_cartao.IDSetorCartao = (int)frm.propEscolha.IDSetor;
-					txtCredor.Text = frm.propEscolha.Setor;
+					txtSetor.Text = frm.propEscolha.Setor;
 				}
 
 				//--- select

@@ -45,7 +45,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(134, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(48, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(379, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Inserir Despesa Cartão de Crédito";
@@ -55,13 +55,13 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(513, 0);
+			this.btnClose.Location = new System.Drawing.Point(427, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnCancelar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(553, 50);
+			this.panel1.Size = new System.Drawing.Size(467, 50);
 			// 
 			// btnSetConta
 			// 
@@ -69,7 +69,7 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(450, 142);
+			this.btnSetConta.Location = new System.Drawing.Point(338, 144);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
@@ -85,11 +85,11 @@
 			// txtCartaoDescricao
 			// 
 			this.txtCartaoDescricao.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtCartaoDescricao.Location = new System.Drawing.Point(82, 142);
+			this.txtCartaoDescricao.Location = new System.Drawing.Point(82, 144);
 			this.txtCartaoDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCartaoDescricao.MaxLength = 30;
 			this.txtCartaoDescricao.Name = "txtCartaoDescricao";
-			this.txtCartaoDescricao.Size = new System.Drawing.Size(362, 31);
+			this.txtCartaoDescricao.Size = new System.Drawing.Size(250, 31);
 			this.txtCartaoDescricao.TabIndex = 3;
 			this.txtCartaoDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtCartaoDescricao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
@@ -99,7 +99,7 @@
 			this.label19.AutoSize = true;
 			this.label19.BackColor = System.Drawing.Color.Transparent;
 			this.label19.ForeColor = System.Drawing.Color.Black;
-			this.label19.Location = new System.Drawing.Point(78, 117);
+			this.label19.Location = new System.Drawing.Point(78, 119);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(123, 19);
 			this.label19.TabIndex = 2;
@@ -110,7 +110,7 @@
 			this.lblDataFinalLabel.AutoSize = true;
 			this.lblDataFinalLabel.BackColor = System.Drawing.Color.Transparent;
 			this.lblDataFinalLabel.ForeColor = System.Drawing.Color.Black;
-			this.lblDataFinalLabel.Location = new System.Drawing.Point(133, 207);
+			this.lblDataFinalLabel.Location = new System.Drawing.Point(78, 209);
 			this.lblDataFinalLabel.Name = "lblDataFinalLabel";
 			this.lblDataFinalLabel.Size = new System.Drawing.Size(138, 19);
 			this.lblDataFinalLabel.TabIndex = 5;
@@ -120,7 +120,7 @@
 			// 
 			this.btnCancelar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.fechar_24;
-			this.btnCancelar.Location = new System.Drawing.Point(281, 319);
+			this.btnCancelar.Location = new System.Drawing.Point(238, 319);
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(120, 48);
 			this.btnCancelar.TabIndex = 10;
@@ -135,7 +135,7 @@
 			this.btnEfetuar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.btnEfetuar.Enabled = false;
 			this.btnEfetuar.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.btnEfetuar.Location = new System.Drawing.Point(151, 319);
+			this.btnEfetuar.Location = new System.Drawing.Point(108, 319);
 			this.btnEfetuar.Name = "btnEfetuar";
 			this.btnEfetuar.Size = new System.Drawing.Size(120, 48);
 			this.btnEfetuar.TabIndex = 9;
@@ -148,9 +148,9 @@
 			// label4
 			// 
 			this.label4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point(41, 64);
+			this.label4.Location = new System.Drawing.Point(25, 64);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(472, 25);
+			this.label4.Size = new System.Drawing.Size(412, 25);
 			this.label4.TabIndex = 1;
 			this.label4.Text = "Escolha o CARTÃO e a DATA para efetuar o fechamento:";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -159,7 +159,7 @@
 			// 
 			this.numRefDia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.numRefDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numRefDia.Location = new System.Drawing.Point(137, 229);
+			this.numRefDia.Location = new System.Drawing.Point(82, 231);
 			this.numRefDia.Maximum = new decimal(new int[] {
             31,
             0,
@@ -184,7 +184,7 @@
 			// 
 			this.numRefAno.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.numRefAno.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numRefAno.Location = new System.Drawing.Point(351, 229);
+			this.numRefAno.Location = new System.Drawing.Point(296, 231);
 			this.numRefAno.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -211,7 +211,7 @@
 			this.cmbRefMes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbRefMes.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmbRefMes.FormattingEnabled = true;
-			this.cmbRefMes.Location = new System.Drawing.Point(195, 229);
+			this.cmbRefMes.Location = new System.Drawing.Point(140, 231);
 			this.cmbRefMes.Name = "cmbRefMes";
 			this.cmbRefMes.Size = new System.Drawing.Size(150, 31);
 			this.cmbRefMes.TabIndex = 7;
@@ -219,7 +219,7 @@
 			// frmDespesaCartaoInserir
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(553, 390);
+			this.ClientSize = new System.Drawing.Size(467, 390);
 			this.Controls.Add(this.numRefDia);
 			this.Controls.Add(this.numRefAno);
 			this.Controls.Add(this.cmbRefMes);

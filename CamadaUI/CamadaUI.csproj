@@ -398,6 +398,12 @@
     <Compile Include="Contas\frmContaSaldoInicial.designer.cs">
       <DependentUpon>frmContaSaldoInicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="DespesaCartao\frmDespesaCartaoListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DespesaCartao\frmDespesaCartaoListagem.designer.cs">
+      <DependentUpon>frmDespesaCartaoListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="DespesaCartao\frmDespesaCartaoProcurar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -830,6 +836,7 @@
     <EmbeddedResource Include="APagar\frmAPagarSaidas.resx">
       <DependentUpon>frmAPagarSaidas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Contas\Reports\rptMovimentacaoContaList.rdlc" />
     <EmbeddedResource Include="DespesaCartao\frmCartaoCreditoDespesa.resx">
       <DependentUpon>frmCartaoCreditoDespesa.cs</DependentUpon>
     </EmbeddedResource>
@@ -957,6 +964,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Contas\frmContaSaldoInicial.resx">
       <DependentUpon>frmContaSaldoInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DespesaCartao\frmDespesaCartaoListagem.resx">
+      <DependentUpon>frmDespesaCartaoListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DespesaCartao\frmDespesaCartaoProcurar.resx">
       <DependentUpon>frmDespesaCartaoProcurar.cs</DependentUpon>

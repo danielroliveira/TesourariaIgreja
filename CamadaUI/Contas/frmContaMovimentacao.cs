@@ -804,5 +804,39 @@ namespace CamadaUI.Contas
 
 		#endregion
 
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<object> mylist = listMov.Cast<object>().ToList();
+
+				//--- create Params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtInicial", _dtInicial.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _dtFinal.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmConta", ContaSelected.Conta));
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Contas.Reports.rptMovimentacaoContaList.rdlc",
+					"Relatório de Mopvimentações de Conta",
+					mylist, null, param);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 	}
 }

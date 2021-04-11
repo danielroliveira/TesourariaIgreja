@@ -888,6 +888,8 @@ namespace CamadaDTO
 			internal int _IDSetor;
 			internal string _Setor;
 			internal bool _Ativo;
+			internal int _IDAPagarForma;
+			internal string _APagarForma;
 		}
 
 		// VARIABLES | CONSTRUCTOR
@@ -1114,5 +1116,27 @@ namespace CamadaDTO
 			}
 		}
 
+		// Property IDAPagarForma
+		//---------------------------------------------------------------
+		public int IDAPagarForma
+		{
+			get => EditData._IDAPagarForma;
+			set
+			{
+				if (value != EditData._IDAPagarForma)
+				{
+					EditData._IDAPagarForma = value;
+					NotifyPropertyChanged("IDAPagarForma");
+				}
+			}
+		}
+
+		// Property APagarForma
+		//---------------------------------------------------------------
+		public string APagarForma
+		{
+			get => EditData._APagarForma;
+			set => EditData._APagarForma = value;
+		}
 	}
 }

@@ -1036,6 +1036,8 @@ namespace CamadaBLL
 					IDSetorCartao = (int)row["IDSetor"],
 					SetorCartao = (string)row["Setor"],
 					VencimentoDia = (byte)row["VencimentoDia"],
+					IDAPagarForma = (int)row["IDAPagarForma"],
+					APagarForma = (string)row["APagarForma"],
 				};
 
 				return cartao;
@@ -1076,6 +1078,8 @@ namespace CamadaBLL
 						IDSetorCartao = (int)row["IDSetor"],
 						SetorCartao = (string)row["Setor"],
 						VencimentoDia = (byte)row["VencimentoDia"],
+						IDAPagarForma = (int)row["IDAPagarForma"],
+						APagarForma = (string)row["APagarForma"],
 					};
 
 					list.Add(cartao);
@@ -1111,6 +1115,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@CartaoNumeracao", cartao.CartaoNumeracao);
 				db.AdicionarParametros("@IDSetor", cartao.IDSetorCartao);
 				db.AdicionarParametros("@IDCredor", cartao.IDCredorCartao);
+				db.AdicionarParametros("@IDAPagarForma", cartao.IDAPagarForma);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -1153,6 +1158,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@CartaoNumeracao", cartao.CartaoNumeracao);
 				db.AdicionarParametros("@IDSetor", cartao.IDSetorCartao);
 				db.AdicionarParametros("@IDCredor", cartao.IDCredorCartao);
+				db.AdicionarParametros("@IDAPagarForma", cartao.IDAPagarForma);
 
 				//--- convert null parameters
 				db.ConvertNullParams();

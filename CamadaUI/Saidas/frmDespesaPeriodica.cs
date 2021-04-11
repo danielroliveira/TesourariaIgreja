@@ -408,7 +408,8 @@ namespace CamadaUI.Saidas
 
 			foreach (string monthName in enBr.DateTimeFormat.MonthNames)
 			{
-				dtMes.Rows.Add(new object[] { i, monthName });
+				if (!string.IsNullOrEmpty(monthName))
+					dtMes.Rows.Add(new object[] { i, monthName });
 				i++;
 			}
 
@@ -919,11 +920,11 @@ namespace CamadaUI.Saidas
 			else if ((e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9))
 			{
 				//--- cria um array de controles que serao liberados ao KEYPRESS
-				Control[] controlesBloqueados = {
-					txtAPagarForma, //txtDespesaDescricao,
+				Control[] controlesLiberados = {
+					txtAPagarForma, txtDespesaDescricao,
 				};
 
-				if (controlesBloqueados.Contains(ctr))
+				if (controlesLiberados.Contains(ctr))
 				{
 					e.Handled = false;
 				}

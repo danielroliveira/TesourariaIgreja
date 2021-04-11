@@ -651,14 +651,13 @@ namespace CamadaUI
 		//------------------------------------------------------------------------------------------------------------
 		private void lblConta_Click(object sender, EventArgs e)
 		{
-			// check if exists open forms
-			if (Application.OpenForms.Count > 1)
-				return;
-
-			Contas.frmContaProcura frm = new Contas.frmContaProcura(null, propContaPadrao.IDConta);
+			DesativaPanel(ActiveMdiChild);
 
 			// show
+			Contas.frmContaProcura frm = new Contas.frmContaProcura(null, propContaPadrao.IDConta);
 			frm.ShowDialog();
+
+			AtivaPanel(ActiveMdiChild);
 
 			if (frm.DialogResult == DialogResult.OK)
 			{
@@ -681,14 +680,13 @@ namespace CamadaUI
 		//------------------------------------------------------------------------------------------------------------
 		private void lblSetor_Click(object sender, EventArgs e)
 		{
-			// check if exists open forms
-			if (Application.OpenForms.Count > 1)
-				return;
-
-			Setores.frmSetorProcura frm = new Setores.frmSetorProcura(null, propSetorPadrao?.IDSetor);
+			DesativaPanel(ActiveMdiChild);
 
 			// show
+			var frm = new Setores.frmSetorProcura(null, propSetorPadrao?.IDSetor);
 			frm.ShowDialog();
+
+			AtivaPanel(ActiveMdiChild);
 
 			if (frm.DialogResult == DialogResult.OK)
 			{
@@ -710,14 +708,13 @@ namespace CamadaUI
 		//------------------------------------------------------------------------------------------------------------
 		private void lblDataSis_Click(object sender, EventArgs e)
 		{
-			// check if exists open forms
-			if (Application.OpenForms.Count > 1)
-				return;
-
-			frmDateGet frm = new frmDateGet("Data padrão do sistema", EnumDataTipo.PassadoPresente, _DataPadrao, null);
+			DesativaPanel(ActiveMdiChild);
 
 			// show
+			frmDateGet frm = new frmDateGet("Data padrão do sistema", EnumDataTipo.PassadoPresente, _DataPadrao, null);
 			frm.ShowDialog();
+
+			AtivaPanel(ActiveMdiChild);
 
 			if (frm.DialogResult == DialogResult.OK)
 			{
@@ -764,7 +761,7 @@ namespace CamadaUI
 			mnuDespesaProvisoriaProcurar.Click += (a, b) => MenuClickOpenForm(new frmProvisoriaListagem());
 
 			mnuDespesaCartaoInserir.Click += (a, b) => MenuClickOpenForm(new DespesaCartao.frmDespesaCartaoInserir(null));
-			//mnuDespesaCartaoProcurar.Click += (a, b) => MenuClickOpenForm(new frmProvisoriaListagem());
+			mnuDespesaCartaoProcurar.Click += (a, b) => MenuClickOpenForm(new DespesaCartao.frmDespesaCartaoListagem());
 
 			// MENU MOVIMENTACAO
 			mnuContaProcurar.Click += (a, b) => MenuClickOpenForm(new Contas.frmContaListagem());

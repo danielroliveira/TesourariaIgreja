@@ -361,7 +361,7 @@ namespace CamadaUI
 
 		#endregion
 
-		#region CONTROLE DO MENU
+		#region CONTROLE DO MENU E DO PANEL
 
 		//--- OCULTAR E REVELAR O MENU PRINCIPAL
 		public static void OcultaMenuPrincipal()
@@ -392,6 +392,24 @@ namespace CamadaUI
 			frm.pnlTop.BackColor = Color.SlateGray;
 			frm.btnConfig.Enabled = false;
 			*/
+		}
+
+		//--- DESATIVA CHANGE COLOR O PANEL ACTIVATE FORM
+		public static void DesativaPanel(Form form)
+		{
+			if (form != null && !form.IsDisposed && form.Controls.ContainsKey("Panel1"))
+			{
+				form.Controls["panel1"].BackColor = Color.Silver;
+			}
+		}
+
+		//--- ATIVA CHANGE COLOR O PANEL ACTIVATE FORM
+		public static void AtivaPanel(Form form)
+		{
+			if (form != null && !form.IsDisposed && form.Controls.ContainsKey("Panel1"))
+			{
+				form.Controls["panel1"].BackColor = Color.SlateGray;
+			}
 		}
 
 		#endregion

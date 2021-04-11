@@ -32,19 +32,20 @@ namespace CamadaUI.DespesaCartao
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.btnSelecionar = new System.Windows.Forms.Button();
+			this.btnFechar = new System.Windows.Forms.Button();
 			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnIdentificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnVencimento = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.btnIncluirItem = new System.Windows.Forms.Button();
-			this.btnFechar = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(378, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(621, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(339, 50);
 			this.lblTitulo.Text = "Selecionar Despesa de Cartão";
 			// 
@@ -53,12 +54,12 @@ namespace CamadaUI.DespesaCartao
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(717, 0);
+			this.btnClose.Location = new System.Drawing.Point(960, 0);
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(757, 50);
+			this.panel1.Size = new System.Drawing.Size(1000, 50);
 			// 
 			// dgvListagem
 			// 
@@ -88,6 +89,7 @@ namespace CamadaUI.DespesaCartao
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnCredor,
+            this.clnDescricao,
             this.clnIdentificador,
             this.clnVencimento,
             this.clnValor});
@@ -104,15 +106,50 @@ namespace CamadaUI.DespesaCartao
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(706, 441);
+			this.dgvListagem.Size = new System.Drawing.Size(949, 441);
 			this.dgvListagem.TabIndex = 28;
+			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
+			// 
+			// btnSelecionar
+			// 
+			this.btnSelecionar.Image = global::CamadaUI.Properties.Resources.AddSimple_24;
+			this.btnSelecionar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSelecionar.Location = new System.Drawing.Point(24, 516);
+			this.btnSelecionar.Name = "btnSelecionar";
+			this.btnSelecionar.Size = new System.Drawing.Size(174, 45);
+			this.btnSelecionar.TabIndex = 30;
+			this.btnSelecionar.Text = "&Selecionar Item";
+			this.btnSelecionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSelecionar.UseVisualStyleBackColor = true;
+			this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
+			// 
+			// btnFechar
+			// 
+			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnFechar.Image = global::CamadaUI.Properties.Resources.fechar_24;
+			this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnFechar.Location = new System.Drawing.Point(824, 516);
+			this.btnFechar.Name = "btnFechar";
+			this.btnFechar.Size = new System.Drawing.Size(149, 45);
+			this.btnFechar.TabIndex = 31;
+			this.btnFechar.Text = "&Fechar";
+			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnFechar.UseVisualStyleBackColor = true;
+			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// clnCredor
 			// 
 			this.clnCredor.HeaderText = "Credor";
 			this.clnCredor.Name = "clnCredor";
 			this.clnCredor.ReadOnly = true;
-			this.clnCredor.Width = 350;
+			this.clnCredor.Width = 300;
+			// 
+			// clnDescricao
+			// 
+			this.clnDescricao.HeaderText = "Descrição";
+			this.clnDescricao.Name = "clnDescricao";
+			this.clnDescricao.ReadOnly = true;
+			this.clnDescricao.Width = 300;
 			// 
 			// clnIdentificador
 			// 
@@ -134,43 +171,19 @@ namespace CamadaUI.DespesaCartao
 			this.clnValor.Name = "clnValor";
 			this.clnValor.ReadOnly = true;
 			// 
-			// btnIncluirItem
-			// 
-			this.btnIncluirItem.Image = global::CamadaUI.Properties.Resources.AddSimple_24;
-			this.btnIncluirItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnIncluirItem.Location = new System.Drawing.Point(24, 516);
-			this.btnIncluirItem.Name = "btnIncluirItem";
-			this.btnIncluirItem.Size = new System.Drawing.Size(149, 45);
-			this.btnIncluirItem.TabIndex = 30;
-			this.btnIncluirItem.Text = "&Incluir Item";
-			this.btnIncluirItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnIncluirItem.UseVisualStyleBackColor = true;
-			// 
-			// btnFechar
-			// 
-			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFechar.Image = global::CamadaUI.Properties.Resources.fechar_24;
-			this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnFechar.Location = new System.Drawing.Point(581, 516);
-			this.btnFechar.Name = "btnFechar";
-			this.btnFechar.Size = new System.Drawing.Size(149, 45);
-			this.btnFechar.TabIndex = 31;
-			this.btnFechar.Text = "&Fechar";
-			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnFechar.UseVisualStyleBackColor = true;
-			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
-			// 
 			// frmDespesaCartaoProcurar
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(757, 572);
+			this.ClientSize = new System.Drawing.Size(1000, 572);
 			this.Controls.Add(this.btnFechar);
-			this.Controls.Add(this.btnIncluirItem);
+			this.Controls.Add(this.btnSelecionar);
 			this.Controls.Add(this.dgvListagem);
 			this.Name = "frmDespesaCartaoProcurar";
+			this.Activated += new System.EventHandler(this.form_Activated);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
-			this.Controls.SetChildIndex(this.btnIncluirItem, 0);
+			this.Controls.SetChildIndex(this.btnSelecionar, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
@@ -181,11 +194,12 @@ namespace CamadaUI.DespesaCartao
 		#endregion
 
 		internal System.Windows.Forms.DataGridView dgvListagem;
+		private System.Windows.Forms.Button btnSelecionar;
+		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDescricao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
-		private System.Windows.Forms.Button btnIncluirItem;
-		private System.Windows.Forms.Button btnFechar;
 	}
 }

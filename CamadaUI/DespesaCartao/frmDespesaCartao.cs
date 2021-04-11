@@ -17,16 +17,13 @@ namespace CamadaUI.DespesaCartao
 	{
 		private objDespesaCartao _despesa;
 		private DespesaCartaoBLL despBLL = new DespesaCartaoBLL();
-		private BindingSource bind = new BindingSource();
-		private BindingSource bindPag = new BindingSource();
-		private EnumFlagEstado _Sit;
+		private BindingSource bindDespesa = new BindingSource();
+		private BindingSource bindAPagar = new BindingSource();
 		private List<objAPagar> listAPagarVinculado = new List<objAPagar>();
 		private List<objAPagar> listAPagarEmAberto = new List<objAPagar>();
 
-		private objSetor setorSelected;
+		//private objSetor setorSelected;
 		private Form _formOrigem;
-
-		private ErrorProvider EP = new ErrorProvider(); // default error provider
 
 		#region SUB NEW | CONSTRUCTOR | PROPERTIES
 
@@ -58,31 +55,20 @@ namespace CamadaUI.DespesaCartao
 		{
 			_despesa = despesa;
 
-			// Define Conta and Setor padrao
-			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			setorSelected = principal.propSetorPadrao;
-
-			// binding
-			bind.DataSource = typeof(objDespesaCartao);
-			bind.Add(_despesa);
+			// binding Despesa
+			bindDespesa.DataSource = typeof(objDespesaCartao);
+			bindDespesa.Add(_despesa);
 			BindingCreator();
 
-			if (_despesa.IDSituacao == 1)
-			{
-				Sit = EnumFlagEstado.NovoRegistro;
-				_despesa.IDSetor = (int)setorSelected.IDSetor;
-				_despesa.Setor = setorSelected.Setor;
-				_despesa.DespesaData = DataPadrao();
-				GetAPagarEmAberto();
-			}
-			else
-			{
-				Sit = EnumFlagEstado.RegistroSalvo;
+			// binding APagar
+			bindAPagar.DataSource = typeof(objAPagar);
+			GetAPagarVinculado();
 
-			}
+			SituacaoAlterada();
 
 			// handlers
-			_despesa.PropertyChanged += RegistroAlterado;
+			bindAPagar.ListChanged += (a, b) => CalculaTotais();
+
 			HandlerKeyDownControl(this);
 		}
 
@@ -97,31 +83,42 @@ namespace CamadaUI.DespesaCartao
 			}
 
 			txtSetor.Enter += text_Enter;
+			CalculaTotais();
+			_despesa.PropertyChanged += RegistroAlterado;
 
 		}
 
-		// PROPERTY SITUACAO
+		// CHANGE SITUACAO
 		//------------------------------------------------------------------------------------------------------------
-		public EnumFlagEstado Sit
+		public void SituacaoAlterada()
 		{
-			get { return _Sit; }
-			set
+			switch (_despesa.IDSituacao)
 			{
-				_Sit = value;
+				case 1: // INICIADA
+					btnIncluirItem.Enabled = true;
+					btnRemoverItem.Enabled = true;
+					btnFinalizar.Enabled = true;
+					btnSetSetor.Enabled = true;
 
-				if (value == EnumFlagEstado.NovoRegistro)
-				{
-					btnSalvar.Enabled = true;
-					btnCancelar.Enabled = true;
-				}
-				else
-				{
-					btnSalvar.Enabled = false;
-					btnCancelar.Enabled = false;
-				}
+					GetAPagarEmAberto();
 
-				// btnSET ENABLE | DISABLE
-				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
+					break;
+				case 2: // FINALIZADA
+					btnIncluirItem.Enabled = false;
+					btnRemoverItem.Enabled = false;
+					btnFinalizar.Enabled = false;
+					btnSetSetor.Enabled = false;
+
+					break;
+				case 3: // BLOQUEADA
+					btnIncluirItem.Enabled = false;
+					btnRemoverItem.Enabled = false;
+					btnFinalizar.Enabled = false;
+					btnSetSetor.Enabled = false;
+
+					break;
+				default:
+					break;
 			}
 		}
 
@@ -154,20 +151,22 @@ namespace CamadaUI.DespesaCartao
 		{
 			try
 			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
+				if (_despesa.IDDespesa != null)
+				{
+					// --- Ampulheta ON
+					Cursor.Current = Cursors.WaitCursor;
 
-				listAPagarEmAberto = despBLL.ListAPagarCartaoEmAberto(_despesa.IDCartaoCredito);
+					listAPagarVinculado = despBLL.ListAPagarCartaoVinculadas((long)_despesa.IDDespesa);
+				}
 
 				// format Datagridview
-				bindPag.DataSource = listAPagarEmAberto;
-				dgvListagem.DataSource = bindPag;
+				bindAPagar.DataSource = listAPagarVinculado;
+				dgvListagem.DataSource = bindAPagar;
 				FormataListagem();
-
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter a lista de Parcelamento..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a lista de APagar Vinculados..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -210,17 +209,16 @@ namespace CamadaUI.DespesaCartao
 		private void BindingCreator()
 		{
 			// CREATE BINDINGS
-			lblID.DataBindings.Add("Text", bind, "IDDespesa", true);
-			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblCredor.DataBindings.Add("Text", bind, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblDespesaTipo.DataBindings.Add("Text", bind, "DespesaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblDespesaDescricao.DataBindings.Add("Text", bind, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
-			lblDespesaData.DataBindings.Add("Text", bind, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
-			txtDespesaValor.DataBindings.Add("Text", bind, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblID.DataBindings.Add("Text", bindDespesa, "IDDespesa", true);
+			txtSetor.DataBindings.Add("Text", bindDespesa, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblCredor.DataBindings.Add("Text", bindDespesa, "Credor", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaDescricao.DataBindings.Add("Text", bindDespesa, "DespesaDescricao", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaData.DataBindings.Add("Text", bindDespesa, "DespesaData", true, DataSourceUpdateMode.OnPropertyChanged);
+			lblDespesaValor.DataBindings.Add("Text", bindDespesa, "DespesaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 
 			// FORMAT HANDLERS
 			lblID.DataBindings["Text"].Format += FormatID;
-			txtDespesaValor.DataBindings["Text"].Format += FormatCurrency;
+			lblDespesaValor.DataBindings["Text"].Format += FormatCurrency;
 		}
 
 		private void FormatID(object sender, ConvertEventArgs e)
@@ -242,12 +240,7 @@ namespace CamadaUI.DespesaCartao
 
 		private void RegistroAlterado(object sender, PropertyChangedEventArgs e)
 		{
-			if (Sit != EnumFlagEstado.Alterado && Sit != EnumFlagEstado.NovoRegistro)
-			{
-				Sit = EnumFlagEstado.Alterado;
-			}
-
-			EP.Clear();
+			_despesa.IDSituacao = 1;
 		}
 
 		#endregion // DATABINDING --- END
@@ -324,19 +317,21 @@ namespace CamadaUI.DespesaCartao
 
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
-			if (Sit == EnumFlagEstado.Alterado || Sit == EnumFlagEstado.NovoRegistro)
+			if (_despesa.IDSituacao == 1)
 			{
-				AbrirDialog("Esse registro ainda não foi salvo... \n" +
-					"Favor SALVAR ou CANCELAR a edição do registro atual antes de fechar.",
-					"Registro Novo ou Alterado", DialogType.OK, DialogIcon.Exclamation);
-				return;
+				var resp = AbrirDialog("Essa Despesa de Cartão ainda não foi concluída..." +
+					"\n\nDeseja fechar assim mesmo?",
+					"Não concluída",
+					DialogType.SIM_NAO, DialogIcon.Question);
+
+				if (resp == DialogResult.No) return;
 			}
 
 			Close();
 
 			if (_formOrigem != null && _formOrigem.Name == "frmDespesaCartaoListagem")
 			{
-				var frm = new Saidas.frmDespesaListagem();
+				var frm = new frmDespesaCartaoListagem();
 				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 				frm.Show();
 			}
@@ -344,31 +339,6 @@ namespace CamadaUI.DespesaCartao
 			{
 				MostraMenuPrincipal();
 			}
-		}
-
-		private void btnCancelar_Click(object sender, EventArgs e)
-		{
-			if (Sit == EnumFlagEstado.NovoRegistro)
-			{
-				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
-							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
-
-				if (response == DialogResult.Yes)
-				{
-					Close();
-					MostraMenuPrincipal();
-				}
-			}
-			else if (Sit == EnumFlagEstado.Alterado)
-			{
-				bind.CancelEdit();
-				Sit = EnumFlagEstado.RegistroSalvo;
-			}
-			else
-			{
-				Sit = EnumFlagEstado.RegistroSalvo;
-			}
-
 		}
 
 		#endregion // BUTTONS --- END
@@ -388,8 +358,8 @@ namespace CamadaUI.DespesaCartao
 				//--- check return
 				if (frm.DialogResult == DialogResult.OK)
 				{
-					if (Sit != EnumFlagEstado.NovoRegistro && _despesa.IDSetor != frm.propEscolha.IDSetor)
-						Sit = EnumFlagEstado.Alterado;
+					if (_despesa.IDSituacao != 1 && _despesa.IDSetor != frm.propEscolha.IDSetor)
+						_despesa.IDSituacao = 1;
 
 					_despesa.IDSetor = (int)frm.propEscolha.IDSetor;
 					txtSetor.Text = frm.propEscolha.Setor;
@@ -447,7 +417,7 @@ namespace CamadaUI.DespesaCartao
 		{
 			// previne to accepts changes if SIT = RegistroSalvo
 			//---------------------------------------------------
-			if (Sit == EnumFlagEstado.RegistroSalvo)
+			if (_despesa.IDSituacao != 1)
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
@@ -554,15 +524,24 @@ namespace CamadaUI.DespesaCartao
 				mnuImagemInserir.Text = IsThereImagem ? "Alterar Imagem" : "Inserir Imagem";
 				mnuImagemVisualizar.Enabled = IsThereImagem;
 
-				mnuEditarAPagar.Enabled = true;
-				mnuExcluirAPagar.Enabled = true;
 				mnuImagemAPagar.Enabled = true;
+
+				if (_despesa.IDSituacao == 1)
+				{
+					mnuExcluirAPagar.Enabled = true;
+					mnuAdicionarAPagar.Enabled = true;
+				}
+				else
+				{
+					mnuExcluirAPagar.Enabled = false;
+					mnuAdicionarAPagar.Enabled = false;
+				}
 			}
 			else
 			{
-				mnuEditarAPagar.Enabled = false;
 				mnuExcluirAPagar.Enabled = false;
 				mnuImagemAPagar.Enabled = false;
+				if (_despesa.IDSituacao != 1) mnuAdicionarAPagar.Enabled = false;
 			}
 
 			// revela menu
@@ -743,119 +722,51 @@ namespace CamadaUI.DespesaCartao
 		//------------------------------------------------------------------------------------------------------------
 		private void mnuAdicionarAPagar_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				//--- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Adicionar parcela de APagar..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		// EDITAR A PAGAR
-		//------------------------------------------------------------------------------------------------------------
-		private void mnuEditarAPagar_Click(object sender, EventArgs e)
-		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Editar...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
-			//--- get Selected item
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Editar a Parcela..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
+			btnIncluirItem_Click(sender, e);
 		}
 
 		// EXCLUIR APAGAR
 		//------------------------------------------------------------------------------------------------------------
 		private void mnuRemoverAPagar_Click(object sender, EventArgs e)
 		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para REMOVER...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
-			//--- get Selected item
-			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				bindPag.Remove(item);
-				bindPag.ResetBindings(false);
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Excluir registro de APagar..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
+			btnRemoverItem_Click(sender, e);
 		}
 
 		#endregion // MENU A PAGAR --- END
 
-		#region SALVAR REGISTRO
+		#region CONCLUIR REGISTRO
 
-		private void btnSalvar_Click(object sender, EventArgs e)
+		private void btnConcluir_Click(object sender, EventArgs e)
 		{
-			if (Sit == EnumFlagEstado.Alterado)
-			{
-				AbrirDialog("Não é possível alterar um registro de Despesa...", "Alterar Despesa");
-				return;
-			}
-
 			if (!VerificaRegistro()) return;
+
+			//--- ask user
+			var resp = AbrirDialog("Deseja concluir a Fatura atual desse cartão de Crédito?" +
+				$"\nValor da Fatura: {_despesa.DespesaValor:C}" +
+				$"\nVencimento: {_despesa.ReferenciaData:d}",
+				"Concluir Fatura", DialogType.SIM_NAO, DialogIcon.Question);
+
+			if (resp != DialogResult.Yes) return;
 
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				//--- execute
+				despBLL.ConcluirDespesaCartao(_despesa);
+				_despesa.IDSituacao = 2;
+				_despesa.Situacao = "Concluída";
+				SituacaoAlterada();
 
+				//--- user message
+				AbrirDialog("Despesa de Cartão concuída com sucesso..." +
+					"\nA Fatura do cartão foi inserida no APagar.", "Despesa Concluida");
 
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Evento..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Concluir a Fatura do Cartão..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -863,37 +774,23 @@ namespace CamadaUI.DespesaCartao
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
-
 		}
 
 		// CHECK REGISTRES
 		private bool VerificaRegistro()
 		{
 			// CHECK FIELDS
-			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(lblDespesaTipo, "Tipo de Despesa", _despesa, EP)) return false;
-			if (!VerificaDadosClasse(lblDespesaDescricao, "Descrição da Despesa", _despesa, EP)) return false;
+			if (!VerificaDadosClasse(txtSetor, "Setor Debitado", _despesa)) return false;
 
 			// CHECK DESPESA VALUE
+			_despesa.DespesaValor = listAPagarVinculado.Sum(x => x.APagarValor);
+
 			if (_despesa.DespesaValor <= 0)
 			{
 				AbrirDialog("O valor da Despesa precisa ser maior do que Zero...\n" +
-					"Favor inserir o valor desta despesa corretamente.", "Valor da Despesa",
+					"Favor inserir itens nessa Despesa.", "Valor da Despesa",
 					DialogType.OK, DialogIcon.Exclamation);
-				EP.SetError(txtDespesaValor, "Valor necessário...");
-				txtDespesaValor.Focus();
-				return false;
-			}
-
-			//--- Check and Create APagar
-			if (listAPagarVinculado.Count == 0)
-			{
-				AbrirDialog("Informe as Parcelas de APagar dessa Despesa\n" +
-					"Use o segundo botão do mouse na listagem e adicione uma ou mais parcelas.",
-					"Informar Parcelamento",
-					DialogType.OK,
-					DialogIcon.Information);
+				lblDespesaValor.Focus();
 				return false;
 			}
 
@@ -1075,10 +972,20 @@ namespace CamadaUI.DespesaCartao
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				var frm = new frmDespesaCartaoProcurar(listAPagarEmAberto, this);
+				//--- create list not inserted
+				var newList = listAPagarEmAberto.Except(listAPagarVinculado).ToList();
 
+				var frm = new frmDespesaCartaoProcurar(newList, this);
 				frm.ShowDialog();
 
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				//--- update DB
+				despBLL.VincularAPagarItem((long)frm.SelectedItem.IDAPagar, (long)_despesa.IDDespesa);
+
+				//--- update list
+				listAPagarVinculado.Add(frm.SelectedItem);
+				bindAPagar.ResetBindings(false);
 			}
 			catch (Exception ex)
 			{
@@ -1091,6 +998,94 @@ namespace CamadaUI.DespesaCartao
 				Cursor.Current = Cursors.Default;
 			}
 
+		}
+
+		private void CalculaTotais()
+		{
+			decimal Total = listAPagarVinculado.Sum(x => x.APagarValor);
+
+			lblDespesaValor.Text = $"{Total:C}";
+		}
+
+		private void btnRemoverItem_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para REMOVER...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objAPagar item = (objAPagar)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- Update DB
+				despBLL.RemoverVinculoAPagarItem((long)item.IDAPagar);
+
+				//--- Remove to list
+				bindAPagar.Remove(item);
+				bindAPagar.ResetBindings(false);
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir registro de APagar..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// EXCLUIR DESPESA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnExcluirDespesa_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// --- ask USER
+				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Despesa abaixo?\n" +
+					$"\nREG: {_despesa.IDDespesa:D4}\nDATA: {_despesa.DespesaData.ToShortDateString()}\nVALOR: {_despesa.DespesaValor:c}",
+					"Excluir Despesa", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes) return;
+
+				//--- EXECUTE DELETE
+				despBLL.DeleteDespesaCartao(_despesa);
+
+				//--- user message
+				AbrirDialog("Despesa/Fatura Excluída com Sucesso!", "Despesa Excluída");
+
+				//--- CLOSE
+				Close();
+				MostraMenuPrincipal();
+			}
+			catch (AppException ex)
+			{
+				AbrirDialog("A Despesa está protegida de exclusão porque:\n" +
+							ex.Message, "Bloqueio de Exclusão", DialogType.OK, DialogIcon.Exclamation);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 	}
 }

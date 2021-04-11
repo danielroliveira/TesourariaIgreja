@@ -58,6 +58,9 @@
 			this.txtCredor = new System.Windows.Forms.TextBox();
 			this.lblContribuinte = new System.Windows.Forms.Label();
 			this.numVencimentoDia = new System.Windows.Forms.NumericUpDown();
+			this.btnSetForma = new VIBlend.WinForms.Controls.vButton();
+			this.txtAPagarForma = new System.Windows.Forms.TextBox();
+			this.label7 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lstListagem)).BeginInit();
@@ -106,24 +109,24 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnNovo,
-			this.toolStripSeparator1,
-			this.btnSalvar,
-			this.btnCancelar,
-			this.toolStripSeparator2,
-			this.btnFechar,
-			this.btnCartoesCredito});
+            this.btnNovo,
+            this.toolStripSeparator1,
+            this.btnSalvar,
+            this.btnCancelar,
+            this.toolStripSeparator2,
+            this.btnFechar,
+            this.btnCartoesCredito});
 			this.tspMenu.Location = new System.Drawing.Point(2, 403);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(1001, 44);
-			this.tspMenu.TabIndex = 20;
+			this.tspMenu.TabIndex = 23;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -231,7 +234,7 @@
 			this.lstListagem.Location = new System.Drawing.Point(12, 63);
 			this.lstListagem.Name = "lstListagem";
 			this.lstListagem.Size = new System.Drawing.Size(353, 324);
-			this.lstListagem.TabIndex = 21;
+			this.lstListagem.TabIndex = 24;
 			this.lstListagem.TabStop = false;
 			this.lstListagem.VScrollBarDisplayMode = ComponentOwl.BetterListView.BetterListViewScrollBarDisplayMode.ShowAlways;
 			this.lstListagem.DrawColumnHeader += new ComponentOwl.BetterListView.BetterListViewDrawColumnHeaderEventHandler(this.list_DrawColumnHeader);
@@ -278,19 +281,19 @@
 			this.cmbAtivo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cmbAtivo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cmbAtivo.FormattingEnabled = true;
-			this.cmbAtivo.Location = new System.Drawing.Point(526, 300);
+			this.cmbAtivo.Location = new System.Drawing.Point(526, 339);
 			this.cmbAtivo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.cmbAtivo.Name = "cmbAtivo";
 			this.cmbAtivo.Size = new System.Drawing.Size(103, 27);
-			this.cmbAtivo.TabIndex = 19;
+			this.cmbAtivo.TabIndex = 22;
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(478, 303);
+			this.label3.Location = new System.Drawing.Point(478, 342);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(42, 19);
-			this.label3.TabIndex = 18;
+			this.label3.TabIndex = 21;
 			this.label3.Text = "Ativo";
 			// 
 			// label1
@@ -432,28 +435,73 @@
 			// 
 			this.numVencimentoDia.Location = new System.Drawing.Point(813, 183);
 			this.numVencimentoDia.Maximum = new decimal(new int[] {
-			28,
-			0,
-			0,
-			0});
+            28,
+            0,
+            0,
+            0});
 			this.numVencimentoDia.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numVencimentoDia.Name = "numVencimentoDia";
 			this.numVencimentoDia.Size = new System.Drawing.Size(53, 27);
 			this.numVencimentoDia.TabIndex = 11;
 			this.numVencimentoDia.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
+			// 
+			// btnSetForma
+			// 
+			this.btnSetForma.AllowAnimations = true;
+			this.btnSetForma.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetForma.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetForma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetForma.Location = new System.Drawing.Point(799, 300);
+			this.btnSetForma.Name = "btnSetForma";
+			this.btnSetForma.RoundedCornersMask = ((byte)(15));
+			this.btnSetForma.RoundedCornersRadius = 0;
+			this.btnSetForma.Size = new System.Drawing.Size(34, 27);
+			this.btnSetForma.TabIndex = 20;
+			this.btnSetForma.TabStop = false;
+			this.btnSetForma.Text = "n";
+			this.btnSetForma.UseCompatibleTextRendering = true;
+			this.btnSetForma.UseVisualStyleBackColor = false;
+			this.btnSetForma.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetForma.Click += new System.EventHandler(this.btnSetForma_Click);
+			// 
+			// txtAPagarForma
+			// 
+			this.txtAPagarForma.Location = new System.Drawing.Point(526, 300);
+			this.txtAPagarForma.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtAPagarForma.MaxLength = 30;
+			this.txtAPagarForma.Name = "txtAPagarForma";
+			this.txtAPagarForma.Size = new System.Drawing.Size(267, 27);
+			this.txtAPagarForma.TabIndex = 19;
+			this.txtAPagarForma.Tag = "Pressione a tecla (+) para procurar";
+			this.txtAPagarForma.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtAPagarForma.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.BackColor = System.Drawing.Color.Transparent;
+			this.label7.ForeColor = System.Drawing.Color.Black;
+			this.label7.Location = new System.Drawing.Point(386, 303);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(134, 19);
+			this.label7.TabIndex = 18;
+			this.label7.Text = "Forma de Cobrança";
 			// 
 			// frmCartaoCreditoDespesa
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1006, 449);
+			this.Controls.Add(this.btnSetForma);
+			this.Controls.Add(this.txtAPagarForma);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.numVencimentoDia);
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.txtSetor);
@@ -503,6 +551,9 @@
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
 			this.Controls.SetChildIndex(this.numVencimentoDia, 0);
+			this.Controls.SetChildIndex(this.label7, 0);
+			this.Controls.SetChildIndex(this.txtAPagarForma, 0);
+			this.Controls.SetChildIndex(this.btnSetForma, 0);
 			this.panel1.ResumeLayout(false);
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
@@ -544,5 +595,8 @@
 		internal System.Windows.Forms.TextBox txtCredor;
 		internal System.Windows.Forms.Label lblContribuinte;
 		private System.Windows.Forms.NumericUpDown numVencimentoDia;
+		internal VIBlend.WinForms.Controls.vButton btnSetForma;
+		internal System.Windows.Forms.TextBox txtAPagarForma;
+		internal System.Windows.Forms.Label label7;
 	}
 }

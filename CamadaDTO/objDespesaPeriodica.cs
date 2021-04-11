@@ -267,7 +267,7 @@ namespace CamadaDTO
 			{
 
 				Func<string> DiaDaSemana = () => new System.Globalization.CultureInfo("pt-BR").DateTimeFormat.DayNames[(int)RecorrenciaDia];
-				Func<string> MesDoAno = () => new System.Globalization.CultureInfo("pt-BR").DateTimeFormat.MonthNames[(int)RecorrenciaMes];
+				Func<string> MesDoAno = () => new System.Globalization.CultureInfo("pt-BR").DateTimeFormat.MonthNames[(int)RecorrenciaMes - 1];
 
 				// define o inicio da frase Masculino ou Feminino
 				string repeticaoM = "Todos os";

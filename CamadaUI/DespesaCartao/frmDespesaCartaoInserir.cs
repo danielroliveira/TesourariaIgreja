@@ -3,7 +3,6 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
@@ -35,6 +34,9 @@ namespace CamadaUI.DespesaCartao
 			numRefAno.KeyDown += Numeric_KeyDown;
 			numRefDia.Enter += Numeric_Enter;
 			numRefAno.Enter += Numeric_Enter;
+
+			Activated += (a, b) => DesativaPanel(_formOrigem);
+			FormClosed += (a, b) => AtivaPanel(_formOrigem);
 		}
 
 		private void ObterDadosLastDespesa()
@@ -170,32 +172,49 @@ namespace CamadaUI.DespesaCartao
 
 		private void btnEfetuar_Click(object sender, EventArgs e)
 		{
-			//--- CHECK LAST DESPESA
-			if (_LastDespesa.IDSituacao != 2)
-			{
-				var resp = AbrirDialog("A última Despesa Reunida desse Cartão de Crédito ainda não foi Quitada...\n" +
-					"Há necessidade de Quitar a ultima despesa antes de Criar uma nova Despesa.\n" +
-					"Deseja abrir a última despesa de Cartão?",
-					"Despesa não Quitada",
-					DialogType.SIM_NAO,
-					DialogIcon.Exclamation);
-
-				if (resp != DialogResult.Yes) return;
-
-				var frm = new frmDespesaCartao(_LastDespesa);
-				frm.MdiParent = Application.OpenForms[0];
-				Close();
-				frm.Show();
-				return;
-			}
-
 			//--- GET REF DATE
 			if (!DateTime.TryParse($"{numRefDia.Value}/{cmbRefMes.SelectedValue}/{numRefAno.Value}", out DateTime _RefDate))
 			{
 				AbrirDialog("Data escolhida é inválida...\n" +
-					"Favor selecionar uma data válida", "Data de Referência",
+					"Favor selecionar uma data válida",
+					"Data de Referência",
 					DialogType.OK, DialogIcon.Exclamation);
 				numRefDia.Focus();
+			}
+
+			//--- ANALIZE LAST DESPESA
+			if (_LastDespesa != null)
+			{
+				//--- CHECK LAST DESPESA SITUACAO
+				if (_LastDespesa.IDSituacao != 2)
+				{
+					var resp = AbrirDialog("A última Despesa Reunida desse Cartão de Crédito ainda não foi Finalizada...\n" +
+						"Há necessidade de Concluir a Fatura da ultima despesa, antes de Criar uma nova Despesa.\n" +
+						"Deseja abrir a última Fatura de Cartão?",
+						"Fatura não Concluída",
+						DialogType.SIM_NAO,
+						DialogIcon.Exclamation);
+
+					if (resp != DialogResult.Yes) return;
+
+					var frm = new frmDespesaCartao(_LastDespesa);
+					frm.MdiParent = Application.OpenForms[0];
+					Close();
+					frm.Show();
+					return;
+				}
+
+				//--- CHECK LAST DESPESA DATE
+				if (_LastDespesa.ReferenciaData >= _RefDate)
+				{
+					AbrirDialog("A última Despesa de Fechamento desse Cartão de Crédito " +
+						"tem uma Data de Referência posterior à Data de Referência escolhida...\n" +
+						$"Favor escolher uma data posterior a: {_LastDespesa.ReferenciaData:d}",
+						"Data de Referência",
+						DialogType.OK, DialogIcon.Exclamation);
+					numRefDia.Focus();
+					return;
+				}
 			}
 
 			//--- INSERT NEW DESPESA CARTAO
@@ -209,13 +228,14 @@ namespace CamadaUI.DespesaCartao
 
 				//--- open form
 				var frm = new frmDespesaCartao(newDespCartao);
+				frm.MdiParent = Application.OpenForms[0];
 				frm.Show();
 
 				Close();
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Inserir o novo Caixa..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Inserir uma nova Despesa de Cartão de Crédito..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -391,27 +411,6 @@ namespace CamadaUI.DespesaCartao
 
 		#region DESIGN FORM FUNCTIONS
 
-		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
-		//------------------------------------------------------------------------------------------------------------
-		private void form_Activated(object sender, EventArgs e)
-		{
-			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
-			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.Silver;
-			}
-		}
-
-		private void form_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
-			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.SlateGray;
-
-			}
-		}
-
 		// CONTROLA TOOLTIP
 		//------------------------------------------------------------------------------------------------------------
 		private void ShowToolTip(Control control)
@@ -440,11 +439,6 @@ namespace CamadaUI.DespesaCartao
 			if (control.Enabled == true)
 				ShowToolTip(control);
 		}
-
-
-
-
-
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
 

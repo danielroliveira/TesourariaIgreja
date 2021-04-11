@@ -1,6 +1,6 @@
-﻿namespace CamadaUI.Contas
+﻿namespace CamadaUI.DespesaCartao
 {
-	partial class frmContaMovimentacao
+	partial class frmDespesaCartaoListagem
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,25 +30,27 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
+			this.btnAdicionar = new System.Windows.Forms.Button();
+			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnMovData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnMovTipoDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnDescricaoOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnIDCaixa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorReal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnDespesaDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCredor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSituacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
-			this.lblValorTransferido = new System.Windows.Forms.Label();
-			this.btnImprimir = new System.Windows.Forms.Button();
+			this.lblValorTotal = new System.Windows.Forms.Label();
+			this.btnImprimirListagem = new System.Windows.Forms.Button();
 			this.pnlPorMes = new System.Windows.Forms.Panel();
 			this.btnPeriodoPosterior = new VIBlend.WinForms.Controls.vArrowButton();
 			this.btnMesAtual = new VIBlend.WinForms.Controls.vButton();
 			this.btnPeriodoAnterior = new VIBlend.WinForms.Controls.vArrowButton();
 			this.lblPeriodo = new System.Windows.Forms.Label();
-			this.rbtPorMes = new System.Windows.Forms.RadioButton();
+			this.rbtPorAno = new System.Windows.Forms.RadioButton();
 			this.rbtPorPeriodo = new System.Windows.Forms.RadioButton();
 			this.rbtTodas = new System.Windows.Forms.RadioButton();
 			this.pnlPorPeriodo = new System.Windows.Forms.Panel();
@@ -57,25 +59,20 @@
 			this.btnDtFinal = new VIBlend.WinForms.Controls.vButton();
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
-			this.lblValorEntradas = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
+			this.btnExcluir = new System.Windows.Forms.Button();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
-			this.verCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuImagemRemover = new System.Windows.Forms.ToolStripMenuItem();
-			this.lblValorSaidas = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
+			this.line1 = new AwesomeShapeControl.Line();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
-			this.txtConta = new System.Windows.Forms.TextBox();
+			this.txtCartaoDescricao = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
-			this.lblValorProvisorias = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.lblValorNaoRealizadas = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -86,37 +83,65 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(917, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(288, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(722, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(543, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Movimentação de Contas";
+			this.lblTitulo.Text = "Procurar Despesa de Fatura de Cartão de Crédito";
 			// 
 			// btnClose
 			// 
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1205, 0);
+			this.btnClose.Location = new System.Drawing.Point(1265, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1245, 50);
+			this.panel1.Size = new System.Drawing.Size(1305, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(1088, 632);
+			this.btnFechar.Location = new System.Drawing.Point(1189, 634);
 			this.btnFechar.Name = "btnFechar";
-			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 10;
+			this.btnFechar.Size = new System.Drawing.Size(104, 42);
+			this.btnFechar.TabIndex = 14;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnFechar.UseVisualStyleBackColor = true;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+			// 
+			// btnAdicionar
+			// 
+			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.btnAdicionar.Location = new System.Drawing.Point(11, 632);
+			this.btnAdicionar.Name = "btnAdicionar";
+			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
+			this.btnAdicionar.TabIndex = 7;
+			this.btnAdicionar.Text = "&Adicionar";
+			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnAdicionar.UseVisualStyleBackColor = true;
+			this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+			// 
+			// btnVisualizar
+			// 
+			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnVisualizar.Location = new System.Drawing.Point(143, 632);
+			this.btnVisualizar.Name = "btnVisualizar";
+			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
+			this.btnVisualizar.TabIndex = 8;
+			this.btnVisualizar.Text = "&Visualizar";
+			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnVisualizar.UseVisualStyleBackColor = true;
+			this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
 			// 
 			// dgvListagem
 			// 
@@ -124,95 +149,97 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnMovData,
-            this.clnMovTipoDescricao,
-            this.clnDescricaoOrigem,
-            this.clnIDOrigem,
-            this.clnConta,
+            this.clnID,
+            this.clnData,
             this.clnSetor,
-            this.clnIDCaixa,
-            this.clnValorReal});
+            this.clnDespesaDescricao,
+            this.clnCredor,
+            this.clnSituacao,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(22, 128);
+			this.dgvListagem.Location = new System.Drawing.Point(11, 130);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
+			this.dgvListagem.ReadOnly = true;
 			this.dgvListagem.RowHeadersVisible = false;
 			this.dgvListagem.RowHeadersWidth = 45;
 			this.dgvListagem.RowTemplate.Height = 30;
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1201, 494);
-			this.dgvListagem.TabIndex = 5;
-			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
-			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
+			this.dgvListagem.Size = new System.Drawing.Size(1282, 492);
+			this.dgvListagem.TabIndex = 4;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
-			// clnMovData
+			// clnID
 			// 
-			this.clnMovData.HeaderText = "Data";
-			this.clnMovData.Name = "clnMovData";
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 50;
 			// 
-			// clnMovTipoDescricao
+			// clnData
 			// 
-			this.clnMovTipoDescricao.HeaderText = "Tipo";
-			this.clnMovTipoDescricao.Name = "clnMovTipoDescricao";
-			this.clnMovTipoDescricao.Width = 120;
-			// 
-			// clnDescricaoOrigem
-			// 
-			this.clnDescricaoOrigem.HeaderText = "Origem";
-			this.clnDescricaoOrigem.Name = "clnDescricaoOrigem";
-			this.clnDescricaoOrigem.Width = 230;
-			// 
-			// clnIDOrigem
-			// 
-			this.clnIDOrigem.HeaderText = "Reg.";
-			this.clnIDOrigem.Name = "clnIDOrigem";
-			this.clnIDOrigem.Width = 80;
-			// 
-			// clnConta
-			// 
-			this.clnConta.HeaderText = "Conta";
-			this.clnConta.Name = "clnConta";
-			this.clnConta.Width = 200;
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
 			// 
 			// clnSetor
 			// 
 			this.clnSetor.HeaderText = "Setor";
 			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.Width = 200;
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 180;
 			// 
-			// clnIDCaixa
+			// clnDespesaDescricao
 			// 
-			this.clnIDCaixa.HeaderText = "Caixa";
-			this.clnIDCaixa.Name = "clnIDCaixa";
+			this.clnDespesaDescricao.HeaderText = "Descrição";
+			this.clnDespesaDescricao.Name = "clnDespesaDescricao";
+			this.clnDespesaDescricao.ReadOnly = true;
+			this.clnDespesaDescricao.Width = 320;
 			// 
-			// clnValorReal
+			// clnCredor
 			// 
-			this.clnValorReal.HeaderText = "Valor";
-			this.clnValorReal.Name = "clnValorReal";
-			this.clnValorReal.Width = 120;
+			this.clnCredor.HeaderText = "Credor";
+			this.clnCredor.Name = "clnCredor";
+			this.clnCredor.ReadOnly = true;
+			this.clnCredor.Width = 320;
+			// 
+			// clnSituacao
+			// 
+			this.clnSituacao.HeaderText = "Situação";
+			this.clnSituacao.Name = "clnSituacao";
+			this.clnSituacao.ReadOnly = true;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
 			// label1
 			// 
@@ -220,38 +247,37 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(639, 628);
+			this.label1.Location = new System.Drawing.Point(1110, 623);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(90, 15);
-			this.label1.TabIndex = 8;
-			this.label1.Text = "Vl. Transferido:";
+			this.label1.Size = new System.Drawing.Size(69, 15);
+			this.label1.TabIndex = 12;
+			this.label1.Text = "Valor Total:";
 			// 
-			// lblValorTransferido
+			// lblValorTotal
 			// 
-			this.lblValorTransferido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorTransferido.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorTransferido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTransferido.ForeColor = System.Drawing.Color.DarkGreen;
-			this.lblValorTransferido.Location = new System.Drawing.Point(594, 645);
-			this.lblValorTransferido.Name = "lblValorTransferido";
-			this.lblValorTransferido.Size = new System.Drawing.Size(137, 32);
-			this.lblValorTransferido.TabIndex = 9;
-			this.lblValorTransferido.Text = "R$ 0,00";
-			this.lblValorTransferido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
+			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValorTotal.Location = new System.Drawing.Point(1042, 642);
+			this.lblValorTotal.Name = "lblValorTotal";
+			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
+			this.lblValorTotal.TabIndex = 13;
+			this.lblValorTotal.Text = "R$ 0,00";
+			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// btnImprimir
+			// btnImprimirListagem
 			// 
-			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(956, 632);
-			this.btnImprimir.Name = "btnImprimir";
-			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
-			this.btnImprimir.TabIndex = 9;
-			this.btnImprimir.Text = "&Imprimir";
-			this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnImprimir.UseVisualStyleBackColor = true;
-			this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
+			this.btnImprimirListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnImprimirListagem.Image = global::CamadaUI.Properties.Resources.imprimir_24;
+			this.btnImprimirListagem.Location = new System.Drawing.Point(423, 632);
+			this.btnImprimirListagem.Name = "btnImprimirListagem";
+			this.btnImprimirListagem.Size = new System.Drawing.Size(185, 42);
+			this.btnImprimirListagem.TabIndex = 11;
+			this.btnImprimirListagem.Text = "&Imprimir Listagem";
+			this.btnImprimirListagem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnImprimirListagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnImprimirListagem.UseVisualStyleBackColor = true;
+			this.btnImprimirListagem.Click += new System.EventHandler(this.btnImprimirListagem_Click);
 			// 
 			// pnlPorMes
 			// 
@@ -264,7 +290,6 @@
 			this.pnlPorMes.Name = "pnlPorMes";
 			this.pnlPorMes.Size = new System.Drawing.Size(321, 38);
 			this.pnlPorMes.TabIndex = 3;
-			this.pnlPorMes.Tag = "";
 			// 
 			// btnPeriodoPosterior
 			// 
@@ -275,7 +300,7 @@
 			this.btnPeriodoPosterior.Minimum = 0;
 			this.btnPeriodoPosterior.Name = "btnPeriodoPosterior";
 			this.btnPeriodoPosterior.Size = new System.Drawing.Size(25, 25);
-			this.btnPeriodoPosterior.TabIndex = 4;
+			this.btnPeriodoPosterior.TabIndex = 0;
 			this.btnPeriodoPosterior.TabStop = false;
 			this.btnPeriodoPosterior.Text = "VArrowButton1";
 			this.btnPeriodoPosterior.Value = 0;
@@ -322,28 +347,25 @@
 			this.lblPeriodo.Name = "lblPeriodo";
 			this.lblPeriodo.Size = new System.Drawing.Size(238, 30);
 			this.lblPeriodo.TabIndex = 2;
-			this.lblPeriodo.Tag = "Clique aqui duas vezes para escolher o Ano e o Mês";
 			this.lblPeriodo.Text = "Novembro | 2017";
 			this.lblPeriodo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.lblPeriodo.DoubleClick += new System.EventHandler(this.lblPeriodo_DoubleClick);
-			this.lblPeriodo.MouseHover += new System.EventHandler(this.lblPeriodo_MouseHover);
 			// 
-			// rbtPorMes
+			// rbtPorAno
 			// 
-			this.rbtPorMes.Appearance = System.Windows.Forms.Appearance.Button;
-			this.rbtPorMes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(230)))), ((int)(((byte)(239)))));
-			this.rbtPorMes.Checked = true;
-			this.rbtPorMes.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-			this.rbtPorMes.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSteelBlue;
-			this.rbtPorMes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.rbtPorMes.Location = new System.Drawing.Point(16, 10);
-			this.rbtPorMes.Name = "rbtPorMes";
-			this.rbtPorMes.Size = new System.Drawing.Size(102, 38);
-			this.rbtPorMes.TabIndex = 0;
-			this.rbtPorMes.TabStop = true;
-			this.rbtPorMes.Text = "Por Mês";
-			this.rbtPorMes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rbtPorMes.UseVisualStyleBackColor = false;
+			this.rbtPorAno.Appearance = System.Windows.Forms.Appearance.Button;
+			this.rbtPorAno.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(230)))), ((int)(((byte)(239)))));
+			this.rbtPorAno.Checked = true;
+			this.rbtPorAno.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+			this.rbtPorAno.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSteelBlue;
+			this.rbtPorAno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.rbtPorAno.Location = new System.Drawing.Point(16, 10);
+			this.rbtPorAno.Name = "rbtPorAno";
+			this.rbtPorAno.Size = new System.Drawing.Size(102, 38);
+			this.rbtPorAno.TabIndex = 0;
+			this.rbtPorAno.TabStop = true;
+			this.rbtPorAno.Text = "Por Ano";
+			this.rbtPorAno.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rbtPorAno.UseVisualStyleBackColor = false;
 			// 
 			// rbtPorPeriodo
 			// 
@@ -371,7 +393,7 @@
 			this.rbtTodas.Name = "rbtTodas";
 			this.rbtTodas.Size = new System.Drawing.Size(102, 38);
 			this.rbtTodas.TabIndex = 2;
-			this.rbtTodas.Text = "Todos";
+			this.rbtTodas.Text = "Todas";
 			this.rbtTodas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rbtTodas.UseVisualStyleBackColor = false;
 			// 
@@ -445,74 +467,59 @@
 			this.Panel2.BackColor = System.Drawing.Color.Gainsboro;
 			this.Panel2.Controls.Add(this.rbtTodas);
 			this.Panel2.Controls.Add(this.rbtPorPeriodo);
-			this.Panel2.Controls.Add(this.rbtPorMes);
+			this.Panel2.Controls.Add(this.rbtPorAno);
 			this.Panel2.Controls.Add(this.pnlPorPeriodo);
 			this.Panel2.Controls.Add(this.pnlPorMes);
-			this.Panel2.Location = new System.Drawing.Point(549, 60);
+			this.Panel2.Location = new System.Drawing.Point(619, 60);
 			this.Panel2.Name = "Panel2";
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
-			this.Panel2.TabIndex = 4;
+			this.Panel2.TabIndex = 15;
 			// 
-			// lblValorEntradas
+			// btnExcluir
 			// 
-			this.lblValorEntradas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorEntradas.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorEntradas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorEntradas.ForeColor = System.Drawing.Color.DarkBlue;
-			this.lblValorEntradas.Location = new System.Drawing.Point(308, 645);
-			this.lblValorEntradas.Name = "lblValorEntradas";
-			this.lblValorEntradas.Size = new System.Drawing.Size(137, 32);
-			this.lblValorEntradas.TabIndex = 9;
-			this.lblValorEntradas.Text = "R$ 0,00";
-			this.lblValorEntradas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label3
-			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(369, 628);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(76, 15);
-			this.label3.TabIndex = 8;
-			this.label3.Text = "Vl. Entradas:";
+			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.btnExcluir.Location = new System.Drawing.Point(275, 632);
+			this.btnExcluir.Name = "btnExcluir";
+			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
+			this.btnExcluir.TabIndex = 9;
+			this.btnExcluir.Text = "&Excluir";
+			this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnExcluir.UseVisualStyleBackColor = true;
+			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
 			// 
 			// mnuOperacoes
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemVerOrigem,
-            this.verCaixaToolStripMenuItem,
-            this.mnuImagem});
+            this.mnuVisualizar,
+            this.mnuImagem,
+            this.toolStripSeparator2,
+            this.mnuExcluir});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(161, 82);
+			this.mnuOperacoes.Size = new System.Drawing.Size(224, 118);
 			// 
-			// mnuItemVerOrigem
+			// mnuVisualizar
 			// 
-			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
-			this.mnuItemVerOrigem.Size = new System.Drawing.Size(160, 26);
-			this.mnuItemVerOrigem.Text = "Ver Origem";
-			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
-			// 
-			// verCaixaToolStripMenuItem
-			// 
-			this.verCaixaToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.verCaixaToolStripMenuItem.Name = "verCaixaToolStripMenuItem";
-			this.verCaixaToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
-			this.verCaixaToolStripMenuItem.Text = "Ver Caixa";
+			this.mnuVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuVisualizar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuVisualizar.Name = "mnuVisualizar";
+			this.mnuVisualizar.Size = new System.Drawing.Size(223, 36);
+			this.mnuVisualizar.Text = "Visualizar Despesa";
+			this.mnuVisualizar.Click += new System.EventHandler(this.mnuVisualizar_Click);
 			// 
 			// mnuImagem
 			// 
 			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuImagemInserir,
             this.mnuImagemVisualizar,
-            this.toolStripSeparator3,
+            this.toolStripSeparator1,
             this.mnuImagemRemover});
 			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
+			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagem.Name = "mnuImagem";
-			this.mnuImagem.Size = new System.Drawing.Size(160, 26);
+			this.mnuImagem.Size = new System.Drawing.Size(223, 36);
 			this.mnuImagem.Text = "Imagem";
 			// 
 			// mnuImagemInserir
@@ -521,6 +528,7 @@
 			this.mnuImagemInserir.Name = "mnuImagemInserir";
 			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemInserir.Text = "Inserir Imagem";
+			this.mnuImagemInserir.Click += new System.EventHandler(this.mnuImagemInserir_Click);
 			// 
 			// mnuImagemVisualizar
 			// 
@@ -528,11 +536,12 @@
 			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
 			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemVisualizar.Text = "Ver Imagem";
+			this.mnuImagemVisualizar.Click += new System.EventHandler(this.mnuImagemVisualizar_Click);
 			// 
-			// toolStripSeparator3
+			// toolStripSeparator1
 			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(201, 6);
 			// 
 			// mnuImagemRemover
 			// 
@@ -540,31 +549,32 @@
 			this.mnuImagemRemover.Name = "mnuImagemRemover";
 			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemRemover.Text = "Remover Imagem";
+			this.mnuImagemRemover.Click += new System.EventHandler(this.mnuImagemRemover_Click);
 			// 
-			// lblValorSaidas
+			// toolStripSeparator2
 			// 
-			this.lblValorSaidas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorSaidas.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorSaidas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorSaidas.ForeColor = System.Drawing.Color.DarkRed;
-			this.lblValorSaidas.Location = new System.Drawing.Point(451, 645);
-			this.lblValorSaidas.Name = "lblValorSaidas";
-			this.lblValorSaidas.Size = new System.Drawing.Size(137, 32);
-			this.lblValorSaidas.TabIndex = 9;
-			this.lblValorSaidas.Text = "R$ 0,00";
-			this.lblValorSaidas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
 			// 
-			// label4
+			// mnuExcluir
 			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label4.AutoSize = true;
-			this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.ForeColor = System.Drawing.Color.DimGray;
-			this.label4.Location = new System.Drawing.Point(525, 628);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(63, 15);
-			this.label4.TabIndex = 8;
-			this.label4.Text = "Vl. Saídas:";
+			this.mnuExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuExcluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuExcluir.Name = "mnuExcluir";
+			this.mnuExcluir.Size = new System.Drawing.Size(223, 36);
+			this.mnuExcluir.Text = "Excluir Despesa";
+			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
+			// 
+			// line1
+			// 
+			this.line1.EndPoint = new System.Drawing.Point(5, 42);
+			this.line1.LineColor = System.Drawing.Color.Silver;
+			this.line1.LineWidth = 3F;
+			this.line1.Location = new System.Drawing.Point(407, 629);
+			this.line1.Name = "line1";
+			this.line1.Size = new System.Drawing.Size(10, 47);
+			this.line1.StartPoint = new System.Drawing.Point(5, 5);
+			this.line1.TabIndex = 10;
 			// 
 			// btnSetConta
 			// 
@@ -572,135 +582,76 @@
 			this.btnSetConta.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetConta.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetConta.Location = new System.Drawing.Point(358, 79);
+			this.btnSetConta.Location = new System.Drawing.Point(427, 74);
 			this.btnSetConta.Name = "btnSetConta";
 			this.btnSetConta.RoundedCornersMask = ((byte)(15));
 			this.btnSetConta.RoundedCornersRadius = 0;
-			this.btnSetConta.Size = new System.Drawing.Size(34, 31);
-			this.btnSetConta.TabIndex = 3;
+			this.btnSetConta.Size = new System.Drawing.Size(34, 27);
+			this.btnSetConta.TabIndex = 18;
 			this.btnSetConta.TabStop = false;
-			this.btnSetConta.Text = "...";
+			this.btnSetConta.Text = "n";
 			this.btnSetConta.UseCompatibleTextRendering = true;
 			this.btnSetConta.UseVisualStyleBackColor = false;
 			this.btnSetConta.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnSetConta.Click += new System.EventHandler(this.btnSetConta_Click);
+			this.btnSetConta.Click += new System.EventHandler(this.btnSetCartao_Click);
 			// 
-			// txtConta
+			// txtCartaoDescricao
 			// 
-			this.txtConta.BackColor = System.Drawing.Color.White;
-			this.txtConta.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConta.Location = new System.Drawing.Point(22, 79);
-			this.txtConta.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtConta.MaxLength = 30;
-			this.txtConta.Name = "txtConta";
-			this.txtConta.Size = new System.Drawing.Size(330, 31);
-			this.txtConta.TabIndex = 2;
-			this.txtConta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtCartaoDescricao.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtCartaoDescricao.Location = new System.Drawing.Point(143, 74);
+			this.txtCartaoDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtCartaoDescricao.MaxLength = 30;
+			this.txtCartaoDescricao.Name = "txtCartaoDescricao";
+			this.txtCartaoDescricao.Size = new System.Drawing.Size(278, 27);
+			this.txtCartaoDescricao.TabIndex = 17;
+			this.txtCartaoDescricao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			this.txtCartaoDescricao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
 			// 
 			// label19
 			// 
 			this.label19.AutoSize = true;
 			this.label19.BackColor = System.Drawing.Color.Transparent;
 			this.label19.ForeColor = System.Drawing.Color.Black;
-			this.label19.Location = new System.Drawing.Point(18, 55);
+			this.label19.Location = new System.Drawing.Point(14, 76);
 			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(106, 19);
-			this.label19.TabIndex = 1;
-			this.label19.Text = "Escolher Conta";
+			this.label19.Size = new System.Drawing.Size(123, 19);
+			this.label19.TabIndex = 16;
+			this.label19.Text = "Cartão de Crédito";
 			// 
-			// lblValorProvisorias
-			// 
-			this.lblValorProvisorias.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorProvisorias.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorProvisorias.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorProvisorias.ForeColor = System.Drawing.Color.DimGray;
-			this.lblValorProvisorias.Location = new System.Drawing.Point(22, 645);
-			this.lblValorProvisorias.Name = "lblValorProvisorias";
-			this.lblValorProvisorias.Size = new System.Drawing.Size(137, 32);
-			this.lblValorProvisorias.TabIndex = 9;
-			this.lblValorProvisorias.Text = "R$ 0,00";
-			this.lblValorProvisorias.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label5
-			// 
-			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label5.AutoSize = true;
-			this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label5.ForeColor = System.Drawing.Color.DimGray;
-			this.label5.Location = new System.Drawing.Point(65, 628);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(91, 15);
-			this.label5.TabIndex = 8;
-			this.label5.Text = "Vl. Provisórias:";
-			// 
-			// lblValorNaoRealizadas
-			// 
-			this.lblValorNaoRealizadas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorNaoRealizadas.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorNaoRealizadas.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorNaoRealizadas.ForeColor = System.Drawing.Color.DimGray;
-			this.lblValorNaoRealizadas.Location = new System.Drawing.Point(165, 645);
-			this.lblValorNaoRealizadas.Name = "lblValorNaoRealizadas";
-			this.lblValorNaoRealizadas.Size = new System.Drawing.Size(137, 32);
-			this.lblValorNaoRealizadas.TabIndex = 9;
-			this.lblValorNaoRealizadas.Text = "R$ 0,00";
-			this.lblValorNaoRealizadas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label6
-			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label6.AutoSize = true;
-			this.label6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.ForeColor = System.Drawing.Color.DimGray;
-			this.label6.Location = new System.Drawing.Point(226, 628);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(73, 15);
-			this.label6.TabIndex = 8;
-			this.label6.Text = "Vl. Cheques:";
-			// 
-			// frmContaMovimentacao
+			// frmDespesaCartaoListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1245, 686);
-			this.Controls.Add(this.btnFechar);
-			this.Controls.Add(this.btnImprimir);
+			this.ClientSize = new System.Drawing.Size(1305, 686);
 			this.Controls.Add(this.btnSetConta);
-			this.Controls.Add(this.txtConta);
+			this.Controls.Add(this.txtCartaoDescricao);
 			this.Controls.Add(this.label19);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.label6);
-			this.Controls.Add(this.label5);
-			this.Controls.Add(this.label3);
+			this.Controls.Add(this.line1);
+			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.lblValorSaidas);
-			this.Controls.Add(this.lblValorNaoRealizadas);
-			this.Controls.Add(this.lblValorProvisorias);
-			this.Controls.Add(this.lblValorEntradas);
-			this.Controls.Add(this.lblValorTransferido);
+			this.Controls.Add(this.lblValorTotal);
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
+			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnImprimirListagem);
+			this.Controls.Add(this.btnAdicionar);
+			this.Controls.Add(this.btnVisualizar);
 			this.KeyPreview = true;
-			this.Name = "frmContaMovimentacao";
+			this.Name = "frmDespesaCartaoListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
-			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
+			this.Controls.SetChildIndex(this.btnVisualizar, 0);
+			this.Controls.SetChildIndex(this.btnAdicionar, 0);
+			this.Controls.SetChildIndex(this.btnImprimirListagem, 0);
+			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
-			this.Controls.SetChildIndex(this.lblValorTransferido, 0);
-			this.Controls.SetChildIndex(this.lblValorEntradas, 0);
-			this.Controls.SetChildIndex(this.lblValorProvisorias, 0);
-			this.Controls.SetChildIndex(this.lblValorNaoRealizadas, 0);
-			this.Controls.SetChildIndex(this.lblValorSaidas, 0);
+			this.Controls.SetChildIndex(this.lblValorTotal, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.label5, 0);
-			this.Controls.SetChildIndex(this.label6, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
+			this.Controls.SetChildIndex(this.btnExcluir, 0);
+			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.label19, 0);
-			this.Controls.SetChildIndex(this.txtConta, 0);
+			this.Controls.SetChildIndex(this.txtCartaoDescricao, 0);
 			this.Controls.SetChildIndex(this.btnSetConta, 0);
-			this.Controls.SetChildIndex(this.btnImprimir, 0);
-			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlPorMes.ResumeLayout(false);
@@ -715,16 +666,18 @@
 		#endregion
 
 		internal System.Windows.Forms.Button btnFechar;
+		internal System.Windows.Forms.Button btnAdicionar;
+		internal System.Windows.Forms.Button btnVisualizar;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.Label label1;
-		internal System.Windows.Forms.Label lblValorTransferido;
-		internal System.Windows.Forms.Button btnImprimir;
+		internal System.Windows.Forms.Label lblValorTotal;
+		internal System.Windows.Forms.Button btnImprimirListagem;
 		internal System.Windows.Forms.Panel pnlPorMes;
 		internal VIBlend.WinForms.Controls.vArrowButton btnPeriodoPosterior;
 		internal VIBlend.WinForms.Controls.vButton btnMesAtual;
 		internal VIBlend.WinForms.Controls.vArrowButton btnPeriodoAnterior;
 		internal System.Windows.Forms.Label lblPeriodo;
-		internal System.Windows.Forms.RadioButton rbtPorMes;
+		internal System.Windows.Forms.RadioButton rbtPorAno;
 		internal System.Windows.Forms.RadioButton rbtPorPeriodo;
 		internal System.Windows.Forms.RadioButton rbtTodas;
 		internal System.Windows.Forms.Panel pnlPorPeriodo;
@@ -733,32 +686,26 @@
 		internal VIBlend.WinForms.Controls.vButton btnDtFinal;
 		internal VIBlend.WinForms.Controls.vButton btnDtInicial;
 		internal System.Windows.Forms.Panel Panel2;
-		internal System.Windows.Forms.Label lblValorEntradas;
-		internal System.Windows.Forms.Label label3;
+		internal System.Windows.Forms.Button btnExcluir;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemVerOrigem;
-		internal System.Windows.Forms.Label lblValorSaidas;
-		internal System.Windows.Forms.Label label4;
-		internal VIBlend.WinForms.Controls.vButton btnSetConta;
-		internal System.Windows.Forms.TextBox txtConta;
-		internal System.Windows.Forms.Label label19;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovData;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnMovTipoDescricao;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnDescricaoOrigem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDOrigem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDCaixa;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
-		private System.Windows.Forms.ToolStripMenuItem verCaixaToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuVisualizar;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem mnuExcluir;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemRemover;
-		internal System.Windows.Forms.Label lblValorProvisorias;
-		internal System.Windows.Forms.Label label5;
-		internal System.Windows.Forms.Label lblValorNaoRealizadas;
-		internal System.Windows.Forms.Label label6;
+		private AwesomeShapeControl.Line line1;
+		internal VIBlend.WinForms.Controls.vButton btnSetConta;
+		internal System.Windows.Forms.TextBox txtCartaoDescricao;
+		internal System.Windows.Forms.Label label19;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnDespesaDescricao;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnSituacao;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
 	}
 }

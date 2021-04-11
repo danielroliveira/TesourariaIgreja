@@ -35,8 +35,8 @@
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
-			this.btnSalvar = new System.Windows.Forms.ToolStripButton();
-			this.btnCancelar = new System.Windows.Forms.ToolStripButton();
+			this.btnFinalizar = new System.Windows.Forms.ToolStripButton();
+			this.btnExcluirDespesa = new System.Windows.Forms.ToolStripButton();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuImagem = new System.Windows.Forms.ToolStripDropDownButton();
@@ -48,8 +48,6 @@
 			this.lblCongregacao = new System.Windows.Forms.Label();
 			this.lblCredor = new System.Windows.Forms.Label();
 			this.lblContribuinte = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.lblDespesaTipo = new System.Windows.Forms.Label();
 			this.btnSetSetor = new VIBlend.WinForms.Controls.vButton();
 			this.txtSetor = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
@@ -62,7 +60,6 @@
 			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuAdicionarAPagar = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuEditarAPagar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuExcluirAPagar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuImagemAPagar = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +70,7 @@
 			this.lblDespesaData = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
-			this.txtDespesaValor = new System.Windows.Forms.Label();
+			this.lblDespesaValor = new System.Windows.Forms.Label();
 			this.btnIncluirItem = new System.Windows.Forms.Button();
 			this.btnRemoverItem = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
@@ -141,48 +138,48 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnSalvar,
-			this.btnCancelar,
-			this.btnFechar,
-			this.toolStripSeparator2,
-			this.mnuImagem});
-			this.tspMenu.Location = new System.Drawing.Point(2, 597);
+            this.btnFinalizar,
+            this.btnExcluirDespesa,
+            this.btnFechar,
+            this.toolStripSeparator2,
+            this.mnuImagem});
+			this.tspMenu.Location = new System.Drawing.Point(2, 551);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(876, 44);
 			this.tspMenu.TabIndex = 28;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
-			// btnSalvar
+			// btnFinalizar
 			// 
-			this.btnSalvar.Image = global::CamadaUI.Properties.Resources.salvar_30;
-			this.btnSalvar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnSalvar.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnSalvar.Name = "btnSalvar";
-			this.btnSalvar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnSalvar.Size = new System.Drawing.Size(92, 41);
-			this.btnSalvar.Text = "&Salvar";
-			this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+			this.btnFinalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnFinalizar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnFinalizar.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnFinalizar.Name = "btnFinalizar";
+			this.btnFinalizar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnFinalizar.Size = new System.Drawing.Size(145, 41);
+			this.btnFinalizar.Text = "&Concluir Fatura";
+			this.btnFinalizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnFinalizar.Click += new System.EventHandler(this.btnConcluir_Click);
 			// 
-			// btnCancelar
+			// btnExcluirDespesa
 			// 
-			this.btnCancelar.Image = global::CamadaUI.Properties.Resources.delete_page_30;
-			this.btnCancelar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnCancelar.Name = "btnCancelar";
-			this.btnCancelar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.btnCancelar.Size = new System.Drawing.Size(110, 41);
-			this.btnCancelar.Text = "&Cancelar";
-			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+			this.btnExcluirDespesa.Image = global::CamadaUI.Properties.Resources.delete_24;
+			this.btnExcluirDespesa.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnExcluirDespesa.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnExcluirDespesa.Name = "btnExcluirDespesa";
+			this.btnExcluirDespesa.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.btnExcluirDespesa.Size = new System.Drawing.Size(135, 41);
+			this.btnExcluirDespesa.Text = "&Excluir Fatura";
+			this.btnExcluirDespesa.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExcluirDespesa.Click += new System.EventHandler(this.btnExcluirDespesa_Click);
 			// 
 			// btnFechar
 			// 
@@ -205,10 +202,10 @@
 			// mnuImagem
 			// 
 			this.mnuImagem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnInserirImagem,
-			this.btnVerImagem,
-			this.toolStripSeparator3,
-			this.btnRemoverImagem});
+            this.btnInserirImagem,
+            this.btnVerImagem,
+            this.toolStripSeparator3,
+            this.btnRemoverImagem});
 			this.mnuImagem.Enabled = false;
 			this.mnuImagem.Image = ((System.Drawing.Image)(resources.GetObject("mnuImagem.Image")));
 			this.mnuImagem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -252,11 +249,12 @@
 			// lblDespesaDescricao
 			// 
 			this.lblDespesaDescricao.BackColor = System.Drawing.Color.Transparent;
+			this.lblDespesaDescricao.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaDescricao.ForeColor = System.Drawing.Color.Black;
-			this.lblDespesaDescricao.Location = new System.Drawing.Point(216, 175);
+			this.lblDespesaDescricao.Location = new System.Drawing.Point(214, 107);
 			this.lblDespesaDescricao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.lblDespesaDescricao.Name = "lblDespesaDescricao";
-			this.lblDespesaDescricao.Size = new System.Drawing.Size(507, 27);
+			this.lblDespesaDescricao.Size = new System.Drawing.Size(507, 30);
 			this.lblDespesaDescricao.TabIndex = 20;
 			this.lblDespesaDescricao.Tag = "";
 			this.lblDespesaDescricao.Text = "Descrição da Despesa";
@@ -268,7 +266,7 @@
 			this.lblCongregacao.AutoSize = true;
 			this.lblCongregacao.BackColor = System.Drawing.Color.Transparent;
 			this.lblCongregacao.ForeColor = System.Drawing.Color.Black;
-			this.lblCongregacao.Location = new System.Drawing.Point(137, 178);
+			this.lblCongregacao.Location = new System.Drawing.Point(135, 113);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(73, 19);
 			this.lblCongregacao.TabIndex = 19;
@@ -277,11 +275,12 @@
 			// lblCredor
 			// 
 			this.lblCredor.BackColor = System.Drawing.Color.Transparent;
+			this.lblCredor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCredor.ForeColor = System.Drawing.Color.Black;
-			this.lblCredor.Location = new System.Drawing.Point(216, 102);
+			this.lblCredor.Location = new System.Drawing.Point(214, 66);
 			this.lblCredor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.lblCredor.Name = "lblCredor";
-			this.lblCredor.Size = new System.Drawing.Size(427, 27);
+			this.lblCredor.Size = new System.Drawing.Size(507, 30);
 			this.lblCredor.TabIndex = 5;
 			this.lblCredor.Tag = "Pressione a tecla (+) para procurar";
 			this.lblCredor.Text = "Credor / Fornecedor";
@@ -293,36 +292,11 @@
 			this.lblContribuinte.AutoSize = true;
 			this.lblContribuinte.BackColor = System.Drawing.Color.Transparent;
 			this.lblContribuinte.ForeColor = System.Drawing.Color.Black;
-			this.lblContribuinte.Location = new System.Drawing.Point(72, 105);
+			this.lblContribuinte.Location = new System.Drawing.Point(70, 72);
 			this.lblContribuinte.Name = "lblContribuinte";
 			this.lblContribuinte.Size = new System.Drawing.Size(138, 19);
 			this.lblContribuinte.TabIndex = 4;
 			this.lblContribuinte.Text = "Credor / Fornecedor";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.BackColor = System.Drawing.Color.Transparent;
-			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(93, 139);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(117, 19);
-			this.label4.TabIndex = 11;
-			this.label4.Text = "Tipo de Despesa";
-			// 
-			// lblDespesaTipo
-			// 
-			this.lblDespesaTipo.BackColor = System.Drawing.Color.Transparent;
-			this.lblDespesaTipo.ForeColor = System.Drawing.Color.Black;
-			this.lblDespesaTipo.Location = new System.Drawing.Point(216, 136);
-			this.lblDespesaTipo.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.lblDespesaTipo.Name = "lblDespesaTipo";
-			this.lblDespesaTipo.Size = new System.Drawing.Size(427, 27);
-			this.lblDespesaTipo.TabIndex = 12;
-			this.lblDespesaTipo.Tag = "Pressione a tecla (+) para procurar";
-			this.lblDespesaTipo.Text = "Tipo de Despesa";
-			this.lblDespesaTipo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lblDespesaTipo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnSetSetor
 			// 
@@ -330,7 +304,7 @@
 			this.btnSetSetor.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetSetor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
 			this.btnSetSetor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetSetor.Location = new System.Drawing.Point(551, 63);
+			this.btnSetSetor.Location = new System.Drawing.Point(551, 152);
 			this.btnSetSetor.Name = "btnSetSetor";
 			this.btnSetSetor.RoundedCornersMask = ((byte)(15));
 			this.btnSetSetor.RoundedCornersRadius = 0;
@@ -345,7 +319,7 @@
 			// 
 			// txtSetor
 			// 
-			this.txtSetor.Location = new System.Drawing.Point(216, 63);
+			this.txtSetor.Location = new System.Drawing.Point(216, 152);
 			this.txtSetor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetor.MaxLength = 30;
 			this.txtSetor.Name = "txtSetor";
@@ -358,7 +332,7 @@
 			this.label5.AutoSize = true;
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(105, 66);
+			this.label5.Location = new System.Drawing.Point(105, 155);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(105, 19);
 			this.label5.TabIndex = 1;
@@ -366,14 +340,14 @@
 			// 
 			// line2
 			// 
-			this.line2.EndPoint = new System.Drawing.Point(497, 5);
+			this.line2.EndPoint = new System.Drawing.Point(601, 5);
 			this.line2.LineColor = System.Drawing.Color.LightSlateGray;
 			this.line2.LineWidth = 3F;
-			this.line2.Location = new System.Drawing.Point(262, 260);
+			this.line2.Location = new System.Drawing.Point(262, 206);
 			this.line2.Name = "line2";
 			this.line2.Opacity = 0.5F;
-			this.line2.Size = new System.Drawing.Size(502, 10);
-			this.line2.StartPoint = new System.Drawing.Point(5, 5);
+			this.line2.Size = new System.Drawing.Size(606, 11);
+			this.line2.StartPoint = new System.Drawing.Point(5, 6);
 			this.line2.TabIndex = 25;
 			this.line2.TabStop = false;
 			// 
@@ -383,7 +357,7 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.LightSlateGray;
-			this.label6.Location = new System.Drawing.Point(16, 252);
+			this.label6.Location = new System.Drawing.Point(16, 199);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(248, 23);
 			this.label6.TabIndex = 24;
@@ -413,13 +387,13 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnCredor,
-			this.clnIdentificador,
-			this.clnVencimento,
-			this.clnValor});
+            this.clnCredor,
+            this.clnIdentificador,
+            this.clnVencimento,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(24, 290);
+			this.dgvListagem.Location = new System.Drawing.Point(24, 234);
 			this.dgvListagem.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
@@ -430,7 +404,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(677, 248);
+			this.dgvListagem.Size = new System.Drawing.Size(677, 265);
 			this.dgvListagem.TabIndex = 27;
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
@@ -466,57 +440,47 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuAdicionarAPagar,
-			this.mnuEditarAPagar,
-			this.mnuExcluirAPagar,
-			this.toolStripSeparator5,
-			this.mnuImagemAPagar});
+            this.mnuAdicionarAPagar,
+            this.mnuExcluirAPagar,
+            this.toolStripSeparator5,
+            this.mnuImagemAPagar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(214, 154);
+			this.mnuOperacoes.Size = new System.Drawing.Size(211, 118);
 			// 
 			// mnuAdicionarAPagar
 			// 
 			this.mnuAdicionarAPagar.Image = global::CamadaUI.Properties.Resources.add_24;
 			this.mnuAdicionarAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuAdicionarAPagar.Name = "mnuAdicionarAPagar";
-			this.mnuAdicionarAPagar.Size = new System.Drawing.Size(213, 36);
-			this.mnuAdicionarAPagar.Text = "Adicionar APagar";
+			this.mnuAdicionarAPagar.Size = new System.Drawing.Size(210, 36);
+			this.mnuAdicionarAPagar.Text = "Incluir APagar";
 			this.mnuAdicionarAPagar.Click += new System.EventHandler(this.mnuAdicionarAPagar_Click);
-			// 
-			// mnuEditarAPagar
-			// 
-			this.mnuEditarAPagar.Image = global::CamadaUI.Properties.Resources.editar_24;
-			this.mnuEditarAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuEditarAPagar.Name = "mnuEditarAPagar";
-			this.mnuEditarAPagar.Size = new System.Drawing.Size(213, 36);
-			this.mnuEditarAPagar.Text = "Editar APagar";
-			this.mnuEditarAPagar.Click += new System.EventHandler(this.mnuEditarAPagar_Click);
 			// 
 			// mnuExcluirAPagar
 			// 
 			this.mnuExcluirAPagar.Image = global::CamadaUI.Properties.Resources.lixeira_24;
 			this.mnuExcluirAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuExcluirAPagar.Name = "mnuExcluirAPagar";
-			this.mnuExcluirAPagar.Size = new System.Drawing.Size(213, 36);
-			this.mnuExcluirAPagar.Text = "Excluir APagar";
+			this.mnuExcluirAPagar.Size = new System.Drawing.Size(210, 36);
+			this.mnuExcluirAPagar.Text = "Remover APagar";
 			this.mnuExcluirAPagar.Click += new System.EventHandler(this.mnuRemoverAPagar_Click);
 			// 
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(210, 6);
+			this.toolStripSeparator5.Size = new System.Drawing.Size(207, 6);
 			// 
 			// mnuImagemAPagar
 			// 
 			this.mnuImagemAPagar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuImagemInserir,
-			this.mnuImagemVisualizar,
-			this.toolStripSeparator4,
-			this.mnuImagemRemover});
+            this.mnuImagemInserir,
+            this.mnuImagemVisualizar,
+            this.toolStripSeparator4,
+            this.mnuImagemRemover});
 			this.mnuImagemAPagar.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
 			this.mnuImagemAPagar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuImagemAPagar.Name = "mnuImagemAPagar";
-			this.mnuImagemAPagar.Size = new System.Drawing.Size(213, 36);
+			this.mnuImagemAPagar.Size = new System.Drawing.Size(210, 36);
 			this.mnuImagemAPagar.Text = "Imagem APagar";
 			// 
 			// mnuImagemInserir
@@ -564,12 +528,12 @@
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.Color.LightGray;
-			this.label7.Location = new System.Drawing.Point(215, 4);
+			this.label7.Location = new System.Drawing.Point(178, 4);
 			this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(37, 13);
+			this.label7.Size = new System.Drawing.Size(117, 13);
 			this.label7.TabIndex = 1;
-			this.label7.Text = "Data";
+			this.label7.Text = "Data Vencimento";
 			this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label8
@@ -577,30 +541,30 @@
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.Location = new System.Drawing.Point(488, 552);
+			this.label8.Location = new System.Drawing.Point(428, 514);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(122, 19);
 			this.label8.TabIndex = 1;
 			this.label8.Text = "Valor da Despesa";
 			// 
-			// txtDespesaValor
+			// lblDespesaValor
 			// 
-			this.txtDespesaValor.BackColor = System.Drawing.Color.Transparent;
-			this.txtDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtDespesaValor.ForeColor = System.Drawing.Color.Black;
-			this.txtDespesaValor.Location = new System.Drawing.Point(616, 546);
-			this.txtDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtDespesaValor.Name = "txtDespesaValor";
-			this.txtDespesaValor.Size = new System.Drawing.Size(145, 31);
-			this.txtDespesaValor.TabIndex = 2;
-			this.txtDespesaValor.Text = "R$ 0,00";
-			this.txtDespesaValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblDespesaValor.BackColor = System.Drawing.Color.Transparent;
+			this.lblDespesaValor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDespesaValor.ForeColor = System.Drawing.Color.Black;
+			this.lblDespesaValor.Location = new System.Drawing.Point(556, 508);
+			this.lblDespesaValor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.lblDespesaValor.Name = "lblDespesaValor";
+			this.lblDespesaValor.Size = new System.Drawing.Size(145, 31);
+			this.lblDespesaValor.TabIndex = 2;
+			this.lblDespesaValor.Text = "R$ 0,00";
+			this.lblDespesaValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// btnIncluirItem
 			// 
 			this.btnIncluirItem.Image = global::CamadaUI.Properties.Resources.AddSimple_24;
 			this.btnIncluirItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnIncluirItem.Location = new System.Drawing.Point(717, 305);
+			this.btnIncluirItem.Location = new System.Drawing.Point(713, 234);
 			this.btnIncluirItem.Name = "btnIncluirItem";
 			this.btnIncluirItem.Size = new System.Drawing.Size(149, 42);
 			this.btnIncluirItem.TabIndex = 29;
@@ -613,29 +577,28 @@
 			// 
 			this.btnRemoverItem.Image = global::CamadaUI.Properties.Resources.MinusSimples_24;
 			this.btnRemoverItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnRemoverItem.Location = new System.Drawing.Point(717, 353);
+			this.btnRemoverItem.Location = new System.Drawing.Point(713, 282);
 			this.btnRemoverItem.Name = "btnRemoverItem";
 			this.btnRemoverItem.Size = new System.Drawing.Size(149, 42);
 			this.btnRemoverItem.TabIndex = 30;
 			this.btnRemoverItem.Text = "Remover Item";
 			this.btnRemoverItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnRemoverItem.UseVisualStyleBackColor = true;
+			this.btnRemoverItem.Click += new System.EventHandler(this.btnRemoverItem_Click);
 			// 
 			// frmDespesaCartao
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(880, 642);
+			this.ClientSize = new System.Drawing.Size(880, 597);
 			this.Controls.Add(this.btnRemoverItem);
 			this.Controls.Add(this.btnIncluirItem);
-			this.Controls.Add(this.txtDespesaValor);
+			this.Controls.Add(this.lblDespesaValor);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.line2);
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.txtSetor);
 			this.Controls.Add(this.label5);
-			this.Controls.Add(this.lblDespesaTipo);
-			this.Controls.Add(this.label4);
 			this.Controls.Add(this.lblCredor);
 			this.Controls.Add(this.lblContribuinte);
 			this.Controls.Add(this.label6);
@@ -653,18 +616,16 @@
 			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.lblContribuinte, 0);
 			this.Controls.SetChildIndex(this.lblCredor, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
-			this.Controls.SetChildIndex(this.lblDespesaTipo, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
 			this.Controls.SetChildIndex(this.line2, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
-			this.Controls.SetChildIndex(this.txtDespesaValor, 0);
-			this.Controls.SetChildIndex(this.panel1, 0);
+			this.Controls.SetChildIndex(this.lblDespesaValor, 0);
 			this.Controls.SetChildIndex(this.btnIncluirItem, 0);
 			this.Controls.SetChildIndex(this.btnRemoverItem, 0);
+			this.Controls.SetChildIndex(this.panel1, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -681,16 +642,13 @@
 		internal System.Windows.Forms.Label lblID;
 		internal System.Windows.Forms.Label lbl_IdTexto;
 		private System.Windows.Forms.ToolStrip tspMenu;
-		private System.Windows.Forms.ToolStripButton btnSalvar;
-		private System.Windows.Forms.ToolStripButton btnCancelar;
+		private System.Windows.Forms.ToolStripButton btnFinalizar;
 		private System.Windows.Forms.ToolStripButton btnFechar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		internal System.Windows.Forms.Label lblDespesaDescricao;
 		internal System.Windows.Forms.Label lblCongregacao;
 		internal System.Windows.Forms.Label lblCredor;
 		internal System.Windows.Forms.Label lblContribuinte;
-		internal System.Windows.Forms.Label label4;
-		internal System.Windows.Forms.Label lblDespesaTipo;
 		internal VIBlend.WinForms.Controls.vButton btnSetSetor;
 		internal System.Windows.Forms.TextBox txtSetor;
 		internal System.Windows.Forms.Label label5;
@@ -704,7 +662,6 @@
 		private System.Windows.Forms.ToolStripMenuItem btnRemoverImagem;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
 		private System.Windows.Forms.ToolStripMenuItem mnuAdicionarAPagar;
-		private System.Windows.Forms.ToolStripMenuItem mnuEditarAPagar;
 		private System.Windows.Forms.ToolStripMenuItem mnuExcluirAPagar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemAPagar;
@@ -715,11 +672,12 @@
 		internal System.Windows.Forms.Label lblDespesaData;
 		internal System.Windows.Forms.Label label7;
 		internal System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label txtDespesaValor;
+		private System.Windows.Forms.Label lblDespesaValor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCredor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIdentificador;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnVencimento;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
+		private System.Windows.Forms.ToolStripButton btnExcluirDespesa;
 		private System.Windows.Forms.Button btnIncluirItem;
 		private System.Windows.Forms.Button btnRemoverItem;
 	}

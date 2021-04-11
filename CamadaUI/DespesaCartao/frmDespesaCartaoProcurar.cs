@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.DespesaCartao
 {
 	public partial class frmDespesaCartaoProcurar : CamadaUI.Modals.frmModFinBorder
 	{
+		public objAPagar SelectedItem { get { return (objAPagar)bindPag.Current; } }
 		private BindingSource bindPag = new BindingSource();
 		private List<objAPagar> _ItensList = new List<objAPagar>();
 		private Form _formOrigem;
@@ -51,7 +53,7 @@ namespace CamadaUI.DespesaCartao
 			// DEFINE COLUMN FONT
 			Font clnFont = new Font("Pathway Gothic One", 13.00F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
-			//--- (1) COLUNA FORMA
+			//--- (0) COLUNA CREDOR
 			clnCredor.DataPropertyName = "Credor";
 			clnCredor.Visible = true;
 			clnCredor.ReadOnly = true;
@@ -60,6 +62,16 @@ namespace CamadaUI.DespesaCartao
 			clnCredor.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCredor.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCredor.DefaultCellStyle.Font = clnFont;
+
+			//--- (1) COLUNA DESCRICAO
+			clnDescricao.DataPropertyName = "DespesaDescricao";
+			clnDescricao.Visible = true;
+			clnDescricao.ReadOnly = true;
+			clnDescricao.Resizable = DataGridViewTriState.False;
+			clnDescricao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnDescricao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnDescricao.DefaultCellStyle.Font = clnFont;
 
 			//--- (2) COLUNA ID
 			clnIdentificador.DataPropertyName = "Identificador";
@@ -93,7 +105,7 @@ namespace CamadaUI.DespesaCartao
 			clnValor.DefaultCellStyle.Font = clnFont;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnCredor, clnIdentificador, clnVencimento, clnValor);
+			dgvListagem.Columns.AddRange(clnCredor, clnDescricao, clnIdentificador, clnVencimento, clnValor);
 		}
 
 		#endregion
@@ -161,5 +173,25 @@ namespace CamadaUI.DespesaCartao
 		{
 			DialogResult = DialogResult.Cancel;
 		}
+
+		private void btnSelecionar_Click(object sender, EventArgs e)
+		{
+			if (bindPag.Current == null)
+			{
+				AbrirDialog("Favor escolher um registro na listagem antes de selecionar...",
+					"Escolher Registro", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			DialogResult = DialogResult.OK;
+		}
+
+		private void dgvListagem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			btnSelecionar_Click(sender, null);
+		}
+
+
+
 	}
 }
