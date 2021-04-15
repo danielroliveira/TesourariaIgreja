@@ -30,8 +30,8 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAPagarSaidas));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.lblID = new System.Windows.Forms.Label();
 			this.lbl_IdTexto = new System.Windows.Forms.Label();
 			this.lblDespesaDescricao = new System.Windows.Forms.Label();
@@ -158,8 +158,9 @@
 			this.lblDespesaDescricao.Font = new System.Drawing.Font("Pathway Gothic One", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDespesaDescricao.Location = new System.Drawing.Point(17, 6);
 			this.lblDespesaDescricao.Name = "lblDespesaDescricao";
-			this.lblDespesaDescricao.Size = new System.Drawing.Size(369, 27);
+			this.lblDespesaDescricao.Size = new System.Drawing.Size(456, 27);
 			this.lblDespesaDescricao.TabIndex = 1;
+			this.lblDespesaDescricao.Tag = "Clique para abrir a Despesa de Origem";
 			this.lblDespesaDescricao.Text = "Descrição da Despesa";
 			this.lblDespesaDescricao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -495,20 +496,20 @@
 			// 
 			this.dgvListagem.AllowUserToAddRows = false;
 			this.dgvListagem.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.Azure;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Azure;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.BackgroundColor = System.Drawing.Color.AliceBlue;
 			this.dgvListagem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 25;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnData,
@@ -705,7 +706,7 @@
             this.estornarPagamentoToolStripMenuItem,
             this.toolStripMenuItem1});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(221, 56);
+			this.mnuOperacoes.Size = new System.Drawing.Size(221, 78);
 			// 
 			// estornarPagamentoToolStripMenuItem
 			// 

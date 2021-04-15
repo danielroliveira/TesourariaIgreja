@@ -37,18 +37,23 @@ namespace CamadaUI.Saidas
 		{
 			InitializeComponent();
 			_formOrigem = formOrigem;
+
+			//--- Continue
 			ConstructorContinue(despesa);
 		}
 
 		// CONSTRUCTOR WITH ID
 		//------------------------------------------------------------------------------------------------------------
-		public frmDespesa(long IDDespesa)
+		public frmDespesa(long IDDespesa, Form formOrigem = null)
 		{
 			InitializeComponent();
-			var desp = GetDespesaByID(IDDespesa);
+			_formOrigem = formOrigem;
 
+			//--- get DESPESA object
+			var desp = GetDespesaByID(IDDespesa);
 			if (desp == null) return;
 
+			//--- Continue
 			ConstructorContinue(desp);
 		}
 
@@ -345,18 +350,7 @@ namespace CamadaUI.Saidas
 				return;
 			}
 
-			Close();
-
-			if (_formOrigem != null && _formOrigem.Name == "frmDespesaListagem")
-			{
-				var frm = new frmDespesaListagem();
-				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
-				frm.Show();
-			}
-			else
-			{
-				MostraMenuPrincipal();
-			}
+			Fechar();
 		}
 
 		private void btnCancelar_Click(object sender, EventArgs e)
@@ -368,8 +362,7 @@ namespace CamadaUI.Saidas
 
 				if (response == DialogResult.Yes)
 				{
-					Close();
-					MostraMenuPrincipal();
+					Fechar();
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -382,6 +375,22 @@ namespace CamadaUI.Saidas
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+		}
+
+		private void Fechar()
+		{
+			Close();
+
+			if (_formOrigem != null && _formOrigem.Name == "frmDespesaListagem")
+			{
+				var frm = new frmDespesaListagem();
+				frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
+				frm.Show();
+			}
+			else if (Application.OpenForms.Count == 1)
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		#endregion // BUTTONS --- END

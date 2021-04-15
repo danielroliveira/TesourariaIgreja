@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Imagem;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -88,7 +89,7 @@ namespace CamadaUI.Contas
 				// define list
 				listMov = mBLL.GetMovimentacaoList(null, ContaSelected.IDConta, null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
-					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
+					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null, null, true);
 
 				bindMov.DataSource = listMov;
 				dgvListagem.DataSource = bindMov;
@@ -693,41 +694,20 @@ namespace CamadaUI.Contas
 			dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 			// mostra o MENU ativar e desativar
-			objMovimentacao recItem = (objMovimentacao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+			objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-			// mnuVerPagamentos
-			/*
-			switch (recItem.IDSituacao)
-			{
-				case 1: // EM ABERTO
-					mnuItemAlterar.Enabled = true;
-					mnuItemAlterar.Text = "Alterar";
-					mnuItemCancelar.Enabled = true;
-					mnuItemNormalizar.Enabled = false;
-					mnuItemReceber.Enabled = true;
-					mnuItemEstornar.Enabled = false;
-					break;
-				case 2: // RECEBIDAS
-					mnuItemAlterar.Enabled = false;
-					mnuItemCancelar.Enabled = false;
-					mnuItemNormalizar.Enabled = false;
-					mnuItemReceber.Enabled = false;
-					mnuItemEstornar.Enabled = true;
-					break;
-				case 3: // CANCELADAS
-					mnuItemAlterar.Enabled = false;
-					mnuItemCancelar.Enabled = false;
-					mnuItemNormalizar.Enabled = true;
-					mnuItemReceber.Enabled = false;
-					mnuItemEstornar.Enabled = false;
-					break;
-				default:
-					break;
-			}
-			*/
+			mnuVerCaixa.Enabled = mov.IDCaixa != null;
+
+			// mnuImagem
+			mnuImagem.Enabled = true;
+			bool IsThereImagem = mov.Imagem != null && !string.IsNullOrEmpty(mov.Imagem.ImagemFileName);
+
+			mnuImagemRemover.Enabled = IsThereImagem;
+			mnuImagemInserir.Text = IsThereImagem ? "Alterar Imagem" : "Inserir Imagem";
+			mnuImagemVisualizar.Enabled = IsThereImagem;
+
 			// revela menu
 			mnuOperacoes.Show(c.PointToScreen(e.Location));
-
 		}
 
 		//--- MENU VER ORIGEM
@@ -744,13 +724,33 @@ namespace CamadaUI.Contas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				/*
-				Entradas.frmContribuicao frm = new Entradas.frmContribuicao(item.IDContribuicao);
-				Visible = false;
-				frm.ShowDialog();
-				DesativaMenuPrincipal();
-				Visible = true;
-				*/
+
+				switch (item.Origem)
+				{
+					case EnumMovOrigem.Contribuicao:
+						VerOrigemContribuicao(item);
+						break;
+
+					case EnumMovOrigem.AReceber:
+						break;
+
+					case EnumMovOrigem.APagar:
+						VerOrigemAPagar(item);
+						break;
+
+					case EnumMovOrigem.CaixaAjuste:
+						break;
+
+					case EnumMovOrigem.TransfConta:
+						break;
+
+					case EnumMovOrigem.TransfSetor:
+						break;
+
+					default:
+						break;
+				}
+
 			}
 			catch (Exception ex)
 			{
@@ -764,7 +764,195 @@ namespace CamadaUI.Contas
 			}
 		}
 
+		//--- OPEN FORM ORIGEM --> APAGAR
+		//-------------------------------------------------------------------------------------------------------
+		private void VerOrigemAPagar(objMovimentacao item)
+		{
+			try
+			{
+				//--- get APAGAR object
+				objAPagar pagar = new APagarBLL().GetAPagar(item.IDOrigem);
+
+				//--- open APAGAR form
+				APagar.frmAPagarSaidas frm = new APagar.frmAPagarSaidas(pagar, this);
+				frm.ShowDialog();
+
+				//--- get DATA
+				ObterDados();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		//--- OPEN FORM ORIGEM --> CONTRIBUICAO
+		//-------------------------------------------------------------------------------------------------------
+		private void VerOrigemContribuicao(objMovimentacao item)
+		{
+			try
+			{
+				//--- open CONTRIBUICAO form
+				var frm = new Entradas.frmContribuicao(item.IDOrigem, this);
+				frm.ShowDialog();
+
+				//--- get DATA
+				ObterDados();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		#endregion // MENU SUSPENSO --- END
+
+		#region MENU IMAGEM
+
+		private void mnuImagemInserir_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Inserir Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objMovimentacao item = (objMovimentacao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				objImagem imagem = new objImagem()
+				{
+					IDOrigem = (long)item.IDMovimentacao,
+					Origem = EnumImagemOrigem.Movimentacao,
+					ImagemFileName = item.Imagem == null ? string.Empty : item.Imagem.ImagemFileName,
+					ImagemPath = item.Imagem == null ? string.Empty : item.Imagem.ImagemPath,
+					ReferenceDate = item.MovData,
+				};
+
+				// open form to edit or save image
+				bool IsNew = item.Imagem == null || string.IsNullOrEmpty(item.Imagem.ImagemPath);
+				imagem = ImagemUtil.ImagemGetFileAndSave(imagem, this);
+
+				// check if isUpdated
+				bool IsUpdated = false;
+				if (item.Imagem != null && imagem != null)
+				{
+					IsUpdated = (item.Imagem.ImagemFileName != imagem.ImagemFileName) || (item.Imagem.ImagemPath != imagem.ImagemPath);
+				}
+
+				// update imagem object
+				item.Imagem = imagem;
+
+				// emit message
+				if (IsNew && imagem != null)
+				{
+					AbrirDialog("Imagem associada e salva com sucesso!" +
+								"\nPor segurança a imagem foi transferida para a pasta padrão.",
+								"Imagem Salva", DialogType.OK, DialogIcon.Information);
+				}
+				else if (IsUpdated)
+				{
+					AbrirDialog("Imagem alterada com sucesso!" +
+								"\nPor segurança a imagem anterior foi transferida para a pasta de imagens removidas.",
+								"Imagem Alterada", DialogType.OK, DialogIcon.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuImagemVisualizar_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objMovimentacao item = (objMovimentacao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				ImagemUtil.ImagemVisualizar(item.Imagem);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Visualizar a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void mnuImagemRemover_Click(object sender, EventArgs e)
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar Imagem...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
+
+			//--- get Selected item
+			objMovimentacao item = (objMovimentacao)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			DialogResult resp;
+
+			resp = AbrirDialog("Deseja realmente REMOVER ou DESASSOCIAR a imagem da Movimentação de Saída selecionada?" +
+				"\nA imagem não será excluída mas movida para pasta de Imagens Removidas...",
+				"Remover Imagem", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//_despesa.Imagem.ReferenceDate = _despesa.DespesaData;
+				item.Imagem = ImagemUtil.ImagemRemover(item.Imagem);
+
+				AbrirDialog("Imagem desassociada com sucesso!" +
+					"\nPor segurança a imagem foi guardada na pasta de Imagens Removidas.",
+					"Imagem Removida", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover a imagem..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // MENU IMAGEM --- END
 
 		#region TOOLTIP
 		private void lblPeriodo_MouseHover(object sender, EventArgs e)

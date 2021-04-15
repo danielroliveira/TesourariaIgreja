@@ -61,7 +61,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
-			this.verCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuVerCaixa = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuImagemVisualizar = new System.Windows.Forms.ToolStripMenuItem();
@@ -483,25 +483,25 @@
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuItemVerOrigem,
-            this.verCaixaToolStripMenuItem,
+            this.mnuVerCaixa,
             this.mnuImagem});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(161, 82);
+			this.mnuOperacoes.Size = new System.Drawing.Size(181, 104);
 			// 
 			// mnuItemVerOrigem
 			// 
 			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
-			this.mnuItemVerOrigem.Size = new System.Drawing.Size(160, 26);
+			this.mnuItemVerOrigem.Size = new System.Drawing.Size(180, 26);
 			this.mnuItemVerOrigem.Text = "Ver Origem";
 			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
 			// 
-			// verCaixaToolStripMenuItem
+			// mnuVerCaixa
 			// 
-			this.verCaixaToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.verCaixaToolStripMenuItem.Name = "verCaixaToolStripMenuItem";
-			this.verCaixaToolStripMenuItem.Size = new System.Drawing.Size(160, 26);
-			this.verCaixaToolStripMenuItem.Text = "Ver Caixa";
+			this.mnuVerCaixa.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.mnuVerCaixa.Name = "mnuVerCaixa";
+			this.mnuVerCaixa.Size = new System.Drawing.Size(180, 26);
+			this.mnuVerCaixa.Text = "Ver Caixa";
 			// 
 			// mnuImagem
 			// 
@@ -512,7 +512,7 @@
             this.mnuImagemRemover});
 			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
 			this.mnuImagem.Name = "mnuImagem";
-			this.mnuImagem.Size = new System.Drawing.Size(160, 26);
+			this.mnuImagem.Size = new System.Drawing.Size(180, 26);
 			this.mnuImagem.Text = "Imagem";
 			// 
 			// mnuImagemInserir
@@ -521,6 +521,7 @@
 			this.mnuImagemInserir.Name = "mnuImagemInserir";
 			this.mnuImagemInserir.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemInserir.Text = "Inserir Imagem";
+			this.mnuImagemInserir.Click += new System.EventHandler(this.mnuImagemInserir_Click);
 			// 
 			// mnuImagemVisualizar
 			// 
@@ -528,6 +529,7 @@
 			this.mnuImagemVisualizar.Name = "mnuImagemVisualizar";
 			this.mnuImagemVisualizar.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemVisualizar.Text = "Ver Imagem";
+			this.mnuImagemVisualizar.Click += new System.EventHandler(this.mnuImagemVisualizar_Click);
 			// 
 			// toolStripSeparator3
 			// 
@@ -540,6 +542,7 @@
 			this.mnuImagemRemover.Name = "mnuImagemRemover";
 			this.mnuImagemRemover.Size = new System.Drawing.Size(204, 26);
 			this.mnuImagemRemover.Text = "Remover Imagem";
+			this.mnuImagemRemover.Click += new System.EventHandler(this.mnuImagemRemover_Click);
 			// 
 			// lblValorSaidas
 			// 
@@ -750,7 +753,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnIDCaixa;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorReal;
-		private System.Windows.Forms.ToolStripMenuItem verCaixaToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuVerCaixa;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagem;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuImagemVisualizar;

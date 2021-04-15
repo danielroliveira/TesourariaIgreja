@@ -41,12 +41,15 @@ namespace CamadaUI.Entradas
 			ConstructorContinue(contribuicao);
 		}
 
-		public frmContribuicao(long IDContribuicao)
+		public frmContribuicao(long IDContribuicao, Form formOrigem = null)
 		{
 			InitializeComponent();
 			var cont = GetContribuicaoByID(IDContribuicao);
 
 			if (cont == null) return;
+
+			this.Shown += (a, b) => DesativaPanel(formOrigem);
+			this.FormClosed += (a, b) => AtivaPanel(formOrigem);
 
 			ConstructorContinue(cont);
 		}
@@ -96,7 +99,6 @@ namespace CamadaUI.Entradas
 			numEntradaAno.Enter += Numeric_Enter;
 			numEntradaDia.KeyDown += Numeric_KeyDown;
 			numEntradaDia.Enter += Numeric_Enter;
-
 		}
 
 		// SHOW FORM
@@ -1022,9 +1024,9 @@ namespace CamadaUI.Entradas
 			else
 			{
 				if (_contribuicao.IDReuniao != null)
-					descricao += _contribuicao.Reuniao + " - " + _contribuicao.ContribuicaoData.ToShortDateString();
+					descricao += _contribuicao.Reuniao;
 				else
-					descricao += "Reunião não informada - " + _contribuicao.ContribuicaoData.ToShortDateString();
+					descricao += "Reunião não informada";
 			}
 
 
@@ -1350,7 +1352,6 @@ namespace CamadaUI.Entradas
 				Cursor.Current = Cursors.Default;
 			}
 		}
-
 
 		#endregion // BUTTONS PROCURA --- END
 

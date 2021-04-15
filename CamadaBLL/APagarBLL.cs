@@ -14,9 +14,33 @@ namespace CamadaBLL
 	{
 		// GET
 		//------------------------------------------------------------------------------------------------------------
-		public objAPagar GetAPagar()
+		public objAPagar GetAPagar(long IDAPagar)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM qryAPagar";
+
+				// add params
+				db.LimparParametros();
+				db.AdicionarParametros("@IDAPagar", IDAPagar);
+				query += " WHERE IDAPagar = @IDAPagar";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new AppException("ID procurado não retornou nenhum registro...");
+				}
+
+				return ConvertRowInClass(dt.Rows[0]);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		// GET LIST OF

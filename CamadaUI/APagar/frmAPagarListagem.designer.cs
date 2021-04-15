@@ -672,7 +672,7 @@
             this.mnuItemVerOrigem,
             this.mnuItemAlterar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(263, 250);
+			this.mnuOperacoes.Size = new System.Drawing.Size(263, 272);
 			// 
 			// mnuItemQuitar
 			// 

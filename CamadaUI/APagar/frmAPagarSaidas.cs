@@ -41,6 +41,14 @@ namespace CamadaUI.APagar
 			}
 
 			DefineValueLabels();
+
+			//--- if ORIGEM => frmMovimentacao
+			if (_formOrigem.GetType() == typeof(Contas.frmContaMovimentacao))
+			{
+				lblDespesaDescricao.Cursor = Cursors.Hand;
+				lblDespesaDescricao.Click += LblDespesaDescricao_Click;
+				lblDespesaDescricao.MouseHover += (a, b) => ShowToolTip(lblDespesaDescricao as Control);
+			}
 		}
 
 		// GET LIST OF SAIDAS
@@ -373,7 +381,6 @@ namespace CamadaUI.APagar
 			if (control.Enabled == true)
 				ShowToolTip(control);
 		}
-
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
 
@@ -820,6 +827,54 @@ namespace CamadaUI.APagar
 		}
 
 		#endregion // MNU CONTEXT PAGAMENTO --- END
+
+		#region OTHER FUNCTIONS
+
+		// OPEN DESPESA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void LblDespesaDescricao_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- check if ORIGEM is Comum or Periodica
+				if (_apagar.DespesaOrigem == 1)
+				{
+					Saidas.frmDespesa frm = new Saidas.frmDespesa(_apagar.IDDespesa, this);
+					Visible = false;
+					frm.ShowDialog();
+					Visible = true;
+				}
+				else
+				{
+					if (_apagar.IDAPagar != null)
+					{
+						AbrirDialog("A origem deste APagar é uma despesa periódica que foi transformado em REAL...\n" +
+							"Mesmo que se faça alterações na ORIGEM essas alterações não serão refletidas " +
+							"no APagar.", "Despesa Periódica");
+					}
+
+					Saidas.frmDespesaPeriodica frm = new Saidas.frmDespesaPeriodica(_apagar.IDDespesa, this);
+					Visible = false;
+					frm.ShowDialog();
+					Visible = true;
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir a Despesa..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // OTHER FUNCTIONS --- END
 
 	}
 }

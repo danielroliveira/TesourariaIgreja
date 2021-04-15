@@ -565,7 +565,7 @@ namespace CamadaUI.Saidas
 			else
 			{
 				Close();
-				MostraMenuPrincipal();
+				if (Application.OpenForms.Count == 1) MostraMenuPrincipal();
 			}
 		}
 
