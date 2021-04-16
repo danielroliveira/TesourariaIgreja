@@ -58,14 +58,10 @@
 			this.Panel2 = new System.Windows.Forms.Panel();
 			this.btnNovaTransferencia = new System.Windows.Forms.Button();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.mnuItemReceber = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemEstornar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuItemCancelar = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemNormalizar = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemVerOrigem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemAlterar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuItemNova = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuItemEstornar = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnSetConta = new VIBlend.WinForms.Controls.vButton();
 			this.txtConta = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
@@ -122,14 +118,14 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
 			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy;
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -143,12 +139,12 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnTransfData,
-			this.clnTipo,
-			this.clnOrigem,
-			this.clnDestino,
-			this.clnTransfValor});
+            this.clnID,
+            this.clnTransfData,
+            this.clnTipo,
+            this.clnOrigem,
+            this.clnDestino,
+            this.clnTransfValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -163,7 +159,6 @@
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvListagem.Size = new System.Drawing.Size(1029, 478);
 			this.dgvListagem.TabIndex = 5;
-			this.dgvListagem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListagem_CellDoubleClick);
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
@@ -259,7 +254,6 @@
 			// 
 			this.btnPeriodoPosterior.AllowAnimations = true;
 			this.btnPeriodoPosterior.ArrowDirection = System.Windows.Forms.ArrowDirection.Right;
-			this.btnPeriodoPosterior.Enabled = true;
 			this.btnPeriodoPosterior.Location = new System.Drawing.Point(220, 7);
 			this.btnPeriodoPosterior.Maximum = 100;
 			this.btnPeriodoPosterior.Minimum = 0;
@@ -461,69 +455,39 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuItemReceber,
-			this.mnuItemEstornar,
-			this.toolStripSeparator2,
-			this.mnuItemCancelar,
-			this.mnuItemNormalizar,
-			this.toolStripSeparator1,
-			this.mnuItemVerOrigem,
-			this.mnuItemAlterar});
+            this.mnuItemVerOrigem,
+            this.mnuItemNova,
+            this.toolStripSeparator2,
+            this.mnuItemEstornar});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(234, 172);
-			// 
-			// mnuItemReceber
-			// 
-			this.mnuItemReceber.Image = global::CamadaUI.Properties.Resources.money_green_24;
-			this.mnuItemReceber.Name = "mnuItemReceber";
-			this.mnuItemReceber.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemReceber.Text = "Receber";
-			// 
-			// mnuItemEstornar
-			// 
-			this.mnuItemEstornar.Image = global::CamadaUI.Properties.Resources.refresh_16;
-			this.mnuItemEstornar.Name = "mnuItemEstornar";
-			this.mnuItemEstornar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemEstornar.Text = "Estornar Recebimento";
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(230, 6);
-			// 
-			// mnuItemCancelar
-			// 
-			this.mnuItemCancelar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.mnuItemCancelar.Name = "mnuItemCancelar";
-			this.mnuItemCancelar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemCancelar.Text = "Cancelar";
-			// 
-			// mnuItemNormalizar
-			// 
-			this.mnuItemNormalizar.Image = global::CamadaUI.Properties.Resources.accept_24;
-			this.mnuItemNormalizar.Name = "mnuItemNormalizar";
-			this.mnuItemNormalizar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemNormalizar.Text = "Normalizar";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(230, 6);
+			this.mnuOperacoes.Size = new System.Drawing.Size(235, 88);
 			// 
 			// mnuItemVerOrigem
 			// 
 			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
-			this.mnuItemVerOrigem.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemVerOrigem.Text = "Ver Origem";
+			this.mnuItemVerOrigem.Size = new System.Drawing.Size(234, 26);
+			this.mnuItemVerOrigem.Text = "Abrir Transferência";
 			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
 			// 
-			// mnuItemAlterar
+			// mnuItemNova
 			// 
-			this.mnuItemAlterar.Image = global::CamadaUI.Properties.Resources.refresh_24;
-			this.mnuItemAlterar.Name = "mnuItemAlterar";
-			this.mnuItemAlterar.Size = new System.Drawing.Size(233, 26);
-			this.mnuItemAlterar.Text = "Alterar";
+			this.mnuItemNova.Image = global::CamadaUI.Properties.Resources.add_16;
+			this.mnuItemNova.Name = "mnuItemNova";
+			this.mnuItemNova.Size = new System.Drawing.Size(234, 26);
+			this.mnuItemNova.Text = "Nova Transferência";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(231, 6);
+			// 
+			// mnuItemEstornar
+			// 
+			this.mnuItemEstornar.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuItemEstornar.Name = "mnuItemEstornar";
+			this.mnuItemEstornar.Size = new System.Drawing.Size(234, 26);
+			this.mnuItemEstornar.Text = "Estornar Transferência";
 			// 
 			// btnSetConta
 			// 
@@ -683,12 +647,8 @@
 		internal System.Windows.Forms.Panel Panel2;
 		internal System.Windows.Forms.Button btnNovaTransferencia;
 		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemReceber;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemCancelar;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemNormalizar;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemVerOrigem;
-		private System.Windows.Forms.ToolStripMenuItem mnuItemAlterar;
+		private System.Windows.Forms.ToolStripMenuItem mnuItemNova;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem mnuItemEstornar;
 		internal VIBlend.WinForms.Controls.vButton btnSetConta;

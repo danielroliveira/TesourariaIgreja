@@ -124,6 +124,11 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -131,12 +136,6 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
@@ -486,13 +485,13 @@
             this.mnuVerCaixa,
             this.mnuImagem});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(181, 104);
+			this.mnuOperacoes.Size = new System.Drawing.Size(161, 82);
 			// 
 			// mnuItemVerOrigem
 			// 
 			this.mnuItemVerOrigem.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuItemVerOrigem.Name = "mnuItemVerOrigem";
-			this.mnuItemVerOrigem.Size = new System.Drawing.Size(180, 26);
+			this.mnuItemVerOrigem.Size = new System.Drawing.Size(160, 26);
 			this.mnuItemVerOrigem.Text = "Ver Origem";
 			this.mnuItemVerOrigem.Click += new System.EventHandler(this.mnuItemVerOrigem_Click);
 			// 
@@ -500,7 +499,7 @@
 			// 
 			this.mnuVerCaixa.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuVerCaixa.Name = "mnuVerCaixa";
-			this.mnuVerCaixa.Size = new System.Drawing.Size(180, 26);
+			this.mnuVerCaixa.Size = new System.Drawing.Size(160, 26);
 			this.mnuVerCaixa.Text = "Ver Caixa";
 			// 
 			// mnuImagem
@@ -512,7 +511,7 @@
             this.mnuImagemRemover});
 			this.mnuImagem.Image = global::CamadaUI.Properties.Resources.ImagesFolder_30;
 			this.mnuImagem.Name = "mnuImagem";
-			this.mnuImagem.Size = new System.Drawing.Size(180, 26);
+			this.mnuImagem.Size = new System.Drawing.Size(160, 26);
 			this.mnuImagem.Text = "Imagem";
 			// 
 			// mnuImagemInserir

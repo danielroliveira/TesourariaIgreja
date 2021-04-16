@@ -51,6 +51,7 @@ namespace CamadaUI.Transferencias
 			rbtTodas.CheckedChanged += rbt_CheckedChanged;
 
 			rbtEntrada.CheckedChanged += (a, b) => ObterDados();
+			dgvListagem.CellDoubleClick += (a, b) => mnuItemVerOrigem_Click(a, b);
 		}
 
 		// CONTROLA O MES
@@ -231,23 +232,6 @@ namespace CamadaUI.Transferencias
 			dgvListagem.Columns.AddRange(colList.ToArray());
 		}
 
-		// ON DOUBLE CLICK SELECT ITEM
-		//------------------------------------------------------------------------------------------------------------
-		private void dgvListagem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Visualizar...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
-			objTransfConta transf = (objTransfConta)dgvListagem.SelectedRows[0].DataBoundItem;
-			frmTransferencia frm = new frmTransferencia(transf, this);
-			frm.ShowDialog();
-		}
-
 		// ON ENTER SELECT ITEM
 		//------------------------------------------------------------------------------------------------------------
 		private void dgvListagem_KeyDown(object sender, KeyEventArgs e)
@@ -256,7 +240,7 @@ namespace CamadaUI.Transferencias
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-				dgvListagem_CellDoubleClick(sender, null);
+				mnuItemVerOrigem_Click(sender, null);
 			}
 		}
 
@@ -666,36 +650,6 @@ namespace CamadaUI.Transferencias
 			// mostra o MENU ativar e desativar
 			objTransfConta recItem = (objTransfConta)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-			// mnuVerPagamentos
-			/*
-			switch (recItem.IDSituacao)
-			{
-				case 1: // EM ABERTO
-					mnuItemAlterar.Enabled = true;
-					mnuItemAlterar.Text = "Alterar";
-					mnuItemCancelar.Enabled = true;
-					mnuItemNormalizar.Enabled = false;
-					mnuItemReceber.Enabled = true;
-					mnuItemEstornar.Enabled = false;
-					break;
-				case 2: // RECEBIDAS
-					mnuItemAlterar.Enabled = false;
-					mnuItemCancelar.Enabled = false;
-					mnuItemNormalizar.Enabled = false;
-					mnuItemReceber.Enabled = false;
-					mnuItemEstornar.Enabled = true;
-					break;
-				case 3: // CANCELADAS
-					mnuItemAlterar.Enabled = false;
-					mnuItemCancelar.Enabled = false;
-					mnuItemNormalizar.Enabled = true;
-					mnuItemReceber.Enabled = false;
-					mnuItemEstornar.Enabled = false;
-					break;
-				default:
-					break;
-			}
-			*/
 			// revela menu
 			mnuOperacoes.Show(c.PointToScreen(e.Location));
 
@@ -705,23 +659,25 @@ namespace CamadaUI.Transferencias
 		//-------------------------------------------------------------------------------------------------------
 		private void mnuItemVerOrigem_Click(object sender, EventArgs e)
 		{
-			//--- verifica se existe alguma cell 
-			if (dgvListagem.SelectedRows.Count == 0) return;
-
-			//--- Get A Pagar on list
-			objTransfConta item = (objTransfConta)dgvListagem.SelectedRows[0].DataBoundItem;
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
+			{
+				AbrirDialog("Favor selecionar um registro para Visualizar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
+			}
 
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				/*
-				Entradas.frmContribuicao frm = new Entradas.frmContribuicao(item.IDContribuicao);
-				Visible = false;
+
+				objTransfConta transf = (objTransfConta)dgvListagem.SelectedRows[0].DataBoundItem;
+				frmTransferencia frm = new frmTransferencia(transf, this);
 				frm.ShowDialog();
-				DesativaMenuPrincipal();
-				Visible = true;
-				*/
+
+				if (frm.DialogResult == DialogResult.Yes) ObterDados();
+
 			}
 			catch (Exception ex)
 			{
@@ -774,6 +730,5 @@ namespace CamadaUI.Transferencias
 		}
 
 		#endregion
-
 	}
 }

@@ -564,6 +564,49 @@ namespace CamadaUI.Caixa
 			}
 		}
 
+		// IMPRIMIR CAIXA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnImprimir_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- convert list
+				List<objCaixa> listCaixa = new List<objCaixa>() { _caixa };
+
+				List<object> dstPrimario = listCaixa.Cast<object>().ToList();
+				List<object> dstSecundario = lstMov.Cast<object>().ToList();
+
+				//--- create Params
+				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtInicial", _caixa.DataInicial.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _caixa.DataFinal.ToShortDateString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmIDCaixa", _caixa.IDCaixa.ToString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmEntradas", _TEntradas.ToString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmSaidas", _TSaidas.ToString()));
+				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmTransferencias", _TTransf.ToString()));
+
+				//--- create Report Global and Show
+				var frm = new Main.frmReportGlobal("CamadaUI.Caixa.Reports.rptCaixa.rdlc",
+					"Relatório de Conclusão de Caixa",
+					dstPrimario, dstSecundario, param);
+				frm.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion // BUTTONS FUNCTIONS --- END
 
 		#region AJUSTE DE CAIXA
@@ -752,45 +795,5 @@ namespace CamadaUI.Caixa
 
 		#endregion // OBSERVACAO --- END
 
-		private void btnImprimir_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//--- convert list
-				List<objCaixa> listCaixa = new List<objCaixa>() { _caixa };
-
-				List<object> dstPrimario = listCaixa.Cast<object>().ToList();
-				List<object> dstSecundario = lstMov.Cast<object>().ToList();
-
-				//--- create Params
-				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtInicial", _caixa.DataInicial.ToShortDateString()));
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _caixa.DataFinal.ToShortDateString()));
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmIDCaixa", _caixa.IDCaixa.ToString()));
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmEntradas", _TEntradas.ToString()));
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmSaidas", _TSaidas.ToString()));
-				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("prmTransferencias", _TTransf.ToString()));
-
-				//--- create Report Global and Show
-				var frm = new Main.frmReportGlobal("CamadaUI.Caixa.Reports.rptCaixa.rdlc",
-					"Relatório de Conclusão de Caixa",
-					dstPrimario, dstSecundario, param);
-				frm.ShowDialog();
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o Formulário de Impresão..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
 	}
 }

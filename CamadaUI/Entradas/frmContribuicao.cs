@@ -22,6 +22,7 @@ namespace CamadaUI.Entradas
 		private objContribuicao _contribuicao;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
+		private Form _formOrigem = null;
 
 		private List<objContribuicaoTipo> listTipos;
 		private List<objEntradaForma> listFormas;
@@ -47,6 +48,9 @@ namespace CamadaUI.Entradas
 			var cont = GetContribuicaoByID(IDContribuicao);
 
 			if (cont == null) return;
+
+			//--- Form origem
+			_formOrigem = formOrigem;
 
 			this.Shown += (a, b) => DesativaPanel(formOrigem);
 			this.FormClosed += (a, b) => AtivaPanel(formOrigem);
@@ -184,6 +188,10 @@ namespace CamadaUI.Entradas
 
 				if (value == EnumFlagEstado.NovoRegistro)
 				{
+					btnSalvar.Visible = true;
+					btnCancelar.Text = "&Cancelar";
+					btnCancelar.Image = Properties.Resources.delete_page_30;
+
 					btnNovo.Enabled = false;
 					btnSalvar.Enabled = true;
 					btnCancelar.Enabled = true;
@@ -203,9 +211,11 @@ namespace CamadaUI.Entradas
 				}
 				else
 				{
+					btnSalvar.Visible = false;
+					btnCancelar.Text = "&Excluir Contribuição";
+					btnCancelar.Image = Properties.Resources.lixeira_24;
+
 					btnNovo.Enabled = true;
-					btnSalvar.Enabled = false;
-					btnCancelar.Enabled = false;
 					lblSitBlock.Visible = true;
 
 					if (_contribuicao.IDEntradaForma != 1)
@@ -463,6 +473,20 @@ namespace CamadaUI.Entradas
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
+				CancelarFunc();
+			}
+			else
+			{
+				ExcluirFunc();
+			}
+		}
+
+		// CANCELAR ALTERACAO FUNCTION
+		//------------------------------------------------------------------------------------------------------------
+		private void CancelarFunc()
+		{
+			if (Sit == EnumFlagEstado.NovoRegistro)
+			{
 				var response = AbrirDialog("Deseja cancelar a inserção de um novo registro?",
 							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
 
@@ -483,6 +507,49 @@ namespace CamadaUI.Entradas
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+			}
+
+		}
+
+		// EXCLUIR CONTRIBUICAO FUNCTION
+		//------------------------------------------------------------------------------------------------------------
+		private void ExcluirFunc()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				// --- ask USER
+				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Contribuição ATUAL?\n" +
+					$"\nREG: {_contribuicao.IDContribuicao:D4}\nDATA: {_contribuicao.ContribuicaoData.ToShortDateString()}\nVALOR: {_contribuicao.ValorBruto:c}",
+					"Excluir Contribuição", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp != DialogResult.Yes) return;
+
+				//--- EXECUTE DELETE
+				contBLL.DeleteContribuicao((long)_contribuicao.IDContribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+
+				//--- CLOSE FORM
+				Close();
+
+				//--- INFORM
+				AbrirDialog("Registro removido com sucesso!", "Exclusão");
+			}
+			catch (AppException ex)
+			{
+				AbrirDialog("A contribuição está protegida de exclusão porque:\n" +
+							ex.Message, "Bloqueio de Exclusão", DialogType.OK, DialogIcon.Exclamation);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir Contribuição..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 
 		}

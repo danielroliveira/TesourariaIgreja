@@ -332,7 +332,7 @@ namespace CamadaUI.Contas
 			{
 				objMovimentacao mov = (objMovimentacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (mov.MovTipoDescricao == "SAIDA")
+				if (mov.MovTipoDescricao == "SAÍDA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.Firebrick;
@@ -344,7 +344,7 @@ namespace CamadaUI.Contas
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(227, 231, 234);
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
 				}
-				else if (mov.MovTipoDescricao == "TRANSFERENCIA")
+				else if (mov.MovTipoDescricao == "TRANSFERÊNCIA")
 				{
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Honeydew;
 					dgvListagem.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkSeaGreen;
@@ -732,6 +732,7 @@ namespace CamadaUI.Contas
 						break;
 
 					case EnumMovOrigem.AReceber:
+						VerOrigemAReceber(item);
 						break;
 
 					case EnumMovOrigem.APagar:
@@ -739,12 +740,19 @@ namespace CamadaUI.Contas
 						break;
 
 					case EnumMovOrigem.CaixaAjuste:
+						AbrirDialog($"Ajuste inicial da Conta: {item.Conta.ToUpper()}\n" +
+							$"Valor do Ajuste: {item.MovValorAbsoluto:c}\n" +
+							$"Data do Ajuste: {item.MovData:d}",
+							"Ajuste Inicial Informação");
 						break;
 
 					case EnumMovOrigem.TransfConta:
+						VerOrigemTransferenciaConta(item);
 						break;
 
 					case EnumMovOrigem.TransfSetor:
+						AbrirDialog("Ainda não foi implementado...",
+							"", DialogType.OK, DialogIcon.Exclamation);
 						break;
 
 					default:
@@ -786,6 +794,27 @@ namespace CamadaUI.Contas
 			}
 		}
 
+		//--- OPEN FORM ORIGEM --> ARECEBER
+		//-------------------------------------------------------------------------------------------------------
+		private void VerOrigemAReceber(objMovimentacao item)
+		{
+			try
+			{
+				//--- get ARECEBER object
+				objAReceber receber = new AReceberBLL().GetAReceber(item.IDOrigem);
+
+				AbrirDialog("Movimentação de Entrada de AReceber:\n\n" +
+					$"Forma de Entrada: {receber.EntradaForma.ToUpper()}\n" +
+					$"Data de Compensação: {receber.CompensacaoData:d}\n" +
+					$"Data de Entrada: {item.MovData:d}\n" +
+					$"Valor Recebido: {receber.ValorRecebido:c}", "Entrada de AReceber");
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		//--- OPEN FORM ORIGEM --> CONTRIBUICAO
 		//-------------------------------------------------------------------------------------------------------
 		private void VerOrigemContribuicao(objMovimentacao item)
@@ -794,6 +823,28 @@ namespace CamadaUI.Contas
 			{
 				//--- open CONTRIBUICAO form
 				var frm = new Entradas.frmContribuicao(item.IDOrigem, this);
+				frm.ShowDialog();
+
+				//--- get DATA
+				ObterDados();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		//--- OPEN FORM ORIGEM --> TRANSFERENCIA DE CONTA
+		//-------------------------------------------------------------------------------------------------------
+		private void VerOrigemTransferenciaConta(objMovimentacao item)
+		{
+			try
+			{
+				//--- get APAGAR object
+				objTransfConta transfConta = new TransfContaBLL().GetTransfContaByID(item.IDOrigem);
+
+				//--- open APAGAR form
+				var frm = new Transferencias.frmTransferencia(transfConta, this);
 				frm.ShowDialog();
 
 				//--- get DATA

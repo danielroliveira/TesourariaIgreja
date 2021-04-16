@@ -129,14 +129,18 @@ namespace CamadaUI.Transferencias
 
 				if (value == EnumFlagEstado.NovoRegistro)
 				{
-					btnSalvar.Enabled = true;
-					btnCancelar.Enabled = true;
+					btnSalvar.Visible = true;
+					btnCancelar.Text = "&Cancelar";
+					btnCancelar.Image = Properties.Resources.delete_page_30;
+
 					lblSitBlock.Visible = false;
 				}
 				else
 				{
-					btnSalvar.Enabled = false;
-					btnCancelar.Enabled = false;
+					btnSalvar.Visible = false;
+					btnCancelar.Text = "&Estornar Transferência";
+					btnCancelar.Image = Properties.Resources.lixeira_24;
+
 					lblSitBlock.Visible = true;
 					numTransferenciaAno.Maximum = _transf.TransfData.Year;
 					numTransferenciaAno.Minimum = _transf.TransfData.Year;
@@ -290,13 +294,25 @@ namespace CamadaUI.Transferencias
 		{
 			if (Sit == EnumFlagEstado.NovoRegistro)
 			{
+				CancelarFunc();
+			}
+			else
+			{
+				ExcluirFunc();
+			}
+		}
+
+		private void CancelarFunc()
+		{
+			if (Sit == EnumFlagEstado.NovoRegistro)
+			{
 				var response = AbrirDialog("Deseja cancelar a inserção de uma nova Transferência?",
 							   "Cancelar", DialogType.SIM_NAO, DialogIcon.Question);
 
 				if (response == DialogResult.Yes)
 				{
 					Sit = EnumFlagEstado.RegistroSalvo;
-					btnFechar_Click(sender, e);
+					btnFechar_Click(btnCancelar, new EventArgs());
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -308,7 +324,43 @@ namespace CamadaUI.Transferencias
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
+		}
 
+		private void ExcluirFunc()
+		{
+			//--- ask user
+			var resp = AbrirDialog("Deseja realemente estornar a Transferência de Conta atual?",
+				"Estornar Transferência",
+				DialogType.SIM_NAO,
+				DialogIcon.Question,
+				DialogDefaultButton.Second);
+
+			if (resp != DialogResult.Yes) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				tBLL.DeleteTransferenciaConta(_transf, ContaSaldoLocalUpdate);
+
+				if (Modal)
+					DialogResult = DialogResult.Yes;
+				else
+					Close();
+
+				AbrirDialog("Transferência Estornada com sucesso!", "Estornar");
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Estornar Transferência..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		#endregion

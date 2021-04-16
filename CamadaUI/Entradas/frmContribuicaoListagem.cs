@@ -470,7 +470,6 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		#endregion
