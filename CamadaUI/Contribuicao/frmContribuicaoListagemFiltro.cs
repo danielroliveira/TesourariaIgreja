@@ -10,7 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Contribuicao
 {
 	public partial class frmContribuicaoListagemFiltro : CamadaUI.Modals.frmModFinBorder
 	{

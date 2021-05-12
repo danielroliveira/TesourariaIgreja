@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.Entradas
+﻿namespace CamadaUI.Contribuicao
 {
 	partial class frmCampanhaProcura
 	{
@@ -89,9 +89,9 @@
 			// 
 			// lstItens
 			// 
-			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstItens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lstItens.ColorSortedColumn = System.Drawing.Color.Transparent;
 			this.lstItens.Columns.Add(this.clnID);
 			this.lstItens.Columns.Add(this.clnItem);

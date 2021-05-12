@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.Entradas
+﻿namespace CamadaUI.Contribuicao
 {
 	partial class frmContribuicao
 	{
@@ -155,19 +155,19 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNovo,
-            this.toolStripSeparator1,
-            this.btnSalvar,
-            this.btnCancelar,
-            this.btnFechar,
-            this.toolStripSeparator2});
+			this.btnNovo,
+			this.toolStripSeparator1,
+			this.btnSalvar,
+			this.btnCancelar,
+			this.btnFechar,
+			this.toolStripSeparator2});
 			this.tspMenu.Location = new System.Drawing.Point(2, 596);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(600, 44);
@@ -594,24 +594,24 @@
 			this.numEntradaAno.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numEntradaAno.Location = new System.Drawing.Point(354, 231);
 			this.numEntradaAno.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
+			5000,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaAno.Name = "numEntradaAno";
 			this.numEntradaAno.Size = new System.Drawing.Size(76, 31);
 			this.numEntradaAno.TabIndex = 11;
 			this.numEntradaAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numEntradaAno.Value = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
+			2000,
+			0,
+			0,
+			0});
 			this.numEntradaAno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// numEntradaDia
@@ -620,24 +620,24 @@
 			this.numEntradaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numEntradaDia.Location = new System.Drawing.Point(140, 231);
 			this.numEntradaDia.Maximum = new decimal(new int[] {
-            31,
-            0,
-            0,
-            0});
+			31,
+			0,
+			0,
+			0});
 			this.numEntradaDia.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaDia.Name = "numEntradaDia";
 			this.numEntradaDia.Size = new System.Drawing.Size(52, 31);
 			this.numEntradaDia.TabIndex = 9;
 			this.numEntradaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numEntradaDia.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.numEntradaDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// line2

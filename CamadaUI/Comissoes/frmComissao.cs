@@ -283,7 +283,7 @@ namespace CamadaUI.Comissoes
 			//--- get Selected item
 			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			Entradas.frmContribuicao frm = new Entradas.frmContribuicao(item);
+			Contribuicao.frmContribuicao frm = new Contribuicao.frmContribuicao(item);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();

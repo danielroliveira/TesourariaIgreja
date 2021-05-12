@@ -822,7 +822,7 @@ namespace CamadaUI.Contas
 			try
 			{
 				//--- open CONTRIBUICAO form
-				var frm = new Entradas.frmContribuicao(item.IDOrigem, this);
+				var frm = new Contribuicao.frmContribuicao(item.IDOrigem, this);
 				frm.ShowDialog();
 
 				//--- get DATA

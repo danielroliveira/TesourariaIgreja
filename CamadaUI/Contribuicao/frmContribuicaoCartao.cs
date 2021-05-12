@@ -6,10 +6,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Contribuicao
 {
 	public partial class frmContribuicaoCartao : CamadaUI.Modals.frmModFinBorder
 	{

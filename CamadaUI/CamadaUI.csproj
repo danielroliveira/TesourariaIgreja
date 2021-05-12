@@ -410,52 +410,52 @@
     <Compile Include="DespesaCartao\frmDespesaCartaoProcurar.Designer.cs">
       <DependentUpon>frmDespesaCartaoProcurar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmCampanha.cs">
+    <Compile Include="Contribuicao\frmCampanha.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmCampanha.designer.cs">
+    <Compile Include="Contribuicao\frmCampanha.designer.cs">
       <DependentUpon>frmCampanha.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmCampanhaListagem.cs">
+    <Compile Include="Contribuicao\frmCampanhaListagem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmCampanhaListagem.designer.cs">
+    <Compile Include="Contribuicao\frmCampanhaListagem.designer.cs">
       <DependentUpon>frmCampanhaListagem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmCampanhaProcura.cs">
+    <Compile Include="Contribuicao\frmCampanhaProcura.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmCampanhaProcura.designer.cs">
+    <Compile Include="Contribuicao\frmCampanhaProcura.designer.cs">
       <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmContribuicao.cs">
+    <Compile Include="Contribuicao\frmContribuicao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmContribuicao.designer.cs">
+    <Compile Include="Contribuicao\frmContribuicao.designer.cs">
       <DependentUpon>frmContribuicao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoCartao.cs">
+    <Compile Include="Contribuicao\frmContribuicaoCartao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoCartao.designer.cs">
+    <Compile Include="Contribuicao\frmContribuicaoCartao.designer.cs">
       <DependentUpon>frmContribuicaoCartao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoCheque.cs">
+    <Compile Include="Contribuicao\frmContribuicaoCheque.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoCheque.designer.cs">
+    <Compile Include="Contribuicao\frmContribuicaoCheque.designer.cs">
       <DependentUpon>frmContribuicaoCheque.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoListagem.cs">
+    <Compile Include="Contribuicao\frmContribuicaoListagem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoListagem.designer.cs">
+    <Compile Include="Contribuicao\frmContribuicaoListagem.designer.cs">
       <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoListagemFiltro.cs">
+    <Compile Include="Contribuicao\frmContribuicaoListagemFiltro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Entradas\frmContribuicaoListagemFiltro.Designer.cs">
+    <Compile Include="Contribuicao\frmContribuicaoListagemFiltro.Designer.cs">
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </Compile>
     <Compile Include="Imagem\frmImagemDialog.cs">
@@ -971,31 +971,31 @@
     <EmbeddedResource Include="DespesaCartao\frmDespesaCartaoProcurar.resx">
       <DependentUpon>frmDespesaCartaoProcurar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmCampanha.resx">
+    <EmbeddedResource Include="Contribuicao\frmCampanha.resx">
       <DependentUpon>frmCampanha.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmCampanhaListagem.resx">
+    <EmbeddedResource Include="Contribuicao\frmCampanhaListagem.resx">
       <DependentUpon>frmCampanhaListagem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmCampanhaProcura.resx">
+    <EmbeddedResource Include="Contribuicao\frmCampanhaProcura.resx">
       <DependentUpon>frmCampanhaProcura.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmContribuicao.resx">
+    <EmbeddedResource Include="Contribuicao\frmContribuicao.resx">
       <DependentUpon>frmContribuicao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmContribuicaoCartao.resx">
+    <EmbeddedResource Include="Contribuicao\frmContribuicaoCartao.resx">
       <DependentUpon>frmContribuicaoCartao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmContribuicaoCheque.resx">
+    <EmbeddedResource Include="Contribuicao\frmContribuicaoCheque.resx">
       <DependentUpon>frmContribuicaoCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmContribuicaoListagem.resx">
+    <EmbeddedResource Include="Contribuicao\frmContribuicaoListagem.resx">
       <DependentUpon>frmContribuicaoListagem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\frmContribuicaoListagemFiltro.resx">
+    <EmbeddedResource Include="Contribuicao\frmContribuicaoListagemFiltro.resx">
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Entradas\Reports\rptEntradasPorPeriodoList.rdlc" />
+    <EmbeddedResource Include="Contribuicao\Reports\rptEntradasPorPeriodoList.rdlc" />
     <EmbeddedResource Include="Imagem\frmImagemDialog.resx">
       <DependentUpon>frmImagemDialog.cs</DependentUpon>
     </EmbeddedResource>

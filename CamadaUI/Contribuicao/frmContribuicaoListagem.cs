@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Contribuicao
 {
 	public partial class frmContribuicaoListagem : CamadaUI.Modals.frmModFinBorder
 	{
@@ -403,7 +403,7 @@ namespace CamadaUI.Entradas
 				param.Add(new Microsoft.Reporting.WinForms.ReportParameter("dtFinal", _dtFinal.ToShortDateString()));
 
 				//--- create Report Global and Show
-				var frm = new Main.frmReportGlobal("CamadaUI.Entradas.Reports.rptEntradasPorPeriodoList.rdlc",
+				var frm = new Main.frmReportGlobal("CamadaUI.Contribuicao.Reports.rptEntradasPorPeriodoList.rdlc",
 					"Relatório de Contribuições",
 					mylist, null, param);
 				frm.ShowDialog();

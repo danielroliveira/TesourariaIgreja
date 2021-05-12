@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Contribuicao
 {
 	public partial class frmCampanha : CamadaUI.Modals.frmModFinBorder
 	{

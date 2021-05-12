@@ -1,16 +1,16 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Caixa;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
-using CamadaUI.Caixa;
+using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Entradas
+namespace CamadaUI.Contribuicao
 {
 	public partial class frmContribuicaoCheque : CamadaUI.Modals.frmModFinBorder
 	{

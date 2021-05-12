@@ -1,4 +1,4 @@
-﻿namespace CamadaUI.Entradas
+﻿namespace CamadaUI.Contribuicao
 {
 	partial class frmContribuicaoListagemFiltro
 	{
@@ -401,8 +401,8 @@
 			// 
 			// panel2
 			// 
-			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(219)))), ((int)(((byte)(224)))));
 			this.panel2.Controls.Add(this.btnCancelar);
 			this.panel2.Controls.Add(this.btnProcurar);

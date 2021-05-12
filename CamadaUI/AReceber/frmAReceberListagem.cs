@@ -1205,7 +1205,7 @@ namespace CamadaUI.AReceber
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				Entradas.frmContribuicao frm = new Entradas.frmContribuicao(item.IDContribuicao);
+				Contribuicao.frmContribuicao frm = new Contribuicao.frmContribuicao(item.IDContribuicao);
 				Visible = false;
 				frm.ShowDialog();
 				DesativaMenuPrincipal();
