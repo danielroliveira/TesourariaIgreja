@@ -30,7 +30,8 @@ namespace CamadaDTO
 		APagar = 3,
 		CaixaAjuste = 4,
 		TransfConta = 5,
-		TransfSetor = 6
+		TransfSetor = 6,
+		Entrada = 7
 	}
 
 	public enum EnumImagemOrigem : byte
