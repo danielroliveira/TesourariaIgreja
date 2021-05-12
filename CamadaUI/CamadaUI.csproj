@@ -458,6 +458,30 @@
     <Compile Include="Contribuicao\frmContribuicaoListagemFiltro.Designer.cs">
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entradas\frmEntrada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmEntrada.designer.cs">
+      <DependentUpon>frmEntrada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaListagem.designer.cs">
+      <DependentUpon>frmEntradaListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaOrigemControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaOrigemControle.designer.cs">
+      <DependentUpon>frmEntradaOrigemControle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaOrigemProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entradas\frmEntradaOrigemProcura.designer.cs">
+      <DependentUpon>frmEntradaOrigemProcura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Imagem\frmImagemDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -996,6 +1020,18 @@
       <DependentUpon>frmContribuicaoListagemFiltro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Contribuicao\Reports\rptEntradasPorPeriodoList.rdlc" />
+    <EmbeddedResource Include="Entradas\frmEntrada.resx">
+      <DependentUpon>frmEntrada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmEntradaListagem.resx">
+      <DependentUpon>frmEntradaListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmEntradaOrigemControle.resx">
+      <DependentUpon>frmEntradaOrigemControle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entradas\frmEntradaOrigemProcura.resx">
+      <DependentUpon>frmEntradaOrigemProcura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Imagem\frmImagemDialog.resx">
       <DependentUpon>frmImagemDialog.cs</DependentUpon>
     </EmbeddedResource>

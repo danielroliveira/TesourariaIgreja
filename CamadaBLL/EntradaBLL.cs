@@ -6,7 +6,7 @@ using System.Data;
 
 namespace CamadaBLL
 {
-	class EntradaBLL
+	public class EntradaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
@@ -413,6 +413,57 @@ namespace CamadaBLL
 				}
 
 				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET ENTRADA ORIGEM LIST
+		//------------------------------------------------------------------------------------------------------------
+		public List<objEntradaOrigem> GetEntradaOrigemList(bool? Ativo = null)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				string query = "SELECT * FROM tblEntradaOrigem";
+
+				// add params
+				db.LimparParametros();
+
+				if (Ativo != null)
+				{
+					db.AdicionarParametros("@Ativo", Ativo);
+					query += " WHERE Ativo = @Ativo";
+				}
+
+				query += " ORDER BY OrigemDescricao";
+
+				List<objEntradaOrigem> listagem = new List<objEntradaOrigem>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					objEntradaOrigem titular = new objEntradaOrigem()
+					{
+						IDEntradaOrigem = (int)row["IDEntradaOrigem"],
+						OrigemDescricao = (string)row["OrigemDescricao"],
+						CNP = row["CNP"] == DBNull.Value ? string.Empty : (string)row["CNP"],
+						Ativo = (bool)row["Ativo"],
+					};
+
+					listagem.Add(titular);
+				}
+
+				return listagem;
 
 			}
 			catch (Exception ex)
