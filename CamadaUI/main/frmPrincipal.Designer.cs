@@ -47,6 +47,9 @@
 			this.btnEntradas = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuContribuicaoInserir = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuContribuicaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuEntradas = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuEntradasInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuEntradasProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuAReceberProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -282,6 +285,7 @@
 			this.btnEntradas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuContribuicaoInserir,
             this.mnuContribuicaoProcurar,
+            this.mnuEntradas,
             this.toolStripSeparator6,
             this.mnuAReceberProcurar,
             this.toolStripSeparator3,
@@ -305,7 +309,7 @@
 			this.mnuContribuicaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.mnuContribuicaoInserir.Name = "mnuContribuicaoInserir";
 			this.mnuContribuicaoInserir.Padding = new System.Windows.Forms.Padding(0);
-			this.mnuContribuicaoInserir.Size = new System.Drawing.Size(240, 28);
+			this.mnuContribuicaoInserir.Size = new System.Drawing.Size(242, 28);
 			this.mnuContribuicaoInserir.Text = "Inserir Contribuição";
 			// 
 			// mnuContribuicaoProcurar
@@ -315,13 +319,41 @@
 			this.mnuContribuicaoProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuContribuicaoProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.mnuContribuicaoProcurar.Name = "mnuContribuicaoProcurar";
-			this.mnuContribuicaoProcurar.Size = new System.Drawing.Size(240, 30);
+			this.mnuContribuicaoProcurar.Size = new System.Drawing.Size(242, 30);
 			this.mnuContribuicaoProcurar.Text = "Procurar Contribuição";
+			// 
+			// mnuEntradas
+			// 
+			this.mnuEntradas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuEntradasInserir,
+            this.mnuEntradasProcurar});
+			this.mnuEntradas.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuEntradas.Image = global::CamadaUI.Properties.Resources.money_green_24;
+			this.mnuEntradas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuEntradas.Name = "mnuEntradas";
+			this.mnuEntradas.Size = new System.Drawing.Size(242, 30);
+			this.mnuEntradas.Text = "Outros Tipos de Entrada";
+			// 
+			// mnuEntradasInserir
+			// 
+			this.mnuEntradasInserir.Image = global::CamadaUI.Properties.Resources.add_24;
+			this.mnuEntradasInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuEntradasInserir.Name = "mnuEntradasInserir";
+			this.mnuEntradasInserir.Size = new System.Drawing.Size(194, 30);
+			this.mnuEntradasInserir.Text = "Inserir Entrada";
+			// 
+			// mnuEntradasProcurar
+			// 
+			this.mnuEntradasProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
+			this.mnuEntradasProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuEntradasProcurar.Name = "mnuEntradasProcurar";
+			this.mnuEntradasProcurar.Size = new System.Drawing.Size(194, 30);
+			this.mnuEntradasProcurar.Text = "Procurar Entrada";
 			// 
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(237, 6);
+			this.toolStripSeparator6.Size = new System.Drawing.Size(239, 6);
 			// 
 			// mnuAReceberProcurar
 			// 
@@ -330,14 +362,14 @@
 			this.mnuAReceberProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuAReceberProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.mnuAReceberProcurar.Name = "mnuAReceberProcurar";
-			this.mnuAReceberProcurar.Size = new System.Drawing.Size(240, 30);
+			this.mnuAReceberProcurar.Size = new System.Drawing.Size(242, 30);
 			this.mnuAReceberProcurar.Tag = "1";
 			this.mnuAReceberProcurar.Text = "Procurar AReceber";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(237, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(239, 6);
 			// 
 			// mnuCampanhas
 			// 
@@ -345,7 +377,7 @@
 			this.mnuCampanhas.Image = global::CamadaUI.Properties.Resources.money_green_24;
 			this.mnuCampanhas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuCampanhas.Name = "mnuCampanhas";
-			this.mnuCampanhas.Size = new System.Drawing.Size(240, 30);
+			this.mnuCampanhas.Size = new System.Drawing.Size(242, 30);
 			this.mnuCampanhas.Tag = "1";
 			this.mnuCampanhas.Text = "Controle de Campanhas";
 			// 
@@ -1136,5 +1168,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuSubDespesaCartao;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaCartaoInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuDespesaCartaoProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuEntradas;
+		private System.Windows.Forms.ToolStripMenuItem mnuEntradasInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuEntradasProcurar;
 	}
 }

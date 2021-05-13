@@ -32,10 +32,10 @@ namespace CamadaUI.Entradas
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmEntrada(objEntrada contribuicao)
+		public frmEntrada(objEntrada entrada)
 		{
 			InitializeComponent();
-			ConstructorContinue(contribuicao);
+			ConstructorContinue(entrada);
 		}
 
 		public frmEntrada(long IDEntrada, Form formOrigem = null)
@@ -56,9 +56,9 @@ namespace CamadaUI.Entradas
 
 		// CONTRUCTOR CONTINUE
 		//------------------------------------------------------------------------------------------------------------
-		private void ConstructorContinue(objEntrada contribuicao)
+		private void ConstructorContinue(objEntrada entrada)
 		{
-			_entrada = contribuicao;
+			_entrada = entrada;
 			GetTipos();
 
 			// Define Conta and Setor padrao
@@ -132,7 +132,7 @@ namespace CamadaUI.Entradas
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter a Contribuicao..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao obter a Entrada..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				return null;
 			}
@@ -219,12 +219,12 @@ namespace CamadaUI.Entradas
 				// btnSET
 				btnSetConta.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetSetor.Enabled = value == EnumFlagEstado.NovoRegistro;
-				btnSetContribuinte.Enabled = value == EnumFlagEstado.NovoRegistro;
+				btnSetOrigem.Enabled = value == EnumFlagEstado.NovoRegistro;
 				btnSetEntradaTipo.Enabled = value == EnumFlagEstado.NovoRegistro;
 			}
 		}
 
-		// DEFINE A DATA PADRAO DA CONTRIBUICAO DATA
+		// DEFINE A DATA PADRAO DA ENTRADA DATA
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineDataPadrao()
 		{
@@ -255,7 +255,7 @@ namespace CamadaUI.Entradas
 		{
 			// CREATE BINDINGS
 			lblID.DataBindings.Add("Text", bind, "IDEntrada", true);
-			txtEntradaValor.DataBindings.Add("Text", bind, "ValorBruto", true, DataSourceUpdateMode.OnPropertyChanged);
+			txtEntradaValor.DataBindings.Add("Text", bind, "EntradaValor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEntradaTipo.DataBindings.Add("Text", bind, "EntradaTipo.EntradaTipo", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtSetor.DataBindings.Add("Text", bind, "Setor", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtConta.DataBindings.Add("Text", bind, "Conta", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -422,7 +422,7 @@ namespace CamadaUI.Entradas
 
 		}
 
-		// EXCLUIR CONTRIBUICAO FUNCTION
+		// EXCLUIR ENTRADA FUNCTION
 		//------------------------------------------------------------------------------------------------------------
 		private void ExcluirFunc()
 		{

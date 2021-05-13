@@ -35,18 +35,7 @@
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnContribuinte = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnForma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValorRecebido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.label1 = new System.Windows.Forms.Label();
 			this.lblValorTotal = new System.Windows.Forms.Label();
-			this.btnProcurar = new VIBlend.WinForms.Controls.vButton();
 			this.btnImprimir = new System.Windows.Forms.Button();
 			this.pnlPorMes = new System.Windows.Forms.Panel();
 			this.btnPeriodoPosterior = new VIBlend.WinForms.Controls.vArrowButton();
@@ -62,15 +51,19 @@
 			this.btnDtFinal = new VIBlend.WinForms.Controls.vButton();
 			this.btnDtInicial = new VIBlend.WinForms.Controls.vButton();
 			this.Panel2 = new System.Windows.Forms.Panel();
-			this.lblFiltro = new System.Windows.Forms.Label();
 			this.btnExcluir = new System.Windows.Forms.Button();
-			this.lblValorRecebido = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.mnuOperacoes = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuDefinirSetor = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -81,7 +74,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(863, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(680, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(402, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Procurar Outras Formas de Entradas";
@@ -91,19 +84,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(1265, 0);
+			this.btnClose.Location = new System.Drawing.Point(1082, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(1305, 50);
+			this.panel1.Size = new System.Drawing.Size(1122, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(1148, 632);
+			this.btnFechar.Location = new System.Drawing.Point(965, 632);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
 			this.btnFechar.TabIndex = 7;
@@ -117,7 +110,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnAdicionar.Image = global::CamadaUI.Properties.Resources.add_16;
-			this.btnAdicionar.Location = new System.Drawing.Point(312, 631);
+			this.btnAdicionar.Location = new System.Drawing.Point(154, 632);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
 			this.btnAdicionar.TabIndex = 5;
@@ -131,7 +124,7 @@
 			// 
 			this.btnVisualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
-			this.btnVisualizar.Location = new System.Drawing.Point(180, 631);
+			this.btnVisualizar.Location = new System.Drawing.Point(22, 632);
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
 			this.btnVisualizar.TabIndex = 4;
@@ -152,9 +145,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -168,15 +161,13 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnID,
-            this.clnData,
-            this.clnConta,
-            this.clnSetor,
-            this.clnTipo,
-            this.clnContribuinte,
-            this.clnForma,
-            this.clnValor,
-            this.clnValorRecebido});
+			this.clnID,
+			this.clnData,
+			this.clnConta,
+			this.clnSetor,
+			this.clnTipo,
+			this.clnOrigem,
+			this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -190,128 +181,28 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1261, 479);
+			this.dgvListagem.Size = new System.Drawing.Size(1078, 479);
 			this.dgvListagem.TabIndex = 2;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
-			// 
-			// clnID
-			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 60;
-			// 
-			// clnData
-			// 
-			this.clnData.HeaderText = "Data";
-			this.clnData.Name = "clnData";
-			this.clnData.ReadOnly = true;
-			this.clnData.Width = 85;
-			// 
-			// clnConta
-			// 
-			this.clnConta.HeaderText = "Conta de Entrada";
-			this.clnConta.Name = "clnConta";
-			this.clnConta.ReadOnly = true;
-			this.clnConta.Width = 200;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor de Recursos";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 200;
-			// 
-			// clnTipo
-			// 
-			this.clnTipo.HeaderText = "Tipo de Contribuição";
-			this.clnTipo.Name = "clnTipo";
-			this.clnTipo.ReadOnly = true;
-			this.clnTipo.Width = 170;
-			// 
-			// clnContribuinte
-			// 
-			this.clnContribuinte.HeaderText = "Contribuinte";
-			this.clnContribuinte.Name = "clnContribuinte";
-			this.clnContribuinte.ReadOnly = true;
-			this.clnContribuinte.Width = 200;
-			// 
-			// clnForma
-			// 
-			this.clnForma.HeaderText = "Meio";
-			this.clnForma.Name = "clnForma";
-			this.clnForma.ReadOnly = true;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
-			// 
-			// clnValorRecebido
-			// 
-			this.clnValorRecebido.HeaderText = "Vl Recebido";
-			this.clnValorRecebido.Name = "clnValorRecebido";
-			this.clnValorRecebido.ReadOnly = true;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.ForeColor = System.Drawing.Color.DimGray;
-			this.label1.Location = new System.Drawing.Point(1010, 623);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(122, 15);
-			this.label1.TabIndex = 8;
-			this.label1.Text = "Valor Recebido Total:";
 			// 
 			// lblValorTotal
 			// 
 			this.lblValorTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblValorTotal.BackColor = System.Drawing.Color.LightGray;
 			this.lblValorTotal.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorTotal.Location = new System.Drawing.Point(842, 642);
+			this.lblValorTotal.Location = new System.Drawing.Point(814, 642);
 			this.lblValorTotal.Name = "lblValorTotal";
 			this.lblValorTotal.Size = new System.Drawing.Size(137, 32);
 			this.lblValorTotal.TabIndex = 9;
 			this.lblValorTotal.Text = "R$ 0,00";
 			this.lblValorTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// btnProcurar
-			// 
-			this.btnProcurar.AllowAnimations = true;
-			this.btnProcurar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnProcurar.BackColor = System.Drawing.Color.Transparent;
-			this.btnProcurar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnProcurar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnProcurar.HoverEffectsEnabled = true;
-			this.btnProcurar.Image = global::CamadaUI.Properties.Resources.search_24;
-			this.btnProcurar.ImageAbsolutePosition = new System.Drawing.Point(20, 3);
-			this.btnProcurar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnProcurar.Location = new System.Drawing.Point(22, 632);
-			this.btnProcurar.Name = "btnProcurar";
-			this.btnProcurar.PressedTextColor = System.Drawing.Color.LemonChiffon;
-			this.btnProcurar.RoundedCornersMask = ((byte)(15));
-			this.btnProcurar.RoundedCornersRadius = 2;
-			this.btnProcurar.Size = new System.Drawing.Size(138, 41);
-			this.btnProcurar.TabIndex = 3;
-			this.btnProcurar.TabStop = false;
-			this.btnProcurar.Text = "Filtrar";
-			this.btnProcurar.TextAbsolutePosition = new System.Drawing.Point(25, 5);
-			this.btnProcurar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnProcurar.UseAbsoluteImagePositioning = true;
-			this.btnProcurar.UseAbsoluteTextPositioning = true;
-			this.btnProcurar.UseCompatibleTextRendering = true;
-			this.btnProcurar.UseVisualStyleBackColor = false;
-			this.btnProcurar.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.OFFICESILVER;
-			// 
 			// btnImprimir
 			// 
 			this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.imprimir_24;
-			this.btnImprimir.Location = new System.Drawing.Point(444, 631);
+			this.btnImprimir.Location = new System.Drawing.Point(286, 632);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
 			this.btnImprimir.TabIndex = 6;
@@ -517,20 +408,11 @@
 			this.Panel2.Size = new System.Drawing.Size(674, 58);
 			this.Panel2.TabIndex = 1;
 			// 
-			// lblFiltro
-			// 
-			this.lblFiltro.Font = new System.Drawing.Font("Pathway Gothic One", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblFiltro.Location = new System.Drawing.Point(717, 67);
-			this.lblFiltro.Name = "lblFiltro";
-			this.lblFiltro.Size = new System.Drawing.Size(561, 58);
-			this.lblFiltro.TabIndex = 10;
-			this.lblFiltro.Text = "Filtro";
-			// 
 			// btnExcluir
 			// 
 			this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
-			this.btnExcluir.Location = new System.Drawing.Point(576, 631);
+			this.btnExcluir.Location = new System.Drawing.Point(418, 632);
 			this.btnExcluir.Name = "btnExcluir";
 			this.btnExcluir.Size = new System.Drawing.Size(126, 42);
 			this.btnExcluir.TabIndex = 6;
@@ -540,25 +422,13 @@
 			this.btnExcluir.UseVisualStyleBackColor = true;
 			this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
 			// 
-			// lblValorRecebido
-			// 
-			this.lblValorRecebido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblValorRecebido.BackColor = System.Drawing.Color.LightGray;
-			this.lblValorRecebido.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValorRecebido.Location = new System.Drawing.Point(993, 641);
-			this.lblValorRecebido.Name = "lblValorRecebido";
-			this.lblValorRecebido.Size = new System.Drawing.Size(137, 32);
-			this.lblValorRecebido.TabIndex = 9;
-			this.lblValorRecebido.Text = "R$ 0,00";
-			this.lblValorRecebido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
 			// label3
 			// 
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.DimGray;
-			this.label3.Location = new System.Drawing.Point(910, 623);
+			this.label3.Location = new System.Drawing.Point(882, 623);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(69, 15);
 			this.label3.TabIndex = 8;
@@ -568,52 +438,87 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuVisualizar,
-            this.mnuDefinirSetor,
-            this.toolStripSeparator2,
-            this.mnuExcluir});
+			this.mnuVisualizar,
+			this.toolStripSeparator2,
+			this.mnuExcluir});
 			this.mnuOperacoes.Name = "mnuOperacoes";
-			this.mnuOperacoes.Size = new System.Drawing.Size(310, 88);
+			this.mnuOperacoes.Size = new System.Drawing.Size(205, 62);
 			// 
 			// mnuVisualizar
 			// 
 			this.mnuVisualizar.Image = global::CamadaUI.Properties.Resources.search_page_24;
 			this.mnuVisualizar.Name = "mnuVisualizar";
-			this.mnuVisualizar.Size = new System.Drawing.Size(309, 26);
-			this.mnuVisualizar.Text = "Visualizar Contribuição";
+			this.mnuVisualizar.Size = new System.Drawing.Size(204, 26);
+			this.mnuVisualizar.Text = "Visualizar Entrada";
 			this.mnuVisualizar.Click += new System.EventHandler(this.mnuVisualizar_Click);
-			// 
-			// mnuDefinirSetor
-			// 
-			this.mnuDefinirSetor.Image = global::CamadaUI.Properties.Resources.edit_page_24;
-			this.mnuDefinirSetor.Name = "mnuDefinirSetor";
-			this.mnuDefinirSetor.Size = new System.Drawing.Size(309, 26);
-			this.mnuDefinirSetor.Text = "Definir o Setor de Movimentação";
-			this.mnuDefinirSetor.Click += new System.EventHandler(this.mnuDefinirSetor_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(306, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(201, 6);
 			// 
 			// mnuExcluir
 			// 
 			this.mnuExcluir.Image = global::CamadaUI.Properties.Resources.lixeira_24;
 			this.mnuExcluir.Name = "mnuExcluir";
-			this.mnuExcluir.Size = new System.Drawing.Size(309, 26);
-			this.mnuExcluir.Text = "Excluir Contribuição";
+			this.mnuExcluir.Size = new System.Drawing.Size(204, 26);
+			this.mnuExcluir.Text = "Excluir Entrada";
 			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 60;
+			// 
+			// clnData
+			// 
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
+			this.clnData.Width = 85;
+			// 
+			// clnConta
+			// 
+			this.clnConta.HeaderText = "Conta de Entrada";
+			this.clnConta.Name = "clnConta";
+			this.clnConta.ReadOnly = true;
+			this.clnConta.Width = 200;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor de Recursos";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 200;
+			// 
+			// clnTipo
+			// 
+			this.clnTipo.HeaderText = "Tipo de Entrada";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.ReadOnly = true;
+			this.clnTipo.Width = 170;
+			// 
+			// clnOrigem
+			// 
+			this.clnOrigem.HeaderText = "Origem";
+			this.clnOrigem.Name = "clnOrigem";
+			this.clnOrigem.ReadOnly = true;
+			this.clnOrigem.Width = 200;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
 			// frmEntradaListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(1305, 686);
-			this.Controls.Add(this.lblFiltro);
+			this.ClientSize = new System.Drawing.Size(1122, 686);
 			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.lblValorRecebido);
 			this.Controls.Add(this.lblValorTotal);
-			this.Controls.Add(this.btnProcurar);
 			this.Controls.Add(this.Panel2);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.btnFechar);
@@ -631,13 +536,9 @@
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
 			this.Controls.SetChildIndex(this.Panel2, 0);
-			this.Controls.SetChildIndex(this.btnProcurar, 0);
 			this.Controls.SetChildIndex(this.lblValorTotal, 0);
-			this.Controls.SetChildIndex(this.lblValorRecebido, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
-			this.Controls.SetChildIndex(this.lblFiltro, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.pnlPorMes.ResumeLayout(false);
@@ -655,9 +556,7 @@
 		internal System.Windows.Forms.Button btnAdicionar;
 		internal System.Windows.Forms.Button btnVisualizar;
 		internal System.Windows.Forms.DataGridView dgvListagem;
-		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label lblValorTotal;
-		internal VIBlend.WinForms.Controls.vButton btnProcurar;
 		internal System.Windows.Forms.Button btnImprimir;
 		internal System.Windows.Forms.Panel pnlPorMes;
 		internal VIBlend.WinForms.Controls.vArrowButton btnPeriodoPosterior;
@@ -673,23 +572,18 @@
 		internal VIBlend.WinForms.Controls.vButton btnDtFinal;
 		internal VIBlend.WinForms.Controls.vButton btnDtInicial;
 		internal System.Windows.Forms.Panel Panel2;
-		private System.Windows.Forms.Label lblFiltro;
 		internal System.Windows.Forms.Button btnExcluir;
+		internal System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
+		private System.Windows.Forms.ToolStripMenuItem mnuVisualizar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem mnuExcluir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnConta;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnSetor;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnContribuinte;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnForma;
+		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnValorRecebido;
-		internal System.Windows.Forms.Label lblValorRecebido;
-		internal System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ContextMenuStrip mnuOperacoes;
-		private System.Windows.Forms.ToolStripMenuItem mnuVisualizar;
-		private System.Windows.Forms.ToolStripMenuItem mnuDefinirSetor;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripMenuItem mnuExcluir;
 	}
 }

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -13,32 +12,13 @@ namespace CamadaUI.Entradas
 {
 	public partial class frmEntradaListagem : CamadaUI.Modals.frmModFinBorder
 	{
-		ContribuicaoBLL cBLL = new ContribuicaoBLL();
-		private List<objContribuicao> listCont = new List<objContribuicao>();
+		EntradaBLL eBLL = new EntradaBLL();
+		private List<objEntrada> listEntrada = new List<objEntrada>();
 		private Form _formOrigem;
 		private DateTime _myMes;
 		private DateTime _dtInicial;
 		private DateTime _dtFinal;
 		private byte _ProcuraTipo = 1; // 1: Por Mes | 2: Por Datas | 3: Todos
-
-		public struct StructPesquisa
-		{
-			public int? IDConta;
-			public string Conta;
-			public int? IDSetor;
-			public string Setor;
-			public byte? IDTipo;
-			public string Tipo;
-			public byte? IDForma;
-			public string Forma;
-			public int? IDContribuinte;
-			public string Contribuinte;
-			public int? IDCampanha;
-			public string Campanha;
-			public bool? SetorIndefinido;
-		}
-
-		public StructPesquisa Dados;
 
 		#region NEW | OPEN FUNCTIONS | PROPERTIES
 
@@ -47,8 +27,6 @@ namespace CamadaUI.Entradas
 		public frmEntradaListagem(Form formOrigem = null)
 		{
 			InitializeComponent();
-
-			Dados = new StructPesquisa();
 
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
@@ -62,8 +40,6 @@ namespace CamadaUI.Entradas
 
 			//--- get dados
 			dgvListagem.CellDoubleClick += btnVisualizar_Click;
-
-			DefineLabelFiltro();
 
 			//--- Handlers
 			HandlerKeyDownControl(this);
@@ -107,18 +83,15 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				listCont = cBLL.GetListContribuicao(
-					Dados.IDConta,
-					Dados.IDSetor,
-					Dados.IDForma,
-					Dados.IDTipo,
-					Dados.IDContribuinte,
-					Dados.IDCampanha,
+				listEntrada = eBLL.GetListEntrada(
+					null,
+					null,
+					null,
+					null,
 					_ProcuraTipo != 3 ? (DateTime?)_dtInicial : null,
-					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null,
-					Dados.SetorIndefinido);
+					_ProcuraTipo != 3 ? (DateTime?)_dtFinal : null);
 
-				dgvListagem.DataSource = listCont;
+				dgvListagem.DataSource = listEntrada;
 				CalculaTotais();
 			}
 			catch (Exception ex)
@@ -138,51 +111,8 @@ namespace CamadaUI.Entradas
 		//----------------------------------------------------------------------------------
 		private void CalculaTotais()
 		{
-			decimal vlTotal = listCont.Sum(x => x.ValorBruto);
+			decimal vlTotal = listEntrada.Sum(x => x.EntradaValor);
 			lblValorTotal.Text = vlTotal.ToString("C");
-
-			decimal vlRecebido = listCont.Sum(x => x.ValorRecebido);
-			lblValorRecebido.Text = vlRecebido.ToString("C");
-		}
-
-		// DEFINE O LABEL FILTRO
-		//------------------------------------------------------------------------------------------------------------
-		private void DefineLabelFiltro()
-		{
-			StringBuilder builder = new StringBuilder();
-
-			if (Dados.IDConta != null)
-			{
-				builder.Append("CONTA: " + Dados.Conta);
-			}
-
-			if (Dados.IDSetor != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "SETOR: " + Dados.Setor);
-			}
-
-			if (Dados.IDTipo != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "TIPO: " + Dados.Tipo);
-			}
-
-			if (Dados.IDForma != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "FORMA: " + Dados.Forma);
-			}
-
-			if (Dados.IDContribuinte != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "CONTRIBUINTE: " + Dados.Contribuinte);
-			}
-
-			if (Dados.IDCampanha != null)
-			{
-				builder.Append((builder.Length > 0 ? " | " : "") + "CAMPANHA: " + Dados.Campanha);
-			}
-
-			lblFiltro.Text = builder.ToString();
-
 		}
 
 		#endregion
@@ -210,7 +140,7 @@ namespace CamadaUI.Entradas
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDContribuicao";
+			clnID.DataPropertyName = "IDEntrada";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -220,7 +150,7 @@ namespace CamadaUI.Entradas
 			clnID.DefaultCellStyle.Font = clnFont;
 
 			//--- (2) COLUNA DATA
-			clnData.DataPropertyName = "ContribuicaoData";
+			clnData.DataPropertyName = "EntradaData";
 			clnData.Visible = true;
 			clnData.ReadOnly = true;
 			clnData.Resizable = DataGridViewTriState.False;
@@ -250,7 +180,7 @@ namespace CamadaUI.Entradas
 			clnSetor.DefaultCellStyle.Font = clnFont;
 
 			//--- (5) COLUNA TIPO
-			clnTipo.DataPropertyName = "ContribuicaoTipo";
+			clnTipo.DataPropertyName = "EntradaTipo";
 			clnTipo.Visible = true;
 			clnTipo.ReadOnly = true;
 			clnTipo.Resizable = DataGridViewTriState.False;
@@ -259,28 +189,18 @@ namespace CamadaUI.Entradas
 			clnTipo.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnTipo.DefaultCellStyle.Font = clnFont;
 
-			//--- (6) COLUNA CONTRIBUINTE
-			clnContribuinte.DataPropertyName = "Contribuinte";
-			clnContribuinte.Visible = true;
-			clnContribuinte.ReadOnly = true;
-			clnContribuinte.Resizable = DataGridViewTriState.False;
-			clnContribuinte.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnContribuinte.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnContribuinte.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnContribuinte.DefaultCellStyle.Font = clnFont;
-
-			//--- (7) COLUNA FORMA
-			clnForma.DataPropertyName = "EntradaForma";
-			clnForma.Visible = true;
-			clnForma.ReadOnly = true;
-			clnForma.Resizable = DataGridViewTriState.False;
-			clnForma.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnForma.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnForma.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnForma.DefaultCellStyle.Font = clnFont;
+			//--- (6) COLUNA ORIGEM
+			clnOrigem.DataPropertyName = "OrigemDescricao";
+			clnOrigem.Visible = true;
+			clnOrigem.ReadOnly = true;
+			clnOrigem.Resizable = DataGridViewTriState.False;
+			clnOrigem.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnOrigem.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnOrigem.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+			clnOrigem.DefaultCellStyle.Font = clnFont;
 
 			//--- (8) COLUNA VALOR
-			clnValor.DataPropertyName = "ValorBruto";
+			clnValor.DataPropertyName = "EntradaValor";
 			clnValor.Visible = true;
 			clnValor.ReadOnly = true;
 			clnValor.Resizable = DataGridViewTriState.False;
@@ -290,17 +210,6 @@ namespace CamadaUI.Entradas
 			clnValor.DefaultCellStyle.Format = "#,##0.00";
 			clnValor.DefaultCellStyle.Font = clnFont;
 
-			//--- (9) COLUNA VALOR RECEBIDO
-			clnValorRecebido.DataPropertyName = "ValorRecebido";
-			clnValorRecebido.Visible = true;
-			clnValorRecebido.ReadOnly = true;
-			clnValorRecebido.Resizable = DataGridViewTriState.False;
-			clnValorRecebido.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValorRecebido.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorRecebido.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-			clnValorRecebido.DefaultCellStyle.Format = "#,##0.00";
-			clnValorRecebido.DefaultCellStyle.Font = clnFont;
-
 			//--- Add Columns
 			dgvListagem.Columns.AddRange(
 				clnID,
@@ -308,10 +217,8 @@ namespace CamadaUI.Entradas
 				clnConta,
 				clnSetor,
 				clnTipo,
-				clnContribuinte,
-				clnForma,
-				clnValor,
-				clnValorRecebido);
+				clnOrigem,
+				clnValor);
 		}
 
 		// ON ENTER SELECT ITEM
@@ -342,14 +249,14 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			Contribuicao.frmContribuicao frm = new Contribuicao.frmContribuicao(new objContribuicao(null));
+			frmEntrada frm = new frmEntrada(new objEntrada(null));
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
 			frm.Show();
 		}
 
-		// ABRIR CONTRIBUICAO ESCOLHIDA
+		// ABRIR ENTRADA ESCOLHIDA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnVisualizar_Click(object sender, EventArgs e)
 		{
@@ -362,9 +269,9 @@ namespace CamadaUI.Entradas
 			}
 
 			//--- get Selected item
-			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objEntrada item = (objEntrada)dgvListagem.SelectedRows[0].DataBoundItem;
 
-			Contribuicao.frmContribuicao frm = new Contribuicao.frmContribuicao(item);
+			frmEntrada frm = new frmEntrada(item);
 			frm.MdiParent = Application.OpenForms.OfType<frmPrincipal>().FirstOrDefault();
 			DesativaMenuPrincipal();
 			Close();
@@ -375,13 +282,16 @@ namespace CamadaUI.Entradas
 		//------------------------------------------------------------------------------------------------------------
 		private void btnImprimir_Click(object sender, EventArgs e)
 		{
+			MessageBox.Show("Ainda não implementado...");
+
 			try
 			{
+				/*
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- convert list
-				List<object> mylist = listCont.Cast<object>().ToList();
+				List<object> mylist = listEntrada.Cast<object>().ToList();
 
 				//--- create Params
 				var param = new List<Microsoft.Reporting.WinForms.ReportParameter>();
@@ -393,7 +303,7 @@ namespace CamadaUI.Entradas
 					"Relatório de Contribuições",
 					mylist, null, param);
 				frm.ShowDialog();
-
+				*/
 			}
 			catch (Exception ex)
 			{
@@ -407,7 +317,7 @@ namespace CamadaUI.Entradas
 			}
 		}
 
-		// EXCLUIR CONTRIBUICAO
+		// EXCLUIR ENTRADA
 		//------------------------------------------------------------------------------------------------------------
 		private void btnExcluir_Click(object sender, EventArgs e)
 		{
@@ -420,7 +330,7 @@ namespace CamadaUI.Entradas
 			}
 
 			//--- get Selected item
-			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
+			objEntrada item = (objEntrada)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			try
 			{
@@ -428,14 +338,14 @@ namespace CamadaUI.Entradas
 				Cursor.Current = Cursors.WaitCursor;
 
 				// --- ask USER
-				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Contribuição abaixo?\n" +
-					$"\nREG: {item.IDContribuicao:D4}\nDATA: {item.ContribuicaoData.ToShortDateString()}\nVALOR: {item.ValorBruto:c}",
-					"Excluir Contribuição", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+				var resp = AbrirDialog("Você deseja realmente EXCLUIR definitivamente a Entrada abaixo?\n" +
+					$"\nREG: {item.IDEntrada:D4}\nDATA: {item.EntradaData.ToShortDateString()}\nVALOR: {item.EntradaValor:c}",
+					"Excluir Entrada", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 
 				if (resp != DialogResult.Yes) return;
 
 				//--- EXECUTE DELETE
-				cBLL.DeleteContribuicao((long)item.IDContribuicao, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
+				eBLL.DeleteEntrada((long)item.IDEntrada, ContaSaldoLocalUpdate, SetorSaldoLocalUpdate);
 
 				//--- REQUERY LIST
 				ObterDados();
@@ -443,12 +353,12 @@ namespace CamadaUI.Entradas
 			}
 			catch (AppException ex)
 			{
-				AbrirDialog("A contribuição está protegida de exclusão porque:\n" +
+				AbrirDialog("A Entrada está protegida de exclusão porque:\n" +
 							ex.Message, "Bloqueio de Exclusão", DialogType.OK, DialogIcon.Exclamation);
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Excluir Contribuição..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Excluir a Entrada..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -658,15 +568,8 @@ namespace CamadaUI.Entradas
 			dgvListagem.CurrentCell = dgvListagem.Rows[hit.RowIndex].Cells[2];
 			dgvListagem.Rows[hit.RowIndex].Selected = true;
 
-			// mostra o MENU ativar e desativar
-			objContribuicao contribuicao = (objContribuicao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
-
-			// mnuDefinir Setor
-			mnuDefinirSetor.Enabled = contribuicao.IDSetor == null;
-
 			// revela menu
 			mnuOperacoes.Show(c.PointToScreen(e.Location));
-
 		}
 
 		private void mnuVisualizar_Click(object sender, EventArgs e)
@@ -677,82 +580,6 @@ namespace CamadaUI.Entradas
 		private void mnuExcluir_Click(object sender, EventArgs e)
 		{
 			btnExcluir_Click(sender, e);
-		}
-
-		private void mnuDefinirSetor_Click(object sender, EventArgs e)
-		{
-			//--- check selected item
-			if (dgvListagem.SelectedRows.Count == 0)
-			{
-				AbrirDialog("Favor selecionar um registro para Definir o Setor...",
-					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
-				return;
-			}
-
-			//--- get Selected item
-			objContribuicao item = (objContribuicao)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				Setores.frmSetorProcura frm = new Setores.frmSetorProcura(this, item.IDSetor);
-				frm.ShowDialog();
-
-				//--- check return
-				if (frm.DialogResult != DialogResult.OK) return;
-
-				item.IDSetor = frm.propEscolha.IDSetor;
-				item.Setor = frm.propEscolha.Setor;
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao abrir o formulário de procura de setor..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
-			DialogResult resp;
-
-			resp = AbrirDialog("Deseja realmente DEFINIR o SETOR na contribuição selecionada?" +
-				$"\nSetor Escolhido: {item.Setor.ToUpper()}" +
-				"\nEssa ação será definitiva...",
-				"Definir Setor", DialogType.SIM_NAO,
-				DialogIcon.Question,
-				DialogDefaultButton.Second);
-
-			if (resp != DialogResult.Yes)
-			{
-				item.CancelEdit();
-				return;
-			}
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				cBLL.UpdateContribuicaoSetor(item);
-				ObterDados();
-
-				AbrirDialog("Setor Definido com sucesso!",
-					"Setor Definido", DialogType.OK, DialogIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Definir o Setor..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
 		}
 
 		#endregion // MENU SUSPENSO --- END

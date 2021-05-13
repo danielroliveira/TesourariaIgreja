@@ -40,7 +40,7 @@
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.line1 = new AwesomeShapeControl.Line();
-			this.btnSetContribuinte = new VIBlend.WinForms.Controls.vButton();
+			this.btnSetOrigem = new VIBlend.WinForms.Controls.vButton();
 			this.txtEntradaOrigem = new System.Windows.Forms.TextBox();
 			this.lblContribuinte = new System.Windows.Forms.Label();
 			this.txtEntradaValor = new CamadaUC.ucOnlyNumbers();
@@ -146,19 +146,19 @@
 			// 
 			// tspMenu
 			// 
-			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tspMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tspMenu.AutoSize = false;
 			this.tspMenu.BackColor = System.Drawing.Color.AntiqueWhite;
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.None;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnNovo,
-			this.toolStripSeparator1,
-			this.btnSalvar,
-			this.btnCancelar,
-			this.btnFechar,
-			this.toolStripSeparator2});
+            this.btnNovo,
+            this.toolStripSeparator1,
+            this.btnSalvar,
+            this.btnCancelar,
+            this.btnFechar,
+            this.toolStripSeparator2});
 			this.tspMenu.Location = new System.Drawing.Point(2, 472);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(600, 44);
@@ -238,24 +238,24 @@
 			this.line1.TabIndex = 7;
 			this.line1.TabStop = false;
 			// 
-			// btnSetContribuinte
+			// btnSetOrigem
 			// 
-			this.btnSetContribuinte.AllowAnimations = true;
-			this.btnSetContribuinte.BackColor = System.Drawing.Color.Transparent;
-			this.btnSetContribuinte.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnSetContribuinte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetContribuinte.Location = new System.Drawing.Point(528, 361);
-			this.btnSetContribuinte.Name = "btnSetContribuinte";
-			this.btnSetContribuinte.RoundedCornersMask = ((byte)(15));
-			this.btnSetContribuinte.RoundedCornersRadius = 0;
-			this.btnSetContribuinte.Size = new System.Drawing.Size(34, 27);
-			this.btnSetContribuinte.TabIndex = 26;
-			this.btnSetContribuinte.TabStop = false;
-			this.btnSetContribuinte.Text = "...";
-			this.btnSetContribuinte.UseCompatibleTextRendering = true;
-			this.btnSetContribuinte.UseVisualStyleBackColor = false;
-			this.btnSetContribuinte.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
-			this.btnSetContribuinte.Click += new System.EventHandler(this.btnSetOrigem_Click);
+			this.btnSetOrigem.AllowAnimations = true;
+			this.btnSetOrigem.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetOrigem.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnSetOrigem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetOrigem.Location = new System.Drawing.Point(528, 361);
+			this.btnSetOrigem.Name = "btnSetOrigem";
+			this.btnSetOrigem.RoundedCornersMask = ((byte)(15));
+			this.btnSetOrigem.RoundedCornersRadius = 0;
+			this.btnSetOrigem.Size = new System.Drawing.Size(34, 27);
+			this.btnSetOrigem.TabIndex = 26;
+			this.btnSetOrigem.TabStop = false;
+			this.btnSetOrigem.Text = "...";
+			this.btnSetOrigem.UseCompatibleTextRendering = true;
+			this.btnSetOrigem.UseVisualStyleBackColor = false;
+			this.btnSetOrigem.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+			this.btnSetOrigem.Click += new System.EventHandler(this.btnSetOrigem_Click);
 			// 
 			// txtEntradaOrigem
 			// 
@@ -457,24 +457,24 @@
 			this.numEntradaAno.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numEntradaAno.Location = new System.Drawing.Point(270, 239);
 			this.numEntradaAno.Maximum = new decimal(new int[] {
-			5000,
-			0,
-			0,
-			0});
+            5000,
+            0,
+            0,
+            0});
 			this.numEntradaAno.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numEntradaAno.Name = "numEntradaAno";
 			this.numEntradaAno.Size = new System.Drawing.Size(76, 31);
 			this.numEntradaAno.TabIndex = 11;
 			this.numEntradaAno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numEntradaAno.Value = new decimal(new int[] {
-			2000,
-			0,
-			0,
-			0});
+            2000,
+            0,
+            0,
+            0});
 			this.numEntradaAno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// numEntradaDia
@@ -483,24 +483,24 @@
 			this.numEntradaDia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numEntradaDia.Location = new System.Drawing.Point(56, 239);
 			this.numEntradaDia.Maximum = new decimal(new int[] {
-			31,
-			0,
-			0,
-			0});
+            31,
+            0,
+            0,
+            0});
 			this.numEntradaDia.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numEntradaDia.Name = "numEntradaDia";
 			this.numEntradaDia.Size = new System.Drawing.Size(52, 31);
 			this.numEntradaDia.TabIndex = 9;
 			this.numEntradaDia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numEntradaDia.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.numEntradaDia.KeyDown += new System.Windows.Forms.KeyEventHandler(this.control_KeyDown_Block);
 			// 
 			// line2
@@ -552,7 +552,7 @@
 			this.Controls.Add(this.btnSetConta);
 			this.Controls.Add(this.btnSetSetor);
 			this.Controls.Add(this.btnSetEntradaTipo);
-			this.Controls.Add(this.btnSetContribuinte);
+			this.Controls.Add(this.btnSetOrigem);
 			this.Controls.Add(this.txtConta);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.txtSetor);
@@ -588,7 +588,7 @@
 			this.Controls.SetChildIndex(this.txtSetor, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.txtConta, 0);
-			this.Controls.SetChildIndex(this.btnSetContribuinte, 0);
+			this.Controls.SetChildIndex(this.btnSetOrigem, 0);
 			this.Controls.SetChildIndex(this.btnSetEntradaTipo, 0);
 			this.Controls.SetChildIndex(this.btnSetSetor, 0);
 			this.Controls.SetChildIndex(this.btnSetConta, 0);
@@ -622,7 +622,7 @@
 		private System.Windows.Forms.ToolStripButton btnCancelar;
 		private System.Windows.Forms.ToolStripButton btnFechar;
 		private AwesomeShapeControl.Line line1;
-		internal VIBlend.WinForms.Controls.vButton btnSetContribuinte;
+		internal VIBlend.WinForms.Controls.vButton btnSetOrigem;
 		internal System.Windows.Forms.TextBox txtEntradaOrigem;
 		internal System.Windows.Forms.Label lblContribuinte;
 		private CamadaUC.ucOnlyNumbers txtEntradaValor;
