@@ -301,10 +301,15 @@ namespace CamadaDTO
 	//=================================================================================================
 	public class objEntradaOrigem
 	{
-		public int IDEntradaOrigem { get; set; }
+		public int? IDEntradaOrigem { get; set; }
 		public string OrigemDescricao { get; set; }
 		public string CNP { get; set; }
 		public bool Ativo { get; set; }
+
+		public override string ToString()
+		{
+			return OrigemDescricao;
+		}
 	}
 
 	//=================================================================================================
@@ -321,6 +326,10 @@ namespace CamadaDTO
 			IDEntradaTipo = 1;
 			EntradaTipo = "Investimento";
 			Ativo = true;
+		}
+		public override string ToString()
+		{
+			return EntradaTipo;
 		}
 	}
 }

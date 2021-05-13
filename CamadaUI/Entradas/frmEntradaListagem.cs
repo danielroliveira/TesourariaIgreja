@@ -190,7 +190,7 @@ namespace CamadaUI.Entradas
 			clnTipo.DefaultCellStyle.Font = clnFont;
 
 			//--- (6) COLUNA ORIGEM
-			clnOrigem.DataPropertyName = "OrigemDescricao";
+			clnOrigem.DataPropertyName = "EntradaOrigem";
 			clnOrigem.Visible = true;
 			clnOrigem.ReadOnly = true;
 			clnOrigem.Resizable = DataGridViewTriState.False;

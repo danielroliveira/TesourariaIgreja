@@ -42,11 +42,11 @@
 			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvListagem = new CamadaUC.ucDataGridView();
+			this.lblAcao = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCNP = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.lblAcao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.MenuListagem.SuspendLayout();
@@ -58,7 +58,7 @@
 			this.lblTitulo.Location = new System.Drawing.Point(281, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(353, 50);
 			this.lblTitulo.TabIndex = 0;
-			this.lblTitulo.Text = "Controle de Titulares de Despesa";
+			this.lblTitulo.Text = "Controle de Origens de Entrada";
 			// 
 			// btnClose
 			// 
@@ -85,12 +85,12 @@
 			this.tspMenu.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.tspMenu.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.btnNovo,
-			this.toolStripSeparator1,
-			this.btnSalvar,
-			this.btnCancelar,
-			this.toolStripSeparator2,
-			this.btnFechar});
+            this.btnNovo,
+            this.toolStripSeparator1,
+            this.btnSalvar,
+            this.btnCancelar,
+            this.toolStripSeparator2,
+            this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 610);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(674, 44);
@@ -162,8 +162,8 @@
 			// MenuListagem
 			// 
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.AtivarToolStripMenuItem,
-			this.DesativarToolStripMenuItem});
+            this.AtivarToolStripMenuItem,
+            this.DesativarToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
 			this.MenuListagem.Size = new System.Drawing.Size(159, 48);
 			// 
@@ -194,9 +194,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -210,10 +210,10 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnCadastro,
-			this.clnCNP,
-			this.clnImage});
+            this.clnID,
+            this.clnCadastro,
+            this.clnCNP,
+            this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(12, 63);
@@ -234,6 +234,18 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
+			// lblAcao
+			// 
+			this.lblAcao.AutoSize = true;
+			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
+			this.lblAcao.Location = new System.Drawing.Point(6, 14);
+			this.lblAcao.Name = "lblAcao";
+			this.lblAcao.Size = new System.Drawing.Size(210, 22);
+			this.lblAcao.TabIndex = 3;
+			this.lblAcao.Text = "Adicionando Novo Registro";
+			this.lblAcao.Visible = false;
+			// 
 			// clnID
 			// 
 			this.clnID.Frozen = true;
@@ -245,7 +257,7 @@
 			// clnCadastro
 			// 
 			this.clnCadastro.Frozen = true;
-			this.clnCadastro.HeaderText = "Titular";
+			this.clnCadastro.HeaderText = "Descrição da Origem";
 			this.clnCadastro.Name = "clnCadastro";
 			this.clnCadastro.Width = 300;
 			// 
@@ -264,18 +276,6 @@
 			this.clnImage.Name = "clnImage";
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
-			// 
-			// lblAcao
-			// 
-			this.lblAcao.AutoSize = true;
-			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
-			this.lblAcao.Location = new System.Drawing.Point(6, 14);
-			this.lblAcao.Name = "lblAcao";
-			this.lblAcao.Size = new System.Drawing.Size(210, 22);
-			this.lblAcao.TabIndex = 3;
-			this.lblAcao.Text = "Adicionando Novo Registro";
-			this.lblAcao.Visible = false;
 			// 
 			// frmEntradaOrigemControle
 			// 

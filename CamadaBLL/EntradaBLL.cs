@@ -166,11 +166,12 @@ namespace CamadaBLL
 		{
 			objEntrada entrada = new objEntrada((long)row["IDEntrada"])
 			{
+				EntradaDescricao = (string)row["EntradaDescricao"],
 				EntradaData = (DateTime)row["EntradaData"],
 				EntradaValor = (decimal)row["EntradaValor"],
 				EntradaTipo = new objEntradaTipo()
 				{
-					IDEntradaTipo = (int)row["IDEntradaTipo"],
+					IDEntradaTipo = (byte)row["IDEntradaTipo"],
 					EntradaTipo = (string)row["EntradaTipo"]
 				},
 				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
@@ -183,6 +184,7 @@ namespace CamadaBLL
 					OrigemDescricao = (string)row["OrigemDescricao"],
 					CNP = (string)row["CNP"]
 				},
+
 			};
 
 			return entrada;
@@ -421,6 +423,10 @@ namespace CamadaBLL
 			}
 		}
 
+		//=================================================================================================
+		// ENTRADA ORIGEM
+		//=================================================================================================
+
 		// GET ENTRADA ORIGEM LIST
 		//------------------------------------------------------------------------------------------------------------
 		public List<objEntradaOrigem> GetEntradaOrigemList(bool? Ativo = null)
@@ -471,5 +477,73 @@ namespace CamadaBLL
 				throw ex;
 			}
 		}
+
+		// INSERT ENTRADA ORIGEM
+		//------------------------------------------------------------------------------------------------------------
+		public int InsertEntradaOrigem(objEntradaOrigem origem)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@OrigemDescricao", origem.OrigemDescricao);
+				db.AdicionarParametros("@CNP", origem.CNP);
+				db.AdicionarParametros("@Ativo", true);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				string query = db.CreateInsertSQL("tblEntradaOrigem");
+
+				//--- insert and Get new ID
+				int newID = (int)db.ExecutarInsertAndGetID(query);
+
+				return newID;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// UPDATE ENTRADA ORIGEM
+		//------------------------------------------------------------------------------------------------------------
+		public bool UpdateEntradaOrigem(objEntradaOrigem origem)
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados();
+
+				//--- clear Params
+				db.LimparParametros();
+
+				//--- define Params
+				db.AdicionarParametros("@IDEntradaOrigem", origem.IDEntradaOrigem);
+				db.AdicionarParametros("@OrigemDescricao", origem.OrigemDescricao);
+				db.AdicionarParametros("@CNP", origem.CNP);
+				db.AdicionarParametros("@Ativo", origem.Ativo);
+
+				//--- convert null parameters
+				db.ConvertNullParams();
+
+				//--- create query
+				string query = db.CreateUpdateSQL("tblEntradaOrigem", "@IDEntradaOrigem");
+
+				//--- update
+				db.ExecutarManipulacao(CommandType.Text, query);
+				return true;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 	}
 }

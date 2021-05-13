@@ -11,9 +11,9 @@ namespace CamadaUI.Entradas
 {
 	public partial class frmEntradaOrigemControle : CamadaUI.Modals.frmModFinBorder
 	{
-		private List<classTitular> list;
+		private List<classOrigem> list;
 		private BindingSource bindList = new BindingSource();
-		DespesaBLL bBLL = new DespesaBLL();
+		EntradaBLL eBLL = new EntradaBLL();
 
 		private Form _formOrigem;
 
@@ -23,7 +23,7 @@ namespace CamadaUI.Entradas
 
 		private EnumFlagEstado _Sit;
 
-		public objDespesaTitular propEscolhido { get; set; }
+		public objEntradaOrigem propEscolhido { get; set; }
 
 		//=================================================================================================
 		// SUB NEW
@@ -35,10 +35,10 @@ namespace CamadaUI.Entradas
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
-			AtivarToolStripMenuItem.Text = "Ativar Titular";
-			DesativarToolStripMenuItem.Text = "Desativar Titular";
+			AtivarToolStripMenuItem.Text = "Ativar Origem";
+			DesativarToolStripMenuItem.Text = "Desativar Origem";
 
-			bindList.DataSource = typeof(classTitular);
+			bindList.DataSource = typeof(classOrigem);
 			ObterDados();
 			FormataListagem();
 
@@ -64,28 +64,28 @@ namespace CamadaUI.Entradas
 
 		}
 
-		private class classTitular : objDespesaTitular
+		private class classOrigem : objEntradaOrigem
 		{
-			public classTitular() : base()
+			public classOrigem() : base()
 			{
 				Ativo = true;
 			}
 
 			public EnumFlagEstado RowSit { get; set; }
 
-			public static List<classTitular> convertFrom(List<objDespesaTitular> lstTitular)
+			public static List<classOrigem> convertFrom(List<objEntradaOrigem> lstOrigem)
 			{
-				var novaClasse = new List<classTitular>();
+				var novaClasse = new List<classOrigem>();
 
-				foreach (var titular in lstTitular)
+				foreach (var origem in lstOrigem)
 				{
-					var cl = new classTitular()
+					var cl = new classOrigem()
 					{
-						Titular = titular.Titular,
-						Ativo = titular.Ativo,
-						IDTitular = titular.IDTitular,
-						CNP = CNPConvert(titular.CNP),
-						RowSit = titular.IDTitular == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
+						OrigemDescricao = origem.OrigemDescricao,
+						Ativo = origem.Ativo,
+						IDEntradaOrigem = origem.IDEntradaOrigem,
+						CNP = CNPConvert(origem.CNP),
+						RowSit = origem.IDEntradaOrigem == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
 					};
 
 					novaClasse.Add(cl);
@@ -141,7 +141,7 @@ namespace CamadaUI.Entradas
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				list = classTitular.convertFrom(bBLL.GetTitularList());
+				list = classOrigem.convertFrom(eBLL.GetEntradaOrigemList());
 				bindList.DataSource = list;
 				dgvListagem.DataSource = bindList;
 
@@ -184,7 +184,7 @@ namespace CamadaUI.Entradas
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDTitular";
+			clnID.DataPropertyName = "IDEntradaOrigem";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -193,7 +193,7 @@ namespace CamadaUI.Entradas
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "Titular";
+			clnCadastro.DataPropertyName = "OrigemDescricao";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = false;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -227,9 +227,9 @@ namespace CamadaUI.Entradas
 		{
 			if (e.ColumnIndex == clnImage.Index)
 			{
-				objDespesaTitular item = (objDespesaTitular)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				objEntradaOrigem item = (objEntradaOrigem)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (item.IDTitular == null)
+				if (item.IDEntradaOrigem == null)
 				{
 					e.Value = ImgNew;
 				}
@@ -257,7 +257,7 @@ namespace CamadaUI.Entradas
 				return;
 			}
 
-			classTitular currentItem = (classTitular)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+			classOrigem currentItem = (classOrigem)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
 			if (Sit != EnumFlagEstado.RegistroSalvo && currentItem.RowSit == EnumFlagEstado.RegistroSalvo)
 			{
@@ -265,7 +265,7 @@ namespace CamadaUI.Entradas
 				return;
 			}
 
-			if (currentItem.IDTitular == null)
+			if (currentItem.IDEntradaOrigem == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				currentItem.RowSit = EnumFlagEstado.NovoRegistro;
@@ -319,7 +319,7 @@ namespace CamadaUI.Entradas
 				e.SuppressKeyPress = true;
 				e.Handled = true;
 
-				classTitular myItem = (classTitular)dgvListagem.CurrentRow.DataBoundItem;
+				classOrigem myItem = (classOrigem)dgvListagem.CurrentRow.DataBoundItem;
 
 				if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
 				{
@@ -348,7 +348,7 @@ namespace CamadaUI.Entradas
 					return;
 				}
 
-				if (ProcuraTitularDuplicado(e.FormattedValue.ToString()) == false)
+				if (ProcuraOrigemDuplicado(e.FormattedValue.ToString()) == false)
 				{
 					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
 					e.Cancel = true;
@@ -373,14 +373,14 @@ namespace CamadaUI.Entradas
 			}
 		}
 
-		// PROCURA DUPLICADO TITULAR NOME & TITULAR NUMERO
-		private bool ProcuraTitularDuplicado(string valor)
+		// PROCURA DUPLICADO ORIGEM NOME & ORIGEM NUMERO
+		private bool ProcuraOrigemDuplicado(string valor)
 		{
-			foreach (classTitular titular in bindList.List)
+			foreach (classOrigem origem in bindList.List)
 			{
-				if (titular.Titular?.ToUpper() == valor.ToUpper())
+				if (origem.OrigemDescricao?.ToUpper() == valor.ToUpper())
 				{
-					AbrirDialog($"Nome de Titular duplicado...\n O titular {valor.ToUpper()} já foi inserido.",
+					AbrirDialog($"Descrição da Origem duplicada...\n A Descrição da Origem {valor.ToUpper()} já foi inserida.",
 						"Duplicado",
 						DialogType.OK,
 						DialogIcon.Exclamation);
@@ -393,11 +393,11 @@ namespace CamadaUI.Entradas
 
 		private bool ProcuraSiglaDuplicado(string valor)
 		{
-			foreach (classTitular titular in bindList.List)
+			foreach (classOrigem origem in bindList.List)
 			{
-				if (titular.CNP?.ToUpper() == valor.ToUpper())
+				if (origem.CNP?.ToUpper() == valor.ToUpper())
 				{
-					AbrirDialog($"O CNP do titular precisa ser exclusivo...\n O CNP {valor.ToUpper()} já foi inserido.",
+					AbrirDialog($"O CNP da origem precisa ser exclusivo...\n O CNP {valor.ToUpper()} já foi inserido.",
 						"Duplicado",
 						DialogType.OK,
 						DialogIcon.Exclamation);
@@ -474,14 +474,14 @@ namespace CamadaUI.Entradas
 			if (VerificaItems() == false) return;
 
 			//--- verifica se é um ROW editado ou novo
-			classTitular myItem;
+			classOrigem myItem;
 			bool everyOK = true;
 
 			foreach (DataGridViewRow row in dgvListagem.Rows)
 			{
 				try
 				{
-					myItem = (classTitular)row.DataBoundItem;
+					myItem = (classOrigem)row.DataBoundItem;
 					myItem.CNP = CNPConvert(myItem.CNP);
 
 					if (myItem.RowSit == EnumFlagEstado.NovoRegistro || myItem.RowSit == EnumFlagEstado.Alterado)
@@ -489,7 +489,7 @@ namespace CamadaUI.Entradas
 						if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
 						{
 							var newItem = ItemInserir(myItem);
-							myItem.IDTitular = newItem;
+							myItem.IDEntradaOrigem = newItem;
 							bindList.ResetBindings(false);
 						}
 						else if (myItem.RowSit == EnumFlagEstado.Alterado)
@@ -519,7 +519,7 @@ namespace CamadaUI.Entradas
 		//--- VERIFICACAO SE O ITEM ESTA PRONTO PARA SER INSERIDO OU ALTERADO
 		private bool VerificaItems()
 		{
-			classTitular Item = null;
+			classOrigem Item = null;
 
 			foreach (DataGridViewRow row in dgvListagem.Rows)
 			{
@@ -527,17 +527,17 @@ namespace CamadaUI.Entradas
 
 				try
 				{
-					Item = (classTitular)row.DataBoundItem;
+					Item = (classOrigem)row.DataBoundItem;
 				}
 				catch
 				{
 					continue;
 				}
 
-				if (string.IsNullOrEmpty(Item.Titular))
+				if (string.IsNullOrEmpty(Item.OrigemDescricao))
 				{
 					dgvListagem.CurrentCell = row.Cells[1];
-					MessageBox.Show("A descrição/nome do Titular não pode ficar vazia...",
+					MessageBox.Show("A descrição/nome da Origem não pode ficar vazia...",
 									"Campo Vazio",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
@@ -547,7 +547,7 @@ namespace CamadaUI.Entradas
 				if (string.IsNullOrEmpty(Item.CNP))
 				{
 					dgvListagem.CurrentCell = row.Cells[2];
-					MessageBox.Show("O número do CNP: CNPJ ou CPF do titular não pode ficar vazio...",
+					MessageBox.Show("O número do CNP: CNPJ ou CPF da origem não pode ficar vazio...",
 									"Campo Vazio",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
@@ -558,21 +558,21 @@ namespace CamadaUI.Entradas
 			return true;
 		}
 
-		//--- INSERE NOVO ITEM NO TBL TITULAR
-		public int ItemInserir(objDespesaTitular titular)
+		//--- INSERE NOVO ITEM NO TBL ORIGEM
+		public int ItemInserir(objEntradaOrigem origem)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				int newID = bBLL.InsertTitutar(titular);
-				titular.IDTitular = newID;
+				int newID = eBLL.InsertEntradaOrigem(origem);
+				origem.IDEntradaOrigem = newID;
 				return newID;
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Ocorreu uma exceção ao inserir um novo titular\n" +
+				MessageBox.Show("Ocorreu uma exceção ao inserir uma nova Origem\n" +
 								ex.Message, "Exceção",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 				throw ex;
@@ -585,19 +585,19 @@ namespace CamadaUI.Entradas
 			}
 		}
 
-		//--- INSERE NOVO ITEM NO TBL TITULAR
-		public void ItemAlterar(objDespesaTitular titular)
+		//--- INSERE NOVO ITEM NO TBL ORIGEM
+		public void ItemAlterar(objEntradaOrigem origem)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				bBLL.UpdateTitular(titular);
+				eBLL.UpdateEntradaOrigem(origem);
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Ocorreu uma exceção ao atualizar o titular/n" +
+				MessageBox.Show("Ocorreu uma exceção ao atualizar a origem/n" +
 								ex.Message, "Exceção",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 				throw ex;
@@ -635,9 +635,9 @@ namespace CamadaUI.Entradas
 				// mostra o MENU ativar e desativar
 				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objDespesaTitular titular = (objDespesaTitular)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objEntradaOrigem origem = (objEntradaOrigem)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-					if (titular.Ativo == true)
+					if (origem.Ativo == true)
 					{
 						AtivarToolStripMenuItem.Enabled = false;
 						DesativarToolStripMenuItem.Enabled = true;
@@ -660,16 +660,16 @@ namespace CamadaUI.Entradas
 			if (dgvListagem.SelectedCells.Count == 0) return;
 
 			//--- Verifica o item
-			objDespesaTitular titular = (objDespesaTitular)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
+			objEntradaOrigem origem = (objEntradaOrigem)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(titular.Ativo ? "DESATIVAR " : "ATIVAR")} esse Titular?\n" +
-									  titular.Titular.ToUpper(), (titular.Ativo ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(origem.Ativo ? "DESATIVAR " : "ATIVAR")} essa Origem de Entrada?\n" +
+									  origem.OrigemDescricao.ToUpper(), (origem.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			titular.Ativo = !titular.Ativo;
+			origem.Ativo = !origem.Ativo;
 
 			//--- Salvar o Registro
 			try
@@ -677,7 +677,7 @@ namespace CamadaUI.Entradas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				bBLL.UpdateTitular(titular);
+				eBLL.UpdateEntradaOrigem(origem);
 
 				//--- altera a imagem
 				dgvListagem.Refresh();
@@ -685,7 +685,7 @@ namespace CamadaUI.Entradas
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar o registro do Titular..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Alterar o registro da Origem..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally

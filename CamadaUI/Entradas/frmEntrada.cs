@@ -559,7 +559,7 @@ namespace CamadaUI.Entradas
 			if (!VerificaDadosClasse(txtEntradaTipo, "Tipo de Entrada", _entrada, EP)) return false;
 			if (!VerificaDadosClasse(txtSetor, "Setor de Entrada", _entrada, EP)) return false;
 			if (!VerificaDadosClasse(txtConta, "Conta de Entrada", _entrada, EP)) return false;
-			if (!VerificaDadosClasse(txtEntradaOrigem, "Origem da Entrada", _entrada, EP)) return false;
+			if (!VerificaDadosClasse(txtEntradaOrigem, "Origem da Entrada", _entrada.EntradaOrigem, EP)) return false;
 
 			// check VALOR BRUTO
 			if (!VerificaDadosClasse(txtEntradaValor, "Valor da Entrada", _entrada, EP)) return false;
@@ -962,19 +962,18 @@ namespace CamadaUI.Entradas
 				}
 				else if (frm.DialogResult == DialogResult.Yes) // ADD NEW ORIGEM
 				{
-					/*
-					frmContribuinte frmNovo = new frmContribuinte(new objContribuinte(null), this);
+					frmEntradaOrigemControle frmNovo = new frmEntradaOrigemControle(this);
 					frmNovo.ShowDialog();
 
 					if (frmNovo.DialogResult == DialogResult.OK)
 					{
-						if (Sit != EnumFlagEstado.NovoRegistro && _entrada.IDContribuinte != frmNovo.propEscolha.IDContribuinte)
+						if (Sit != EnumFlagEstado.NovoRegistro && _entrada.EntradaOrigem.IDEntradaOrigem != frmNovo.propEscolhido.IDEntradaOrigem)
 							Sit = EnumFlagEstado.Alterado;
 
-						_entrada.IDContribuinte = (int)frmNovo.propEscolha.IDContribuinte;
-						txtEntradaOrigem.Text = frmNovo.propEscolha.Contribuinte;
+						_entrada.EntradaOrigem.IDEntradaOrigem = (int)frmNovo.propEscolhido.IDEntradaOrigem;
+						_entrada.EntradaOrigem = frmNovo.propEscolhido;
+						txtEntradaOrigem.Text = frmNovo.propEscolhido.OrigemDescricao;
 					}
-					*/
 				}
 
 				//--- select
