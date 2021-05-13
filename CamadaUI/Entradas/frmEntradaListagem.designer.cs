@@ -29,12 +29,19 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnVisualizar = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.lblValorTotal = new System.Windows.Forms.Label();
 			this.btnImprimir = new System.Windows.Forms.Button();
 			this.pnlPorMes = new System.Windows.Forms.Panel();
@@ -57,13 +64,7 @@
 			this.mnuVisualizar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuExcluir = new System.Windows.Forms.ToolStripMenuItem();
-			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnConta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSetor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnOrigem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.btnOrigemControle = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.pnlPorMes.SuspendLayout();
@@ -99,7 +100,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(965, 632);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(135, 42);
-			this.btnFechar.TabIndex = 7;
+			this.btnFechar.TabIndex = 10;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -113,7 +114,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(154, 632);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 5;
+			this.btnAdicionar.TabIndex = 4;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -127,7 +128,7 @@
 			this.btnVisualizar.Location = new System.Drawing.Point(22, 632);
 			this.btnVisualizar.Name = "btnVisualizar";
 			this.btnVisualizar.Size = new System.Drawing.Size(126, 42);
-			this.btnVisualizar.TabIndex = 4;
+			this.btnVisualizar.TabIndex = 3;
 			this.btnVisualizar.Text = "&Visualizar";
 			this.btnVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnVisualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -140,34 +141,34 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.clnID,
-			this.clnData,
-			this.clnConta,
-			this.clnSetor,
-			this.clnTipo,
-			this.clnOrigem,
-			this.clnValor});
+            this.clnID,
+            this.clnData,
+            this.clnConta,
+            this.clnSetor,
+            this.clnTipo,
+            this.clnOrigem,
+            this.clnValor});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 140);
@@ -185,6 +186,54 @@
 			this.dgvListagem.TabIndex = 2;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// clnID
+			// 
+			this.clnID.HeaderText = "Reg.";
+			this.clnID.Name = "clnID";
+			this.clnID.ReadOnly = true;
+			this.clnID.Width = 60;
+			// 
+			// clnData
+			// 
+			this.clnData.HeaderText = "Data";
+			this.clnData.Name = "clnData";
+			this.clnData.ReadOnly = true;
+			this.clnData.Width = 85;
+			// 
+			// clnConta
+			// 
+			this.clnConta.HeaderText = "Conta de Entrada";
+			this.clnConta.Name = "clnConta";
+			this.clnConta.ReadOnly = true;
+			this.clnConta.Width = 200;
+			// 
+			// clnSetor
+			// 
+			this.clnSetor.HeaderText = "Setor de Recursos";
+			this.clnSetor.Name = "clnSetor";
+			this.clnSetor.ReadOnly = true;
+			this.clnSetor.Width = 200;
+			// 
+			// clnTipo
+			// 
+			this.clnTipo.HeaderText = "Tipo de Entrada";
+			this.clnTipo.Name = "clnTipo";
+			this.clnTipo.ReadOnly = true;
+			this.clnTipo.Width = 170;
+			// 
+			// clnOrigem
+			// 
+			this.clnOrigem.HeaderText = "Origem";
+			this.clnOrigem.Name = "clnOrigem";
+			this.clnOrigem.ReadOnly = true;
+			this.clnOrigem.Width = 200;
+			// 
+			// clnValor
+			// 
+			this.clnValor.HeaderText = "Valor";
+			this.clnValor.Name = "clnValor";
+			this.clnValor.ReadOnly = true;
 			// 
 			// lblValorTotal
 			// 
@@ -205,7 +254,7 @@
 			this.btnImprimir.Location = new System.Drawing.Point(286, 632);
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.Size = new System.Drawing.Size(126, 42);
-			this.btnImprimir.TabIndex = 6;
+			this.btnImprimir.TabIndex = 5;
 			this.btnImprimir.Text = "&Imprimir";
 			this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -438,9 +487,9 @@
 			// 
 			this.mnuOperacoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.mnuOperacoes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mnuVisualizar,
-			this.toolStripSeparator2,
-			this.mnuExcluir});
+            this.mnuVisualizar,
+            this.toolStripSeparator2,
+            this.mnuExcluir});
 			this.mnuOperacoes.Name = "mnuOperacoes";
 			this.mnuOperacoes.Size = new System.Drawing.Size(205, 62);
 			// 
@@ -465,53 +514,19 @@
 			this.mnuExcluir.Text = "Excluir Entrada";
 			this.mnuExcluir.Click += new System.EventHandler(this.mnuExcluir_Click);
 			// 
-			// clnID
+			// btnOrigemControle
 			// 
-			this.clnID.HeaderText = "Reg.";
-			this.clnID.Name = "clnID";
-			this.clnID.ReadOnly = true;
-			this.clnID.Width = 60;
-			// 
-			// clnData
-			// 
-			this.clnData.HeaderText = "Data";
-			this.clnData.Name = "clnData";
-			this.clnData.ReadOnly = true;
-			this.clnData.Width = 85;
-			// 
-			// clnConta
-			// 
-			this.clnConta.HeaderText = "Conta de Entrada";
-			this.clnConta.Name = "clnConta";
-			this.clnConta.ReadOnly = true;
-			this.clnConta.Width = 200;
-			// 
-			// clnSetor
-			// 
-			this.clnSetor.HeaderText = "Setor de Recursos";
-			this.clnSetor.Name = "clnSetor";
-			this.clnSetor.ReadOnly = true;
-			this.clnSetor.Width = 200;
-			// 
-			// clnTipo
-			// 
-			this.clnTipo.HeaderText = "Tipo de Entrada";
-			this.clnTipo.Name = "clnTipo";
-			this.clnTipo.ReadOnly = true;
-			this.clnTipo.Width = 170;
-			// 
-			// clnOrigem
-			// 
-			this.clnOrigem.HeaderText = "Origem";
-			this.clnOrigem.Name = "clnOrigem";
-			this.clnOrigem.ReadOnly = true;
-			this.clnOrigem.Width = 200;
-			// 
-			// clnValor
-			// 
-			this.clnValor.HeaderText = "Valor";
-			this.clnValor.Name = "clnValor";
-			this.clnValor.ReadOnly = true;
+			this.btnOrigemControle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnOrigemControle.Image = global::CamadaUI.Properties.Resources.search_page_24;
+			this.btnOrigemControle.Location = new System.Drawing.Point(550, 632);
+			this.btnOrigemControle.Name = "btnOrigemControle";
+			this.btnOrigemControle.Size = new System.Drawing.Size(190, 42);
+			this.btnOrigemControle.TabIndex = 7;
+			this.btnOrigemControle.Text = "&Origens de Entrada";
+			this.btnOrigemControle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnOrigemControle.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnOrigemControle.UseVisualStyleBackColor = true;
+			this.btnOrigemControle.Click += new System.EventHandler(this.btnOrigemControle_Click);
 			// 
 			// frmEntradaListagem
 			// 
@@ -525,11 +540,13 @@
 			this.Controls.Add(this.btnExcluir);
 			this.Controls.Add(this.btnImprimir);
 			this.Controls.Add(this.btnAdicionar);
+			this.Controls.Add(this.btnOrigemControle);
 			this.Controls.Add(this.btnVisualizar);
 			this.KeyPreview = true;
 			this.Name = "frmEntradaListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frm_KeyDown);
 			this.Controls.SetChildIndex(this.btnVisualizar, 0);
+			this.Controls.SetChildIndex(this.btnOrigemControle, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
 			this.Controls.SetChildIndex(this.btnImprimir, 0);
 			this.Controls.SetChildIndex(this.btnExcluir, 0);
@@ -585,5 +602,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnOrigem;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValor;
+		internal System.Windows.Forms.Button btnOrigemControle;
 	}
 }

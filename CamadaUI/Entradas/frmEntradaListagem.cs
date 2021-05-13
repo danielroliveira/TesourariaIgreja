@@ -368,6 +368,31 @@ namespace CamadaUI.Entradas
 			}
 		}
 
+		// CONTROLE DE ORIGENS DE ENTRADA
+		//------------------------------------------------------------------------------------------------------------
+		private void btnOrigemControle_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				frmEntradaOrigemControle frmNovo = new frmEntradaOrigemControle(this);
+				frmNovo.ShowDialog();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Controle de Origens de Entrada..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
 		#endregion
 
 		#region CONTROL FUNCTIONS
@@ -583,6 +608,5 @@ namespace CamadaUI.Entradas
 		}
 
 		#endregion // MENU SUSPENSO --- END
-
 	}
 }
