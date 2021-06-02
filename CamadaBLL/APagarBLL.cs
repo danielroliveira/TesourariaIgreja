@@ -177,7 +177,7 @@ namespace CamadaBLL
 		{
 			// get Despesa Periodica List
 			List<objDespesaPeriodica> listPer = new DespesaPeriodicaBLL()
-				.GetListDespesaPeriodica(true, null, null, IDCredor, IDAPagarForma, dataInicial);
+				.GetListDespesaPeriodica(true, null, null, IDCredor, IDAPagarForma, dataFinal);
 
 			List<objAPagar> APagarList = new List<objAPagar>();
 
@@ -419,6 +419,16 @@ namespace CamadaBLL
 				// init transaction
 				dbTran = new AcessoDados();
 				dbTran.BeginTransaction();
+
+				//--- check exists DESP PERIODICA before this
+				var PeriodicoList = CreateListAPagarPeriodica(desp, desp.IniciarData, desp.IniciarData.AddMonths(1));
+
+				if (PeriodicoList[0].Vencimento != Vencimento)
+				{
+					throw new AppException($"Não é possível converter em Despesa Real já que existem vencimentos " +
+						$"anteriores dessa despesa periódica.\n" +
+						$"Primeira Data: {PeriodicoList[0].Vencimento:d}");
+				}
 
 				// 1. update Despesa Periodica (IniciarData, DespesaValor)
 				desp.IniciarData = Vencimento.AddDays(1);

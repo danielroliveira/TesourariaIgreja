@@ -22,7 +22,7 @@ namespace CamadaDTO
 			internal int _IDContaProvisoria;
 			internal long _IDMovProvisoria; // ID movimentacao de entrada na conta provisoria
 			internal string _Conta;
-			internal int _IDSetor;
+			internal int? _IDSetor;
 			internal byte _IDSituacao; // 1: EmAberto | 2: Recebido | 3: Cancelada
 			internal string _Situacao; // 1: EmAberto | 2: Recebido | 3: Cancelada
 			internal byte _IDEntradaForma;
@@ -221,7 +221,7 @@ namespace CamadaDTO
 
 		// Property IDSetor
 		//---------------------------------------------------------------
-		public int IDSetor
+		public int? IDSetor
 		{
 			get => EditData._IDSetor;
 			set => EditData._IDSetor = value;

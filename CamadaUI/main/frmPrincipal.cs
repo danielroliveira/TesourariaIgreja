@@ -99,7 +99,6 @@ namespace CamadaUI
 
 				// VERIFICA AND GET SETOR PADRAO
 				//------------------------------------------------------------------------------------------------------------
-
 				propSetorPadrao = VerificaAndGet_Setor();
 
 				// DETERMINA A CONTA ATIVA | CONGREGACAO ATIVA | DATAPADRAO
@@ -115,29 +114,17 @@ namespace CamadaUI
 					propContaPadrao = contaInicial;
 
 					//--- configurar DATAPADRAO
-					if (contaInicial.BloqueioData != null)
+					bool DataPadraoOrigem = Convert.ToBoolean(ObterDefault("DataPadraoOrigem"));
+					string DataPadraoConfig = ObterDefault("DataPadrao");
+					bool ThereIsDtPadrao = !string.IsNullOrEmpty(DataPadraoConfig);
+
+					if (DataPadraoOrigem || !ThereIsDtPadrao)
 					{
-						//--  adiciona um dia à data do caixa final ???
-						DateTime dtPadrao = (DateTime)contaInicial.BloqueioData;
-						//dtPadrao = dtPadrao.AddDays(1)
-
-						//-- verifica se a data adicionada é DOMINGO, sendo adiciona um dia
-						if (dtPadrao.DayOfWeek == DayOfWeek.Sunday) dtPadrao.AddDays(1);
-
-						//-- define a propriedade DATA PADRAO
-						propDataPadrao = dtPadrao;
+						DefineDataPadraoPelaDataBloqueio(contaInicial);
 					}
 					else
 					{
-						AbrirDialog("A CONTA PADRÃO escolhida: " + contaInicial.Conta.ToUpper() + "\n" +
-									"ainda não tem data de bloqueio definida...\n" +
-									"Logo a DATA PADRÃO do sistema será escolhida para " +
-									"DATA ATUAL: " + string.Format("dd de MMMM de yyyy", DateTime.Now),
-									"Data Padrão",
-									DialogType.OK,
-									DialogIcon.Exclamation);
-
-						propDataPadrao = DateTime.Today;
+						propDataPadrao = Convert.ToDateTime(DataPadraoConfig);
 					}
 				}
 				catch (Exception ex)
@@ -516,6 +503,29 @@ namespace CamadaUI
 				Cursor.Current = Cursors.Default;
 			}
 
+		}
+
+		// DEFINDA DATA PADRAO PELA DATA DE BLOQUEIO
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineDataPadraoPelaDataBloqueio(objConta contaInicial)
+		{
+			if (contaInicial.BloqueioData != null)
+			{
+				//-- define a propriedade DATA PADRAO
+				propDataPadrao = (DateTime)contaInicial.BloqueioData;
+			}
+			else
+			{
+				AbrirDialog("A CONTA PADRÃO escolhida: " + contaInicial.Conta.ToUpper() + "\n" +
+							"ainda não tem data de bloqueio definida...\n" +
+							"Logo a DATA PADRÃO do sistema será escolhida para " +
+							"DATA ATUAL: " + string.Format("dd de MMMM de yyyy", DateTime.Now),
+							"Data Padrão",
+							DialogType.OK,
+							DialogIcon.Exclamation);
+
+				propDataPadrao = DateTime.Today;
+			}
 		}
 
 		#endregion

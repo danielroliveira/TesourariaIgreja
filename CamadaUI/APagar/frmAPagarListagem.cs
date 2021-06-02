@@ -102,6 +102,9 @@ namespace CamadaUI.APagar
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				//--- reserve procura text if exists
+				string ProcuraText = txtProcura.Text;
+
 				// define list
 				listPag = pBLL.GetListAPagar(
 					_Situacao,
@@ -119,6 +122,8 @@ namespace CamadaUI.APagar
 				txtProcura.Clear();
 				_disableProcura = false;
 
+				// return with procura text
+				if (!string.IsNullOrEmpty(ProcuraText)) txtProcura.Text = ProcuraText;
 			}
 			catch (Exception ex)
 			{

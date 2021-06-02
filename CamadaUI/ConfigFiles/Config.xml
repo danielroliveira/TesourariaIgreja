@@ -3,6 +3,7 @@
   <DefaultValues>
     <IgrejaTitulo>Igreja Padrão</IgrejaTitulo>
     <DataPadrao>01/01/2020</DataPadrao>
+	<DataPadraoOrigem>false</DataPadraoOrigem>
     <CongregacaoPadrao>1</CongregacaoPadrao>
     <CongregacaoDescricao>Congregacao Padrão</CongregacaoDescricao>
     <ContaPadrao>1</ContaPadrao>
@@ -13,6 +14,7 @@
     <CidadePadrao></CidadePadrao>
     <UFPadrao></UFPadrao>
 	<DocumentsImageFolder></DocumentsImageFolder>
+	<LastSourceImageFolder></LastSourceImageFolder>
   </DefaultValues>
   <ArquivoLogo>
     <ArquivoLogoMono>

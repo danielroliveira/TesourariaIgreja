@@ -114,6 +114,9 @@ namespace CamadaUI.Saidas
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				//--- reserve procura text if exists
+				string ProcuraText = txtProcura.Text;
+
 				// define list
 				listCont = dBLL.GetListDespesa(
 					Dados.IDSetor,
@@ -129,6 +132,9 @@ namespace CamadaUI.Saidas
 				_disableProcura = true;
 				txtProcura.Clear();
 				_disableProcura = false;
+
+				// return with procura text
+				if (!string.IsNullOrEmpty(ProcuraText)) txtProcura.Text = ProcuraText;
 			}
 			catch (Exception ex)
 			{

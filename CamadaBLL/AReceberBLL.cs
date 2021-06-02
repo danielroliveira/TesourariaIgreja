@@ -156,7 +156,7 @@ namespace CamadaBLL
 				Situacao = (string)row["Situacao"],
 				IDEntradaForma = (byte)row["IDEntradaForma"],
 				EntradaForma = (string)row["EntradaForma"],
-				IDSetor = (int)row["IDSetor"],
+				IDSetor = row["IDSetor"] == DBNull.Value ? null : (int?)row["IDSetor"],
 			};
 
 			return entrada;

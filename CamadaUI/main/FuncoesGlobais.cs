@@ -45,6 +45,7 @@ namespace CamadaUI
 						new XElement("DefaultValues",
 							new XElement("IgrejaTitulo", ""),
 							new XElement("DataPadrao", ""),
+							new XElement("DataPadraoOrigem", "true"),
 							new XElement("CongregacaoPadrao", 1),
 							new XElement("CongregacaoDescricao", "Sede"),
 							new XElement("ContaPadrao", "1"),
@@ -54,7 +55,8 @@ namespace CamadaUI
 							new XElement("DataBloqueada", ""),
 							new XElement("CidadePadrao", ""),
 							new XElement("UFPadrao", ""),
-							new XElement("DocumentsImageFolder", "")
+							new XElement("DocumentsImageFolder", ""),
+							new XElement("LastSourceImageFolder", "")
 						),
 						new XElement("ArquivoLogo",
 							new XElement("ArquivoLogoMono", ""),

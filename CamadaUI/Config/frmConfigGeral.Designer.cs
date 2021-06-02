@@ -57,6 +57,7 @@
 			this.txtSetorPadrao = new System.Windows.Forms.TextBox();
 			this.txtCidadePadrao = new System.Windows.Forms.TextBox();
 			this.txtContaPadrao = new System.Windows.Forms.TextBox();
+			this.chkDataPadraoOrigem = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
 			this.SuspendLayout();
@@ -95,7 +96,7 @@
 			this.btnSalvarConfig.Margin = new System.Windows.Forms.Padding(6);
 			this.btnSalvarConfig.Name = "btnSalvarConfig";
 			this.btnSalvarConfig.Size = new System.Drawing.Size(121, 36);
-			this.btnSalvarConfig.TabIndex = 2;
+			this.btnSalvarConfig.TabIndex = 1;
 			this.btnSalvarConfig.Text = "&Salvar";
 			this.btnSalvarConfig.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnSalvarConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -113,7 +114,7 @@
 			this.btnCancelar.Location = new System.Drawing.Point(611, 531);
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(121, 36);
-			this.btnCancelar.TabIndex = 3;
+			this.btnCancelar.TabIndex = 2;
 			this.btnCancelar.Text = "&Cancelar";
 			this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -123,6 +124,7 @@
 			// pnlPastas
 			// 
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.pnlPastas.Controls.Add(this.chkDataPadraoOrigem);
 			this.pnlPastas.Controls.Add(this.btnBackupProjecoes);
 			this.pnlPastas.Controls.Add(this.txtImageFolder);
 			this.pnlPastas.Controls.Add(this.btnProcImageFolder);
@@ -153,7 +155,7 @@
 			this.pnlPastas.Margin = new System.Windows.Forms.Padding(6);
 			this.pnlPastas.Name = "pnlPastas";
 			this.pnlPastas.Size = new System.Drawing.Size(720, 477);
-			this.pnlPastas.TabIndex = 1;
+			this.pnlPastas.TabIndex = 0;
 			// 
 			// btnBackupProjecoes
 			// 
@@ -167,7 +169,7 @@
 			this.btnBackupProjecoes.Location = new System.Drawing.Point(429, 389);
 			this.btnBackupProjecoes.Name = "btnBackupProjecoes";
 			this.btnBackupProjecoes.Size = new System.Drawing.Size(208, 36);
-			this.btnBackupProjecoes.TabIndex = 25;
+			this.btnBackupProjecoes.TabIndex = 26;
 			this.btnBackupProjecoes.Text = " &Backup Documentos";
 			this.btnBackupProjecoes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnBackupProjecoes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -181,7 +183,7 @@
 			this.txtImageFolder.MaxLength = 200;
 			this.txtImageFolder.Name = "txtImageFolder";
 			this.txtImageFolder.Size = new System.Drawing.Size(565, 27);
-			this.txtImageFolder.TabIndex = 23;
+			this.txtImageFolder.TabIndex = 24;
 			this.txtImageFolder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// btnProcImageFolder
@@ -195,7 +197,7 @@
 			this.btnProcImageFolder.RoundedCornersMask = ((byte)(15));
 			this.btnProcImageFolder.RoundedCornersRadius = 0;
 			this.btnProcImageFolder.Size = new System.Drawing.Size(34, 27);
-			this.btnProcImageFolder.TabIndex = 24;
+			this.btnProcImageFolder.TabIndex = 25;
 			this.btnProcImageFolder.TabStop = false;
 			this.btnProcImageFolder.Text = "...";
 			this.btnProcImageFolder.UseCompatibleTextRendering = true;
@@ -211,7 +213,7 @@
 			this.Label18.Location = new System.Drawing.Point(19, 360);
 			this.Label18.Name = "Label18";
 			this.Label18.Size = new System.Drawing.Size(49, 19);
-			this.Label18.TabIndex = 22;
+			this.Label18.TabIndex = 23;
 			this.Label18.Text = "Pasta:";
 			// 
 			// label4
@@ -243,7 +245,7 @@
 			this.label3.Location = new System.Drawing.Point(9, 319);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(287, 23);
-			this.label3.TabIndex = 21;
+			this.label3.TabIndex = 22;
 			this.label3.Text = "Pasta das Imagens de Documentos:";
 			// 
 			// label1
@@ -269,7 +271,7 @@
 			this.btnSetorEditar.Location = new System.Drawing.Point(605, 218);
 			this.btnSetorEditar.Name = "btnSetorEditar";
 			this.btnSetorEditar.Size = new System.Drawing.Size(72, 30);
-			this.btnSetorEditar.TabIndex = 16;
+			this.btnSetorEditar.TabIndex = 17;
 			this.btnSetorEditar.TabStop = false;
 			this.btnSetorEditar.Text = "Editar";
 			this.btnSetorEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -289,7 +291,7 @@
 			this.btnContaEditar.Location = new System.Drawing.Point(605, 126);
 			this.btnContaEditar.Name = "btnContaEditar";
 			this.btnContaEditar.Size = new System.Drawing.Size(72, 30);
-			this.btnContaEditar.TabIndex = 8;
+			this.btnContaEditar.TabIndex = 9;
 			this.btnContaEditar.TabStop = false;
 			this.btnContaEditar.Text = "Editar";
 			this.btnContaEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -321,7 +323,7 @@
 			this.btnSetorAlterar.Location = new System.Drawing.Point(527, 218);
 			this.btnSetorAlterar.Name = "btnSetorAlterar";
 			this.btnSetorAlterar.Size = new System.Drawing.Size(72, 30);
-			this.btnSetorAlterar.TabIndex = 15;
+			this.btnSetorAlterar.TabIndex = 16;
 			this.btnSetorAlterar.TabStop = false;
 			this.btnSetorAlterar.Text = "Alterar";
 			this.btnSetorAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -341,7 +343,7 @@
 			this.btnContaAlterar.Location = new System.Drawing.Point(527, 126);
 			this.btnContaAlterar.Name = "btnContaAlterar";
 			this.btnContaAlterar.Size = new System.Drawing.Size(72, 30);
-			this.btnContaAlterar.TabIndex = 7;
+			this.btnContaAlterar.TabIndex = 8;
 			this.btnContaAlterar.TabStop = false;
 			this.btnContaAlterar.Text = "Alterar";
 			this.btnContaAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -356,7 +358,7 @@
 			this.lblCongregacao.Location = new System.Drawing.Point(307, 162);
 			this.lblCongregacao.Name = "lblCongregacao";
 			this.lblCongregacao.Size = new System.Drawing.Size(94, 19);
-			this.lblCongregacao.TabIndex = 9;
+			this.lblCongregacao.TabIndex = 11;
 			this.lblCongregacao.Text = "Congregação";
 			this.lblCongregacao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -380,7 +382,7 @@
 			this.label5.Location = new System.Drawing.Point(418, 262);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(79, 19);
-			this.label5.TabIndex = 19;
+			this.label5.TabIndex = 20;
 			this.label5.Text = "UF Padrão:";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -392,7 +394,7 @@
 			this.label6.Location = new System.Drawing.Point(86, 223);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(95, 19);
-			this.label6.TabIndex = 13;
+			this.label6.TabIndex = 14;
 			this.label6.Text = "Setor Padrão:";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -404,7 +406,7 @@
 			this.label2.Location = new System.Drawing.Point(74, 262);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(107, 19);
-			this.label2.TabIndex = 17;
+			this.label2.TabIndex = 18;
 			this.label2.Text = "Cidade Padrão:";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -416,7 +418,7 @@
 			this.Label35.Location = new System.Drawing.Point(81, 131);
 			this.Label35.Name = "Label35";
 			this.Label35.Size = new System.Drawing.Size(100, 19);
-			this.Label35.TabIndex = 5;
+			this.Label35.TabIndex = 6;
 			this.Label35.Text = "Conta Padrão:";
 			this.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -436,7 +438,7 @@
 			this.lblDataBloqueio.Location = new System.Drawing.Point(307, 189);
 			this.lblDataBloqueio.Name = "lblDataBloqueio";
 			this.lblDataBloqueio.Size = new System.Drawing.Size(92, 18);
-			this.lblDataBloqueio.TabIndex = 12;
+			this.lblDataBloqueio.TabIndex = 13;
 			this.lblDataBloqueio.Text = "01/01/2018";
 			// 
 			// Label22
@@ -446,7 +448,7 @@
 			this.Label22.Location = new System.Drawing.Point(184, 189);
 			this.Label22.Name = "Label22";
 			this.Label22.Size = new System.Drawing.Size(117, 19);
-			this.Label22.TabIndex = 11;
+			this.Label22.TabIndex = 12;
 			this.Label22.Text = "Data Bloqueada:";
 			// 
 			// txtUFPadrao
@@ -458,7 +460,7 @@
 			this.txtUFPadrao.MaxLength = 2;
 			this.txtUFPadrao.Name = "txtUFPadrao";
 			this.txtUFPadrao.Size = new System.Drawing.Size(46, 27);
-			this.txtUFPadrao.TabIndex = 20;
+			this.txtUFPadrao.TabIndex = 21;
 			// 
 			// txtSetorPadrao
 			// 
@@ -467,7 +469,7 @@
 			this.txtSetorPadrao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtSetorPadrao.Name = "txtSetorPadrao";
 			this.txtSetorPadrao.Size = new System.Drawing.Size(334, 27);
-			this.txtSetorPadrao.TabIndex = 14;
+			this.txtSetorPadrao.TabIndex = 15;
 			this.txtSetorPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// txtCidadePadrao
@@ -478,7 +480,7 @@
 			this.txtCidadePadrao.MaxLength = 50;
 			this.txtCidadePadrao.Name = "txtCidadePadrao";
 			this.txtCidadePadrao.Size = new System.Drawing.Size(212, 27);
-			this.txtCidadePadrao.TabIndex = 18;
+			this.txtCidadePadrao.TabIndex = 19;
 			// 
 			// txtContaPadrao
 			// 
@@ -487,8 +489,21 @@
 			this.txtContaPadrao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtContaPadrao.Name = "txtContaPadrao";
 			this.txtContaPadrao.Size = new System.Drawing.Size(334, 27);
-			this.txtContaPadrao.TabIndex = 6;
+			this.txtContaPadrao.TabIndex = 7;
 			this.txtContaPadrao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			// 
+			// chkDataPadraoOrigem
+			// 
+			this.chkDataPadraoOrigem.AutoSize = true;
+			this.chkDataPadraoOrigem.Checked = true;
+			this.chkDataPadraoOrigem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkDataPadraoOrigem.Font = new System.Drawing.Font("Pathway Gothic One", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.chkDataPadraoOrigem.Location = new System.Drawing.Point(368, 91);
+			this.chkDataPadraoOrigem.Name = "chkDataPadraoOrigem";
+			this.chkDataPadraoOrigem.Size = new System.Drawing.Size(274, 23);
+			this.chkDataPadraoOrigem.TabIndex = 5;
+			this.chkDataPadraoOrigem.Text = "Obter Data Padrão pela Data de Bloqueio da Conta";
+			this.chkDataPadraoOrigem.UseVisualStyleBackColor = true;
 			// 
 			// frmConfigGeral
 			// 
@@ -503,8 +518,8 @@
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.btnSalvarConfig, 0);
 			this.Controls.SetChildIndex(this.btnCancelar, 0);
-			this.Controls.SetChildIndex(this.pnlPastas, 0);
 			this.Controls.SetChildIndex(this.panel1, 0);
+			this.Controls.SetChildIndex(this.pnlPastas, 0);
 			this.panel1.ResumeLayout(false);
 			this.pnlPastas.ResumeLayout(false);
 			this.pnlPastas.PerformLayout();
@@ -542,5 +557,6 @@
 		internal System.Windows.Forms.Label Label18;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Button btnBackupProjecoes;
+		private System.Windows.Forms.CheckBox chkDataPadraoOrigem;
 	}
 }

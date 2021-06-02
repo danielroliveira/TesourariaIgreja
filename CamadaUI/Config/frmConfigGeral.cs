@@ -314,6 +314,9 @@ namespace CamadaUI.Config
 				string DataPadrao = LoadNode(doc, "DataPadrao");
 				dtpDataPadrao.Value = string.IsNullOrEmpty(DataPadrao) ? DateTime.Today : Convert.ToDateTime(DataPadrao);
 
+				// DATA PADRAO ORIGEM
+				chkDataPadraoOrigem.Checked = Convert.ToBoolean(LoadNode(doc, "DataPadraoOrigem"));
+
 				// CIDADE PADRAO
 				txtCidadePadrao.Text = LoadNode(doc, "CidadePadrao");
 
@@ -373,6 +376,11 @@ namespace CamadaUI.Config
 				SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
 				SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
 				SaveConfigValorNode("DocumentsImageFolder", txtImageFolder.Text);
+
+				if (chkDataPadraoOrigem.Checked)
+					SaveConfigValorNode("DataPadraoOrigem", "true");
+				else
+					SaveConfigValorNode("DataPadraoOrigem", "false");
 
 				//< DocumentsImageFolder ></ DocumentsImageFolder >
 
