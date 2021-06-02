@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Imagem
@@ -43,10 +44,15 @@ namespace CamadaUI.Imagem
 
 		private void btnProcurar_Click(object sender, EventArgs e)
 		{
+			// CHECK IS NEW
+			bool IsNew = propImagem == null || string.IsNullOrEmpty(propImagem.ImagemPath);
+			string DefaultInitialFolder = IsNew ? ObterDefault("LastSourceImageFolder") : propImagem.ImagemPath;
+
 			// GET ImageFile
 			using (OpenFileDialog OFD = new OpenFileDialog()
 			{
-				Filter = "Arquivo PDF (*.pdf)|*.pdf|Image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png"
+				Filter = "Arquivo PDF (*.pdf)|*.pdf|Image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png",
+				InitialDirectory = DefaultInitialFolder,
 			})
 			{
 				if (OFD.ShowDialog() == DialogResult.OK)
@@ -58,6 +64,7 @@ namespace CamadaUI.Imagem
 						lblPath.Text = propImagem.ImagemPath;
 						ResizeFontLabel(lblPath);
 						btnAlterar.Enabled = true;
+						SaveDefault("LastSourceImageFolder", System.IO.Path.GetDirectoryName(propImagem.ImagemPath));
 					}
 					else
 					{

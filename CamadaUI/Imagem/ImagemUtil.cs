@@ -20,6 +20,10 @@ namespace CamadaUI.Imagem
 				// GET IMAGE FOLDER
 				string ImageFolder = GetImageFolder();
 
+				// GET LastSourceImageFolder FROM CONFIG
+				string LastSourceImageFolder = ObterDefault("LastSourceImageFolder");
+				string DefaultInitialFolder = string.IsNullOrEmpty(LastSourceImageFolder) ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : LastSourceImageFolder;
+
 				if (string.IsNullOrEmpty(imagem.ImagemFileName)) // if IMAGE = NULL
 				{
 					// GET ImageFile
@@ -27,7 +31,7 @@ namespace CamadaUI.Imagem
 					{
 						Filter = "Arquivo PDF (*.pdf)|*.pdf|Image files (*.jpg, *.jpeg, *.png)|*.jpg; *.jpeg; *.png",
 						Title = "Escolher arquivo de imagem",
-						InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+						InitialDirectory = DefaultInitialFolder
 					})
 					{
 						if (OFD.ShowDialog() == DialogResult.OK)
@@ -43,6 +47,7 @@ namespace CamadaUI.Imagem
 								{
 									imagem.ImagemFileName = frm.propImagem.ImagemFileName;
 									imagem.ImagemPath = frm.propImagem.ImagemPath;
+									SaveDefault("LastSourceImageFolder", Path.GetDirectoryName(imagem.ImagemPath));
 								}
 								else
 								{
@@ -284,7 +289,7 @@ namespace CamadaUI.Imagem
 					}
 					else
 					{
-						throw new Exception("a pasta padrão para as Imagens dos Documentos e Comprovantes ainda ñão foi criada...");
+						throw new Exception("a pasta padrão para as Imagens dos Documentos e Comprovantes ainda não foi criada...");
 					}
 				}
 			}
@@ -334,7 +339,7 @@ namespace CamadaUI.Imagem
 				imagem = RemoveImageToDefaultFolder(imagem, imageFolder);
 
 				//--- check return
-				if(imagem == null)
+				if (imagem == null)
 				{
 					throw new AppException("Operação cancelada...");
 				}
