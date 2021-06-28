@@ -99,6 +99,11 @@ namespace CamadaUI
 				XmlDocument config = MyConfig();
 				if (config != null)
 				{
+					if (config.SelectSingleNode("Configuracao").SelectSingleNode("DefaultValues").SelectSingleNode(CampoDefault) == null)
+					{
+						throw new AppException("XML Node não encontrado no config");
+					}
+
 					return config.SelectSingleNode("Configuracao").SelectSingleNode("DefaultValues").SelectSingleNode(CampoDefault).InnerText;
 				}
 				else

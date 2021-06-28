@@ -356,13 +356,6 @@ namespace CamadaUI
 					var webResponse = (HttpWebResponse)task.Result;
 					System.IO.Stream responseStream = webResponse.GetResponseStream();
 
-					/*
-					if (webResponse.ContentEncoding.ToLower().Contains("gzip"))
-						responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
-					else if (webResponse.ContentEncoding.ToLower().Contains("deflate"))
-						responseStream = new DeflateStream(responseStream, CompressionMode.Decompress);
-					*/
-
 					if (responseStream != null) webImage = Image.FromStream(responseStream);
 					tcs.TrySetResult(webImage);
 					webResponse.Close();
