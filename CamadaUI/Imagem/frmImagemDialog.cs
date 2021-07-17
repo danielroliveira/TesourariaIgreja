@@ -11,6 +11,7 @@ namespace CamadaUI.Imagem
 	{
 		public objImagem propImagem { get; set; }
 		Form _formOrigem;
+		public delegate void DelegateUpdate(long bytes, string msg);
 
 		#region CONSTRUCTOR | SUB NEW
 
@@ -131,10 +132,6 @@ namespace CamadaUI.Imagem
 			}
 		}
 
-
-
 		#endregion // VISUAL EFFECTS --- END
-
-
 	}
 }

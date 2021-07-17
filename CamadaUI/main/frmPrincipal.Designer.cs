@@ -101,6 +101,8 @@
 			this.btnMinimizer = new System.Windows.Forms.Button();
 			this.btnConfig = new System.Windows.Forms.Button();
 			this.PainelInferior = new System.Windows.Forms.Panel();
+			this.lblProgress = new System.Windows.Forms.Label();
+			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.lblSetor = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.lblConta = new System.Windows.Forms.Label();
@@ -875,6 +877,8 @@
 			// PainelInferior
 			// 
 			this.PainelInferior.BackColor = System.Drawing.Color.SlateGray;
+			this.PainelInferior.Controls.Add(this.lblProgress);
+			this.PainelInferior.Controls.Add(this.progressBar);
 			this.PainelInferior.Controls.Add(this.lblSetor);
 			this.PainelInferior.Controls.Add(this.label5);
 			this.PainelInferior.Controls.Add(this.lblConta);
@@ -891,6 +895,30 @@
 			this.PainelInferior.Name = "PainelInferior";
 			this.PainelInferior.Size = new System.Drawing.Size(1110, 35);
 			this.PainelInferior.TabIndex = 3;
+			// 
+			// lblProgress
+			// 
+			this.lblProgress.BackColor = System.Drawing.Color.Transparent;
+			this.lblProgress.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+			this.lblProgress.ForeColor = System.Drawing.Color.White;
+			this.lblProgress.Location = new System.Drawing.Point(504, 1);
+			this.lblProgress.Name = "lblProgress";
+			this.lblProgress.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+			this.lblProgress.Size = new System.Drawing.Size(106, 25);
+			this.lblProgress.TabIndex = 108;
+			this.lblProgress.Text = "Obtendo...";
+			this.lblProgress.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.lblProgress.Visible = false;
+			// 
+			// progressBar
+			// 
+			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar.Location = new System.Drawing.Point(619, 6);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(222, 23);
+			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progressBar.TabIndex = 107;
+			this.progressBar.Visible = false;
 			// 
 			// lblSetor
 			// 
@@ -1171,5 +1199,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuEntradas;
 		private System.Windows.Forms.ToolStripMenuItem mnuEntradasInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuEntradasProcurar;
+		private System.Windows.Forms.Label lblProgress;
+		private System.Windows.Forms.ProgressBar progressBar;
 	}
 }

@@ -20,6 +20,10 @@ namespace CamadaUI
 
 	public static class FuncoesGlobais
 	{
+		public static string appDataSavePath = Environment.GetFolderPath(
+			Environment.SpecialFolder.ApplicationData)
+			+ "\\TesourariaIgreja";
+
 		#region CONFIG CREATE | LOAD | CHANGE
 
 		// CHECK IF EXIST CONFIG

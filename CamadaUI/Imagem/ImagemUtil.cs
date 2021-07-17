@@ -10,6 +10,8 @@ namespace CamadaUI.Imagem
 {
 	public static class ImagemUtil
 	{
+		// GET LOCAL IMAGE FROM FOLDER TO SAVE
+		//------------------------------------------------------------------------------------------------------------
 		public static objImagem ImagemGetFileAndSave(objImagem imagem, Form formOrigem)
 		{
 			try
@@ -104,6 +106,8 @@ namespace CamadaUI.Imagem
 			}
 		}
 
+		// COPY FILE TO DEFAULT LOCAL FOLDER
+		//------------------------------------------------------------------------------------------------------------
 		private static objImagem CopyImageToDefaultFolder(objImagem image, string ImageFolder)
 		{
 			try
@@ -178,6 +182,8 @@ namespace CamadaUI.Imagem
 			}
 		}
 
+		// REMOVE FILE FROM DEFAULT LOCAL FOLDER
+		//------------------------------------------------------------------------------------------------------------
 		private static objImagem RemoveImageToDefaultFolder(objImagem image, string ImageFolder)
 		{
 			try
@@ -240,6 +246,8 @@ namespace CamadaUI.Imagem
 			}
 		}
 
+		// SAVE DATABASE IMAGE DATA
+		//------------------------------------------------------------------------------------------------------------
 		public static void ImagemSave(objImagem imagem)
 		{
 			try
